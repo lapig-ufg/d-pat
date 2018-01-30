@@ -1,0 +1,10 @@
+*.log
+*.sublime-project
+*.sublime-workspace
+*.pyc
+node_modules
+*~
+*#
+*.pyc
+*.rdb
+*.sqlite
