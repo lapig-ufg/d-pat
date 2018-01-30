@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <div style="padding: 10px;" class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5" [ngbCollapse]="isCollapsed">
+      <div class="card">
+        <div class="card-header">
+            Monitoramento FIP-Cerrado
+            <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">Toggle</button>
+        </div>
+        <div class="card-block dpat-layer-group">
+          <div class="dpat-period-group input-group input-group-sm">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Período de análise</label>
+            </div>
+            <select name="startYear" class="custom-select custom-select-sm" [(ngModel)]="mapDescriptor.years.start" (ngModelChange)="updataLayers()">
+                <option *ngFor="let year of mapDescriptor.years.startValues" [value]="year">  
+                {{year}}
+                </option>
+            </select>
+            <div class="input-group-append">
+              <label class="input-group-text" for="inputGroupSelect01"> - </label>
+            </div>
+            <select name="endYear" class="custom-select custom-select-sm" [(ngModel)]="mapDescriptor.years.end" (ngModelChange)="updataLayers()">
+                <option *ngFor="let year of mapDescriptor.years.endValues" [value]="year">  
+                {{year}}
+                </option>
+            </select>
+          </div>
+          <hr>
+          <div class="input-group input-group-sm dpat-layer" *ngFor="let layer of mapDescriptor.layers">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox">
+                </div>
+              </div>
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{layer.displayLabel}}">
+              <select class="custom-select custom-select-sm" name="{{layer.option.id}}" [(ngModel)]="layer.option.selectedValue" [hidden]="layer.option == false">
+                <option *ngFor="let value of layer.option.values" [value]="value.id">  
+                {{value.label}}
+                </option>
+              </select>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 dpat-ol-div">
+      <div id="map" class="dpat-ol-map"></div>
+    </div>
+  </div>
+</div>

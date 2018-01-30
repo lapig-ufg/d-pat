@@ -1,0 +1,42 @@
+@import 'https://openlayers.org/en/v4.6.4/css/ol.css';
+
+.container-fluid {
+	margin-top: 55px;
+}
+
+.dpat-period-group {
+	padding: 10px;
+}
+
+.dpat-layer-group {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.dpat-layer {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.dpat-layer-label {
+	background-color: #ffffff;
+}
+
+.dpat-layer-label:focus {
+	outline:0 !important;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.dpat-ol-div {
+	padding: 0px;
+}
+
+.dpat-ol-map {
+	height: calc(100vh - 55px); /* 100% of the viewport height - navbar height */
+}
