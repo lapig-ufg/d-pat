@@ -1,8 +1,11 @@
+var sqlite3 = require('sqlite3');
+
 module.exports = function(app){
 	var Map = {}
 
 	var points = app.repository.collections.points;
-	
+	var database = new sqlite3.Database('/home/leandro/Tmp/FREL/d-pat.sqlite');
+
 	Map.test = function(request, response){
 
 		response.send({ 'ok': 'oh yeah !'})
@@ -68,6 +71,7 @@ module.exports = function(app){
 					'showLegend': false,
 					'minZoom': 8
 				},
+		
 				{ 
 					'id': 'landsat_start',
 					'ows_layer': 'bi_ce_mosaico_landsat_30_{start_year}_lapig',
@@ -94,20 +98,72 @@ module.exports = function(app){
 		
 	}
 
-	Map.info = function(request, response) {
-		var startyear = request.param('startyear');
-		var endyear = request.param('endyear');
+	Map.charts = function(request, response) {
+
+		var processTimeseries = function(rows, result) {
+			result.timeseries[0].name = 'Área desmatada';
+			result.timeseries[0].series = rows;
+			result.deforestation = 0;
+
+			for(var i=0; i < result.timeseries[0].series.length; i++) {
+				var year = result.timeseries[0].series[i].name;
+				var newName = year-2 + ' - ' + year;
+				result.timeseries[0].series[i].name = newName;
+				result.timeseries[0].series[i].year = year;
+			}
+
+			return result;
+		}
+
+		var sqlTimeseries = 'SELECT ano as name, SUM(area_km2) as value FROM fip_municipios_desmatamento GROUP BY ano ORDER BY ano asc'
 
 		var result = {
-			"version": "2.1.0",
-			"grids": [
-				"http://maps.lapig.iesa.ufg.br/ows?layers=fip_municipios_desmatamento&mode=tile&tile={x}+{y}+{z}&tilemode=gmap&map.imagetype=utfgrid"
-				+"&startyear="+startyear+"&endyear="+endyear
+			'timeseries': [
+				{}
 			]
 		}
 
-		response.send(result)
-		response.end()
+		database.all(sqlTimeseries, function(err, rows) {
+			result = processTimeseries(rows, result)
+			response.send(result)
+			response.end()
+		});
+
+	}
+
+	Map.chartByYear = function(request, response) {
+
+		var staryear = request.param('startyear', 2000);
+		var endyear = request.param('endyear', 2015);
+
+		var processState = function(rows, result) {
+			result.state = rows;
+			return result;
+		}
+
+		var sqlState = 'SELECT nome as name, SUM(d.area_km2) as value FROM fip_estados_desmatamento d INNER JOIN fip_estados e 	ON d.codigo = e.geocodigo '
+			+ ' WHERE ano >= ' + staryear + ' AND ano <= ' + endyear 
+			+ ' GROUP BY 1 ORDER BY 2 desc '
+		
+		var sqlCities = 'SELECT e.nome as name, SUM(d.area_km2) as value FROM fip_municipios_desmatamento d INNER JOIN fip_municipios e ON d.codigo = e.geocodigo'
+			+ ' WHERE ano >= ' + staryear + ' AND ano <= ' + endyear 
+			+ ' GROUP BY 1'
+			+ ' ORDER BY 2 desc'
+			+ ' LIMIT 10'
+
+		var result = {
+			'state': []
+		}
+
+		database.all(sqlState, function(err, rows) {
+			result = processState(rows, result)
+			database.all(sqlCities, function(err, rows) {
+				result.cities = rows;
+				response.send(result)
+				response.end()
+			});
+		});
+
 	}
 
 	return Map;

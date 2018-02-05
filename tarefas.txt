@@ -19,8 +19,6 @@ Mapa:
 	- MinScale para poligonos
 
 Gráficos:
-	- Indicador com total acumulado de área desmatada
-	- Gráfico com série histórica de desmatamento (Cerrado)
 	- Gráfico com quantitativo por estado (Cerrado)
 	- Top-10 municipios (Cerrado)
 	- Gráfico com série histórica de desmatamento (Estado/Municipio)

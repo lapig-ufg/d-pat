@@ -32,12 +32,16 @@ export class MapComponent implements OnInit {
 	infodata: Object;
 	currentZoom: Number;
 
+	charts: any;
 	urls: any;
 	indexedLayers: any;
 	tileloading: Number;
 
 	mapDescriptor: any;
 	isCollapsed: boolean;
+	collapseBiome: boolean;
+	collapseState: boolean;
+	collapseCity: boolean;
 	widthMap: Number;
 
 	constructor(private http: HttpClient) { 
@@ -47,6 +51,11 @@ export class MapComponent implements OnInit {
 		this.tileloading = 0;
 		this.projection = OlProj.get('EPSG:900913');
 		this.currentZoom = 4;
+
+		this.charts = { 
+			timeseries: {},
+			state: {}
+		}
 
 		this.urls = [
     	'http://m1.lapig.iesa.ufg.br/ows',
@@ -142,15 +151,6 @@ export class MapComponent implements OnInit {
         	}
         }.bind(this));
 		}.bind(this));
-	}
-
-	private collapseSidebar() {
-		this.isCollapsed = !this.isCollapsed;
-
-		this.widthMap = 12;
-		if(!this.isCollapsed) {
-			this.widthMap = 7;
-		}
 	}
 
 	private applYearRestrictions() {
@@ -280,6 +280,11 @@ export class MapComponent implements OnInit {
     this.layers.push(utfgridLayer)
 	}
 
+	private getLegendUrl(layer) {
+		return 'http://maps.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&'
+				 + 'LAYER='+this.getOwsLayername(layer)+'&format=image/png'
+	}
+
 	private updataLayers() {
 
 		this.widthMap = 7;
@@ -288,8 +293,13 @@ export class MapComponent implements OnInit {
 		for (let layer of this.mapDescriptor.layers) {
 			layer.displayLabel = this.getDisplayName(layer)
 			
+			if(layer.showLegend) {
+				layer.legendUrl = this.getLegendUrl(layer);
+			}
+
 			if (this.indexedLayers[layer.id]) {
 				
+
 				var wmsSource = this.indexedLayers[layer.id].getSource();
 				var params = wmsSource.getParams();
 				var newParams = this.getOwsParams(layer)
@@ -303,14 +313,37 @@ export class MapComponent implements OnInit {
 			this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
 			this.utfgridsource.refresh();
 		}
+
+		this.calculateTotalDeforestaton();
+		var chartByYearUrl = '/service/map/chartsByYear'
+			+ "?startyear="+this.mapDescriptor.years.start
+			+ "&endyear="+this.mapDescriptor.years.end;
+
+		this.http.get(chartByYearUrl).subscribe(charts2 => {
+			this.charts.state = charts2['state'];
+			this.charts.cities = charts2['cities'];
+			console.log(this.charts)
+		})
+	}
+
+	private calculateTotalDeforestaton() {
+		this.charts.deforestation = 0;
+		this.charts.timeseries[0].series.forEach(function(serie) {
+			if(this.mapDescriptor.years.start <= serie.year && serie.year <= this.mapDescriptor.years.end) {
+				this.charts.deforestation += serie.value
+			}
+		}.bind(this))
 	}
 
 	ngOnInit() {
 
-		this.http.get('/service/map/layers').subscribe(mapDescriptor => {
-			this.mapDescriptor = mapDescriptor;
-			this.updataLayers();
-			this.createMap();
+		this.http.get('/service/map/charts').subscribe(charts => {
+			this.charts = charts;
+			this.http.get('/service/map/layers').subscribe(mapDescriptor => {
+				this.mapDescriptor = mapDescriptor;
+				this.updataLayers();
+				this.createMap();
+			});
 		});
 	}
 

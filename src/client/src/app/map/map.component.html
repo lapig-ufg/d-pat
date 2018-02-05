@@ -8,7 +8,7 @@
         <div class="card-header">
             Camadas Geográficas
             <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="camadageografica">_</button>
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="camadageografica">-</button>
         </div>
         <div id="camadageografica" class="card-block dpat-layer-group" [ngbCollapse]="isCollapsed">
           <div class="dpat-period-group input-group input-group-sm">
@@ -44,10 +44,67 @@
                 </option>
               </select>
             </div>
-            <img [hidden]="!layer.enabled" style="margin-left: 40px;" *ngIf="layer.showLegend" src="http://maps.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&LAYER=fip_municipios_desmatamento&format=image/png" />
+            <img [hidden]="!layer.enabled" style="margin-left: 40px;" *ngIf="layer.showLegend" src="{{layer.legendUrl}}" />
           </div>
         </div>
       </div>
+      <div class="card" style="margin-top: 15px;">
+        <div class="card-header">
+            Bioma
+            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseBiome = !collapseBiome"
+                  [attr.aria-expanded]="!collapseBiome" aria-controls="camadageografica">-</button>
+        </div>
+        <div class="card-block" [ngbCollapse]="collapseBiome">
+          <h6 style="margin-left: 15px; margin-top: 5px;">
+            <small>Área acumulada de Desmatamento (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}}): <b>{{charts.deforestation | number:'1.0-0'}} km2</b></small>
+          </h6>
+          <ngx-charts-line-chart [results]="charts.timeseries" [yAxis]="true" [xAxis]="true">
+          </ngx-charts-line-chart><br>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 15px;">
+        <div class="card-header">
+            Unidades Federativas
+            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseState = !collapseState"
+                  [attr.aria-expanded]="!collapseState" aria-controls="camadageografica">-</button>
+        </div>
+        <div class="card-block" [ngbCollapse]="collapseState">
+          <h6 style="margin-left: 5px; margin-top: 5px;">
+            <small>Desmatamento acumulado (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}}) nas unidades federativas</small>
+          </h6>
+          <ngx-charts-bar-horizontal [barPadding]="2" [roundDomains]="false"  [roundEdges]="false" [scheme]="vivid" [results]="charts.state" [yAxis]="true" [xAxis]="true">
+          </ngx-charts-bar-horizontal>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 15px;">
+        <div class="card-header">
+            Municípios
+            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseCity = !collapseCity"
+                  [attr.aria-expanded]="!collapseCity" aria-controls="camadageografica">-</button>
+        </div>
+        <div class="card-block" style="padding-left: 10px; padding-right: 10px;" [ngbCollapse]="collapseCity">
+          <h6 style="margin-left: 5px; margin-top: 5px;">
+            <small>Apenas os 10 municípios mais representativos</small>
+          </h6>
+          <table class="table table-sm" style="font-size: 11px; ">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Município</th>
+                <th scope="col">Área desmatada (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}})</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let city of charts.cities">
+              <tr>
+                <th scope="row">1</th>
+                <td>{{city.name}}</td>
+                <td>{{city.value | number:'1.0-0' }} km2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
     </div>
     <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 dpat-ol-div">
       <div id="map" class="dpat-ol-map"></div>

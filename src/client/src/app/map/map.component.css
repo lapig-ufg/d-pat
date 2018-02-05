@@ -44,6 +44,8 @@
 	padding: 10px;
 	padding-top: 0px;
 	background-color: #343a40;
+	overflow-y: scroll;
+	height: calc(100vh - 55px);
 }
 
 hr {
@@ -69,4 +71,8 @@ hr {
 
 .ol-zoom-in, .ol-zoom-out {
 	background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.card-header {
+	padding: 10px;
 }
