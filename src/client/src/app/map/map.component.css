@@ -1,5 +1,17 @@
 @import 'https://openlayers.org/en/v4.6.4/css/ol.css';
 
+.collapse-btn {
+	padding: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: #343a40;
+	border-color: #343a40;
+}
+
+.bckgdisabled {
+	background-color: #e9ecef !important;
+}
+
 .container-fluid {
 	margin-top: 55px;
 }
@@ -28,9 +40,23 @@
 	outline:0 !important;
 }
 
+.dpat-sidepanel {
+	padding: 10px;
+	padding-top: 0px;
+	background-color: #343a40;
+}
+
 hr {
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+.card {
+	border-radius: 0px;
+}
+
+.custom-select, .form-control-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
+	border-radius: 0px;
 }
 
 .dpat-ol-div {
@@ -39,4 +65,8 @@ hr {
 
 .dpat-ol-map {
 	height: calc(100vh - 55px); /* 100% of the viewport height - navbar height */
+}
+
+.ol-zoom-in, .ol-zoom-out {
+	background-color: rgba(0, 0, 0, 0.5) !important;
 }

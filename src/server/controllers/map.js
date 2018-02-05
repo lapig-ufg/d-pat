@@ -21,37 +21,60 @@ module.exports = function(app){
 			'layers': [
 				{ 
 					'id': 'desmatamento',
-					'label': 'Área total desmatada por',
-					'option': {
-							'selectedValue': 'uf',
+					'enabled': true,
+					'utfgrid': true,
+					'label': 'Desmatamento acumulado por',
+					'sendYears':true,
+					'showLegend': true,
+					'minZoom': 0,
+					'options': {
+							'selectedValue': 'municipio',
 							'values': [
-								{ 'label': 'Estado', 'id': 'uf'},
-								{ 'label': 'Município', 'id': 'municipio' }
+								{ 
+									'label': 'Estado',
+									'id': 'uf',
+									'ows_layer': 'fip_estados_desmatamento'
+								},
+								{ 
+									'label': 'Município', 
+									'id': 'municipio',
+									'ows_layer': 'fip_municipios_desmatamento'
+								}
 							]
 						}
 				},
-				{ 
+				/*{ 
 					'id': 'desmatamento',
 					'label': 'Polígonos de desmatamento',
-					'option': false
+					'options': false
+				},*/
+				{ 
+					'id': 'fip_poligonos_desmatamento',
+					'ows_layer': 'fip_poligonos_desmatamento',
+					'enabled': false,
+					'sendYears':true,
+					'label': 'Polígonos de desmatamento - {start_year} a {end_year}',
+					'options': false,
+					'showLegend': false,
+					'minZoom': 8
 				},
 				{ 
-					'id': 'remanescente',
-					'label': 'Vegetação natural remanescente - ',
-					'option': false,
-					'concatEndYear': true
+					'id': 'landsat_start',
+					'ows_layer': 'bi_ce_mosaico_landsat_30_{start_year}_lapig',
+					'enabled': false,
+					'label': 'Mosaico Landsat - {start_year}',
+					'options': false,
+					'showLegend': false,
+					'minZoom': 0
 				},
 				{ 
-					'id': 'landsat',
-					'label': 'Mosaico Landsat - ',
-					'option': false,
-					'concatEndYear': true
-				},
-				{ 
-					'id': 'landsat',
-					'label': 'Mosaico Landsat - ',
-					'option': false,
-					'concatStartYear': true
+					'id': 'landsat_end',
+					'ows_layer': 'bi_ce_mosaico_landsat_30_{end_year}_lapig',
+					'enabled': false,
+					'label': 'Mosaico Landsat - {end_year}',
+					'options': false,
+					'showLegend': false,
+					'minZoom': 0
 				}
 			]
 		}
@@ -59,6 +82,22 @@ module.exports = function(app){
 		response.send(result)
 		response.end()
 		
+	}
+
+	Map.info = function(request, response) {
+		var startyear = request.param('startyear');
+		var endyear = request.param('endyear');
+
+		var result = {
+			"version": "2.1.0",
+			"grids": [
+				"http://maps.lapig.iesa.ufg.br/ows?layers=fip_municipios_desmatamento&mode=tile&tile={x}+{y}+{z}&tilemode=gmap&map.imagetype=utfgrid"
+				+"&startyear="+startyear+"&endyear="+endyear
+			]
+		}
+
+		response.send(result)
+		response.end()
 	}
 
 	return Map;

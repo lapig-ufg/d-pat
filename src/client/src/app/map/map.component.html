@@ -1,13 +1,16 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">Deforestation Polygon Assessment Tool</a>
+</nav>
 <div class="container-fluid">
   <div class="row">
-    <div style="padding: 10px;" class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5" [ngbCollapse]="isCollapsed">
-      <div class="card">
+    <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 dpat-sidepanel">
+      <div class="card" >
         <div class="card-header">
-            Monitoramento FIP-Cerrado
-            <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">Toggle</button>
+            Camadas Geográficas
+            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="camadageografica">_</button>
         </div>
-        <div class="card-block dpat-layer-group">
+        <div id="camadageografica" class="card-block dpat-layer-group" [ngbCollapse]="isCollapsed">
           <div class="dpat-period-group input-group input-group-sm">
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Período de análise</label>
@@ -27,24 +30,35 @@
             </select>
           </div>
           <hr>
-          <div class="input-group input-group-sm dpat-layer" *ngFor="let layer of mapDescriptor.layers">
-            <div class="input-group-prepend">
+          <div *ngFor="let layer of mapDescriptor.layers">
+            <div class="input-group input-group-sm dpat-layer" placement="top" ngbTooltip="{{layer.tooltip}}">
+              <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <input type="checkbox">
+                  <input [disabled]="layer.minZoom >= currentZoom" [(ngModel)]="layer.enabled" (ngModelChange)="visibility(layer)" type="checkbox">
                 </div>
               </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{layer.displayLabel}}">
-              <select class="custom-select custom-select-sm" name="{{layer.option.id}}" [(ngModel)]="layer.option.selectedValue" [hidden]="layer.option == false">
-                <option *ngFor="let value of layer.option.values" [value]="value.id">  
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{layer.displayLabel}}" [class.bckgdisabled]="layer.minZoom >= currentZoom">
+              <select class="custom-select custom-select-sm" name="{{layer.options.id}}" [(ngModel)]="layer.options.selectedValue" [hidden]="layer.options == false">
+                <option *ngFor="let value of layer.options.values" [value]="value.id">  
                 {{value.label}}
                 </option>
               </select>
             </div>
+            <img [hidden]="!layer.enabled" style="margin-left: 40px;" *ngIf="layer.showLegend" src="http://maps.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&LAYER=fip_municipios_desmatamento&format=image/png" />
+          </div>
         </div>
       </div>
     </div>
     <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 dpat-ol-div">
       <div id="map" class="dpat-ol-map"></div>
+      <div [hidden]="infodata.area_desmatada == -1" id="map-info" class="card" style="background-color: #ffffff99;">
+        <div class="card-body" style="padding:5px;">
+          <p class="card-text" style="font-size: 13px;">
+            <b>{{infodata.area_desmatada | number:'1.0-0' }} km2</b>
+            <br>{{infodata.nome}}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
