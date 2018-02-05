@@ -38,7 +38,7 @@
                 </div>
               </div>
               <input type="text" readonly class="form-control dpat-layer-label" value="{{layer.displayLabel}}" [class.bckgdisabled]="layer.minZoom >= currentZoom">
-              <select class="custom-select custom-select-sm" name="{{layer.options.id}}" [(ngModel)]="layer.options.selectedValue" [hidden]="layer.options == false">
+              <select class="custom-select custom-select-sm" name="{{layer.options.id}}" [(ngModel)]="layer.options.selectedValue" [hidden]="layer.options == false" (ngModelChange)="updataLayers()">
                 <option *ngFor="let value of layer.options.values" [value]="value.id">  
                 {{value.label}}
                 </option>

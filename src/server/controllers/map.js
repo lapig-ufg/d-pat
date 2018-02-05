@@ -14,11 +14,21 @@ module.exports = function(app){
 
 		result = {
 			'years': {
-				'values': [ 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2015 ],
+				'values': [ 2000,2002,2004,2006,2008,2010,2013,2015 ],
 				'start': 2000,
 				'end': 2015
 			},
 			'layers': [
+				/*{ 
+					'id': 'fip_limite_cerrado',
+					'ows_layer': 'fip_limite_cerrado',
+					'enabled': true,
+					'sendYears':false,
+					'label': 'Limite do bioma Cerrado',
+					'options': false,
+					'showLegend': false,
+					'minZoom': 0
+				},*/
 				{ 
 					'id': 'desmatamento',
 					'enabled': true,
