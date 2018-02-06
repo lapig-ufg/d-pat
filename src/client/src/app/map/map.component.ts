@@ -29,7 +29,7 @@ export class MapComponent implements OnInit {
 	tileGrid: TileGrid;
 	utfgridsource: TileUTFGrid;
 	infoOverlay: Overlay;
-	infodata: Object;
+	infodata: any;
 	currentZoom: Number;
 
 	charts: any;
@@ -232,7 +232,7 @@ export class MapComponent implements OnInit {
 
 	private updateTooltip(layer) {
 		if(layer.minZoom >= this.currentZoom) {
-			layer.tooltip = 'Dê o zoom em alguma região do mapa para habiltar esta camada.';
+			layer.tooltip = 'Dê o zoom em uma região específica para habiltar esta camada.';
 		} else {
 			layer.tooltip = '';
 		}
@@ -285,7 +285,7 @@ export class MapComponent implements OnInit {
 				 + 'LAYER='+this.getOwsLayername(layer)+'&format=image/png'
 	}
 
-	private updataLayers() {
+	public updataLayers() {
 
 		this.widthMap = 7;
 		this.applYearRestrictions();

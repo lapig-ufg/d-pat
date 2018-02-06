@@ -4,7 +4,7 @@ module.exports = function(app){
 	var Map = {}
 
 	var points = app.repository.collections.points;
-	var database = new sqlite3.Database('/home/leandro/Tmp/FREL/d-pat.sqlite');
+	var database = new sqlite3.Database(app.config.dbpath);
 
 	Map.test = function(request, response){
 
@@ -158,6 +158,11 @@ module.exports = function(app){
 		database.all(sqlState, function(err, rows) {
 			result = processState(rows, result)
 			database.all(sqlCities, function(err, rows) {
+				
+				for (var i=0; i < rows.length; i++) {
+					rows[i].index = i+1 + 'º'
+				}
+
 				result.cities = rows;
 				response.send(result)
 				response.end()

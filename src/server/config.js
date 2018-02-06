@@ -4,7 +4,8 @@ module.exports = function(app) {
 	
 	var config = {
 		"appRoot": appRoot, 
-		"clientDir": appRoot + "/../client",
+		"clientDir": appRoot + "/../client/dist/",
+		"dbpath": '/home/leandro/Tmp/FREL/d-pat.sqlite',
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
 		"mongo": {
@@ -17,6 +18,9 @@ module.exports = function(app) {
 
 	if(process.env.NODE_ENV == 'prod') {
 		config["mongo"]["port"] = "27017"
+		config["port"] = "4000"
+		config['dbpath'] = "/data/catalog/Ocultos/d-pat.sqlite"
+
 	}
 
 	return config;
