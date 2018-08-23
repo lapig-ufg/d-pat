@@ -180,7 +180,6 @@ export class MapComponent implements OnInit {
 		var utfgridLayers = []
 		for (let layer of this.mapDescriptor.layers) {
 			if(layer.utfgrid && layer.enabled) {
-				console.log(layer)
 				utfgridLayers.push(this.getOwsLayername(layer));
 			}
 		}
@@ -191,7 +190,7 @@ export class MapComponent implements OnInit {
 				"http://maps.lapig.iesa.ufg.br/ows?layers="+utfgridLayers.join(',')
 				+ "&startyear="+this.mapDescriptor.years.start
 				+ "&endyear="+this.mapDescriptor.years.end
-				+ "&mode=tile&tile={x}+{y}+{z}&tilemode=gmap&map.imagetype=utfgrid" 
+				+ "&mode=tile&tile={x}+{y}+{z}&tilemode=gmap&map.imagetype=utfgrid"
 			]
 		}
 	}
@@ -206,7 +205,28 @@ export class MapComponent implements OnInit {
 			}
 		}
 
+		owsLayer = owsLayer.replace('{start_year}', this.mapDescriptor.years.start)
+		owsLayer = owsLayer.replace('{end_year}', this.mapDescriptor.years.end)
+
 		return owsLayer;
+	}
+
+	private getXYZUrls(layer) {
+		
+		var xyzUrls = []
+
+		this.urls.forEach(function(url) {
+			xyzUrls.push(url
+				+ "?layers="+this.getOwsLayername(layer)
+				+ "&startyear="+this.mapDescriptor.years.start
+				+ "&endyear="+this.mapDescriptor.years.end
+				+ "&mode=tile&tile={x}+{y}+{z}"
+				+ "&tilemode=gmap" 
+				+ "&map.imagetype=png"
+			);
+		}.bind(this))
+
+		return xyzUrls;
 	}
 
 	private getOwsParams(layer) {
@@ -243,7 +263,7 @@ export class MapComponent implements OnInit {
 
 		for (let layer of this.mapDescriptor.layers) {
 			this.updateTooltip(layer)
-			var olLayer = new OlTileLayer({
+			/*var olLayer = new OlTileLayer({
         source: new TileWMS({
           urls: this.urls,
           params: this.getOwsParams(layer),
@@ -251,16 +271,22 @@ export class MapComponent implements OnInit {
           tileGrid: this.tileGrid
         }),
         visible: layer.enabled
-    	});
+    	});*/
+
+    	var olLayer = new OlTileLayer({
+	      source: new OlXYZ({
+		      urls: this.getXYZUrls(layer)
+		    }),
+		    visible: layer.enabled,
+		    tileGrid: this.tileGrid
+	    })
 
 			olLayer.getSource().on('tileloadstart', function() {
-				console.log(this.tileloading)
 				this.tileloading = this.tileloading + 1
 			}.bind(this));
 
 			olLayer.getSource().on('tileloadend', function() {
 				this.tileloading = this.tileloading - 1
-				console.log(this.tileloading)
 			}.bind(this));
 
 			this.indexedLayers[layer.id] = olLayer;
@@ -300,11 +326,11 @@ export class MapComponent implements OnInit {
 			if (this.indexedLayers[layer.id]) {
 				
 
-				var wmsSource = this.indexedLayers[layer.id].getSource();
+				/*var wmsSource = this.indexedLayers[layer.id].getSource();
 				var params = wmsSource.getParams();
 				var newParams = this.getOwsParams(layer)
 				wmsSource.updateParams(newParams);
-				wmsSource.changed();
+				wmsSource.changed();*/
 			}
 		}
 
@@ -322,7 +348,6 @@ export class MapComponent implements OnInit {
 		this.http.get(chartByYearUrl).subscribe(charts2 => {
 			this.charts.state = charts2['state'];
 			this.charts.cities = charts2['cities'];
-			console.log(this.charts)
 		})
 	}
 
