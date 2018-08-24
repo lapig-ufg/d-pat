@@ -20,8 +20,8 @@ module.exports = function(app) {
 		config["mongo"]["port"] = "27017"
 		config["port"] = "4000"
 		config['dbpath'] = "/data/catalog/Ocultos/d-pat.sqlite"
-
-
+	}
+	
 	return config;
 
 }

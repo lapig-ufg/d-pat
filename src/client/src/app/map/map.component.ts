@@ -58,10 +58,10 @@ export class MapComponent implements OnInit {
 		}
 
 		this.urls = [
-    	'http://m1.lapig.iesa.ufg.br/ows',
-    	'http://m2.lapig.iesa.ufg.br/ows',
-    	'http://m3.lapig.iesa.ufg.br/ows',
-    	'http://m4.lapig.iesa.ufg.br/ows'
+    	'http://o1.lapig.iesa.ufg.br/ows',
+    	'http://o2.lapig.iesa.ufg.br/ows',
+    	'http://o3.lapig.iesa.ufg.br/ows',
+    	'http://o4.lapig.iesa.ufg.br/ows'
     ];
 
 		this.tileGrid = new TileGrid({
@@ -214,12 +214,17 @@ export class MapComponent implements OnInit {
 	private getXYZUrls(layer) {
 		
 		var xyzUrls = []
+		var years = ""
+
+		if(layer.sendYears) {
+			years = + "&startyear="+this.mapDescriptor.years.start
+							+ "&endyear="+this.mapDescriptor.years.end
+		}
 
 		this.urls.forEach(function(url) {
 			xyzUrls.push(url
 				+ "?layers="+this.getOwsLayername(layer)
-				+ "&startyear="+this.mapDescriptor.years.start
-				+ "&endyear="+this.mapDescriptor.years.end
+				+ years
 				+ "&mode=tile&tile={x}+{y}+{z}"
 				+ "&tilemode=gmap" 
 				+ "&map.imagetype=png"
