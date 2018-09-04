@@ -31,10 +31,12 @@ export class MapComponent implements OnInit {
 	infoOverlay: Overlay;
 	infodata: any;
 	currentZoom: Number;
+	xAxis: boolean;
 
 	charts: any;
 	urls: any;
 	indexedLayers: any;
+	chartResult: any;
 	tileloading: Number;
 
 	mapDescriptor: any;
@@ -44,6 +46,8 @@ export class MapComponent implements OnInit {
 	collapseCity: boolean;
 	widthMap: Number;
 
+	chartType: String;
+
 	constructor(private http: HttpClient) { 
 		this.indexedLayers = {};
 		this.mapDescriptor = {};
@@ -51,6 +55,9 @@ export class MapComponent implements OnInit {
 		this.tileloading = 0;
 		this.projection = OlProj.get('EPSG:900913');
 		this.currentZoom = 4;
+
+		this.chartType = 'bioma';
+		this.xAxis = true;
 
 		this.charts = { 
 			timeseries: {},
@@ -365,10 +372,21 @@ export class MapComponent implements OnInit {
 		}.bind(this))
 	}
 
+	private changeChart(newChartType) {
+		this.chartType = newChartType;
+		this.xAxis = !this.xAxis;
+		if(newChartType == 'bioma') {
+			this.chartResult = this.charts.timeseries
+		} else if(newChartType == 'estados') {
+			this.chartResult = this.charts.state
+		}
+	}
+
 	ngOnInit() {
 
 		this.http.get('/service/map/charts').subscribe(charts => {
 			this.charts = charts;
+			this.chartResult = this.charts.timeseries
 			this.http.get('/service/map/layers').subscribe(mapDescriptor => {
 				this.mapDescriptor = mapDescriptor;
 				this.updataLayers();

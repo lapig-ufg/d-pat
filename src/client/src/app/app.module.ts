@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule, MatSelectModule, MatButtonModule, MatTabsModule, MatIconModule, MatRadioModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
@@ -42,6 +43,12 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     NgxChartsModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatRadioModule,
+    MatTabsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
