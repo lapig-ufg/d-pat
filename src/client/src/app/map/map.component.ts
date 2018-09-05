@@ -18,7 +18,8 @@ import _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 	selector: 'app-map',
 	templateUrl: './map.component.html',
 	styleUrls: [
-		'./map.component.css'
+		'./map.component.css',
+		'./map.component.scss'
 	]
 })
 export class MapComponent implements OnInit {
@@ -31,33 +32,30 @@ export class MapComponent implements OnInit {
 	infoOverlay: Overlay;
 	infodata: any;
 	currentZoom: Number;
-	xAxis: boolean;
+	
+	landsat: any;
+	desmatamento: any;
+	antropico: any;
 
 	charts: any;
-	urls: any;
-	indexedLayers: any;
 	chartResult: any;
-	tileloading: Number;
-
-	mapDescriptor: any;
-	isCollapsed: boolean;
-	collapseBiome: boolean;
-	collapseState: boolean;
-	collapseCity: boolean;
-	widthMap: Number;
-
 	chartType: String;
 
+	urls: Array<String>;
+	periods: any;
+	selectedPeriod: any;
+
+	collapseLayer: boolean;
+	collapseCharts: boolean;
+	sliderOptions: any;
+
 	constructor(private http: HttpClient) { 
-		this.indexedLayers = {};
-		this.mapDescriptor = {};
+		
 		this.infodata = { area_desmatada: -1};
-		this.tileloading = 0;
 		this.projection = OlProj.get('EPSG:900913');
 		this.currentZoom = 4;
 
 		this.chartType = 'bioma';
-		this.xAxis = true;
 
 		this.charts = { 
 			timeseries: {},
@@ -71,10 +69,20 @@ export class MapComponent implements OnInit {
     	'http://o4.lapig.iesa.ufg.br/ows'
     ];
 
+    this.sliderOptions = {
+	    floor: 0,
+	    ceil: 1,
+	    step: 0.1,
+	    precision: 1,
+	    translate: (value: number): string => {
+	      return "";
+	    }
+	  }
+
 		this.tileGrid = new TileGrid({
     	extent: this.projection.getExtent(),
     	resolutions: this.getResolutions(this.projection),
-      tileSize: 512
+      tileSize: 256
     });
 
 		this.layers = [
@@ -85,11 +93,16 @@ export class MapComponent implements OnInit {
 		    })
 	    })
     ];
+
 	}
 
-	private visibility(layer) {
-		this.indexedLayers[layer.id].setVisible(layer.enabled);
-		this.updataLayers();
+	private landsatOpacity(event) {
+		this.landsat.layer2.setOpacity(event.value)
+	}
+
+	private landsatVisible(value){
+		this.landsat.layer1.setVisible(value);
+		this.landsat.layer2.setVisible(value);
 	}
 
 	private getResolutions(projection) {
@@ -105,14 +118,6 @@ export class MapComponent implements OnInit {
 
 	private createMap() {
 		this.createLayers()
-    
-		this.infoOverlay = new Overlay({
-      element: document.getElementById('map-info'),
-      offset: [15, 15],
-      stopEvent: false
-    });
-    
-
     this.map = new OlMap({
       target: 'map',
       layers: this.layers,
@@ -122,245 +127,94 @@ export class MapComponent implements OnInit {
 	      zoom: this.currentZoom,
 	    }),
 	    loadTilesWhileAnimating: true,
-    	loadTilesWhileInteracting: true
+    	loadTilesWhileInteracting: true 
     });
-
-    this.map.addOverlay(this.infoOverlay);
-
-    this.map.getView().on('change:resolution', function(evt) {
-    	this.currentZoom = this.map.getView().getZoom();
-    	for (let layer of this.mapDescriptor.layers) {
-    		this.updateTooltip(layer)
-    		if(layer.minZoom >= this.currentZoom) {
-    			layer.enabled = false;
-    			this.visibility(layer);
-    		}
-    	}
-
-    }.bind(this));
-
-		this.map.on('pointermove', function(evt) {
-			if (evt.dragging) {
-				return;
-			}
-			
-			var infoOverlay = this.infoOverlay;
-			var coordinate = this.map.getEventCoordinate(evt.originalEvent);
-			var viewResolution = this.map.getView().getResolution();
-
-	    this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
-        function (data) { 
-        	if(data) {
-	        	this.infodata = data;
-	        	this.infoOverlay.setPosition(coordinate);
-        	} else {
-        		this.infodata = { area_desmatada: -1}
-        	}
-        }.bind(this));
-		}.bind(this));
 	}
 
-	private applYearRestrictions() {
-		if(this.mapDescriptor) {
-			this.mapDescriptor.years.startValues = [];
-			this.mapDescriptor.years.endValues = [];
-
-			for (let y of this.mapDescriptor.years.values) {
-				if(y <= this.mapDescriptor.years.end) {
-					this.mapDescriptor.years.startValues.push(y);
-				}
-				if(y >= this.mapDescriptor.years.start) {
-					this.mapDescriptor.years.endValues.push(y);
-				}
-			}
-		}
-	}
-
-	private getDisplayName(layer) {
-		return layer.label
-									.replace('{start_year}', this.mapDescriptor.years.start)
-									.replace('{end_year}', this.mapDescriptor.years.end);
-	}
-
-	private getTileJSON() {
-
-		var utfgridLayers = []
-		for (let layer of this.mapDescriptor.layers) {
-			if(layer.utfgrid && layer.enabled) {
-				utfgridLayers.push(this.getOwsLayername(layer));
-			}
-		}
-
-		return {
-			version: "2.1.0",
-			grids: [
-				"http://maps.lapig.iesa.ufg.br/ows?layers="+utfgridLayers.join(',')
-				+ "&startyear="+this.mapDescriptor.years.start
-				+ "&endyear="+this.mapDescriptor.years.end
-				+ "&mode=tile&tile={x}+{y}+{z}&tilemode=gmap&map.imagetype=utfgrid"
-			]
-		}
-	}
-
-	private getOwsLayername(layer) {
-		var owsLayer = layer.ows_layer;
-		if (layer.options != false) {
-			for (let v of layer.options.values) {
-				if (v.id == layer.options.selectedValue) {
-					owsLayer = v.ows_layer
-				}
-			}
-		}
-
-		owsLayer = owsLayer.replace('{start_year}', this.mapDescriptor.years.start)
-		owsLayer = owsLayer.replace('{end_year}', this.mapDescriptor.years.end)
-
-		return owsLayer;
-	}
-
-	private getXYZUrls(layer) {
+	private getUrls(layername, filter) {
 		
-		var xyzUrls = []
-		var years = ""
+		var result = []
 
-		if(layer.sendYears) {
-			years = + "&startyear="+this.mapDescriptor.years.start
-							+ "&endyear="+this.mapDescriptor.years.end
-		}
-
-		this.urls.forEach(function(url) {
-			xyzUrls.push(url
-				+ "?layers="+this.getOwsLayername(layer)
-				+ years
+		var msfilter = ""
+		if(filter)
+			msfilter = '&MSFILTER='+this.parseParams(filter)
+		
+		for (let url of this.urls) {
+			result.push(url
+				+ "?layers=" + this.parseParams(layername)
+				+ msfilter
 				+ "&mode=tile&tile={x}+{y}+{z}"
 				+ "&tilemode=gmap" 
 				+ "&map.imagetype=png"
 			);
-		}.bind(this))
-
-		return xyzUrls;
-	}
-
-	private getOwsParams(layer) {
-		
-		var owsLayer = this.getOwsLayername(layer);
-		var owsParams = {
-    	'LAYERS': owsLayer, 
-    	'TILED': true,
-    	'VERSION': '1.1.1'
-    }
-
-		if(layer.sendYears) {
-			owsParams['STARTYEAR'] = this.mapDescriptor.years.start;
-			owsParams['ENDYEAR'] = this.mapDescriptor.years.end;
 		}
 
-		owsParams['LAYERS'] = owsLayer
-										.replace('{start_year}', this.mapDescriptor.years.start)
-										.replace('{end_year}', this.mapDescriptor.years.end);
-
-		return owsParams;
+		return result;
 	}
 
-	private updateTooltip(layer) {
-		if(layer.minZoom >= this.currentZoom) {
-			layer.tooltip = 'Dê o zoom em uma região específica para habiltar esta camada.';
-		} else {
-			layer.tooltip = '';
-		}
+	private createTMSLayer(layername, visible, opacity, filter) {
+		return new OlTileLayer({
+			source: new OlXYZ({
+				urls: this.getUrls(layername, filter)
+			}),
+			tileGrid: this.tileGrid,
+			visible: visible,
+			opacity: opacity
+		});
+	}
+
+	private parseParams(input) {
+		input = input.replace(new RegExp('{start_year}', 'g'), this.selectedPeriod.startYear)
+		input = input.replace(new RegExp('{end_year}', 'g'), this.selectedPeriod.endYear)
+		return input
 	}
 
 	private createLayers() {
 		var olLayers: OlTileLayer[] = new Array();
 
-		for (let layer of this.mapDescriptor.layers) {
-			this.updateTooltip(layer)
-			/*var olLayer = new OlTileLayer({
-        source: new TileWMS({
-          urls: this.urls,
-          params: this.getOwsParams(layer),
-          serverType: 'mapserver',
-          tileGrid: this.tileGrid
-        }),
-        visible: layer.enabled
-    	});*/
-
-    	var olLayer = new OlTileLayer({
-	      source: new OlXYZ({
-		      urls: this.getXYZUrls(layer)
-		    }),
-		    visible: layer.enabled,
-		    tileGrid: this.tileGrid
-	    })
-
-			olLayer.getSource().on('tileloadstart', function() {
-				this.tileloading = this.tileloading + 1
-			}.bind(this));
-
-			olLayer.getSource().on('tileloadend', function() {
-				this.tileloading = this.tileloading - 1
-			}.bind(this));
-
-			this.indexedLayers[layer.id] = olLayer;
-			olLayers.push(olLayer);
+		this.landsat = {
+			label: 'Mosaicos Landsat do Cerrado',
+			tooltip: 'Mosaico Landsat Tooltip',
+			layername1: "bi_ce_mosaico_landsat_30_{start_year}_lapig",
+			layername2: "bi_ce_mosaico_landsat_30_{end_year}_lapig",
+			visible: true,
+			opacity: 1
 		}
 
+		this.desmatamento = {
+			label: 'Desmatamento',
+			layername: 'bi_ce_prodes_desmatamento_100_fip',
+			layerfilter: 'year = {end_year} AND baseline = FALSE',
+			visible: true,
+			opacity: 1
+		}
+
+		this.antropico = {
+			label: 'Área Antrópica até',
+			layername: 'bi_ce_prodes_antropico_100_fip',
+			layerfilter: 'year < {start_year} OR (year = {start_year} AND baseline = TRUE)',
+			visible: true,
+			opacity: 1
+		}
+
+		this.landsat['layer1'] = this.createTMSLayer(this.landsat.layername1, this.landsat.visible, this.landsat.opacity, '')
+		this.landsat['layer2'] = this.createTMSLayer(this.landsat.layername2, this.landsat.visible, this.landsat.opacity, '')
+		this.desmatamento['layer'] = this.createTMSLayer(this.desmatamento.layername, this.desmatamento.visible, this.desmatamento.opacity, this.desmatamento.layerfilter)
+		this.antropico['layer'] = this.createTMSLayer(this.antropico.layername, this.antropico.visible, this.antropico.opacity, this.antropico.layerfilter)
+
+		this.layers.push(this.landsat['layer1'])
+		this.layers.push(this.landsat['layer2'])
+		this.layers.push(this.desmatamento['layer'])
+		this.layers.push(this.antropico['layer'])
+
+		this.layers.push()
 		this.layers = this.layers.concat(olLayers.reverse());
 
-		this.utfgridsource = new TileUTFGrid({
-			tileJSON: this.getTileJSON()
-		});
-
-		var utfgridLayer = new OlTileLayer({
-    	source: this.utfgridsource
-    });
-
-    this.layers.push(utfgridLayer)
 	}
 
 	private getLegendUrl(layer) {
 		return 'http://maps.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&'
-				 + 'LAYER='+this.getOwsLayername(layer)+'&format=image/png'
-	}
-
-	public updataLayers() {
-
-		this.widthMap = 7;
-		this.applYearRestrictions();
-
-		for (let layer of this.mapDescriptor.layers) {
-			layer.displayLabel = this.getDisplayName(layer)
-			
-			if(layer.showLegend) {
-				layer.legendUrl = this.getLegendUrl(layer);
-			}
-
-			if (this.indexedLayers[layer.id]) {
-				
-
-				/*var wmsSource = this.indexedLayers[layer.id].getSource();
-				var params = wmsSource.getParams();
-				var newParams = this.getOwsParams(layer)
-				wmsSource.updateParams(newParams);
-				wmsSource.changed();*/
-			}
-		}
-
-		if(this.utfgridsource) {
-			var tileJSON = this.getTileJSON();
-			this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
-			this.utfgridsource.refresh();
-		}
-
-		this.calculateTotalDeforestaton();
-		var chartByYearUrl = '/service/map/chartsByYear'
-			+ "?startyear="+this.mapDescriptor.years.start
-			+ "&endyear="+this.mapDescriptor.years.end;
-
-		this.http.get(chartByYearUrl).subscribe(charts2 => {
-			this.charts.state = charts2['state'];
-			this.charts.cities = charts2['cities'];
-		})
+				 + 'LAYER=&format=image/png'
 	}
 
 	private calculateTotalDeforestaton() {
@@ -374,7 +228,6 @@ export class MapComponent implements OnInit {
 
 	private changeChart(newChartType) {
 		this.chartType = newChartType;
-		this.xAxis = !this.xAxis;
 		if(newChartType == 'bioma') {
 			this.chartResult = this.charts.timeseries
 		} else if(newChartType == 'estados') {
@@ -382,17 +235,54 @@ export class MapComponent implements OnInit {
 		}
 	}
 
+	private updatePeriod() {
+		
+		var l1Source = this.landsat.layer1.getSource()
+		l1Source.setUrls(this.getUrls(this.landsat.layername1, ''))
+
+		var l2Source = this.landsat.layer2.getSource()
+		l2Source.setUrls(this.getUrls(this.landsat.layername2, ''))
+		
+		var dSource = this.desmatamento.layer.getSource()
+		dSource.setUrls(this.getUrls(this.desmatamento.layername, this.desmatamento.layerfilter))
+
+		var aSource = this.antropico.layer.getSource()
+		aSource.setUrls(this.getUrls(this.antropico.layername, this.antropico.layerfilter))
+
+		l1Source.refresh()
+		l2Source.refresh()
+		dSource.refresh()
+		aSource.refresh()
+
+		this.updateCharts();
+	}
+
+	private updateCharts() {
+		var chartByYearUrl = '/service/map/chartsByYear?year='+this.selectedPeriod.endYear;
+
+		this.http.get(chartByYearUrl).subscribe(charts => {
+			this.charts.state = charts['state'];
+			this.charts.cities = charts['cities'];
+			this.changeChart(this.chartType);
+		})
+	}
+
 	ngOnInit() {
 
-		this.http.get('/service/map/charts').subscribe(charts => {
-			this.charts = charts;
-			this.chartResult = this.charts.timeseries
-			this.http.get('/service/map/layers').subscribe(mapDescriptor => {
-				this.mapDescriptor = mapDescriptor;
-				this.updataLayers();
+		this.http.get('/service/map/periods').subscribe(periods => {
+			this.periods = periods
+			console.log(periods)
+			this.selectedPeriod = this.periods[0]
+			
+			this.http.get('/service/map/charts').subscribe(charts => {
+				this.charts = charts;
+				this.chartResult = this.charts.timeseries;
+				this.updateCharts();
 				this.createMap();
 			});
-		});
+
+		})
+
 	}
 
 }

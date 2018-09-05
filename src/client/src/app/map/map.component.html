@@ -4,148 +4,102 @@
 </nav>
 <div class="container-fluid">
   <div class="row">
-    <!--div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 dpat-sidepanel">
-      
-      <div class="card" style="margin-top: 15px;">
-        <div class="card-header">
-            Bioma
-            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseBiome = !collapseBiome"
-                  [attr.aria-expanded]="!collapseBiome" aria-controls="camadageografica">-</button>
-        </div>
-        <div class="card-block" [ngbCollapse]="collapseBiome">
-          <h6 style="margin-left: 15px; margin-top: 5px;">
-            <small>Área acumulada de Desmatamento (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}}): <b>{{charts.deforestation | number:'1.0-0'}} km2</b></small>
-          </h6>
-          <ngx-charts-line-chart [results]="charts.timeseries" [yAxis]="true" [xAxis]="true">
-          </ngx-charts-line-chart><br>
-        </div>
-      </div>
-      <div class="card" style="margin-top: 15px;">
-        <div class="card-header">
-            Unidades Federativas
-            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseState = !collapseState"
-                  [attr.aria-expanded]="!collapseState" aria-controls="camadageografica">-</button>
-        </div>
-        <div class="card-block" [ngbCollapse]="collapseState">
-          
-        </div>
-      </div>
-      <div class="card" style="margin-top: 15px;">
-        <div class="card-header">
-            Municípios
-            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseCity = !collapseCity"
-                  [attr.aria-expanded]="!collapseCity" aria-controls="camadageografica">-</button>
-        </div>
-        <div class="card-block" style="padding-left: 10px; padding-right: 10px;" [ngbCollapse]="collapseCity">
-          <h6 style="margin-left: 5px; margin-top: 5px;">
-            <small>Apenas os 10 municípios mais representativos</small>
-          </h6>
-          <table class="table table-sm" style="font-size: 11px; ">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Município</th>
-                <th scope="col">Área desmatada (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}})</th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let city of charts.cities">
-              <tr>
-                <th scope="row">{{city.index}}</th>
-                <td>{{city.name}}</td>
-                <td>{{city.value | number:'1.0-0' }} km2</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      
-    </div-->
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 dpat-ol-div">
       <div id="map" class="dpat-ol-map"></div>
       <div class="card card-layers" >
         <div class="card-header">
             Camadas Geográficas
-            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="camadageografica">-</button>
+            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseLayer = !collapseLayer"
+                  [attr.aria-expanded]="!collapseLayer" aria-controls="camadageografica">-</button>
         </div>
-        <div id="camadageografica" class="card-block dpat-layer-group" [ngbCollapse]="isCollapsed">
+        <div id="camadageografica" class="card-block dpat-layer-group" [ngbCollapse]="collapseLayer">
           <div class="dpat-period-group input-group input-group-sm">
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Período de análise</label>
             </div>
-            <select name="startYear" class="custom-select custom-select-sm" [(ngModel)]="mapDescriptor.years.start" (ngModelChange)="updataLayers()">
-                <option *ngFor="let year of mapDescriptor.years.startValues" [value]="year">  
-                {{year}}
-                </option>
-            </select>
-            <div class="input-group-append">
-              <label class="input-group-text" for="inputGroupSelect01"> - </label>
-            </div>
-            <select name="endYear" class="custom-select custom-select-sm" [(ngModel)]="mapDescriptor.years.end" (ngModelChange)="updataLayers()">
-                <option *ngFor="let year of mapDescriptor.years.endValues" [value]="year">  
-                {{year}}
+            <select name="startYear" class="custom-select custom-select-sm" [(ngModel)]="selectedPeriod" (ngModelChange)="updatePeriod()">
+                <option *ngFor="let period of periods" [ngValue]="period">  
+                {{period.label}}
                 </option>
             </select>
           </div>
           <hr>
-          <div *ngFor="let layer of mapDescriptor.layers">
-            <div class="input-group input-group-sm dpat-layer" placement="top" ngbTooltip="{{layer.tooltip}}">
+          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <input [disabled]="layer.minZoom >= currentZoom" [(ngModel)]="layer.enabled" (ngModelChange)="visibility(layer)" type="checkbox">
+                  <input [(ngModel)]="desmatamento.visible" (ngModelChange)="desmatamento.layer.setVisible($event)" type="checkbox">
                 </div>
               </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{layer.displayLabel}}" [class.bckgdisabled]="layer.minZoom >= currentZoom">
-              <select class="custom-select custom-select-sm" name="{{layer.options.id}}" [(ngModel)]="layer.options.selectedValue" [hidden]="layer.options == false" (ngModelChange)="updataLayers()">
-                <option *ngFor="let value of layer.options.values" [value]="value.id">  
-                {{value.label}}
-                </option>
-              </select>
-            </div>
-            <img [hidden]="!layer.enabled" style="margin-left: 40px;" *ngIf="layer.showLegend" src="{{layer.legendUrl}}" />
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{ desmatamento.label }} {{ selectedPeriod.endYear }}">
+          </div>
+           <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input [(ngModel)]="antropico.visible" (ngModelChange)="antropico.layer.setVisible($event)" type="checkbox">
+                </div>
+              </div>
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{ antropico.label }} {{ selectedPeriod.startYear }}">
+          </div>
+          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top" ngbTooltip="{{landsat.tooltip}}">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input [(ngModel)]="landsat.visible" (ngModelChange)="landsatVisible($event)" type="checkbox">
+                </div>
+              </div>
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{ landsat.label }}">
+          </div>
+          <div class="custom-slider">
+            <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
+            <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="landsatOpacity($event)"></ng5-slider>
+            <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
           </div>
         </div>
       </div>
       <div class="card card-charts" >
         <div class="card-header">
             Estatísticas
-            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseBiome = !collapseBiome"
-                  [attr.aria-expanded]="!collapseBiome" aria-controls="camadageografica">-</button>
+            <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseCharts = !collapseCharts"
+                  [attr.aria-expanded]="!collapseCharts" aria-controls="camadageografica">-</button>
             <button [ngClass]="{'chart-change-btn-active': (chartType == 'municipios') }" (click)="changeChart('municipios')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Municípios</button>
             <button [ngClass]="{'chart-change-btn-active': (chartType == 'estados') }" (click)="changeChart('estados')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Estados</button>
-            <button [ngClass]="{'chart-change-btn-active': (chartType == 'bioma') }" (click)="changeChart('bioma')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Bioma</button>
+            <button [ngClass]="{'chart-change-btn-active': (chartType == 'bioma') }" (click)="changeChart('bioma')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Cerrado</button>
         </div>
-        <div class="card-block" [ngbCollapse]="collapseBiome" [hidden]="chartType != 'bioma'">
+        <div class="card-block" [ngbCollapse]="collapseCharts" [hidden]="chartType != 'bioma'">
           <h6 style="margin-left: 15px; margin-top: 5px;">
-            <small>Área acumulada de Desmatamento (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}}): <b>{{charts.deforestation | number:'1.0-0'}} km2</b></small>
+            <b>Incremento Anual de Desmatamento</b>
           </h6>
           <ngx-charts-line-chart [view]="[500,300]" [results]="chartResult" [yAxis]="true" [xAxis]="true">
           </ngx-charts-line-chart><br>
         </div>
-        <div class="card-block" [ngbCollapse]="collapseBiome" [hidden]="chartType != 'estados'">
-          <h6 style="margin-left: 5px; margin-top: 5px;">
-            <small>Desmatamento acumulado por unidade federativa (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}})</small>
+        <div class="card-block" [ngbCollapse]="collapseCharts" [hidden]="chartType != 'estados'">
+          <h6 style="margin-left: 15px; margin-top: 5px;">
+            <b>Desmatamento por unidade federativa - {{selectedPeriod.label}}</b>
           </h6>
-          <ngx-charts-bar-horizontal [view]="[350,300]" [barPadding]="2" [roundDomains]="false" [roundEdges]="false" [results]="chartResult" [yAxis]="true" [xAxis]="true">
+          <ngx-charts-bar-horizontal [view]="[350,300]" [barPadding]="2" [showGridLines]="true" [roundDomains]="false" [roundEdges]="false" [results]="chartResult" [yAxis]="true" [xAxis]="true" [showYAxisLabel]="true">
+            <ng-template #tooltipTemplate let-model="model">periods
+                {{model.name}}: {{ model.value | number:'1.0-0' }} km<sup>2</sup>
+            </ng-template>
           </ngx-charts-bar-horizontal>
         </div>
-        <div class="card-block" [ngbCollapse]="collapseBiome" [hidden]="chartType != 'municipios'">
-          <h6 style="margin-left: 5px; margin-top: 5px;">
-            <small>Apenas os 10 municípios mais representativos</small>
+        <div style="padding-left: 15px; padding-right: 15px;" class="card-block" [ngbCollapse]="collapseCharts" [hidden]="chartType != 'municipios'">
+          <h6 style="margin-top: 5px;">
+            <b>Top-10 - Área Desmatada {{selectedPeriod.label}}</b>
           </h6>
           <table class="table table-sm" style="font-size: 11px; ">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Município</th>
-                <th scope="col">Área desmatada (entre {{mapDescriptor.years.start}} e {{mapDescriptor.years.end}})</th>
+                <th scope="col">Estado</th>
+                <th class="text-right" scope="col">Área desmatada</th>
               </tr>
             </thead>
             <tbody *ngFor="let city of charts.cities">
               <tr>
                 <th scope="row">{{city.index}}</th>
                 <td>{{city.name}}</td>
-                <td>{{city.value | number:'1.0-0' }} km2</td>
+                <td>{{city.uf}}</td>
+                <td class="float-right">{{city.value | number:'1.0-0' }} km<sup>2</sup></td>
               </tr>
             </tbody>
           </table>

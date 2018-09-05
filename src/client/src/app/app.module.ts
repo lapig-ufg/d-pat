@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCheckboxModule, MatSelectModule, MatButtonModule, MatTabsModule, MatIconModule, MatRadioModule } from '@angular/material';
+import { MatCheckboxModule, MatSliderModule, MatSelectModule, MatButtonModule, MatTabsModule, MatIconModule, MatRadioModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
@@ -15,6 +15,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { Ng5SliderModule } from 'ng5-slider';
 
 registerLocaleData(localePt);
 
@@ -49,6 +50,8 @@ const appRoutes: Routes = [
     MatIconModule,
     MatRadioModule,
     MatTabsModule,
+    MatSliderModule,
+    Ng5SliderModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
