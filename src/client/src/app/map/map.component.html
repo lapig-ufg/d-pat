@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 dpat-ol-div">
       <div id="map" class="dpat-ol-map"></div>
-      <div class="card card-layers" >
+      <div class="card card-layers">
         <div class="card-header">
             Camadas Geográficas
             <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseLayer = !collapseLayer"
@@ -27,35 +27,66 @@
           <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
               <div class="input-group-prepend">
                 <div class="input-group-text">
+                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/desmatamento_leg.png" />
                   <input [(ngModel)]="desmatamento.visible" (ngModelChange)="desmatamento.layer.setVisible($event)" type="checkbox">
                 </div>
               </div>
               <input type="text" readonly class="form-control dpat-layer-label" value="{{ desmatamento.label }} {{ selectedPeriod.endYear }}">
           </div>
-           <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
+          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
               <div class="input-group-prepend">
                 <div class="input-group-text">
+                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/antropico_leg.png" />
                   <input [(ngModel)]="antropico.visible" (ngModelChange)="antropico.layer.setVisible($event)" type="checkbox">
                 </div>
               </div>
               <input type="text" readonly class="form-control dpat-layer-label" value="{{ antropico.label }} {{ selectedPeriod.startYear }}">
           </div>
+          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/sucetibilidade_leg.png" />
+                  <input [(ngModel)]="sucetibilidade.visible" (ngModelChange)="sucetibilidade.layer.setVisible($event)" type="checkbox">
+                </div>
+              </div>
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{ sucetibilidade.label }}">
+          </div>
+          <img style="height: 15px; margin-left: 100px;" src="/assets/img/sucetibilidade_leg_color.png" />
           <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top" ngbTooltip="{{landsat.tooltip}}">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <input [(ngModel)]="landsat.visible" (ngModelChange)="landsatVisible($event)" type="checkbox">
+                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/landsat_leg.png" />
+                  <input [(ngModel)]="landsat.visible" (ngModelChange)="mosaicVisible(landsat, $event)" type="checkbox">
                 </div>
               </div>
               <input type="text" readonly class="form-control dpat-layer-label" value="{{ landsat.label }}">
           </div>
           <div class="custom-slider">
             <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
-            <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="landsatOpacity($event)"></ng5-slider>
+            <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(landsat, $event)"></ng5-slider>
             <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
           </div>
+          
+          <div [hidden]="selectedPeriod.endYear != 2017" class="input-group input-group-sm dpat-layer mat-app-background" placement="top" ngbTooltip="{{sentinel.tooltip}}">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/sentinel_leg.png" />
+                  <input [(ngModel)]="sentinel.visible" (ngModelChange)="mosaicVisible(sentinel, $event)" type="checkbox">
+                </div>
+              </div>
+              <input type="text" readonly class="form-control dpat-layer-label" value="{{ sentinel.label }}">
+          </div>
+          <div [hidden]="selectedPeriod.endYear != 2017" class="custom-slider">
+            <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
+            <ng5-slider [(value)]="sentinel.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(sentinel, $event)"></ng5-slider>
+            <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
+          </div>
+        
         </div>
+
+
       </div>
-      <div class="card card-charts" >
+      <div class="card card-charts">
         <div class="card-header">
             Estatísticas
             <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseCharts = !collapseCharts"

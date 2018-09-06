@@ -34,6 +34,8 @@ export class MapComponent implements OnInit {
 	currentZoom: Number;
 	
 	landsat: any;
+	sucetibilidade: any;
+	sentinel: any;
 	desmatamento: any;
 	antropico: any;
 
@@ -53,7 +55,7 @@ export class MapComponent implements OnInit {
 		
 		this.infodata = { area_desmatada: -1};
 		this.projection = OlProj.get('EPSG:900913');
-		this.currentZoom = 4;
+		this.currentZoom = 5;
 
 		this.chartType = 'bioma';
 
@@ -96,13 +98,13 @@ export class MapComponent implements OnInit {
 
 	}
 
-	private landsatOpacity(event) {
-		this.landsat.layer2.setOpacity(event.value)
+	private mosaicOpacity(mosaicObj, event) {
+		mosaicObj.layer2.setOpacity(event.value)
 	}
 
-	private landsatVisible(value){
-		this.landsat.layer1.setVisible(value);
-		this.landsat.layer2.setVisible(value);
+	private mosaicVisible(mosaicObj, value){
+		mosaicObj.layer1.setVisible(value);
+		mosaicObj.layer2.setVisible(value);
 	}
 
 	private getResolutions(projection) {
@@ -172,6 +174,15 @@ export class MapComponent implements OnInit {
 	private createLayers() {
 		var olLayers: OlTileLayer[] = new Array();
 
+		this.sentinel = {
+			label: 'Mosaicos Sentinel do Cerrado',
+			tooltip: 'Mosaico Landsat Tooltip',
+			layername1: "bi_ce_mosaico_sentinel_10_{start_year}_lapig",
+			layername2: "bi_ce_mosaico_sentinel_10_{end_year}_lapig",
+			visible: false,
+			opacity: 1
+		}
+
 		this.landsat = {
 			label: 'Mosaicos Landsat do Cerrado',
 			tooltip: 'Mosaico Landsat Tooltip',
@@ -181,8 +192,15 @@ export class MapComponent implements OnInit {
 			opacity: 1
 		}
 
+		this.sucetibilidade = {
+			label: 'Sucetibilidade a Desmatamento',
+			layername: 'bi_ce_suscetibilidade_desmatamento_100_na_lapig',
+			visible: false,
+			opacity: 1
+		}
+
 		this.desmatamento = {
-			label: 'Desmatamento',
+			label: 'Desmatamentos PRODES',
 			layername: 'bi_ce_prodes_desmatamento_100_fip',
 			layerfilter: 'year = {end_year} AND baseline = FALSE',
 			visible: true,
@@ -192,29 +210,30 @@ export class MapComponent implements OnInit {
 		this.antropico = {
 			label: 'Área Antrópica até',
 			layername: 'bi_ce_prodes_antropico_100_fip',
-			layerfilter: 'year < {start_year} OR (year = {start_year} AND baseline = TRUE)',
+			layerfilter: 'year < {end_year} OR (year = {start_year} AND baseline = TRUE)',
 			visible: true,
 			opacity: 1
 		}
 
+		this.sentinel['layer1'] = this.createTMSLayer(this.sentinel.layername1, this.sentinel.visible, this.sentinel.opacity, '')
+		this.sentinel['layer2'] = this.createTMSLayer(this.sentinel.layername2, this.sentinel.visible, this.sentinel.opacity, '')
 		this.landsat['layer1'] = this.createTMSLayer(this.landsat.layername1, this.landsat.visible, this.landsat.opacity, '')
 		this.landsat['layer2'] = this.createTMSLayer(this.landsat.layername2, this.landsat.visible, this.landsat.opacity, '')
+		this.sucetibilidade['layer'] = this.createTMSLayer(this.sucetibilidade.layername, this.sucetibilidade.visible, this.sucetibilidade.opacity, '')
 		this.desmatamento['layer'] = this.createTMSLayer(this.desmatamento.layername, this.desmatamento.visible, this.desmatamento.opacity, this.desmatamento.layerfilter)
 		this.antropico['layer'] = this.createTMSLayer(this.antropico.layername, this.antropico.visible, this.antropico.opacity, this.antropico.layerfilter)
 
+		this.layers.push(this.sentinel['layer1'])
+		this.layers.push(this.sentinel['layer2'])
 		this.layers.push(this.landsat['layer1'])
 		this.layers.push(this.landsat['layer2'])
-		this.layers.push(this.desmatamento['layer'])
+		this.layers.push(this.sucetibilidade['layer'])
 		this.layers.push(this.antropico['layer'])
+		this.layers.push(this.desmatamento['layer'])
 
 		this.layers.push()
 		this.layers = this.layers.concat(olLayers.reverse());
 
-	}
-
-	private getLegendUrl(layer) {
-		return 'http://maps.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&'
-				 + 'LAYER=&format=image/png'
 	}
 
 	private calculateTotalDeforestaton() {
@@ -248,6 +267,10 @@ export class MapComponent implements OnInit {
 
 		var aSource = this.antropico.layer.getSource()
 		aSource.setUrls(this.getUrls(this.antropico.layername, this.antropico.layerfilter))
+
+		if(this.selectedPeriod.endYear != 2017) {
+			this.mosaicVisible(this.sentinel, false)
+		}
 
 		l1Source.refresh()
 		l2Source.refresh()

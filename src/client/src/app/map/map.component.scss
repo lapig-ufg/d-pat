@@ -1,10 +1,10 @@
 ::ng-deep {
   .custom-slider .ng5-slider .ng5-slider-bar {
-    background: #ffe4d1;
+    background: #367d3b;
     height: 2px;
   }
   .custom-slider .ng5-slider .ng5-slider-selection {
-    background: orange;
+    background: #367d3b;
   }
 
   .custom-slider .ng5-slider .ng5-slider-pointer {
@@ -33,7 +33,7 @@
 
   .custom-slider .ng5-slider .ng5-slider-limit {
     font-weight: bold;
-    color: orange;
+    color: #367d3b;
   }
 
   .custom-slider .ng5-slider .ng5-slider-tick {
@@ -41,12 +41,12 @@
     height: 10px;
     margin-left: 4px;
     border-radius: 0;
-    background: #ffe4d1;
+    background: #367d3b;
     top: -1px;
   }
 
   .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
-    background: orange;
+    background: #367d3b;
   }
 
   .custom-slider .ng5-slider .ng5-slider-tick-legend {
