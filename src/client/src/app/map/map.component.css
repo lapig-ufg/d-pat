@@ -111,8 +111,8 @@ hr {
 .card-swipe {
 	position: absolute;
 	left: 5px;
-	bottom: 5px;
-	width: 500px;
+	top: 295px;
+	width: 360px;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
@@ -161,4 +161,12 @@ hr {
 
 .btn .btn-deforestation {
 	color: #fc16ef;
+}
+
+.label-visual-inspect {
+	margin-left: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-size: 14px;
+	font-weight: bold;
 }

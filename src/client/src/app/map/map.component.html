@@ -44,30 +44,29 @@
             <ui-switch color="#d7191c" (ngModelChange)="sucetibilidade.layer.setVisible($event)" [(ngModel)]="sucetibilidade.visible"></ui-switch> {{sucetibilidade.label}}
             <br>
             <ui-switch color="#7fb26d" (ngModelChange)="mosaicVisible(landsat, $event)" [(ngModel)]="landsat.visible"></ui-switch> {{landsat.label}}
-            <br>
-            <span class="custom-slider">
-              <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
-              <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(landsat, $event)"></ng5-slider>
-              <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
+            <span [hidden]="selectedPeriod.endYear != 2017">
+              <br>
+              <ui-switch color="#9e7269" (ngModelChange)="mosaicVisible(sentinel, $event)" [(ngModel)]="sentinel.visible"></ui-switch> {{sentinel.label}}
             </span>
             <br>
-            <ui-switch color="#9e7269" (ngModelChange)="mosaicVisible(sentinel, $event)" [(ngModel)]="sentinel.visible"></ui-switch> {{sentinel.label}}
-            <br>
-            <span [hidden]="selectedPeriod.endYear != 2017" class="custom-slider">
-              <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
-              <ng5-slider [(value)]="sentinel.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(sentinel, $event)"></ng5-slider>
-              <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
-            </span>
           </div>
-        
         </div>
-
-
       </div>
 
-      <div class="card card-swipe">
+      <div class="card card-swipe" [hidden]="((!sentinel.visible && !landsat.visible) && !sucetibilidade.visible) || collapseLayer" >
         <div class="card-block">
-          <input id="swipe" type="range" style="width: 100%">
+          <div [hidden]="(!sentinel.visible && !landsat.visible)">
+            <div class="label-visual-inspect">Comparação visual entre mosaicos<br></div>
+              <span class="custom-slider">
+                <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
+                <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity($event)"></ng5-slider>
+                <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
+              </span>
+            </div>
+          <div [hidden]="!sucetibilidade.visible">
+            <div class="label-visual-inspect">Sucetibilidade a Desmatamento<br></div>
+            <img style="margin-left: 10px;" src="http://ows.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&LAYER=bi_ce_suscetibilidade_desmatamento_100_na_lapig&format=image%2Fpng">
+          </div>
         </div>
       </div>
 

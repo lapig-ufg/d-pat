@@ -172,11 +172,25 @@ export class MapComponent implements OnInit {
   	this.updatePeriod()	
   }
 
-	private mosaicOpacity(mosaicObj, event) {
+	private mosaicOpacity(event) {
+		var mosaicObj = this.landsat
+		if (this.sentinel.visible)
+			mosaicObj = this.sentinel
+
 		mosaicObj.layer2.setOpacity(event.value)
 	}
 
-	private mosaicVisible(mosaicObj, value){
+	private mosaicVisible(mosaicObj, value) {
+		if (mosaicObj != this.landsat && this.landsat.visible) {
+			this.landsat.layer1.setVisible(false)
+			this.landsat.layer2.setVisible(false)
+			this.landsat.visible = false
+		} else if(mosaicObj != this.sentinel && this.sentinel.visible) {
+			this.sentinel.layer1.setVisible(false)
+			this.sentinel.layer2.setVisible(false)
+			this.sentinel.visible = false
+		}
+
 		mosaicObj.layer1.setVisible(value);
 		mosaicObj.layer2.setVisible(value);
 	}
