@@ -1,25 +1,100 @@
-var sqlite3 = require('sqlite3');
 var pg = require('pg');
 
 module.exports = function(app){
 	var Map = {}
-
-	var points = app.repository.collections.points;
-	var database = new sqlite3.Database(app.config.dbpath);
+	var Internal = {}
 
 	var conString = "postgres://postgres@localhost:5433/fip_cerrado";
 	var client = new pg.Client(conString);
 	client.connect();
 
-	Map.charts = function(request, response) {
+	Internal.regionFilter = function(type, region) {
+		if (type == 'city')
+  		return " AND county = '"+region+"'"
+  	else if (type == 'state')
+  		return "AND uf = '"+region+"'"
+  	else
+  		return ''
+	}
+
+	Map.extent = function(request, response) {
+
+		var type = request.param('type', '');
+		var region = request.param('region', '');
+
+		var sqlQuery = "SELECT ST_AsGeoJSON(geom) geojson FROM regions WHERE " +
+							 " type='"+type+"'"+
+							 " AND value='"+region+"';";
+		
+		client.query(sqlQuery, (err, queryResult) => {
+			if (err) {
+				response.end()
+			} else {
+				
+				var result = {
+          'type': 'Feature',
+          'geometry': JSON.parse(queryResult.rows[0]['geojson'])
+        }
+
+				response.send(result)
+		    response.end();
+			}
+		});
+
+	}
+
+	Map.search = function(request, response) {
+
+		var key = request.param('key', '');
+
+		sqlQuery = "SELECT text, value, type FROM regions WHERE text ILIKE '"+key+"%' AND type in ('state', 'city')";
+
+		client.query(sqlQuery, (err, queryResult) => {
+			response.send(queryResult.rows)
+	    response.end();
+		});
+
+	}
+
+	Map.periods = function(request, response) {
+		sqlQuery = " SELECT DISTINCT classname FROM prodes_cerrado ORDER BY classname DESC;";
+
+		client.query(sqlQuery, (err, queryResult) => {
+			var result = []
+	    var years = []
+
+	    queryResult.rows.forEach(function(row) {
+	    	if (row.classname.startsWith('D')){
+	    		years.push(Number(row.classname.slice(2)))
+	    	}
+	    })
+
+	    for(var i=0; i < years.length-1; i++) {
+	    	result.push({
+	    		startYear: years[i+1],
+	    		endYear: years[i],
+	    		label: years[i+1] + '/' + years[i]
+	    	})
+	    }
+
+			response.send(result)
+	    response.end();
+		});
+
+	}
+
+	Map.deforestationTimeseries = function(request, response) {
+
+		var type = request.param('type', '');
+		var region = request.param('region', '');
+		var regionFilter = Internal.regionFilter(type, region)
 
 		sqlQuery1 = " SELECT classname, source, SUM(areamunkm) as areamunkm " +
 								" FROM prodes_cerrado " +
+								( regionFilter == '' ? '' : 'WHERE TRUE=TRUE ' + regionFilter ) +
 								" GROUP BY 1,2;";
 
-		var result = {
-			'timeseries': []
-		}
+		var result = []
 
 		client.query(sqlQuery1, (err, res) => {
 
@@ -72,7 +147,7 @@ module.exports = function(app){
 				})
 			}
 
-			result.timeseries.push({
+			result.push({
 				name: "Área desmatada",
 				series: series
 			})
@@ -83,35 +158,7 @@ module.exports = function(app){
 		})
 	}
 
-	Map.periods = function(request, response) {
-		sqlQuery = " SELECT DISTINCT classname FROM prodes_cerrado ORDER BY classname DESC;";
-
-		client.query(sqlQuery, (err, queryResult) => {
-			var result = []
-	    var years = []
-
-	    queryResult.rows.forEach(function(row) {
-	    	if (row.classname.startsWith('D')){
-	    		years.push(Number(row.classname.slice(2)))
-	    	}
-	    })
-
-	    for(var i=0; i < years.length-1; i++) {
-	    	result.push({
-	    		startYear: years[i+1],
-	    		endYear: years[i],
-	    		label: years[i+1] + '/' + years[i]
-	    	})
-	    }
-
-			response.send(result)
-	    response.end();
-		});
-
-	}
-
-	Map.chartByYear = function(request, response) {
-
+	Map.deforestationStates = function(request, response) {
 		var year = request.param('year', 2017);
 
 		var classname = 'D_'+year
@@ -120,18 +167,9 @@ module.exports = function(app){
 		
 		var stateQuery = " SELECT INITCAP(uf) AS region, source, SUM(areamunkm) as areamunkm " +
 								" FROM prodes_cerrado " +
-								" WHERE classname = '" + classname + "'" +
+								" WHERE classname = '" + classname + "'" + 
 								" GROUP BY 1,2 " +
 								" ORDER BY 3 DESC;";
-
-		var citiesQuery = " SELECT county AS name, INITCAP(uf) as uf," +
-									( Number(year) < 2013 ? "SUM(areamunkm)/2" : "SUM(areamunkm)" )  + " as value "+
-								" FROM prodes_cerrado " +
-								" WHERE classname = '" + classname + "' AND areamunkm > 0" +
-									( classname == 'D_2008' ? "AND source != 'prodes_amz'" : '' ) +
-								" GROUP BY 1,2 " +
-								" ORDER BY 3 DESC" +
-								" LIMIT 10;";
 
 		var processStateRows = function(queryResult) {
 			var resultBySource = {
@@ -167,6 +205,34 @@ module.exports = function(app){
 			return regionResult;
 		}
 
+		client.query(stateQuery, (err, stateResult) => {
+			var state = processStateRows(stateResult)
+			response.send(state)
+			response.end()
+		})
+
+	}
+
+	Map.deforestationCities = function(request, response) {
+
+		var year = request.param('year', 2017);
+		var type = request.param('type', '');
+		var region = request.param('region', '');
+
+		var classname = 'D_'+year
+		if (year < 2013 && year % 2 != 0)
+			classname = 'D_'+(Number(year)+1)
+
+		var citiesQuery = " SELECT county AS name, INITCAP(uf) as uf," +
+									( Number(year) < 2013 ? "SUM(areamunkm)/2" : "SUM(areamunkm)" )  + " as value "+
+								" FROM prodes_cerrado " +
+								" WHERE classname = '" + classname + "' AND areamunkm > 0" +
+									( classname == 'D_2008' ? "AND source != 'prodes_amz'" : '' ) +
+									Internal.regionFilter(type, region) +
+								" GROUP BY 1,2 " +
+								" ORDER BY 3 DESC" +
+								" LIMIT 10;";
+
 		var processCitiesResult = function(citiesResult) {
 			var index = 1;
 			for(var i=0; i < 10; i++) {
@@ -176,16 +242,10 @@ module.exports = function(app){
 			return citiesResult.rows
 		}
 
-		client.query(stateQuery, (err, stateResult) => {
-			var state = processStateRows(stateResult)
-			client.query(citiesQuery, (err, citiesResult) => {
-				var cities = processCitiesResult(citiesResult)
-				response.send({
-					'state': state,
-					'cities': citiesResult.rows
-				})
-				response.end()
-			})
+		client.query(citiesQuery, (err, citiesResult) => {
+			var cities = processCitiesResult(citiesResult)
+			response.send(citiesResult.rows)
+			response.end()
 		})
 
 	}

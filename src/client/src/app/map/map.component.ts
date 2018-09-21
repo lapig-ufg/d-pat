@@ -1,27 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import * as ol from 'openlayers';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { HttpClient, HttpParams} from '@angular/common/http';
+
+import {Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
+import {catchError, debounceTime, distinctUntilChanged, map, tap, switchMap} from 'rxjs/operators';
+import "rxjs/add/observable/of";
+
 
 import OlMap from 'ol/map';
 import OlXYZ from 'ol/source/xyz';
 import OlTileLayer from 'ol/layer/tile';
+import VectorLayer from 'ol/layer/vector';
 import TileGrid from 'ol/tilegrid/tilegrid';
 import TileWMS from 'ol/source/tilewms';
+import VectorSource from 'ol/source/vector';
+import Stroke from 'ol/style/stroke';
+import Fill from 'ol/style/fill';
+import Style from 'ol/style/style';
 import OlView from 'ol/view';
 import OlProj from 'ol/proj';
 import OlExtent from 'ol/extent';
 import TileUTFGrid from 'ol/source/tileutfgrid';
 import Overlay from 'ol/overlay';
+import GeoJSON from 'ol/format/geojson';
 import _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
+
+const REGION_URL = '/service/map/search';
+const PARAMS = new HttpParams({
+  fromObject: {
+    format: 'json'
+  }
+});
+
+@Injectable()
+export class RegionService {
+  constructor(private http: HttpClient) {}
+
+  search(term: string) {
+    if (term === '') {
+      return of([]);
+    }
+
+    return this.http.get(REGION_URL, {params: PARAMS.set('key', term)}).pipe(
+        map(response => response)
+      );
+  }
+}
 
 @Component({
 	selector: 'app-map',
 	templateUrl: './map.component.html',
+	providers: [RegionService],
 	styleUrls: [
 		'./map.component.css',
 		'./map.component.scss'
 	]
 })
+
 export class MapComponent implements OnInit {
 
 	map: OlMap;
@@ -38,6 +73,7 @@ export class MapComponent implements OnInit {
 	sentinel: any;
 	desmatamento: any;
 	antropico: any;
+	regions: any;
 
 	charts: any;
 	chartResult: any;
@@ -46,16 +82,25 @@ export class MapComponent implements OnInit {
 	urls: Array<String>;
 	periods: any;
 	selectedPeriod: any;
+	selectRegion: any;
+	defaultRegion: any;
+	valueRegion: any;
 
 	collapseLayer: boolean;
 	collapseCharts: boolean;
 	sliderOptions: any;
 
-	constructor(private http: HttpClient) { 
-		
+	constructor(private http: HttpClient, private _service: RegionService) { 
 		this.infodata = { area_desmatada: -1};
 		this.projection = OlProj.get('EPSG:900913');
 		this.currentZoom = 5;
+
+		this.defaultRegion = {
+			type: 'biome',
+			text: 'Cerrado',
+			value: 'Cerrado'
+		} 
+		this.selectRegion = this.defaultRegion;
 
 		this.chartType = 'bioma';
 
@@ -98,6 +143,35 @@ export class MapComponent implements OnInit {
 
 	}
 
+	searching = false;
+  searchFailed = false;
+
+	search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      switchMap(term =>
+        this._service.search(term).pipe(
+          tap(() => this.searchFailed = false),
+          catchError(() => {
+            this.searchFailed = true;
+            return of([]);
+          }))
+      ),
+      tap(() => this.searching = false)
+    )
+
+  formatter = (x: {text: string}) => x.text;
+
+  private updateRegion(region) {
+  	if(region == this.defaultRegion)
+  		this.valueRegion = ''
+
+  	this.selectRegion = region;
+  	this.updatePeriod()	
+  }
+
 	private mosaicOpacity(mosaicObj, event) {
 		mosaicObj.layer2.setOpacity(event.value)
 	}
@@ -116,6 +190,28 @@ export class MapComponent implements OnInit {
     }
 
     return resolutions
+	}
+
+	private createVectorLayer() {
+    return new VectorLayer({
+      source: new VectorSource({
+	      //features: (new GeoJSON()).readFeatures(extentResult)
+	    }),
+	    style: [
+	      new Style({
+	        stroke: new Stroke({
+	          color: '#dedede',
+	          width: 2
+	        })
+	      }),
+		    new Style({
+	        stroke: new Stroke({
+	          color: '#ffea00',
+	          width: 1
+	        })
+	      }),
+      ]
+    });
 	}
 
 	private createMap() {
@@ -168,6 +264,15 @@ export class MapComponent implements OnInit {
 	private parseParams(input) {
 		input = input.replace(new RegExp('{start_year}', 'g'), this.selectedPeriod.startYear)
 		input = input.replace(new RegExp('{end_year}', 'g'), this.selectedPeriod.endYear)
+
+		var regionQuery = ''
+		if (this.selectRegion.type == 'city')
+  		regionQuery = " AND county = '"+this.selectRegion.value+"'"
+  	else if (this.selectRegion.type == 'state')
+  		regionQuery = "AND uf = '"+this.selectRegion.value+"'"
+
+
+		input = input.replace(new RegExp('{region_query}', 'g'), regionQuery)
 		return input
 	}
 
@@ -202,7 +307,7 @@ export class MapComponent implements OnInit {
 		this.desmatamento = {
 			label: 'Desmatamentos PRODES',
 			layername: 'bi_ce_prodes_desmatamento_100_fip',
-			layerfilter: 'year = {end_year} AND baseline = FALSE',
+			layerfilter: 'year = {end_year} AND baseline = FALSE {region_query}',
 			visible: true,
 			opacity: 1
 		}
@@ -210,7 +315,7 @@ export class MapComponent implements OnInit {
 		this.antropico = {
 			label: 'Área Antrópica até',
 			layername: 'bi_ce_prodes_antropico_100_fip',
-			layerfilter: 'year < {end_year} OR (year = {start_year} AND baseline = TRUE)',
+			layerfilter: '(year < {end_year} OR (year = {start_year} AND baseline = TRUE)) {region_query}',
 			visible: true,
 			opacity: 1
 		}
@@ -222,6 +327,7 @@ export class MapComponent implements OnInit {
 		this.sucetibilidade['layer'] = this.createTMSLayer(this.sucetibilidade.layername, this.sucetibilidade.visible, this.sucetibilidade.opacity, '')
 		this.desmatamento['layer'] = this.createTMSLayer(this.desmatamento.layername, this.desmatamento.visible, this.desmatamento.opacity, this.desmatamento.layerfilter)
 		this.antropico['layer'] = this.createTMSLayer(this.antropico.layername, this.antropico.visible, this.antropico.opacity, this.antropico.layerfilter)
+		this.regions = this.createVectorLayer();
 
 		this.layers.push(this.sentinel['layer1'])
 		this.layers.push(this.sentinel['layer2'])
@@ -230,9 +336,20 @@ export class MapComponent implements OnInit {
 		this.layers.push(this.sucetibilidade['layer'])
 		this.layers.push(this.antropico['layer'])
 		this.layers.push(this.desmatamento['layer'])
+		this.layers.push(this.regions)
 
-		this.layers.push()
 		this.layers = this.layers.concat(olLayers.reverse());
+		
+		//console.log(olext)
+
+		/*
+		var swipe = Swipe()
+
+		this.map.addControl(swipe);
+		
+		swipe.addLayer(this.landsat['layer1']);
+		swipe.addLayer(this.landsat['layer2'], true);
+		*/
 
 	}
 
@@ -281,29 +398,60 @@ export class MapComponent implements OnInit {
 	}
 
 	private updateCharts() {
-		var chartByYearUrl = '/service/map/chartsByYear?year='+this.selectedPeriod.endYear;
 
-		this.http.get(chartByYearUrl).subscribe(charts => {
-			this.charts.state = charts['state'];
-			this.charts.cities = charts['cities'];
-			this.changeChart(this.chartType);
-		})
+		var regionParams = ''
+		if (this.selectRegion.type != '')
+			regionParams = "&type="+this.selectRegion.type+"&region="+this.selectRegion.value
+
+
+		var timeseriesUrl = '/service/deforestation/timeseries?'+regionParams;
+		var statesUrl = '/service/deforestation/states?year='+this.selectedPeriod.endYear;
+		var citiesUrl = '/service/deforestation/cities?year='+this.selectedPeriod.endYear+regionParams;
+		var extenUrl = '/service/map/extent?'+regionParams;
+		
+		this.changeChart('bioma');
+		this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
+			this.charts.timeseries = timeseriesResult;
+			this.chartResult = this.charts.timeseries;
+		});
+		
+		var map = this.map
+		if (this.selectRegion.type != '') {
+			this.http.get(extenUrl).subscribe(extentResult => {
+				//this.extent = extentResult;
+				var features = (new GeoJSON()).readFeatures(extentResult, {
+				  dataProjection : 'EPSG:4326',
+				  featureProjection: 'EPSG:3857'
+				});
+				var regionSource = this.regions.getSource();
+				regionSource.clear()
+				regionSource.addFeature(features[0])
+				var extent = features[0].getGeometry().getExtent();
+				map.getView().fit(extent, { duration: 1500 });
+			})
+		}
+
+		if (this.selectRegion.type != 'city') {
+			this.http.get(citiesUrl).subscribe(citiesResult => {
+				this.charts.cities = citiesResult;
+			})
+		}
+  		
+  	if (this.selectRegion.type != 'state' || this.selectRegion.type != 'city') {
+			this.http.get(statesUrl).subscribe(statesResult => {
+				this.charts.state = statesResult;
+			})
+  	}
+
 	}
 
 	ngOnInit() {
 
 		this.http.get('/service/map/periods').subscribe(periods => {
 			this.periods = periods
-			console.log(periods)
 			this.selectedPeriod = this.periods[0]
-			
-			this.http.get('/service/map/charts').subscribe(charts => {
-				this.charts = charts;
-				this.chartResult = this.charts.timeseries;
-				this.updateCharts();
-				this.createMap();
-			});
-
+			this.updateCharts();
+			this.createMap();
 		})
 
 	}

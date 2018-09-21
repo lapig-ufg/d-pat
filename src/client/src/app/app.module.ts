@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { UiSwitchModule } from 'ngx-ui-switch';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule, MatSliderModule, MatSelectModule, MatButtonModule, MatTabsModule, MatIconModule, MatRadioModule } from '@angular/material';
@@ -18,7 +19,6 @@ import localePt from '@angular/common/locales/pt';
 import { Ng5SliderModule } from 'ng5-slider';
 
 registerLocaleData(localePt);
-
 
 const appRoutes: Routes = [
   {
@@ -41,6 +41,11 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    UiSwitchModule.forRoot({
+      size: 'small',
+      checkedLabel: 'on',
+      uncheckedLabel: 'off'
+    }),
     BrowserAnimationsModule,
     FormsModule,
     NgxChartsModule,

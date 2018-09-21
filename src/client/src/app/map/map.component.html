@@ -13,91 +13,76 @@
                   [attr.aria-expanded]="!collapseLayer" aria-controls="camadageografica">-</button>
         </div>
         <div id="camadageografica" class="card-block dpat-layer-group" [ngbCollapse]="collapseLayer">
-          <div class="dpat-period-group input-group input-group-sm">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Período de análise</label>
+          <!-- <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <label for="typeahead-http">Região:</label>
+          </div> -->
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <ng-template #rt let-r="result" let-t="term">
+              <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+            </ng-template>
+            <input id="typeahead-http" type="text" class="form-control search-box" [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search" placeholder="Escolha um estado/município" (selectItem)="updateRegion($event.item)" [resultTemplate]="rt" [inputFormatter]="formatter"/>
+            <img [hidden]="selectRegion == defaultRegion" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="/assets/img/clear_button.png" />
+            <span *ngIf="searching">localizando...</span>
+            <div class="invalid-feedback" *ngIf="searchFailed">Desculpe, Região não encontrada.</div>
+            
+            <div class="dpat-period-group input-group input-group-sm">
+              
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Período de análise</label>
+              </div>
+              <select name="startYear" class="custom-select custom-select-sm" [(ngModel)]="selectedPeriod" (ngModelChange)="updatePeriod()">
+                  <option *ngFor="let period of periods" [ngValue]="period">  
+                  {{period.label}}
+                  </option>
+              </select>
             </div>
-            <select name="startYear" class="custom-select custom-select-sm" [(ngModel)]="selectedPeriod" (ngModelChange)="updatePeriod()">
-                <option *ngFor="let period of periods" [ngValue]="period">  
-                {{period.label}}
-                </option>
-            </select>
-          </div>
-          <hr>
-          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/desmatamento_leg.png" />
-                  <input [(ngModel)]="desmatamento.visible" (ngModelChange)="desmatamento.layer.setVisible($event)" type="checkbox">
-                </div>
-              </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{ desmatamento.label }} {{ selectedPeriod.endYear }}">
-          </div>
-          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/antropico_leg.png" />
-                  <input [(ngModel)]="antropico.visible" (ngModelChange)="antropico.layer.setVisible($event)" type="checkbox">
-                </div>
-              </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{ antropico.label }} {{ selectedPeriod.startYear }}">
-          </div>
-          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/sucetibilidade_leg.png" />
-                  <input [(ngModel)]="sucetibilidade.visible" (ngModelChange)="sucetibilidade.layer.setVisible($event)" type="checkbox">
-                </div>
-              </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{ sucetibilidade.label }}">
-          </div>
-          <img style="height: 15px; margin-left: 100px;" src="/assets/img/sucetibilidade_leg_color.png" />
-          <div class="input-group input-group-sm dpat-layer mat-app-background" placement="top" ngbTooltip="{{landsat.tooltip}}">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/landsat_leg.png" />
-                  <input [(ngModel)]="landsat.visible" (ngModelChange)="mosaicVisible(landsat, $event)" type="checkbox">
-                </div>
-              </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{ landsat.label }}">
-          </div>
-          <div class="custom-slider">
-            <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
-            <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(landsat, $event)"></ng5-slider>
-            <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
-          </div>
-          
-          <div [hidden]="selectedPeriod.endYear != 2017" class="input-group input-group-sm dpat-layer mat-app-background" placement="top" ngbTooltip="{{sentinel.tooltip}}">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <img style="height: 40px; margin-right: 10px;" src="/assets/img/sentinel_leg.png" />
-                  <input [(ngModel)]="sentinel.visible" (ngModelChange)="mosaicVisible(sentinel, $event)" type="checkbox">
-                </div>
-              </div>
-              <input type="text" readonly class="form-control dpat-layer-label" value="{{ sentinel.label }}">
-          </div>
-          <div [hidden]="selectedPeriod.endYear != 2017" class="custom-slider">
-            <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
-            <ng5-slider [(value)]="sentinel.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(sentinel, $event)"></ng5-slider>
-            <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
+            <hr>
+            <ui-switch color="#fc16ef" (ngModelChange)="desmatamento.layer.setVisible($event)" [(ngModel)]="desmatamento.visible"></ui-switch> {{desmatamento.label}} {{ selectedPeriod.endYear }}
+            <br>
+            <ui-switch color="#343a40" (ngModelChange)="antropico.layer.setVisible($event)" [(ngModel)]="antropico.visible"></ui-switch> {{antropico.label}} {{ selectedPeriod.endYear }}
+            <br>
+            <ui-switch color="#d7191c" (ngModelChange)="sucetibilidade.layer.setVisible($event)" [(ngModel)]="sucetibilidade.visible"></ui-switch> {{sucetibilidade.label}}
+            <br>
+            <ui-switch color="#7fb26d" (ngModelChange)="mosaicVisible(landsat, $event)" [(ngModel)]="landsat.visible"></ui-switch> {{landsat.label}}
+            <br>
+            <span class="custom-slider">
+              <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
+              <ng5-slider [(value)]="landsat.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(landsat, $event)"></ng5-slider>
+              <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
+            </span>
+            <br>
+            <ui-switch color="#9e7269" (ngModelChange)="mosaicVisible(sentinel, $event)" [(ngModel)]="sentinel.visible"></ui-switch> {{sentinel.label}}
+            <br>
+            <span [hidden]="selectedPeriod.endYear != 2017" class="custom-slider">
+              <span class="float-left year-slider-label">{{selectedPeriod.startYear}}</span>
+              <ng5-slider [(value)]="sentinel.opacity" [options]="sliderOptions" (userChange)="mosaicOpacity(sentinel, $event)"></ng5-slider>
+              <span class="float-right year-slider-label">{{selectedPeriod.endYear}}</span>
+            </span>
           </div>
         
         </div>
 
 
       </div>
+
+      <div class="card card-swipe">
+        <div class="card-block">
+          <input id="swipe" type="range" style="width: 100%">
+        </div>
+      </div>
+
       <div class="card card-charts">
         <div class="card-header">
             Estatísticas
             <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="collapseCharts = !collapseCharts"
                   [attr.aria-expanded]="!collapseCharts" aria-controls="camadageografica">-</button>
-            <button [ngClass]="{'chart-change-btn-active': (chartType == 'municipios') }" (click)="changeChart('municipios')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Municípios</button>
-            <button [ngClass]="{'chart-change-btn-active': (chartType == 'estados') }" (click)="changeChart('estados')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Estados</button>
-            <button [ngClass]="{'chart-change-btn-active': (chartType == 'bioma') }" (click)="changeChart('bioma')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Cerrado</button>
+            <button [hidden]="selectRegion.type == 'city'" [ngClass]="{'chart-change-btn-active': (chartType == 'municipios') }" (click)="changeChart('municipios')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Municípios</button>
+            <button [hidden]="selectRegion.type == 'state' || selectRegion.type == 'city'" [ngClass]="{'chart-change-btn-active': (chartType == 'estados') }" (click)="changeChart('estados')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">Estados</button>
+            <button [ngClass]="{'chart-change-btn-active': (chartType == 'bioma') }" (click)="changeChart('bioma')" type="button" class="chart-change-btn btn btn-sm float-right" aria-controls="camadageografica">{{selectRegion.text}}</button>
         </div>
         <div class="card-block" [ngbCollapse]="collapseCharts" [hidden]="chartType != 'bioma'">
           <h6 style="margin-left: 15px; margin-top: 5px;">
-            <b>Incremento Anual de Desmatamento</b>
+            <b>Incremento Anual de Desmatamento - {{selectRegion.text}}</b>
           </h6>
           <ngx-charts-line-chart [view]="[500,300]" [results]="chartResult" [yAxis]="true" [xAxis]="true">
           </ngx-charts-line-chart><br>
