@@ -9,6 +9,8 @@ import "rxjs/add/observable/of";
 
 import OlMap from 'ol/map';
 import OlXYZ from 'ol/source/xyz';
+import Select from 'ol/interaction/select';
+import Condition from 'ol/events/condition';
 import OlTileLayer from 'ol/layer/tile';
 import VectorLayer from 'ol/layer/vector';
 import TileGrid from 'ol/tilegrid/tilegrid';
@@ -64,7 +66,7 @@ export class MapComponent implements OnInit {
 	projection: OlProj;
 	tileGrid: TileGrid;
 	utfgridsource: TileUTFGrid;
-	infoOverlay: Overlay;
+	infoFeature: any;
 	infodata: any;
 	currentZoom: Number;
 	
@@ -74,6 +76,7 @@ export class MapComponent implements OnInit {
 	desmatamento: any;
 	antropico: any;
 	regions: any;
+	fieldValidation: any;
 
 	charts: any;
 	chartResult: any;
@@ -85,10 +88,16 @@ export class MapComponent implements OnInit {
 	selectRegion: any;
 	defaultRegion: any;
 	valueRegion: any;
+	deforestationAll: any;
+
+	deforestationOpts: any;
+	selectedDeforestationOpt: any;
 
 	collapseLayer: boolean;
 	collapseCharts: boolean;
 	sliderOptions: any;
+	indicator: any;
+	polValidados: any;
 
 	constructor(private http: HttpClient, private _service: RegionService) { 
 		this.infodata = { area_desmatada: -1};
@@ -141,6 +150,19 @@ export class MapComponent implements OnInit {
 	    })
     ];
 
+    this.deforestationOpts = [
+    	{ label: 'Todos os polígonos', value: 'ALL' },
+    	{ label: 'Polígonos validados em campo', value: 'VALIDATED' },
+    	{ label: 'Em base municipal', value: 'MUNICIPALITIES' }
+    ]
+    this.selectedDeforestationOpt = this.deforestationOpts[0]
+
+    this.infoFeature = {
+  		foto: '',
+  		uso: '',
+  		fitoViz: '',
+  		obs: ''
+  	}
 	}
 
 	searching = false;
@@ -163,6 +185,34 @@ export class MapComponent implements OnInit {
     )
 
   formatter = (x: {text: string}) => x.text;
+
+  yAxisTickFormattingFn = (val)=>{
+     return val + ' km2';
+	}
+
+	private updateDeforestationOpt() {
+		if (this.selectedDeforestationOpt.value == 'VALIDATED') {
+			
+			this.fieldValidation.setVisible(true);
+			this.deforestationAll.setVisible(false);
+			this.desmatamento.layer = this.fieldValidation;
+			
+			this.selectedPeriod = this.periods[0];
+			this.updatePeriod()
+			this.updateRegion(this.defaultRegion)
+			this.antropico.visible = false
+			this.antropico.layer.setVisible(false)
+			this.collapseCharts = true
+			
+		} else if (this.selectedDeforestationOpt.value == 'ALL') {
+			this.fieldValidation.setVisible(false);
+			this.deforestationAll.setVisible(true);
+			this.desmatamento.layer = this.deforestationAll;
+			
+			var extent = this.regions.getSource().getExtent();
+			this.map.getView().fit(extent, { duration: 1500 });
+		}
+	}
 
   private updateRegion(region) {
   	if(region == this.defaultRegion)
@@ -206,22 +256,21 @@ export class MapComponent implements OnInit {
     return resolutions
 	}
 
-	private createVectorLayer() {
+	private createVectorLayer(layerName, strokeColor, width) {
     return new VectorLayer({
-      source: new VectorSource({
-	      //features: (new GeoJSON()).readFeatures(extentResult)
-	    }),
+    	name: layerName,
+      source: new VectorSource(),
 	    style: [
 	      new Style({
 	        stroke: new Stroke({
 	          color: '#dedede',
-	          width: 2
+	          width: width+1
 	        })
 	      }),
 		    new Style({
 	        stroke: new Stroke({
-	          color: '#ffea00',
-	          width: 1
+	          color: strokeColor,
+	          width: width
 	        })
 	      }),
       ]
@@ -234,13 +283,65 @@ export class MapComponent implements OnInit {
       target: 'map',
       layers: this.layers,
       view: new OlView({
-	      center: OlProj.fromLonLat([-44, -14]),
 	      projection: this.projection,
 	      zoom: this.currentZoom,
 	    }),
 	    loadTilesWhileAnimating: true,
     	loadTilesWhileInteracting: true 
     });
+
+    
+    var select = new Select({
+			condition: Condition.pointerMove,
+			layers: [this.fieldValidation],
+			style: new Style({
+        stroke: new Stroke({
+          color: '#ff1800',
+          width: 4
+        })
+      })
+    });
+
+    select.on('select', function(event) {
+	    	if(event.selected.length > 0) {
+	    		var featureSel = event.selected[0]
+		    	this.infoFeature = {
+		    		foto: '/assets/fotos_campo/' + featureSel.get('foto'),
+		    		uso: featureSel.get('uso'),
+		    		fitoViz: featureSel.get('fito_viz'),
+		    		obs: featureSel.get('obs')
+		    	}
+		    	
+	    	}
+    	}.bind(this));
+
+		this.map.addInteraction(select);
+
+
+    /*var map = this.map
+    map.on('pointermove', function(browserEvent) {
+    var coordinate = browserEvent.coordinate;
+    var pixel = map.getPixelFromCoordinate(coordinate);
+    var features = map.getFeaturesAtPixel(pixel, {
+    	'layerFilter': function(layerCandidate) {
+    		if (layerCandidate.type == 'VECTOR' && layerCandidate.get('name') == 'fieldValidation') {
+    			return true
+    		} else {
+    			return false
+    		}
+    	}
+    });
+
+    var selFeatures = select.getFeatures({
+    	layers: [this.fieldValidation]
+    });
+
+    //selFeatures.clear()
+    if(features)
+    	selFeatures.push(features);
+
+
+  	});*/
 	}
 
 	private getUrls(layername, filter) {
@@ -330,18 +431,23 @@ export class MapComponent implements OnInit {
 			label: 'Área Antrópica até',
 			layername: 'bi_ce_prodes_antropico_100_fip',
 			layerfilter: '(year < {end_year} OR (year = {start_year} AND baseline = TRUE)) {region_query}',
-			visible: true,
+			visible: false,
 			opacity: 1
 		}
+
+		this.fieldValidation = this.createVectorLayer('fieldValidation', '#fc16ef', 3);
+		this.deforestationAll = this.createTMSLayer(this.desmatamento.layername, this.desmatamento.visible, this.desmatamento.opacity, this.desmatamento.layerfilter)
 
 		this.sentinel['layer1'] = this.createTMSLayer(this.sentinel.layername1, this.sentinel.visible, this.sentinel.opacity, '')
 		this.sentinel['layer2'] = this.createTMSLayer(this.sentinel.layername2, this.sentinel.visible, this.sentinel.opacity, '')
 		this.landsat['layer1'] = this.createTMSLayer(this.landsat.layername1, this.landsat.visible, this.landsat.opacity, '')
 		this.landsat['layer2'] = this.createTMSLayer(this.landsat.layername2, this.landsat.visible, this.landsat.opacity, '')
 		this.sucetibilidade['layer'] = this.createTMSLayer(this.sucetibilidade.layername, this.sucetibilidade.visible, this.sucetibilidade.opacity, '')
-		this.desmatamento['layer'] = this.createTMSLayer(this.desmatamento.layername, this.desmatamento.visible, this.desmatamento.opacity, this.desmatamento.layerfilter)
+		this.desmatamento['layer'] = this.deforestationAll
 		this.antropico['layer'] = this.createTMSLayer(this.antropico.layername, this.antropico.visible, this.antropico.opacity, this.antropico.layerfilter)
-		this.regions = this.createVectorLayer();
+		this.regions = this.createVectorLayer('regions', '#ffea00', 1);
+
+		this.fieldValidation.setVisible(false);
 
 		this.layers.push(this.sentinel['layer1'])
 		this.layers.push(this.sentinel['layer2'])
@@ -351,19 +457,10 @@ export class MapComponent implements OnInit {
 		this.layers.push(this.antropico['layer'])
 		this.layers.push(this.desmatamento['layer'])
 		this.layers.push(this.regions)
+		this.layers.push(this.fieldValidation)
+
 
 		this.layers = this.layers.concat(olLayers.reverse());
-		
-		//console.log(olext)
-
-		/*
-		var swipe = Swipe()
-
-		this.map.addControl(swipe);
-		
-		swipe.addLayer(this.landsat['layer1']);
-		swipe.addLayer(this.landsat['layer2'], true);
-		*/
 
 	}
 
@@ -393,8 +490,11 @@ export class MapComponent implements OnInit {
 		var l2Source = this.landsat.layer2.getSource()
 		l2Source.setUrls(this.getUrls(this.landsat.layername2, ''))
 		
-		var dSource = this.desmatamento.layer.getSource()
-		dSource.setUrls(this.getUrls(this.desmatamento.layername, this.desmatamento.layerfilter))
+		if(this.selectedDeforestationOpt.value != 'VALIDATED'){
+			var dSource = this.desmatamento.layer.getSource()
+			dSource.setUrls(this.getUrls(this.desmatamento.layername, this.desmatamento.layerfilter))
+			dSource.refresh()
+		}
 
 		var aSource = this.antropico.layer.getSource()
 		aSource.setUrls(this.getUrls(this.antropico.layername, this.antropico.layerfilter))
@@ -405,10 +505,24 @@ export class MapComponent implements OnInit {
 
 		l1Source.refresh()
 		l2Source.refresh()
-		dSource.refresh()
 		aSource.refresh()
 
 		this.updateCharts();
+	}
+
+	private addValidationPolygons() {
+		var fieldValidationUrl = '/service/map/field-validation';
+		this.http.get(fieldValidationUrl).subscribe(fieldValResult => {
+				var features = (new GeoJSON()).readFeatures(fieldValResult, {
+				  dataProjection : 'EPSG:4326',
+				  featureProjection: 'EPSG:3857'
+				});
+				var regionSource = this.fieldValidation.getSource();
+				this.polValidados = features.length;
+				regionSource.clear()
+				regionSource.addFeatures(features)
+			})
+
 	}
 
 	private updateCharts() {
@@ -417,22 +531,22 @@ export class MapComponent implements OnInit {
 		if (this.selectRegion.type != '')
 			regionParams = "&type="+this.selectRegion.type+"&region="+this.selectRegion.value
 
-
-		var timeseriesUrl = '/service/deforestation/timeseries?'+regionParams;
+		var timeseriesUrl = '/service/deforestation/timeseries?year='+this.selectedPeriod.startYear+regionParams;
 		var statesUrl = '/service/deforestation/states?year='+this.selectedPeriod.endYear;
 		var citiesUrl = '/service/deforestation/cities?year='+this.selectedPeriod.endYear+regionParams;
 		var extenUrl = '/service/map/extent?'+regionParams;
 		
 		this.changeChart('bioma');
+		
 		this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
 			this.charts.timeseries = timeseriesResult;
+			this.indicator = timeseriesResult[0].indicator;
 			this.chartResult = this.charts.timeseries;
 		});
 		
 		var map = this.map
 		if (this.selectRegion.type != '') {
 			this.http.get(extenUrl).subscribe(extentResult => {
-				//this.extent = extentResult;
 				var features = (new GeoJSON()).readFeatures(extentResult, {
 				  dataProjection : 'EPSG:4326',
 				  featureProjection: 'EPSG:3857'
@@ -464,8 +578,9 @@ export class MapComponent implements OnInit {
 		this.http.get('/service/map/periods').subscribe(periods => {
 			this.periods = periods
 			this.selectedPeriod = this.periods[0]
-			this.updateCharts();
 			this.createMap();
+			this.updateCharts();
+			this.addValidationPolygons();
 		})
 
 	}

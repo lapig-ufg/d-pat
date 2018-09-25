@@ -17,6 +17,40 @@ module.exports = function(app){
   		return ''
 	}
 
+	Map.fieldValidation = function(request, response) {
+
+		var sqlQuery = "SELECT ST_AsGeoJSON(geom) geojson, foto_uso, uso, fito_viz, obs FROM prodes_cerrado_validados;";
+		
+		client.query(sqlQuery, (err, queryResult) => {
+			if (err) {
+				response.end()
+			} else {
+				
+				var result = []
+
+				queryResult.rows.forEach(function(row) {
+					result.push({
+						'type': 'Feature',
+          	'geometry': JSON.parse(row['geojson']),
+          	'properties': {
+          		'foto': row['foto_uso'],
+          		'uso': row['uso'],
+          		'fito_viz': row['fito_viz'],
+          		'obs': row['obs'],
+          	}
+					})
+				})
+
+				response.send({
+  				"type": "FeatureCollection",
+  				"features": result
+  			})
+		    response.end();
+			}
+		});
+
+	}
+
 	Map.extent = function(request, response) {
 
 		var type = request.param('type', '');
@@ -83,20 +117,47 @@ module.exports = function(app){
 
 	}
 
-	Map.deforestationTimeseries = function(request, response) {
-
+	Map.indicators = function(request, response) {
+		var year = request.param('year', 2017);
 		var type = request.param('type', '');
 		var region = request.param('region', '');
 		var regionFilter = Internal.regionFilter(type, region)
 
-		sqlQuery1 = " SELECT classname, source, SUM(areamunkm) as areamunkm " +
+		var classname = 'D_'+year
+		if (year < 2013 && year % 2 != 0)
+			classname = 'D_'+(Number(year)+1)
+
+		var sqlQuery = " SELECT classname, source, SUM(areamunkm) as areamunkm " +
 								" FROM prodes_cerrado " +
-								( regionFilter == '' ? '' : 'WHERE TRUE=TRUE ' + regionFilter ) +
+								" WHERE classname != 'AGUA' " + Internal.regionFilter(type, region) +
+								" GROUP BY 1,2 " +
+								" ORDER BY classname ASC;";
+		
+		client.query(sqlQuery, (err, res) => {
+			
+			response.send(res.rows)
+			response.end()
+		})
+	}
+
+	Map.deforestationTimeseries = function(request, response) {
+
+		var type = request.param('type', '');
+		var region = request.param('region', '');
+		var indicatorYear = Number(request.param('year', 2016));
+		var regionFilter = Internal.regionFilter(type, region)
+
+		sqlQuery1 = " SELECT year, source, SUM(areamunkm) as areamunkm " +
+								" FROM prodes_cerrado " +
+								" WHERE classname NOT IN ('AGUA') " + regionFilter +
 								" GROUP BY 1,2;";
 
 		var result = []
 
 		client.query(sqlQuery1, (err, res) => {
+
+			var anthropicArea = 0
+			var deforestationArea = 0
 
 			var resultBySource = {
 				prodes_amz: {},
@@ -104,16 +165,18 @@ module.exports = function(app){
 			}
 
 			res.rows.forEach(function(row) {
-				year = Number(row['classname'].split('_')[1])
-				source = row['source']
+				var year = Number(row['year'])
+				var area = Number(row['areamunkm'])
+				var source = row['source']
 				
-				if(!isNaN(year) && year > 2000) {
-					
+				if(year > 2000) {
 					if (!resultBySource[year])
 						resultBySource[source][year] = 0.0
 					
-					resultBySource[source][year] += Number(row['areamunkm'])
+					resultBySource[source][year] += area
 
+				} else {
+					anthropicArea += area
 				}
 
 			})
@@ -136,8 +199,12 @@ module.exports = function(app){
 			var series = []
 
 			for(var year in resultBySource['prodes_cerrado']) {
-				if(resultBySource['prodes_amz'][year] && year != 2008) {
-					resultBySource['prodes_cerrado'][year] += resultBySource['prodes_amz'][year]
+				if(resultBySource['prodes_amz'][year]) {
+					if(year != 2008) {
+						resultBySource['prodes_cerrado'][year] += resultBySource['prodes_amz'][year]
+					} else if (year <= indicatorYear) {
+						anthropicArea += resultBySource['prodes_amz'][year]
+					}
 				}
 
 				series.push({
@@ -145,11 +212,23 @@ module.exports = function(app){
 					'value': resultBySource['prodes_cerrado'][year],
 					'year': year
 				})
+
+				
+				if(year <= indicatorYear) {
+					anthropicArea += resultBySource['prodes_cerrado'][year]
+				} else if(year == (indicatorYear+1)) {
+					deforestationArea = resultBySource['prodes_cerrado'][year]
+				}
 			}
 
 			result.push({
 				name: "Área desmatada",
-				series: series
+				series: series,
+				indicator: {
+					anthropic: anthropicArea,
+					deforestation: deforestationArea,
+					cerrado: 2045064
+				}
 			})
 
 		  response.send(result)

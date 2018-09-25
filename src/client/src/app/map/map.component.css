@@ -111,7 +111,19 @@ hr {
 .card-swipe {
 	position: absolute;
 	left: 5px;
-	top: 295px;
+  top: 365px;
+	width: 360px;
+	background-color: #FFF;
+	color: #666;
+	text-align: left;
+	z-index: 1000;
+	border: 1px solid #808080;
+}
+
+.card-info {
+	position: absolute;
+	right: 5px;
+  top: 5px;
 	width: 360px;
 	background-color: #FFF;
 	color: #666;
@@ -164,9 +176,44 @@ hr {
 }
 
 .label-visual-inspect {
-	margin-left: 10px;
+	margin-left: 2px;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	font-size: 14px;
 	font-weight: bold;
+}
+
+.info-icon {
+	width: 18px;
+	height: 18px;
+	margin-left: 40px;
+}
+
+.info-text {
+	font-size: 14px;
+	margin-left: 2px;
+}
+
+.layer-switch {
+	margin-bottom: 5px;
+}
+
+.font-14 {
+	font-size: 14px;
+}
+
+.deforestation-viz {
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+.label-deforestation {
+	background-color: #ffffff;
+	border: 0px;
+}
+
+.field-uso {
+	text-align: center;
+	padding-top: 5px;
+	font-size: 14px;
 }
