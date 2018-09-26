@@ -97,13 +97,13 @@
           </div>
         </div>
       </div>
-      <div class="card card-info" >
+      <div class="card card-info" [hidden]="closeInfo">
         <div class="card-header">
             Informações
             <button type="button" class="collapse-btn btn btn-dark btn-sm float-right" (click)="closeInfo = !closeInfo"
-                  [attr.aria-expanded]="!closeInfo" aria-controls="info">X</button>
+                  aria-controls="info">X</button>
         </div>
-        <div style="padding: 7px; margin: 0px;" id="info" class="card-block dpat-layer-group" [ngbCollapse]="closeInfo">
+        <div style="padding: 7px; margin: 0px;" id="info" class="card-block dpat-layer-group">
           <img style="width: 345px;" src="{{infoFeature.foto}}">
           <div class="field-uso">
             <b>{{infoFeature.uso}}</b>

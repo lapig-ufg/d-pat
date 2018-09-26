@@ -95,6 +95,7 @@ export class MapComponent implements OnInit {
 
 	collapseLayer: boolean;
 	collapseCharts: boolean;
+	closeInfo: boolean;
 	sliderOptions: any;
 	indicator: any;
 	polValidados: any;
@@ -152,10 +153,11 @@ export class MapComponent implements OnInit {
 
     this.deforestationOpts = [
     	{ label: 'Todos os polígonos', value: 'ALL' },
-    	{ label: 'Polígonos validados em campo', value: 'VALIDATED' },
-    	{ label: 'Em base municipal', value: 'MUNICIPALITIES' }
+    	{ label: 'Polígonos validados em campo', value: 'VALIDATED' }
     ]
     this.selectedDeforestationOpt = this.deforestationOpts[0]
+
+    this.closeInfo = true;
 
     this.infoFeature = {
   		foto: '',
@@ -305,6 +307,7 @@ export class MapComponent implements OnInit {
     select.on('select', function(event) {
 	    	if(event.selected.length > 0) {
 	    		var featureSel = event.selected[0]
+	    		this.closeInfo = false;
 		    	this.infoFeature = {
 		    		foto: '/assets/fotos_campo/' + featureSel.get('foto'),
 		    		uso: featureSel.get('uso'),
