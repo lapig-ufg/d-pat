@@ -192,7 +192,7 @@ export class MapComponent implements OnInit {
      return val + ' km2';
 	}
 
-	private updateDeforestationOpt() {
+	updateDeforestationOpt() {
 		if (this.selectedDeforestationOpt.value == 'VALIDATED') {
 			
 			this.fieldValidation.setVisible(true);
@@ -216,7 +216,7 @@ export class MapComponent implements OnInit {
 		}
 	}
 
-  private updateRegion(region) {
+  updateRegion(region) {
   	if(region == this.defaultRegion)
   		this.valueRegion = ''
 
@@ -224,7 +224,7 @@ export class MapComponent implements OnInit {
   	this.updatePeriod()	
   }
 
-	private mosaicOpacity(event) {
+	mosaicOpacity(event) {
 		var mosaicObj = this.landsat
 		if (this.sentinel.visible)
 			mosaicObj = this.sentinel
@@ -232,7 +232,7 @@ export class MapComponent implements OnInit {
 		mosaicObj.layer2.setOpacity(event.value)
 	}
 
-	private mosaicVisible(mosaicObj, value) {
+	mosaicVisible(mosaicObj, value) {
 		if (mosaicObj != this.landsat && this.landsat.visible) {
 			this.landsat.layer1.setVisible(false)
 			this.landsat.layer2.setVisible(false)
@@ -247,7 +247,7 @@ export class MapComponent implements OnInit {
 		mosaicObj.layer2.setVisible(value);
 	}
 
-	private getResolutions(projection) {
+	getResolutions(projection) {
 		var projExtent = projection.getExtent();
     var startResolution = OlExtent.getWidth(projExtent) / 256;
     var resolutions = new Array(22);
@@ -258,7 +258,7 @@ export class MapComponent implements OnInit {
     return resolutions
 	}
 
-	private createVectorLayer(layerName, strokeColor, width) {
+	createVectorLayer(layerName, strokeColor, width) {
     return new VectorLayer({
     	name: layerName,
       source: new VectorSource(),
@@ -279,7 +279,7 @@ export class MapComponent implements OnInit {
     });
 	}
 
-	private createMap() {
+ createMap() {
 		this.createLayers()
     this.map = new OlMap({
       target: 'map',
@@ -347,7 +347,7 @@ export class MapComponent implements OnInit {
   	});*/
 	}
 
-	private getUrls(layername, filter) {
+	getUrls(layername, filter) {
 		
 		var result = []
 
@@ -368,7 +368,7 @@ export class MapComponent implements OnInit {
 		return result;
 	}
 
-	private createTMSLayer(layername, visible, opacity, filter) {
+ createTMSLayer(layername, visible, opacity, filter) {
 		return new OlTileLayer({
 			source: new OlXYZ({
 				urls: this.getUrls(layername, filter)
@@ -379,7 +379,7 @@ export class MapComponent implements OnInit {
 		});
 	}
 
-	private parseParams(input) {
+	parseParams(input) {
 		input = input.replace(new RegExp('{start_year}', 'g'), this.selectedPeriod.startYear)
 		input = input.replace(new RegExp('{end_year}', 'g'), this.selectedPeriod.endYear)
 
@@ -394,7 +394,7 @@ export class MapComponent implements OnInit {
 		return input
 	}
 
-	private createLayers() {
+	createLayers() {
 		var olLayers: OlTileLayer[] = new Array();
 
 		this.sentinel = {
@@ -467,7 +467,7 @@ export class MapComponent implements OnInit {
 
 	}
 
-	private calculateTotalDeforestaton() {
+	calculateTotalDeforestaton() {
 		this.charts.deforestation = 0;
 		this.charts.timeseries[0].series.forEach(function(serie) {
 			if(this.mapDescriptor.years.start <= serie.year && serie.year <= this.mapDescriptor.years.end) {
@@ -476,7 +476,7 @@ export class MapComponent implements OnInit {
 		}.bind(this))
 	}
 
-	private changeChart(newChartType) {
+	changeChart(newChartType) {
 		this.chartType = newChartType;
 		if(newChartType == 'bioma') {
 			this.chartResult = this.charts.timeseries
@@ -485,7 +485,7 @@ export class MapComponent implements OnInit {
 		}
 	}
 
-	private updatePeriod() {
+	updatePeriod() {
 		
 		var l1Source = this.landsat.layer1.getSource()
 		l1Source.setUrls(this.getUrls(this.landsat.layername1, ''))
@@ -513,7 +513,7 @@ export class MapComponent implements OnInit {
 		this.updateCharts();
 	}
 
-	private addValidationPolygons() {
+	addValidationPolygons() {
 		var fieldValidationUrl = '/service/map/field-validation';
 		this.http.get(fieldValidationUrl).subscribe(fieldValResult => {
 				var features = (new GeoJSON()).readFeatures(fieldValResult, {
@@ -528,7 +528,7 @@ export class MapComponent implements OnInit {
 
 	}
 
-	private updateCharts() {
+	updateCharts() {
 
 		var regionParams = ''
 		if (this.selectRegion.type != '')
