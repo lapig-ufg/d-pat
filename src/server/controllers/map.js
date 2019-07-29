@@ -1,11 +1,17 @@
 var pg = require('pg');
+var fs = require('fs');
 
 module.exports = function(app){
 	var Map = {}
 	var Internal = {}
 
-	var conString = "postgres://postgres@localhost:5433/fip_cerrado";
-	var client = new pg.Client(conString);
+	var client = new pg.Client({
+	  user: 'postgres',
+	  host: '10.0.0.14',
+	  database: 'fip_cerrado',
+	  password: 'postgres',
+	  port: 5432,
+	});
 	client.connect();
 
 	Internal.regionFilter = function(type, region) {
@@ -17,10 +23,51 @@ module.exports = function(app){
   		return ''
 	}
 
+	Internal.getFiles = function(path) {
+		console.log(path, fs.existsSync(path))
+		if (fs.existsSync(path)) {
+	    return fs.readdirSync(path)
+	  } else{
+	  	return []
+	  }
+	}
+
+	Internal.fieldFiles = function(id) {
+
+		var fotosCamera = app.config.fieldDataDir + '/fotos_camera/' + id
+		var fotosDrone = app.config.fieldDataDir + '/fotos_drone/' + id
+		var videosDrone = app.config.fieldDataDir + '/videos_drone/' + id
+
+		return {
+			'videos_drone': Internal.getFiles(videosDrone),
+			'fotos_drone': Internal.getFiles(fotosDrone),
+			'fotos_camera': Internal.getFiles(fotosCamera)
+		}
+
+	}
+
+	/*
+	Just use HTTP straight-up. No need to use web sockets for one-way communication.
+	Use Express to serve that file statically. Then in your video tag, src="path/video.mp4".
+	*/
+
+	Map.fieldData = function(request, response) {
+		var id = request.param('id')
+		var category = request.param('category')
+		var filename = request.param('filename')
+
+		var filepath = app.config.fieldDataDir + '/' + category + '/' + id + '/' + filename
+
+		console.log(filepath)
+		response.sendFile(filepath);
+
+	}
+
 	Map.fieldValidation = function(request, response) {
 
-		var sqlQuery = "SELECT ST_AsGeoJSON(geom) geojson, foto_uso, uso, fito_viz, obs FROM prodes_cerrado_validados;";
-		
+		var sqlQuery = "SELECT ST_AsGeoJSON(geom) geojson, campo_id, data, cobertura, obs " +
+										"FROM prodes_cerrado_campo";
+		console.log(sqlQuery)
 		client.query(sqlQuery, (err, queryResult) => {
 			if (err) {
 				response.end()
@@ -29,14 +76,21 @@ module.exports = function(app){
 				var result = []
 
 				queryResult.rows.forEach(function(row) {
+
+					var campoId = row['campo_id']
+					var files = Internal.fieldFiles(campoId)
+
 					result.push({
 						'type': 'Feature',
           	'geometry': JSON.parse(row['geojson']),
           	'properties': {
-          		'foto': row['foto_uso'],
-          		'uso': row['uso'],
-          		'fito_viz': row['fito_viz'],
+          		'campo_id': campoId,
+          		'data': row['data'],
+          		'usocobertura': row['cobertura'],
           		'obs': row['obs'],
+          		'videos_drone': files['videos_drone'],
+          		'fotos_drone': files['fotos_drone'],
+          		'fotos_camera': files['fotos_camera']
           	}
 					})
 				})
@@ -92,6 +146,7 @@ module.exports = function(app){
 
 	Map.periods = function(request, response) {
 		sqlQuery = " SELECT DISTINCT classname FROM prodes_cerrado ORDER BY classname DESC;";
+		console.log(sqlQuery)
 
 		client.query(sqlQuery, (err, queryResult) => {
 			var result = []
@@ -147,33 +202,29 @@ module.exports = function(app){
 		var indicatorYear = Number(request.param('year', 2016));
 		var regionFilter = Internal.regionFilter(type, region)
 
-		sqlQuery1 = " SELECT year, source, SUM(areamunkm) as areamunkm " +
+		sqlQuery1 = " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
 								" FROM prodes_cerrado " +
-								" WHERE classname NOT IN ('AGUA') " + regionFilter +
-								" GROUP BY 1,2;";
+								" WHERE year IS NOT NULL " + regionFilter +
+								" GROUP BY 1;";
 
 		var result = []
-
+		console.log(sqlQuery1)
 		client.query(sqlQuery1, (err, res) => {
 
 			var anthropicArea = 0
 			var deforestationArea = 0
 
-			var resultBySource = {
-				prodes_amz: {},
-				prodes_cerrado: {}
-			}
+			var resultByYear = {}
 
 			res.rows.forEach(function(row) {
 				var year = Number(row['year'])
 				var area = Number(row['areamunkm'])
-				var source = row['source']
 				
 				if(year > 2000) {
-					if (!resultBySource[year])
-						resultBySource[source][year] = 0.0
+					if (!resultByYear[year])
+						resultByYear[year] = 0.0
 					
-					resultBySource[source][year] += area
+					resultByYear[year] += area
 
 				} else {
 					anthropicArea += area
@@ -182,42 +233,24 @@ module.exports = function(app){
 			})
 
 			for (i=2001; i < 2012; i = i + 2){
-				resultBySource['prodes_cerrado'][i] = resultBySource['prodes_cerrado'][i+1] / 2
-				resultBySource['prodes_cerrado'][i+1] = resultBySource['prodes_cerrado'][i+1] / 2
-			}
-
-			/*
-			for (i=2001; i <= 2008; i++){
-				resultBySource['prodes_amz'][i] = resultBySource['prodes_amz'][2008] / (2008 - 1988)
-			}*/
-
-			for (i=2009; i < 2012; i = i + 2){
-				resultBySource['prodes_amz'][i] = resultBySource['prodes_amz'][i+1] / 2
-				resultBySource['prodes_amz'][i+1] = resultBySource['prodes_amz'][i+1] / 2
+				resultByYear[i] = resultByYear[i+1] / 2
+				resultByYear[i+1] = resultByYear[i+1] / 2
 			}
 
 			var series = []
 
-			for(var year in resultBySource['prodes_cerrado']) {
-				if(resultBySource['prodes_amz'][year]) {
-					if(year != 2008) {
-						resultBySource['prodes_cerrado'][year] += resultBySource['prodes_amz'][year]
-					} else if (year <= indicatorYear) {
-						anthropicArea += resultBySource['prodes_amz'][year]
-					}
-				}
+			for(var year in resultByYear) {
 
 				series.push({
 					'name': year,
-					'value': resultBySource['prodes_cerrado'][year],
+					'value': resultByYear[year],
 					'year': year
 				})
-
 				
 				if(year <= indicatorYear) {
-					anthropicArea += resultBySource['prodes_cerrado'][year]
+					anthropicArea += resultByYear[year]
 				} else if(year == (indicatorYear+1)) {
-					deforestationArea = resultBySource['prodes_cerrado'][year]
+					deforestationArea = resultByYear[year]
 				}
 			}
 
@@ -244,7 +277,7 @@ module.exports = function(app){
 		if (year < 2013 && year % 2 != 0)
 			classname = 'D_'+(Number(year)+1)
 		
-		var stateQuery = " SELECT INITCAP(uf) AS region, source, SUM(areamunkm) as areamunkm " +
+		var stateQuery = " SELECT INITCAP(uf) AS region, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
 								" FROM prodes_cerrado " +
 								" WHERE classname = '" + classname + "'" + 
 								" GROUP BY 1,2 " +

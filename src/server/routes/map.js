@@ -6,6 +6,7 @@ module.exports = function (app) {
 	app.get('/service/map/search', map.search);
 	app.get('/service/map/extent', map.extent);
 	app.get('/service/map/field-validation', map.fieldValidation);
+	app.get('/service/map/field/:category/:id/:filename', map.fieldData);
 
 	app.get('/service/deforestation/timeseries', map.deforestationTimeseries);
 	app.get('/service/deforestation/states', map.deforestationStates);

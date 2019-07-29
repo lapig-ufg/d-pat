@@ -119,6 +119,11 @@ export class MapComponent implements OnInit {
 			state: {}
 		}
 
+		/*
+		this.urls = [
+    	'http://localhost:5501/ows'
+    ];*/
+
 		this.urls = [
     	'http://o1.lapig.iesa.ufg.br/ows',
     	'http://o2.lapig.iesa.ufg.br/ows',
@@ -153,7 +158,9 @@ export class MapComponent implements OnInit {
 
     this.deforestationOpts = [
     	{ label: 'Todos os polígonos', value: 'ALL' },
-    	{ label: 'Polígonos validados em campo', value: 'VALIDATED' }
+    	{ label: 'Validados em campo', value: 'VALIDATED' },
+    	{ label: 'Confirmados pelo BFast-Monitor', value: 'BFAST' },
+    	{ label: 'Com alta suceptibilidade', value: 'SUSCEP' }
     ]
     this.selectedDeforestationOpt = this.deforestationOpts[0]
 
@@ -409,15 +416,15 @@ export class MapComponent implements OnInit {
 		this.landsat = {
 			label: 'Mosaicos Landsat do Cerrado',
 			tooltip: 'Mosaico Landsat Tooltip',
-			layername1: "bi_ce_mosaico_landsat_30_{start_year}_lapig",
-			layername2: "bi_ce_mosaico_landsat_30_{end_year}_lapig",
-			visible: true,
+			layername1: "bi_ce_mosaico_landsat_completo_30_{start_year}_fip",
+			layername2: "bi_ce_mosaico_landsat_completo_30_{end_year}_fip",
+			visible: false,
 			opacity: 1
 		}
 
 		this.sucetibilidade = {
-			label: 'Sucetibilidade a Desmatamento',
-			layername: 'bi_ce_suscetibilidade_desmatamento_100_na_lapig',
+			label: 'Susceptibilidade a desmatamentos > 0.25 km2',
+			layername: 'bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig',
 			visible: false,
 			opacity: 1
 		}
@@ -425,7 +432,7 @@ export class MapComponent implements OnInit {
 		this.desmatamento = {
 			label: 'Desmatamentos PRODES',
 			layername: 'bi_ce_prodes_desmatamento_100_fip',
-			layerfilter: 'year = {end_year} AND baseline = FALSE {region_query}',
+			layerfilter: 'year = {end_year} {region_query}',
 			visible: true,
 			opacity: 1
 		}
@@ -433,7 +440,7 @@ export class MapComponent implements OnInit {
 		this.antropico = {
 			label: 'Área Antrópica até',
 			layername: 'bi_ce_prodes_antropico_100_fip',
-			layerfilter: '(year < {end_year} OR (year = {start_year} AND baseline = TRUE)) {region_query}',
+			layerfilter: '(year < {end_year} OR (year = {start_year})) {region_query}',
 			visible: false,
 			opacity: 1
 		}

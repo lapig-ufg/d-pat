@@ -8,6 +8,7 @@ module.exports = function(app) {
 		"dbpath": '/home/leandro/Tmp/FREL/d-pat.sqlite',
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
+		"fieldDataDir": '/home/leandro/Projects/campo/',
 		"mongo": {
 			"host": "localhost",
 			"port": "27017",
