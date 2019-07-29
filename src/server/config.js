@@ -5,14 +5,16 @@ module.exports = function(app) {
 	var config = {
 		"appRoot": appRoot, 
 		"clientDir": appRoot + "/../client/dist/",
-		"dbpath": '/home/leandro/Tmp/FREL/d-pat.sqlite',
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
 		"fieldDataDir": '/home/leandro/Projects/campo/',
-		"mongo": {
-			"host": "localhost",
-			"port": "27017",
-			"dbname": "tvi"
+		"pg": {
+			"user": 'postgres',
+		  "host": '10.0.0.14',
+		  "database": 'fip_cerrado',
+		  "password": 'postgres',
+		  "port": 5432,
+		  "debug": true
 		},
 		"port": 3000,
 	};

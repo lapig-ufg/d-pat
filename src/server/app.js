@@ -17,50 +17,51 @@ var http = require('http').Server(app);
 var cookie = parseCookie('LAPIG')
 
 load('config.js', {'verbose': false})
-.then('libs')
-.then('middleware')
+.then('database')
 .into(app);
-	
-app.use(compression());
-app.use(express.static(app.config.clientDir));
-app.set('views', __dirname + '/templates');
-app.set('view engine', 'ejs');
 
-var publicDir = path.join(__dirname, '');
+app.database.client.init(function() {
 
-app.use(requestTimeout({
-	'timeout': 1000 * 60 * 30,
-	'callback': function(err, options) {
-		var response = options.res;
-		if (err) {
-			util.log('Timeout: ' + err);
+	app.use(compression());
+	app.use(express.static(app.config.clientDir));
+	app.set('views', __dirname + '/templates');
+	app.set('view engine', 'ejs');
+
+	var publicDir = path.join(__dirname, '');
+
+	app.use(requestTimeout({
+		'timeout': 1000 * 60 * 30,
+		'callback': function(err, options) {
+			var response = options.res;
+			if (err) {
+				util.log('Timeout: ' + err);
+			}
+			response.end();
 		}
-		response.end();
-	}
-}));
+	}));
 
-app.use(responseTime());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(multer());
+	app.use(responseTime());
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: true }));
+	app.use(multer());
 
-app.use(function(error, request, response, next) {
-	console.log('ServerError: ', error.stack);
-	next();
-});
+	app.use(function(error, request, response, next) {
+		console.log('ServerError: ', error.stack);
+		next();
+	});
 
-load('models', {'verbose': false})
-.then('controllers')
-.then('routes')
-.into(app);
+	load('models', {'verbose': false})
+	.then('controllers')
+	.then('routes')
+	.into(app);
 
-http.listen(app.config.port, function() {
-	console.log('D-PAT Server @ [port %s] [pid %s]', app.config.port, process.pid.toString());
-	if(process.env.PRIMARY_WORKER) {
-		
-	}
-});
+	http.listen(app.config.port, function() {
+		console.log('D-PAT Server @ [port %s] [pid %s]', app.config.port, process.pid.toString());
+	});
 
-process.on('uncaughtException', function (err) {
-	console.error(err.stack);
-});
+	process.on('uncaughtException', function (err) {
+		console.error(err.stack);
+	});
+
+})
+

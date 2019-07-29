@@ -1,30 +1,13 @@
-var pg = require('pg');
 var fs = require('fs');
 
 module.exports = function(app){
 	var Map = {}
 	var Internal = {}
 
-	var client = new pg.Client({
-	  user: 'postgres',
-	  host: '10.0.0.14',
-	  database: 'fip_cerrado',
-	  password: 'postgres',
-	  port: 5432,
-	});
-	client.connect();
-
-	Internal.regionFilter = function(type, region) {
-		if (type == 'city')
-  		return " AND county = '"+region+"'"
-  	else if (type == 'state')
-  		return "AND uf = '"+region+"'"
-  	else
-  		return ''
-	}
+	var client = app.database.client
+	var queries = app.database.queries.map
 
 	Internal.getFiles = function(path) {
-		console.log(path, fs.existsSync(path))
 		if (fs.existsSync(path)) {
 	    return fs.readdirSync(path)
 	  } else{
@@ -46,11 +29,6 @@ module.exports = function(app){
 
 	}
 
-	/*
-	Just use HTTP straight-up. No need to use web sockets for one-way communication.
-	Use Express to serve that file statically. Then in your video tag, src="path/video.mp4".
-	*/
-
 	Map.fieldData = function(request, response) {
 		var id = request.param('id')
 		var category = request.param('category')
@@ -58,50 +36,45 @@ module.exports = function(app){
 
 		var filepath = app.config.fieldDataDir + '/' + category + '/' + id + '/' + filename
 
-		console.log(filepath)
 		response.sendFile(filepath);
 
 	}
 
 	Map.fieldValidation = function(request, response) {
+		
+		var query = queries.fieldValidation()
+		var callback = function(queryResult) {
+			var result = []
 
-		var sqlQuery = "SELECT ST_AsGeoJSON(geom) geojson, campo_id, data, cobertura, obs " +
-										"FROM prodes_cerrado_campo";
-		console.log(sqlQuery)
-		client.query(sqlQuery, (err, queryResult) => {
-			if (err) {
-				response.end()
-			} else {
-				
-				var result = []
+			queryResult.rows.forEach(function(row) {
 
-				queryResult.rows.forEach(function(row) {
+				var campoId = row['campo_id']
+				var files = Internal.fieldFiles(campoId)
 
-					var campoId = row['campo_id']
-					var files = Internal.fieldFiles(campoId)
-
-					result.push({
-						'type': 'Feature',
-          	'geometry': JSON.parse(row['geojson']),
-          	'properties': {
-          		'campo_id': campoId,
-          		'data': row['data'],
-          		'usocobertura': row['cobertura'],
-          		'obs': row['obs'],
-          		'videos_drone': files['videos_drone'],
-          		'fotos_drone': files['fotos_drone'],
-          		'fotos_camera': files['fotos_camera']
-          	}
-					})
+				result.push({
+					'type': 'Feature',
+        	'geometry': JSON.parse(row['geojson']),
+        	'properties': {
+        		'campo_id': campoId,
+        		'data': row['data'],
+        		'usocobertura': row['cobertura'],
+        		'obs': row['obs'],
+        		'videos_drone': files['videos_drone'],
+        		'fotos_drone': files['fotos_drone'],
+        		'fotos_camera': files['fotos_camera']
+        	}
 				})
+			})
 
-				response.send({
-  				"type": "FeatureCollection",
-  				"features": result
-  			})
-		    response.end();
-			}
-		});
+			response.send({
+				"type": "FeatureCollection",
+				"features": result
+			})
+	    response.end();
+
+		};
+
+		client.query(query, callback);
 
 	}
 
@@ -110,45 +83,41 @@ module.exports = function(app){
 		var type = request.param('type', '');
 		var region = request.param('region', '');
 
-		var sqlQuery = "SELECT ST_AsGeoJSON(geom) geojson FROM regions WHERE " +
-							 " type='"+type+"'"+
-							 " AND value='"+region+"';";
-		
-		client.query(sqlQuery, (err, queryResult) => {
-			if (err) {
-				response.end()
-			} else {
-				
-				var result = {
+		var query = queries.extent()
+		var params = [type, region]
+		var callback = function(queryResult) {
+			var result = {
           'type': 'Feature',
           'geometry': JSON.parse(queryResult.rows[0]['geojson'])
         }
 
 				response.send(result)
 		    response.end();
-			}
-		});
+		}
+
+		client.query(query, params, callback);
 
 	}
 
 	Map.search = function(request, response) {
 
 		var key = request.param('key', '');
-
-		sqlQuery = "SELECT text, value, type FROM regions WHERE text ILIKE '"+key+"%' AND type in ('state', 'city')";
-
-		client.query(sqlQuery, (err, queryResult) => {
+		
+		var query = queries.search()
+		var params = [ key+'%' ]
+		var callback = function(queryResult) {
 			response.send(queryResult.rows)
 	    response.end();
-		});
+		}
+
+		client.query(query, params, callback);
 
 	}
 
 	Map.periods = function(request, response) {
-		sqlQuery = " SELECT DISTINCT classname FROM prodes_cerrado ORDER BY classname DESC;";
-		console.log(sqlQuery)
-
-		client.query(sqlQuery, (err, queryResult) => {
+		
+		var query = queries.periods()
+		var callback = function(queryResult) {
 			var result = []
 	    var years = []
 
@@ -168,7 +137,9 @@ module.exports = function(app){
 
 			response.send(result)
 	    response.end();
-		});
+		}
+
+		client.query(query, callback);
 
 	}
 
@@ -176,23 +147,14 @@ module.exports = function(app){
 		var year = request.param('year', 2017);
 		var type = request.param('type', '');
 		var region = request.param('region', '');
-		var regionFilter = Internal.regionFilter(type, region)
-
-		var classname = 'D_'+year
-		if (year < 2013 && year % 2 != 0)
-			classname = 'D_'+(Number(year)+1)
-
-		var sqlQuery = " SELECT classname, source, SUM(areamunkm) as areamunkm " +
-								" FROM prodes_cerrado " +
-								" WHERE classname != 'AGUA' " + Internal.regionFilter(type, region) +
-								" GROUP BY 1,2 " +
-								" ORDER BY classname ASC;";
 		
-		client.query(sqlQuery, (err, res) => {
-			
-			response.send(res.rows)
+		var query = queries.indicators(type, region)
+		var callback = function(queryResult) {
+			response.send(queryResult.rows)
 			response.end()
-		})
+		}
+		
+		client.query(query, callback)
 	}
 
 	Map.deforestationTimeseries = function(request, response) {
@@ -200,23 +162,18 @@ module.exports = function(app){
 		var type = request.param('type', '');
 		var region = request.param('region', '');
 		var indicatorYear = Number(request.param('year', 2016));
-		var regionFilter = Internal.regionFilter(type, region)
 
-		sqlQuery1 = " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
-								" FROM prodes_cerrado " +
-								" WHERE year IS NOT NULL " + regionFilter +
-								" GROUP BY 1;";
-
-		var result = []
-		console.log(sqlQuery1)
-		client.query(sqlQuery1, (err, res) => {
-
+		var query = queries.deforestationTimeseries(type, region)
+		var callback = function(queryResult) {
+			
 			var anthropicArea = 0
 			var deforestationArea = 0
 
+			var result = []
 			var resultByYear = {}
 
-			res.rows.forEach(function(row) {
+			queryResult.rows.forEach(function(row) {
+				
 				var year = Number(row['year'])
 				var area = Number(row['areamunkm'])
 				
@@ -267,7 +224,9 @@ module.exports = function(app){
 		  response.send(result)
 			response.end()
 
-		})
+		}
+
+		client.query(query, callback)
 	}
 
 	Map.deforestationStates = function(request, response) {
@@ -276,14 +235,10 @@ module.exports = function(app){
 		var classname = 'D_'+year
 		if (year < 2013 && year % 2 != 0)
 			classname = 'D_'+(Number(year)+1)
-		
-		var stateQuery = " SELECT INITCAP(uf) AS region, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
-								" FROM prodes_cerrado " +
-								" WHERE classname = '" + classname + "'" + 
-								" GROUP BY 1,2 " +
-								" ORDER BY 3 DESC;";
 
-		var processStateRows = function(queryResult) {
+		var query = queries.deforestationStates()
+		var params = [ classname ]
+		var callback = function(queryResult) {
 			var resultBySource = {
 				prodes_amz: {},
 				prodes_cerrado: {}
@@ -314,14 +269,11 @@ module.exports = function(app){
 				})
 			}
 
-			return regionResult;
+			response.send(regionResult)
+			response.end()
 		}
 
-		client.query(stateQuery, (err, stateResult) => {
-			var state = processStateRows(stateResult)
-			response.send(state)
-			response.end()
-		})
+		client.query(query, params, callback)
 
 	}
 
@@ -335,30 +287,20 @@ module.exports = function(app){
 		if (year < 2013 && year % 2 != 0)
 			classname = 'D_'+(Number(year)+1)
 
-		var citiesQuery = " SELECT county AS name, INITCAP(uf) as uf," +
-									( Number(year) < 2013 ? "SUM(areamunkm)/2" : "SUM(areamunkm)" )  + " as value "+
-								" FROM prodes_cerrado " +
-								" WHERE classname = '" + classname + "' AND areamunkm > 0" +
-									( classname == 'D_2008' ? "AND source != 'prodes_amz'" : '' ) +
-									Internal.regionFilter(type, region) +
-								" GROUP BY 1,2 " +
-								" ORDER BY 3 DESC" +
-								" LIMIT 10;";
-
-		var processCitiesResult = function(citiesResult) {
+		var params = [ classname ]
+		var query = queries.deforestationCities(year, type, region)
+		var callback = function(queryResult) {
 			var index = 1;
 			for(var i=0; i < 10; i++) {
-				citiesResult.rows[i].index = index++ + 'º'
-				citiesResult.rows[i].value = Number(citiesResult.rows[i].value)
+				queryResult.rows[i].index = index++ + 'º'
+				queryResult.rows[i].value = Number(queryResult.rows[i].value)
 			}
-			return citiesResult.rows
+			
+			response.send(queryResult.rows)
+			response.end()
 		}
 
-		client.query(citiesQuery, (err, citiesResult) => {
-			var cities = processCitiesResult(citiesResult)
-			response.send(citiesResult.rows)
-			response.end()
-		})
+		client.query(query, params, callback)
 
 	}
 
