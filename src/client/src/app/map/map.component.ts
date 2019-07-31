@@ -477,7 +477,7 @@ export class MapComponent implements OnInit {
 	calculateTotalDeforestaton() {
 		this.charts.deforestation = 0;
 		this.charts.timeseries[0].series.forEach(function(serie) {
-			if(this.mapDescriptor.years.start <= serie.year && serie.year <= this.mapDescriptor.years.end) {
+			if(this.mapDescriptor.years.start <= serie.year && serie.year < this.mapDescriptor.years.end) {
 				this.charts.deforestation += serie.value
 			}
 		}.bind(this))
@@ -521,7 +521,7 @@ export class MapComponent implements OnInit {
 	}
 
 	addValidationPolygons() {
-		var fieldValidationUrl = '/service/map/field-validation';
+		var fieldValidationUrl = '/service/map/field';
 		this.http.get(fieldValidationUrl).subscribe(fieldValResult => {
 				var features = (new GeoJSON()).readFeatures(fieldValResult, {
 				  dataProjection : 'EPSG:4326',
@@ -551,6 +551,7 @@ export class MapComponent implements OnInit {
 		this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
 			this.charts.timeseries = timeseriesResult;
 			this.indicator = timeseriesResult[0].indicator;
+			console.log(this.indicator)
 			this.chartResult = this.charts.timeseries;
 		});
 		
@@ -585,7 +586,7 @@ export class MapComponent implements OnInit {
 
 	ngOnInit() {
 
-		this.http.get('/service/map/periods').subscribe(periods => {
+		this.http.get('/service/deforestation/periods').subscribe(periods => {
 			this.periods = periods
 			this.selectedPeriod = this.periods[0]
 			this.createMap();

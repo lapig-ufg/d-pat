@@ -8,6 +8,17 @@ module.exports = function(app) {
 		const config = app.config;
 		Internal['pool'] = new Pool(config['pg'])
 
+		Internal.prepareQuery = function(sqlQuery, params) {			
+			
+			Object.keys(params).forEach(function(name) {
+				sqlQuery = sqlQuery.replace("${"+name+"}%", "'" + params[name] + "%'")
+				sqlQuery = sqlQuery.replace("$%{"+name+"}", "'%" + params[name] + "'")
+				sqlQuery = sqlQuery.replace("${"+name+"}", "'" + params[name] + "'")
+			})
+			
+			return sqlQuery
+		}
+
 		Client.init = function(callback) {
 			Internal['pool'].connect((err, client, release) => {
 				if (err)
@@ -24,16 +35,20 @@ module.exports = function(app) {
 		Client.query = function(sqlQuery, params, callback) {
 			const start = Date.now()
 			
-			if (callback === undefined)
+			if (callback === undefined) {
 				callback = params
+				params = {}
+			}
 
-			return Internal['client'].query(sqlQuery, params, (err, result) => {
+			query = Internal.prepareQuery(sqlQuery, params)
+
+			return Internal['client'].query(query, (err, result) => {
 
 				if (err !== null)
 					console.error(err)
 				else if (config['pg']['debug']) {
 					const duration = Date.now() - start
-					console.log('Executed query', { sqlQuery, duration, rows: result.rowCount })
+					console.log('Executed query', { query, duration, rows: result.rowCount })
 				}
 
 				callback(result)

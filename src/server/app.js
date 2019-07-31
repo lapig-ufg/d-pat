@@ -18,6 +18,7 @@ var cookie = parseCookie('LAPIG')
 
 load('config.js', {'verbose': false})
 .then('database')
+.then('middleware')
 .into(app);
 
 app.database.client.init(function() {
