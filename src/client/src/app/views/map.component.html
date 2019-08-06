@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-md fixed-top barra-titulo navbar-title">
+  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 title-atlas-div">
+  	<div class="title-atlas">Deforestation Polygon Assessment Tool</div>
+  </div>
+  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 logos-atlas">
+    <a href="http://cepfcerrado.iieb.org.br/" target="_blank"><img  class="logo-cepf" src="assets/logo/fip.png" /></a>
+    <a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img  class="logo-lapig" src="assets/logo/lapig.png" /></a>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 dpat-ol-div">
+      <div id="map" class="dpat-ol-map"></div>
+      <div id="positionLayers">
+	      <div class= "titleWindows">
+	      		Camadas de Informações
+	        	<button type="button" class="collapse-btn btn btn-light btn-sm float-right" (click)="collapseLayer = !collapseLayer" [attr.aria-expanded]="!collapseLayer" aria-controls="camadageografica">-</button>
+	      </div>
+	      <div class="collapseLayer" [ngbCollapse]="collapseLayer">
+	      	<mat-tab-group class="layersConteudo">
+						<mat-tab label="Pastagem">
+							<mat-accordion>
+				      	<div id="layers_pastagens">
+				      		<div class="regions-row">
+										<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+										  <ng-template #rt let-r="result" let-t="term">
+											  <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+											</ng-template>
+										  <input id="typeahead-http" type="text" class="form-control searchRegion" [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search" placeholder="Escolha um bioma / estado / município..." (selectItem)="updateRegion($event.item)" [resultTemplate]="rt" [inputFormatter]="formatter"/>
+										  <img [hidden]="selectRegion == defaultRegion" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+										  <span *ngIf="searching">localizando...</span>
+										  <div class="invalid-feedback" *ngIf="searchFailed">Desculpe, Região não encontrada.</div>
+										</div>
+								  </div>
+								  <div class="row" *ngFor="let groups of descriptor.groups">
+									  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+											<div >
+												<mat-expansion-panel [expanded] = groups.group_expanded>
+													<mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'" class="expansion-header-layer">
+														<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
+													</mat-expansion-panel-header>
+													<div class="layersContent" *ngFor="let layer of groups.layers">
+														<mat-checkbox class="example-margin" (change)="changeVisibility(layer, $event)" [checked]=layer.visible>
+															{{layer.label}}
+														</mat-checkbox>
+														<div style="padding-left: 8%">
+															<mat-form-field style="margin-right: 15%; width: 130px">
+															  <mat-label>Tipo</mat-label>
+															  <mat-select (selectionChange)="changeVisibility(layer)" [(value)]="layer.selectedType">
+															  	<mat-option *ngFor="let type of layer.types" [value]="type.value">
+														        {{type.Viewvalue}}
+														      </mat-option>
+															  </mat-select>
+                              </mat-form-field>
+                              <span *ngFor="let type of layer.types" [hidden]="type.value != layer.selectedType">
+                                <mat-form-field *ngIf="type.times">
+                                  <mat-label>{{type.timeLabel}}</mat-label>
+                                    <mat-select (selectionChange)="updateSourceLayer(type)" [(value)]="type.timeSelected">
+                                      <mat-option *ngFor="let times of type.times" [value]="times.value">
+                                        {{times.Viewvalue}}
+                                      </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                              </span>
+														</div>
+													</div>
+												</mat-expansion-panel>
+											</div>
+										</div>
+									</div>
+								</div>
+							</mat-accordion>
+						</mat-tab>
+						<mat-tab label="Mapa Base">
+							<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
+								<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)" [(ngModel)]="basemap.visible">
+									{{basemap.viewValue}}
+								</mat-slide-toggle>
+							</div>
+						</mat-tab>
+						<mat-tab label="Limites">
+							<div *ngFor="let limits of descriptor.limits">
+								<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
+									<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)" [(ngModel)]="name_limits.visible" class="slideEstados" >
+										{{name_limits.Viewvalue}}
+									</mat-slide-toggle>
+								</div>
+							</div>
+						</mat-tab>
+					</mat-tab-group>
+				</div>
+			</div>
+    </div>
+  </div>
+</div>

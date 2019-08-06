@@ -34,7 +34,7 @@ module.exports = function(app){
 	Controller.timeseries = function(request, response) {
 
 		var queryResult = request.queryResult
-		var indicatorYear = Number(request.param('year', 2017));;
+		var indicatorYear = Number(request.param('year', 2018));;
 
 		var anthropicArea = 0
 		var deforestationArea = 0
@@ -76,7 +76,7 @@ module.exports = function(app){
 
 			if(year < indicatorYear) {
 				anthropicArea += resultByYear[year]
-			} else if(year == (indicatorYear+1)) {
+			} else if(year == (indicatorYear)) {
 				deforestationArea = resultByYear[year]
 			}
 		}

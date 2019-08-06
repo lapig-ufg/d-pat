@@ -1,0 +1,564 @@
+html, body { margin:0; height: 100%;}
+
+.bckgdisabled {
+	background-color: #e9ecef !important;
+}
+
+.container-fluid {
+	margin-top: 55px;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.card {
+	border-radius: 0px;
+}
+
+.custom-select, .form-control-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
+	border-radius: 0px;
+}
+
+.dpat-ol-div {
+	padding: 0px;
+}
+
+.dpat-ol-map {
+	height: calc(100vh - 55px); /* 100% of the viewport height - navbar height */
+}
+
+.ol-zoom-in, .ol-zoom-out {
+	background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.card-header {
+	padding: 10px;
+}
+
+.card-text {
+	text-align: center;
+	margin-bottom: 0;
+	font-weight: bold;
+}
+
+.card-body {
+	padding:5px; 
+	font-size: 13px;
+}
+
+#positionheaders {
+  padding: 10px;
+}
+
+#positionLayers {
+  position: absolute; 
+  left: 2%;
+  /*bottom: 2%;*/
+  /*height: 90%;*/
+  min-width: 320px;
+  top: 4%;
+  width: 22%;
+  background-color: #FFF;
+  color: #666;
+  text-align: left;
+  z-index: 1000;
+  /*border: 1px solid #808080;*/
+  opacity: .93;
+}
+
+#positionCharts {
+  position: absolute; 
+  right: 1%; 
+  bottom: 2%;
+  width: 600px;
+  background-color: #FFF;
+  color: #666;
+  text-align: left;
+  z-index: 1000;
+  border: 1px solid #808080;
+  opacity: .93;
+}
+
+#positionLegend {
+	position: absolute; 
+  right: 1%;
+  top: 4%;
+  width: 350px;
+  background-color: #FFF;
+  color: #666;
+  text-align: left;
+  z-index: 1000;
+  border: 1px solid #808080;
+  opacity: .93;
+}
+
+.layersConteudo {
+  max-height: 800px;
+  overflow: auto;
+}
+
+/*.collapseLayer {
+	height: 86%
+}*/
+
+.searchRegion {
+	border: 1px solid #d1d1d1;
+}
+
+.row-box-name {
+	padding-top: 10px;
+	padding-left: 20px;
+}
+
+.layer-name {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.navbar-title {
+	border-bottom: 5px solid #66bb6a; 
+	background-color: #FFF;
+	padding: 13px 0;
+}
+
+.layers-indicator {
+	font-size: 0.9rem;
+	/*padding-left: 60px;*/
+	padding-bottom: 5px;
+	margin-right: 0px !important;
+	flex-wrap: nowrap;
+}
+
+.value-indicators {
+	padding-left: 5px;
+	display: inline;
+}
+
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}
+
+.icon-info {
+	font-weight: bold;
+	font-size: 15px;
+	color: black;
+	background-color: #d1d1d1;
+	border-radius: 15px;
+}
+
+.options-radio-button {
+	padding-left: 10%;
+	padding-top: 5%;
+}
+
+.regions-row {
+	padding: 20px 0px 12px 0px;
+}
+
+.mat-form-field{
+	width: 65px;
+}
+
+.mat-icon-button {
+	width: 20px;
+	height: 20px;
+	line-height: 0px;
+}
+
+.mat-form-field-infix{
+	padding: 0px  !important;
+	border-top: 0px !important;
+}
+
+.font-size-geral {
+	padding-left: 0px;
+	font-size: 0.9rem;
+}
+
+.legendasConteudo {
+	max-height: 320px;
+  	overflow: auto;
+  	overflow-x: hidden;
+}
+
+h6 {
+	font-size: 0.98rem;
+	margin-left: 15px; 
+	margin-top: 10px;
+}
+
+.charts {
+	padding-bottom: 10px;
+}
+
+.table-municipios {
+	margin: 15px;
+	width: 95%;
+	max-width: 95%;
+	font-size: 12px;
+}
+
+.collapse-btn {
+	padding: 0px;
+	font-weight: bold;
+	width: 30px;
+  border-color: #d1d1d1;
+}
+
+.titleWindows {
+	color: #424242;
+	background-color: #ffd54f;
+	padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #424242;
+  font-size: 20px;
+}
+
+.title-atlas {
+	color: #585858;
+	font-weight: bold;
+	font-size: 25px; 
+}
+
+.title-atlas-div {
+	text-align: left;
+	/* padding-left: 0px; */
+}
+
+.paddingLayerLegend {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.baseMap {
+	padding: 20px 10px 5px 30px
+}
+
+.logos-atlas {
+	text-align: right;
+}
+
+.logo-cepf {
+	height: 39px;
+	margin-right: 8px;
+	margin-top: 5px;
+}
+
+.logo-lapig {
+	height: 40px;
+	margin-left: 8px;
+}
+
+.clear-region-btn {
+	height: 18px;
+	position: absolute;
+	left: 88%;
+	top: 10px;
+	cursor: pointer;
+	opacity: 0.8;
+}
+
+.button-csv {
+	color: #707070 !important;
+} button {
+	color: #707070 !important;
+}
+
+.button-shp{
+	text-align: left;
+} button {
+	color: #707070 !important;
+}
+
+.buttons-download-past {
+	padding-left: 6%;
+}
+
+.buttons-download {
+	padding-bottom: 25px;
+	margin-right: 0px;
+}
+
+.nameLayers {
+	/*font-size: 0.98rem;*/
+	color: #eeeeee;
+}
+
+.collapse-btn {
+	padding: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: #424242;
+	border-color: #424242;
+	margin-left: 15px;
+	color: white !important;
+}
+
+.separacaoLayers {
+	border-top: 1px solid #d1d1d1;
+}
+
+.optionPontosTVI {
+	margin-left: 5%;
+}
+
+.fotosCampo {
+	text-align: center;
+	max-width: 320px;
+	max-height: 190px;
+	padding: 10px;
+}
+
+.conteinerFotosCampo {
+  padding-bottom: 5%;
+  padding-top: 5%;
+  text-align: center;
+}
+
+.instrucoesPontosCampo {
+  height: auto;
+  width: auto;
+  text-align: center;
+  padding-top: 20px;
+}
+
+/*#dropdowYearRebanho {
+	padding-left: 22%;
+}*/
+
+@media (max-width: 600px) { 
+	.title-atlas {
+		font-size: 1em;
+	}
+
+	.value-indicators {
+		font-size: 0.8em;
+	}
+
+	.logo-lapig {
+		height: 20px;
+		margin-left: 0px;
+	}
+
+	.logo-cepf {
+		height: 20px;
+	}
+
+	.barra-titulo {
+		padding-top: 10px;
+		padding-bottom: 0px;
+	}
+
+	.buttons-download,
+	.buttonsDisplay {
+		display: none
+	}
+
+	#dropdowYearRebanho, 
+	.button-csv {
+		padding-left: 33%
+	}
+
+	.layers-indicator {
+		padding-bottom: 5px;
+	}
+
+	#positionCharts {
+		width: 350px;
+		max-height: 287px;
+	}
+
+	h6 {
+		font-size: 0.8rem;
+	}
+
+	.titleWindows {
+		font-size: 0.95em
+	}
+
+	.table-municipios {
+		font-size: 0.6em;
+	}
+
+	.mat-tab-label-container {
+		height: 40px !important;
+	}
+
+	.graficoEstados {
+		max-width: 78%;
+		max-height: 177px;
+	}
+
+	#positionLegend {
+		width: 220px;
+	}
+
+	.legendasConteudo {
+		max-height: 150px;
+	}
+
+	.paddingLayerLegend {
+		padding-top: 0px;
+	}
+
+}
+
+@media (min-width: 1000px) and (max-width: 1400px) {
+
+	.legendasConteudo {
+		max-height: 200px;
+	}
+
+	.titleWindows {
+		font-size: 0.95em
+	}
+
+	h6 {
+		font-size: 0.8rem;
+	}
+
+	.table-municipios {
+		font-size: 0.6em;
+	}
+
+	.logo-cepf {
+		height: 20px;
+	}
+
+	.title-atlas {
+		font-size: 1em;
+	}
+
+	.logo-lapig {
+		height: 20px;
+		margin-left: 0px;
+	}
+
+	.container-fluid {
+		margin-top: 40px;
+	}
+
+	.dpat-ol-map {
+		height: calc(100vh - 40px); /* 100% of the viewport height - navbar height */
+	}
+
+	.layersConteudo {
+	  	max-height: 510px;
+	  }
+
+  	.nameLayers {
+		font-size: 0.92rem;
+		padding-left: 5px;
+		padding-bottom: 5px;
+	}
+
+	.value-indicators {
+		font-size: 0.8em;
+	}
+
+	.layers-indicator {
+		font-size: 0.85rem;
+	}
+
+	.font-size-geral {
+		font-size: 0.85rem;
+	}
+
+	#dropdowYearRebanho,
+	#dropdownPoints {
+		font-size: 0.9rem;
+	}
+}
+
+.iconInfo {
+	font-size: 20px;
+}
+
+@media (min-width: 1400px) and (max-width: 1700px) {
+	.layersConteudo {
+  	max-height: 720px;
+  }
+}
+
+@media (height: 1280px) and (width: 1240px) {
+	.layersConteudo {
+  	max-height: 800px;
+  }
+}
+
+.stylePercentual {
+	/*padding-left: 5px;*/
+	font-size: 0.7rem;
+	/*display: inline;*/
+}
+
+.legend_Graphic {
+	position: absolute;
+	right: 2%
+}
+
+#seriesTooltipTemplate {
+	display: none !important;
+}
+
+.slider-layer {
+	text-align: center;
+    padding-right: 0px;
+    padding-top: 3%;
+}
+
+.expansion-layer {
+	padding-left: 4.5%;
+}
+
+.layersContent {
+	padding: 1.5% 4%;
+}
+
+.expansion-header-layer {
+	padding-left: 0px;
+}
+
+.expansion-header-layer-legend {
+	margin-left: 0px;
+    margin-top: 0px;
+}
+
+#dropdownPoints {
+	margin-top: -20px;
+	padding-left: 10px;
+}
+
+.info_clique_mapa {
+	margin: 0px;
+    font-size: 0.7rem;
+    text-align: right;
+    padding-right: 14px;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  background: #4e4e4e;
+ 	color: #eeeeee;
+  border: solid #eeeeee 3px;
+}
+
+.mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header.mat-expanded:hover {
+  background: #f3f3f3;
+  color: #4e4e4e;
+  border: solid #eeeeee 3px;
+}
+
+.mat-expansion-panel-header {
+  background: #4e4e4e;
+  color: #eeeeee;
+  border: solid #eeeeee 3px;
+}
+
+.mat-expansion-panel-header:focus, .mat-expansion-panel-header:hover {
+  background: #f3f3f3;
+  color: #4e4e4e;
+  border: solid #eeeeee 3px;
+}
