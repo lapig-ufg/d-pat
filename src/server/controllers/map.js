@@ -87,13 +87,5 @@ module.exports = function(app){
 
 	}
 
-	Controller.search = function(request, response) {
-
-		var queryResult = request.queryResult
-		response.send(queryResult.rows)
-	  response.end();
-
-	}
-
 	return Controller;
 }

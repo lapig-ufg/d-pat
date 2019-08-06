@@ -31,14 +31,6 @@ module.exports = function(app){
 
 	}
 
-	Controller.indicators = function(request, response) {
-		
-		var queryResult = request.queryResult
-		response.send(queryResult.rows)
-		response.end()
-
-	}
-
 	Controller.timeseries = function(request, response) {
 
 		var queryResult = request.queryResult
@@ -163,6 +155,7 @@ module.exports = function(app){
 	Controller.largest = function(request, response) {
 
 		var queryResult = request.queryResult
+		
 		response.send(queryResult.rows[0])
 		response.end()
 

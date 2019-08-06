@@ -11,8 +11,15 @@ module.exports = function(app) {
 		return merge(queriesOfController.defaultParams, request.params, request.query, request.body);
 	}
 
+	Internal.defaultController = function(request, response) {
+		var queryResult = request.queryResult
+		response.send(queryResult.rows)
+		response.end()
+	}
+
 	return function(request, response, next) {
 		
+		var hasController = (request.route.stack.length > 1)
 		var pathParts = request.path.split('/')
 		var controller = pathParts[2]
 		var method = pathParts[3]
@@ -26,7 +33,12 @@ module.exports = function(app) {
 
 			var callback = function(queryResult) {
 				request.queryResult = queryResult
-				next()
+
+				if (hasController) {
+					next()
+				} else {
+					Internal.defaultController(request, response)
+				}
 			}
 			
 			client.query(query, params, callback)

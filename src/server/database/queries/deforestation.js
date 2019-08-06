@@ -4,7 +4,8 @@ module.exports = function(app) {
 	var Query = {};
 
 	Query.defaultParams = {
-		'year': 2017
+		'year': 2017,
+		'amount': 1
 	}
 
 	Internal.regionFilter = function(type, region) {
@@ -15,13 +16,7 @@ module.exports = function(app) {
   	else
   		return ''
 	}
-
-	Query.largest = function() {
-		return "SELECT view_date,source,classname,areamunkm,county,uf,sucept_desmat,sucept_desmat_peq,sucept_desmat_grd,bfm_pct,year " +
-		" FROM prodes_cerrado WHERE year = ${year}" +
-		" ORDER BY areamunkm DESC"
-	}
-
+	
 	Query.periods = function() {
 		return "SELECT DISTINCT classname FROM prodes_cerrado ORDER BY classname DESC";
 	}
@@ -68,6 +63,10 @@ module.exports = function(app) {
 						" GROUP BY 1,2 " +
 						" ORDER BY 3 DESC" +
 						" LIMIT 10;";
+	}
+
+	Query.largest = function(params) {
+		return "SELECT view_date,county,uf, ST_ASGEOJSON(geom) FROM prodes_cerrado WHERE year = ${year} ORDER BY areamunkm DESC LIMIT ${amount}"
 	}
 
 	return Query;
