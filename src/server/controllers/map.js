@@ -130,6 +130,44 @@ module.exports = function(app){
 							]
 						},
             {
+              "id": "desmatamento",
+              "label": "Alertas - DETER-Cerrado",
+              "visible": false,
+              "selectedType": 'bi_ce_deter_desmatamento_100_fip', 
+              "types": [
+                {
+                  "value": "bi_ce_deter_desmatamento_100_fip", 
+                  "Viewvalue": "Polígonos", 
+                  "opacity": 1,
+                  "order": 1,
+                  "regionFilter": false,
+                  "timeLabel": "Período",
+                  "timeSelected": "view_date > (current_date - interval '90' day)",
+                  "timeHandler": "msfilter",
+                  "times": [
+                     { "value": "view_date > (current_date - interval '90' day)", "Viewvalue": "Últimos 90 dias" },
+                     { "value": "view_date > '2019-01-01'", "Viewvalue": "Desde 2019" },
+                     { "value": "view_date > '2018-01-01'", "Viewvalue": "Desde 2018" },
+                  ]
+                },
+                {
+                  "value": "bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip", 
+                  "Viewvalue": "Polígonos com alta suceptibilidade", 
+                  "opacity": 1,
+                  "order": 1,
+                  "regionFilter": false,
+                  "timeLabel": "Período",
+                  "timeSelected": "view_date > (current_date - interval '90' day)",
+                  "timeHandler": "msfilter",
+                  "times": [
+                     { "value": "view_date > (current_date - interval '90' day)", "Viewvalue": "Últimos 90 dias" },
+                     { "value": "view_date > '2019-01-01'", "Viewvalue": "Desde 2019" },
+                     { "value": "view_date > '2018-01-01'", "Viewvalue": "Desde 2018" },
+                  ]
+                }
+              ]
+            },
+            {
               "id": "",
               "label": "Susceptibilidade a Desmatamentos",
               "visible": false,
@@ -186,6 +224,26 @@ module.exports = function(app){
                      { "value": "year < 2018", "Viewvalue": "até 2018" }
                   ]
                  }
+              ]
+            },
+            {
+              "id": "terraclass",
+              "label": "Uso e Cobertura da Terra",
+              "visible": false,
+              "selectedType": 'bi_ce_uso_solo_terraclass_250_2013_mma', 
+              "types": [
+                {
+                  "value": "bi_ce_uso_solo_terraclass_250_2013_mma", 
+                  "Viewvalue": "TerraClass-Cerrado - 2013", 
+                  "opacity": 0.8,
+                  "order": 3
+                },
+                {
+                  "value": "bi_ce_cobertura_vegetal_250_2002_mma", 
+                  "Viewvalue": "PROBIO-Cerrado - 2002", 
+                  "opacity": 0.8,
+                  "order": 3
+                }
               ]
             }
           ]
