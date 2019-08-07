@@ -72,6 +72,8 @@ export class MapComponent implements OnInit {
   valueRegion: any;
   regionFilterDefault: any;
   urls: any;
+  
+	collapseLayer = false;
   searching = false;
   searchFailed = false;
   msFilterRegion = '';
