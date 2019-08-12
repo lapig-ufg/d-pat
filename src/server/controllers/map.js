@@ -256,7 +256,7 @@ module.exports = function(app){
             {
               "id": "satelite",
               "label": "Mosaico de Imagens",
-              "visible": true,
+              "visible": false,
               "selectedType": 'landsat', 
               "types": [
                 {

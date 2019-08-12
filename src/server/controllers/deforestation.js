@@ -39,7 +39,7 @@ module.exports = function(app){
 		var anthropicArea = 0
 		var deforestationArea = 0
 
-		var result = []
+		var result 
 		var resultByYear = {}
 
 		queryResult.rows.forEach(function(row) {
@@ -81,7 +81,7 @@ module.exports = function(app){
 			}
 		}
 
-		result.push({
+		result = {
 			name: "Área desmatada",
 			series: series,
 			indicator: {
@@ -89,7 +89,7 @@ module.exports = function(app){
 				deforestation: deforestationArea,
 				cerrado: 2045064
 			}
-		})
+		}
 
 	  response.send(result)
 		response.end()
@@ -119,20 +119,24 @@ module.exports = function(app){
 
 		})
 
-		var regionResult = []
+		var regionResult = [] ;
 
 		for(var region in resultBySource['prodes_cerrado']) {
 			if(resultBySource['prodes_amz'] && resultBySource['prodes_amz'][region] && year != 2008) {
 				resultBySource['prodes_cerrado'][region] += resultBySource['prodes_amz'][region]
 			}
 
-			regionResult.push({
+			regionResult.push ( {
 				'name': region,
 				'value': resultBySource['prodes_cerrado'][region],
 			})
 		}
 
-		response.send(regionResult)
+		var result = {
+			series : regionResult
+		}
+
+		response.send(result)
 		response.end()
 
 	}
@@ -147,7 +151,7 @@ module.exports = function(app){
 			queryResult.rows[i].value = Number(queryResult.rows[i].value)
 		}
 		
-		response.send(queryResult.rows)
+		response.send(queryResult)
 		response.end()
 
 	}

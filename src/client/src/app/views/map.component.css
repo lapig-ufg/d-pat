@@ -21,6 +21,7 @@ hr {
 	border-radius: 0px;
 }
 
+
 .dpat-ol-div {
 	padding: 0px;
 }
@@ -61,7 +62,7 @@ hr {
   top: 4%;
   width: 22%;
   background-color: #FFF;
-  color: #666;
+  color: #754c26;
   text-align: left;
   z-index: 1000;
   /*border: 1px solid #808080;*/
@@ -113,8 +114,8 @@ hr {
 }
 
 .layer-name {
-	font-weight: bold;
-	font-size: 20px;
+	font-weight: normal;
+	font-size: 16px;
 }
 
 .navbar-title {
@@ -173,6 +174,22 @@ hr {
 	border-top: 0px !important;
 }
 
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: rgb(54, 153, 67) !important;
+}
+
+/* active tab */
+/* ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+	color:red;
+	background-color: green;
+	} */
+	
+	/* ink bar */
+	::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+	background-color: var(--primary-color,rgb(20, 148, 27)) !important;
+	}
+
+
 .font-size-geral {
 	padding-left: 0px;
 	font-size: 0.9rem;
@@ -210,17 +227,23 @@ h6 {
 
 .titleWindows {
 	color: #424242;
-	background-color: #ffd54f;
+	background-color: #69ce69;
 	padding: 10px;
   font-weight: bold;
   border-bottom: 1px solid #424242;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .title-atlas {
-	color: #585858;
 	font-weight: bold;
-	font-size: 25px; 
+	font-size: 30px; 
+	font-family: Gill Sans, Verdana;
+	color: rgb(19, 134, 67);
+	margin: 0;
+	padding: 0px 0px 6px 0px;
+	line-height: 44px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
 }
 
 .title-atlas-div {

@@ -25,6 +25,9 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
+import {ChartModule} from 'primeng/chart';
+import {TableModule} from 'primeng/table';
+
 registerLocaleData(localePt);
 
 @NgModule({
@@ -33,6 +36,8 @@ registerLocaleData(localePt);
     MapComponent
   ],
   imports: [
+    TableModule,
+    ChartModule,
     BrowserAnimationsModule,
     MatExpansionModule,
     MatTabsModule,
