@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
 	dataStates: any;
 	dataCities: any;
 	chartResultCities: [];
-	periodSelected : any;
+	periodSelected: any;
 
 	optionsTimeSeries: any;
 	optionsStates: any;
@@ -141,11 +141,10 @@ export class MapComponent implements OnInit {
 		this.descriptor = {
 			"groups": []
 		}
-		
-		console.log("red 0 - " , this.selectRegion)
-		 this.periodSelected = { 
-			Viewvalue : '2017/2018'
-		 };
+
+		this.periodSelected = {
+			Viewvalue: '2017/2018'
+		};
 
 		this.updateCharts();
 		this.chartRegionScale = true;
@@ -283,7 +282,7 @@ export class MapComponent implements OnInit {
 				title: {
 					display: false,
 					text: 'Testing Title',
-					fontSize : 16
+					fontSize: 16
 				},
 				legend:
 				{
@@ -302,7 +301,7 @@ export class MapComponent implements OnInit {
 						data: statesResult['series'].map(element => element.value),
 						fill: true,
 						// borderColor: '#333333',
-						backgroundColor: '#e28100'
+						backgroundColor: '#fd7e14'
 					}
 				]
 			}
@@ -319,7 +318,6 @@ export class MapComponent implements OnInit {
 			// console.log("ttttt--- " , typeof(citiesResult), citiesResult)
 
 			this.chartResultCities = citiesResult['rows'];
-			// console.log("5- ", this.chartResultCities)
 		});
 	}
 
@@ -328,8 +326,6 @@ export class MapComponent implements OnInit {
 			this.valueRegion = ''
 
 		this.selectRegion = region;
-
-		console.log("re-", this.selectRegion)
 
 		if (this.selectRegion.type == 'city')
 			this.msFilterRegion = " county = '" + this.selectRegion.value + "'"
@@ -539,17 +535,21 @@ export class MapComponent implements OnInit {
 			this.updateSourceLayer(layer)
 		}
 	}
-	
+
 	private updateSourceLayer(layer) {
 		var source_layers = this.LayersTMS[layer.value].getSource();
 		source_layers.setUrls(this.parseUrls(layer))
 		source_layers.refresh();
 
-		this.periodSelected = layer['times'].find(element => element.value === layer.timeSelected);
-		console.log("perio - " , this.periodSelected)
 
-		this.updateCharts();
-		console.log("source layer -> ", layer)
+		if (layer['times']) {
+			this.periodSelected = layer['times'].find(element => element.value === layer.timeSelected);
+		}
+
+		if(layer['value'].search("bi_ce_prodes_desmatamento_100_fip") != -1){
+			// console.log("entrou - " , layer['value'])
+			this.updateCharts();
+		}
 	}
 
 	baseLayerChecked(base, e) {
@@ -604,7 +604,7 @@ export class MapComponent implements OnInit {
 
 		this.LayersTMS[layer.selectedType].setVisible(layer.visible)
 
-		console.log("vis ->", layer)
+		// console.log("vis ->", layer)
 	}
 
 	ngOnInit() {

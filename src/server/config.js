@@ -10,10 +10,12 @@ module.exports = function(app) {
 		"fieldDataDir": '/home/leandro/Projects/campo/',
 		"pg": {
 			"user": 'postgres',
-		  "host": '10.0.0.14',
+		//   "host": '10.0.0.14',
+		  "host": 'localhost',
 		  "database": 'fip_cerrado',
 		  "password": 'postgres',
-		  "port": 5432,
+		//   "port": 5432,
+		  "port": 5433,
 		  "debug": true
 		},
 		"port": 3000,
