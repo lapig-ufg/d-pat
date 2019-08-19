@@ -33,7 +33,7 @@
 											<input id="typeahead-http" type="text" class="form-control searchRegion"
 												[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
 												[ngbTypeahead]="search"
-												placeholder="Digite um Bioma, Estado ou Município..."
+												placeholder="Digite um Estado ou Município..."
 												(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
 												[inputFormatter]="formatter" />
 											<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
@@ -157,7 +157,7 @@
 										<td align="center">{{city.index}}</td>
 										<td align="center">{{city.name}}</td>
 										<td align="center">{{city.uf}}</td>
-										<td align="center">{{city.value | number }} ha</td>
+										<td align="center">{{city.value | number }} km²</td>
 									</tr>
 								</ng-template>
 							</p-table>

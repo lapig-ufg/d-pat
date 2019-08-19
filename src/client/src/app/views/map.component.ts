@@ -88,7 +88,6 @@ export class MapComponent implements OnInit {
 	regionFilterDefault: any;
 	urls: any;
 
-	collapseLayer = false;
 	searching = false;
 	searchFailed = false;
 	msFilterRegion = '';
@@ -109,6 +108,13 @@ export class MapComponent implements OnInit {
 	year: any;
 	LayersTMS = {};
 	limitsTMS = {};
+
+	collapseCharts = false;
+	collapseLayer = false;
+	selectedIndex: any;
+
+	isFilteredByCity = false;
+	isFilteredByState = false;
 
 	constructor(private http: HttpClient, private _service: SearchService) {
 
@@ -168,23 +174,7 @@ export class MapComponent implements OnInit {
 
 	formatter = (x: { text: string }) => x.text;
 
-	private zoomExtent() {
-		var map = this.map;
-		if (this.regionTypeFilter != '') {
-			this.http.get('service/map/extent?region=text=' + "'" + this.region_geom + "'").subscribe(extentResult => {
-				var features = (new GeoJSON()).readFeatures(extentResult, {
-					dataProjection: 'EPSG:4326',
-					featureProjection: 'EPSG:3857'
-				});
 
-				this.regionSource = this.regionsLimits.getSource();
-				this.regionSource.clear()
-				this.regionSource.addFeature(features[0])
-				var extent = features[0].getGeometry().getExtent();
-				map.getView().fit(extent, { duration: 1500 });
-			})
-		}
-	}
 
 	private selectedTimeFromLayerType(layerName) {
 		for (let layer of this.layersTypes) {
@@ -274,9 +264,22 @@ export class MapComponent implements OnInit {
 
 			}
 			this.optionsTimeSeries = {
+				tooltips: {
+					callbacks: {
+						label: function (tooltipItem, data) {
+							var percent = Math.round(data['datasets'][0]['data'][tooltipItem['index']] * 1000) / 1000;
+							return percent + ' km²';
+						}
+
+					}
+				},
 				scales: {
 					yAxes: [{
-						stacked: true
+						ticks: {
+							callback: function (value, index, values) {
+								return value + ' km²';
+							}
+						}
 					}]
 				},
 				title: {
@@ -291,34 +294,54 @@ export class MapComponent implements OnInit {
 			};
 		});
 
-		this.http.get(statesUrl).subscribe(statesResult => {
-
-			this.dataStates = {
-				labels: statesResult['series'].map(element => element.name),
-				datasets: [
-					{
-						label: 'Estados',
-						data: statesResult['series'].map(element => element.value),
-						fill: true,
-						// borderColor: '#333333',
-						backgroundColor: '#fd7e14'
-					}
-				]
-			}
-
-			this.optionsStates = {
-				legend:
-				{
-					position: 'bottom'
+		if (!this.isFilteredByState) {
+			this.http.get(statesUrl).subscribe(statesResult => {
+				this.dataStates = {
+					labels: statesResult['series'].map(element => element.name),
+					datasets: [
+						{
+							label: 'Estados',
+							data: statesResult['series'].map(element => element.value),
+							fill: true,
+							// borderColor: '#333333',
+							backgroundColor: '#fd7e14'
+						}
+					]
 				}
-			}
-		});
 
-		this.http.get(citiesUrl).subscribe(citiesResult => {
-			// console.log("ttttt--- " , typeof(citiesResult), citiesResult)
+				this.optionsStates = {
+					tooltips: {
+						callbacks: {
+							label: function (tooltipItem, data) {
+								var percent = Math.round(data['datasets'][0]['data'][tooltipItem['index']] * 1000) / 1000;
+								return percent + ' km²';
+							}
 
-			this.chartResultCities = citiesResult['rows'];
-		});
+						}
+					},
+					scales: {
+						xAxes: [{
+							ticks: {
+								callback: function (value, index, values) {
+									return value + ' km²';
+								}
+							}
+						}]
+					},
+					legend:
+					{
+						position: 'bottom'
+					}
+				}
+			});
+		}
+
+		if (!this.isFilteredByCity) {
+			this.http.get(citiesUrl).subscribe(citiesResult => {
+				// console.log("ttttt--- " , typeof(citiesResult), citiesResult)
+				this.chartResultCities = citiesResult['rows'];
+			});
+		}
 	}
 
 	updateRegion(region) {
@@ -327,15 +350,23 @@ export class MapComponent implements OnInit {
 
 		this.selectRegion = region;
 
-		if (this.selectRegion.type == 'city')
+		this.isFilteredByCity = false;
+		this.isFilteredByState = false;
+
+		if (this.selectRegion.type == 'city') {
 			this.msFilterRegion = " county = '" + this.selectRegion.value + "'"
-		else if (this.selectRegion.type == 'state')
+			this.isFilteredByCity = true;
+			this.isFilteredByState = true;
+		}
+		else if (this.selectRegion.type == 'state') {
 			this.msFilterRegion = "uf = '" + this.selectRegion.value + "'"
+			this.isFilteredByState = true;
+		}
 		else
 			this.msFilterRegion = ""
 
 		this.updateExtent()
-		this.updateCharts()
+		// this.updateCharts()
 		this.updateSourceAllLayer()
 
 	}
@@ -546,7 +577,7 @@ export class MapComponent implements OnInit {
 			this.periodSelected = layer['times'].find(element => element.value === layer.timeSelected);
 		}
 
-		if(layer['value'].search("bi_ce_prodes_desmatamento_100_fip") != -1){
+		if (layer['value'].search("bi_ce_prodes_desmatamento_100_fip") != -1) {
 			// console.log("entrou - " , layer['value'])
 			this.updateCharts();
 		}
