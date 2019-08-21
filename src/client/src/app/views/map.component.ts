@@ -102,6 +102,8 @@ export class MapComponent implements OnInit {
 
 	defaultRegion: any;
 
+
+	layersNames = [];
 	layersTypes = [];
 	basemapsNames = [];
 	limitsNames = [];
@@ -115,6 +117,13 @@ export class MapComponent implements OnInit {
 
 	isFilteredByCity = false;
 	isFilteredByState = false;
+
+	collapseLegends: boolean;
+	checked = true;
+
+	layerSusceptShow = 'areas-susceptibilidade-maiores-100';
+	checkedSuscept = true;
+
 
 	constructor(private http: HttpClient, private _service: SearchService) {
 
@@ -267,7 +276,7 @@ export class MapComponent implements OnInit {
 				tooltips: {
 					callbacks: {
 						label: function (tooltipItem, data) {
-							var percent = Math.round(data['datasets'][0]['data'][tooltipItem['index']] * 1000) / 1000;
+							var percent = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE');
 							return percent + ' km²';
 						}
 
@@ -277,7 +286,7 @@ export class MapComponent implements OnInit {
 					yAxes: [{
 						ticks: {
 							callback: function (value, index, values) {
-								return value + ' km²';
+								return value.toLocaleString('de-DE') + ' km²';
 							}
 						}
 					}]
@@ -313,7 +322,7 @@ export class MapComponent implements OnInit {
 					tooltips: {
 						callbacks: {
 							label: function (tooltipItem, data) {
-								var percent = Math.round(data['datasets'][0]['data'][tooltipItem['index']] * 1000) / 1000;
+								var percent = (parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE'));
 								return percent + ' km²';
 							}
 
@@ -322,8 +331,8 @@ export class MapComponent implements OnInit {
 					scales: {
 						xAxes: [{
 							ticks: {
-								callback: function (value, index, values) {
-									return value + ' km²';
+								callback: function (value) {
+									return value.toLocaleString('de-DE') + ' km²';
 								}
 							}
 						}]
@@ -626,16 +635,16 @@ export class MapComponent implements OnInit {
 	}
 
 	changeVisibility(layer, e) {
+
 		for (let layerType of layer.types) {
 			this.LayersTMS[layerType.value].setVisible(false)
 		}
 
-		if (e != undefined)
+		if (e != undefined) {
 			layer.visible = e.checked
+		}
 
 		this.LayersTMS[layer.selectedType].setVisible(layer.visible)
-
-		// console.log("vis ->", layer)
 	}
 
 	ngOnInit() {
@@ -646,12 +655,15 @@ export class MapComponent implements OnInit {
 
 			for (let group of this.descriptor.groups) {
 				for (let layer of group.layers) {
+					// console.log("lyat  ", layer)
+					if (layer.id != "satelite") {
+						this.layersNames.push(layer)
+					}
 					for (let layerType of layer.types) {
 
 						layerType.visible = false
 						if (layer.selectedType == layerType.value)
 							layerType.visible = layer.visible
-
 
 						this.layersTypes.push(layerType)
 						this.layersTypes.sort(function (e1, e2) {

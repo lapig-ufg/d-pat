@@ -32,8 +32,7 @@
 											</ng-template>
 											<input id="typeahead-http" type="text" class="form-control searchRegion"
 												[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-												[ngbTypeahead]="search"
-												placeholder="Digite um Estado ou Município..."
+												[ngbTypeahead]="search" placeholder="Digite um Estado ou Município..."
 												(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
 												[inputFormatter]="formatter" />
 											<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
@@ -132,7 +131,8 @@
 
 							<p-chart type="line" [data]="dataSeries" [options]="optionsTimeSeries"></p-chart>
 						</mat-tab>
-						<mat-tab label="Estados" *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'" id="tabGraficoLinhas">
+						<mat-tab label="Estados" *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'"
+							id="tabGraficoLinhas">
 							<h6>
 								<b>Áreas Desmatadas nos Estados: {{ periodSelected.Viewvalue }}</b>
 							</h6>
@@ -169,6 +169,27 @@
 					</mat-tab-group>
 				</div>
 			</div>
+
+			<div id="positionLegend">
+				<div class="titleWindows">
+					Legendas das Camadas
+					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
+						(click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends"
+						aria-controls="camadageografica">-</button>
+				</div>
+				<div class="legendasConteudo">
+					<mat-expansion-panel [expanded]="true" *ngFor="let layer of layersNames">
+						<mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'70px'"
+							class="expansion-header-layer" *ngIf="layer.visible">
+							{{layer.label}}
+						</mat-expansion-panel-header>
+						<img *ngIf="layer.visible"
+							src="http://ows.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer={{layer.selectedType}}&format=image/png">
+
+					</mat-expansion-panel>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
