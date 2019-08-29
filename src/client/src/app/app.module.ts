@@ -28,6 +28,8 @@ import localePt from '@angular/common/locales/pt';
 import {ChartModule} from 'primeng/chart';
 import {TableModule} from 'primeng/table';
 
+import { DatePipe } from '@angular/common';
+
 registerLocaleData(localePt);
 
 @NgModule({
@@ -56,7 +58,8 @@ registerLocaleData(localePt);
   ],
   entryComponents:[],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

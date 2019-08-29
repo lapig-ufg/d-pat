@@ -1,5 +1,6 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, LOCALE_ID } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
@@ -19,8 +20,13 @@ import VectorLayer from 'ol/layer/Vector';
 import Style from 'ol/style/Style';
 import Stroke from 'ol/style/Stroke';
 import VectorSource from 'ol/source/Vector';
-import { source } from 'openlayers';
-
+import Circle from 'ol/style/Circle.js';
+import Select from 'ol/interaction/Select';
+import UTFGrid from 'ol/source/UTFGrid.js';
+import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
+import Overlay from 'ol/Overlay.js';
+import Fill from 'ol/style/Fill.js';
+import * as Condition from 'ol/events/condition.js';
 
 
 const SEARCH_URL = 'service/map/search';
@@ -68,6 +74,7 @@ export class MapComponent implements OnInit {
 	dataCities: any;
 	chartResultCities: [];
 	periodSelected: any;
+	desmatInfo: any
 
 	optionsTimeSeries: any;
 	optionsStates: any;
@@ -107,31 +114,28 @@ export class MapComponent implements OnInit {
 	layersTypes = [];
 	basemapsNames = [];
 	limitsNames = [];
-	year: any;
 	LayersTMS = {};
 	limitsTMS = {};
 
 	collapseCharts = false;
 	collapseLayer = false;
-	selectedIndex: any;
 
 	isFilteredByCity = false;
 	isFilteredByState = false;
+	selectedIndex: any;
+	collapseLegends = false;
 
-	collapseLegends: boolean;
-	checked = true;
-
-	layerSusceptShow = 'areas-susceptibilidade-maiores-100';
-	checkedSuscept = true;
-
+	infodata: any;
+	fieldPointsStop: any;
+	utfgridsource: UTFGrid;
+	infoOverlay: Overlay;
+	datePipe: DatePipe
 
 	constructor(private http: HttpClient, private _service: SearchService) {
 
 		this.projection = OlProj.get('EPSG:900913');
 		this.currentZoom = 5.8;
 		this.layers = [];
-
-		this.year = 2018;
 
 		this.defaultRegion = {
 			type: 'biome',
@@ -141,10 +145,11 @@ export class MapComponent implements OnInit {
 		this.selectRegion = this.defaultRegion;
 
 		this.urls = [
-			'http://o1.lapig.iesa.ufg.br/ows',
-			'http://o2.lapig.iesa.ufg.br/ows',
-			'http://o3.lapig.iesa.ufg.br/ows',
-			'http://o4.lapig.iesa.ufg.br/ows'
+			// 'http://o1.lapig.iesa.ufg.br/ows',
+			// 'http://o2.lapig.iesa.ufg.br/ows',
+			// 'http://o3.lapig.iesa.ufg.br/ows',
+			// 'http://o4.lapig.iesa.ufg.br/ows'
+			'http://localhost:5001/ows'
 		];
 
 		this.tileGrid = new TileGrid({
@@ -158,8 +163,20 @@ export class MapComponent implements OnInit {
 		}
 
 		this.periodSelected = {
-			Viewvalue: '2017/2018'
+			value: "year=2018",
+			Viewvalue: '2017/2018',
+			year: 2018
+		}
+
+		this.desmatInfo = {
+			value: "year=2018",
+			Viewvalue: '2017/2018',
+			year: 2018
 		};
+
+		this.datePipe = new DatePipe('pt-BR');
+
+		this.infodata = { showUTFGridCard : true }
 
 		this.updateCharts();
 		this.chartRegionScale = true;
@@ -209,6 +226,7 @@ export class MapComponent implements OnInit {
 		}
 
 		var selectedTime = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip')
+
 		if (selectedTime != undefined) {
 			params.push("year=" + selectedTime.year)
 		}
@@ -354,8 +372,14 @@ export class MapComponent implements OnInit {
 	}
 
 	updateRegion(region) {
-		if (region == this.defaultRegion)
+		if (region == this.defaultRegion) {
 			this.valueRegion = ''
+			this.desmatInfo = {
+				value: "year=2018",
+				Viewvalue: '2017/2018',
+				year: 2018
+			};
+		}
 
 		this.selectRegion = region;
 
@@ -374,8 +398,8 @@ export class MapComponent implements OnInit {
 		else
 			this.msFilterRegion = ""
 
+
 		this.updateExtent()
-		// this.updateCharts()
 		this.updateSourceAllLayer()
 
 	}
@@ -405,7 +429,60 @@ export class MapComponent implements OnInit {
 			loadTilesWhileInteracting: true
 		});
 
+		var style = new Style({
+			image: new Circle({
+				radius: 7,
+				fill: new Fill({ color: '#b8714e', width: 1 }),
+				stroke: new Stroke({ color: '#7b2900', width: 2 })
+			})
+		})
+
+		var selectOver = new Select({
+			condition: Condition.pointerMove,
+			layers: [this.fieldPointsStop],
+			style: style
+		});
+
+		var select = new Select({
+			condition: Condition.click,
+			layers: [this.fieldPointsStop],
+			style: style
+		});
+
+		// this.map.addInteraction(select);
+		this.map.addInteraction(selectOver);
+
+		this.infoOverlay = new Overlay({
+			element: document.getElementById('map-info'),
+			offset: [15, 15],
+			stopEvent: false
+		});
+
+		this.map.addOverlay(this.infoOverlay);
+
+		this.map.on('pointermove', function (evt) {
+			if (evt.dragging) {
+				return;
+			}
+
+			var coordinate = this.map.getEventCoordinate(evt.originalEvent);
+			var viewResolution = this.map.getView().getResolution();
+
+			this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
+				function (data) {
+					if (data) {
+						this.infodata = data;
+						this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
+						this.infodata.showUTFGridCard = this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible
+						this.infoOverlay.setPosition(data ? coordinate : undefined);
+					} else {
+						this.infodata.showUTFGridCard = false ;
+					}
+				}.bind(this));
+		}.bind(this));
+
 	}
+
 
 	private createBaseLayers() {
 		this.mapbox = {
@@ -500,9 +577,27 @@ export class MapComponent implements OnInit {
 		this.regionsLimits = this.createVectorLayer('regions', '#ffea00', 1);
 		this.layers.push(this.regionsLimits);
 
+		this.utfgridsource = new UTFGrid({
+			tileJSON: this.getTileJSON()
+		});
+
+		var utfgridLayer = new OlTileLayer({
+			source: this.utfgridsource
+		});
+
+		this.layers.push(utfgridLayer)
+
 		this.layers.push()
 		this.layers = this.layers.concat(olLayers.reverse());
 
+	}
+
+	private getTileJSON() {
+		// console.log("PERIODOOOO - ", this.desmatInfo.year);
+		return {
+			version: "2.2.0",
+			grids: ["/service/deforestation/info?layername=bi_ce_prodes_desmatamento_100_fip&msfilter=year=" + this.desmatInfo.year + "&tile={x}+{y}+{z}"]
+		}
 	}
 
 	private createTMSLayer(layer) {
@@ -566,9 +661,11 @@ export class MapComponent implements OnInit {
 				+ "&map.imagetype=png"
 			);
 		}
-
 		return result;
 	}
+
+
+
 
 	private updateSourceAllLayer() {
 		for (let layer of this.layersTypes) {
@@ -577,19 +674,28 @@ export class MapComponent implements OnInit {
 	}
 
 	private updateSourceLayer(layer) {
+		if (layer['times']) {
+			this.periodSelected = layer['times'].find(element => element.value === layer.timeSelected);
+
+		}
+
+		if (layer['value'].search("bi_ce_prodes_desmatamento_100_fip") != -1) {
+			this.desmatInfo = this.periodSelected
+			this.updateCharts();
+		}
+
+		if (this.utfgridsource) {
+			var tileJSON = this.getTileJSON();
+			this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
+			this.utfgridsource.tileJSON = tileJSON;
+			// console.log(this.utfgridsource)
+			this.utfgridsource.refresh();
+		}
+
 		var source_layers = this.LayersTMS[layer.value].getSource();
 		source_layers.setUrls(this.parseUrls(layer))
 		source_layers.refresh();
 
-
-		if (layer['times']) {
-			this.periodSelected = layer['times'].find(element => element.value === layer.timeSelected);
-		}
-
-		if (layer['value'].search("bi_ce_prodes_desmatamento_100_fip") != -1) {
-			// console.log("entrou - " , layer['value'])
-			this.updateCharts();
-		}
 	}
 
 	baseLayerChecked(base, e) {
@@ -659,8 +765,8 @@ export class MapComponent implements OnInit {
 					if (layer.id != "satelite") {
 						this.layersNames.push(layer)
 					}
-					for (let layerType of layer.types) {
 
+					for (let layerType of layer.types) {
 						layerType.visible = false
 						if (layer.selectedType == layerType.value)
 							layerType.visible = layer.visible

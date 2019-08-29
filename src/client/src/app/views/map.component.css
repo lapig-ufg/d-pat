@@ -1,4 +1,8 @@
-html, body { margin:0; height: 100%;}
+html,
+body {
+	margin: 0;
+	height: 100%;
+}
 
 .bckgdisabled {
 	background-color: #e9ecef !important;
@@ -15,9 +19,17 @@ hr {
 
 .card {
 	border-radius: 0px;
+	color : black;
+	box-shadow: 10px 10px 60px #555;
 }
 
-.custom-select, .form-control-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
+.custom-select,
+.form-control-sm,
+.input-group-sm>.form-control,
+.input-group-sm>.input-group-prepend>.input-group-text,
+.input-group-sm>.input-group-append>.input-group-text,
+.input-group-sm>.input-group-prepend>.btn,
+.input-group-sm>.input-group-append>.btn {
 	border-radius: 0px;
 }
 
@@ -27,10 +39,12 @@ hr {
 }
 
 .dpat-ol-map {
-	height: calc(100vh - 55px); /* 100% of the viewport height - navbar height */
+	height: calc(100vh - 55px);
+	/* 100% of the viewport height - navbar height */
 }
 
-.ol-zoom-in, .ol-zoom-out {
+.ol-zoom-in,
+.ol-zoom-out {
 	background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -45,59 +59,59 @@ hr {
 }
 
 .card-body {
-	padding:5px; 
+	padding: 5px;
 	font-size: 13px;
 }
 
 #positionheaders {
-  padding: 10px;
+	padding: 10px;
 }
 
 #positionLayers {
-  position: absolute; 
-  left: 2%;
-  /*bottom: 2%;*/
-  /*height: 90%;*/
-  min-width: 320px;
-  top: 4%;
-  width: 22%;
-  background-color: #FFF;
-  color: #754c26;
-  text-align: left;
-  z-index: 1000;
-  /*border: 1px solid #808080;*/
-  opacity: .93;
+	position: absolute;
+	left: 2%;
+	/*bottom: 2%;*/
+	/*height: 90%;*/
+	min-width: 320px;
+	top: 4%;
+	width: 22%;
+	background-color: #FFF;
+	color: #754c26;
+	text-align: left;
+	z-index: 1000;
+	/*border: 1px solid #808080;*/
+	opacity: .93;
 }
 
 #positionCharts {
-  position: absolute; 
-  right: 1%; 
-  bottom: 2%;
-  width: 600px;
-  background-color: #FFF;
-  color: #666;
-  text-align: left;
-  z-index: 1000;
-  border: 1px solid #808080;
-  opacity: .93;
+	position: absolute;
+	right: 1%;
+	bottom: 2%;
+	width: 600px;
+	background-color: #FFF;
+	color: #666;
+	text-align: left;
+	z-index: 1000;
+	border: 1px solid #808080;
+	opacity: .93;
 }
 
 #positionLegend {
-	position: absolute; 
-  right: 1%;
-  top: 4%;
-  width: 350px;
-  background-color: #FFF;
-  color: #666;
-  text-align: left;
-  z-index: 1000;
-  border: 1px solid #808080;
-  opacity: .93;
+	position: absolute;
+	right: 1%;
+	top: 4%;
+	width: 350px;
+	background-color: #FFF;
+	color: #666;
+	text-align: left;
+	z-index: 1000;
+	border: 1px solid #808080;
+	opacity: .93;
 }
 
 .layersConteudo {
-  max-height: 800px;
-  overflow: auto;
+	max-height: 800px;
+	overflow: auto;
 }
 
 /*.collapseLayer {
@@ -119,7 +133,7 @@ hr {
 }
 
 .navbar-title {
-	border-bottom: 5px solid #66bb6a; 
+	border-bottom: 5px solid #66bb6a;
 	background-color: #FFF;
 	padding: 13px 0;
 }
@@ -139,7 +153,7 @@ hr {
 
 .button-row button,
 .button-row a {
-  margin-right: 8px;
+	margin-right: 8px;
 }
 
 .icon-info {
@@ -159,8 +173,8 @@ hr {
 	padding: 20px 0px 12px 0px;
 }
 
-.mat-form-field{
-	width: 65px;
+.mat-form-field {
+	width: 70px;
 }
 
 .mat-icon-button {
@@ -169,13 +183,14 @@ hr {
 	line-height: 0px;
 }
 
-.mat-form-field-infix{
-	padding: 0px  !important;
+.mat-form-field-infix {
+	padding: 0px !important;
 	border-top: 0px !important;
 }
 
-::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: rgb(54, 153, 67) !important;
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+	background-color: rgb(54, 153, 67) !important;
 }
 
 /* active tab */
@@ -183,11 +198,11 @@ hr {
 	color:red;
 	background-color: green;
 	} */
-	
-	/* ink bar */
-	::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
-	background-color: var(--primary-color,rgb(20, 148, 27)) !important;
-	}
+
+/* ink bar */
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+	background-color: var(--primary-color, rgb(20, 148, 27)) !important;
+}
 
 
 .font-size-geral {
@@ -197,13 +212,13 @@ hr {
 
 .legendasConteudo {
 	max-height: 320px;
-  	overflow: auto;
-  	overflow-x: hidden;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
 h6 {
 	font-size: 0.98rem;
-	margin-left: 15px; 
+	margin-left: 15px;
 	margin-top: 10px;
 }
 
@@ -222,21 +237,21 @@ h6 {
 	padding: 0px;
 	font-weight: bold;
 	width: 30px;
-  border-color: #d1d1d1;
+	border-color: #d1d1d1;
 }
 
 .titleWindows {
 	color: #424242;
 	background-color: #69ce69;
 	padding: 10px;
-  font-weight: bold;
-  border-bottom: 1px solid #424242;
-  font-size: 22px;
+	font-weight: bold;
+	border-bottom: 1px solid #424242;
+	font-size: 22px;
 }
 
 .title-atlas {
 	font-weight: bold;
-	font-size: 30px; 
+	font-size: 30px;
 	font-family: Gill Sans, Verdana;
 	color: rgb(19, 134, 67);
 	margin: 0;
@@ -286,13 +301,17 @@ h6 {
 
 .button-csv {
 	color: #707070 !important;
-} button {
+}
+
+button {
 	color: #707070 !important;
 }
 
-.button-shp{
+.button-shp {
 	text-align: left;
-} button {
+}
+
+button {
 	color: #707070 !important;
 }
 
@@ -336,23 +355,23 @@ h6 {
 }
 
 .conteinerFotosCampo {
-  padding-bottom: 5%;
-  padding-top: 5%;
-  text-align: center;
+	padding-bottom: 5%;
+	padding-top: 5%;
+	text-align: center;
 }
 
 .instrucoesPontosCampo {
-  height: auto;
-  width: auto;
-  text-align: center;
-  padding-top: 20px;
+	height: auto;
+	width: auto;
+	text-align: center;
+	padding-top: 20px;
 }
 
 /*#dropdowYearRebanho {
 	padding-left: 22%;
 }*/
 
-@media (max-width: 600px) { 
+@media (max-width: 600px) {
 	.title-atlas {
 		font-size: 1em;
 	}
@@ -380,7 +399,7 @@ h6 {
 		display: none
 	}
 
-	#dropdowYearRebanho, 
+	#dropdowYearRebanho,
 	.button-csv {
 		padding-left: 33%
 	}
@@ -465,14 +484,15 @@ h6 {
 	}
 
 	.dpat-ol-map {
-		height: calc(100vh - 40px); /* 100% of the viewport height - navbar height */
+		height: calc(100vh - 40px);
+		/* 100% of the viewport height - navbar height */
 	}
 
 	.layersConteudo {
-	  	max-height: 510px;
-	  }
+		max-height: 510px;
+	}
 
-  	.nameLayers {
+	.nameLayers {
 		font-size: 0.92rem;
 		padding-left: 5px;
 		padding-bottom: 5px;
@@ -502,14 +522,14 @@ h6 {
 
 @media (min-width: 1400px) and (max-width: 1700px) {
 	.layersConteudo {
-  	max-height: 720px;
-  }
+		max-height: 720px;
+	}
 }
 
 @media (height: 1280px) and (width: 1240px) {
 	.layersConteudo {
-  	max-height: 800px;
-  }
+		max-height: 800px;
+	}
 }
 
 .stylePercentual {
@@ -529,8 +549,8 @@ h6 {
 
 .slider-layer {
 	text-align: center;
-    padding-right: 0px;
-    padding-top: 3%;
+	padding-right: 0px;
+	padding-top: 3%;
 }
 
 .expansion-layer {
@@ -547,7 +567,7 @@ h6 {
 
 .expansion-header-layer-legend {
 	margin-left: 0px;
-    margin-top: 0px;
+	margin-top: 0px;
 }
 
 #dropdownPoints {
@@ -557,9 +577,9 @@ h6 {
 
 .info_clique_mapa {
 	margin: 0px;
-    font-size: 0.7rem;
-    text-align: right;
-    padding-right: 14px;
+	font-size: 0.7rem;
+	text-align: right;
+	padding-right: 14px;
 }
 
 /* .mat-expansion-panel-header.mat-expanded {
@@ -577,14 +597,40 @@ h6 {
 }
 
 .mat-expansion-panel-header {
-  background: #4e4e4e;
-  color: #eeeeee;
-  border: solid #eeeeee 3px;
-  justify-content: space-between;
+	background: #4e4e4e;
+	color: #eeeeee;
+	border: solid #eeeeee 3px;
+	justify-content: space-between;
 }
 
-.mat-expansion-panel-header.mat-expanded:focus, .mat-expansion-panel-header:hover {
-  background: #eeeeee;
-  color: #4e4e4e;
-  border: solid #eeeeee 3px;
-} 
+.mat-expansion-panel-header.mat-expanded:focus,
+.mat-expansion-panel-header:hover {
+	background: #eeeeee;
+	color: #4e4e4e;
+	border: solid #eeeeee 3px;
+}
+
+mat-select {
+	width: fit-content !important;
+	min-width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+	min-width: 75px !important;
+	width: fit-content !important;
+}
+
+::ng-deep mat-select .mat-select-value {
+	width: fit-content !important;
+	min-width: 2ch;
+	max-width: 25ch;
+}
+
+::ng-deep mat-select .mat-select-placeholder {
+	width: fit-content !important;
+	min-width: 10ch;
+}
+
+::ng-deep mat-form-field .mat-form-field-underline {
+	width: 15ch !important; 
+}

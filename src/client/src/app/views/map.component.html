@@ -15,7 +15,7 @@
 			<div id="map" class="dpat-ol-map"></div>
 			<div id="positionLayers">
 				<div class="titleWindows">
-					Camadas de Informações
+					Camadas de Dados
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseLayer = !collapseLayer" [attr.aria-expanded]="!collapseLayer"
 						aria-controls="camadageografica">-</button>
@@ -114,7 +114,7 @@
 
 			<div id="positionCharts">
 				<div class="titleWindows">
-					Análises
+					Estatísticas de Desmatamento no Cerrado
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
 						aria-controls="camadageografica">-</button>
@@ -172,25 +172,72 @@
 
 			<div id="positionLegend">
 				<div class="titleWindows">
-					Legendas das Camadas
+					Legendas
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends"
 						aria-controls="camadageografica">-</button>
 				</div>
-				<div class="legendasConteudo">
-					<mat-expansion-panel [expanded]="true" *ngFor="let layer of layersNames">
+				<div [ngbCollapse]="collapseLegends" class="legendasConteudo">
+					<mat-expansion-panel [expanded]="layer.visible" *ngFor="let layer of layersNames">
 						<mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'70px'"
 							class="expansion-header-layer" *ngIf="layer.visible">
 							{{layer.label}}
 						</mat-expansion-panel-header>
 						<img *ngIf="layer.visible"
 							src="http://ows.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer={{layer.selectedType}}&format=image/png">
-
 					</mat-expansion-panel>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 </div>
+
+<!-- *ngIf="infodata.year != '2018'" -->
+<div id="map-info" class="card" [ngStyle]="{'visibility': infodata.showUTFGridCard ? 'visible' : 'hidden', 'background-color': '#ffffff99'}" >
+	<div  class="card-body">
+		  <!-- <p class="card-text">{{ infodata.municipio }} - {{ infodata.uf }}</p> -->
+		  <table>
+			  <tbody>
+				  <tr>
+					  <th>Área Desmatada: </th>
+						  <td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
+				  </tr>
+				  <tr>
+					  <th>Município: </th>
+						  <td>{{infodata.municipio }}</td>
+				  </tr>
+				  <tr>
+					  <th>Estado: </th>
+						  <td>{{infodata.uf }}</td>
+				  </tr>
+				  <tr>
+					  <th>Data da Detecção: </th>
+						  <td>{{infodata.dataFormatada}}</td>
+				  </tr>
+				  <!--<tr>
+					  <th>Nível de Validação: </th>
+						   <td>{{infodata.cd_geocmu}}</td> 
+				  </tr>-->
+			  </tbody>
+		  </table>
+	</div>
+	<!-- <div *ngIf="infodata.year == '2018'" class="card-body">
+		  <p class="card-text">{{ infodata.municipio }} - {{ infodata.uf }}</p>
+		  <table>
+			  <tbody>
+				  <tr>
+					  <th>Área de Pastagem: </th>
+						  <td>{{infodata.past_ha | number:'1.0-0' }} ha</td>
+				  </tr>
+				  <tr>
+					  <th>Ano: </th>
+						  <td>{{infodata.year}}</td>
+				  </tr>
+				  <tr>
+					  <th>Código Município: </th>
+						  <td>{{infodata.cd_geocmu}}</td>
+				  </tr>
+			  </tbody>
+		  </table>
+	</div> -->
+  </div>
