@@ -145,11 +145,11 @@ export class MapComponent implements OnInit {
 		this.selectRegion = this.defaultRegion;
 
 		this.urls = [
-			// 'http://o1.lapig.iesa.ufg.br/ows',
-			// 'http://o2.lapig.iesa.ufg.br/ows',
-			// 'http://o3.lapig.iesa.ufg.br/ows',
-			// 'http://o4.lapig.iesa.ufg.br/ows'
-			'http://localhost:5001/ows'
+			'http://o1.lapig.iesa.ufg.br/ows',
+			'http://o2.lapig.iesa.ufg.br/ows',
+			'http://o3.lapig.iesa.ufg.br/ows',
+			'http://o4.lapig.iesa.ufg.br/ows'
+			// 'http://localhost:5001/ows'
 		];
 
 		this.tileGrid = new TileGrid({
