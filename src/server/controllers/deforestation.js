@@ -3,6 +3,8 @@ const req = require('request');
 
 module.exports = function (app) {
 
+	const config = app.config;
+
 	var Internal = {}
 	var Controller = {}
 
@@ -172,9 +174,10 @@ module.exports = function (app) {
 		var tile = request.param('tile');
 
 		// console.log("layer " , layername, "   filter ", filter, "  tile ", tile);
+		console.log(config["ows_host"])
 
 		req(
-			'http://localhost:5001/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid', {
+			config["ows_host"] + '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid', {
 			json: true
 		}, (err, res, body) => {
 			if (err) {

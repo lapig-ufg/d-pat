@@ -37,7 +37,7 @@
 												[inputFormatter]="formatter" />
 											<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
 												(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-											<span *ngIf="searching">localizando...</span>
+											<span *ngIf="searching">Procurando...</span>
 											<div class="invalid-feedback" *ngIf="searchFailed">Desculpe, Região não
 												encontrada.</div>
 										</div>
