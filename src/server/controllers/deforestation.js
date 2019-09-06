@@ -173,9 +173,6 @@ module.exports = function (app) {
 		var filter = request.param('msfilter');
 		var tile = request.param('tile');
 
-		// console.log("layer " , layername, "   filter ", filter, "  tile ", tile);
-		console.log(config["ows_host"])
-
 		req(
 			config["ows_host"] + '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid', {
 			json: true

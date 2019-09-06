@@ -193,51 +193,66 @@
 </div>
 
 <!-- *ngIf="infodata.year != '2018'" -->
-<div id="map-info" class="card" [ngStyle]="{'visibility': infodata.showUTFGridCard ? 'visible' : 'hidden', 'background-color': '#ffffff99'}" >
-	<div  class="card-body">
-		  <!-- <p class="card-text">{{ infodata.municipio }} - {{ infodata.uf }}</p> -->
-		  <table>
-			  <tbody>
-				  <tr>
-					  <th>Área Desmatada: </th>
-						  <td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
-				  </tr>
-				  <tr>
-					  <th>Município: </th>
-						  <td>{{infodata.municipio }}</td>
-				  </tr>
-				  <tr>
-					  <th>Estado: </th>
-						  <td>{{infodata.uf }}</td>
-				  </tr>
-				  <tr>
-					  <th>Data da Detecção: </th>
-						  <td>{{infodata.dataFormatada}}</td>
-				  </tr>
-				  <!--<tr>
-					  <th>Nível de Validação: </th>
-						   <td>{{infodata.cd_geocmu}}</td> 
-				  </tr>-->
-			  </tbody>
-		  </table>
-	</div>
-	<!-- <div *ngIf="infodata.year == '2018'" class="card-body">
-		  <p class="card-text">{{ infodata.municipio }} - {{ infodata.uf }}</p>
-		  <table>
-			  <tbody>
-				  <tr>
-					  <th>Área de Pastagem: </th>
-						  <td>{{infodata.past_ha | number:'1.0-0' }} ha</td>
-				  </tr>
-				  <tr>
-					  <th>Ano: </th>
-						  <td>{{infodata.year}}</td>
-				  </tr>
-				  <tr>
-					  <th>Código Município: </th>
-						  <td>{{infodata.cd_geocmu}}</td>
-				  </tr>
-			  </tbody>
-		  </table>
-	</div> -->
-  </div>
+<div id="map-info" class="card"
+	[ngStyle]="{'visibility': infodata.showUTFGridCard ? 'visible' : 'hidden', 'background-color': '#ffffff99'}">
+	<div class="card-body">
+			<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
+			<!-- <div *ngIf="this.infodata.origin_table == 'PRODES'" class="card-body"> -->
+		<table>
+			<tbody>
+				<tr>
+					<th>Área Desmatada: </th>
+					<td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
+				</tr>
+				<tr>
+					<th>Município: </th>
+					<td>{{infodata.municipio }}</td>
+				</tr>
+				<tr>
+					<th>Estado: </th>
+					<td>{{infodata.uf }}</td>
+				</tr>
+				<tr>
+					<th>Data da Detecção: </th>
+					<td>{{infodata.dataFormatada}}</td>
+				</tr>
+				<tr>
+					<th>Susceptibilidade ao Desmatamento: </th>
+					<td>{{infodata.sucept_desmatFormatada}}</td>
+				</tr>
+			</tbody>
+		</table>
+	<!-- </div>
+	<div *ngIf="this.infodata.origin_table == 'DETER'" class="card-body">
+			<table>
+					<tbody>
+						<tr>
+							<th>Área Desmatada: </th>
+							<td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
+						</tr>
+						<tr>
+							<th>Município: </th>
+							<td>{{infodata.municipio }}</td>
+						</tr>
+						<tr>
+							<th>Estado: </th>
+							<td>{{infodata.uf }}</td>
+						</tr>
+						<tr>
+							<th>Data da Detecção: </th>
+							<td>{{infodata.dataFormatada}}</td>
+						</tr>
+						<tr>
+							<th>Susceptibilidade ao Desmatamento: </th>
+							<td>{{infodata.sucept_desmatFormatada}}</td>
+						</tr>
+					</tbody>
+				</table>
+	</div>  -->
+</div>
+</div>
+<!-- <div>
+	<li>
+		<button mat-raised-button (click)="openDialog()">Pick one</button>
+	  </li>
+</div> -->

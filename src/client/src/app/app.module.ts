@@ -3,10 +3,12 @@ import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import {MatDialogModule} from "@angular/material";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MapComponent } from './views/map.component';
+import { DialogOverviewExampleDialog } from './views/map.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -35,11 +37,13 @@ registerLocaleData(localePt);
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
     TableModule,
     ChartModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     MatExpansionModule,
     MatTabsModule,
@@ -56,12 +60,12 @@ registerLocaleData(localePt);
     FormsModule,
     NgbModule.forRoot()
   ],
-  entryComponents:[],
+  entryComponents:[MapComponent, DialogOverviewExampleDialog],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

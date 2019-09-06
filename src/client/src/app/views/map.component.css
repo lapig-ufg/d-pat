@@ -623,12 +623,14 @@ mat-select {
 ::ng-deep mat-select .mat-select-value {
 	width: fit-content !important;
 	min-width: 2ch;
-	max-width: 25ch;
+	max-width: 15ch;
 }
 
 ::ng-deep mat-select .mat-select-placeholder {
 	width: fit-content !important;
 	min-width: 10ch;
+	max-width: 20ch;
+	color: red;
 }
 
 ::ng-deep mat-form-field .mat-form-field-underline {
