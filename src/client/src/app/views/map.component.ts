@@ -685,7 +685,7 @@ export class MapComponent implements OnInit {
 		var msfilter = '&MSFILTER=1=1';
 
 		if(filters.length > 0)
-			'AND ' + filters.join(' AND ')
+			msfilter += 'AND ' + filters.join(' AND ')
 
 		var layername = layer.value
 		if (layer.timeHandler == 'layername')
