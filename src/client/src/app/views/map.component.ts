@@ -1,7 +1,7 @@
 import { Component, Inject, Injectable, OnInit, LOCALE_ID } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
@@ -177,7 +177,7 @@ export class MapComponent implements OnInit {
 
 		this.datePipe = new DatePipe('pt-BR');
 
-		this.infodata = { showUTFGridCard : true }
+		this.infodata = { showUTFGridCard: true }
 
 		this.updateCharts();
 		this.chartRegionScale = true;
@@ -219,15 +219,15 @@ export class MapComponent implements OnInit {
 
 	openDialog(): void {
 		const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-		  width: '250px',
-		  data: 'Teste'
+			width: '250px',
+			data: 'Teste'
 		});
-	
+
 		dialogRef.afterClosed().subscribe(result => {
-		  console.log('The dialog was closed');
+			console.log('The dialog was closed');
 		});
-	  }
-	
+	}
+
 	private getServiceParams() {
 
 		var params = []
@@ -446,69 +446,71 @@ export class MapComponent implements OnInit {
 			})
 		})
 
-		var selectOver = new Select({
-			condition: Condition.pointerMove,
-			layers: [this.fieldPointsStop],
-			style: style
-		});
 
-		var select = new Select({
-			condition: Condition.click,
-			layers: [this.fieldPointsStop],
-			style: style
-		});
+		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
+			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
 
-		this.map.addInteraction(select);
-		this.map.addInteraction(selectOver);
+			var selectOver = new Select({
+				condition: Condition.pointerMove,
+				layers: [this.fieldPointsStop],
+				style: style
+			});
 
-		this.infoOverlay = new Overlay({
-			element: document.getElementById('map-info'),
-			offset: [15, 15],
-			stopEvent: false
-		});
+			var select = new Select({
+				condition: Condition.click,
+				layers: [this.fieldPointsStop],
+				style: style
+			});
 
-		this.map.addOverlay(this.infoOverlay);
+			this.map.addInteraction(select);
+			this.map.addInteraction(selectOver);
 
-		this.map.on('pointermove', function (evt) {
-			if (evt.dragging) {
-				return;
-			}
+			this.infoOverlay = new Overlay({
+				element: document.getElementById('map-info'),
+				offset: [15, 15],
+				stopEvent: false
+			});
 
-			var coordinate = this.map.getEventCoordinate(evt.originalEvent);
-			var viewResolution = this.map.getView().getResolution();
+			this.map.addOverlay(this.infoOverlay);
 
-			this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
-				function (data) {
-					if (data) {
-						if(this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible)
-						{
-							if(data.origin_table =='prodes')
-							{
-								this.infodata = data;
-								this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
-								this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : (''+(this.infodata.sucept_desmat*100).toFixed(2) + '%').replace('.', ','))
-								this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
-								this.infodata.showUTFGridCard = true;
+			this.map.on('pointermove', function (evt) {
+				if (evt.dragging) {
+					return;
+				}
+
+				var coordinate = this.map.getEventCoordinate(evt.originalEvent);
+				var viewResolution = this.map.getView().getResolution();
+
+				this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
+					function (data) {
+						if (data) {
+							if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible) {
+								if (data.origin_table == 'prodes') {
+									this.infodata = data;
+									this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
+									this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ','))
+									this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
+									this.infodata.showUTFGridCard = true;
+								}
 							}
-						}
-						if(this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible){
-							if(data.origin_table == 'deter')
-							{
-								this.infodata = data;
-								this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
-								this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : (''+(this.infodata.sucept_desmat*100).toFixed(2) + '%').replace('.', ','))
-								this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
-								this.infodata.showUTFGridCard = true;
+							if (this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
+								if (data.origin_table == 'deter') {
+									this.infodata = data;
+									this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
+									this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ','))
+									this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
+									this.infodata.municipio = this.infodata.municipio.toUpperCase();
+									this.infodata.showUTFGridCard = true;
+								}
 							}
+
+							this.infoOverlay.setPosition(data ? coordinate : undefined);
+						} else {
+							this.infodata.showUTFGridCard = false;
 						}
-
-						this.infoOverlay.setPosition(data ? coordinate : undefined);
-					} else {
-						this.infodata.showUTFGridCard = false ;
-					}
-				}.bind(this));
-		}.bind(this));
-
+					}.bind(this));
+			}.bind(this));
+		}
 	}
 
 
@@ -622,15 +624,15 @@ export class MapComponent implements OnInit {
 
 	private getTileJSON() {
 		let text = "";
-		
-		text = "(origin_table = 'prodes' AND view_date>='" + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year + "-01-01'" + 
-		"AND view_date<'" + (this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year + 1) + "-01-01')" + " OR " +
-		"(origin_table = 'deter' AND " + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + ")";
 
-		console.log("Text - ", text)
+		text = "(origin_table = 'prodes' AND view_date>='" + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year + "-01-01'" +
+			"AND view_date<'" + (this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year + 1) + "-01-01')" + " OR " +
+			"(origin_table = 'deter' AND " + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + ")";
+
+		// console.log("Text - ", text)
 		return {
 			version: "2.2.0",
-			grids: ["/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter="+ text +"&tile={x}+{y}+{z}"]
+			grids: ["/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter=" + text + "&tile={x}+{y}+{z}"]
 		}
 	}
 
@@ -680,7 +682,10 @@ export class MapComponent implements OnInit {
 		if (layer.regionFilter && this.msFilterRegion)
 			filters.push(this.msFilterRegion)
 
-		var msfilter = '&MSFILTER=' + filters.join(' AND ')
+		var msfilter = '&MSFILTER=1=1';
+
+		if(filters.length > 0)
+			'AND ' + filters.join(' AND ')
 
 		var layername = layer.value
 		if (layer.timeHandler == 'layername')
@@ -718,12 +723,16 @@ export class MapComponent implements OnInit {
 			this.updateCharts();
 		}
 
-		if (this.utfgridsource) {
-			var tileJSON = this.getTileJSON();
+		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
+			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
 
-			this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
-			this.utfgridsource.tileJSON = tileJSON;
-			this.utfgridsource.refresh();
+			if (this.utfgridsource) {
+				var tileJSON = this.getTileJSON();
+
+				this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
+				this.utfgridsource.tileJSON = tileJSON;
+				this.utfgridsource.refresh();
+			}
 		}
 
 		var source_layers = this.LayersTMS[layer.value].getSource();
@@ -837,15 +846,15 @@ export class MapComponent implements OnInit {
 	styleUrls: [
 		'./map.component.css'
 	]
-  })
-  export class DialogOverviewExampleDialog {
-  
+})
+export class DialogOverviewExampleDialog {
+
 	constructor(
-	  public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-	  @Inject(MAT_DIALOG_DATA) public data: any) {}
-  
+		public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+		@Inject(MAT_DIALOG_DATA) public data: any) { }
+
 	onNoClick(): void {
-	  this.dialogRef.close();
+		this.dialogRef.close();
 	}
-  
-  }
+
+}
