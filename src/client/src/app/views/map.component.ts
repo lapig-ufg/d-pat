@@ -623,13 +623,11 @@ export class MapComponent implements OnInit {
 	}
 
 	private getTileJSON() {
-		let text = "";
 
-		text = "(origin_table = 'prodes' AND view_date>='" + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year + "-01-01'" +
-			"AND view_date<'" + (this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year + 1) + "-01-01')" + " OR " +
+		let	text = "(origin_table = 'prodes' AND "+ this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ")"
+			+ " OR " +
 			"(origin_table = 'deter' AND " + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + ")";
 
-		// console.log("Text - ", text)
 		return {
 			version: "2.2.0",
 			grids: ["/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter=" + text + "&tile={x}+{y}+{z}"]
@@ -682,10 +680,9 @@ export class MapComponent implements OnInit {
 		if (layer.regionFilter && this.msFilterRegion)
 			filters.push(this.msFilterRegion)
 
-		var msfilter = '&MSFILTER=1=1';
-
+		var msfilter = '';
 		if(filters.length > 0)
-			msfilter += 'AND ' + filters.join(' AND ')
+			msfilter += '&MSFILTER=' + filters.join(' AND ')
 
 		var layername = layer.value
 		if (layer.timeHandler == 'layername')
@@ -702,9 +699,6 @@ export class MapComponent implements OnInit {
 		}
 		return result;
 	}
-
-
-
 
 	private updateSourceAllLayer() {
 		for (let layer of this.layersTypes) {
@@ -780,7 +774,6 @@ export class MapComponent implements OnInit {
 				limits.visible = false;
 			}
 		}
-
 	}
 
 	changeVisibility(layer, e) {
@@ -797,7 +790,6 @@ export class MapComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		this.http.get('service/map/descriptor').subscribe(result => {
 			this.descriptor = result
 			this.regionFilterDefault = this.descriptor.regionFilterDefault;
