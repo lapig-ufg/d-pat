@@ -19,7 +19,7 @@ hr {
 
 .card {
 	border-radius: 0px;
-	color : black;
+	color: black;
 	box-shadow: 10px 10px 60px #555;
 }
 
@@ -636,4 +636,17 @@ mat-select {
 	width: fit-content !important;
 	min-width: 15ch;
 	max-width: 25ch;
+}
+
+.chart-region {
+	width: 100%;
+    height: 100%;
+    display: table;
+	text-align: left;
+	vertical-align: right;
+	font-size: 36pt
+}
+
+.stylePercentual {
+	font-size: 0.9rem;
 }

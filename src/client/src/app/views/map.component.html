@@ -123,10 +123,21 @@
 					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
 						(selectedTabChange)="changeTab($event)">
 						<mat-tab label="Série Temporal" *ngIf="true" id="tabGraficoLinhas">
-							<h6>
-								<b>Áreas Desmatadas: {{ selectRegion.text }}</b>
-								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
-							</h6>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="chart-region">
+										<h5>
+											<strong>   {{ selectRegion.text }}   </strong>
+										</h5>
+									</div>
+								</div>
+								<div class="col-md-8">
+									O {{ selectRegion.regionTypeBr | lowercase }} <strong>{{ selectRegion.text }} </strong> possui uma <strong>Área Antrópica</strong> de 					
+									<strong>{{ dataSeries.area_antropica | number:'1.2-2' }} km² </strong> que representa
+										<strong>{{dataSeries.percentArea}} </strong> da sua área total.
+										 <!-- <p class="stylePercentual" > </p>  -->
+								</div>
+							</div>
 							<!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
 
 							<p-chart type="line" [data]="dataSeries" [options]="optionsTimeSeries"></p-chart>
@@ -155,7 +166,7 @@
 								<ng-template pTemplate="body" let-city>
 									<tr>
 										<td align="center">{{city.index}}</td>
-										<td align="center">{{city.name}}</td>
+										<td align="center">{{city.name}}/</td>
 										<td align="center">{{city.uf}}</td>
 										<td align="center">{{city.value | number }} km²</td>
 									</tr>
@@ -196,8 +207,8 @@
 <div id="map-info" class="card"
 	[ngStyle]="{'visibility': infodata.showUTFGridCard ? 'visible' : 'hidden', 'background-color': '#ffffff99'}">
 	<div class="card-body">
-			<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
-			<!-- <div *ngIf="this.infodata.origin_table == 'PRODES'" class="card-body"> -->
+		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
+		<!-- <div *ngIf="this.infodata.origin_table == 'PRODES'" class="card-body"> -->
 		<table>
 			<tbody>
 				<tr>
@@ -206,11 +217,7 @@
 				</tr>
 				<tr>
 					<th>Município: </th>
-					<td>{{infodata.municipio }}</td>
-				</tr>
-				<tr>
-					<th>Estado: </th>
-					<td>{{infodata.uf }}</td>
+					<td>{{infodata.municipio }} - {{infodata.uf }}</td>
 				</tr>
 				<tr>
 					<th>Data da Detecção: </th>
@@ -222,7 +229,7 @@
 				</tr>
 			</tbody>
 		</table>
-	<!-- </div>
+		<!-- </div>
 	<div *ngIf="this.infodata.origin_table == 'DETER'" class="card-body">
 			<table>
 					<tbody>
@@ -249,10 +256,10 @@
 					</tbody>
 				</table>
 	</div>  -->
+	</div>
 </div>
-</div>
-<!-- <div>
+<div id="popup" class="popup">
 	<li>
 		<button mat-raised-button (click)="openDialog()">Pick one</button>
-	  </li>
-</div> -->
+	</li>
+</div>

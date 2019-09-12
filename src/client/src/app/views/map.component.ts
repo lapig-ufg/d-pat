@@ -73,7 +73,7 @@ export class MapComponent implements OnInit {
 	dataSeries: any;
 	dataStates: any;
 	dataCities: any;
-	chartResultCities: [];
+	chartResultCities ;
 	periodSelected: any;
 	desmatInfo: any
 
@@ -95,21 +95,20 @@ export class MapComponent implements OnInit {
 	valueRegion: any;
 	regionFilterDefault: any;
 	urls: any;
+	dataExtent : any;
 
 	searching = false;
 	searchFailed = false;
 	msFilterRegion = '';
 	selectRegion: any;
 
-
-	regionSelected: 'Brasil';
-	regionTypeBr: any;
 	region_geom: any;
 	regionSource: any;
 	regionTypeFilter: any;
 
 	defaultRegion: any;
 
+	statePreposition = []
 
 	layersNames = [];
 	layersTypes = [];
@@ -138,10 +137,14 @@ export class MapComponent implements OnInit {
 		this.currentZoom = 5.8;
 		this.layers = [];
 
+		this.dataSeries = {}
+
 		this.defaultRegion = {
 			type: 'biome',
 			text: 'Cerrado',
-			value: 'Cerrado'
+			value: 'Cerrado',
+			area_region: 2040047.67930316,
+			regionTypeBr: 'Bioma'
 		}
 		this.selectRegion = this.defaultRegion;
 
@@ -180,7 +183,24 @@ export class MapComponent implements OnInit {
 		this.infodata = { showUTFGridCard: true }
 
 		this.updateCharts();
+
 		this.chartRegionScale = true;
+
+		this.statePreposition = [
+			"AL",
+			"GO",
+			"MT",
+			"MS",
+			"MG",
+			"PE",
+			"RO",
+			"RR",
+			"SC",
+			"SP",
+			"SE"
+		];
+
+
 	}
 
 	search = (text$: Observable<string>) =>
@@ -266,6 +286,9 @@ export class MapComponent implements OnInit {
 
 				var extent = features[0].getGeometry().getExtent();
 				map.getView().fit(extent, { duration: 1500 });
+
+				this.selectRegion.area_region = extentResult['area_km2']
+
 			})
 		}
 	}
@@ -298,8 +321,11 @@ export class MapComponent implements OnInit {
 						fill: false,
 						borderColor: '#289628'
 					}
-				]
+				],
+				area_antropica : timeseriesResult['indicator'].anthropic, 
+				percentArea : (((timeseriesResult['indicator'].anthropic / this.selectRegion.area_region)  * 100).toFixed(2) + '%').replace('.', ',')
 			}
+
 			this.optionsTimeSeries = {
 				tooltips: {
 					callbacks: {
@@ -353,7 +379,6 @@ export class MapComponent implements OnInit {
 								var percent = (parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE'));
 								return percent + ' km²';
 							}
-
 						}
 					},
 					scales: {
@@ -375,7 +400,7 @@ export class MapComponent implements OnInit {
 
 		if (!this.isFilteredByCity) {
 			this.http.get(citiesUrl).subscribe(citiesResult => {
-				this.chartResultCities = citiesResult['rows'];
+				this.chartResultCities = citiesResult;
 			});
 		}
 	}
@@ -399,10 +424,18 @@ export class MapComponent implements OnInit {
 			this.msFilterRegion = " county = '" + this.selectRegion.value + "'"
 			this.isFilteredByCity = true;
 			this.isFilteredByState = true;
+			this.selectRegion.regionTypeBr = 'Município de '
 		}
 		else if (this.selectRegion.type == 'state') {
 			this.msFilterRegion = "uf = '" + this.selectRegion.value + "'"
 			this.isFilteredByState = true;
+
+			if(this.statePreposition.find(e => e === this.selectRegion.value))
+				this.selectRegion.regionTypeBr = 'Estado de'
+			else if (this.selectRegion.value === 'BA' || this.selectRegion.value === 'PB')
+				this.selectRegion.regionTypeBr = 'Estado da'
+			else
+				this.selectRegion.regionTypeBr = 'Estado do'
 		}
 		else
 			this.msFilterRegion = ""
@@ -450,11 +483,7 @@ export class MapComponent implements OnInit {
 		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
 			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
 
-			var selectOver = new Select({
-				condition: Condition.pointerMove,
-				layers: [this.fieldPointsStop],
-				style: style
-			});
+			
 
 			var select = new Select({
 				condition: Condition.click,
@@ -463,6 +492,31 @@ export class MapComponent implements OnInit {
 			});
 
 			this.map.addInteraction(select);
+			
+			
+			
+			
+			
+			
+			var featureListener = function ( event ) {
+				console.log("featureListenerCalled");
+				alert("Feature Listener Called");
+			};
+			
+			this.map.on('click', function(event) {
+			
+				this.map.forEachFeatureAtPixel(event.pixel, function(feature,layer) {
+				});
+			});
+			
+			
+			
+			var selectOver = new Select({
+				condition: Condition.pointerMove,
+				layers: [this.fieldPointsStop],
+				style: style
+			});
+			
 			this.map.addInteraction(selectOver);
 
 			this.infoOverlay = new Overlay({
@@ -825,9 +879,10 @@ export class MapComponent implements OnInit {
 					this.limitsNames.push(types)
 				}
 			}
-
 			this.createMap();
 		});
+
+
 	}
 
 }

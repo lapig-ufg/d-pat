@@ -45,7 +45,7 @@ module.exports = function (app) {
     var result = []
     var queryResult = request.queryResult
 
-    queryResult.rows.forEach(function (row) {
+    queryResult.forEach(function (row) {
 
       var campoId = row['campo_id']
       var files = Internal.fieldFiles(campoId)
@@ -79,7 +79,8 @@ module.exports = function (app) {
 
     var result = {
       'type': 'Feature',
-      'geometry': JSON.parse(queryResult.rows[0]['geojson'])
+      'geometry': JSON.parse(queryResult[0].geojson),
+      'area_km2': queryResult[0].area_km2
     }
 
     response.send(result)

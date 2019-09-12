@@ -15,7 +15,7 @@ module.exports = function (app) {
 		var result = []
 		var years = []
 
-		queryResult.rows.forEach(function (row) {
+		queryResult.forEach(function (row) {
 			if (row.classname.startsWith('D')) {
 				years.push(Number(row.classname.slice(2)))
 			}
@@ -37,6 +37,7 @@ module.exports = function (app) {
 	Controller.timeseries = function (request, response) {
 
 		var queryResult = request.queryResult
+		
 		var indicatorYear = Number(request.param('year', 2018));;
 
 		var anthropicArea = 0
@@ -45,7 +46,7 @@ module.exports = function (app) {
 		var result
 		var resultByYear = {}
 
-		queryResult.rows.forEach(function (row) {
+		queryResult.forEach(function (row) {
 
 			var year = Number(row['year'])
 			var area = Number(row['areamunkm'])
@@ -90,7 +91,7 @@ module.exports = function (app) {
 			indicator: {
 				anthropic: anthropicArea,
 				deforestation: deforestationArea,
-				cerrado: 2045064
+				totalArea: 2045064
 			}
 		}
 
@@ -110,7 +111,7 @@ module.exports = function (app) {
 			prodes_cerrado: {}
 		}
 
-		queryResult.rows.forEach(function (row) {
+		queryResult.forEach(function (row) {
 			region = row['region']
 			source = row['source']
 			if (region) {
@@ -150,8 +151,8 @@ module.exports = function (app) {
 
 		var index = 1;
 		for (var i = 0; i < 10; i++) {
-			queryResult.rows[i].index = index++ + 'º'
-			queryResult.rows[i].value = Number(queryResult.rows[i].value)
+			queryResult[i].index = index++ + 'º'
+			queryResult[i].value = Number(queryResult[i].value)
 		}
 
 		response.send(queryResult)
@@ -163,7 +164,7 @@ module.exports = function (app) {
 
 		var queryResult = request.queryResult
 
-		response.send(queryResult.rows[0])
+		response.send(queryResult[0])
 		response.end()
 
 	}

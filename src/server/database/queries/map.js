@@ -9,7 +9,7 @@ module.exports = function(app) {
 	}
 
 	Query.extent = function() {
-		return "SELECT ST_AsGeoJSON(geom) geojson FROM regions WHERE type=${type} AND value=${region}";
+		return "SELECT ST_AsGeoJSON(geom) geojson, area_km2 FROM regions WHERE type=${type} AND value=${region}";
 	}
 
 	Query.search = function() {

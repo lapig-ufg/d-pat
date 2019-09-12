@@ -36,10 +36,25 @@ module.exports = function(app) {
 
 		var type = params['type']
 
-		return " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
-								" FROM prodes_cerrado " +
-								" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
-								" GROUP BY 1;";
+		/*return [
+			{
+				id: 'timeseries',
+				sql:" SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
+									" FROM prodes_cerrado " +
+									" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
+									" GROUP BY 1;"
+			},
+			{
+				id: 'extent',
+				sql: "SELECT ST_AsGeoJSON(geom) geojson, area_km2 FROM regions WHERE type=${type} AND value=${region}"
+			}
+		]
+		 ----> For future referece on the return pattern for two or more queries as dictionaries on [id, sql] */
+
+		 return " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
+			" FROM prodes_cerrado " +
+			" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
+			" GROUP BY 1;"
 	}
 
 	Query.states = function() {
