@@ -17,9 +17,12 @@ module.exports = function (app) {
 
   Internal.fieldFiles = function (id) {
 
-    var fotosCamera = app.config.fieldDataDir + '/fotos_camera/' + id
+    // var fotosCamera = app.config.fieldDataDir + '/fotos_camera/' + id
+    var fotosCamera = app.config.fieldDataDir + '/fotos_campo/';
     var fotosDrone = app.config.fieldDataDir + '/fotos_drone/' + id
     var videosDrone = app.config.fieldDataDir + '/videos_drone/' + id
+
+    console.log(fotosCamera)
 
     return {
       'videos_drone': Internal.getFiles(videosDrone),
@@ -42,32 +45,77 @@ module.exports = function (app) {
 
   Controller.field = function (request, response) {
 
-    var result = []
-    var queryResult = request.queryResult
+    var gid = request.param('gid')
+    var origin_table = request.param('origin')
+    var year = request.param('year')
 
-    queryResult.forEach(function (row) {
+    var resultCampo = []
+    var queryResultCampo = request.queryResult['pontos_campo']
+
+    queryResultCampo.forEach(function (row) {
 
       var campoId = row['campo_id']
       var files = Internal.fieldFiles(campoId)
 
-      result.push({
-        'type': 'Feature',
+      resultCampo.push({
         'geometry': JSON.parse(row['geojson']),
         'properties': {
           'campo_id': campoId,
-          'data': row['data'],
+          'data_visita': row['data'],
           'usocobertura': row['cobertura'],
           'obs': row['obs'],
           'videos_drone': files['videos_drone'],
           'fotos_drone': files['fotos_drone'],
-          'fotos_camera': files['fotos_camera']
+          'fotos_camera': files['fotos_camera'],
+          'prodes_id': row['desmat_id'],
+          'latitude': row['latitude'],
+          'longitutde': row['longitude']
         }
       })
+
     })
 
+    var imagesDesmat;
+    var queryResultDesmat = request.queryResult[origin_table]
+
+    var urlsLandsatMontadas = [];
+
+    let box;
+    queryResultDesmat.forEach(function (row) {
+
+        box = row['polygon'].replace('BOX(', '').replace(')', '').split(' ').join(',')
+      
+      })
+
+      for(let ano = 2000 ; ano <= 2018 ; ano++)
+      {
+        
+        urlsLandsatMontadas.push({
+            'url': app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_'+ ano +'_fip,bi_ce_' +
+                origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width=512&height=512&format=image/png&styles=&MSFILTER=gid=' + gid,
+            'year': ano
+              })
+
+        if (ano < 2012)
+        {
+          ano++
+        }
+      }
+      
+      let urlSentinel = (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_2017_lapig,bi_ce_' +
+      origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width=512&height=512&format=image/png&styles=&MSFILTER=gid=' + gid);
+
+        
+
+      imagesDesmat = {
+        'urlsLandSat': urlsLandsatMontadas,
+        'urlSentinel': urlSentinel
+      }
+
     response.send({
-      "type": "FeatureCollection",
-      "features": result
+      "info": "Laudo-" + origin_table,
+      "ponto_campo": resultCampo,
+      "images": imagesDesmat
     })
     response.end();
 

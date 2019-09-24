@@ -1,1 +1,139 @@
-<h1 mat-dialog-title>Hi Teste</h1>
+<p-scrollPanel [style]="{width: '100%', height: '1000px'}">
+    <div class="container-fluid">
+        <nav class="navbar navbar-default navbar-fixed-top nav-title-laudo">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h3><strong>Laudo do Desmatamento </strong></h3>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <mat-dialog-actions>
+                        <ng-container ngProjectAs="btn-close">
+                            <button mat-raised-button style="background-color: #f72424; color: white"
+                                (click)="dialogRef.close()">Fechar</button>
+                        </ng-container>
+                    </mat-dialog-actions>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content Row -->
+        <p-panel header="Metadados" [toggleable]="true">
+            <div class="row">
+                <!--  -->
+                <div class="col-sm-4">
+                    <div>
+                        <!-- <p class="card-text">{{ data.origin_table }}-Cerrado</p> -->
+                        <!-- <div *ngIf="this.infodata.origin_table == 'PRODES'" class="card-body"> -->
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Área Desmatada: </th>
+                                    <td>{{data.area_desmat | number:'1.2-3' }} km²</td>
+                                </tr>
+                                <tr>
+                                    <th>Município: </th>
+                                    <td>{{data.municipio }} - {{data.uf }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Data da Detecção: </th>
+                                    <td>{{data.dataFormatada}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-sm-4" style="text-align: center">
+                    <img [src]="urlSentinel" id="img-polygon" class="img-polygon-laudo"
+                        style="width: 100%; height:90%;"> <br>
+                    <strong>Provided by Sentinel</strong>
+                </div>
+
+                <!-- calc(35vh - 155px) -->
+
+                <div class="col-sm-4">
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Área Desmatada: </th>
+                                    <td>{{data.area_desmat | number:'1.2-3' }} km²</td>
+                                </tr>
+                                <tr>
+                                    <th>Município: </th>
+                                    <td>{{data.municipio }} - {{data.uf }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Data da Detecção: </th>
+                                    <td>{{data.dataFormatada}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <!-- /.row -->
+            </div>
+        </p-panel>
+
+        <p-panel header="Validações" [toggleable]="true">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <p-accordion [activeIndex]="index">
+                        <p-accordionTab header="Validação de Campo">
+                            <div style="width:800px; margin:0 auto;">
+                                <p-galleria styleClass="completa" [images]="images" panelWidth="800" panelHeight="400"
+                                    [showCaption]="true" [transitionInterval]="5000">
+                                </p-galleria>
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab header="Validação Amostral / Histórico de Imagens LandSat">
+                            <div class="container">
+                                <p-scrollPanel [style]="{width: '100%', height: '50%', display: 'flex'}"
+                                    styleClass="custombar2">
+                                    <div class="p-grid" style="margin-top: .5em">
+                                        <div class="p-col" style="text-align: center;"
+                                            *ngFor="let landsat of urlsLandSat">
+                                            <ng-template>
+                                                <img [src]="landsat.url" id="img-landsat" class="img-landsat-laudo"
+                                                    style="width: 40%; height: 50%">
+                                                <br>
+                                                <span style="font-size: medium">
+                                                    <strong>{{landsat.year}}</strong></span>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </p-scrollPanel>
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab header="Análise Automática">
+                            Teste
+                        </p-accordionTab>
+                        <p-accordionTab header=" Histórico de Uso e Ocupação">
+                            teste
+                        </p-accordionTab>
+                    </p-accordion>
+                </div>
+            </div>
+        </p-panel>
+        <!-- /.row -->
+
+        <!-- /.container -->
+
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
+                            class="logo-cepf" src="assets/logo/fip.png" /></a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
+                            src="assets/logo/lapig.png" /></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</p-scrollPanel>

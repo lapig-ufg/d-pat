@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable, OnInit, LOCALE_ID } from '@angular/core';
+import { Component, Inject, Injectable, OnInit, LOCALE_ID, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
@@ -28,6 +28,9 @@ import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 import Overlay from 'ol/Overlay.js';
 import Fill from 'ol/style/Fill.js';
 import * as Condition from 'ol/events/condition.js';
+import OSM from 'ol/source/OSM.js';
+import { CdkRowDef } from '@angular/cdk/table';
+
 
 
 const SEARCH_URL = 'service/map/search';
@@ -73,7 +76,7 @@ export class MapComponent implements OnInit {
 	dataSeries: any;
 	dataStates: any;
 	dataCities: any;
-	chartResultCities ;
+	chartResultCities;
 	periodSelected: any;
 	desmatInfo: any
 
@@ -95,7 +98,7 @@ export class MapComponent implements OnInit {
 	valueRegion: any;
 	regionFilterDefault: any;
 	urls: any;
-	dataExtent : any;
+	dataExtent: any;
 
 	searching = false;
 	searchFailed = false;
@@ -130,6 +133,8 @@ export class MapComponent implements OnInit {
 	utfgridsource: UTFGrid;
 	infoOverlay: Overlay;
 	datePipe: DatePipe
+
+	dataForDialog = {};
 
 	constructor(private http: HttpClient, private _service: SearchService, public dialog: MatDialog) {
 
@@ -237,17 +242,6 @@ export class MapComponent implements OnInit {
 		return undefined
 	}
 
-	openDialog(): void {
-		const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-			width: '250px',
-			data: 'Teste'
-		});
-
-		dialogRef.afterClosed().subscribe(result => {
-			console.log('The dialog was closed');
-		});
-	}
-
 	private getServiceParams() {
 
 		var params = []
@@ -322,8 +316,8 @@ export class MapComponent implements OnInit {
 						borderColor: '#289628'
 					}
 				],
-				area_antropica : timeseriesResult['indicator'].anthropic, 
-				percentArea : (((timeseriesResult['indicator'].anthropic / this.selectRegion.area_region)  * 100).toFixed(2) + '%').replace('.', ',')
+				area_antropica: timeseriesResult['indicator'].anthropic,
+				percentArea: (((timeseriesResult['indicator'].anthropic / this.selectRegion.area_region) * 100).toFixed(2) + '%').replace('.', ',')
 			}
 
 			this.optionsTimeSeries = {
@@ -430,7 +424,7 @@ export class MapComponent implements OnInit {
 			this.msFilterRegion = "uf = '" + this.selectRegion.value + "'"
 			this.isFilteredByState = true;
 
-			if(this.statePreposition.find(e => e === this.selectRegion.value))
+			if (this.statePreposition.find(e => e === this.selectRegion.value))
 				this.selectRegion.regionTypeBr = 'Estado de'
 			else if (this.selectRegion.value === 'BA' || this.selectRegion.value === 'PB')
 				this.selectRegion.regionTypeBr = 'Estado da'
@@ -454,6 +448,14 @@ export class MapComponent implements OnInit {
 			resolutions[i] = startResolution / Math.pow(2, i);
 		}
 		return resolutions
+	}
+
+	openDialog(): void {
+		const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+			width: window.innerWidth + 'px',
+			data: this.dataForDialog
+		});
+
 	}
 
 	private createMap() {
@@ -483,40 +485,12 @@ export class MapComponent implements OnInit {
 		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
 			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
 
-			
-
-			var select = new Select({
-				condition: Condition.click,
-				layers: [this.fieldPointsStop],
-				style: style
-			});
-
-			this.map.addInteraction(select);
-			
-			
-			
-			
-			
-			
-			var featureListener = function ( event ) {
-				console.log("featureListenerCalled");
-				alert("Feature Listener Called");
-			};
-			
-			this.map.on('click', function(event) {
-			
-				this.map.forEachFeatureAtPixel(event.pixel, function(feature,layer) {
-				});
-			});
-			
-			
-			
 			var selectOver = new Select({
 				condition: Condition.pointerMove,
 				layers: [this.fieldPointsStop],
 				style: style
 			});
-			
+
 			this.map.addInteraction(selectOver);
 
 			this.infoOverlay = new Overlay({
@@ -564,6 +538,32 @@ export class MapComponent implements OnInit {
 						}
 					}.bind(this));
 			}.bind(this));
+
+
+         /*
+			this.map.on('click', function (evt) {
+				if (evt.dragging) {
+					return;
+				}
+
+				var zoom = this.map.getView().getZoom();
+
+
+				var coordinate = this.map.getEventCoordinate(evt.originalEvent);
+				var viewResolution = this.map.getView().getResolution();
+
+				this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
+					function (data) {
+						if (data) {
+							//console.log("da - " , data)
+							//console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+							this.dataForDialog = data;
+							this.dataForDialog.coordinate = coordinate;
+							this.dataForDialog.year = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year
+							this.openDialog();
+						}
+					}.bind(this));
+			}.bind(this));*/
 		}
 	}
 
@@ -678,7 +678,7 @@ export class MapComponent implements OnInit {
 
 	private getTileJSON() {
 
-		let	text = "(origin_table = 'prodes' AND "+ this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ")"
+		let text = "(origin_table = 'prodes' AND " + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ")"
 			+ " OR " +
 			"(origin_table = 'deter' AND " + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + ")";
 
@@ -735,7 +735,7 @@ export class MapComponent implements OnInit {
 			filters.push(this.msFilterRegion)
 
 		var msfilter = '';
-		if(filters.length > 0)
+		if (filters.length > 0)
 			msfilter += '&MSFILTER=' + filters.join(' AND ')
 
 		var layername = layer.value
@@ -881,8 +881,6 @@ export class MapComponent implements OnInit {
 			}
 			this.createMap();
 		});
-
-
 	}
 
 }
@@ -892,16 +890,94 @@ export class MapComponent implements OnInit {
 	templateUrl: './dialog-laudo.html',
 	styleUrls: [
 		'./map.component.css'
-	]
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogOverviewExampleDialog {
+export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
+	map: OlMap;
+	projection: OlProj;
+
+	images: any[];
+
+	urlSentinel: any;
+	numberOfTicks = 0;
+	index: number = 0;
+
+	urlsLandSat : any[];
 
 	constructor(
 		public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-		@Inject(MAT_DIALOG_DATA) public data: any) { }
+		@Inject(MAT_DIALOG_DATA) public data: any,
+		private http: HttpClient,
+		private cdRef: ChangeDetectorRef) 
+		{
+
+			console.log("DIALOG - ", data)
+
+			this.initGallery();
+		}
+
+	initImages() {
+
+	}
+
+	initGallery() {
+		this.images = [];
+
+		this.images.push({ source: '/assets/123cam/123_1.jpg', alt: 'Description for Image 1', title: 'Title 1' });
+		this.images.push({ source: '/assets/123cam/123_2.jpg', alt: 'Description for Image 2', title: 'Title 2' });
+		this.images.push({ source: '/assets/123cam/123_3.jpg', alt: 'Description for Image 3', title: 'Title 3' });
+		// this.images.push({ source: '/assets/123cam/v123_1.MP4', alt: 'Description for Video 1', title: 'Title 4' });
+
+
+		console.log("ima - ", this.images)
+	}
 
 	onNoClick(): void {
+
+		this.cdRef.detach();
 		this.dialogRef.close();
+
 	}
+
+	private getServiceParams() {
+
+		let params = []
+
+		if (this.data != undefined) {
+			params.push("origin=" + this.data.origin_table.toLowerCase())
+			params.push("gid=" + this.data.gid)
+
+			if(this.data.origin_table.toLowerCase() ==='prodes' )
+				params.push("year="+ this.data.year)
+			else
+			{
+				params.push("year=2018");
+			}
+		}
+
+		var urlParams = "?" + params.join("&")
+
+		return urlParams
+
+	}
+
+
+	ngOnInit() {
+
+		var fieldPhotosUrl = '/service/map/field/' + this.getServiceParams();
+
+		this.http.get(fieldPhotosUrl).subscribe(result => {
+			console.log('res - ', result)
+			this.urlSentinel = result['images'].urlSentinel
+			this.urlsLandSat = result['images'].urlsLandSat
+		});
+	}
+
+	ngOnDestroy() {
+		this.cdRef.detach(); // do this
+
+	}
+
 
 }

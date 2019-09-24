@@ -30,6 +30,12 @@ import localePt from '@angular/common/locales/pt';
 import {ChartModule} from 'primeng/chart';
 import {TableModule} from 'primeng/table';
 
+import {FieldsetModule} from 'primeng/fieldset';
+import {PanelModule} from 'primeng/panel';
+import {AccordionModule} from 'primeng/accordion';
+import {GalleriaModule} from 'primeng/galleria';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+
 import { DatePipe } from '@angular/common';
 
 registerLocaleData(localePt);
@@ -41,6 +47,10 @@ registerLocaleData(localePt);
     DialogOverviewExampleDialog
   ],
   imports: [
+    ScrollPanelModule,
+    GalleriaModule,
+    PanelModule,
+    AccordionModule,
     TableModule,
     ChartModule,
     MatDialogModule,

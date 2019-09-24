@@ -9,7 +9,7 @@ body {
 }
 
 .container-fluid {
-	margin-top: 55px;
+	margin-top: auto;
 }
 
 hr {
@@ -138,6 +138,10 @@ hr {
 	padding: 13px 0;
 }
 
+.nav-title-laudo{
+border-bottom: 5px solid #66bb6a;
+}
+
 .layers-indicator {
 	font-size: 0.9rem;
 	/*padding-left: 60px;*/
@@ -259,6 +263,7 @@ h6 {
 	line-height: 44px;
 	letter-spacing: 3px;
 	text-transform: uppercase;
+
 }
 
 .title-atlas-div {
@@ -304,8 +309,12 @@ h6 {
 }
 
 button {
-	color: #707070 !important;
+	color: #707070;
 }
+
+.mat-raised-button{
+	color: white !important;
+  }
 
 .button-shp {
 	text-align: left;
@@ -392,6 +401,7 @@ button {
 	.barra-titulo {
 		padding-top: 10px;
 		padding-bottom: 0px;
+		background-color: #cccccc;
 	}
 
 	.buttons-download,
@@ -480,10 +490,10 @@ button {
 	}
 
 	.container-fluid {
-		margin-top: 40px;
+		margin-top: auto;
 	}
 
-	.dpat-ol-map {
+	.dpat-ol-map{
 		height: calc(100vh - 40px);
 		/* 100% of the viewport height - navbar height */
 	}
@@ -649,4 +659,42 @@ mat-select {
 
 .stylePercentual {
 	font-size: 0.9rem;
+}
+
+.navbar-nav {
+	flex-direction: row;
+  }
+  
+  .nav-link {
+	padding-right: .5rem !important;
+	padding-left: .5rem !important;
+  }
+
+  .ui-scrollpanel-content {
+    height: calc(100% + 18px);
+    width: calc(100%);
+    padding: 0 18px 18px 0;
+    position: absolute;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.ui-galleria-nav-prev, .ui-galleria-nav-next {
+	color: #ffff !important; 
+}
+
+.custombar2 .ui-scrollpanel-wrapper {
+	border-right: 9px solid #757575;
+	border-bottom: 9px solid #757575;
+}
+	
+.custombar2 .ui-scrollpanel-bar {
+	background-color: #68C77D;
+	border-radius: 0;
+	opacity: 1;
+	transition: background-color .3s;
+}
+	
+.custombar2:hover .ui-scrollpanel-bar {
+	background-color: #46A55A;
 }

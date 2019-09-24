@@ -32,7 +32,6 @@ module.exports = function (app) {
 			var params = Internal.parseParams(request, queriesOfController)
 			var methodQueries = queriesOfController[method](params)
 
-
 			if(typeof methodQueries == "string"){
 				methodQueries =[ {
 					id: method,
@@ -41,11 +40,11 @@ module.exports = function (app) {
 				]
 			}
 
-			console.log ("method - ", methodQueries)
 			var result = {};
 
 			var onEach = function (query, nextQuery) {
 				client.query(query.sql, params, function (queryResult) {
+					console.log(queryResult)
 					result[query.id] = queryResult.rows
 					nextQuery()
 				})
@@ -68,8 +67,6 @@ module.exports = function (app) {
 
 
 			async.each(methodQueries, onEach, onComplete)
-
-
 
 		} else {
 			next()

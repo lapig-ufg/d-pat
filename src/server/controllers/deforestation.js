@@ -184,9 +184,6 @@ module.exports = function (app) {
 			response.send(body)
 			response.end();
 		});
-
-
-
 	}
 	return Controller;
 }

@@ -7,7 +7,8 @@ module.exports = function(app) {
 		"clientDir": appRoot + "/../client/dist/",
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
-		"fieldDataDir": '/home/leandro/Projects/campo/',
+		"remoteFieldDataDir": '/data/fotos_campo/',
+		"fieldDataDir": appRoot+ '/media/',
 		"pg": {
 			"user": 'postgres',
 		  "host": '10.0.0.14',
@@ -21,6 +22,7 @@ module.exports = function(app) {
 		"port": 3000,
 		// "ows_host" : 'http://localhost:5001',
 		"ows_host" : 'http://ows.lapig.iesa.ufg.br',
+
 	};
 
 	if(process.env.NODE_ENV == 'prod') {
