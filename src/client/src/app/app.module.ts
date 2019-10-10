@@ -32,11 +32,14 @@ import {TableModule} from 'primeng/table';
 
 import {FieldsetModule} from 'primeng/fieldset';
 import {PanelModule} from 'primeng/panel';
-import {AccordionModule} from 'primeng/accordion';
 import {GalleriaModule} from 'primeng/galleria';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
-
+import { LightboxModule } from 'ngx-lightbox';
+import {CardModule} from 'primeng/card';
+import {AccordionModule} from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
+import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
+
 
 registerLocaleData(localePt);
 
@@ -44,9 +47,13 @@ registerLocaleData(localePt);
   declarations: [
     AppComponent,
     MapComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    SpinnerImgComponent
   ],
   imports: [
+    FieldsetModule,
+    CardModule,
+    LightboxModule,
     ScrollPanelModule,
     GalleriaModule,
     PanelModule,

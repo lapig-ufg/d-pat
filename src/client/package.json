@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open --proxy-config proxy.conf.json",
+    "start": "ng serve --host 0.0.0.0 --open --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -28,6 +28,7 @@
     "core-js": "^2.5.4",
     "format": "^0.2.2",
     "geojson": "^0.5.0",
+    "ngx-lightbox": "^2.1.0",
     "node-sass": "^4.12.0",
     "ol": "^5.3.2",
     "primeflex": "^1.0.0-rc.1",

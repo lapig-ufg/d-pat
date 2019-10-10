@@ -28,8 +28,8 @@ import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 import Overlay from 'ol/Overlay.js';
 import Fill from 'ol/style/Fill.js';
 import * as Condition from 'ol/events/condition.js';
-import OSM from 'ol/source/OSM.js';
-import { CdkRowDef } from '@angular/cdk/table';
+import { Lightbox } from 'ngx-lightbox';
+
 
 
 
@@ -157,7 +157,8 @@ export class MapComponent implements OnInit {
 			'http://o1.lapig.iesa.ufg.br/ows',
 			'http://o2.lapig.iesa.ufg.br/ows',
 			'http://o3.lapig.iesa.ufg.br/ows',
-			'http://o4.lapig.iesa.ufg.br/ows'
+			'http://o4.lapig.iesa.ufg.br/ows',
+			'http://ows2.lapig.iesa.ufg.br/ows'
 			// 'http://localhost:5001/ows'
 		];
 
@@ -437,7 +438,6 @@ export class MapComponent implements OnInit {
 
 		this.updateExtent()
 		this.updateSourceAllLayer()
-
 	}
 
 	private getResolutions(projection) {
@@ -451,8 +451,10 @@ export class MapComponent implements OnInit {
 	}
 
 	openDialog(): void {
+		window.document.body.style.cursor = "auto";
 		const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-			width: window.innerWidth + 'px',
+			width: (window.innerWidth - 150) + 'px',
+			height: (window.innerHeight - 100) + 'px',
 			data: this.dataForDialog
 		});
 
@@ -461,6 +463,7 @@ export class MapComponent implements OnInit {
 	private createMap() {
 		this.createBaseLayers();
 		this.createLayers();
+
 		this.map = new OlMap({
 			target: 'map',
 			layers: this.layers,
@@ -512,6 +515,9 @@ export class MapComponent implements OnInit {
 				this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
 					function (data) {
 						if (data) {
+
+							window.document.body.style.cursor = "pointer";
+
 							if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible) {
 								if (data.origin_table == 'prodes') {
 									this.infodata = data;
@@ -535,12 +541,13 @@ export class MapComponent implements OnInit {
 							this.infoOverlay.setPosition(data ? coordinate : undefined);
 						} else {
 							this.infodata.showUTFGridCard = false;
+							window.document.body.style.cursor = "auto";
 						}
 					}.bind(this));
 			}.bind(this));
 
 
-         /*
+
 			this.map.on('click', function (evt) {
 				if (evt.dragging) {
 					return;
@@ -563,7 +570,7 @@ export class MapComponent implements OnInit {
 							this.openDialog();
 						}
 					}.bind(this));
-			}.bind(this));*/
+			}.bind(this));
 		}
 	}
 
@@ -678,9 +685,16 @@ export class MapComponent implements OnInit {
 
 	private getTileJSON() {
 
-		let text = "(origin_table = 'prodes' AND " + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ")"
+		let text = "((origin_table = 'prodes' AND " + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ")"
 			+ " OR " +
-			"(origin_table = 'deter' AND " + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + ")";
+			"(origin_table = 'deter' AND " + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + "))";
+
+		if (this.selectRegion.type === 'city') {
+			text += " AND county = '" + this.selectRegion.value + "'";
+		}
+		else if (this.selectRegion.type === 'state') {
+			text += " AND uf = '" + this.selectRegion.value + "'";
+		}
 
 		return {
 			version: "2.2.0",
@@ -761,6 +775,7 @@ export class MapComponent implements OnInit {
 	}
 
 	private updateSourceLayer(layer) {
+
 		if (layer['times']) {
 			this.periodSelected = layer['times'].find(element => element.value === layer.timeSelected);
 
@@ -773,7 +788,6 @@ export class MapComponent implements OnInit {
 
 		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
 			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
-
 			if (this.utfgridsource) {
 				var tileJSON = this.getTileJSON();
 
@@ -852,6 +866,7 @@ export class MapComponent implements OnInit {
 				for (let layer of group.layers) {
 					// console.log("lyat  ", layer)
 					if (layer.id != "satelite") {
+						layer.urlLegend = this.urls[0]+"?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer="+layer.selectedType+"&format=image/png";
 						this.layersNames.push(layer)
 					}
 
@@ -891,31 +906,42 @@ export class MapComponent implements OnInit {
 	styleUrls: [
 		'./map.component.css'
 	],
-	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
-	map: OlMap;
-	projection: OlProj;
+	indexAccordion: number = 0;
+
 
 	images: any[];
+	defaultImg = ""
+	private urlSentinel : Array<{ src: string, caption: string, thumb: string }> = [];
+	private vetBfast : Array<{ src: string, caption: string, thumb: string }> = [];
+	private vetSuscept : Array<{ src: string, caption: string, thumb: string }> = [];
+	dataBfast: any = {};
+	dataSuscept: any = {};
+	dataCampo: any = {};
 
-	urlSentinel: any;
-	numberOfTicks = 0;
-	index: number = 0;
 
-	urlsLandSat : any[];
+	infoDesmat: any = {};
+
+	urlsLandSat: any = [];
+
+	private _album: Array<{ src: string, caption: string, thumb: string }> = [];
 
 	constructor(
 		public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private http: HttpClient,
-		private cdRef: ChangeDetectorRef) 
-		{
-
-			console.log("DIALOG - ", data)
-
-			this.initGallery();
-		}
+		private cdRef: ChangeDetectorRef,
+		private _lightbox: Lightbox
+	) {
+		this.defaultImg = ""
+		this.dataSuscept = {};
+		this.dataBfast = {};
+		this.urlsLandSat = [];
+		this.dataCampo = {};
+		this.infoDesmat = {};
+		this.initGallery();
+	}
 
 	initImages() {
 
@@ -924,13 +950,13 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 	initGallery() {
 		this.images = [];
 
-		this.images.push({ source: '/assets/123cam/123_1.jpg', alt: 'Description for Image 1', title: 'Title 1' });
-		this.images.push({ source: '/assets/123cam/123_2.jpg', alt: 'Description for Image 2', title: 'Title 2' });
-		this.images.push({ source: '/assets/123cam/123_3.jpg', alt: 'Description for Image 3', title: 'Title 3' });
+		// this.images.push({ source: '/assets/123cam/123_1.jpg', alt: 'Description for Image 1', title: 'Title 1' });
+		// this.images.push({ source: '/assets/123cam/123_2.jpg', alt: 'Description for Image 2', title: 'Title 2' });
+		// this.images.push({ source: '/assets/123cam/123_3.jpg', alt: 'Description for Image 3', title: 'Title 3' });
 		// this.images.push({ source: '/assets/123cam/v123_1.MP4', alt: 'Description for Video 1', title: 'Title 4' });
 
 
-		console.log("ima - ", this.images)
+		// console.log("ima - ", this.images)
 	}
 
 	onNoClick(): void {
@@ -948,10 +974,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 			params.push("origin=" + this.data.origin_table.toLowerCase())
 			params.push("gid=" + this.data.gid)
 
-			if(this.data.origin_table.toLowerCase() ==='prodes' )
-				params.push("year="+ this.data.year)
-			else
-			{
+			if (this.data.origin_table.toLowerCase() === 'prodes')
+				params.push("year=" + this.data.year)
+			else {
 				params.push("year=2018");
 			}
 		}
@@ -966,12 +991,56 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 	ngOnInit() {
 
 		var fieldPhotosUrl = '/service/map/field/' + this.getServiceParams();
-
+	
+		console.log("data - ", this.data)
 		this.http.get(fieldPhotosUrl).subscribe(result => {
 			console.log('res - ', result)
-			this.urlSentinel = result['images'].urlSentinel
-			this.urlsLandSat = result['images'].urlsLandSat
+			this.infoDesmat = result['info'];
+
+			const sent = {
+				src: result['images'].urlSentinel.src,
+				caption:"LandSat " + this.data.year,
+				thumb: result['images'].urlSentinel.thumb
+			};
+			this.urlSentinel.push(sent);
+			
+			this.dataCampo = result['ponto_campo'];
+
+			this.urlsLandSat = result['images'].urlsLandSat;
+			for(let i=0; i<this.urlsLandSat.length; i++){
+				const album = {
+					src: this.urlsLandSat[i].url,
+					caption: "Ano: " + this.urlsLandSat[i].year,
+					thumb: this.urlsLandSat[i].thumb
+				};
+	
+				this._album.push(album);
+			}
+
+			this.dataBfast = result['images'].urlBfast;
+			this.dataBfast.prob_Formatada = (this.dataBfast.pct_bfast == null ? 'não foi computada' : ('' + (this.dataBfast.pct_bfast * 100).toFixed(2) + '%').replace('.', ','))
+
+			const dfast = {
+				src: this.dataBfast.urlBfast.src,
+				caption: this.dataBfast.prob_Formatada+ " do polígono apresentou quebras em sua série temporal.",
+				thumb: this.dataBfast.urlBfast.thumb
+			}
+			this.vetBfast.push(dfast);
+
+			this.dataSuscept = result['images'].suscept;
+			this.dataSuscept.sucept_desmatFormatada = (this.dataSuscept.prob_suscept == null ? 'não foi computada' : ('' + (this.dataSuscept.prob_suscept * 100).toFixed(2) + '%').replace('.', ','))
+			console.log("d-", this.dataSuscept)
+			const dsuscept = {
+				src: this.dataSuscept.urlSuscept.src,
+				caption: "Susceptibilidade a Desmatamento: " + this.dataSuscept.sucept_desmatFormatada,
+				thumb: this.dataSuscept.urlSuscept.thumb
+			}
+			this.vetSuscept.push(dsuscept)
+			console.log("d222- ", this.vetSuscept)
+
 		});
+
+
 	}
 
 	ngOnDestroy() {
@@ -979,5 +1048,26 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 	}
 
+	openImage(index: number): void {
+		// open lightbox
+		this._lightbox.open(this._album, index);
+	}
+
+	closeImage(): void {
+		// close lightbox programmatically
+		this._lightbox.close();
+	}
+
+	openLightboxSentinel():void {
+		this._lightbox.open(this.urlSentinel)
+	}
+
+	openLightboxSuscept():void {
+		this._lightbox.open(this.vetSuscept)
+	}
+
+	openLightboxBfast():void {
+		this._lightbox.open(this.vetBfast)
+	}
 
 }

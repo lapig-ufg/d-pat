@@ -22,7 +22,7 @@ module.exports = function (app) {
     var fotosDrone = app.config.fieldDataDir + '/fotos_drone/' + id
     var videosDrone = app.config.fieldDataDir + '/videos_drone/' + id
 
-    console.log(fotosCamera)
+    // console.log(fotosCamera)
 
     return {
       'videos_drone': Internal.getFiles(videosDrone),
@@ -75,46 +75,117 @@ module.exports = function (app) {
 
     })
 
-    var imagesDesmat;
     var queryResultDesmat = request.queryResult[origin_table]
 
     var urlsLandsatMontadas = [];
 
     let box;
+    let area;
+    let prob_suscept;
+    let prob_bfast;
+    let lat, long;
     queryResultDesmat.forEach(function (row) {
 
-        box = row['polygon'].replace('BOX(', '').replace(')', '').split(' ').join(',')
-      
+      box = row['polygon'].replace('BOX(', '').replace(')', '').split(' ').join(',');
+      area = parseFloat(row['areamunkm']);
+      prob_suscept = parseFloat(row['sucept_desmat']);
+      prob_bfast = parseFloat(row['bfm']);
+      lat = parseFloat(row['lat']);
+      long = parseFloat(row['long']);
+
+    })
+    
+    let sizeSrc = 768
+    let sizeThumb = 400
+
+    for (let ano = 2000; ano <= 2018; ano++) {
+
+      urlsLandsatMontadas.push({
+        'url': app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + ano + '_fip,bi_ce_' +
+          origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFILTER=gid=' + gid,
+        'year': ano,
+        'thumb': app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + ano + '_fip,bi_ce_' +
+        origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeThumb+'&height='+sizeThumb+'&format=image/png&styles=&MSFILTER=gid=' + gid
       })
 
-      for(let ano = 2000 ; ano <= 2018 ; ano++)
-      {
-        
-        urlsLandsatMontadas.push({
-            'url': app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_'+ ano +'_fip,bi_ce_' +
-                origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width=512&height=512&format=image/png&styles=&MSFILTER=gid=' + gid,
-            'year': ano
-              })
+      if (ano < 2012) {
+        ano++
+      }
+    }
 
-        if (ano < 2012)
-        {
-          ano++
-        }
+    let urlSentinel = {
+      'thumb': (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_' +
+      origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeThumb+'&height='+sizeThumb+'&format=image/png&styles=&MSFILTER=gid=' + gid),
+      
+      'src':  (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_' +
+      origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFILTER=gid=' + gid),
+    }
+      // let urlSentinel = (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_2017_lapig,bi_ce_' +
+      // origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width=512&height=512&format=image/png&styles=&MSFILTER=gid=' + gid);
+
+
+    let urlSuscept = "";
+    let typeSuscept = "";
+    let legendSuscept = "";
+    if (area >= 0.5) {
+      urlSuscept = {
+       'thumb': (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig,bi_ce_' +
+        origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeThumb+'&height='+sizeThumb+'&format=image/png&styles=&MSFILTER=gid=' + gid),
+      
+        'src':(app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig,bi_ce_' +
+        origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFILTER=gid=' + gid)
+      }
+      typeSuscept = "superior";
+      legendSuscept = app.config.ows_host +"/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig&format=image/png";
+    } else {
+      urlSuscept = {
+       'thumb':  (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig,bi_ce_' +
+        origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeThumb+'&height='+sizeThumb+'&format=image/png&styles=&MSFILTER=gid=' + gid),
+       'src': (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig,bi_ce_' +
+       origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFILTER=gid=' + gid)
+      
+      }
+        typeSuscept = "inferior";
+      legendSuscept = app.config.ows_host +"/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig&format=image/png";
+    }
+
+    let urlBfast = {
+     'thumb': (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_' +
+      origin_table + '_desmatamento_100_fip,bi_ce_bfast_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+400+'&height='+400+'&format=image/png&styles=&MSFAST=t.gid=' + gid +'&TABLEFAST='+origin_table+'_cerrado'),
+
+      'src':(app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_' +
+      origin_table + '_desmatamento_100_fip,bi_ce_bfast_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFAST=t.gid=' + gid +'&TABLEFAST='+origin_table+'_cerrado')
+
+    }
+    let legendBfast = app.config.ows_host +"/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_bfast_fip&format=image/png";
+
+    var imagesDesmat = {
+      'urlsLandSat': urlsLandsatMontadas,
+      'urlSentinel': urlSentinel,
+      'urlBfast': { 
+        'urlBfast': urlBfast,
+        'legend': legendBfast,
+        'pct_bfast': prob_bfast
+      },
+      'suscept': {
+        'urlSuscept': urlSuscept,
+        'type': typeSuscept,
+        'prob_suscept': prob_suscept,
+        'legend': legendSuscept
       }
       
-      let urlSentinel = (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_2017_lapig,bi_ce_' +
-      origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width=512&height=512&format=image/png&styles=&MSFILTER=gid=' + gid);
+    }
 
-        
-
-      imagesDesmat = {
-        'urlsLandSat': urlsLandsatMontadas,
-        'urlSentinel': urlSentinel
-      }
+    var infoDesmat = {
+      'descricao': "Laudo-" + origin_table.toUpperCase(),
+      'area': area,
+      'latitude': lat,
+      'longitude': long
+    }
 
     response.send({
-      "info": "Laudo-" + origin_table,
-      "ponto_campo": resultCampo,
+      "info": infoDesmat,
+      "ponto_campo": null,
       "images": imagesDesmat
     })
     response.end();
@@ -231,7 +302,7 @@ module.exports = function (app) {
                   "Viewvalue": "Polígonos",
                   "opacity": 1,
                   "order": 1,
-                  "regionFilter": false,
+                  "regionFilter": true,
                   "timeLabel": "Período",
                   "timeSelected": "view_date > (current_date - interval '90' day)",
                   "timeHandler": "msfilter",

@@ -21,8 +21,7 @@ module.exports = function(app) {
 		},
 		"port": 3000,
 		// "ows_host" : 'http://localhost:5001',
-		"ows_host" : 'http://ows.lapig.iesa.ufg.br',
-
+		"ows_host" : 'http://ows.lapig.iesa.ufg.br'
 	};
 
 	if(process.env.NODE_ENV == 'prod') {
@@ -31,7 +30,7 @@ module.exports = function(app) {
 		config['dbpath'] = "/data/catalog/Ocultos/d-pat.sqlite"
 		config["pg"] = {
 			"user": 'postgres',
-		  "host": '200.137.217.158',
+		  "host": '200.137.217.160',
 		  "database": 'fip_cerrado',
 		  "password": 'postgres',
 		  "port": 5432,

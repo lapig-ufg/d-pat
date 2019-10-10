@@ -127,15 +127,17 @@
 								<div class="col-md-4">
 									<div class="chart-region">
 										<h5>
-											<strong>   {{ selectRegion.text }}   </strong>
+											<strong> {{ selectRegion.text }} </strong>
 										</h5>
 									</div>
 								</div>
 								<div class="col-md-8" style="text-align:justify">
-									O {{ selectRegion.regionTypeBr | lowercase }} <strong>{{ selectRegion.text }} </strong> possui uma <strong>Área Antrópica</strong> de 					
-									<strong>{{ dataSeries.area_antropica | number:'1.2-2' }} km² </strong> que representa
-										<strong>{{dataSeries.percentArea}} </strong> da sua área total.
-										 <!-- <p class="stylePercentual" > </p>  -->
+									O {{ selectRegion.regionTypeBr | lowercase }} <strong>{{ selectRegion.text }}
+									</strong> possui uma <strong>Área Antrópica</strong> de
+									<strong>{{ dataSeries.area_antropica | number:'1.2-2' }} km² </strong> que
+									representa
+									<strong>{{dataSeries.percentArea}} </strong> da sua área total.
+									<!-- <p class="stylePercentual" > </p>  -->
 								</div>
 							</div>
 							<!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
@@ -181,7 +183,7 @@
 				</div>
 			</div>
 
-			<!-- <div id="positionLegend">
+			<div id="positionLegend">
 				<div class="titleWindows">
 					Legendas
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
@@ -195,20 +197,18 @@
 							{{layer.label}}
 						</mat-expansion-panel-header>
 						<img *ngIf="layer.visible"
-							src="http://ows.lapig.iesa.ufg.br/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer={{layer.selectedType}}&format=image/png">
+						[src]="layer.urlLegend">
 					</mat-expansion-panel>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </div>
 
-<!-- *ngIf="infodata.year != '2018'" -->
 <div id="map-info" class="card"
 	[ngStyle]="{'visibility': infodata.showUTFGridCard ? 'visible' : 'hidden', 'background-color': '#ffffff99'}">
 	<div class="card-body">
 		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
-		<!-- <div *ngIf="this.infodata.origin_table == 'PRODES'" class="card-body"> -->
 		<table>
 			<tbody>
 				<tr>
@@ -229,37 +229,5 @@
 				</tr>
 			</tbody>
 		</table>
-		<!-- </div>
-	<div *ngIf="this.infodata.origin_table == 'DETER'" class="card-body">
-			<table>
-					<tbody>
-						<tr>
-							<th>Área Desmatada: </th>
-							<td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
-						</tr>
-						<tr>
-							<th>Município: </th>
-							<td>{{infodata.municipio }}</td>
-						</tr>
-						<tr>
-							<th>Estado: </th>
-							<td>{{infodata.uf }}</td>
-						</tr>
-						<tr>
-							<th>Data da Detecção: </th>
-							<td>{{infodata.dataFormatada}}</td>
-						</tr>
-						<tr>
-							<th>Susceptibilidade ao Desmatamento: </th>
-							<td>{{infodata.sucept_desmatFormatada}}</td>
-						</tr>
-					</tbody>
-				</table>
-	</div>  -->
 	</div>
 </div>
-<!-- <div id="popup" class="popup">
-	<li>
-		<button mat-raised-button (click)="openDialog()">Pick one</button>
-	</li>
-</div> -->
