@@ -913,9 +913,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 	images: any[];
 	defaultImg = ""
-	private urlSentinel : Array<{ src: string, caption: string, thumb: string }> = [];
-	private vetBfast : Array<{ src: string, caption: string, thumb: string }> = [];
-	private vetSuscept : Array<{ src: string, caption: string, thumb: string }> = [];
+	urlSentinel : Array<{ src: string, caption: string, thumb: string }> = [];
+	vetBfast : Array<{ src: string, caption: string, thumb: string }> = [];
+	vetSuscept : Array<{ src: string, caption: string, thumb: string }> = [];
 	dataBfast: any = {};
 	dataSuscept: any = {};
 	dataCampo: any = {};
@@ -925,7 +925,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 	urlsLandSat: any = [];
 
-	private _album: Array<{ src: string, caption: string, thumb: string }> = [];
+	_album: Array<{ src: string, caption: string, thumb: string }> = [];
 
 	constructor(
 		public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
