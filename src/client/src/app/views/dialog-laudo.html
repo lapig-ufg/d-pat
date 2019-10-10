@@ -97,7 +97,8 @@
                                         A susceptibilidade a desmatamentos neste polígono
                                         <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
                                 </div>
-                                <div class="p-col-8" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <div class="p-col-8"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb"
                                         [spinnerSrc]="'/assets/gif/loadImage.gif'" [largura]="'100%'"
                                         (click)="openLightboxSuscept()">
@@ -116,8 +117,14 @@
                                     <span style="font-size: small">
                                         <strong>*Informações sobre quebras nos pixels MODIS*</strong>
                                     </span>
+                                    <br>
+                                    <br>
+                                    <span style="font-size: medium">
+                                        A taxa de pixels MODIS que sofreram quebras em suas séries temporais foi de:
+                                        <strong>{{dataBfast.prob_Formatada}}.</strong></span>
                                 </div>
-                                <div class="p-col-8" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <div class="p-col-8"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb"
                                         [spinnerSrc]="'/assets/gif/loadImage.gif'" [largura]="'100%'"
                                         (click)="openLightboxBfast()">
