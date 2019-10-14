@@ -8,6 +8,8 @@ import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 
 import BingMaps from 'ol/source/BingMaps';
+import {unByKey} from 'ol/Observable';
+import OlObservable from 'ol/Observable';
 import OlMap from 'ol/Map';
 import OlXYZ from 'ol/source/XYZ';
 import OlTileLayer from 'ol/layer/Tile';
@@ -135,6 +137,9 @@ export class MapComponent implements OnInit {
 	datePipe: DatePipe
 
 	dataForDialog = {};
+
+	keyForClick: any;
+	keyForPointer: any;
 
 	constructor(private http: HttpClient, private _service: SearchService, public dialog: MatDialog) {
 
@@ -454,7 +459,7 @@ export class MapComponent implements OnInit {
 		window.document.body.style.cursor = "auto";
 		const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
 			width: (window.innerWidth - 150) + 'px',
-			height: (window.innerHeight - 100) + 'px',
+			height: (window.innerHeight - 50) + 'px',
 			data: this.dataForDialog
 		});
 
@@ -504,74 +509,76 @@ export class MapComponent implements OnInit {
 
 			this.map.addOverlay(this.infoOverlay);
 
-			this.map.on('pointermove', function (evt) {
-				if (evt.dragging) {
-					return;
-				}
+			this.keyForPointer = this.map.on('pointermove', this.callbackPointerMoveMap.bind(this));
 
-				var coordinate = this.map.getEventCoordinate(evt.originalEvent);
-				var viewResolution = this.map.getView().getResolution();
-
-				this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
-					function (data) {
-						if (data) {
-
-							window.document.body.style.cursor = "pointer";
-
-							if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible) {
-								if (data.origin_table == 'prodes') {
-									this.infodata = data;
-									this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
-									this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ','))
-									this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
-									this.infodata.showUTFGridCard = true;
-								}
-							}
-							if (this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
-								if (data.origin_table == 'deter') {
-									this.infodata = data;
-									this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
-									this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ','))
-									this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
-									this.infodata.municipio = this.infodata.municipio.toUpperCase();
-									this.infodata.showUTFGridCard = true;
-								}
-							}
-
-							this.infoOverlay.setPosition(data ? coordinate : undefined);
-						} else {
-							this.infodata.showUTFGridCard = false;
-							window.document.body.style.cursor = "auto";
-						}
-					}.bind(this));
-			}.bind(this));
-
-
-
-			this.map.on('click', function (evt) {
-				if (evt.dragging) {
-					return;
-				}
-
-				var zoom = this.map.getView().getZoom();
-
-
-				var coordinate = this.map.getEventCoordinate(evt.originalEvent);
-				var viewResolution = this.map.getView().getResolution();
-
-				this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
-					function (data) {
-						if (data) {
-							//console.log("da - " , data)
-							//console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
-							this.dataForDialog = data;
-							this.dataForDialog.coordinate = coordinate;
-							this.dataForDialog.year = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year
-							this.openDialog();
-						}
-					}.bind(this));
-			}.bind(this));
+			this.keyForClick = this.map.on('singleclick', this.callbackClickMap.bind(this));
 		}
+	}
+
+	private callbackPointerMoveMap(evt) {
+		if (evt.dragging) {
+			return;
+		}
+
+		var coordinate = this.map.getEventCoordinate(evt.originalEvent);
+		var viewResolution = this.map.getView().getResolution();
+
+		this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
+			function (data) {
+				if (data) {
+
+					window.document.body.style.cursor = "pointer";
+
+					if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible) {
+						if (data.origin_table == 'prodes') {
+							this.infodata = data;
+							this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
+							this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ','))
+							this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
+							this.infodata.showUTFGridCard = true;
+						}
+					}
+					if (this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
+						if (data.origin_table == 'deter') {
+							this.infodata = data;
+							this.infodata.dataFormatada = (this.infodata.data_detec == '' ? 'Não Divulgada' : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy'))
+							this.infodata.sucept_desmatFormatada = (this.infodata.sucept_desmat == '' ? 'Não Computada' : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ','))
+							this.infodata.origin_table = this.infodata.origin_table.toUpperCase();
+							this.infodata.municipio = this.infodata.municipio.toUpperCase();
+							this.infodata.showUTFGridCard = true;
+						}
+					}
+
+					this.infoOverlay.setPosition(data ? coordinate : undefined);
+				} else {
+					this.infodata.showUTFGridCard = false;
+					window.document.body.style.cursor = "auto";
+				}
+			}.bind(this));
+	}
+
+	private callbackClickMap(evt) {
+		if (evt.dragging) {
+			return;
+		}
+
+		var zoom = this.map.getView().getZoom();
+
+
+		var coordinate = this.map.getEventCoordinate(evt.originalEvent);
+		var viewResolution = this.map.getView().getResolution();
+
+		this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution,
+			function (data) {
+				if (data) {
+					//console.log("da - " , data)
+					//console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+					this.dataForDialog = data;
+					this.dataForDialog.coordinate = coordinate;
+					this.dataForDialog.year = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year
+					this.openDialog();
+				}
+			}.bind(this));
 	}
 
 
@@ -786,16 +793,7 @@ export class MapComponent implements OnInit {
 			this.updateCharts();
 		}
 
-		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
-			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
-			if (this.utfgridsource) {
-				var tileJSON = this.getTileJSON();
-
-				this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
-				this.utfgridsource.tileJSON = tileJSON;
-				this.utfgridsource.refresh();
-			}
-		}
+		this.handleInteraction();
 
 		var source_layers = this.LayersTMS[layer.value].getSource();
 		source_layers.setUrls(this.parseUrls(layer))
@@ -844,7 +842,33 @@ export class MapComponent implements OnInit {
 		}
 	}
 
+	handleInteraction() {
+
+		if (this.layersNames.find(element => element.selectedType === 'bi_ce_prodes_desmatamento_100_fip').visible ||
+			this.layersNames.find(element => element.selectedType === 'bi_ce_deter_desmatamento_100_fip').visible) {
+			if (this.utfgridsource) {
+				var tileJSON = this.getTileJSON();
+
+				this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
+				this.utfgridsource.tileJSON = tileJSON;
+				this.utfgridsource.refresh();
+			}
+
+			this.keyForPointer = this.map.on('pointermove', this.callbackPointerMoveMap.bind(this));
+			this.keyForClick = this.map.on('singleclick', this.callbackClickMap.bind(this));
+		}
+		else {
+
+			unByKey(this.keyForPointer);
+			unByKey(this.keyForClick);
+
+			console.log("entrou unclick")
+		}
+	}
+
 	changeVisibility(layer, e) {
+
+		console.log("entrou change.")
 
 		for (let layerType of layer.types) {
 			this.LayersTMS[layerType.value].setVisible(false)
@@ -853,6 +877,8 @@ export class MapComponent implements OnInit {
 		if (e != undefined) {
 			layer.visible = e.checked
 		}
+
+		this.handleInteraction();
 
 		this.LayersTMS[layer.selectedType].setVisible(layer.visible)
 	}
@@ -866,7 +892,7 @@ export class MapComponent implements OnInit {
 				for (let layer of group.layers) {
 					// console.log("lyat  ", layer)
 					if (layer.id != "satelite") {
-						layer.urlLegend = this.urls[0]+"?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer="+layer.selectedType+"&format=image/png";
+						layer.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + layer.selectedType + "&format=image/png";
 						this.layersNames.push(layer)
 					}
 
@@ -913,9 +939,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 	images: any[];
 	defaultImg = ""
-	urlSentinel : Array<{ src: string, caption: string, thumb: string }> = [];
-	vetBfast : Array<{ src: string, caption: string, thumb: string }> = [];
-	vetSuscept : Array<{ src: string, caption: string, thumb: string }> = [];
+	urlSentinel: Array<{ src: string, caption: string, thumb: string }> = [];
+	vetBfast: Array<{ src: string, caption: string, thumb: string }> = [];
+	vetSuscept: Array<{ src: string, caption: string, thumb: string }> = [];
 	dataBfast: any = {};
 	dataSuscept: any = {};
 	dataCampo: any = {};
@@ -991,7 +1017,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 	ngOnInit() {
 
 		var fieldPhotosUrl = '/service/map/field/' + this.getServiceParams();
-	
+
 		// console.log("data - ", this.data)
 		this.http.get(fieldPhotosUrl).subscribe(result => {
 			// console.log('res - ', result)
@@ -999,21 +1025,21 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 			const sent = {
 				src: result['images'].urlSentinel.src,
-				caption:"LandSat " + this.data.year,
+				caption: "LandSat " + this.data.year,
 				thumb: result['images'].urlSentinel.thumb
 			};
 			this.urlSentinel.push(sent);
-			
+
 			this.dataCampo = result['ponto_campo'];
 
 			this.urlsLandSat = result['images'].urlsLandSat;
-			for(let i=0; i<this.urlsLandSat.length; i++){
+			for (let i = 0; i < this.urlsLandSat.length; i++) {
 				const album = {
 					src: this.urlsLandSat[i].url,
 					caption: "Ano: " + this.urlsLandSat[i].year,
 					thumb: this.urlsLandSat[i].thumb
 				};
-	
+
 				this._album.push(album);
 			}
 
@@ -1022,7 +1048,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 			const dfast = {
 				src: this.dataBfast.urlBfast.src,
-				caption: this.dataBfast.prob_Formatada+ " do polígono apresentou quebras em sua série temporal.",
+				caption: this.dataBfast.prob_Formatada + " do polígono apresentou quebras em sua série temporal.",
 				thumb: this.dataBfast.urlBfast.thumb
 			}
 			this.vetBfast.push(dfast);
@@ -1056,15 +1082,15 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 		this._lightbox.close();
 	}
 
-	openLightboxSentinel():void {
+	openLightboxSentinel(): void {
 		this._lightbox.open(this.urlSentinel)
 	}
 
-	openLightboxSuscept():void {
+	openLightboxSuscept(): void {
 		this._lightbox.open(this.vetSuscept)
 	}
 
-	openLightboxBfast():void {
+	openLightboxBfast(): void {
 		this._lightbox.open(this.vetBfast)
 	}
 
