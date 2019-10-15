@@ -29,7 +29,7 @@ module.exports = function(app) {
 				},
 				{
 					id: 'prodes',
-					sql: "SELECT areamunkm, sucept_desmat, bfm_pct as bfm, lat, long, (ST_EXTENT((ST_BUFFER(geom::GEOGRAPHY,1000))::GEOMETRY)) as polygon FROM prodes_cerrado WHERE gid = ${gid} GROUP BY 1,2,3,4,5"
+					sql: "SELECT areamunkm, sucept_desmat, bfm_pct as bfm, lat, long, rect_bbox(geom) as polygon FROM prodes_cerrado WHERE gid = ${gid}"
 					// sql: "SELECT ST_AsGeoJSON(geom) geojson, area_km2 FROM regions WHERE type=${type} AND value=${region}"
 				}
 			]
@@ -42,7 +42,7 @@ module.exports = function(app) {
 				},
 				{
 					id: 'deter',
-					sql: "SELECT areamunkm, sucept_desmat, null as bfm, lat, long, ST_EXTENT((ST_BUFFER(geom::GEOGRAPHY,1000))::GEOMETRY) as polygon FROM deter_cerrado WHERE gid = ${gid} GROUP BY 1,2,3,4,5"
+					sql: "SELECT areamunkm, sucept_desmat, null as bfm, lat, long, rect_bbox(geom) as polygon FROM deter_cerrado WHERE gid = ${gid}"
 				}
 			]
 		}

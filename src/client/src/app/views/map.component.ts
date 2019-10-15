@@ -862,13 +862,10 @@ export class MapComponent implements OnInit {
 			unByKey(this.keyForPointer);
 			unByKey(this.keyForClick);
 
-			console.log("entrou unclick")
 		}
 	}
 
 	changeVisibility(layer, e) {
-
-		console.log("entrou change.")
 
 		for (let layerType of layer.types) {
 			this.LayersTMS[layerType.value].setVisible(false)

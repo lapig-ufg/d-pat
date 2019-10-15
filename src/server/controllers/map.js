@@ -151,10 +151,10 @@ module.exports = function (app) {
 
     let urlBfast = {
      'thumb': (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_' +
-      origin_table + '_desmatamento_100_fip,bi_ce_bfast_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+400+'&height='+400+'&format=image/png&styles=&MSFAST=t.gid=' + gid +'&TABLEFAST='+origin_table+'_cerrado'),
+      origin_table + '_desmatamento_100_fip,bi_ce_bfast_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+400+'&height='+400+'&format=image/png&styles=&MSFILTER=gid=' + gid+'&MSFAST=t.gid=' + gid +'&TABLEFAST='+origin_table+'_cerrado'),
 
       'src':(app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_' + year + '_fip,bi_ce_' +
-      origin_table + '_desmatamento_100_fip,bi_ce_bfast_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFAST=t.gid=' + gid +'&TABLEFAST='+origin_table+'_cerrado')
+      origin_table + '_desmatamento_100_fip,bi_ce_bfast_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width='+sizeSrc+'&height='+sizeSrc+'&format=image/png&styles=&MSFILTER=gid=' + gid+'&MSFAST=t.gid=' + gid +'&TABLEFAST='+origin_table+'_cerrado')
 
     }
     let legendBfast = app.config.ows_host +"/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_bfast_fip&format=image/png";
