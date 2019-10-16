@@ -133,6 +133,7 @@ export class MapComponent implements OnInit {
 	infodata: any;
 	fieldPointsStop: any;
 	utfgridsource: UTFGrid;
+	utfgridlayer: OlTileLayer;
 	infoOverlay: Overlay;
 	datePipe: DatePipe
 
@@ -159,12 +160,12 @@ export class MapComponent implements OnInit {
 		this.selectRegion = this.defaultRegion;
 
 		this.urls = [
-			'http://o1.lapig.iesa.ufg.br/ows',
-			'http://o2.lapig.iesa.ufg.br/ows',
-			'http://o3.lapig.iesa.ufg.br/ows',
-			'http://o4.lapig.iesa.ufg.br/ows',
-			'http://ows2.lapig.iesa.ufg.br/ows'
-			// 'http://localhost:5001/ows'
+			//'http://o1.lapig.iesa.ufg.br/ows',
+			//'http://o2.lapig.iesa.ufg.br/ows',
+			//'http://o3.lapig.iesa.ufg.br/ows',
+			//'http://o4.lapig.iesa.ufg.br/ows',
+			//'http://ows2.lapig.iesa.ufg.br/ows'
+			 'http://localhost:5501/ows'
 		];
 
 		this.tileGrid = new TileGrid({
@@ -516,7 +517,8 @@ export class MapComponent implements OnInit {
 	}
 
 	private callbackPointerMoveMap(evt) {
-		if (evt.dragging) {
+		var utfgridlayerVisible = this.utfgridlayer.getVisible()
+		if (!utfgridlayerVisible || evt.dragging) {
 			return;
 		}
 
@@ -563,7 +565,6 @@ export class MapComponent implements OnInit {
 		}
 
 		var zoom = this.map.getView().getZoom();
-
 
 		var coordinate = this.map.getEventCoordinate(evt.originalEvent);
 		var viewResolution = this.map.getView().getResolution();
@@ -679,11 +680,11 @@ export class MapComponent implements OnInit {
 			tileJSON: this.getTileJSON()
 		});
 
-		var utfgridLayer = new OlTileLayer({
+		this.utfgridlayer = new OlTileLayer({
 			source: this.utfgridsource
 		});
 
-		this.layers.push(utfgridLayer)
+		this.layers.push(this.utfgridlayer)
 
 		this.layers.push()
 		this.layers = this.layers.concat(olLayers.reverse());
@@ -852,16 +853,13 @@ export class MapComponent implements OnInit {
 				this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
 				this.utfgridsource.tileJSON = tileJSON;
 				this.utfgridsource.refresh();
+				
+				this.utfgridlayer.setVisible(true)
 			}
 
-			this.keyForPointer = this.map.on('pointermove', this.callbackPointerMoveMap.bind(this));
-			this.keyForClick = this.map.on('singleclick', this.callbackClickMap.bind(this));
 		}
-		else {
-
-			unByKey(this.keyForPointer);
-			unByKey(this.keyForClick);
-
+		else if (this.utfgridsource) {
+			this.utfgridlayer.setVisible(false)
 		}
 	}
 
