@@ -7,8 +7,8 @@ module.exports = function(app) {
 		"clientDir": appRoot + "/../client/dist/",
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
-		"remoteFieldDataDir": '/data/fotos_campo/',
-		"fieldDataDir": appRoot+ '/media/',
+		"remoteFieldDataDir": '/media/campo/',
+		"fieldDataDir": appRoot+ '/media/campo/',
 		"pg": {
 			"user": 'postgres',
 		  "host": '10.0.0.14',

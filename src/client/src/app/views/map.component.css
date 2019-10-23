@@ -699,3 +699,8 @@ mat-select {
 	border: 1px solid #0b4e26 !important;
 	color: #ffffff;
 }
+
+:host /deep/ .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active {
+	background-color: #0b4e26 !important;
+	border: 1px solid #0b4e26 !important;
+}

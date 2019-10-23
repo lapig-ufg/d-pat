@@ -56,15 +56,50 @@
                         </div>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab header="Validação de Campo" *ngIf="dataCampo != null">
-                    <!-- <p-galleria styleClass="completa" [images]="images" panelWidth="800" panelHeight="400"
-                                    [showCaption]="true" [transitionInterval]="5000">
-                                </p-galleria> -->
+                <p-accordionTab header="Validação de Campo" *ngIf="dataCampo.length > 0">
+
+                    <div class="p-grid p-justify-even">
+                        <div class="p-col-8">
+                            <p-tabView>
+                                <p-tabPanel header="Fotos de Câmera" leftIcon="pi pi-camera" [selected]="true"
+                                    *ngIf="galleryCamera.length > 0">
+                                    <ngx-gallery [options]="galleryOptions" [images]="galleryCamera"></ngx-gallery>
+                                </p-tabPanel>
+                                <p-tabPanel header="Fotos de Drone" leftIcon="pi pi-images"
+                                    *ngIf="galleryDrones.length > 0">
+                                    <ngx-gallery [options]="galleryOptions" [images]="galleryDrones"></ngx-gallery>
+                                </p-tabPanel>
+                                <p-tabPanel header="Vídeos de Drone" leftIcon="pi pi-video"
+                                    *ngIf="galleryVideos.length > 0">
+                                    <ngx-gallery [options]="galleryOptions" [images]="galleryVideos"></ngx-gallery>
+                                </p-tabPanel>
+                            </p-tabView>
+                        </div>
+
+                        <div class="p-col-4">
+                            <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
+                                <div class="p-col-12">
+                                    <h5 style="text-align: center"><strong><i>Dados de Campo</i></strong>
+                                    </h5>
+                                </div>
+                                <div class="p-col-5" style="font-weight: bold">Data da Visita: </div>
+                                <div class="p-col-7">{{infoVisita.dataFormatada}}</div>
+                                <div class="p-col-5" style="font-weight: bold">Latitude: </div>
+                                <div class="p-col-7">{{infoVisita.latitude}}</div>
+                                <div class="p-col-5" style="font-weight: bold">Longitude: </div>
+                                <div class="p-col-7">{{infoVisita.longitude}}</div>
+                                <div *ngIf="infoVisita.usocobertura != ' '" class="p-col-5" style="font-weight: bold">Uso e Cobertura do Solo: </div>
+                                <div *ngIf="infoVisita.usocobertura != ' '" class="p-col-7">{{infoVisita.usocobertura}}</div>
+                                <div *ngIf="infoVisita.obs != ' '" class="p-col-5" style="font-weight: bold">Observações: </div>
+                                <div *ngIf="infoVisita.obs != ' '" class="p-col-7">{{infoVisita.obs}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </p-accordionTab>
                 <p-accordionTab header="Histórico de Imagens LandSat">
                     <div class="p-grid p-justify-even" style="margin-top: .5em ; text-align: center;">
                         <div class="p-col" style="min-width: 300px; max-width: 350px; width: 100%"
-                            *ngFor="let landsat of _album; let i=index">
+                            *ngFor="let landsat of albumLandsat; let i=index">
 
                             <toh-spinner-img [imgSrc]="landsat.thumb" [largura]="'100%'"
                                 [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openImage(i)" id="img-landsat"
@@ -76,7 +111,7 @@
                         </div>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab header="Análise Automática">
+                <p-accordionTab header="Análise Automática" *ngIf="data.year > 2015">
                     <div class="p-grid" style="margin-top: .5em">
                         <div class="p-col" style="text-align: center;">
                             <h5><strong>Superfície de Susceptibilidade ao Desmatamento</strong></h5>

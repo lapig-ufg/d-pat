@@ -25,7 +25,7 @@ module.exports = function(app) {
 			return [
 				{
 					id: 'pontos_campo',
-					sql:"SELECT ST_AsGeoJSON(geom) geojson, id AS campo_id, data, cobertura, obs, prodes_id as desmat_id, latitude, longitude FROM pontos_campo limit 5"
+					sql:"SELECT ST_AsGeoJSON(geom) geojson, id AS campo_id, data, cobertura, obs, prodes_id as desmat_id, latitude, longitude FROM pontos_campo where prodes_id = ${gid}"
 				},
 				{
 					id: 'prodes',
@@ -38,7 +38,7 @@ module.exports = function(app) {
 			return [
 				{
 					id: 'pontos_campo',
-					sql:"SELECT ST_AsGeoJSON(geom) geojson, id AS campo_id, data, cobertura, obs, deter_id as desmat_id, latitude, longitude FROM pontos_campo limit 5"
+					sql:"SELECT ST_AsGeoJSON(geom) geojson, id AS campo_id, data, cobertura, obs, deter_id as desmat_id, latitude, longitude FROM pontos_campo where deter_id = ${gid}"
 				},
 				{
 					id: 'deter',

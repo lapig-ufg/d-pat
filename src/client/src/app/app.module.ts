@@ -29,16 +29,18 @@ import localePt from '@angular/common/locales/pt';
 
 import {ChartModule} from 'primeng/chart';
 import {TableModule} from 'primeng/table';
-
+import {TabViewModule} from 'primeng/tabview';
 import {FieldsetModule} from 'primeng/fieldset';
 import {PanelModule} from 'primeng/panel';
-import {GalleriaModule} from 'primeng/galleria';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { LightboxModule } from 'ngx-lightbox';
+import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import {CardModule} from 'primeng/card';
 import {AccordionModule} from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
+
+
 
 
 registerLocaleData(localePt);
@@ -51,11 +53,12 @@ registerLocaleData(localePt);
     SpinnerImgComponent
   ],
   imports: [
+    TabViewModule,
+    NgxGalleryModule,
     FieldsetModule,
     CardModule,
     LightboxModule,
     ScrollPanelModule,
-    GalleriaModule,
     PanelModule,
     AccordionModule,
     TableModule,
