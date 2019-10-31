@@ -35,8 +35,7 @@ module.exports = function (app) {
     var category = request.param("category");
     var filename = request.param("filename");
 
-    var filepath =
-      app.config.fieldDataDir + "/" + category + "/" + id + "/" + filename;
+    var filepath = app.config.fieldDataDir + "/" + category + "/" + id + "/" + filename;
 
     response.sendFile(filepath);
   };
@@ -95,33 +94,13 @@ module.exports = function (app) {
 
     for (let ano = 2000; ano <= 2018; ano++) {
       urlsLandsatMontadas.push({
-        url: app.config.ows_host +
-          "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          ano +
-          "_fip,bi_ce_" +
-          origin_table +
-          "_desmatamento_100_fip&bbox=" +
-          box +
-          "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeSrc +
-          "&height=" +
-          sizeSrc +
-          "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-          gid,
+        url: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+          ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+          sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
         year: ano,
-        thumb: app.config.ows_host +
-          "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          ano +
-          "_fip,bi_ce_" +
-          origin_table +
-          "_desmatamento_100_fip&bbox=" +
-          box +
-          "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeThumb +
-          "&height=" +
-          sizeThumb +
-          "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-          gid
+        thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+          ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+          sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
       });
 
       if (ano < 2012) {
@@ -130,33 +109,13 @@ module.exports = function (app) {
     }
 
     let urlSentinel = {
-      thumb: app.config.ows_host +
-        "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-        year +
-        "_fip,bi_ce_" +
-        origin_table +
-        "_desmatamento_100_fip&bbox=" +
-        box +
-        "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-        sizeThumb +
-        "&height=" +
-        sizeThumb +
-        "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-        gid,
+      thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+        year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+        sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
 
-      src: app.config.ows_host +
-        "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-        year +
-        "_fip,bi_ce_" +
-        origin_table +
-        "_desmatamento_100_fip&bbox=" +
-        box +
-        "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-        sizeSrc +
-        "&height=" +
-        sizeSrc +
-        "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-        gid
+      src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+        year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+        sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
     };
     // let urlSentinel = (app.config.ows_host + '/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_2017_lapig,bi_ce_' +
     // origin_table + '_desmatamento_100_fip&bbox=' + box + '&TRANSPARENT=TRUE&srs=EPSG:4674&width=512&height=512&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=' + gid);
@@ -166,33 +125,14 @@ module.exports = function (app) {
     let legendSuscept = "";
     if (area >= 0.5) {
       urlSuscept = {
-        thumb: app.config.ows_host +
-          "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          year +
-          "_fip,bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig,bi_ce_" +
-          origin_table +
-          "_desmatamento_100_fip&bbox=" +
-          box +
-          "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeThumb +
-          "&height=" +
-          sizeThumb +
-          "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-          gid,
+        thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+          year + "_fip,bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" +
+          box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" + sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
 
-        src: app.config.ows_host +
-          "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          year +
-          "_fip,bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig,bi_ce_" +
-          origin_table +
-          "_desmatamento_100_fip&bbox=" +
-          box +
-          "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeSrc +
-          "&height=" +
-          sizeSrc +
-          "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-          gid
+        src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" + year +
+          "_fip,bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" +
+          box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+          sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
       };
       typeSuscept = "superior";
       legendSuscept =
@@ -200,31 +140,14 @@ module.exports = function (app) {
         "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig&format=image/png";
     } else {
       urlSuscept = {
-        thumb: app.config.ows_host +
-          "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          year +
-          "_fip,bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig,bi_ce_" +
-          origin_table +
-          "_desmatamento_100_fip&bbox=" +
-          box +
-          "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeThumb +
-          "&height=" +
-          sizeThumb +
-          "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
+        thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+          year + "_fip,bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" +
+          box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" + sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
           gid,
-        src: app.config.ows_host +
-          "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          year +
-          "_fip,bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig,bi_ce_" +
-          origin_table +
-          "_desmatamento_100_fip&bbox=" +
-          box +
-          "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeSrc +
-          "&height=" +
-          sizeSrc +
-          "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
+
+        src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+          year + "_fip,bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" +
+          box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" + sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
           gid
       };
       typeSuscept = "inferior";
@@ -234,47 +157,18 @@ module.exports = function (app) {
     }
 
     let urlBfast = {
-      thumb: app.config.ows_host +
-        "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-        year +
-        "_fip,bi_ce_" +
-        origin_table +
-        "_desmatamento_100_fip,bi_ce_bfast_fip&bbox=" +
-        box +
-        "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-        400 +
-        "&height=" +
-        400 +
-        "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-        gid +
-        "&MSFAST=t.gid=" +
-        gid +
-        "&TABLEFAST=" +
-        origin_table +
-        "_cerrado",
+      thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+        year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip,bi_ce_bfast_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+        sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFAST=t.gid=" +
+        gid + "&TABLEFAST=" + origin_table + "_cerrado",
 
       src: app.config.ows_host +
-        "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-        year +
-        "_fip,bi_ce_" +
-        origin_table +
-        "_desmatamento_100_fip,bi_ce_bfast_fip&bbox=" +
-        box +
-        "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-        sizeSrc +
-        "&height=" +
-        sizeSrc +
-        "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
-        gid +
-        "&MSFAST=t.gid=" +
-        gid +
-        "&TABLEFAST=" +
-        origin_table +
-        "_cerrado"
+        "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" + year + "_fip,bi_ce_" + origin_table +
+        "_desmatamento_100_fip,bi_ce_bfast_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" + sizeSrc + "&height=" + sizeSrc +
+        "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFAST=t.gid=" + gid + "&TABLEFAST=" + origin_table + "_cerrado"
     };
     let legendBfast =
-      app.config.ows_host +
-      "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_bfast_fip&format=image/png";
+      app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_bfast_fip&format=image/png";
 
     var imagesDesmat = {
       urlsLandSat: urlsLandsatMontadas,
@@ -299,10 +193,33 @@ module.exports = function (app) {
       longitude: long
     };
 
+    let urlCar = {
+      thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+      year + "_fip," +"bi_ce_" + origin_table + "_desmatamento_100_fip," + "car_imoveis_cerrado_fip_laudo," + "car_reserva_legal_cerrado_fip_laudo," + "car_app_cerrado_fip_laudo,"+ "car_nascente_cerrado_fip_laudo"
+      +"&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+      sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSCAR=c."+ origin_table + "_id=" + gid,
+
+    src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+    year + "_fip," + "bi_ce_" + origin_table + "_desmatamento_100_fip," + "car_imoveis_cerrado_fip_laudo," + "car_reserva_legal_cerrado_fip_laudo," + "car_app_cerrado_fip_laudo,"+ "car_nascente_cerrado_fip_laudo"
+    +"&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+    sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSCAR=c."+ origin_table + "_id=" + gid,
+
+      legendCar: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_imoveis_cerrado_fip&format=image/png",
+      legendRL: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_reserva_legal_cerrado_fip&format=image/png",
+      legendAPP: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_app_cerrado_fip&format=image/png",
+      legendNascente: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_nascente_cerrado_fip&format=image/png"
+    };
+
+    var resultCar = {
+      imgsCar: urlCar
+
+    }
+
     response.send({
       info: infoDesmat,
       ponto_campo: resultCampo,
-      images: imagesDesmat
+      images: imagesDesmat,
+      car: resultCar
     });
     response.end();
   };
@@ -333,84 +250,84 @@ module.exports = function (app) {
               visible: true,
               selectedType: "bi_ce_prodes_desmatamento_100_fip",
               types: [{
-                value: "bi_ce_prodes_desmatamento_100_fip",
-                Viewvalue: "Polígonos",
-                opacity: 1,
-                order: 1,
-                regionFilter: true,
-                timeLabel: "Período",
-                timeSelected: "year=2018",
-                timeHandler: "msfilter",
-                times: [{
-                    value: "year=2002",
-                    Viewvalue: "2000/2002",
-                    year: 2002
-                  },
-                  {
-                    value: "year=2004",
-                    Viewvalue: "2002/2004",
-                    year: 2004
-                  },
-                  {
-                    value: "year=2006",
-                    Viewvalue: "2004/2006",
-                    year: 2006
-                  },
-                  {
-                    value: "year=2008",
-                    Viewvalue: "2006/2008",
-                    year: 2008
-                  },
-                  {
-                    value: "year=2010",
-                    Viewvalue: "2008/2010",
-                    year: 2010
-                  },
-                  {
-                    value: "year=2012",
-                    Viewvalue: "2010/2012",
-                    year: 2012
-                  },
-                  {
-                    value: "year=2013",
-                    Viewvalue: "2012/2013",
-                    year: 2013
-                  },
-                  {
-                    value: "year=2014",
-                    Viewvalue: "2013/2014",
-                    year: 2014
-                  },
-                  {
-                    value: "year=2015",
-                    Viewvalue: "2014/2015",
-                    year: 2015
-                  },
-                  {
-                    value: "year=2016",
-                    Viewvalue: "2015/2016",
-                    year: 2016
-                  },
-                  {
-                    value: "year=2017",
-                    Viewvalue: "2016/2017",
-                    year: 2017
-                  },
-                  {
-                    value: "year=2018",
-                    Viewvalue: "2017/2018",
-                    year: 2018
-                  }
-                ]
-              },
-              {
-                value: "bi_ce_prodes_desmatamento_pontos_campo_fip",
-                Viewvalue: "Polígonos visitados em Campo",
-                opacity: 1,
-                order: 1,
-                regionFilter: true
-              }
-            ]
+                  value: "bi_ce_prodes_desmatamento_100_fip",
+                  Viewvalue: "Polígonos",
+                  opacity: 1,
+                  order: 1,
+                  regionFilter: true,
+                  timeLabel: "Período",
+                  timeSelected: "year=2018",
+                  timeHandler: "msfilter",
+                  times: [{
+                      value: "year=2002",
+                      Viewvalue: "2000/2002",
+                      year: 2002
+                    },
+                    {
+                      value: "year=2004",
+                      Viewvalue: "2002/2004",
+                      year: 2004
+                    },
+                    {
+                      value: "year=2006",
+                      Viewvalue: "2004/2006",
+                      year: 2006
+                    },
+                    {
+                      value: "year=2008",
+                      Viewvalue: "2006/2008",
+                      year: 2008
+                    },
+                    {
+                      value: "year=2010",
+                      Viewvalue: "2008/2010",
+                      year: 2010
+                    },
+                    {
+                      value: "year=2012",
+                      Viewvalue: "2010/2012",
+                      year: 2012
+                    },
+                    {
+                      value: "year=2013",
+                      Viewvalue: "2012/2013",
+                      year: 2013
+                    },
+                    {
+                      value: "year=2014",
+                      Viewvalue: "2013/2014",
+                      year: 2014
+                    },
+                    {
+                      value: "year=2015",
+                      Viewvalue: "2014/2015",
+                      year: 2015
+                    },
+                    {
+                      value: "year=2016",
+                      Viewvalue: "2015/2016",
+                      year: 2016
+                    },
+                    {
+                      value: "year=2017",
+                      Viewvalue: "2016/2017",
+                      year: 2017
+                    },
+                    {
+                      value: "year=2018",
+                      Viewvalue: "2017/2018",
+                      year: 2018
+                    }
+                  ]
+                },
+                {
+                  value: "bi_ce_prodes_desmatamento_pontos_campo_fip",
+                  Viewvalue: "Polígonos visitados em Campo",
+                  opacity: 1,
+                  order: 1,
+                  regionFilter: true
+                }
+              ]
             },
             {
               id: "desmatamento_deter",

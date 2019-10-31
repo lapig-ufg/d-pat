@@ -1136,19 +1136,11 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         }
 
         this.dataBfast = result["images"].urlBfast;
-        this.dataBfast.prob_Formatada =
-          this.dataBfast.pct_bfast == null
-            ? "não foi computada"
-            : ("" + this.dataBfast.pct_bfast.toFixed(2) + "%").replace(
-              ".",
-              ","
-            );
+        this.dataBfast.prob_Formatada =  this.dataBfast.pct_bfast == null ? "não foi computada" : ("" + this.dataBfast.pct_bfast.toFixed(2) + "%").replace(".",",");
 
         const dfast = {
           src: this.dataBfast.urlBfast.src,
-          caption:
-            this.dataBfast.prob_Formatada +
-            " do polígono apresentou quebras em sua série temporal.",
+          caption: this.dataBfast.prob_Formatada + " do polígono apresentou quebras em sua série temporal.",
           thumb: this.dataBfast.urlBfast.thumb
         };
         this.vetBfast.push(dfast);
@@ -1157,9 +1149,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         this.dataSuscept.sucept_desmatFormatada = this.dataSuscept.prob_suscept == null ? "não foi computada" : ("" + (this.dataSuscept.prob_suscept * 100).toFixed(2) + "%").replace(".", ",");
         const dsuscept = {
           src: this.dataSuscept.urlSuscept.src,
-          caption:
-            "Susceptibilidade a Desmatamento: " +
-            this.dataSuscept.sucept_desmatFormatada,
+          caption: "Susceptibilidade a Desmatamento: " + this.dataSuscept.sucept_desmatFormatada,
           thumb: this.dataSuscept.urlSuscept.thumb
         };
         this.vetSuscept.push(dsuscept);

@@ -26,18 +26,19 @@ module.exports = function(app) {
 
 	if(process.env.NODE_ENV == 'prod') {
 		// config["mongo"]["port"] = "27017"
-		config["port"] = "4000"
 		config['dbpath'] = "/data/catalog/Ocultos/d-pat.sqlite"
 		config["pg"] = {
-			"user": 'postgres',
-		  "host": '200.137.217.160',
+			"user": 'fip_cerrado',
+		  "host": '172.18.0.4',
 		  "database": 'fip_cerrado',
-		  "password": 'postgres',
+		  "password": 'fip_cerrado123',
 		  "port": 5432,
 		  "debug": true
 		}
 		config["clientDir"] = appRoot + "/../client/dist/lapig-dpat/"
 		config["ows_host"] = "http://ows.lapig.iesa.ufg.br"
+		config["fieldDataDir"] = "/STORAGE/d-pat-campo/"
+		config["remoteFieldDataDir"] = "/STORAGE/d-pat-campo/"
 	}
 	
 	return config;
