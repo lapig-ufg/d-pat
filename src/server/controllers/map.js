@@ -193,33 +193,91 @@ module.exports = function (app) {
       longitude: long
     };
 
-    let urlCar = {
-      thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-      year + "_fip," +"bi_ce_" + origin_table + "_desmatamento_100_fip," + "car_imoveis_cerrado_fip_laudo," + "car_reserva_legal_cerrado_fip_laudo," + "car_app_cerrado_fip_laudo,"+ "car_nascente_cerrado_fip_laudo"
-      +"&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-      sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSCAR=c."+ origin_table + "_id=" + gid,
+    var queryCar = request.queryResult["car"];
 
-    src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-    year + "_fip," + "bi_ce_" + origin_table + "_desmatamento_100_fip," + "car_imoveis_cerrado_fip_laudo," + "car_reserva_legal_cerrado_fip_laudo," + "car_app_cerrado_fip_laudo,"+ "car_nascente_cerrado_fip_laudo"
-    +"&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-    sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSCAR=c."+ origin_table + "_id=" + gid,
+    var urlsLandsatMontadas = [];
 
-      legendCar: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_imoveis_cerrado_fip&format=image/png",
-      legendRL: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_reserva_legal_cerrado_fip&format=image/png",
-      legendAPP: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_app_cerrado_fip&format=image/png",
-      legendNascente: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_nascente_cerrado_fip&format=image/png"
-    };
+    var vetCar = [];
+    let cargid;
+    let boxCar;
+    let cod_car;
+    let area_car;
+    let data_ref_car;
+    let areaapp, qnt_nascente, area_rl;
+    let area_reserva_legal, area_app;
+    queryCar.forEach(function (row) {
 
-    var resultCar = {
-      imgsCar: urlCar
+      boxCar = row["bboxcar"]
+        .replace("BOX(", "")
+        .replace(")", "")
+        .split(" ")
+        .join(",");
+      area_car = parseFloat(row["areacar"]);
+      cod_car = row["codcar"];
+      data_ref_car = row["datarefcar"];
+      area_rl = parseFloat(row["area_rl"]);
+      areaapp = parseFloat(row["areaapp"]);
+      qnt_nascente = parseInt(row["qnt_nascente"]);
+      area_desmatada = parseFloat(row["area_desmatada"]);
+      cargid = parseInt(row["cargid"]);
+      area_reserva_legal_total = parseFloat(row["area_reserva_legal_total"]);
+      area_app_total = parseFloat(row["area_app_total"]);
 
-    }
+      let urlCar = {};
+      let metaDataCar = {};
 
+      if (boxCar == undefined) {
+        urlCar = {
+          show: false
+        };
+      } else {
+        urlCar = {
+          show: true,
+          thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "car_reserva_legal_cerrado_fip_laudo," + "car_app_cerrado_fip_laudo," + "car_nascente_cerrado_fip_laudo," +
+            "car_imoveis_cerrado_fip_laudo,"  + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + boxCar + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSCAR=c." + origin_table + "_id=" + gid + "&MSFILTERCAR=car.gid="+cargid,
+
+          src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "car_imoveis_cerrado_fip_laudo," + "car_reserva_legal_cerrado_fip_laudo," + "car_app_cerrado_fip_laudo," + "car_nascente_cerrado_fip_laudo," +
+            "car_imoveis_cerrado_fip_laudo," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + boxCar + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSCAR=c." + origin_table + "_id=" + gid + "&MSFILTERCAR=car.gid="+cargid,
+
+          legendCar: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_imoveis_cerrado_fip_laudo&format=image/png",
+          legendRL: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_reserva_legal_cerrado_fip_laudo&format=image/png",
+          legendAPP: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_app_cerrado_fip_laudo&format=image/png",
+          legendNascente: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=car_nascente_cerrado_fip_laudo&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&format=image/png",
+
+        };
+
+        metaDataCar = {
+          area_car: area_car,
+          dataRef: data_ref_car,
+          cod_car: cod_car,
+          areaapp: areaapp,
+          area_rl: area_rl,
+          qnt_nascente: qnt_nascente,
+          area_desmatada: area_desmatada,
+          area_reserva_legal_total : area_reserva_legal_total,
+          area_app_total : area_app_total
+        }
+      }
+
+      var resultCar = {
+        show: urlCar.show,
+        imgsCar: urlCar,
+        metaData: metaDataCar
+      };
+
+      vetCar.push(resultCar);
+
+    });
     response.send({
       info: infoDesmat,
       ponto_campo: resultCampo,
       images: imagesDesmat,
-      car: resultCar
+      car: vetCar
     });
     response.end();
   };

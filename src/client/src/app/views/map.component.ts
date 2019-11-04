@@ -324,8 +324,7 @@ export class MapComponent implements OnInit {
   }
 
   private updateCharts() {
-    var timeseriesUrl =
-      "/service/deforestation/timeseries" + this.getServiceParams();
+    var timeseriesUrl = "/service/deforestation/timeseries" + this.getServiceParams();
     var statesUrl = "/service/deforestation/states" + this.getServiceParams();
     var citiesUrl = "/service/deforestation/cities" + this.getServiceParams();
 
@@ -341,13 +340,7 @@ export class MapComponent implements OnInit {
           }
         ],
         area_antropica: timeseriesResult["indicator"].anthropic,
-        percentArea: (
-          (
-            (timeseriesResult["indicator"].anthropic /
-              this.selectRegion.area_region) *
-            100
-          ).toFixed(2) + "%"
-        ).replace(".", ",")
+        percentArea: (((timeseriesResult["indicator"].anthropic / this.selectRegion.area_region) * 100).toFixed(2) + "%").replace(".", ",")
       };
 
       this.optionsTimeSeries = {
@@ -732,9 +725,6 @@ export class MapComponent implements OnInit {
     let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
 
-    console.log("p ", prodes)
-    console.log("d ", deter)
-
     if (prodes.visible) {
 
       if (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip") {
@@ -990,11 +980,7 @@ export class MapComponent implements OnInit {
         for (let layer of group.layers) {
           // console.log("lyat  ", layer)
           if (layer.id != "satelite") {
-            layer.urlLegend =
-              this.urls[0] +
-              "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" +
-              layer.selectedType +
-              "&format=image/png";
+            layer.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + layer.selectedType + "&format=image/png";
             this.layersNames.push(layer);
           }
 
@@ -1040,6 +1026,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   urlSentinel: Array<{ src: string; caption: string; thumb: string }> = [];
   vetBfast: Array<{ src: string; caption: string; thumb: string }> = [];
   vetSuscept: Array<{ src: string; caption: string; thumb: string }> = [];
+  vetCar: Array<{ src: string; caption: string; thumb: string }> = [];
   dataBfast: any = {};
   dataSuscept: any = {};
   dataCampo: any = [];
@@ -1047,6 +1034,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   infoDesmat: any = {};
   infoVisita: any = {};
   urlsLandSat: any = [];
+
+  carData: any = [];
 
   albumLandsat: Array<{ src: string; caption: string; thumb: string }> = [];
 
@@ -1070,6 +1059,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.dataCampo = [];
     this.infoDesmat = {};
     this.infoVisita = {};
+
 
     this.initGallery();
   }
@@ -1112,8 +1102,31 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     // console.log("data - ", this.data)
     this.http.get(fieldPhotosUrl).subscribe(
       result => {
-        // console.log('res - ', result)
+        console.log('res - ', result)
         this.infoDesmat = result["info"];
+
+        this.carData = result["car"];
+        this.carData.show = result["car"].show
+        console.log(this.carData)
+
+        this.carData.forEach(element => {
+
+          element.metaData.dataRefFormatada = element.metaData.dataRef == "" ? "Não Divulgada" : this.data.datePipe.transform(new Date(element.metaData.dataRef), "dd/MM/yyyy");
+          element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
+          element.metaData.percent = "" + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + "%").replace(".", ",")
+
+          element.metaData.percentRL =  "" + (((element.metaData.area_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
+
+
+          const dcar = {
+            src: element.imgsCar.src,
+            caption: "CAR: " + element.metaData.cod_car,
+            thumb: element.imgsCar.thumb
+          };
+          this.vetCar.push(dcar);
+
+        });
+
 
         const sent = {
           src: result["images"].urlSentinel.src,
@@ -1136,7 +1149,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         }
 
         this.dataBfast = result["images"].urlBfast;
-        this.dataBfast.prob_Formatada =  this.dataBfast.pct_bfast == null ? "não foi computada" : ("" + this.dataBfast.pct_bfast.toFixed(2) + "%").replace(".",",");
+        this.dataBfast.prob_Formatada = this.dataBfast.pct_bfast == null ? "não foi computada" : ("" + this.dataBfast.pct_bfast.toFixed(2) + "%").replace(".", ",");
 
         const dfast = {
           src: this.dataBfast.urlBfast.src,
@@ -1247,5 +1260,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
   openLightboxBfast(): void {
     this._lightbox.open(this.vetBfast);
+  }
+  openLightboxCAR(index: number): void {
+    this._lightbox.open(this.vetCar, index);
   }
 }

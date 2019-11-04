@@ -57,45 +57,63 @@
                     </div>
                 </p-accordionTab>
 
-                <!-- <p-accordionTab header="Cadastro Ambiental Rural (CAR)" *ngIf="">
-                    <div class="p-grid p-justify-even">
-
-                        <div class="p-col-8"
-                            style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
-                            <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="urlSentinel[0]?.thumb"
-                                [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
-                            </toh-spinner-img>
+                <p-accordionTab header="Cadastro Ambiental Rural (CAR)" *ngIf="carData.length > 0">
+                    <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of carData; let i=index">
+                        <div class="p-col-6">
+                            <h5 style="text-align: center"><strong><i>Informações Cruzadas</i></strong>
+                            </h5>
                             <br>
-                            <strong>Imagem inspecionada pelo {{data.origin_table}}-CERRADO</strong>
+                            <p style="font-size: 16px; text-align: left;"> <b>Código CAR:</b>
+                                {{item.metaData.cod_car}} </p>
+                            <p style="font-size: 16px; text-align: left;"> <b>Área total da propriedade:</b>
+                                {{item.metaData.area_car | number:'1.2-3' }} km²</p>
+                            <p style="font-size: 16px; text-align: left;"> <b>Data de Referência:</b>
+                                {{item.metaData.dataRefFormatada}} </p>
+                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_rl"> <b>Área dentro
+                                    da Reserva Legal:</b>
+                                {{item.metaData.area_rl | number:'1.2-3' }} km² ({{item.metaData.percentRL}} da área total da Reserva Legal.) </p>
+                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.qnt_nascente">
+                                <b>Quantidade de nascentes na propriedade rural:</b>
+                                {{item.metaData.qnt_nascente}} </p>
+                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.areaapp"> <b>Área desmatada dentro
+                                    de APP:</b>
+                                {{item.metaData.areaapp | number:'1.2-3' }} km² </p>
                         </div>
 
-                        <div class="p-col-4">
-                            <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
-                                <div class="p-col-12">
-                                    <h5 style="text-align: center"><strong><i>Informações Cruzadas</i></strong></h5>
+
+
+                        <div class="p-col-6 ">
+                            <div class="p-grid">
+
+                                <div class="p-col-8"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                    <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
+                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxCAR()">
+                                    </toh-spinner-img>
                                 </div>
-                                <div class="p-col-5" style="font-weight: bold">Código CAR: </div>
-                                <div class="p-col-7">{{ }}-CERRADO</div>
 
-                                <div class="p-col-5" style="font-weight: bold">Área Desmatada: </div>
-                                <div class="p-col-7">{{infoDesmat.area | number:'1.2-3' }} km²</div>
+                                <div class="p-col-4">
+                                    <img *ngIf="item.imgsCar.legendDesmatamento"
+                                        [src]="item.imgsCar.legendDesmatamento">
+                                    <img *ngIf="item.imgsCar.legendCar" [src]="item.imgsCar.legendCar">
+                                    <img *ngIf="item.imgsCar.legendAPP" [src]="item.imgsCar.legendAPP">
+                                    <img *ngIf="item.imgsCar.legendRL" [src]="item.imgsCar.legendRL">
+                                    <img *ngIf="item.imgsCar.legendNascente" [src]="item.imgsCar.legendNascente">
 
-                                <div class="p-col-5" style="font-weight: bold">Município: </div>
-                                <div class="p-col-7">{{data.municipio }} - {{data.uf }}</div>
+                                    <br><br>
+                                    <div  *ngIf="item.metaData.percent != ''" style="font-size: medium; text-align: justify">
+                                    <span>
+                                        Este desmatamento detectado pelo <b>{{data.origin_table}}-CERRADO</b>
+                                        corresponde a
+                                        <strong>{{item.metaData.percent}}</strong> da área total da propriedade
+                                        rural.</span> </div>
+                                </div>
 
-                                <div class="p-col-5" style="font-weight: bold">Data da Detecção: </div>
-                                <div class="p-col-7">{{data.dataFormatada}}</div>
-
-                                <div class="p-col-5" style="font-weight: bold">Latitude: </div>
-                                <div class="p-col-7">{{infoDesmat.latitude | number:'1.3-6' }}</div>
-
-                                <div class="p-col-5" style="font-weight: bold">Longitude: </div>
-                                <div class="p-col-7">{{infoDesmat.longitude | number:'1.3-6' }}</div>
                             </div>
                         </div>
-
                     </div>
-                </p-accordionTab> -->
+
+                </p-accordionTab>
 
                 <p-accordionTab header="Validação de Campo" *ngIf="dataCampo.length > 0">
 
