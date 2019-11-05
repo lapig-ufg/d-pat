@@ -340,9 +340,10 @@ export class MapComponent implements OnInit {
           }
         ],
         area_antropica: timeseriesResult["indicator"].anthropic,
-        percentArea: (((this.dataSeries.area_antropica / this.selectRegion.area_region) * 100).toFixed(2) + "%").replace(".", ",")
+        percentArea: (((timeseriesResult["indicator"].anthropic / this.selectRegion.area_region) * 100).toFixed(2) + "%").replace(".", ",")
       };
 
+      console.log("ttt - ", this.dataSeries.percentArea)
       this.optionsTimeSeries = {
         tooltips: {
           callbacks: {
