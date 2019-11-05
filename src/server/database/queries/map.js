@@ -79,8 +79,8 @@ module.exports = function(app) {
 				+ " ST_AREA(rl.geom::GEOGRAPHY) / 1000000 as area_reserva_legal_total, c.area_app as areaapp, c.qnt_nascente as qnt_nascente, c.area_reserva_legal as area_rl, car.gid as cargid, car.cod_car as codcar, car.area_ha as areacar, car.data_ref as datarefcar, rect_bbox(car.geom) as bboxcar FROM car_desmat c "
 				+ " INNER JOIN car_cerrado car on car.idt_imovel = c.idt_imovel" 
 				+ " INNER JOIN geo_car_reserva_legal_cerrado rl on rl.idt_imovel = c.idt_imovel "
-				+ " left JOIN geo_car_app_cerrado app on app.idt_imovel = c.idt_imovel "
-				+ " inner JOIN "+ origin + "_cerrado prodes on prodes.gid = " + gid 
+				+ " INNER JOIN geo_car_app_cerrado app on app.idt_imovel = c.idt_imovel "
+				+ " INNER JOIN "+ origin + "_cerrado prodes on prodes.gid = c." + origin + "_id "
 				+ " WHERE c."+ origin + "_id = " + gid  + " order by area_desmatada DESC"				
 			}
 		]
