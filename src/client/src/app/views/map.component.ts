@@ -343,7 +343,6 @@ export class MapComponent implements OnInit {
         percentArea: (((timeseriesResult["indicator"].anthropic / this.selectRegion.area_region) * 100).toFixed(2) + "%").replace(".", ",")
       };
 
-      console.log("ttt - ", this.dataSeries.percentArea)
       this.optionsTimeSeries = {
         tooltips: {
           callbacks: {
@@ -1103,12 +1102,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     // console.log("data - ", this.data)
     this.http.get(fieldPhotosUrl).subscribe(
       result => {
-        console.log('res - ', result)
         this.infoDesmat = result["info"];
 
         this.carData = result["car"];
         this.carData.show = result["car"].show
-        console.log(this.carData)
 
         this.carData.forEach(element => {
 
