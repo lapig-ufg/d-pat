@@ -58,6 +58,7 @@ import {
   NgxGalleryAnimation
 } from "ngx-image-video-gallery";
 
+
 const SEARCH_URL = "service/map/search";
 const PARAMS = new HttpParams({
   fromObject: {
@@ -741,9 +742,10 @@ export class MapComponent implements OnInit {
         return {
           version: "2.2.0",
           grids: [
-            "/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter=" +
-            text +
-            "&tile={x}+{y}+{z}"
+            this.returnUTFGRID("bi_ce_info_utfgrid_fip", text, "{x}+{y}+{z}")
+            // "/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter=" +
+            // text +
+            // "&tile={x}+{y}+{z}"
           ]
         };
       }
@@ -759,9 +761,10 @@ export class MapComponent implements OnInit {
         return {
           version: "2.2.0",
           grids: [
-            "/service/deforestation/info?layername=bi_ce_info_utfgrid_pontos_campo_fip&msfilter=" +
-            text +
-            "&tile={x}+{y}+{z}"
+            this.returnUTFGRID("bi_ce_info_utfgrid_pontos_campo_fip", text, "{x}+{y}+{z}")
+            // "/service/deforestation/info?layername=bi_ce_info_utfgrid_pontos_campo_fip&msfilter=" +
+            // text +
+            // "&tile={x}+{y}+{z}"
           ]
         };
       }
@@ -783,9 +786,10 @@ export class MapComponent implements OnInit {
         return {
           version: "2.2.0",
           grids: [
-            "/service/deforestation/info?layername=bi_ce_info_utfgrid_pontos_campo_fip&msfilter=" +
-            text +
-            "&tile={x}+{y}+{z}"
+            this.returnUTFGRID("bi_ce_info_utfgrid_fip", text, "{x}+{y}+{z}")
+            // "/service/deforestation/info?layername=bi_ce_info_utfgrid_pontos_campo_fip&msfilter=" +
+            // text +
+            // "&tile={x}+{y}+{z}"
           ]
         };
       }
@@ -802,14 +806,19 @@ export class MapComponent implements OnInit {
         return {
           version: "2.2.0",
           grids: [
-            "/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter=" +
-            text +
-            "&tile={x}+{y}+{z}"
+            this.returnUTFGRID("bi_ce_info_utfgrid_fip", text, "{x}+{y}+{z}")
+            // "/service/deforestation/info?layername=bi_ce_info_utfgrid_fip&msfilter=" +
+            // text +
+            // "&tile={x}+{y}+{z}"
           ]
         };
       }
     }
   }
+
+  private returnUTFGRID(layername, filter, tile){
+    return  "/ows?layers=" + layername + "&MSFILTER=" + filter + "&mode=tile&tile=" + tile + "&tilemode=gmap&map.imagetype=utfgrid"
+}
 
   private createTMSLayer(layer) {
     return new OlTileLayer({

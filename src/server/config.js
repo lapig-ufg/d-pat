@@ -21,7 +21,8 @@ module.exports = function(app) {
 		},
 		"port": 3000,
 		// "ows_host" : 'http://localhost:5001',
-		"ows_host" : 'http://ows.lapig.iesa.ufg.br'
+		"ows_host" : 'http://ows.lapig.iesa.ufg.br',
+		"ows": "http://ows.lapig.iesa.ufg.br",
 	};
 
 	if(process.env.NODE_ENV == 'prod') {

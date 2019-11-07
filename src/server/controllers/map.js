@@ -764,6 +764,10 @@ module.exports = function (app) {
                   {
                     value: "bi_ce_mosaico_sentinel_10_2017_lapig",
                     Viewvalue: "2017"
+                  },
+                  {
+                    value: "bi_ce_mosaico_sentinel_10_2018_lapig",
+                    Viewvalue: "2018"
                   }
                 ]
               }

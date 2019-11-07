@@ -1,20 +1,29 @@
-var ejs = require('ejs');
-var fs = require('fs');
-var requester = require('request');
+var 	querystring = require('querystring')
+	  ,	requester = require('request')
+	  ,	zlib = require('zlib');
+	  ;
 
 module.exports = function(app) {
+	
+	var config = app.config;
 
+	var Internal = {};
 	var Proxy = {};
 
-	Proxy.doRequest = function(request, response, baseUrl) {
+	Internal.doRequest = function(request, response, baseUrl) {
 
-		var region = request.param('region');
-		var city = request.param('city');
-		var absoluteUrl = "http://maps.lapig.iesa.ufg.br/spatial/query?region="+region+"&regionType=biome&city="+city+"&lang=pt-br";
+		var requestType = request.param('REQUEST');  
+	  var url = baseUrl + request.path;
+	  var params  = querystring.stringify(request.query);
+	  
+	  if(request.param('url'))
+	    url = request.param('url');
+	  else
+	    url += '?'+params;
 
 	  requester({
-	  		uri: absoluteUrl
-	  	,	timeout: 50000
+	  		uri: url
+	  	,	timeout: config.timeout
 	  	, headers: {
 	  			'Accept': request.headers['accept']
 	  		,	'User-Agent': request.headers['user-agent']
@@ -27,11 +36,22 @@ module.exports = function(app) {
 	  	if(error) {
 	  		console.log(error);
 	  		response.end();	
+	  	} else {
+	  		console.log(proxyResponse.statusCode, url);
 	  	}
 
-	  }).pipe(response)
+	  })
+	  .pipe(response)
 	}
 
-	return Proxy;
+	Proxy.ows = function(request, response) {
+		var baseUrl = config.ows;
+		Internal.doRequest(request, response, baseUrl);
+	}
 
+	Proxy.tms = function(request, response) {
+		var baseUrl = config.tms;
+		Internal.doRequest(request, response, baseUrl);
+	}
+	return Proxy;
 }

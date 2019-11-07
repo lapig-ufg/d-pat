@@ -41,8 +41,6 @@ import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 
 
-
-
 registerLocaleData(localePt);
 
 @NgModule({
