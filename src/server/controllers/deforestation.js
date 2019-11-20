@@ -185,5 +185,37 @@ module.exports = function (app) {
 			response.end();
 		});
 	}
+
+
+	Controller.illegal = function (request, response) {
+
+		var queryResultAPP = request.queryResult["app"];
+
+
+		var index = 1;
+		for (var i = 0; i < 10; i++) {
+			queryResultAPP[i].index = index++ + 'º'
+			queryResultAPP[i].value = Number(queryResultAPP[i].value)
+		}
+
+		var queryResultRL = request.queryResult["rl"];
+
+
+		index = 1;
+		for (var i = 0; i < 10; i++) {
+			queryResultRL[i].index = index++ + 'º'
+			queryResultRL[i].value = Number(queryResultRL[i].value)
+		}
+
+
+		response.send({
+			resultAPP: queryResultAPP,
+			resultRL: queryResultRL,
+		  })
+		response.end()
+
+	}
+
+
 	return Controller;
 }

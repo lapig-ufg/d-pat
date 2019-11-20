@@ -10,6 +10,7 @@ module.exports = function (app) {
 	app.get('/service/deforestation/indicators', dataInjector);
 	app.get('/service/deforestation/largest', dataInjector);
 	app.get('/service/deforestation/info',dataInjector, deforestation.infoUTFGrid);
+	app.get('/service/deforestation/illegal',dataInjector, deforestation.illegal);
 
 
 }

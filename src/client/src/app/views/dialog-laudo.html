@@ -52,7 +52,7 @@
                                 [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
-                            <strong>Imagem inspecionada pelo {{data.origin_table}}-CERRADO</strong>
+                            <strong>Imagem Sentinel no ano {{data.year}}</strong>
                         </div>
                     </div>
                 </p-accordionTab>
@@ -69,15 +69,19 @@
                                 {{item.metaData.area_car | number:'1.2-3' }} km²</p>
                             <p style="font-size: 16px; text-align: left;"> <b>Data de Referência:</b>
                                 {{item.metaData.dataRefFormatada}} </p>
-                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_rl"> <b>Área dentro
+                            <p style="font-size: 16px; text-align: left;"
+                                *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0 "> <b>Área desmatada dentro
                                     da Reserva Legal:</b>
-                                {{item.metaData.area_rl | number:'1.2-3' }} km² ({{item.metaData.percentRL}} da área total da Reserva Legal.) </p>
-                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.qnt_nascente">
+                                {{item.metaData.area_desmat_rl | number:'1.2-3' }} km² ({{item.metaData.percentRL}} da área
+                                total da Reserva Legal) </p>
+                            <p style="font-size: 16px; text-align: left;"
+                                *ngIf="item.metaData.qnt_nascente && item.metaData.qnt_nascente > 0">
                                 <b>Quantidade de nascentes na propriedade rural:</b>
                                 {{item.metaData.qnt_nascente}} </p>
-                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.areaapp"> <b>Área desmatada dentro
+                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0"> <b>Área
+                                    desmatada dentro
                                     de APP:</b>
-                                {{item.metaData.areaapp | number:'1.2-3' }} km² </p>
+                                {{item.metaData.area_desmat_app | number:'1.2-3' }} km² ({{item.metaData.percentAPP}} da área total da APP)</p>
                         </div>
 
                         <div class="p-col-6 ">
@@ -99,12 +103,15 @@
                                     <img *ngIf="item.imgsCar.legendNascente" [src]="item.imgsCar.legendNascente">
 
                                     <br><br>
-                                    <div  *ngIf="item.metaData.percent != ''" style="font-size: medium; text-align: justify">
-                                    <span>
-                                        Este desmatamento detectado pelo <b>{{data.origin_table}}-CERRADO</b>
-                                        corresponde a
-                                        <strong>{{item.metaData.percent}}</strong> da área total da propriedade
-                                        rural.</span> </div>
+                                    <div *ngIf="item.metaData.percentDesmat != ''"
+                                        style="font-size: medium; text-align: justify">
+                                        <span>
+                                            Este desmatamento detectado pelo <b>{{data.origin_table}}-CERRADO</b>
+                                            corresponde a
+                                            <strong>{{item.metaData.percentDesmat}}</strong> da área total da
+                                            propriedade
+                                            rural.</span>
+                                    </div>
                                 </div>
 
                             </div>

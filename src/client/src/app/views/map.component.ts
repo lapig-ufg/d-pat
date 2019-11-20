@@ -98,6 +98,8 @@ export class MapComponent implements OnInit {
   dataStates: any;
   dataCities: any;
   chartResultCities;
+  chartResultCitiesIllegalAPP;
+  chartResultCitiesIllegalRL;
   periodSelected: any;
   desmatInfo: any;
 
@@ -328,6 +330,7 @@ export class MapComponent implements OnInit {
     var timeseriesUrl = "/service/deforestation/timeseries" + this.getServiceParams();
     var statesUrl = "/service/deforestation/states" + this.getServiceParams();
     var citiesUrl = "/service/deforestation/cities" + this.getServiceParams();
+    var citiesIllegal = "/service/deforestation/illegal" + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
       this.dataSeries = {
@@ -424,6 +427,13 @@ export class MapComponent implements OnInit {
     if (!this.isFilteredByCity) {
       this.http.get(citiesUrl).subscribe(citiesResult => {
         this.chartResultCities = citiesResult;
+      });
+    }
+
+    if (!this.isFilteredByCity) {
+      this.http.get(citiesIllegal).subscribe(citiesIllegalResult => {
+        this.chartResultCitiesIllegalAPP = citiesIllegalResult["resultAPP"];
+        this.chartResultCitiesIllegalRL = citiesIllegalResult["resultRL"];
       });
     }
   }
@@ -891,6 +901,7 @@ export class MapComponent implements OnInit {
   }
 
   private updateSourceLayer(layer) {
+
     if (layer["times"]) {
       this.periodSelected = layer["times"].find(
         element => element.value === layer.timeSelected
@@ -1119,11 +1130,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         this.carData.forEach(element => {
 
           element.metaData.dataRefFormatada = element.metaData.dataRef == "" ? "Não Divulgada" : this.data.datePipe.transform(new Date(element.metaData.dataRef), "dd/MM/yyyy");
-          element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
-          element.metaData.percent = "" + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + "%").replace(".", ",")
-
-          element.metaData.percentRL =  "" + (((element.metaData.area_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
-
+          //element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
+          element.metaData.percentDesmat = "" + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + "%").replace(".", ",")
+          element.metaData.percentRL =  "" + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
+          element.metaData.percentAPP =  "" + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + "%").replace(".", ",")
 
           const dcar = {
             src: element.imgsCar.src,

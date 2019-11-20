@@ -114,7 +114,7 @@
 
 			<div id="positionCharts">
 				<div class="titleWindows">
-					Estatísticas de Desmatamento no Cerrado
+					Estatísticas de Desmatamento pelo PRODES-Cerrado
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
 						aria-controls="camadageografica">-</button>
@@ -147,13 +147,13 @@
 						<mat-tab label="Estados" *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'"
 							id="tabGraficoLinhas">
 							<h6>
-								<b>Áreas Desmatadas nos Estados: {{ periodSelected.Viewvalue }}</b>
+								<b>Áreas Desmatadas nos Estados: {{ desmatInfo.Viewvalue }}</b>
 							</h6>
 							<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
 						</mat-tab>
 						<mat-tab label="Municípios" *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
 							<h6>
-								<b>Ranking dos Municípios com maiores Desmatamentos: {{ periodSelected.Viewvalue }}</b>
+								<b>Ranking dos Municípios com maiores Desmatamentos: {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
 							<p-table [value]="chartResultCities">
@@ -168,13 +168,63 @@
 								<ng-template pTemplate="body" let-city>
 									<tr>
 										<td align="center">{{city.index}}</td>
-										<td align="center">{{city.name}}/</td>
+										<td align="center">{{city.name}}</td>
 										<td align="center">{{city.uf}}</td>
 										<td align="center">{{city.value | number }} km²</td>
 									</tr>
 								</ng-template>
 							</p-table>
 
+						</mat-tab>
+
+						<mat-tab label="Desmatamento em APP" *ngIf="selectRegion.type != 'city'" >
+							<h6>
+								<b>Ranking dos Municípios com maiores Desmatamentos em APP: {{ desmatInfo.Viewvalue }}</b>
+								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
+							</h6>
+							<p-table [value]="chartResultCitiesIllegalAPP">
+								<ng-template pTemplate="header">
+									<tr align="center">
+										<th>#</th>
+										<th>Municípios</th>
+										<th>Estado</th>
+										<th>Área</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-city>
+									<tr>
+										<td align="center">{{city.index}}</td>
+										<td align="center">{{city.name}}</td>
+										<td align="center">{{city.uf}}</td>
+										<td align="center">{{city.value | number }} km²</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</mat-tab>
+
+						<mat-tab label="Desmatamento em Reserva Legal" *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
+							<h6>
+								<b>Ranking dos Municípios com maiores Desmatamentos em Reservas Legal: {{ desmatInfo.Viewvalue }}</b>
+								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
+							</h6>
+							<p-table [value]="chartResultCitiesIllegalRL">
+								<ng-template pTemplate="header">
+									<tr align="center">
+										<th>#</th>
+										<th>Municípios</th>
+										<th>Estado</th>
+										<th>Área</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-city>
+									<tr>
+										<td align="center">{{city.index}}</td>
+										<td align="center">{{city.name}}</td>
+										<td align="center">{{city.uf}}</td>
+										<td align="center">{{city.value | number }} km²</td>
+									</tr>
+								</ng-template>
+							</p-table>
 						</mat-tab>
 
 
