@@ -114,7 +114,7 @@
 
 			<div id="positionCharts">
 				<div class="titleWindows">
-					Estatísticas de Desmatamento pelo PRODES-Cerrado
+					Estatísticas de Desmatamento nos dados do PRODES-Cerrado
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
 						aria-controls="camadageografica">-</button>
@@ -177,7 +177,7 @@
 
 						</mat-tab>
 
-						<mat-tab label="Desmatamento em APP" *ngIf="selectRegion.type != 'city'" >
+						<mat-tab label="Desmatamento em APP" *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" >
 							<h6>
 								<b>Ranking dos Municípios com maiores Desmatamentos em APP: {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
@@ -202,7 +202,7 @@
 							</p-table>
 						</mat-tab>
 
-						<mat-tab label="Desmatamento em Reserva Legal" *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
+						<mat-tab label="Desmatamento em Reserva Legal" *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
 							<h6>
 								<b>Ranking dos Municípios com maiores Desmatamentos em Reservas Legal: {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->

@@ -390,7 +390,7 @@ export class MapComponent implements OnInit {
               data: statesResult["series"].map(element => element.value),
               fill: true,
               // borderColor: '#333333',
-              backgroundColor: "#fd7e14"
+              backgroundColor: "#DAA520"
             }
           ]
         };
@@ -428,14 +428,16 @@ export class MapComponent implements OnInit {
       this.http.get(citiesUrl).subscribe(citiesResult => {
         this.chartResultCities = citiesResult;
       });
+
+      if (this.desmatInfo.year >= 2013) {
+        this.http.get(citiesIllegal).subscribe(citiesIllegalResult => {
+          this.chartResultCitiesIllegalAPP = citiesIllegalResult["resultAPP"];
+          this.chartResultCitiesIllegalRL = citiesIllegalResult["resultRL"];
+          
+        });
+      }
     }
 
-    if (!this.isFilteredByCity) {
-      this.http.get(citiesIllegal).subscribe(citiesIllegalResult => {
-        this.chartResultCitiesIllegalAPP = citiesIllegalResult["resultAPP"];
-        this.chartResultCitiesIllegalRL = citiesIllegalResult["resultRL"];
-      });
-    }
   }
 
   updateRegion(region) {
@@ -610,11 +612,16 @@ export class MapComponent implements OnInit {
       viewResolution,
       function (data) {
         if (data) {
-          //console.log("da - " , data)
           //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
           this.dataForDialog = data;
           this.dataForDialog.coordinate = coordinate;
-          this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
+          let t = this.selectedTimeFromLayerType("bi_ce_deter_desmatamento_100_fip").year;
+          if (this.dataForDialog.origin_table.toUpperCase === "PRODES") {
+            this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
+          }
+          else {
+            this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
+          }
           this.dataForDialog.datePipe = this.datePipe;
           this.openDialog();
         }
@@ -826,9 +833,9 @@ export class MapComponent implements OnInit {
     }
   }
 
-  private returnUTFGRID(layername, filter, tile){
-    return  "/ows?layers=" + layername + "&MSFILTER=" + filter + "&mode=tile&tile=" + tile + "&tilemode=gmap&map.imagetype=utfgrid"
-}
+  private returnUTFGRID(layername, filter, tile) {
+    return "/ows?layers=" + layername + "&MSFILTER=" + filter + "&mode=tile&tile=" + tile + "&tilemode=gmap&map.imagetype=utfgrid"
+  }
 
   private createTMSLayer(layer) {
     return new OlTileLayer({
@@ -1132,8 +1139,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           element.metaData.dataRefFormatada = element.metaData.dataRef == "" ? "Não Divulgada" : this.data.datePipe.transform(new Date(element.metaData.dataRef), "dd/MM/yyyy");
           //element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
           element.metaData.percentDesmat = "" + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + "%").replace(".", ",")
-          element.metaData.percentRL =  "" + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
-          element.metaData.percentAPP =  "" + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + "%").replace(".", ",")
+          element.metaData.percentRL = "" + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
+          element.metaData.percentAPP = "" + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + "%").replace(".", ",")
 
           const dcar = {
             src: element.imgsCar.src,

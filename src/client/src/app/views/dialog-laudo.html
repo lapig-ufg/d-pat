@@ -52,12 +52,12 @@
                                 [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
-                            <strong>Imagem Sentinel no ano {{data.year}}</strong>
+                            <strong>Imagem Landsat inspecionada pelo {{data.origin_table}}-Cerrado</strong>
                         </div>
                     </div>
                 </p-accordionTab>
 
-                <p-accordionTab header="Cadastro Ambiental Rural (CAR)" *ngIf="carData.length > 0">
+                <p-accordionTab header="Cadastro Ambiental Rural (CAR)" *ngIf="carData.length > 0 && data.year >= 2013">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of carData; let i=index">
                         <div class="p-col-6">
                             <h5 style="text-align: center"><strong><i>Informações Cruzadas</i></strong>
@@ -75,7 +75,7 @@
                                 {{item.metaData.area_desmat_rl | number:'1.2-3' }} km² ({{item.metaData.percentRL}} da área
                                 total da Reserva Legal) </p>
                             <p style="font-size: 16px; text-align: left;"
-                                *ngIf="item.metaData.qnt_nascente && item.metaData.qnt_nascente > 0">
+                                *ngIf="item.metaData.qnt_nascente || item.metaData.qnt_nascente > 0">
                                 <b>Quantidade de nascentes na propriedade rural:</b>
                                 {{item.metaData.qnt_nascente}} </p>
                             <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0"> <b>Área

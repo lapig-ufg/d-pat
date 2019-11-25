@@ -12,7 +12,7 @@ module.exports = function (app) {
 		if (type == 'city')
 			return " AND county = ${region}"
 		else if (type == 'state')
-			return "AND uf = ${region}"
+			return " AND uf = ${region}"
 		else
 			return ''
 	}
@@ -70,6 +70,8 @@ module.exports = function (app) {
 		var year = params['year']
 		var type = params['type']
 
+		console.log("city olahndo ", type)
+
 		return " SELECT county AS name, UPPER(uf) as uf," +
 			(Number(year) < 2013 ? "SUM(areamunkm)/2" : "SUM(areamunkm)") + " as value " +
 			" FROM prodes_cerrado " +
@@ -92,29 +94,11 @@ module.exports = function (app) {
 		return [
 			{
 				id: 'app',
-				sql: "SELECT p.county as name, UPPER(p.uf) as uf," +
-				(Number(year) < 2013 ? "SUM(ST_AREA(safe_intersection(p.geom, app.geom)::GEOGRAPHY) / 1000000.0)/2" : "SUM(ST_AREA(safe_intersection(p.geom, app.geom)::GEOGRAPHY) / 1000000.0)") + " as value " 
-				+ " FROM car_desmat c " 
-				+ " INNER JOIN geo_car_app_cerrado app on app.idt_imovel = c.idt_imovel "
-				+ " INNER JOIN prodes_cerrado p on p.gid = c.prodes_id "
-				+ " WHERE year = ${year} " +
-				Internal.regionFilter(type) +
-				" GROUP BY 1,2 " +
-				" ORDER BY 3 DESC" +
-				" LIMIT 10;"
+				sql: "SELECT * from desmat_on_APP where year = " + year + Internal.regionFilter(type) + " LIMIT 10;"
 			},
 			{
 				id: 'rl',
-				sql: "SELECT p.county as name, UPPER(p.uf) as uf," +
-				(Number(year) < 2013 ? "SUM(ST_AREA(ST_Intersection(p.geom, rl.geom)::GEOGRAPHY) / 1000000.0)/2" : "SUM(ST_AREA(ST_Intersection(p.geom, rl.geom)::GEOGRAPHY) / 1000000.0)") + " as value " 
-				+ " FROM car_desmat c " 
-				+ " INNER JOIN geo_car_reserva_legal_cerrado rl on rl.idt_imovel = c.idt_imovel "
-				+ " INNER JOIN prodes_cerrado p on p.gid = c.prodes_id "
-				+ " WHERE year = ${year} " +
-				Internal.regionFilter(type) +
-				" GROUP BY 1,2 " +
-				" ORDER BY 3 DESC" +
-				" LIMIT 10;" 
+				sql: "SELECT * from desmat_on_RL where year = " + year  + Internal.regionFilter(type) + " LIMIT 10;"
 			}
 		]
 	}
