@@ -63,9 +63,11 @@ module.exports = function (app) {
         fotos_camera: files["fotos_camera"],
         prodes_id: row["desmat_id"],
         latitude: row["latitude"],
-        longitude: row["longitude"]
+        longitude: row["longitude"],
+        campo: row["campo"]
       });
     });
+
 
     var queryResultDesmat = request.queryResult["desmatamento"];
 
@@ -109,26 +111,26 @@ module.exports = function (app) {
     }
     let urlSentinel;
 
-      urlSentinel = {
-        thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
+    urlSentinel = {
+      thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+        year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+        sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
 
-        src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
-      };
+      src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+        year + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+        sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
+    };
 
 
-      // urlSentinel = {
-      //   thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_" +
-      //     year + "_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-      //     sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
+    // urlSentinel = {
+    //   thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_" +
+    //     year + "_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+    //     sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
 
-      //   src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_" +
-      //   year + "_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-      //     sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
-      // };
+    //   src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_sentinel_10_" +
+    //   year + "_lapig,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+    //     sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
+    // };
 
     let urlSuscept = "";
     let typeSuscept = "";
@@ -394,7 +396,31 @@ module.exports = function (app) {
                   Viewvalue: "Polígonos visitados em Campo",
                   opacity: 1,
                   order: 1,
-                  regionFilter: true
+                  regionFilter: true,
+                  /*timeLabel: "Campo",
+                  timeSelected: "1=1",
+                  timeHandler: "msfilter",
+                  times: [{
+                      value: "1=1",
+                      Viewvalue: "Todos"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_01'",
+                      Viewvalue: "Campo 01"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_02'",
+                      Viewvalue: "Campo 02"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_03'",
+                      Viewvalue: "Campo 03"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_04'",
+                      Viewvalue: "Campo 04"
+                    }
+                  ]*/
                 }
               ]
             },
@@ -410,7 +436,7 @@ module.exports = function (app) {
                   order: 1,
                   regionFilter: true,
                   timeLabel: "Período",
-                  timeSelected: "view_date > (current_date - interval '90' day)",
+                  timeSelected: "view_date > '2019-01-01'",
                   timeHandler: "msfilter",
                   times: [{
                       value: "view_date > (current_date - interval '90' day)",
@@ -433,7 +459,7 @@ module.exports = function (app) {
                   order: 1,
                   regionFilter: true,
                   timeLabel: "Período",
-                  timeSelected: "view_date > (current_date - interval '90' day)",
+                  timeSelected: "view_date > '2019-01-01'",
                   timeHandler: "msfilter",
                   times: [{
                       value: "view_date > (current_date - interval '90' day)",
@@ -454,36 +480,35 @@ module.exports = function (app) {
                   Viewvalue: "Polígonos visitados em Campo",
                   opacity: 1,
                   order: 1,
-                  regionFilter: true
+                  regionFilter: true,
+                  /*timeLabel: "Campo",
+                  timeSelected: "1=1",
+                  timeHandler: "msfilter",
+                  times: [{
+                      value: "1=1",
+                      Viewvalue: "Todos"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_01'",
+                      Viewvalue: "Campo 01"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_02'",
+                      Viewvalue: "Campo 02"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_03'",
+                      Viewvalue: "Campo 03"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_04'",
+                      Viewvalue: "Campo 04"
+                    }
+                  ]*/
                 }
               ]
             },
             {
-              id: "",
-              label: "Susceptibilidade a Desmatamentos",
-              visible: false,
-              selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
-              types: [{
-                  value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
-                  Viewvalue: "Polígonos pequenos (< 0.5 km2)",
-                  order: 5,
-                  opacity: 1
-                },
-                {
-                  value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
-                  Viewvalue: "Polígonos grandes (> 0.5 km2)",
-                  order: 5,
-                  opacity: 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "uso_da_terra",
-          label: "Uso da Terra",
-          group_expanded: false,
-          layers: [{
               id: "antropico",
               label: "Antrópico - PRODES-Cerrado",
               visible: false,
@@ -549,6 +574,31 @@ module.exports = function (app) {
               }]
             },
             {
+              id: "",
+              label: "Susceptibilidade a Desmatamentos",
+              visible: false,
+              selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
+              types: [{
+                  value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
+                  Viewvalue: "Polígonos pequenos (< 0.5 km2)",
+                  order: 5,
+                  opacity: 1
+                },
+                {
+                  value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
+                  Viewvalue: "Polígonos grandes (> 0.5 km2)",
+                  order: 5,
+                  opacity: 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "uso_da_terra",
+          label: "Uso da Terra",
+          group_expanded: false,
+          layers: [{
               id: "terraclass",
               label: "Uso e Cobertura da Terra",
               visible: false,

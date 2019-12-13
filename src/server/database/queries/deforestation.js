@@ -70,8 +70,6 @@ module.exports = function (app) {
 		var year = params['year']
 		var type = params['type']
 
-		console.log("city olahndo ", type)
-
 		return " SELECT county AS name, UPPER(uf) as uf," +
 			(Number(year) < 2013 ? "SUM(areamunkm)/2" : "SUM(areamunkm)") + " as value " +
 			" FROM prodes_cerrado " +

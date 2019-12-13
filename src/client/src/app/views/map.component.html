@@ -177,9 +177,11 @@
 
 						</mat-tab>
 
-						<mat-tab label="Desmatamento em APP" *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" >
+						<mat-tab label="Desmatamento em APP"
+							*ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013">
 							<h6>
-								<b>Ranking dos Municípios com maiores Desmatamentos em APP: {{ desmatInfo.Viewvalue }}</b>
+								<b>Ranking dos Municípios com maiores Desmatamentos em APP:
+									{{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
 							<p-table [value]="chartResultCitiesIllegalAPP">
@@ -202,9 +204,11 @@
 							</p-table>
 						</mat-tab>
 
-						<mat-tab label="Desmatamento em Reserva Legal" *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
+						<mat-tab label="Desmatamento em Reserva Legal"
+							*ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
 							<h6>
-								<b>Ranking dos Municípios com maiores Desmatamentos em Reservas Legal: {{ desmatInfo.Viewvalue }}</b>
+								<b>Ranking dos Municípios com maiores Desmatamentos em Reservas Legal:
+									{{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
 							<p-table [value]="chartResultCitiesIllegalRL">
@@ -246,8 +250,7 @@
 							class="expansion-header-layer" *ngIf="layer.visible">
 							{{layer.label}}
 						</mat-expansion-panel-header>
-						<img *ngIf="layer.visible"
-						[src]="layer.urlLegend">
+						<img *ngIf="layer.visible" [src]="layer.urlLegend">
 					</mat-expansion-panel>
 				</div>
 			</div>
@@ -256,8 +259,8 @@
 </div>
 
 <div id="map-info" class="card"
-	[ngStyle]="{'visibility': infodata.showUTFGridCard ? 'visible' : 'hidden', 'background-color': '#ffffff99'}">
-	<div class="card-body">
+	[ngStyle]="{'visibility': infodata.showUTFGridCard  ? 'visible' : (infodata.showUTFGridCampo ? 'visible' : 'hidden'), 'background-color': '#ffffff99'}">
+	<div *ngIf="infodata.showUTFGridCard" class="card-body">
 		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
 		<table>
 			<tbody>
@@ -280,4 +283,33 @@
 			</tbody>
 		</table>
 	</div>
+	<div *ngIf="infodata.showUTFGridCampo" class="card-body">
+		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
+		<table>
+			<tbody>
+				<tr>
+					<th>Nº do Campo: </th>
+					<td>{{infodata.campo}}</td>
+				</tr>
+				<tr>
+					<th>Área Desmatada: </th>
+					<td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
+				</tr>
+				<tr>
+					<th>Município: </th>
+					<td>{{infodata.municipio }} - {{infodata.uf }}</td>
+				</tr>
+				<tr>
+					<th>Data da Detecção: </th>
+					<td>{{infodata.dataFormatada}}</td>
+				</tr>
+				<tr>
+					<th>Susceptibilidade ao Desmatamento: </th>
+					<td>{{infodata.sucept_desmatFormatada}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
 </div>

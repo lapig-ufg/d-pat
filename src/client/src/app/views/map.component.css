@@ -634,7 +634,7 @@ mat-select {
 ::ng-deep mat-select .mat-select-value {
 	width: fit-content !important;
 	min-width: 2ch;
-	max-width: 22ch;
+	max-width: 19.5ch;
 }
 
 ::ng-deep mat-select .mat-select-placeholder {

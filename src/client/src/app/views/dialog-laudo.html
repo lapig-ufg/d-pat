@@ -143,9 +143,11 @@
                         <div class="p-col-4">
                             <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
                                 <div class="p-col-12">
-                                    <h5 style="text-align: center"><strong><i>Dados de Campo</i></strong>
+                                    <h5 style="text-align: center"><strong><i>Dados do Campo</i></strong>
                                     </h5>
                                 </div>
+                                <div class="p-col-5" style="font-weight: bold">Nº do Campo: </div>
+                                <div class="p-col-7">{{infoVisita.campo}}</div>
                                 <div class="p-col-5" style="font-weight: bold">Data da Visita: </div>
                                 <div class="p-col-7">{{infoVisita.dataFormatada}}</div>
                                 <div class="p-col-5" style="font-weight: bold">Latitude: </div>
@@ -156,9 +158,9 @@
                                     Uso e Cobertura do Solo: </div>
                                 <div *ngIf="infoVisita.usocobertura != ' '" class="p-col-7">{{infoVisita.usocobertura}}
                                 </div>
-                                <div *ngIf="infoVisita.obs != ' '" class="p-col-5" style="font-weight: bold">
+                                <div *ngIf="infoVisita.obs != null" class="p-col-5" style="font-weight: bold">
                                     Observações: </div>
-                                <div *ngIf="infoVisita.obs != ' '" class="p-col-7">{{infoVisita.obs}}</div>
+                                <div *ngIf="infoVisita.obs != null" class="p-col-7">{{infoVisita.obs}}</div>
                             </div>
                         </div>
                     </div>
