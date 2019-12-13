@@ -1128,8 +1128,7 @@ export class MapComponent implements OnInit {
 @Component({
   selector: "app-map",
   templateUrl: "./dialog-laudo.html",
-  styleUrls: ["./map.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ["./map.component.css"]
 })
 export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   indexAccordion: number = 0;
