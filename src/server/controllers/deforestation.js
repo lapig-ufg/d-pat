@@ -194,7 +194,7 @@ module.exports = function (app) {
 
 		var index = 1;
 		for (var i = 0; i < 10; i++) {
-			queryResultAPP[i].index = index++ + 'º'
+			queryResultAPP[i].index = (index++) + 'º'
 			queryResultAPP[i].value = Number(queryResultAPP[i].value)
 		}
 
@@ -203,7 +203,7 @@ module.exports = function (app) {
 
 		index = 1;
 		for (var i = 0; i < 10; i++) {
-			queryResultRL[i].index = index++ + 'º'
+			queryResultRL[i].index = (index++) + 'º'
 			queryResultRL[i].value = Number(queryResultRL[i].value)
 		}
 

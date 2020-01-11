@@ -205,15 +205,15 @@ export class MapComponent implements OnInit {
     };
 
     this.periodSelected = {
-      value: "year=2018",
-      Viewvalue: "2017/2018",
-      year: 2018
+      value: "year=2019",
+      Viewvalue: "2018/2019",
+      year: 2019
     };
 
     this.desmatInfo = {
-      value: "year=2018",
-      Viewvalue: "2017/2018",
-      year: 2018
+      value: "year=2019",
+      Viewvalue: "2018/2019",
+      year: 2019
     };
 
     this.datePipe = new DatePipe("pt-BR");

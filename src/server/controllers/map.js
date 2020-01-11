@@ -327,7 +327,7 @@ module.exports = function (app) {
                   order: 1,
                   regionFilter: true,
                   timeLabel: "Período",
-                  timeSelected: "year=2018",
+                  timeSelected: "year=2019",
                   timeHandler: "msfilter",
                   times: [{
                       value: "year=2002",
@@ -388,6 +388,11 @@ module.exports = function (app) {
                       value: "year=2018",
                       Viewvalue: "2017/2018",
                       year: 2018
+                    },
+                    {
+                      value: "year=2019",
+                      Viewvalue: "2018/2019",
+                      year: 2019
                     }
                   ]
                 },
