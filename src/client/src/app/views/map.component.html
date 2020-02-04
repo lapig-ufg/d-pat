@@ -259,8 +259,8 @@
 </div>
 
 <div id="map-info" class="card"
-	[ngStyle]="{'visibility': infodata.showUTFGridCard  ? 'visible' : (infodata.showUTFGridCampo ? 'visible' : 'hidden'), 'background-color': '#ffffff99'}">
-	<div *ngIf="infodata.showUTFGridCard" class="card-body">
+	[ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : 'hidden'), 'background-color': '#ffffff99'}">
+	<div *ngIf="infodata" class="card-body">
 		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
 		<table>
 			<tbody>
@@ -283,29 +283,29 @@
 			</tbody>
 		</table>
 	</div>
-	<div *ngIf="infodata.showUTFGridCampo" class="card-body">
-		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
+	<div *ngIf="infodataCampo" class="card-body">
+		<p class="card-text">{{ infodataCampo.origin_table }}-Cerrado</p>
 		<table>
 			<tbody>
 				<tr>
 					<th>Nº do Campo: </th>
-					<td>{{infodata.campo}}</td>
+					<td>{{infodataCampo.campo}}</td>
 				</tr>
 				<tr>
 					<th>Área Desmatada: </th>
-					<td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
+					<td>{{infodataCampo.area_desmat | number:'1.2-3' }} km²</td>
 				</tr>
 				<tr>
 					<th>Município: </th>
-					<td>{{infodata.municipio }} - {{infodata.uf }}</td>
+					<td>{{infodataCampo.municipio }} - {{infodataCampo.uf }}</td>
 				</tr>
 				<tr>
 					<th>Data da Detecção: </th>
-					<td>{{infodata.dataFormatada}}</td>
+					<td>{{infodataCampo.dataFormatada}}</td>
 				</tr>
 				<tr>
 					<th>Susceptibilidade ao Desmatamento: </th>
-					<td>{{infodata.sucept_desmatFormatada}}</td>
+					<td>{{infodataCampo.sucept_desmatFormatada}}</td>
 				</tr>
 			</tbody>
 		</table>

@@ -78,6 +78,7 @@ module.exports = function (app) {
     let prob_suscept;
     let prob_bfast;
     let lat, long;
+    let classefip;
     queryResultDesmat.forEach(function (row) {
       box = row["polygon"]
         .replace("BOX(", "")
@@ -89,6 +90,7 @@ module.exports = function (app) {
       prob_bfast = parseFloat(row["bfm"]);
       lat = parseFloat(row["lat"]);
       long = parseFloat(row["long"]);
+      classefip = row["classefip"]
     });
 
     let sizeSrc = 768;
@@ -202,7 +204,8 @@ module.exports = function (app) {
       descricao: "Laudo-" + origin_table.toUpperCase(),
       area: area,
       latitude: lat,
-      longitude: long
+      longitude: long,
+      classefip: classefip
     };
 
     var queryCar = request.queryResult["car"];

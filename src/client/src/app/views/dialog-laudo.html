@@ -21,7 +21,13 @@
         <div class="row">
             <p-accordion [multiple]="true">
                 <p-accordionTab header="Informações sobre o Polígono" [selected]="true">
-                    <div class="p-grid p-justify-even">
+                    <div class="p-grid p-justify-even" >
+                            <div class="p-col-2" *ngIf="infoDesmat.pathclassefip != '1' ">
+                                    <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="infoDesmat.pathclassefip"
+                                    [spinnerSrc]="'/assets/gif/loadImage.gif'">
+                                </toh-spinner-img>
+
+                                </div>
                         <div class="p-col-4">
                             <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
                                 <div class="p-col-12">
@@ -46,7 +52,7 @@
                                 <div class="p-col-7">{{infoDesmat.longitude | number:'1.3-6' }}</div>
                             </div>
                         </div>
-                        <div class="p-col-8"
+                        <div class="p-col-6"
                             style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                             <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="urlSentinel[0]?.thumb"
                                 [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
