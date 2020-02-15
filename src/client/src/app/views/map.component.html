@@ -1,12 +1,27 @@
 <nav class="navbar barra-titulo navbar-title">
-	<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 title-atlas-div">
-		<div class="title-atlas"> Deforestation Polygon Assessment Tool</div>
+	<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 title-atlas-div">
+		<div class="row" class="title-atlas"> Cerrado-DPAT</div>
+		<div class="row" class="title-atlas"> Deforestation Polygon Assessment Tool</div>
 	</div>
+
+	<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 title-atlas-div">
+	
+		<span class="flag-icon flag-icon-br" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('pt-br')"></span>
+		<span class="flag-icon flag-icon-us" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('en-us')"></span>
+	</div>
+
 	<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 logos-atlas">
+		
+		
+
+
 		<a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
 				class="logo-cepf" src="assets/logo/fip.png" /></a>
+		<a href="https://www.ufg.br/" target="_blank"><img class="logo-ufg"
+				src="assets/logo/logo-ufg.png" /></a>
 		<a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
 				src="assets/logo/lapig.png" /></a>
+				
 	</div>
 </nav>
 <div class="container-fluid">
@@ -15,14 +30,14 @@
 			<div id="map" class="dpat-ol-map"></div>
 			<div id="positionLayers">
 				<div class="titleWindows">
-					Camadas de Dados
+					{{titlesLayerBox.title}}
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseLayer = !collapseLayer" [attr.aria-expanded]="!collapseLayer"
 						aria-controls="camadageografica">-</button>
 				</div>
 				<div class="collapseLayer" [ngbCollapse]="collapseLayer">
 					<mat-tab-group class="layersConteudo">
-						<mat-tab label="Desmatamento">
+						<mat-tab label="{{titlesLayerBox.label_data}}">
 							<mat-accordion>
 								<div id="layers_desmatamentos">
 									<div class="regions-row">
@@ -32,14 +47,13 @@
 											</ng-template>
 											<input id="typeahead-http" type="text" class="form-control searchRegion"
 												[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-												[ngbTypeahead]="search" placeholder="Digite um Estado ou Município..."
+												[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
 												(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
 												[inputFormatter]="formatter" />
 											<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
 												(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-											<span *ngIf="searching">Procurando...</span>
-											<div class="invalid-feedback" *ngIf="searchFailed">Desculpe, Região não
-												encontrada.</div>
+											<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+											<div class="invalid-feedback" *ngIf="searchFailed">{{titlesLayerBox.search_failed}}</div>
 										</div>
 									</div>
 									<div class="row" *ngFor="let groups of descriptor.groups">
@@ -58,7 +72,7 @@
 														</mat-checkbox>
 														<div style="padding-left: 8%">
 															<mat-form-field style="margin-right: 15%; width: 130px">
-																<mat-label>Tipo</mat-label>
+																<mat-label>{{descriptor.type}}</mat-label>
 																<mat-select (selectionChange)="changeVisibility(layer)"
 																	[(value)]="layer.selectedType">
 																	<mat-option *ngFor="let type of layer.types"
@@ -90,7 +104,7 @@
 								</div>
 							</mat-accordion>
 						</mat-tab>
-						<mat-tab label="Mapa Base">
+						<mat-tab label="{{titlesLayerBox.label_mapabase}}">
 							<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
 								<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
 									[(ngModel)]="basemap.visible">
@@ -98,7 +112,7 @@
 								</mat-slide-toggle>
 							</div>
 						</mat-tab>
-						<mat-tab label="Limites">
+						<mat-tab label="{{titlesLayerBox.label_limits}}">
 							<div *ngFor="let limits of descriptor.limits">
 								<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
 									<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
@@ -114,7 +128,7 @@
 
 			<div id="positionCharts">
 				<div class="titleWindows">
-					Estatísticas de Desmatamento nos dados do PRODES-Cerrado
+					{{dataSeries.title}}
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseCharts = !collapseCharts" [attr.aria-expanded]="!collapseCharts"
 						aria-controls="camadageografica">-</button>
@@ -122,7 +136,7 @@
 				<div [ngbCollapse]="collapseCharts" id="matgroup">
 					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
 						(selectedTabChange)="changeTab($event)">
-						<mat-tab label="Série Temporal" *ngIf="true" id="tabGraficoLinhas">
+						<mat-tab label={{dataSeries.label}} *ngIf="true" id="tabGraficoLinhas">
 							<div class="row">
 								<div class="col-md-4">
 									<div class="chart-region">
@@ -132,37 +146,32 @@
 									</div>
 								</div>
 								<div class="col-md-8" style="text-align:justify">
-									O {{ selectRegion.regionTypeBr | lowercase }} <strong>{{ selectRegion.text }}
-									</strong> possui uma <strong>Área Antrópica</strong> de
-									<strong>{{ dataSeries.area_antropica | number:'1.2-2' }} km² </strong> que
-									representa
-									<strong>{{dataSeries.percentArea}} </strong> da sua área total.
+									{{ dataSeries.description }}
 									<!-- <p class="stylePercentual" > </p>  -->
 								</div>
 							</div>
 							<!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
 
-							<p-chart type="line" [data]="dataSeries" [options]="optionsTimeSeries"></p-chart>
+							<p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries"></p-chart>
 						</mat-tab>
-						<mat-tab label="Estados" *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'"
+						<mat-tab label="{{dataStates.label}}" *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'"
 							id="tabGraficoLinhas">
 							<h6>
-								<b>Áreas Desmatadas nos Estados: {{ desmatInfo.Viewvalue }}</b>
+								<b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
 							</h6>
 							<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
 						</mat-tab>
-						<mat-tab label="Municípios" *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
+						<mat-tab label="{{chartResultCities.label}}" *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
 							<h6>
-								<b>Ranking dos Municípios com maiores Desmatamentos: {{ desmatInfo.Viewvalue }}</b>
-								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
+								<b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
 							</h6>
-							<p-table [value]="chartResultCities">
+							<p-table [value]="chartResultCities.series">
 								<ng-template pTemplate="header">
 									<tr align="center">
-										<th>#</th>
-										<th>Municípios</th>
-										<th>Estado</th>
-										<th>Área</th>
+										<th>{{chartResultCities.split[0]}}</th>
+										<th>{{chartResultCities.split[1]}}</th>
+										<th>{{chartResultCities.split[2]}}</th>
+										<th>{{chartResultCities.split[3]}}</th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-city>
@@ -177,20 +186,19 @@
 
 						</mat-tab>
 
-						<mat-tab label="Desmatamento em APP"
+						<mat-tab label="{{chartResultCitiesIllegalAPP.label}}"
 							*ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013">
 							<h6>
-								<b>Ranking dos Municípios com maiores Desmatamentos em APP:
-									{{ desmatInfo.Viewvalue }}</b>
+								<b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
-							<p-table [value]="chartResultCitiesIllegalAPP">
+							<p-table [value]="chartResultCitiesIllegalAPP.series">
 								<ng-template pTemplate="header">
 									<tr align="center">
-										<th>#</th>
-										<th>Municípios</th>
-										<th>Estado</th>
-										<th>Área</th>
+										<th>{{chartResultCities.split[0]}}</th>
+										<th>{{chartResultCities.split[1]}}</th>
+										<th>{{chartResultCities.split[2]}}</th>
+										<th>{{chartResultCities.split[3]}}</th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-city>
@@ -204,20 +212,19 @@
 							</p-table>
 						</mat-tab>
 
-						<mat-tab label="Desmatamento em Reserva Legal"
+						<mat-tab label="{{chartResultCitiesIllegalRL.label}}"
 							*ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
 							<h6>
-								<b>Ranking dos Municípios com maiores Desmatamentos em Reservas Legal:
-									{{ desmatInfo.Viewvalue }}</b>
+								<b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
-							<p-table [value]="chartResultCitiesIllegalRL">
+							<p-table [value]="chartResultCitiesIllegalRL.series">
 								<ng-template pTemplate="header">
 									<tr align="center">
-										<th>#</th>
-										<th>Municípios</th>
-										<th>Estado</th>
-										<th>Área</th>
+										<th>{{chartResultCities.split[0]}}</th>
+										<th>{{chartResultCities.split[1]}}</th>
+										<th>{{chartResultCities.split[2]}}</th>
+										<th>{{chartResultCities.split[3]}}</th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-city>
@@ -239,7 +246,7 @@
 
 			<div id="positionLegend">
 				<div class="titleWindows">
-					Legendas
+					{{titlesLayerBox.legendTitle}}
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 						(click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends"
 						aria-controls="camadageografica">-</button>
@@ -265,19 +272,19 @@
 		<table>
 			<tbody>
 				<tr>
-					<th>Área Desmatada: </th>
+					<th>{{minireportText.area}} </th>
 					<td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
 				</tr>
 				<tr>
-					<th>Município: </th>
+					<th>{{minireportText.city}} </th>
 					<td>{{infodata.municipio }} - {{infodata.uf }}</td>
 				</tr>
 				<tr>
-					<th>Data da Detecção: </th>
+					<th>{{minireportText.detection_date}} </th>
 					<td>{{infodata.dataFormatada}}</td>
 				</tr>
 				<tr>
-					<th>Susceptibilidade ao Desmatamento: </th>
+					<th>{{minireportText.susceptibility}} </th>
 					<td>{{infodata.sucept_desmatFormatada}}</td>
 				</tr>
 			</tbody>
@@ -288,23 +295,23 @@
 		<table>
 			<tbody>
 				<tr>
-					<th>Nº do Campo: </th>
+					<th>{{minireportText.field_number}} </th>
 					<td>{{infodataCampo.campo}}</td>
 				</tr>
 				<tr>
-					<th>Área Desmatada: </th>
+					<th>{{minireportText.area}} </th>
 					<td>{{infodataCampo.area_desmat | number:'1.2-3' }} km²</td>
 				</tr>
 				<tr>
-					<th>Município: </th>
+					<th>{{minireportText.city}} </th>
 					<td>{{infodataCampo.municipio }} - {{infodataCampo.uf }}</td>
 				</tr>
 				<tr>
-					<th>Data da Detecção: </th>
+					<th>{{minireportText.detection_date}} </th>
 					<td>{{infodataCampo.dataFormatada}}</td>
 				</tr>
 				<tr>
-					<th>Susceptibilidade ao Desmatamento: </th>
+					<th>{{minireportText.susceptibility}} </th>
 					<td>{{infodataCampo.sucept_desmatFormatada}}</td>
 				</tr>
 			</tbody>

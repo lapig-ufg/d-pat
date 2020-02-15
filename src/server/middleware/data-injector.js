@@ -44,7 +44,6 @@ module.exports = function (app) {
 
 			var onEach = function (query, nextQuery) {
 				client.query(query.sql, params, function (queryResult) {
-					// console.log(queryResult)
 					result[query.id] = queryResult.rows
 					nextQuery()
 				})
@@ -64,8 +63,6 @@ module.exports = function (app) {
 					Internal.defaultController(request, response)
 				}
 			};
-
-
 			async.each(methodQueries, onEach, onComplete)
 
 		} else {

@@ -28,7 +28,7 @@ module.exports = function(app) {
 			},
 			{
 				id: 'desmatamento',
-				sql: "SELECT areamunkm, sucept_desmat, bfm_pct as bfm, lat, long, rect_bbox(geom) as polygon, classefip FROM " + origin + "_cerrado WHERE gid = " + gid 
+				sql: "SELECT areamunkm, sucept_desmat, sucept_desmat_peq, sucept_desmat_grd, bfm_pct as bfm, lat, long, rect_bbox(geom) as polygon, classefip FROM " + origin + "_cerrado WHERE gid = " + gid 
 				// sql: "SELECT ST_AsGeoJSON(geom) geojson, area_km2 FROM regions WHERE type=${type} AND value=${region}"
 			},
 			{

@@ -3,7 +3,7 @@
         <nav class="navbar sticky-top navbar-light bg-light nav-title-laudo">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <h3><strong>Laudo do Desmatamento </strong></h3>
+                    <h3><strong>{{textOnDialog.title}} </strong></h3>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -11,7 +11,7 @@
                     <mat-dialog-actions>
                         <ng-container ngProjectAs="btn-close">
                             <button mat-raised-button style="background-color: #f72424; color: white"
-                                (click)="dialogRef.close()">Fechar</button>
+                                (click)="dialogRef.close()">{{textOnDialog.close_button_label}}</button>
                         </ng-container>
                     </mat-dialog-actions>
                 </li>
@@ -20,7 +20,7 @@
 
         <div class="row">
             <p-accordion [multiple]="true">
-                <p-accordionTab header="Informações sobre o Polígono" [selected]="true">
+                <p-accordionTab header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even" >
                             <div class="p-col-2" *ngIf="infoDesmat.pathclassefip != '1' ">
                                     <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="infoDesmat.pathclassefip"
@@ -31,24 +31,24 @@
                         <div class="p-col-4">
                             <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
                                 <div class="p-col-12">
-                                    <h5 style="text-align: center"><strong><i>Metadados</i></strong></h5>
+                                    <h5 style="text-align: center"><strong><i>{{textOnDialog.information_tab.metadados_label}}</i></strong></h5>
                                 </div>
-                                <div class="p-col-5" style="font-weight: bold">Polígono: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.polygon_label}} </div>
                                 <div class="p-col-7">{{data.origin_table}}-CERRADO</div>
 
-                                <div class="p-col-5" style="font-weight: bold">Área Desmatada: </div>
-                                <div class="p-col-7">{{infoDesmat.area | number:'1.2-3' }} km²</div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.area_label}} </div>
+                                <div class="p-col-7">{{infoDesmat.area | number:'1.2-3' }} {{textOnDialog.information_tab.unit_measure}}</div>
 
-                                <div class="p-col-5" style="font-weight: bold">Município: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.municipio_label}} </div>
                                 <div class="p-col-7">{{data.municipio }} - {{data.uf }}</div>
 
-                                <div class="p-col-5" style="font-weight: bold">Data da Detecção: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.detection_date_label}}</div>
                                 <div class="p-col-7">{{data.dataFormatada}}</div>
 
-                                <div class="p-col-5" style="font-weight: bold">Latitude: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.latitude_label}} </div>
                                 <div class="p-col-7">{{infoDesmat.latitude | number:'1.3-6' }}</div>
 
-                                <div class="p-col-5" style="font-weight: bold">Longitude: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.longitude_label}} </div>
                                 <div class="p-col-7">{{infoDesmat.longitude | number:'1.3-6' }}</div>
                             </div>
                         </div>
@@ -58,36 +58,32 @@
                                 [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
-                            <strong>Imagem Landsat inspecionada pelo {{data.origin_table}}-Cerrado</strong>
+                            <strong>{{textOnDialog.information_tab.landsat_image_description}} {{data.origin_table}}-Cerrado</strong>
                         </div>
                     </div>
                 </p-accordionTab>
 
-                <p-accordionTab header="Cadastro Ambiental Rural (CAR)" *ngIf="carData.length > 0 && data.year >= 2013">
+                <p-accordionTab header="{{textOnDialog.car_tab.title_tab}}" *ngIf="carData.length > 0 && data.year >= 2013">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of carData; let i=index">
                         <div class="p-col-6">
-                            <h5 style="text-align: center"><strong><i>Informações Cruzadas</i></strong>
+                            <h5 style="text-align: center"><strong><i>{{textOnDialog.car_tab.title_info}}</i></strong>
                             </h5>
                             <br>
-                            <p style="font-size: 16px; text-align: left;"> <b>Código CAR:</b>
+                            <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}} </b>
                                 {{item.metaData.cod_car}} </p>
-                            <p style="font-size: 16px; text-align: left;"> <b>Área total da propriedade:</b>
+                            <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.area_car_label}}</b>
                                 {{item.metaData.area_car | number:'1.2-3' }} km²</p>
-                            <p style="font-size: 16px; text-align: left;"> <b>Data de Referência:</b>
+                            <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.reference_date_car_label}}</b>
                                 {{item.metaData.dataRefFormatada}} </p>
                             <p style="font-size: 16px; text-align: left;"
-                                *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0 "> <b>Área desmatada dentro
-                                    da Reserva Legal:</b>
-                                {{item.metaData.area_desmat_rl | number:'1.2-3' }} km² ({{item.metaData.percentRL}} da área
-                                total da Reserva Legal) </p>
-                            <p style="font-size: 16px; text-align: left;"
                                 *ngIf="item.metaData.qnt_nascente || item.metaData.qnt_nascente > 0">
-                                <b>Quantidade de nascentes na propriedade rural:</b>
+                                <b>{{textOnDialog.car_tab.nascente_car_label}}</b>
                                 {{item.metaData.qnt_nascente}} </p>
-                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0"> <b>Área
-                                    desmatada dentro
-                                    de APP:</b>
-                                {{item.metaData.area_desmat_app | number:'1.2-3' }} km² ({{item.metaData.percentAPP}} da área total da APP)</p>
+                            <p style="font-size: 16px; text-align: left;"
+                                *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0.1 "> <b>{{textOnDialog.car_tab.display_rl_message[0]}}</b>
+                                {{item.metaData.area_desmat_rl | number:'1.2-3' }}  {{textOnDialog.car_tab.display_rl_message[1]}} {{item.metaData.percentRL}} {{textOnDialog.car_tab.display_rl_message[2]}} </p>
+                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0.1"> <b>{{textOnDialog.car_tab.display_app_message[0]}}</b>
+                                {{item.metaData.area_desmat_app | number:'1.2-3' }} {{textOnDialog.car_tab.display_app_message[1]}} {{item.metaData.percentAPP}} {{textOnDialog.car_tab.display_app_message[2]}}</p>
                         </div>
 
                         <div class="p-col-6 ">
@@ -109,14 +105,12 @@
                                     <img *ngIf="item.imgsCar.legendNascente" [src]="item.imgsCar.legendNascente">
 
                                     <br><br>
-                                    <div *ngIf="item.metaData.percentDesmat != ''"
+                                    <div *ngIf="item.metaData.percentDesmat !== ''"
                                         style="font-size: medium; text-align: justify">
                                         <span>
-                                            Este desmatamento detectado pelo <b>{{data.origin_table}}-CERRADO</b>
-                                            corresponde a
-                                            <strong>{{item.metaData.percentDesmat}}</strong> da área total da
-                                            propriedade
-                                            rural.</span>
+                                            {{this.textOnDialog.car_tab.display_car_description_message[0]}} <b>{{data.origin_table}}-CERRADO</b>
+                                            {{this.textOnDialog.car_tab.display_car_description_message[1]}}
+                                            <strong>{{item.metaData.percentDesmat}}</strong> {{this.textOnDialog.car_tab.display_car_description_message[2]}}</span>
                                     </div>
                                 </div>
 
@@ -126,20 +120,20 @@
 
                 </p-accordionTab>
 
-                <p-accordionTab header="Validação de Campo" *ngIf="dataCampo.length > 0">
+                <p-accordionTab header="{{textOnDialog.campo_tab.title_tab}}" *ngIf="dataCampo.length > 0">
 
                     <div class="p-grid p-justify-even">
                         <div class="p-col-8">
                             <p-tabView>
-                                <p-tabPanel header="Fotos de Câmera" leftIcon="pi pi-camera" [selected]="true"
+                                <p-tabPanel header="{{textOnDialog.campo_tab.title_camera_tab}}" leftIcon="pi pi-camera" [selected]="true"
                                     *ngIf="galleryCamera.length > 0">
                                     <ngx-gallery [options]="galleryOptions" [images]="galleryCamera"></ngx-gallery>
                                 </p-tabPanel>
-                                <p-tabPanel header="Fotos de Drone" leftIcon="pi pi-images"
+                                <p-tabPanel header="{{textOnDialog.campo_tab.title_drone_photo_tab}}" leftIcon="pi pi-images"
                                     *ngIf="galleryDrones.length > 0">
                                     <ngx-gallery [options]="galleryOptions" [images]="galleryDrones"></ngx-gallery>
                                 </p-tabPanel>
-                                <p-tabPanel header="Vídeos de Drone" leftIcon="pi pi-video"
+                                <p-tabPanel header="{{textOnDialog.campo_tab.title_drone_video_tab}}" leftIcon="pi pi-video"
                                     *ngIf="galleryVideos.length > 0">
                                     <ngx-gallery [options]="galleryOptions" [images]="galleryVideos"></ngx-gallery>
                                 </p-tabPanel>
@@ -149,29 +143,29 @@
                         <div class="p-col-4">
                             <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
                                 <div class="p-col-12">
-                                    <h5 style="text-align: center"><strong><i>Dados do Campo</i></strong>
+                                    <h5 style="text-align: center"><strong><i>{{textOnDialog.campo_tab.field_data_label}}</i></strong>
                                     </h5>
                                 </div>
-                                <div class="p-col-5" style="font-weight: bold">Nº do Campo: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.campo_tab.field_number_label}} </div>
                                 <div class="p-col-7">{{infoVisita.campo}}</div>
-                                <div class="p-col-5" style="font-weight: bold">Data da Visita: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.campo_tab.visit_date_label}} </div>
                                 <div class="p-col-7">{{infoVisita.dataFormatada}}</div>
-                                <div class="p-col-5" style="font-weight: bold">Latitude: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.latitude_label}} </div>
                                 <div class="p-col-7">{{infoVisita.latitude}}</div>
-                                <div class="p-col-5" style="font-weight: bold">Longitude: </div>
+                                <div class="p-col-5" style="font-weight: bold">{{textOnDialog.information_tab.longitude_label}} </div>
                                 <div class="p-col-7">{{infoVisita.longitude}}</div>
                                 <div *ngIf="infoVisita.usocobertura != ' '" class="p-col-5" style="font-weight: bold">
-                                    Uso e Cobertura do Solo: </div>
+                                    {{textOnDialog.campo_tab.field_uso_do_solo_label}} </div>
                                 <div *ngIf="infoVisita.usocobertura != ' '" class="p-col-7">{{infoVisita.usocobertura}}
                                 </div>
                                 <div *ngIf="infoVisita.obs != ' '" class="p-col-5" style="font-weight: bold">
-                                    Observações: </div>
+                                    {{textOnDialog.campo_tab.field_observation_label}} </div>
                                 <div *ngIf="infoVisita.obs != ' '" class="p-col-7">{{infoVisita.obs}}</div>
                             </div>
                         </div>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab header="Histórico de Imagens LandSat">
+                <p-accordionTab header="{{textOnDialog.historico_amostral_landsat.title_tab}}">
                     <div class="p-grid p-justify-even" style="margin-top: .5em ; text-align: center;">
                         <div class="p-col" style="min-width: 300px; max-width: 350px; width: 100%"
                             *ngFor="let landsat of albumLandsat; let i=index">
@@ -186,16 +180,16 @@
                         </div>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab header="Análise Automática" *ngIf="data.year > 2015">
+                <p-accordionTab header="{{textOnDialog.analise_automatica.title_tab}}" *ngIf="data.year > 2015 && data.year < 2019">
                     <div class="p-grid" style="margin-top: .5em">
                         <div class="p-col" style="text-align: center;">
-                            <h5><strong>Superfície de Susceptibilidade ao Desmatamento</strong></h5>
+                            <h5><strong>{{textOnDialog.analise_automatica.title_info_susceptibility}}</strong></h5>
                             <div class="p-grid" style="margin-top: .3em">
                                 <div class="p-col-4" style="text-align: center;">
                                     <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
                                     <br>
                                     <span style="font-size: small">
-                                        <strong>*Faixas de probabilidade de desmatamento*</strong>
+                                        <strong>{{textOnDialog.analise_automatica.info_susceptibility_faixas}}</strong>
                                     </span> <br>
                                     <br>
                                     <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept != null">
@@ -203,9 +197,9 @@
                                         neste polígono é de
                                         <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
 
-                                    <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept == null">
+                                    <!-- <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept == null">
                                         A susceptibilidade a desmatamentos neste polígono
-                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
+                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span> -->
                                 </div>
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
@@ -219,18 +213,18 @@
                         </div>
                         <div class="p-col" style="text-align: center;"
                             *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
-                            <h5><strong>BFAST-Monitor</strong></h5>
+                            <h5><strong>{{textOnDialog.analise_automatica.title_info_bfast}}</strong></h5>
                             <div class="p-grid" style="margin-top: .5em">
                                 <div class="p-col-4" style="text-align: center;">
                                     <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">
                                     <br>
                                     <span style="font-size: small">
-                                        <strong>*Informações sobre quebras nos pixels MODIS*</strong>
+                                        <strong>{{textOnDialog.analise_automatica.info_bfast_faixas}}</strong>
                                     </span>
                                     <br>
                                     <br>
                                     <span style="font-size: medium">
-                                        A taxa de pixels MODIS que sofreram quebras em suas séries temporais foi de:
+                                        {{textOnDialog.analise_automatica.info_bfast_description}}
                                         <strong>{{dataBfast.prob_Formatada}}.</strong></span>
                                 </div>
                                 <div class="p-col-8"
@@ -255,6 +249,10 @@
                 <li class="nav-item">
                     <a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
                             class="logo-cepf" src="assets/logo/fip.png" /></a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://www.ufg.br/" target="_blank"><img class="logo-lapig"
+                        src="assets/logo/logo-ufg.png" /></a>
                 </li>
                 <li class="nav-item">
                     <a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"

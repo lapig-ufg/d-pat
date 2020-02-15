@@ -48,7 +48,7 @@ module.exports = function(app) {
 					console.error(err)
 				else if (config['pg']['debug']) {
 					const duration = Date.now() - start
-					console.log('Executed query', { query, duration, rows: result.rowCount })
+					// console.log('Executed query', { query, duration, rows: result.rowCount })
 				}
 
 				callback(result)

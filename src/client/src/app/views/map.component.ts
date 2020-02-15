@@ -98,9 +98,9 @@ export class MapComponent implements OnInit {
   dataSeries: any;
   dataStates: any;
   dataCities: any;
-  chartResultCities;
-  chartResultCitiesIllegalAPP;
-  chartResultCitiesIllegalRL;
+  chartResultCities: any;
+  chartResultCitiesIllegalAPP: any;
+  chartResultCitiesIllegalRL: any;
   periodSelected: any;
   desmatInfo: any;
 
@@ -113,6 +113,7 @@ export class MapComponent implements OnInit {
   viewWidthMobile = 350;
   chartRegionScale: boolean;
 
+  textOnDialog : any;
   mapbox: any;
   satelite: any;
   estradas: any;
@@ -162,10 +163,15 @@ export class MapComponent implements OnInit {
   infoOverlay: Overlay;
   datePipe: DatePipe;
 
-  dataForDialog = {};
+  dataForDialog = <any>{};
 
   keyForClick: any;
   keyForPointer: any;
+
+  language: any;
+
+  titlesLayerBox: any
+  minireportText: any
 
   constructor(
     private http: HttpClient,
@@ -177,6 +183,13 @@ export class MapComponent implements OnInit {
     this.layers = [];
 
     this.dataSeries = {};
+    this.dataStates = {};
+
+    this.chartResultCities = {
+      split: []
+    };
+    this.chartResultCitiesIllegalAPP = {};
+    this.chartResultCitiesIllegalRL = {};
 
     this.defaultRegion = {
       type: "biome",
@@ -186,6 +199,8 @@ export class MapComponent implements OnInit {
       regionTypeBr: "Bioma"
     };
     this.selectRegion = this.defaultRegion;
+
+    this.textOnDialog = {};
 
     this.urls = [
       'http://o1.lapig.iesa.ufg.br/ows',
@@ -218,26 +233,14 @@ export class MapComponent implements OnInit {
     };
 
     this.datePipe = new DatePipe("pt-BR");
-
-    // this.infodata = {};
+    this.language = "pt-br";
 
     this.updateCharts();
-
     this.chartRegionScale = true;
+    this.titlesLayerBox = {};
+    this.minireportText = {};
 
-    this.statePreposition = [
-      "AL",
-      "GO",
-      "MT",
-      "MS",
-      "MG",
-      "PE",
-      "RO",
-      "RR",
-      "SC",
-      "SP",
-      "SE"
-    ];
+    this.updateTexts();
   }
 
   search = (text$: Observable<string>) =>
@@ -281,15 +284,16 @@ export class MapComponent implements OnInit {
       params.push("region=" + this.selectRegion.value);
     }
 
-    var selectedTime = this.selectedTimeFromLayerType(
-      "bi_ce_prodes_desmatamento_100_fip"
-    );
+    var selectedTime = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip");
 
     if (selectedTime != undefined) {
       params.push("year=" + selectedTime.year);
     }
 
+    params.push("lang=" + this.language)
+
     var urlParams = "?" + params.join("&");
+
 
     return urlParams;
   }
@@ -330,6 +334,38 @@ export class MapComponent implements OnInit {
     }
   }
 
+  changeLanguage(lang) {
+
+    if (this.language != (lang)) {
+      this.language = lang;
+
+      this.updateDescriptor();
+      this.updateTexts();
+      this.updateCharts();
+    }
+  }
+
+  private updateTexts() {
+    var titlesUrl = "service/map/titles" + this.getServiceParams();
+    
+    this.http.get(titlesUrl).subscribe(titlesResults => {
+
+      this.titlesLayerBox = titlesResults["layer_box"];
+      this.titlesLayerBox.legendTitle = titlesResults["legendTitle"];
+      this.minireportText = titlesResults["utfgrid"];
+    
+    });
+
+    var textlangurl = "/service/map/textreport?lang=" + this.language;
+
+    this.http.get(textlangurl).subscribe(
+      result => {
+        this.textOnDialog = result;
+
+      });
+
+  }
+
   private updateCharts() {
     var timeseriesUrl = "/service/deforestation/timeseries" + this.getServiceParams();
     var statesUrl = "/service/deforestation/states" + this.getServiceParams();
@@ -337,7 +373,9 @@ export class MapComponent implements OnInit {
     var citiesIllegal = "/service/deforestation/illegal" + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
+
       this.dataSeries = {
+        title: timeseriesResult["title"],
         labels: timeseriesResult["series"].map(element => element.year),
         datasets: [
           {
@@ -348,7 +386,10 @@ export class MapComponent implements OnInit {
           }
         ],
         area_antropica: timeseriesResult["indicator"].anthropic,
-        percentArea: (((timeseriesResult["indicator"].anthropic / this.selectRegion.area_region) * 100).toFixed(2) + "%").replace(".", ",")
+        description: timeseriesResult["getText"],
+        label: timeseriesResult["label"],
+        type: timeseriesResult["type"]
+        
       };
 
       this.optionsTimeSeries = {
@@ -390,13 +431,15 @@ export class MapComponent implements OnInit {
           labels: statesResult["series"].map(element => element.name),
           datasets: [
             {
-              label: "Estados",
+              label: statesResult["nameChart"],
               data: statesResult["series"].map(element => element.value),
               fill: true,
               // borderColor: '#333333',
               backgroundColor: "#DAA520"
             }
-          ]
+          ],
+          description: statesResult["description"],
+          label: statesResult["label"]
         };
 
         this.optionsStates = {
@@ -431,6 +474,9 @@ export class MapComponent implements OnInit {
     if (!this.isFilteredByCity) {
       this.http.get(citiesUrl).subscribe(citiesResult => {
         this.chartResultCities = citiesResult;
+        
+        this.chartResultCities.split = this.chartResultCities.title.split("?")
+
       });
 
       if (this.desmatInfo.year >= 2013) {
@@ -468,15 +514,9 @@ export class MapComponent implements OnInit {
       this.msFilterRegion = "uf = '" + this.selectRegion.value + "'";
       this.isFilteredByState = true;
 
-      if (this.statePreposition.find(e => e === this.selectRegion.value))
-        this.selectRegion.regionTypeBr = "Estado de";
-      else if (
-        this.selectRegion.value === "BA" ||
-        this.selectRegion.value === "PB"
-      )
-        this.selectRegion.regionTypeBr = "Estado da";
-      else this.selectRegion.regionTypeBr = "Estado do";
-    } else this.msFilterRegion = "";
+
+    }
+    else this.msFilterRegion = "";
 
     this.updateExtent();
     this.updateSourceAllLayer();
@@ -494,6 +534,10 @@ export class MapComponent implements OnInit {
 
   openDialog(): void {
     window.document.body.style.cursor = "auto";
+    
+    this.dataForDialog.language = this.language;
+    this.dataForDialog.textosDaDialog = this.textOnDialog;
+
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: window.innerWidth - 150 + "px",
       height: window.innerHeight - 50 + "px",
@@ -609,19 +653,18 @@ export class MapComponent implements OnInit {
                   if (data.origin_table == "PRODES") {
                     window.document.body.style.cursor = "pointer";
                     this.infodata = data;
-                    this.infodata.dataFormatada = this.infodata.data_detec == "" ? "Não Divulgada" : this.datePipe.transform(new Date(this.infodata.data_detec), "dd/MM/yyyy");
-                    this.infodata.sucept_desmatFormatada = this.infodata.sucept_desmat == null ? "Não Computada" : ("" + (this.infodata.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
+                    this.infodata.dataFormatada = this.infodata.data_detec == "" ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodata.data_detec), "dd/MM/yyyy");
+                    this.infodata.sucept_desmatFormatada = this.infodata.sucept_desmat == null ? this.minireportText.not_computed_message : ("" + (this.infodata.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
                     this.infodata.municipio = this.infodata.municipio.toUpperCase();
                   }
                 }
 
-                
                 if (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")) {
                   if (data.origin_table == "DETER") {
                     window.document.body.style.cursor = "pointer";
                     this.infodata = data;
-                    this.infodata.dataFormatada = this.infodata.data_detec == "" ? "Não Divulgada" : this.datePipe.transform(new Date(this.infodata.data_detec), "dd/MM/yyyy");
-                    this.infodata.sucept_desmatFormatada = this.infodata.sucept_desmat == "" ? "Não Computada" : ("" + (this.infodata.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
+                    this.infodata.dataFormatada = this.infodata.data_detec == "" ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodata.data_detec), "dd/MM/yyyy");
+                    this.infodata.sucept_desmatFormatada = this.infodata.sucept_desmat == "" ? this.minireportText.not_computed_message : ("" + (this.infodata.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
                     this.infodata.municipio = this.infodata.municipio.toUpperCase();
                   }
                 }
@@ -658,8 +701,8 @@ export class MapComponent implements OnInit {
                     window.document.body.style.cursor = "pointer";
 
                     this.infodataCampo = data;
-                    this.infodataCampo.dataFormatada = this.infodataCampo.data_detec == "" ? "Não Divulgada" : this.datePipe.transform(new Date(this.infodataCampo.data_detec), "dd/MM/yyyy");
-                    this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == "" ? "Não Computada" : ("" + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
+                    this.infodataCampo.dataFormatada = this.infodataCampo.data_detec == "" ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodataCampo.data_detec), "dd/MM/yyyy");
+                    this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == "" ? this.minireportText.not_computed_message : ("" + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
                     this.infodataCampo.origin_table = this.infodataCampo.origin_table.toUpperCase();
                   }
                 }
@@ -667,8 +710,8 @@ export class MapComponent implements OnInit {
                   if (data.origin_table == "DETER") {
                     window.document.body.style.cursor = "pointer";
                     this.infodataCampo = data;
-                    this.infodataCampo.dataFormatada = this.infodataCampo.data_detec == "" ? "Não Divulgada" : this.datePipe.transform(new Date(this.infodataCampo.data_detec), "dd/MM/yyyy");
-                    this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == "" ? "Não Computada" : ("" + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
+                    this.infodataCampo.dataFormatada = this.infodataCampo.data_detec == "" ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodataCampo.data_detec), "dd/MM/yyyy");
+                    this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == "" ? this.minireportText.not_computed_message : ("" + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
                     this.infodataCampo.origin_table = this.infodataCampo.origin_table.toUpperCase();
                     this.infodataCampo.municipio = this.infodataCampo.municipio.toUpperCase();
                   }
@@ -720,10 +763,9 @@ export class MapComponent implements OnInit {
 
             if (data) {
               //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
-              
+
               if ((prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_pontos_campo_fip")) ||
-              (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")))
-              {
+                (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip"))) {
                 isOficial = false;
                 this.dataForDialog = data;
                 this.dataForDialog.coordinate = coordinate;
@@ -731,8 +773,8 @@ export class MapComponent implements OnInit {
                 this.dataForDialog.datePipe = this.datePipe;
                 // console.log(data, this.dataForDialog)
                 this.openDialog();
-                }
-            
+              }
+
             }
           }.bind(this)
           );
@@ -741,35 +783,32 @@ export class MapComponent implements OnInit {
 
       if (isOficial) {
 
-          if (this.utfgridsource) {
-            this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-              if (data) {
-                //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+        if (this.utfgridsource) {
+          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+              //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-                if ((prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) ||
-                (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")))
-                {
-                  this.dataForDialog = data;
-                  this.dataForDialog.coordinate = coordinate;
-                  this.dataForDialog.datePipe = this.datePipe;
+              if ((prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) ||
+                (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip"))) {
+                this.dataForDialog = data;
+                this.dataForDialog.coordinate = coordinate;
+                this.dataForDialog.datePipe = this.datePipe;
 
-                  if (this.dataForDialog.origin_table.toUpperCase === "PRODES") {
-                    this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
-                  }
-                  else{
-                    this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
-                  }
-                  this.openDialog();
+                if (this.dataForDialog.origin_table.toUpperCase === "PRODES") {
+                  this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
                 }
-
+                else {
+                  this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
+                }
+                this.openDialog();
               }
-            }.bind(this)
-            );
-          }
+
+            }
+          }.bind(this)
+          );
+        }
       }
     }
-
-
   }
 
   private createBaseLayers() {
@@ -865,7 +904,7 @@ export class MapComponent implements OnInit {
       this.layers.push(this.limitsTMS[limits.value]);
     }
 
-    this.regionsLimits = this.createVectorLayer("regions", "#ffea00", 1);
+    this.regionsLimits = this.createVectorLayer("regions", "#524f34", 1);
     this.layers.push(this.regionsLimits);
 
     this.utfgridsource = new UTFGrid({
@@ -1113,8 +1152,17 @@ export class MapComponent implements OnInit {
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
   }
 
-  ngOnInit() {
-    this.http.get("service/map/descriptor").subscribe(result => {
+  private updateDescriptor(){
+    
+    this.descriptor ={};
+    this.layersNames = [];
+    this.layersTypes = [];
+    this.basemapsNames = [];
+    this.limitsNames = [];
+
+    let descriptorURL = "service/map/descriptor" + this.getServiceParams();
+
+    this.http.get(descriptorURL).subscribe(result => {
       this.descriptor = result;
       this.regionFilterDefault = this.descriptor.regionFilterDefault;
 
@@ -1150,8 +1198,54 @@ export class MapComponent implements OnInit {
           this.limitsNames.push(types);
         }
       }
+    });
+  }
+
+  ngOnInit() {
+
+    let descriptorURL = "service/map/descriptor" + this.getServiceParams();
+
+    this.http.get(descriptorURL).subscribe(result => {
+      this.descriptor = result;
+      this.regionFilterDefault = this.descriptor.regionFilterDefault;
+
+
+      for (let group of this.descriptor.groups) {
+        for (let layer of group.layers) {
+          // console.log("lyat  ", layer)
+          if (layer.id != "satelite") {
+            layer.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + layer.selectedType + "&format=image/png";
+            this.layersNames.push(layer);
+          }
+
+          for (let layerType of layer.types) {
+            layerType.visible = false;
+            if (layer.selectedType == layerType.value)
+              layerType.visible = layer.visible;
+
+            this.layersTypes.push(layerType);
+            this.layersTypes.sort(function (e1, e2) {
+              return e2.order - e1.order;
+            });
+          }
+        }
+      }
+
+      for (let basemap of this.descriptor.basemaps) {
+        for (let types of basemap.types) {
+          this.basemapsNames.push(types);
+        }
+      }
+
+      for (let limits of this.descriptor.limits) {
+        for (let types of limits.types) {
+          this.limitsNames.push(types);
+        }
+      }
       this.createMap();
     });
+    
+
   }
 }
 
@@ -1176,6 +1270,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   infoDesmat: any = {};
   infoVisita: any = {};
   urlsLandSat: any = [];
+
+  textOnDialog = <any>{};
 
   carData: any = [];
 
@@ -1202,11 +1298,13 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.infoDesmat = {};
     this.infoVisita = {};
 
+    this.textOnDialog = data.textosDaDialog;
+
+    
 
     this.initGallery();
   }
 
-  initImages() { }
 
   initGallery() {
     this.galleryDrones = [];
@@ -1231,6 +1329,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       else {
         params.push("year=2018");
       }
+      
+      params.push("lang=" + this.data.language)
+
     }
 
     var urlParams = "?" + params.join("&");
@@ -1239,7 +1340,13 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    console.log(this.textOnDialog)
+
+   
+
     var fieldPhotosUrl = "/service/map/field/" + this.getServiceParams();
+
 
     // console.log("data - ", this.data)
     this.http.get(fieldPhotosUrl).subscribe(
@@ -1247,30 +1354,32 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         this.infoDesmat = result["info"];
 
-        
-        if(this.infoDesmat.classefip == null)
-        {
+
+        if (this.infoDesmat.classefip == null) {
           this.infoDesmat.pathclassefip = "1";
         }
-        else{
-          this.infoDesmat.pathclassefip = "/assets/metric/classe"+this.infoDesmat.classefip+".png"
+        else {
+          this.infoDesmat.pathclassefip = "/assets/metric/classe" + this.infoDesmat.classefip + ".png"
         }
 
-
-       
-
-        // this.infoDesmat.classefip = "/assets/metric/classeA.png"
-        // console.log(this.infoDesmat)
         this.carData = result["car"];
         this.carData.show = result["car"].show
 
+        
+
         this.carData.forEach(element => {
 
-          element.metaData.dataRefFormatada = element.metaData.dataRef == "" ? "Não Divulgada" : this.data.datePipe.transform(new Date(element.metaData.dataRef), "dd/MM/yyyy");
+          element.metaData.dataRefFormatada = element.metaData.dataRef == "" ? this.textOnDialog.car_tab.undisclosed_message_car : this.data.datePipe.transform(new Date(element.metaData.dataRef), "dd/MM/yyyy");
           //element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
           element.metaData.percentDesmat = "" + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + "%").replace(".", ",")
           element.metaData.percentRL = "" + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
           element.metaData.percentAPP = "" + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + "%").replace(".", ",")
+          
+          this.textOnDialog.car_tab.display_rl_message = this.textOnDialog.car_tab.rl_car_label.split("?")
+          this.textOnDialog.car_tab.display_app_message = this.textOnDialog.car_tab.app_car_label.split("?")
+          this.textOnDialog.car_tab.display_car_description_message = this.textOnDialog.car_tab.deforestation_car_description.split("?")
+          // this.textOnDialog.car_tab.display_rl_message = temp[0] + element.metaData.area_desmat_rl + temp[1] + element.metaData.percentRL + temp[2]
+
 
           const dcar = {
             src: element.imgsCar.src,
