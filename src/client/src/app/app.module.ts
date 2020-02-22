@@ -21,6 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
+import {DropdownModule} from 'primeng/dropdown';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
@@ -33,12 +35,14 @@ import {TabViewModule} from 'primeng/tabview';
 import {FieldsetModule} from 'primeng/fieldset';
 import {PanelModule} from 'primeng/panel';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {TooltipModule} from 'primeng/tooltip';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import {CardModule} from 'primeng/card';
 import {AccordionModule} from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
+import { NgxFlagPickerModule } from 'ngx-flag-picker';
 
 
 registerLocaleData(localePt);
@@ -52,6 +56,9 @@ registerLocaleData(localePt);
   ],
   imports: [
     TabViewModule,
+    TooltipModule,
+    DropdownModule,
+    NgxFlagPickerModule,
     NgxGalleryModule,
     FieldsetModule,
     CardModule,

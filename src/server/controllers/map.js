@@ -101,7 +101,7 @@ module.exports = function (app) {
     let sizeSrc = 768;
     let sizeThumb = 400;
 
-    for (let ano = 2000; ano <= 2018; ano++) {
+    for (let ano = 2000; ano <= 2019; ano++) {
       urlsLandsatMontadas.push({
         url: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
           ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
@@ -323,651 +323,735 @@ module.exports = function (app) {
 
     var result = {
       regionFilterDefault: "",
-      type:  languageJson["descriptor"]["type_of_information_label"][language],
+      type: languageJson["descriptor"]["type_of_information_label"][language],
       groups: [{
-            id: "desmatamento",
-            label: languageJson["descriptor"]["desmatamento"]["label"][language],
-            group_expanded: true,
-            layers: [{
-                id: "desmatamento_prodes",
-                label: languageJson["descriptor"]["desmatamento"]["layers"]["prodes_cerrado"]["label_prodes"][language],
-                visible: true,
-                selectedType: "bi_ce_prodes_desmatamento_100_fip",
-                types: [{
-                    value: "bi_ce_prodes_desmatamento_100_fip",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["prodes_cerrado"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["view_value_prodes"][language],
-                    opacity: 1,
-                    order: 1,
-                    regionFilter: true,
-                    timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["prodes_cerrado"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel_prodes"][language],
-                    timeSelected: "year=2019",
-                    timeHandler: "msfilter",
-                    times: [{
-                        value: "year=2002",
-                        Viewvalue: "2000/2002",
-                        year: 2002
-                      },
-                      {
-                        value: "year=2004",
-                        Viewvalue: "2002/2004",
-                        year: 2004
-                      },
-                      {
-                        value: "year=2006",
-                        Viewvalue: "2004/2006",
-                        year: 2006
-                      },
-                      {
-                        value: "year=2008",
-                        Viewvalue: "2006/2008",
-                        year: 2008
-                      },
-                      {
-                        value: "year=2010",
-                        Viewvalue: "2008/2010",
-                        year: 2010
-                      },
-                      {
-                        value: "year=2012",
-                        Viewvalue: "2010/2012",
-                        year: 2012
-                      },
-                      {
-                        value: "year=2013",
-                        Viewvalue: "2012/2013",
-                        year: 2013
-                      },
-                      {
-                        value: "year=2014",
-                        Viewvalue: "2013/2014",
-                        year: 2014
-                      },
-                      {
-                        value: "year=2015",
-                        Viewvalue: "2014/2015",
-                        year: 2015
-                      },
-                      {
-                        value: "year=2016",
-                        Viewvalue: "2015/2016",
-                        year: 2016
-                      },
-                      {
-                        value: "year=2017",
-                        Viewvalue: "2016/2017",
-                        year: 2017
-                      },
-                      {
-                        value: "year=2018",
-                        Viewvalue: "2017/2018",
-                        year: 2018
-                      },
-                      {
-                        value: "year=2019",
-                        Viewvalue: "2018/2019",
-                        year: 2019
-                      }
-                    ]
-                  },
-                  {
-                    value: "bi_ce_prodes_desmatamento_pontos_campo_fip",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["prodes_cerrado"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value_prodes_campo"][language],
-                    opacity: 1,
-                    order: 1,
-                    regionFilter: true,
-                    /*timeLabel: "Campo",
-                    timeSelected: "1=1",
-                    timeHandler: "msfilter",
-                    times: [{
-                        value: "1=1",
-                        Viewvalue: "Todos"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_01'",
-                        Viewvalue: "Campo 01"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_02'",
-                        Viewvalue: "Campo 02"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_03'",
-                        Viewvalue: "Campo 03"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_04'",
-                        Viewvalue: "Campo 04"
-                      }
-                    ]*/
-                  }
-                ]
-              },
-              {
-                id: "desmatamento_deter",
-                label: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["label_deter"][language],
-                visible: false,
-                selectedType: "bi_ce_deter_desmatamento_100_fip",
-                types: [{
-                    value: "bi_ce_deter_desmatamento_100_fip",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_100_fip"]["view_value_deter"][language],
-                    opacity: 1,
-                    order: 1,
-                    regionFilter: true,
-                    timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_100_fip"]["timelabel_deter"][language],
-                    timeSelected: "view_date > '2019-01-01'",
-                    timeHandler: "msfilter",
-                    times: [{
-                        value: "view_date > (current_date - interval '90' day)",
-                        Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times_deter"]["view_value_last_90_days"][language]
-                      },
-                      {
-                        value: "view_date > '2019-01-01'",
-                        Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times_deter"]["view_value_apartir_2019"][language]
-                      },
-                      {
-                        value: "view_date > '2018-01-01'",
-                        Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times_deter"]["view_value_apartir_2018"][language]
-                      }
-                    ]
-                  },
-                  {
-                    value: "bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["view_value_alta_susceptibilidade"][language],
-                    opacity: 1,
-                    order: 1,
-                    regionFilter: true,
-                    timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["timelabel_alta_susceptiblidade"][language],
-                    timeSelected: "view_date > '2019-01-01'",
-                    timeHandler: "msfilter",
-                    times: [{
-                        value: "view_date > (current_date - interval '90' day)",
-                        Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_last_90_days"][language]
-                      },
-                      {
-                        value: "view_date > '2019-01-01'",
-                        Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_apartir_2019"][language]
-                      },
-                      {
-                        value: "view_date > '2018-01-01'",
-                        Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_apartir_2018"][language]
-                      }
-                    ]
-                  },
-                  {
-                    value: "bi_ce_deter_desmatamento_pontos_campo_fip",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value_deter_campo"][language],
-                    opacity: 1,
-                    order: 1,
-                    regionFilter: true,
-                    /*timeLabel: "Campo",
-                    timeSelected: "1=1",
-                    timeHandler: "msfilter",
-                    times: [{
-                        value: "1=1",
-                        Viewvalue: "Todos"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_01'",
-                        Viewvalue: "Campo 01"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_02'",
-                        Viewvalue: "Campo 02"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_03'",
-                        Viewvalue: "Campo 03"
-                      },
-                      {
-                        value: "pc.campo like 'Campo_04'",
-                        Viewvalue: "Campo 04"
-                      }
-                    ]*/
-                  }
-                ]
-              },
-              {
-                id: "antropico",
-                label: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["label_antropico"][language],
-                visible: false,
-                selectedType: "bi_ce_prodes_antropico_100_fip",
-                types: [{
-                  value: "bi_ce_prodes_antropico_100_fip",
-                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["view_value_antropico"][language],
-                  opacity: 0.8,
-                  order: 2,
+          id: "desmatamento",
+          label: languageJson["descriptor"]["desmatamento"]["label"][language],
+          group_expanded: true,
+          layers: [{
+              id: "desmatamento_prodes",
+              label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
+              visible: true,
+              selectedType: "prodes_por_region_fip",
+              types: [{
+                  value: "prodes_por_region_fip",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["view_value"][language],
+                  opacity: 1,
+                  order: 1,
                   regionFilter: true,
-                  timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["timelabel_antropico"][language],
-                  timeSelected: "year < 2018",
+                  timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["timelabel"][language],
+                  timeSelected: "prodes_year=2019",
                   timeHandler: "msfilter",
                   times: [{
-                      value: "year < 2002",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2002"][language]
+                      value: "prodes_year=2002",
+                      Viewvalue: "2000/2002",
+                      year: 2002
                     },
                     {
-                      value: "year < 2004",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2004"][language]
+                      value: "prodes_year=2004",
+                      Viewvalue: "2002/2004",
+                      year: 2004
                     },
                     {
-                      value: "year < 2006",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2006"][language]
+                      value: "prodes_year=2006",
+                      Viewvalue: "2004/2006",
+                      year: 2006
                     },
                     {
-                      value: "year < 2008",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2008"][language]
+                      value: "prodes_year=2008",
+                      Viewvalue: "2006/2008",
+                      year: 2008
                     },
                     {
-                      value: "year < 2010",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2010"][language]
+                      value: "prodes_year=2010",
+                      Viewvalue: "2008/2010",
+                      year: 2010
                     },
                     {
-                      value: "year < 2012",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2012"][language]
+                      value: "prodes_year=2012",
+                      Viewvalue: "2010/2012",
+                      year: 2012
                     },
                     {
-                      value: "year < 2013",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2013"][language]
+                      value: "prodes_year=2013",
+                      Viewvalue: "2012/2013",
+                      year: 2013
                     },
                     {
-                      value: "year < 2014",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2014"][language]
+                      value: "prodes_year=2014",
+                      Viewvalue: "2013/2014",
+                      year: 2014
                     },
                     {
-                      value: "year < 2015",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2015"][language]
+                      value: "prodes_year=2015",
+                      Viewvalue: "2014/2015",
+                      year: 2015
                     },
                     {
-                      value: "year < 2016",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2016"][language]
+                      value: "prodes_year=2016",
+                      Viewvalue: "2015/2016",
+                      year: 2016
                     },
                     {
-                      value: "year < 2017",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2017"][language]
+                      value: "prodes_year=2017",
+                      Viewvalue: "2016/2017",
+                      year: 2017
                     },
                     {
-                      value: "year < 2018",
-                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times_antropico"]["view_value_ate_2018"][language]
-                    }
-                  ]
-                }]
-              },
-              {
-                id: "susceptibilidade",
-                label: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["label_susceptibilidade"][language],
-                visible: false,
-                selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
-                types: [{
-                    value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig"]["view_value"][language],
-                    order: 5,
-                    opacity: 1
-                  },
-                  {
-                    value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
-                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]["view_value"][language],
-                    order: 5,
-                    opacity: 1
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "uso_da_terra",
-            label: languageJson["descriptor"]["uso_da_terra"]["label"][language],
-            group_expanded: false,
-            layers: [{
-                id: "terraclass",
-                label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
-                visible: false,
-                selectedType: "uso_solo_terraclass_fip",
-                types: [{
-                    value: "uso_solo_terraclass_fip",
-                    Viewvalue: "TerraClass-Cerrado - 2013",
-                    opacity: 0.8,
-                    order: 3
-                  },
-                  {
-                    value: "bi_ce_cobertura_vegetal_250_2002_mma",
-                    Viewvalue: "PROBIO-Cerrado - 2002",
-                    opacity: 0.8,
-                    order: 3
-                  },
-                  {
-                    value: "agricultura_agrosatelite_fip",
-                    Viewvalue: "Agrosatélite 2013/2014",
-                    opacity: 0.8,
-                    order: 3
-                  }
-                ]
-              },
-              {
-                id: "floresta_plantada",
-                label: languageJson["descriptor"]["uso_da_terra"]["layers"]["floresta_plantada"]["label"][language],
-                visible: false,
-                selectedType: "floresta_plantada_fip",
-                types: [{
-                  value: "floresta_plantada_fip",
-                  Viewvalue: "Transparent World",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              }
-            ]
-          },
-          {
-            id: "infraestrutura",
-            label: languageJson["descriptor"]["infraestrutura"]["label"][language],
-            group_expanded: false,
-            layers: [{
-                id: "osm_rodovias",
-                label: languageJson["descriptor"]["infraestrutura"]["layers"]["osm_rodovias"]["label"][language],
-                visible: false,
-                selectedType: "osm_rodovias",
-                types: [{
-                  value: "osm_rodovias",
-                  Viewvalue: "Open Street Map",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              },
-              {
-                id: "armazens",
-                label: languageJson["descriptor"]["infraestrutura"]["layers"]["armazens"]["label"][language],
-                visible: false,
-                selectedType: "armazens_fip",
-                types: [{
-                  value: "armazens_fip",
-                  Viewvalue: "LAPIG",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              },
-              {
-                id: "frigorificos",
-                label: languageJson["descriptor"]["infraestrutura"]["layers"]["frigorificos"]["label"][language],
-                visible: false,
-                selectedType: "matadouros_e_frigorificos",
-                types: [{
-                  value: "matadouros_e_frigorificos",
-                  Viewvalue: "LAPIG",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              }
-            ]
-          },
-          {
-            id: "geofisico",
-            label: languageJson["descriptor"]["geofisico"]["label"][language],
-            group_expanded: false,
-            layers: [{
-                id: "altitude",
-                label: languageJson["descriptor"]["geofisico"]["layers"]["altitude"]["label"][language],
-                visible: false,
-                selectedType: "bi_ce_srtm_altitude_30_2000_lapig",
-                types: [{
-                  value: "bi_ce_srtm_altitude_30_2000_lapig",
-                  Viewvalue: "SRTM",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              },
-              {
-                id: "declividade",
-                label: languageJson["descriptor"]["geofisico"]["layers"]["declividade"]["label"][language],
-                visible: false,
-                selectedType: "bi_ce_srtm_declividade_30_2000_lapig",
-                types: [{
-                  value: "bi_ce_srtm_declividade_30_2000_lapig",
-                  Viewvalue: "SRTM",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              }
-            ]
-          },
-          {
-            id: "edafoclimaticos",
-            label: languageJson["descriptor"]["edafoclimaticos"]["label"][language],
-            group_expanded: false,
-            layers: [{
-                id: "solos",
-                label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["solos"]["label"][language],
-                visible: false,
-                selectedType: "solos_ibge",
-                types: [{
-                  value: "solos_ibge",
-                  Viewvalue: "IBGE",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              },
-              {
-                id: "precipitacao",
-                label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["precipitacao"]["label"][language],
-                visible: false,
-                selectedType: "bi_ce_precipitacao_historica_30_lapig",
-                types: [{
-                  value: "bi_ce_precipitacao_historica_30_lapig",
-                  Viewvalue: "TRMM/GPM",
-                  opacity: 0.8,
-                  order: 3
-                }]
-              }
-            ]
-          },
-          {
-            id: "imagens",
-            label: languageJson["descriptor"]["imagens"]["label"][language],
-            group_expanded: false,
-            layers: [{
-              id: "satelite",
-              label: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["label"][language],
-              visible: false,
-              selectedType: "landsat",
-              types: [{
-                  value: "landsat",
-                  Viewvalue: "Landsat",
-                  order: 10,
-                  opacity: 1,
-                  timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                  timeSelected: "bi_ce_mosaico_landsat_completo_30_2018_fip",
-                  timeHandler: "layername",
-                  times: [{
-                      value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
-                      Viewvalue: "2000"
+                      value: "prodes_year=2018",
+                      Viewvalue: "2017/2018",
+                      year: 2018
                     },
                     {
-                      value: "bi_ce_mosaico_landsat_completo_30_2002_fip",
-                      Viewvalue: "2002"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2004_fip",
-                      Viewvalue: "2004"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2006_fip",
-                      Viewvalue: "2006"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2008_fip",
-                      Viewvalue: "2008"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2010_fip",
-                      Viewvalue: "2010"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2012_fip",
-                      Viewvalue: "2012"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2013_fip",
-                      Viewvalue: "2013"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2014_fip",
-                      Viewvalue: "2014"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2015_fip",
-                      Viewvalue: "2015"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2016_fip",
-                      Viewvalue: "2016"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2017_fip",
-                      Viewvalue: "2017"
-                    },
-                    {
-                      value: "bi_ce_mosaico_landsat_completo_30_2018_fip",
-                      Viewvalue: "2018"
+                      value: "prodes_year=2019",
+                      Viewvalue: "2018/2019",
+                      year: 2019
                     }
                   ]
                 },
                 {
-                  value: "sentinel",
-                  Viewvalue: "Sentinel",
-                  order: 10,
+                  value: "bi_ce_prodes_desmatamento_100_fip",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["view_value"][language],
                   opacity: 1,
-                  timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                  timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
-                  timeHandler: "layername",
+                  order: 1,
+                  regionFilter: true,
+                  timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel"][language],
+                  timeSelected: "year=2019",
+                  timeHandler: "msfilter",
                   times: [{
-                      value: "bi_ce_mosaico_sentinel_10_2016_lapig",
-                      Viewvalue: "2016"
+                      value: "year=2002",
+                      Viewvalue: "2000/2002",
+                      year: 2002
                     },
                     {
-                      value: "bi_ce_mosaico_sentinel_10_2017_lapig",
-                      Viewvalue: "2017"
+                      value: "year=2004",
+                      Viewvalue: "2002/2004",
+                      year: 2004
                     },
                     {
-                      value: "bi_ce_mosaico_sentinel_10_2018_lapig",
-                      Viewvalue: "2018"
+                      value: "year=2006",
+                      Viewvalue: "2004/2006",
+                      year: 2006
+                    },
+                    {
+                      value: "year=2008",
+                      Viewvalue: "2006/2008",
+                      year: 2008
+                    },
+                    {
+                      value: "year=2010",
+                      Viewvalue: "2008/2010",
+                      year: 2010
+                    },
+                    {
+                      value: "year=2012",
+                      Viewvalue: "2010/2012",
+                      year: 2012
+                    },
+                    {
+                      value: "year=2013",
+                      Viewvalue: "2012/2013",
+                      year: 2013
+                    },
+                    {
+                      value: "year=2014",
+                      Viewvalue: "2013/2014",
+                      year: 2014
+                    },
+                    {
+                      value: "year=2015",
+                      Viewvalue: "2014/2015",
+                      year: 2015
+                    },
+                    {
+                      value: "year=2016",
+                      Viewvalue: "2015/2016",
+                      year: 2016
+                    },
+                    {
+                      value: "year=2017",
+                      Viewvalue: "2016/2017",
+                      year: 2017
+                    },
+                    {
+                      value: "year=2018",
+                      Viewvalue: "2017/2018",
+                      year: 2018
+                    },
+                    {
+                      value: "year=2019",
+                      Viewvalue: "2018/2019",
+                      year: 2019
                     }
                   ]
+                },
+                {
+                  value: "bi_ce_prodes_desmatamento_pontos_campo_fip",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value"][language],
+                  opacity: 1,
+                  order: 1,
+                  regionFilter: true,
+                  /*timeLabel: "Campo",
+                  timeSelected: "1=1",
+                  timeHandler: "msfilter",
+                  times: [{
+                      value: "1=1",
+                      Viewvalue: "Todos"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_01'",
+                      Viewvalue: "Campo 01"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_02'",
+                      Viewvalue: "Campo 02"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_03'",
+                      Viewvalue: "Campo 03"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_04'",
+                      Viewvalue: "Campo 04"
+                    }
+                  ]*/
                 }
               ]
-            }]
-          }
-        ],
-        basemaps: [{
-          id: "basemaps",
-          defaultBaseMap: "mapbox",
-          types: [{
-              value: "mapbox",
-              viewValue: languageJson["descriptor"]["basemaps"]["types"]["mapbox_view_value"][language],
-              visible: true
             },
             {
-              value: "satelite",
-              viewValue: languageJson["descriptor"]["basemaps"]["types"]["satelite_view_value"][language],
-              visible: false
+              id: "desmatamento_deter",
+              label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["label"][language],
+              visible: false,
+              selectedType: "bi_ce_deter_desmatamento_100_fip",
+              types: [{
+                  value: "bi_ce_deter_desmatamento_100_fip",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["view_value"][language],
+                  opacity: 1,
+                  order: 1,
+                  regionFilter: true,
+                  timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["timelabel"][language],
+                  timeSelected: "view_date > '2019-01-01'",
+                  timeHandler: "msfilter",
+                  times: [{
+                      value: "view_date > (current_date - interval '90' day)",
+                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > (current_date - interval '90' day)"][language]
+                    },
+                    {
+                      value: "view_date > '2019-01-01'",
+                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2019-01-01'"][language]
+                    },
+                    {
+                      value: "view_date > '2018-01-01'",
+                      Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2018-01-01'"][language]
+                    }
+                  ]
+                },
+                // {
+                //   value: "bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip",
+                //   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["view_value_alta_susceptibilidade"][language],
+                //   opacity: 1,
+                //   order: 1,
+                //   regionFilter: true,
+                //   timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["timelabel_alta_susceptiblidade"][language],
+                //   timeSelected: "view_date > '2019-01-01'",
+                //   timeHandler: "msfilter",
+                //   times: [{
+                //       value: "view_date > (current_date - interval '90' day)",
+                //       Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_last_90_days"][language]
+                //     },
+                //     {
+                //       value: "view_date > '2019-01-01'",
+                //       Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_apartir_2019"][language]
+                //     },
+                //     {
+                //       value: "view_date > '2018-01-01'",
+                //       Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_apartir_2018"][language]
+                //     }
+                //   ]
+                // },
+                {
+                  value: "bi_ce_deter_desmatamento_pontos_campo_fip",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value"][language],
+                  opacity: 1,
+                  order: 1,
+                  regionFilter: true,
+                  /*timeLabel: "Campo",
+                  timeSelected: "1=1",
+                  timeHandler: "msfilter",
+                  times: [{
+                      value: "1=1",
+                      Viewvalue: "Todos"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_01'",
+                      Viewvalue: "Campo 01"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_02'",
+                      Viewvalue: "Campo 02"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_03'",
+                      Viewvalue: "Campo 03"
+                    },
+                    {
+                      value: "pc.campo like 'Campo_04'",
+                      Viewvalue: "Campo 04"
+                    }
+                  ]*/
+                }
+              ]
             },
             {
-              value: "estradas",
-              viewValue: languageJson["descriptor"]["basemaps"]["types"]["estradas_view_value"][language],
-              visible: false
+              id: "antropico",
+              label: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["label"][language],
+              visible: false,
+              selectedType: "bi_ce_prodes_antropico_100_fip",
+              types: [{
+                value: "bi_ce_prodes_antropico_100_fip",
+                Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["view_value"][language],
+                opacity: 0.8,
+                order: 2,
+                regionFilter: true,
+                timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["timelabel"][language],
+                timeSelected: "year < 2018",
+                timeHandler: "msfilter",
+                times: [{
+                    value: "year < 2002",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2002"][language]
+                  },
+                  {
+                    value: "year < 2004",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2004"][language]
+                  },
+                  {
+                    value: "year < 2006",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2006"][language]
+                  },
+                  {
+                    value: "year < 2008",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2008"][language]
+                  },
+                  {
+                    value: "year < 2010",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2010"][language]
+                  },
+                  {
+                    value: "year < 2012",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2012"][language]
+                  },
+                  {
+                    value: "year < 2013",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2013"][language]
+                  },
+                  {
+                    value: "year < 2014",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2014"][language]
+                  },
+                  {
+                    value: "year < 2015",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2015"][language]
+                  },
+                  {
+                    value: "year < 2016",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2016"][language]
+                  },
+                  {
+                    value: "year < 2017",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2017"][language]
+                  },
+                  {
+                    value: "year < 2018",
+                    Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2018"][language]
+                  }
+                ]
+              }]
             },
             {
-              value: "relevo",
-              viewValue: languageJson["descriptor"]["basemaps"]["types"]["relevo_view_value"][language],
-              visible: false
+              id: "susceptibilidade",
+              label: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["label"][language],
+              visible: false,
+              selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
+              types: [{
+                  value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig"]["view_value"][language],
+                  order: 5,
+                  opacity: 1
+                },
+                {
+                  value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]["view_value"][language],
+                  order: 5,
+                  opacity: 1
+                }
+              ]
             }
           ]
-        }],
-        limits: [{
-          id: "limits_bioma",
-          types: [{
-              value: "biomas",
-              Viewvalue: languageJson["descriptor"]["limits"]["types"]["biomas_view_value"][language],
-              visible: true,
-              layer_limits: true,
-              opacity: 1
+        },
+        {
+          id: "uso_da_terra",
+          label: languageJson["descriptor"]["uso_da_terra"]["label"][language],
+          group_expanded: false,
+          layers: [{
+              id: "terraclass",
+              label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
+              visible: false,
+              selectedType: "uso_solo_terraclass_fip",
+              types: [{
+                  value: "uso_solo_terraclass_fip",
+                  Viewvalue: "TerraClass-Cerrado - 2013",
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "bi_ce_cobertura_vegetal_250_2002_mma",
+                  Viewvalue: "PROBIO-Cerrado - 2002",
+                  opacity: 0.8,
+                  order: 3
+                },
+                {
+                  value: "agricultura_agrosatelite_fip",
+                  Viewvalue: "Agrosatélite 2013/2014",
+                  opacity: 0.8,
+                  order: 3
+                }
+              ]
             },
             {
-              value: "estados",
-              Viewvalue: languageJson["descriptor"]["limits"]["types"]["estados_view_value"][language],
+              id: "floresta_plantada",
+              label: languageJson["descriptor"]["uso_da_terra"]["layers"]["floresta_plantada"]["label"][language],
               visible: false,
-              layer_limits: true,
-              opacity: 1
-            },
-            {
-              value: "municipios",
-              Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_view_value"][language],
-              visible: false,
-              layer_limits: true,
-              opacity: 1
+              selectedType: "floresta_plantada_fip",
+              types: [{
+                value: "floresta_plantada_fip",
+                Viewvalue: "Transparent World",
+                opacity: 0.8,
+                order: 3
+              }]
             }
-          ],
-          selectedType: "biomas"
-        }]
-      };
+          ]
+        },
+        {
+          id: "infraestrutura",
+          label: languageJson["descriptor"]["infraestrutura"]["label"][language],
+          group_expanded: false,
+          layers: [{
+              id: "osm_rodovias",
+              label: languageJson["descriptor"]["infraestrutura"]["layers"]["osm_rodovias"]["label"][language],
+              visible: false,
+              selectedType: "osm_rodovias",
+              types: [{
+                value: "osm_rodovias",
+                Viewvalue: "Open Street Map",
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "armazens",
+              label: languageJson["descriptor"]["infraestrutura"]["layers"]["armazens"]["label"][language],
+              visible: false,
+              selectedType: "armazens_fip",
+              types: [{
+                value: "armazens_fip",
+                Viewvalue: "LAPIG",
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "frigorificos",
+              label: languageJson["descriptor"]["infraestrutura"]["layers"]["frigorificos"]["label"][language],
+              visible: false,
+              selectedType: "matadouros_e_frigorificos",
+              types: [{
+                value: "matadouros_e_frigorificos",
+                Viewvalue: "LAPIG",
+                opacity: 0.8,
+                order: 3
+              }]
+            }
+          ]
+        },
+        {
+          id: "geofisico",
+          label: languageJson["descriptor"]["geofisico"]["label"][language],
+          group_expanded: false,
+          layers: [{
+              id: "altitude",
+              label: languageJson["descriptor"]["geofisico"]["layers"]["altitude"]["label"][language],
+              visible: false,
+              selectedType: "bi_ce_srtm_altitude_30_2000_lapig",
+              types: [{
+                value: "bi_ce_srtm_altitude_30_2000_lapig",
+                Viewvalue: "SRTM",
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "declividade",
+              label: languageJson["descriptor"]["geofisico"]["layers"]["declividade"]["label"][language],
+              visible: false,
+              selectedType: "bi_ce_srtm_declividade_30_2000_lapig",
+              types: [{
+                value: "bi_ce_srtm_declividade_30_2000_lapig",
+                Viewvalue: "SRTM",
+                opacity: 0.8,
+                order: 3
+              }]
+            }
+          ]
+        },
+        {
+          id: "edafoclimaticos",
+          label: languageJson["descriptor"]["edafoclimaticos"]["label"][language],
+          group_expanded: false,
+          layers: [{
+              id: "solos",
+              label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["solos"]["label"][language],
+              visible: false,
+              selectedType: "solos_ibge",
+              types: [{
+                value: "solos_ibge",
+                Viewvalue: "IBGE",
+                opacity: 0.8,
+                order: 3
+              }]
+            },
+            {
+              id: "precipitacao",
+              label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["precipitacao"]["label"][language],
+              visible: false,
+              selectedType: "bi_ce_precipitacao_historica_30_lapig",
+              types: [{
+                value: "bi_ce_precipitacao_historica_30_lapig",
+                Viewvalue: "TRMM/GPM",
+                opacity: 0.8,
+                order: 3
+              }]
+            }
+          ]
+        },
+        {
+          id: "imagens",
+          label: languageJson["descriptor"]["imagens"]["label"][language],
+          group_expanded: false,
+          layers: [{
+            id: "satelite",
+            label: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["label"][language],
+            visible: false,
+            selectedType: "landsat",
+            types: [{
+                value: "landsat",
+                Viewvalue: "Landsat",
+                order: 10,
+                opacity: 1,
+                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
+                timeSelected: "bi_ce_mosaico_landsat_completo_30_2019_fip",
+                timeHandler: "layername",
+                times: [{
+                    value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
+                    Viewvalue: "2000"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2002_fip",
+                    Viewvalue: "2002"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2004_fip",
+                    Viewvalue: "2004"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2006_fip",
+                    Viewvalue: "2006"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2008_fip",
+                    Viewvalue: "2008"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2010_fip",
+                    Viewvalue: "2010"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2012_fip",
+                    Viewvalue: "2012"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2013_fip",
+                    Viewvalue: "2013"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2014_fip",
+                    Viewvalue: "2014"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2015_fip",
+                    Viewvalue: "2015"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2016_fip",
+                    Viewvalue: "2016"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2017_fip",
+                    Viewvalue: "2017"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2018_fip",
+                    Viewvalue: "2018"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2019_fip",
+                    Viewvalue: "2019"
+                  }
+                ]
+              },
+              {
+                value: "sentinel",
+                Viewvalue: "Sentinel",
+                order: 10,
+                opacity: 1,
+                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
+                timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
+                timeHandler: "layername",
+                times: [{
+                    value: "bi_ce_mosaico_sentinel_10_2016_lapig",
+                    Viewvalue: "2016"
+                  },
+                  {
+                    value: "bi_ce_mosaico_sentinel_10_2017_lapig",
+                    Viewvalue: "2017"
+                  },
+                  {
+                    value: "bi_ce_mosaico_sentinel_10_2018_lapig",
+                    Viewvalue: "2018"
+                  }
+                ]
+              }
+            ]
+          }]
+        }
+      ],
+      basemaps: [{
+        id: "basemaps",
+        defaultBaseMap: "mapbox",
+        types: [{
+            value: "mapbox",
+            viewValue: languageJson["descriptor"]["basemaps"]["types"]["mapbox"][language],
+            visible: true
+          },
+          {
+            value: "satelite",
+            viewValue: languageJson["descriptor"]["basemaps"]["types"]["satelite"][language],
+            visible: false
+          },
+          {
+            value: "estradas",
+            viewValue: languageJson["descriptor"]["basemaps"]["types"]["estradas"][language],
+            visible: false
+          },
+          {
+            value: "relevo",
+            viewValue: languageJson["descriptor"]["basemaps"]["types"]["relevo"][language],
+            visible: false
+          }
+        ]
+      }],
+      limits: [{
+        id: "limits_bioma",
+        types: [{
+            value: "biomas",
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["biomas"][language],
+            visible: true,
+            layer_limits: true,
+            opacity: 1
+          },
+          {
+            value: "estados",
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["estados"][language],
+            visible: false,
+            layer_limits: true,
+            opacity: 1
+          },
+          {
+            value: "municipios",
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios"][language],
+            visible: false,
+            layer_limits: true,
+            opacity: 1
+          }
+        ],
+        selectedType: "biomas"
+      }]
+    };
 
     response.send(result);
     response.end();
   };
 
 
-  Controller.titles = function (request, response){
+  Controller.titles = function (request, response) {
 
     var language = request.param('lang')
 
-
     var result = {
-        legendTitle: languageJson["legends_box_title"][language],
-        utfgrid: {
-          area: languageJson["mini_report_utfgrid"]["area"][language],
-          city: languageJson["mini_report_utfgrid"]["city"][language],
-          detection_date: languageJson["mini_report_utfgrid"]["detection_date"][language],
-          susceptibility: languageJson["mini_report_utfgrid"]["susceptibility"][language],
-          field_number: languageJson["mini_report_utfgrid"]["field_number"][language],
-          not_computed_message: languageJson["mini_report_utfgrid"]["not_computed_message"][language],
-          undisclosed_message: languageJson["mini_report_utfgrid"]["undisclosed_message"][language]
-        },
-        layer_box: {
-          title: languageJson["layer_box"]["title"][language],
-          label_data: languageJson["layer_box"]["label_data"][language],
-          label_mapabase: languageJson["layer_box"]["label_mapabase"][language],
-          label_limits: languageJson["layer_box"]["label_limits"][language],
-          search_placeholder: languageJson["layer_box"]["search_placeholder"][language],
-          search_loading: languageJson["layer_box"]["search_loading"][language],
-          search_failed: languageJson["layer_box"]["search_failed"][language]
-        }
+      legendTitle: languageJson["legends_box_title"][language],
+      utfgrid: {
+        area: languageJson["mini_report_utfgrid"]["area"][language],
+        city: languageJson["mini_report_utfgrid"]["city"][language],
+        detection_date: languageJson["mini_report_utfgrid"]["detection_date"][language],
+        susceptibility: languageJson["mini_report_utfgrid"]["susceptibility"][language],
+        field_number: languageJson["mini_report_utfgrid"]["field_number"][language],
+        not_computed_message: languageJson["mini_report_utfgrid"]["not_computed_message"][language],
+        undisclosed_message: languageJson["mini_report_utfgrid"]["undisclosed_message"][language],
+        click_more_text: languageJson["mini_report_utfgrid"]["click_more_text"][language],
+        click_more_municipio: languageJson["mini_report_utfgrid"]["click_more_municipio"][language],
+        label_year: languageJson["mini_report_utfgrid"]["label_year"][language]
+      },
+      layer_box: {
+        title: languageJson["layer_box"]["title"][language],
+        label_data: languageJson["layer_box"]["label_data"][language],
+        label_mapabase: languageJson["layer_box"]["label_mapabase"][language],
+        label_limits: languageJson["layer_box"]["label_limits"][language],
+        search_placeholder: languageJson["layer_box"]["search_placeholder"][language],
+        search_loading: languageJson["layer_box"]["search_loading"][language],
+        search_failed: languageJson["layer_box"]["search_failed"][language]
+      },
+      descriptor: languageJson["descriptor"]
+    
     };
 
-
-    response.send(result);
+        response.send(result);
     response.end();
   };
 
-  Controller.textreport = function(request, response){
+
+
+  Controller.textreport = function (request, response) {
     var language = request.param('lang')
 
     var jsonPath = path.join(__dirname, '..', 'assets', 'lang', 'language.json');
-    var rec = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    var languageFile = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
 
-    var teste = rec["dialog_relatorio"];
+    var dialogJson = languageFile["dialog_relatorio"];
 
     var keys = {};
-    
-    Object.keys(teste).forEach(function(key,index) {
+
+    Object.keys(dialogJson).forEach(function (key, index) {
       keys[key] = key
     });
 
     var result = {};
-    Object.keys(keys).forEach(function(key,index) {
+    Object.keys(keys).forEach(function (key, index) {
 
-      if(teste[key].hasOwnProperty("pt-br")){
-        result[key] = teste[key][language]
-      }
-      else{
-        result[key] = teste[key]
-        Object.keys(teste[key]).forEach(function(key2,index) {
-          result[key][key2] = teste[key][key2][language]
+      if (dialogJson[key].hasOwnProperty("pt-br")) {
+        result[key] = dialogJson[key][language]
+      } else {
+        result[key] = dialogJson[key]
+        Object.keys(dialogJson[key]).forEach(function (key2, index) {
+          result[key][key2] = dialogJson[key][key2][language]
         });
       }
     });

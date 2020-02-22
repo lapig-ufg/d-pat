@@ -59,11 +59,7 @@ module.exports = function (app) {
 
 		var type = request.param('type')
 		var region = request.param('region')
-
 		var language = request.param('lang')
-
-		// var language = "eng"
-		
 
 		var queryResult = request.queryResult["timeseries"]
 
@@ -238,6 +234,7 @@ module.exports = function (app) {
 			label: languageJson["charts_box_cities"]["label"][language],
 			description: languageJson["charts_box_cities"]["description"][language],
 			title: languageJson["charts_box_cities"]["title"][language],
+			tooltip: languageJson["charts_box_cities"]["tooltip_text"][language],
 			series: queryResult
 		}
 
@@ -271,7 +268,6 @@ module.exports = function (app) {
 				response.end();
 			});
 	}
-
 
 	Controller.illegal = function (request, response) {
 

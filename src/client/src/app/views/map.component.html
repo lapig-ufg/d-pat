@@ -4,25 +4,28 @@
 		<div class="row" class="title-atlas"> Deforestation Polygon Assessment Tool</div>
 	</div>
 
-	<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 title-atlas-div">
-	
-		<span class="flag-icon flag-icon-br" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('pt-br')"></span>
-		<span class="flag-icon flag-icon-us" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('en-us')"></span>
-	</div>
 
 	<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 logos-atlas">
-		
-		
-
 
 		<a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
 				class="logo-cepf" src="assets/logo/fip.png" /></a>
-		<a href="https://www.ufg.br/" target="_blank"><img class="logo-ufg"
-				src="assets/logo/logo-ufg.png" /></a>
+		<a href="https://www.ufg.br/" target="_blank"><img class="logo-ufg" src="assets/logo/logo-ufg.png" /></a>
 		<a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
 				src="assets/logo/lapig.png" /></a>
-				
+
 	</div>
+
+	<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 title-atlas-div">
+
+
+		<ngx-flag-picker [selectedCountryCode]="selectedCountryCode" [countryCodes]="countryCodes"
+			[customLabels]="customLabels" (changedCountryCode)="changeSelectedCountryCode($event)">
+		</ngx-flag-picker>
+
+		<!-- <span class="flag-icon flag-icon-br" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('pt-br')"></span>
+		<span class="flag-icon flag-icon-us" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('en-us')"></span> -->
+	</div>
+
 </nav>
 <div class="container-fluid">
 	<div class="row">
@@ -47,13 +50,15 @@
 											</ng-template>
 											<input id="typeahead-http" type="text" class="form-control searchRegion"
 												[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-												[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
+												[ngbTypeahead]="search"
+												placeholder="{{titlesLayerBox.search_placeholder}}"
 												(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-												[inputFormatter]="formatter" />
+												[inputFormatter]="formatter" [value]="currentData" />
 											<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
 												(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
 											<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-											<div class="invalid-feedback" *ngIf="searchFailed">{{titlesLayerBox.search_failed}}</div>
+											<div class="invalid-feedback" *ngIf="searchFailed">
+												{{titlesLayerBox.search_failed}}</div>
 										</div>
 									</div>
 									<div class="row" *ngFor="let groups of descriptor.groups">
@@ -152,30 +157,34 @@
 							</div>
 							<!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
 
-							<p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries"></p-chart>
+							<p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries">
+							</p-chart>
 						</mat-tab>
-						<mat-tab label="{{dataStates.label}}" *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'"
-							id="tabGraficoLinhas">
+						<mat-tab label="{{dataStates.label}}"
+							*ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'" id="tabGraficoLinhas">
 							<h6>
 								<b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
 							</h6>
 							<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
 						</mat-tab>
-						<mat-tab label="{{chartResultCities.label}}" *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
+						<mat-tab label="{{chartResultCities.label}}" *ngIf="selectRegion.type != 'city'"
+							id="tabGraficoLinhas">
 							<h6>
 								<b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
+
 							</h6>
-							<p-table [value]="chartResultCities.series">
+							<p-table [value]="chartResultCities.series" selectionMode="single"
+								(onRowSelect)="onCityRowSelect($event)">
 								<ng-template pTemplate="header">
 									<tr align="center">
-										<th>{{chartResultCities.split[0]}}</th>
-										<th>{{chartResultCities.split[1]}}</th>
-										<th>{{chartResultCities.split[2]}}</th>
-										<th>{{chartResultCities.split[3]}}</th>
+										<th *ngFor="let header of chartResultCities.split">
+											{{header}}
+										</th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-city>
-									<tr>
+									<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+										tooltipPosition="bottom" life="2000">
 										<td align="center">{{city.index}}</td>
 										<td align="center">{{city.name}}</td>
 										<td align="center">{{city.uf}}</td>
@@ -192,17 +201,18 @@
 								<b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
-							<p-table [value]="chartResultCitiesIllegalAPP.series">
+							<p-table [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
+								(onRowSelect)="onCityRowSelect($event)">
 								<ng-template pTemplate="header">
 									<tr align="center">
-										<th>{{chartResultCities.split[0]}}</th>
-										<th>{{chartResultCities.split[1]}}</th>
-										<th>{{chartResultCities.split[2]}}</th>
-										<th>{{chartResultCities.split[3]}}</th>
+										<th *ngFor="let header of chartResultCities.split">
+											{{header}}
+										</th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-city>
-									<tr>
+									<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+										tooltipPosition="bottom" life="2000">
 										<td align="center">{{city.index}}</td>
 										<td align="center">{{city.name}}</td>
 										<td align="center">{{city.uf}}</td>
@@ -218,17 +228,18 @@
 								<b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
 								<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 							</h6>
-							<p-table [value]="chartResultCitiesIllegalRL.series">
+							<p-table [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
+								(onRowSelect)="onCityRowSelect($event)">
 								<ng-template pTemplate="header">
 									<tr align="center">
-										<th>{{chartResultCities.split[0]}}</th>
-										<th>{{chartResultCities.split[1]}}</th>
-										<th>{{chartResultCities.split[2]}}</th>
-										<th>{{chartResultCities.split[3]}}</th>
+										<th *ngFor="let header of chartResultCities.split">
+											{{header}}
+										</th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-city>
-									<tr>
+									<tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+										tooltipPosition="bottom" life="2000">
 										<td align="center">{{city.index}}</td>
 										<td align="center">{{city.name}}</td>
 										<td align="center">{{city.uf}}</td>
@@ -257,7 +268,9 @@
 							class="expansion-header-layer" *ngIf="layer.visible">
 							{{layer.label}}
 						</mat-expansion-panel-header>
-						<img *ngIf="layer.visible" [src]="layer.urlLegend">
+						<div *ngFor="let type of layer.types">
+							<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+						</div>
 					</mat-expansion-panel>
 				</div>
 			</div>
@@ -266,7 +279,7 @@
 </div>
 
 <div id="map-info" class="card"
-	[ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : 'hidden'), 'background-color': '#ffffff99'}">
+	[ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden')), 'background-color': '#ffffff99'}">
 	<div *ngIf="infodata" class="card-body">
 		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
 		<table>
@@ -289,6 +302,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}} </strong></div>
 	</div>
 	<div *ngIf="infodataCampo" class="card-body">
 		<p class="card-text">{{ infodataCampo.origin_table }}-Cerrado</p>
@@ -316,6 +330,25 @@
 				</tr>
 			</tbody>
 		</table>
+		<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}} </strong></div>
+	</div>
+	<div *ngIf="infodataMunicipio" class="card-body">
+		<p class="card-text">{{ infodataMunicipio.region_display }}</p>
+		<table>
+			<tbody>
+				
+				<tr>
+					<th>{{minireportText.area}} </th>
+					<td>{{infodataMunicipio.area_prodes | number:'1.2-3' }} km²</td>
+				</tr>
+				<tr>
+					<th>{{minireportText.label_year}} </th>
+					<td>{{infodataMunicipio.prodes_year}}</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>
 	</div>
 
 

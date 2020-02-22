@@ -1,5 +1,5 @@
 {
-    
+        
     "legends_box_title": {
         "pt-br": "Legenda",
         "en-us": "Legend"
@@ -43,7 +43,7 @@
     "charts_box_cities": {
         "label":{
            "pt-br": "Municípios",
-           "en-us": "Cities"
+           "en-us": "Municipalities"
         },
         "description":{
             "pt-br": "Ranking dos Municípios com maiores Desmatamentos: ",
@@ -52,6 +52,10 @@
         "title":{
             "pt-br": "#?Município?Estado?Área",
             "en-us": "#?Municipality?State?Area"
+        },
+        "tooltip_text":{
+            "pt-br": "Clique para visualizar no mapa",
+            "en-us": "Click to view on map"
         }
     },
 
@@ -105,6 +109,18 @@
         "undisclosed_message":{
             "pt-br": "Não Divulgada",
             "en-us": "Undisclosed"
+        },
+        "click_more_text":{
+            "pt-br": "Clique para visualizar o relatório completo deste desmatamento",
+            "en-us": "Click to open the full deforestation report"
+        },
+        "click_more_municipio":{
+            "pt-br": "Clique aproximar deste município",
+            "en-us": "Click to zoom in on this municipality"
+        },
+        "label_year":{
+            "pt-br": "Ano: ",
+            "en-us": "Year: "
         }
     },
 
@@ -150,55 +166,65 @@
                 "en-us": "Deforestation"
             },
             "layers":{
-                "prodes_cerrado":{
-                    "label_prodes":{
+                "desmatamento_prodes":{
+                    "label":{
                         "pt-br": "Desmatamentos - PRODES-Cerrado",
                         "en-us": "Deforestation - PRODES-Cerrado"
                     },
                     "types":{
                         "bi_ce_prodes_desmatamento_100_fip":{
-                            "view_value_prodes":{
+                            "view_value":{
                                 "pt-br": "Polígonos",
                                 "en-us": "Polygons"
                             },
-                            "timelabel_prodes":{
+                            "timelabel":{
                                 "pt-br": "Período",
                                 "en-us": "Period"
                             }
                         },
                         "bi_ce_prodes_desmatamento_pontos_campo_fip":{
-                            "view_value_prodes_campo":{
+                            "view_value":{
                                 "pt-br": "Polígonos visitados em Campo",
                                 "en-us": "Polygons visited in field"
+                            }
+                        },
+                        "prodes_por_region_fip":{
+                            "view_value":{
+                                "pt-br": "Municípios",
+                                "en-us": "Municipalities"
+                            },
+                            "timelabel":{
+                                "pt-br": "Período",
+                                "en-us": "Period"
                             }
                         }
                     }
                 },
-                "deter_cerrado":{
-                    "label_deter":{
+                "desmatamento_deter":{
+                    "label":{
                         "pt-br": "Avisos - DETER-Cerrado",
                         "en-us": "Warnings - DETER-Cerrado"
                     },
                     "types":{
                         "bi_ce_deter_desmatamento_100_fip":{
-                            "view_value_deter":{
+                            "view_value":{
                                 "pt-br": "Polígonos",
                                 "en-us": "Polygons"
                             },
-                            "timelabel_deter":{
+                            "timelabel":{
                                 "pt-br": "Período",
                                 "en-us": "Period"
                             },
-                            "times_deter":{
-                                "view_value_last_90_days":{
+                            "times":{
+                                "view_date > (current_date - interval '90' day)":{
                                     "pt-br": "Últimos 90 dias",
                                     "en-us": "Last 90 days"
                                 },
-                                "view_value_apartir_2019":{
+                                "view_date > '2019-01-01'":{
                                     "pt-br": "À partir de 2019",
                                     "en-us": "From 2019"
                                 },
-                                "view_value_apartir_2018":{
+                                "view_date > '2018-01-01'":{
                                     "pt-br": "À partir de 2018",
                                     "en-us": "From 2018"
                                 }
@@ -229,7 +255,7 @@
                             }
                         },
                         "bi_ce_deter_desmatamento_pontos_campo_fip":{
-                            "view_value_deter_campo":{
+                            "view_value":{
                                 "pt-br": "Polígonos visitados em Campo",
                                 "en-us": "Polygons visited in field"
                             }
@@ -237,66 +263,66 @@
                     }
                 },
                 "antropico":{
-                    "label_antropico":{
+                    "label":{
                         "pt-br": "Antrópico - PRODES-Cerrado",
                         "en-us": "Anthropic - PRODES-Cerrado"
                     },
                     "types":{
                         "bi_ce_prodes_antropico_100_fip":{
-                            "view_value_antropico":{
+                            "view_value":{
                                 "pt-br": "Polígonos",
                                 "en-us": "Polygons"
                             },
-                            "timelabel_antropico":{
+                            "timelabel":{
                                 "pt-br": "Período",
                                 "en-us": "Period"
                             },
-                            "times_antropico":{
-                                "view_value_ate_2002":{
+                            "times":{
+                                "year < 2002":{
                                     "pt-br": "Até 2002",
                                     "en-us": "Until 2002"
                                 },
-                                "view_value_ate_2004":{
+                                "year < 2004":{
                                     "pt-br": "Até 2004",
                                     "en-us": "Until 2004"
                                 },
-                                "view_value_ate_2006":{
+                                "year < 2006":{
                                     "pt-br": "Até 2006",
                                     "en-us": "Until 2006"
                                 },
-                                "view_value_ate_2008":{
+                                "year < 2008":{
                                     "pt-br": "Até 2009",
                                     "en-us": "Until 2008"
                                 },
-                                "view_value_ate_2010":{
+                                "year < 2010":{
                                     "pt-br": "Até 2010",
                                     "en-us": "Until 2010"
                                 },
-                                "view_value_ate_2012":{
+                                "year < 2012":{
                                     "pt-br": "Até 2012",
                                     "en-us": "Until 2012"
                                 },
-                                "view_value_ate_2013":{
+                                "year < 2013":{
                                     "pt-br": "Até 2013",
                                     "en-us": "Until 2013"
                                 },
-                                "view_value_ate_2014":{
+                                "year < 2014":{
                                     "pt-br": "Até 2014",
                                     "en-us": "Until 2014"
                                 },
-                                "view_value_ate_2015":{
+                                "year < 2015":{
                                     "pt-br": "Até 2015",
                                     "en-us": "Until 2015"
                                 },
-                                "view_value_ate_2016":{
+                                "year < 2016":{
                                     "pt-br": "Até 2016",
                                     "en-us": "Until 2016"
                                 },
-                                "view_value_ate_2017":{
+                                "year < 2017":{
                                     "pt-br": "Até 2017",
                                     "en-us": "Until 2017"
                                 },
-                                "view_value_ate_2018":{
+                                "year < 2018":{
                                     "pt-br": "Até 2018",
                                     "en-us": "Until 2018"
                                 }
@@ -306,7 +332,7 @@
                     }
                 },
                 "susceptibilidade":{
-                    "label_susceptibilidade":{
+                    "label":{
                         "pt-br": "Susceptibilidade a Desmatamentos",
                         "en-us": "Susceptibility to Deforestation"
                     },
@@ -433,19 +459,19 @@
         },
         "basemaps":{
             "types":{
-                "mapbox_view_value":{
+                "mapbox":{
                     "pt-br": "Geopolítico",
                     "en-us": "Geopolitical"
                 },
-                "satelite_view_value":{
+                "satelite":{
                     "pt-br": "Satélite",
                     "en-us": "Satellite"
                 },
-                "estradas_view_value":{
+                "estradas":{
                     "pt-br": "Estradas",
                     "en-us": "Roads"
                 },
-                "relevo_view_value":{
+                "relevo":{
                     "pt-br": "Relevo",
                     "en-us": "Geographical Relief"
                 }
@@ -453,15 +479,15 @@
         },
         "limits":{
             "types":{
-                "biomas_view_value":{
+                "biomas":{
                     "pt-br": "Cerrado",
                     "en-us": "Cerrado"
                 },
-                "estados_view_value":{
+                "estados":{
                     "pt-br": "Estados",
                     "en-us": "States"
                 },
-                "municipios_view_value":{
+                "municipios":{
                     "pt-br": "Municípios",
                     "en-us": "Municipality"
                 }
@@ -542,7 +568,7 @@
             },
             "reference_date_car_label":{
                 "pt-br": "Data de Referência informada:",
-                "en-us": "Reference Date Informed:"
+                "en-us": "Informed Reference Date:"
             },
             "rl_car_label":{
                 "pt-br": "Área desmatada dentro da Reserva Legal: ? km² (? da área total da Reserva Legal)",

@@ -17,6 +17,8 @@ import {
   MatDialogConfig
 } from "@angular/material";
 
+import { defaults as defaultInteractions } from 'ol/interaction';
+
 import { Observable } from "rxjs";
 import { of } from "rxjs/observable/of";
 import {
@@ -57,7 +59,6 @@ import {
   NgxGalleryImage,
   NgxGalleryAnimation
 } from "ngx-image-video-gallery";
-import { element } from 'protractor';
 
 
 const SEARCH_URL = "service/map/search";
@@ -113,7 +114,7 @@ export class MapComponent implements OnInit {
   viewWidthMobile = 350;
   chartRegionScale: boolean;
 
-  textOnDialog : any;
+  textOnDialog: any;
   mapbox: any;
   satelite: any;
   estradas: any;
@@ -155,23 +156,36 @@ export class MapComponent implements OnInit {
 
   infodata: any;
   infodataCampo: any;
+  infodataMunicipio: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
   utfgridCampo: UTFGrid;
   utfgridlayerCampo: OlTileLayer;
+  utfgridmunicipio: UTFGrid;
+  utfgridlayerMunicipio: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
+
+  selectedLanguage: any;
+  selectedLanguageItem: any;
+
+  selectedCountryCode: any;
+  countryCodes = <any>[];
+  customLabels: any;
 
   dataForDialog = <any>{};
 
   keyForClick: any;
   keyForPointer: any;
-
+  currentData: any;
   language: any;
+
+  languages: any[];
 
   titlesLayerBox: any
   minireportText: any
+  descriptorText: any
 
   constructor(
     private http: HttpClient,
@@ -202,6 +216,11 @@ export class MapComponent implements OnInit {
 
     this.textOnDialog = {};
 
+    this.currentData = "";
+    this.valueRegion = {
+      text: ""
+    }
+
     this.urls = [
       'http://o1.lapig.iesa.ufg.br/ows',
       'http://o2.lapig.iesa.ufg.br/ows',
@@ -231,9 +250,23 @@ export class MapComponent implements OnInit {
       Viewvalue: "2018/2019",
       year: 2019
     };
-
     this.datePipe = new DatePipe("pt-BR");
     this.language = "pt-br";
+
+    this.selectedLanguageItem = { name: 'Brasil', flag: 'br', lang: 'pt-br' }
+
+    this.selectedLanguage = {
+      label: "optionLabel",
+      value: this.selectedLanguageItem
+    }
+
+    this.selectedCountryCode = 'br';
+    this.countryCodes = ['br', 'us'];
+
+    this.customLabels = {
+      'br': 'Português (Portuguese)',
+      'us': 'Inglês (English)'
+    };
 
     this.updateCharts();
     this.chartRegionScale = true;
@@ -241,6 +274,21 @@ export class MapComponent implements OnInit {
     this.minireportText = {};
 
     this.updateTexts();
+  }
+
+  changeSelectedCountryCode(value: string): void {
+
+    this.selectedCountryCode = value;
+
+    let lang;
+    if (value == 'br') {
+      lang = 'pt-br'
+    }
+    else if (value == 'us') {
+      lang = 'en-us'
+    }
+
+    this.changeLanguage(lang);
   }
 
   search = (text$: Observable<string>) =>
@@ -261,6 +309,18 @@ export class MapComponent implements OnInit {
     );
 
   formatter = (x: { text: string }) => x.text;
+
+  onCityRowSelect(event) {
+    let name = event.data.name
+
+    this.http.get(SEARCH_URL, { params: PARAMS.set("key", name) }).subscribe(result => {
+      let ob = result[0];
+
+      this.currentData = ob.text
+      // this.valueRegion.text = ob.text
+      this.updateRegion(ob)
+    });
+  }
 
   private selectedTimeFromLayerType(layerName) {
     for (let layer of this.layersTypes) {
@@ -339,21 +399,24 @@ export class MapComponent implements OnInit {
     if (this.language != (lang)) {
       this.language = lang;
 
-      this.updateDescriptor();
       this.updateTexts();
       this.updateCharts();
+      this.updateDescriptor();
     }
   }
 
   private updateTexts() {
     var titlesUrl = "service/map/titles" + this.getServiceParams();
-    
+
     this.http.get(titlesUrl).subscribe(titlesResults => {
 
       this.titlesLayerBox = titlesResults["layer_box"];
       this.titlesLayerBox.legendTitle = titlesResults["legendTitle"];
       this.minireportText = titlesResults["utfgrid"];
-    
+      this.descriptorText = titlesResults["descriptor"]
+
+      console.log(this.descriptorText)
+
     });
 
     var textlangurl = "/service/map/textreport?lang=" + this.language;
@@ -361,7 +424,6 @@ export class MapComponent implements OnInit {
     this.http.get(textlangurl).subscribe(
       result => {
         this.textOnDialog = result;
-
       });
 
   }
@@ -389,7 +451,7 @@ export class MapComponent implements OnInit {
         description: timeseriesResult["getText"],
         label: timeseriesResult["label"],
         type: timeseriesResult["type"]
-        
+
       };
 
       this.optionsTimeSeries = {
@@ -474,7 +536,7 @@ export class MapComponent implements OnInit {
     if (!this.isFilteredByCity) {
       this.http.get(citiesUrl).subscribe(citiesResult => {
         this.chartResultCities = citiesResult;
-        
+
         this.chartResultCities.split = this.chartResultCities.title.split("?")
 
       });
@@ -493,6 +555,7 @@ export class MapComponent implements OnInit {
   updateRegion(region) {
     if (region == this.defaultRegion) {
       this.valueRegion = "";
+      this.currentData = "";
       this.desmatInfo = {
         value: "year=2019",
         Viewvalue: "2018/2019",
@@ -534,7 +597,7 @@ export class MapComponent implements OnInit {
 
   openDialog(): void {
     window.document.body.style.cursor = "auto";
-    
+
     this.dataForDialog.language = this.language;
     this.dataForDialog.textosDaDialog = this.textOnDialog;
 
@@ -544,6 +607,8 @@ export class MapComponent implements OnInit {
       data: this.dataForDialog,
     });
   }
+
+
 
   private createMap() {
     this.createBaseLayers();
@@ -558,7 +623,8 @@ export class MapComponent implements OnInit {
         zoom: this.currentZoom
       }),
       loadTilesWhileAnimating: true,
-      loadTilesWhileInteracting: true
+      loadTilesWhileInteracting: true,
+      interactions: defaultInteractions({ altShiftDragRotate: false, pinchRotate: false })
     });
 
     var style = new Style({
@@ -617,6 +683,11 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    var utfgridlayerVisibleMunicipio = this.utfgridlayerMunicipio.getVisible();
+    if (!utfgridlayerVisibleMunicipio || evt.dragging) {
+      return;
+    }
+
 
     let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
@@ -627,6 +698,7 @@ export class MapComponent implements OnInit {
 
       let isCampo = false;
       let isOficial = false;
+      let isMunicipio = false;
 
       if (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip" || deter.selectedType == "bi_ce_deter_desmatamento_100_fip") {
         isOficial = true;
@@ -637,6 +709,37 @@ export class MapComponent implements OnInit {
         isCampo = true;
       }
 
+      if ((prodes.selectedType == "prodes_por_region_fip")) {
+        isMunicipio = true;
+      }
+
+
+      if (isMunicipio) {
+        if (this.utfgridmunicipio) {
+          this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+
+              isOficial = false;
+              isCampo = false;
+
+              if (prodes.visible && (prodes.selectedType == "prodes_por_region_fip")) {
+                window.document.body.style.cursor = "pointer";
+                this.infodataMunicipio = data;
+                this.infodataMunicipio.region_display = this.infodataMunicipio.region_display.toUpperCase();
+                // console.log(this.infodataMunicipio)
+              }
+
+              this.infoOverlay.setPosition(data ? coordinate : undefined);
+
+            } else {
+              window.document.body.style.cursor = "auto";
+              this.infodataMunicipio = null;
+            }
+
+          }.bind(this)
+          );
+        }
+      }
 
       if (isOficial) {
 
@@ -647,7 +750,6 @@ export class MapComponent implements OnInit {
               if (data) {
 
                 isCampo = false;
-
                 data.origin_table = data.origin_table.toUpperCase();
                 if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) {
                   if (data.origin_table == "PRODES") {
@@ -746,6 +848,7 @@ export class MapComponent implements OnInit {
 
       let isCampo = false;
       let isOficial = false;
+      let isMunicipio = false;
 
       if (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip" || deter.selectedType == "bi_ce_deter_desmatamento_100_fip") {
         isOficial = true;
@@ -754,6 +857,36 @@ export class MapComponent implements OnInit {
       if ((prodes.selectedType == "bi_ce_prodes_desmatamento_pontos_campo_fip") ||
         (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
         isCampo = true;
+      }
+
+      if ((prodes.selectedType == "prodes_por_region_fip")) {
+        isMunicipio = true;
+      }
+
+      if (isMunicipio) {
+        if (this.utfgridmunicipio) {
+          this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+
+            if (data) {
+              //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+              this.http.get(SEARCH_URL, { params: PARAMS.set("key", data.region_name) }).subscribe(result => {
+                let ob = result[0];
+
+                this.currentData = ob.text
+                this.updateRegion(ob);
+
+                let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
+                prodes.selectedType = "bi_ce_prodes_desmatamento_100_fip";
+                console.log(prodes)
+                this.changeVisibility(prodes, undefined)
+                this.infodataMunicipio = null;
+
+              });
+
+            }
+          }.bind(this)
+          );
+        }
       }
 
       if (isCampo) {
@@ -904,7 +1037,7 @@ export class MapComponent implements OnInit {
       this.layers.push(this.limitsTMS[limits.value]);
     }
 
-    this.regionsLimits = this.createVectorLayer("regions", "#524f34", 1);
+    this.regionsLimits = this.createVectorLayer("regions", "#666633", 3);
     this.layers.push(this.regionsLimits);
 
     this.utfgridsource = new UTFGrid({
@@ -923,8 +1056,17 @@ export class MapComponent implements OnInit {
       source: this.utfgridCampo
     });
 
+    this.utfgridmunicipio = new UTFGrid({
+      tileJSON: this.getTileJSONMunicipio()
+    });
+
+    this.utfgridlayerMunicipio = new OlTileLayer({
+      source: this.utfgridmunicipio
+    });
+
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerCampo);
+    this.layers.push(this.utfgridlayerMunicipio);
 
     this.layers = this.layers.concat(olLayers.reverse());
   }
@@ -963,6 +1105,23 @@ export class MapComponent implements OnInit {
       version: "2.2.0",
       grids: [
         this.returnUTFGRID("bi_ce_info_utfgrid_pontos_campo_fip", text, "{x}+{y}+{z}")
+      ]
+    };
+
+  }
+
+  private getTileJSONMunicipio() {
+
+    let text = "1=1";
+
+    let time = this.selectedTimeFromLayerType("prodes_por_region_fip")
+
+    text += " AND " + time.value
+
+    return {
+      version: "2.2.0",
+      grids: [
+        this.returnUTFGRID("prodes_por_region_fip", text, "{x}+{y}+{z}")
       ]
     };
 
@@ -1035,14 +1194,15 @@ export class MapComponent implements OnInit {
   }
 
   private updateSourceLayer(layer) {
-
     if (layer["times"]) {
       this.periodSelected = layer["times"].find(
         element => element.value === layer.timeSelected
       );
     }
 
-    if (layer["value"].search("bi_ce_prodes_desmatamento_100_fip") != -1) {
+    // this.layersNames.find(element => element.id === "desmatamento_prodes")
+
+    if (layer["value"] === "bi_ce_prodes_desmatamento_100_fip" || layer["value"] === "prodes_por_region_fip") {
       this.desmatInfo = this.periodSelected;
       this.updateCharts();
     }
@@ -1106,8 +1266,6 @@ export class MapComponent implements OnInit {
         if (this.utfgridsource) {
           var tileJSON = this.getTileJSON();
 
-          // console.log("tile - ", tileJSON)
-
           this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
           this.utfgridsource.tileJSON = tileJSON;
           this.utfgridsource.refresh();
@@ -1120,8 +1278,6 @@ export class MapComponent implements OnInit {
         if (this.utfgridCampo) {
           var tileJSONCampo = this.getTileJSONCampo();
 
-          // console.log("tileCampo - ", tileJSONCampo)
-
           this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
           this.utfgridCampo.tileJSON = tileJSONCampo;
           this.utfgridCampo.refresh();
@@ -1131,16 +1287,30 @@ export class MapComponent implements OnInit {
 
       }
 
+      if ((prodes.selectedType == "prodes_por_region_fip")) {
+        if (this.utfgridmunicipio) {
+          var tileJSONMunicipio = this.getTileJSONMunicipio();
+
+          this.utfgridmunicipio.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONMunicipio.grids, this.utfgridmunicipio.tileGrid);
+          this.utfgridmunicipio.tileJSON = tileJSONMunicipio;
+          this.utfgridmunicipio.refresh();
+
+          this.utfgridlayerMunicipio.setVisible(true);
+        }
+      }
+
     }
-    else if (this.utfgridsource && this.utfgridCampo) {
+    else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio) {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerCampo.setVisible(false);
+      this.utfgridlayerMunicipio.setVisible(false);
     }
 
 
   }
 
   changeVisibility(layer, e) {
+
     for (let layerType of layer.types) {
       this.LayersTMS[layerType.value].setVisible(false);
     }
@@ -1150,55 +1320,61 @@ export class MapComponent implements OnInit {
     }
 
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
+
   }
 
-  private updateDescriptor(){
+  private updateDescriptor() {
+
+    this.descriptor.type = this.descriptorText.type_of_information_label[this.language];
+
+    console.log("descriptor text - ", this.descriptorText)
+
+    for (let group of this.descriptor.groups) {
+
+      group.label = this.descriptorText[group.id].label[this.language];
+
+      for (let layer of group.layers) {
+        // console.log("Layer - ", layer)
+        layer.label = this.descriptorText[group.id].layers[layer.id].label[this.language]
+
+        for (let layerType of layer.types) {
+
+          if (this.descriptorText[group.id].layers[layer.id].hasOwnProperty("types")) {
+
+            if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("view_value")) {
+              layerType.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].view_value[this.language]
+            }
+            if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("timelabel")) {
+              layerType.timeLabel = this.descriptorText[group.id].layers[layer.id].types[layerType.value].timelabel[this.language]
+            }
+
+            if (layerType.times) {
+              for (let time of layerType.times) {
+
+                if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("times[time.value]"))
+                  time.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].times[time.value][this.language]
+              }
+            }
+          }
+        }
+      }
+    }
+
+    console.log("desc  - ", this.descriptor)
+
+    for (let basemap of this.descriptor.basemaps) {
+      for (let types of basemap.types) {
+        types.viewValue = this.descriptorText.basemaps.types[types.value][this.language]
+      }
+    }
+
+    for (let limits of this.descriptor.limits) {
+      for (let types of limits.types) {
+        types.Viewvalue = this.descriptorText.limits.types[types.value][this.language]
+      }
+    }
+
     
-    this.descriptor ={};
-    this.layersNames = [];
-    this.layersTypes = [];
-    this.basemapsNames = [];
-    this.limitsNames = [];
-
-    let descriptorURL = "service/map/descriptor" + this.getServiceParams();
-
-    this.http.get(descriptorURL).subscribe(result => {
-      this.descriptor = result;
-      this.regionFilterDefault = this.descriptor.regionFilterDefault;
-
-      for (let group of this.descriptor.groups) {
-        for (let layer of group.layers) {
-          // console.log("lyat  ", layer)
-          if (layer.id != "satelite") {
-            layer.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + layer.selectedType + "&format=image/png";
-            this.layersNames.push(layer);
-          }
-
-          for (let layerType of layer.types) {
-            layerType.visible = false;
-            if (layer.selectedType == layerType.value)
-              layerType.visible = layer.visible;
-
-            this.layersTypes.push(layerType);
-            this.layersTypes.sort(function (e1, e2) {
-              return e2.order - e1.order;
-            });
-          }
-        }
-      }
-
-      for (let basemap of this.descriptor.basemaps) {
-        for (let types of basemap.types) {
-          this.basemapsNames.push(types);
-        }
-      }
-
-      for (let limits of this.descriptor.limits) {
-        for (let types of limits.types) {
-          this.limitsNames.push(types);
-        }
-      }
-    });
   }
 
   ngOnInit() {
@@ -1212,9 +1388,10 @@ export class MapComponent implements OnInit {
 
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
-          // console.log("lyat  ", layer)
           if (layer.id != "satelite") {
-            layer.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + layer.selectedType + "&format=image/png";
+            for (let type of layer.types) {
+              type.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + type.value + "&format=image/png";
+            }
             this.layersNames.push(layer);
           }
 
@@ -1244,7 +1421,7 @@ export class MapComponent implements OnInit {
       }
       this.createMap();
     });
-    
+
 
   }
 }
@@ -1300,7 +1477,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     this.textOnDialog = data.textosDaDialog;
 
-    
+
 
     this.initGallery();
   }
@@ -1329,7 +1506,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       else {
         params.push("year=2018");
       }
-      
+
       params.push("lang=" + this.data.language)
 
     }
@@ -1341,12 +1518,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    console.log(this.textOnDialog)
-
-   
-
     var fieldPhotosUrl = "/service/map/field/" + this.getServiceParams();
-
 
     // console.log("data - ", this.data)
     this.http.get(fieldPhotosUrl).subscribe(
@@ -1365,7 +1537,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         this.carData = result["car"];
         this.carData.show = result["car"].show
 
-        
+
 
         this.carData.forEach(element => {
 
@@ -1374,7 +1546,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           element.metaData.percentDesmat = "" + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + "%").replace(".", ",")
           element.metaData.percentRL = "" + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + "%").replace(".", ",")
           element.metaData.percentAPP = "" + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + "%").replace(".", ",")
-          
+
           this.textOnDialog.car_tab.display_rl_message = this.textOnDialog.car_tab.rl_car_label.split("?")
           this.textOnDialog.car_tab.display_app_message = this.textOnDialog.car_tab.app_car_label.split("?")
           this.textOnDialog.car_tab.display_car_description_message = this.textOnDialog.car_tab.deforestation_car_description.split("?")
