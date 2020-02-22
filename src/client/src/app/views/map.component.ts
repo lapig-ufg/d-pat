@@ -317,8 +317,8 @@ export class MapComponent implements OnInit {
       let ob = result[0];
 
       this.currentData = ob.text
-      // this.valueRegion.text = ob.text
       this.updateRegion(ob)
+      
     });
   }
 
@@ -414,8 +414,6 @@ export class MapComponent implements OnInit {
       this.titlesLayerBox.legendTitle = titlesResults["legendTitle"];
       this.minireportText = titlesResults["utfgrid"];
       this.descriptorText = titlesResults["descriptor"]
-
-      console.log(this.descriptorText)
 
     });
 
@@ -553,6 +551,9 @@ export class MapComponent implements OnInit {
   }
 
   updateRegion(region) {
+    
+    let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
+    
     if (region == this.defaultRegion) {
       this.valueRegion = "";
       this.currentData = "";
@@ -561,8 +562,17 @@ export class MapComponent implements OnInit {
         Viewvalue: "2018/2019",
         year: 2019
       };
+      
+      prodes.selectedType = "prodes_por_region_fip";
+      
+    }
+    else{
+      prodes.selectedType = "bi_ce_prodes_desmatamento_100_fip";
+      this.infodataMunicipio = null;
     }
 
+    this.changeVisibility(prodes, undefined)
+    
     this.selectRegion = region;
 
     this.isFilteredByCity = false;
@@ -576,8 +586,6 @@ export class MapComponent implements OnInit {
     } else if (this.selectRegion.type == "state") {
       this.msFilterRegion = "uf = '" + this.selectRegion.value + "'";
       this.isFilteredByState = true;
-
-
     }
     else this.msFilterRegion = "";
 
@@ -877,7 +885,6 @@ export class MapComponent implements OnInit {
 
                 let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
                 prodes.selectedType = "bi_ce_prodes_desmatamento_100_fip";
-                console.log(prodes)
                 this.changeVisibility(prodes, undefined)
                 this.infodataMunicipio = null;
 
