@@ -20,8 +20,8 @@
             "en-us": "Deforestation increases"
         },
         "text":{
-            "pt-br": "? possui uma Área Antrópica de ? km², o que representa ? % da sua área total.",
-            "en-us": "? presents an Anthropic area of ? km², which represents ? % of its total area."
+            "pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
+            "en-us": "? presents an Anthropic area of ? km², which represents ?% of its total area."
         }
     },
 
@@ -627,6 +627,10 @@
             "field_observation_label":{
                 "pt-br": "Observações:",
                 "en-us": "Comments:"
+            },
+            "caption_undisclosed":{
+                "pt-br": "Não Divulgada",
+                "en-us": "Undisclosed"
             }
         },
         "historico_amostral_landsat":{
@@ -635,8 +639,8 @@
                 "en-us": "Sample Validation and Landsat Image History"
             },
             "caption":{
-                "pt-br": "Ano:",
-                "en-us": "Year:"
+                "pt-br": "Ano: ",
+                "en-us": "Year: "
             }
         },
         "analise_automatica":{
@@ -654,7 +658,7 @@
             },
             "info_susceptibility_description":{
                 "pt-br": "A susceptibilidade a desmatamentos ? a 0,5 km² neste polígono é de ",
-                "en-us": "The susceptibility to deforestation ? to 0,5 km² of this polygon is "
+                "en-us": "The susceptibility to deforestation ? than 0.5 km² of this polygon is "
             },
             "title_info_bfast":{
                 "pt-br": "BFAST-Monitor",
@@ -667,6 +671,26 @@
             "info_bfast_description":{
                 "pt-br": "A taxa de pixels MODIS que sofreram quebras em suas séries temporais foi de:",
                 "en-us": "The rate of MODIS pixels that suffered breaks in their time series was:"
+            },
+            "caption_bfast":{
+                "pt-br": " do polígono apresentou quebras em sua série temporal.",
+                "en-us": " of the polygon presented breaks in its time series."
+            },
+            "caption_suscept":{
+                "pt-br": "Susceptibilidade a Desmatamento: ",
+                "en-us": "Susceptibility to Deforestation: "
+            },
+            "not_computed":{
+                "pt-br": "não foi computada.",
+                "en-us": "was not computed."
+            },
+            "type_suscept_larger":{
+                "pt-br": "superior",
+                "en-us": "larger"
+            },
+            "type_suscept_smaller":{
+                "pt-br": "inferior",
+                "en-us": "smaller"
             }
         }
 

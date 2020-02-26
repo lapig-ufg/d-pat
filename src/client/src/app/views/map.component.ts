@@ -734,7 +734,6 @@ export class MapComponent implements OnInit {
                 window.document.body.style.cursor = "pointer";
                 this.infodataMunicipio = data;
                 this.infodataMunicipio.region_display = this.infodataMunicipio.region_display.toUpperCase();
-                // console.log(this.infodataMunicipio)
               }
 
               this.infoOverlay.setPosition(data ? coordinate : undefined);
@@ -1334,7 +1333,7 @@ export class MapComponent implements OnInit {
 
     this.descriptor.type = this.descriptorText.type_of_information_label[this.language];
 
-    console.log("descriptor text - ", this.descriptorText)
+    // console.log("descriptor text - ", this.descriptorText)
 
     for (let group of this.descriptor.groups) {
 
@@ -1367,7 +1366,7 @@ export class MapComponent implements OnInit {
       }
     }
 
-    console.log("desc  - ", this.descriptor)
+    // console.log("desc  - ", this.descriptor)
 
     for (let basemap of this.descriptor.basemaps) {
       for (let types of basemap.types) {
@@ -1527,7 +1526,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     var fieldPhotosUrl = "/service/map/field/" + this.getServiceParams();
 
-    // console.log("data - ", this.data)
     this.http.get(fieldPhotosUrl).subscribe(
       result => {
 
@@ -1544,8 +1542,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         this.carData = result["car"];
         this.carData.show = result["car"].show
 
-
-
         this.carData.forEach(element => {
 
           element.metaData.dataRefFormatada = element.metaData.dataRef == "" ? this.textOnDialog.car_tab.undisclosed_message_car : this.data.datePipe.transform(new Date(element.metaData.dataRef), "dd/MM/yyyy");
@@ -1559,7 +1555,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           this.textOnDialog.car_tab.display_car_description_message = this.textOnDialog.car_tab.deforestation_car_description.split("?")
           // this.textOnDialog.car_tab.display_rl_message = temp[0] + element.metaData.area_desmat_rl + temp[1] + element.metaData.percentRL + temp[2]
 
-
           const dcar = {
             src: element.imgsCar.src,
             caption: "CAR: " + element.metaData.cod_car,
@@ -1568,7 +1563,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           this.vetCar.push(dcar);
 
         });
-
 
         const sent = {
           src: result["images"].urlSentinel.src,
@@ -1583,7 +1577,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         for (let i = 0; i < this.urlsLandSat.length; i++) {
           const album = {
             src: this.urlsLandSat[i].url,
-            caption: "Ano: " + this.urlsLandSat[i].year,
+            caption: this.textOnDialog.historico_amostral_landsat.caption + this.urlsLandSat[i].year,
             thumb: this.urlsLandSat[i].thumb
           };
 
@@ -1591,20 +1585,22 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         }
 
         this.dataBfast = result["images"].urlBfast;
-        this.dataBfast.prob_Formatada = this.dataBfast.pct_bfast == null ? "não foi computada" : ("" + this.dataBfast.pct_bfast.toFixed(2) + "%").replace(".", ",");
+        this.dataBfast.prob_Formatada = this.dataBfast.pct_bfast == null ? this.textOnDialog.analise_automatica.not_computed : ("" + this.dataBfast.pct_bfast.toFixed(2) + "%").replace(".", ",");
 
         const dfast = {
           src: this.dataBfast.urlBfast.src,
-          caption: this.dataBfast.prob_Formatada + " do polígono apresentou quebras em sua série temporal.",
+          caption: this.dataBfast.prob_Formatada + this.textOnDialog.analise_automatica.caption_bfast,
           thumb: this.dataBfast.urlBfast.thumb
         };
         this.vetBfast.push(dfast);
 
         this.dataSuscept = result["images"].suscept;
-        this.dataSuscept.sucept_desmatFormatada = this.dataSuscept.prob_suscept == null ? "não foi computada" : ("" + (this.dataSuscept.prob_suscept * 100).toFixed(2) + "%").replace(".", ",");
+
+        this.textOnDialog.analise_automatica.info_susceptibility_description_split = this.textOnDialog.analise_automatica.info_susceptibility_description.split("?");
+        this.dataSuscept.sucept_desmatFormatada = this.dataSuscept.prob_suscept == null ? this.textOnDialog.analise_automatica.not_computed : ("" + (this.dataSuscept.prob_suscept * 100).toFixed(2) + "%").replace(".", ",");
         const dsuscept = {
           src: this.dataSuscept.urlSuscept.src,
-          caption: "Susceptibilidade a Desmatamento: " + this.dataSuscept.sucept_desmatFormatada,
+          caption: this.textOnDialog.analise_automatica.caption_suscept + this.dataSuscept.sucept_desmatFormatada,
           thumb: this.dataSuscept.urlSuscept.thumb
         };
         this.vetSuscept.push(dsuscept);
@@ -1647,7 +1643,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
           this.infoVisita = element;
 
-          this.infoVisita.dataFormatada = this.infoVisita.data_visita == "" ? "Não Divulgada" : this.infoVisita.data_visita;
+          this.infoVisita.dataFormatada = this.infoVisita.data_visita == "" ? this.textOnDialog.campo_tab.caption_undisclosed : this.infoVisita.data_visita;
 
 
           for (let foto = 0; foto < element.fotos_camera.length; foto++) {
@@ -1688,12 +1684,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   }
 
   openImage(index: number): void {
-    // open lightbox
     this._lightbox.open(this.albumLandsat, index);
   }
 
   closeImage(): void {
-    // close lightbox programmatically
     this._lightbox.close();
   }
 

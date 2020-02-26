@@ -193,8 +193,8 @@
                                     </span> <br>
                                     <br>
                                     <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept != null">
-                                        A susceptibilidade a desmatamentos {{dataSuscept.type}} a 0,5 km²
-                                        neste polígono é de
+                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}} {{dataSuscept.type}} 
+                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
                                         <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
 
                                     <!-- <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept == null">

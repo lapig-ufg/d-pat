@@ -154,7 +154,7 @@ module.exports = function (app) {
           box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
           sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
       };
-      typeSuscept = "superior";
+      typeSuscept = languageJson["dialog_relatorio"]["analise_automatica"]["type_suscept_larger"][language];
       legendSuscept =
         app.config.ows_host +
         "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig&format=image/png";
@@ -170,7 +170,7 @@ module.exports = function (app) {
           box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" + sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" +
           gid
       };
-      typeSuscept = "inferior";
+      typeSuscept = languageJson["dialog_relatorio"]["analise_automatica"]["type_suscept_smaller"][language];
       legendSuscept =
         app.config.ows_host +
         "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig&format=image/png";
