@@ -121,6 +121,14 @@
         "label_year":{
             "pt-br": "Ano: ",
             "en-us": "Year: "
+        },
+        "label_area_app":{
+            "pt-br": "Área Desmatada em APP:",
+            "en-us": "Deforested Area in Preservation Areas:"
+        },
+        "label_area_rl":{
+            "pt-br": "Área Desmatada em Reserva Legal",
+            "en-us": "Deforested Area in Legal Reservation:"
         }
     },
 
