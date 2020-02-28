@@ -19,7 +19,7 @@
 
 
 		<ngx-flag-picker [selectedCountryCode]="selectedCountryCode" [countryCodes]="countryCodes"
-			[customLabels]="customLabels" (changedCountryCode)="changeSelectedCountryCode($event)">
+			[customLabels]="customLabels" [showFlags]="false" (changedCountryCode)="changeSelectedCountryCode($event)">
 		</ngx-flag-picker>
 
 		<!-- <span class="flag-icon flag-icon-br" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('pt-br')"></span>
@@ -344,6 +344,14 @@
 				<tr>
 					<th>{{minireportText.label_year}} </th>
 					<td>{{infodataMunicipio.prodes_year}}</td>
+				</tr>
+				<tr>
+					<th>{{minireportText.label_area_app}} </th>
+					<td>{{infodataMunicipio.area_app_show}}</td>
+				</tr>
+				<tr>
+					<th>{{minireportText.label_area_rl}} </th>
+					<td>{{infodataMunicipio.area_rl_show}}</td>
 				</tr>
 				
 			</tbody>

@@ -731,9 +731,13 @@ export class MapComponent implements OnInit {
               isCampo = false;
 
               if (prodes.visible && (prodes.selectedType == "prodes_por_region_fip")) {
+                // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = "pointer";
                 this.infodataMunicipio = data;
                 this.infodataMunicipio.region_display = this.infodataMunicipio.region_display.toUpperCase();
+               
+                this.infodataMunicipio.area_app_show = this.infodataMunicipio.area_app == "" ? this.minireportText.undisclosed_message : ("" + (Math.round(this.infodataMunicipio.area_app*100) / 100) + " km²").replace(".", ",");
+                this.infodataMunicipio.area_rl_show = this.infodataMunicipio.area_rl == "" ? this.minireportText.undisclosed_message : ("" + (Math.round(this.infodataMunicipio.area_rl*100) /100) + " km²").replace(".", ",");
               }
 
               this.infoOverlay.setPosition(data ? coordinate : undefined);

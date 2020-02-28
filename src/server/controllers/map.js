@@ -976,7 +976,7 @@ module.exports = function (app) {
             opacity: 1
           },
           {
-            value: "municipios",
+            value: "municipios_cerrado",
             Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios"][language],
             visible: false,
             layer_limits: true,
@@ -1008,7 +1008,9 @@ module.exports = function (app) {
         undisclosed_message: languageJson["mini_report_utfgrid"]["undisclosed_message"][language],
         click_more_text: languageJson["mini_report_utfgrid"]["click_more_text"][language],
         click_more_municipio: languageJson["mini_report_utfgrid"]["click_more_municipio"][language],
-        label_year: languageJson["mini_report_utfgrid"]["label_year"][language]
+        label_year: languageJson["mini_report_utfgrid"]["label_year"][language],
+        label_area_app: languageJson["mini_report_utfgrid"]["label_area_app"][language],
+        label_area_rl: languageJson["mini_report_utfgrid"]["label_area_rl"][language]
       },
       layer_box: {
         title: languageJson["layer_box"]["title"][language],
