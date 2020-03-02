@@ -132,7 +132,7 @@
 
 							<div class="info-header">Clique no botão abaixo para carrregar seu arquivo compactado (.zip ou .kmz).</div>
 
-							<app-file-upload [loading]="layerFromUpload.loading" [ddarea]="layerFromUpload.dragArea" (complete)="onFileComplete($event)"></app-file-upload>
+							<app-file-upload [loading]="layerFromUpload.loading" [language]="language" [ddarea]="layerFromUpload.dragArea" (complete)="onFileComplete($event)"></app-file-upload>
 							
 							<div class="info-footer">Formatos suportados: geojson, kml e shp.</div>
 

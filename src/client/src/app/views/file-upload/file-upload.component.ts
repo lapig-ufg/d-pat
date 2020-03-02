@@ -54,6 +54,9 @@ export class FileUploadComponent implements OnInit {
   /** Max size allowed in MB*/
   @Input() maxSize: number = 15;
 
+  /** Max size allowed in MB*/
+  @Input() language: string = "pt_br";
+
   /** Allow you to add handler after its completion. Bubble up response text from remote. */
   @Output() complete = new EventEmitter<string>();
 
@@ -74,20 +77,9 @@ export class FileUploadComponent implements OnInit {
 
   onClick() {
 
-    let url = document.getElementById(
-      'lang-picker'
-    ).getAttribute('ng-reflect-selected-country-code');
+    console.log("LANG", this.language);
 
-    let lang;
-
-    if (url == 'br') {
-      lang = '?lang=pt-br'
-    }
-    else if (url == 'us') {
-      lang = '?lang=en-us'
-    }
-
-    this.target =  '/service/upload/spatial-file' + lang;  
+    this.target =  '/service/upload/spatial-file' + "?lang=" + this.language;  
   
     const fileUpload = document.getElementById(
       'fileUpload'
@@ -213,7 +205,6 @@ export class FileUploadComponent implements OnInit {
   }
 
   private dropHandler(ev: DragEvent) {
-    // console.log('File(s) dropped');
 
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
