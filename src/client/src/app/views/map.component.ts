@@ -61,7 +61,7 @@ import {
 } from "ngx-image-video-gallery";
 
 
-const SEARCH_URL = "service/map/search";
+const SEARCH_URL = "/service/map/search";
 const PARAMS = new HttpParams({
   fromObject: {
     format: "json"
@@ -186,6 +186,17 @@ export class MapComponent implements OnInit {
   titlesLayerBox: any
   minireportText: any
   descriptorText: any
+
+  /** Variables for upload shapdefiles **/
+  layerFromUpload: any = {
+    label: null,
+    layer: null,
+    checked: false, 
+    visible:null,
+    loading: false,
+    dragArea: true,
+    strokeColor: "lightskyblue"
+  };
 
   constructor(
     private http: HttpClient,
@@ -406,7 +417,7 @@ export class MapComponent implements OnInit {
   }
 
   private updateTexts() {
-    var titlesUrl = "service/map/titles" + this.getServiceParams();
+    var titlesUrl = "/service/map/titles" + this.getServiceParams();
 
     this.http.get(titlesUrl).subscribe(titlesResults => {
 
@@ -1387,9 +1398,98 @@ export class MapComponent implements OnInit {
     
   }
 
+  public onFileComplete(data: any) {
+    
+    let map = this.map;
+
+    this.layerFromUpload.checked = false; 
+
+    if(this.layerFromUpload.layer != null){
+      map.removeLayer(this.layerFromUpload.layer);
+    }
+
+    if(data.features.length > 1) {
+      this.layerFromUpload.loading = false; 
+
+      this.layerFromUpload.visible = false;
+      this.layerFromUpload.label   = data.name;
+      this.layerFromUpload.layer   = data;
+
+    } else {
+      this.layerFromUpload.loading = false; 
+
+      if(data.features[0].hasOwnProperty('properties')){
+
+        let auxlabel = Object.keys(data.features[0].properties)[0];
+        this.layerFromUpload.visible = false;
+        this.layerFromUpload.label   = data.features[0].properties[auxlabel];
+        this.layerFromUpload.layer   = data;
+
+      } else {
+
+        this.layerFromUpload.visible = false;
+        this.layerFromUpload.label   = data.name;
+        this.layerFromUpload.layer   = data;
+      }
+    }
+
+    this.layerFromUpload.visible = true;
+
+    var vectorSource = new VectorSource({
+      features: (new GeoJSON()).readFeatures(data, {
+        dataProjection: "EPSG:4326",
+        featureProjection: "EPSG:3857"
+      })
+    });
+
+
+    this.layerFromUpload.layer = new VectorLayer({
+      source: vectorSource,
+      style: [
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromUpload.strokeColor,
+            width: 4
+          })
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromUpload.strokeColor,
+            width: 4,
+            lineCap : 'round',
+            zIndex: 1
+          })
+        })
+      ]
+    }); 
+
+  }
+
+  onChangeCheckUpload(event){
+    let map = this.map;
+    this.layerFromUpload.checked = !this.layerFromUpload.checked;
+
+    if(this.layerFromUpload.checked){
+
+      map.addLayer(this.layerFromUpload.layer);
+
+      
+      let extent = this.layerFromUpload.layer.getExtent(); 
+
+      if(this.layerFromUpload.layer.length > 0 && this.layerFromUpload.layer.length <= 1){
+      
+        map.getView().fit(extent, { duration: 1800 });
+      }
+
+    }else{
+      map.removeLayer(this.layerFromUpload.layer);
+    }
+
+  }
+
   ngOnInit() {
 
-    let descriptorURL = "service/map/descriptor" + this.getServiceParams();
+    let descriptorURL = "/service/map/descriptor" + this.getServiceParams();
 
     this.http.get(descriptorURL).subscribe(result => {
       this.descriptor = result;

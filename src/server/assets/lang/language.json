@@ -149,6 +149,10 @@
             "pt-br": "Limites",
             "en-us": "Limits"
         },
+        "label_upload":{
+            "pt-br": "Upload",
+            "en-us": "Upload"
+        },
         "search_placeholder":{
             "pt-br": "Digite um Estado ou Município",
             "en-us": "Please inform a State or Municipality name"

@@ -1017,6 +1017,7 @@ module.exports = function (app) {
         label_data: languageJson["layer_box"]["label_data"][language],
         label_mapabase: languageJson["layer_box"]["label_mapabase"][language],
         label_limits: languageJson["layer_box"]["label_limits"][language],
+        label_upload: languageJson["layer_box"]["label_upload"][language],
         search_placeholder: languageJson["layer_box"]["search_placeholder"][language],
         search_loading: languageJson["layer_box"]["search_loading"][language],
         search_failed: languageJson["layer_box"]["search_failed"][language]

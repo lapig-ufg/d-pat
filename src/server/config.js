@@ -7,6 +7,7 @@ module.exports = function(app) {
 		"clientDir": appRoot + "/../client/dist/",
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
+		"tmp": appRoot + "/tmp/", 
 		"remoteFieldDataDir": '/media/campo/',
 		"fieldDataDir": appRoot+ '/media/campo/',
 		"pg": {
