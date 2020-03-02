@@ -15,11 +15,11 @@ module.exports = function(app) {
 
     Internal.targetFilesName = null
     Internal.dirTarget       = null
-    Internal.tmpPath        = null; 
+    Internal.tmpPath         = null; 
     Internal.response        = {}; 
 
     Internal.acceptedFiles   = ['dbf', 'map', 'prj', 'qlx', 'shp', 'shx', 'sld', 'qpj','cpg', 'qix' , 'kml', 'shp.xml', 'sbx', 'sbn', 'geojson']; 
-
+    Internal.spatialFiles    = ['shp', 'kml','geojson']; 
 	
 	Internal.clearCache = function(data, callback) {
         
@@ -47,7 +47,6 @@ module.exports = function(app) {
         geojson.exec(function(er, data) {
             if (er){
                 Internal.response.status(400).send('Something is wrong, please try again!'); 
-                console.error(er)
                 return; 
             } else{
                 callback(data, Internal.finish);
@@ -59,6 +58,7 @@ module.exports = function(app) {
     Internal.extractFiles = async function(zip, callback) {
     
         try{
+
             let ext = null; 
             
             for await (const entry of zip) {
@@ -78,25 +78,19 @@ module.exports = function(app) {
                 if (!fs.existsSync(Internal.dirTarget)){
                     fs.mkdirSync(Internal.dirTarget);
                 }
-
-                console.log(extension);
-
                 
-
-                if(extension == "kml"){
-                    ext = "kml"
-                }else if(extension == "geojson"){
-                    ext = "geojson"
-                }else if(extension == "shp"){
-                    ext = "shp"
-                }
-                 
-                Internal.targetFilesName = Internal.dirTarget + "/" + fileName.split('/').pop().toLowerCase() + "." + ext; 
-    
+                     
                 if (type == "File" && Internal.acceptedFiles.includes(extension)) {
-                        let target_path = Internal.dirTarget  + "/" + fileName.split('/').pop().toLowerCase() +"." + extension; 
-                        entry.pipe(fs.createWriteStream(target_path));
-    
+                    let target_path = Internal.dirTarget  + "/" + fileName.split('/').pop().toLowerCase() +"." + extension; 
+                    
+                    let file = fs.createWriteStream(target_path); 
+
+                    entry.pipe(file);
+                    
+                    if(Internal.spatialFiles.includes(extension)){
+                        Internal.targetFilesName = file.path
+                    }
+                    
                 } else {
     
                     entry.autodrain();
@@ -105,16 +99,14 @@ module.exports = function(app) {
             }
     
           }catch(e){
-                console.log(e.stack);
+                console.error(e.stack);
           }
 
           if (!fs.existsSync(Internal.targetFilesName)){
-            Internal.response.status(400).send("This is not spatial file!"); 
+            Internal.response.status(400).send("Can't read you file!"); 
             console.error("WRONG FILE: ", Internal.targetFilesName)
             return; 
           }
-
-          console.log("FILE: ", Internal.targetFilesName); 
 
           if(Internal.targetFilesName.split('.').pop() == 'geojson'){
 
