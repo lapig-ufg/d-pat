@@ -30,7 +30,6 @@ module.exports = function(app) {
             let len = files.length;
             for(const file of files){ 
                 fs.unlink(dir_upload + "/" + file, err => {
-                  console.log(file, "deleted"); 
                     if(--len <= 0){
                         callback(true, data);
                     }
@@ -155,7 +154,6 @@ module.exports = function(app) {
 
 	Uploader.getGeoJson = function(request, response) {
         var language = request.param('lang')
-        console.log("LANG:", language);
         Internal.doRequest(request, response);
         
 	}

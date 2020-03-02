@@ -205,7 +205,6 @@ export class FileUploadComponent implements OnInit {
   }
 
   private dropHandler(ev: DragEvent) {
-    // console.log('File(s) dropped');
 
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
