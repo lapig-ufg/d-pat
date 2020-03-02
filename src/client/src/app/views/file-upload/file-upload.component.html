@@ -26,7 +26,7 @@
         <mat-progress-bar *ngIf="loading" mode="indeterminate" ></mat-progress-bar> 
 
         <mat-card *ngIf="response.error" class="card-error mat-elevation-z6" color="primary">
-            <div class="msg-error" [innerHTML]="response.msg">{{response.msg}}</div>
+            <div class="msg-error" [innerHTML]="response.msg"></div>
         </mat-card>
     </mat-card>
     <input type="file" id="fileUpload" name="shapefile" [multiple]="multiple" accept="{{accept}}" style="display:none;" />

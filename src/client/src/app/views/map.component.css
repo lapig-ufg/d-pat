@@ -729,3 +729,24 @@ mat-select {
 	margin: 8px;
 	z-index: 1000000000;
 }
+
+.info-header{
+	font-size: 15px;
+	padding: 5px;
+	margin: 10px;
+	border-radius: 6px;
+	background-color: #8080802e;
+	text-align: justify;
+	border-left: 5px solid #585858;
+}
+
+
+.info-footer{
+	font-size: 15px;
+	padding: 5px;
+	margin: 10px;
+	border-radius: 6px;
+	background-color: #8080802e;
+	text-align: justify;
+	border-left: 5px solid #f48024;
+}

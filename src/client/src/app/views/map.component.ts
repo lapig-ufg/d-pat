@@ -195,7 +195,7 @@ export class MapComponent implements OnInit {
     visible:null,
     loading: false,
     dragArea: true,
-    strokeColor: "lightskyblue"
+    strokeColor: "#2224ba",
   };
 
   constructor(
@@ -1402,7 +1402,8 @@ export class MapComponent implements OnInit {
     
     let map = this.map;
 
-    this.layerFromUpload.checked = false; 
+    this.layerFromUpload.checked = false;
+
 
     if(this.layerFromUpload.layer != null){
       map.removeLayer(this.layerFromUpload.layer);
@@ -1472,14 +1473,13 @@ export class MapComponent implements OnInit {
     if(this.layerFromUpload.checked){
 
       map.addLayer(this.layerFromUpload.layer);
+      let extent = this.layerFromUpload.layer.getSource().getExtent();
+      map.getView().fit(extent, { duration: 1800 });
 
-      
-      let extent = this.layerFromUpload.layer.getExtent(); 
-
-      if(this.layerFromUpload.layer.length > 0 && this.layerFromUpload.layer.length <= 1){
-      
-        map.getView().fit(extent, { duration: 1800 });
-      }
+      let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
+      prodes.selectedType = "bi_ce_prodes_desmatamento_100_fip";
+      this.changeVisibility(prodes, undefined)
+      this.infodataMunicipio = null;
 
     }else{
       map.removeLayer(this.layerFromUpload.layer);

@@ -59,7 +59,8 @@ module.exports = function(app) {
     Internal.extractFiles = async function(zip, callback) {
     
         try{
-
+            let ext = null; 
+            
             for await (const entry of zip) {
 
                 const arrayName = entry.path.split('.'); 
@@ -78,12 +79,16 @@ module.exports = function(app) {
                     fs.mkdirSync(Internal.dirTarget);
                 }
 
-                let ext = "shp"; 
+                console.log(extension);
+
+                
 
                 if(extension == "kml"){
                     ext = "kml"
                 }else if(extension == "geojson"){
                     ext = "geojson"
+                }else if(extension == "shp"){
+                    ext = "shp"
                 }
                  
                 Internal.targetFilesName = Internal.dirTarget + "/" + fileName.split('/').pop().toLowerCase() + "." + ext; 
@@ -103,6 +108,12 @@ module.exports = function(app) {
                 console.log(e.stack);
           }
 
+          if (!fs.existsSync(Internal.targetFilesName)){
+            Internal.response.status(400).send("This is not spatial file!"); 
+            console.error("WRONG FILE: ", Internal.targetFilesName)
+            return; 
+          }
+
           console.log("FILE: ", Internal.targetFilesName); 
 
           if(Internal.targetFilesName.split('.').pop() == 'geojson'){
@@ -110,7 +121,7 @@ module.exports = function(app) {
             fs.readFile(Internal.targetFilesName, "utf8", function(err, data) {
                 if(err){
                     Internal.response.status(400).send("It's not possible to read your file!"); 
-                    console.error(er)
+                    console.error(err)
                     return; 
                 }
                 Internal.response.status(200).send(data); 
@@ -151,7 +162,10 @@ module.exports = function(app) {
 	}
 
 	Uploader.getGeoJson = function(request, response) {
-		Internal.doRequest(request, response);
+        var language = request.param('lang')
+        console.log("LANG:", language);
+        Internal.doRequest(request, response);
+        
 	}
 
     

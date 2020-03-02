@@ -21,7 +21,7 @@ module.exports = function (app) {
             return cb(null, true);
             }
             
-            cb("Error: File upload only supports the following filetypes - " + filetypes);
+            cb("File upload only supports the following filetypes (.kmz or .zip).");
         }
       });
 

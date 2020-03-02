@@ -39,7 +39,6 @@ export class FileUploadComponent implements OnInit {
   /** control visual progres bar */
   @Input() loading = false;
 
-
   /** Name used in form which will be sent in HTTP request. */
   @Input() param = 'shapefile';
 
@@ -52,8 +51,8 @@ export class FileUploadComponent implements OnInit {
   /** Allow you to configure drag and drop area shown or not. */
   @Input() ddarea = false;
 
-  /** Max size allowed */
-  @Input() maxSize = 3000000;
+  /** Max size allowed in MB*/
+  @Input() maxSize: number = 15;
 
   /** Allow you to add handler after its completion. Bubble up response text from remote. */
   @Output() complete = new EventEmitter<string>();
@@ -66,11 +65,30 @@ export class FileUploadComponent implements OnInit {
   files: Array<FileUploadModel> = [];
 
   constructor(private _http: HttpClient) {
+
+    this.maxSize = (this.maxSize * 1024 * 1024);
+
   }
 
   ngOnInit() {}
 
   onClick() {
+
+    let url = document.getElementById(
+      'lang-picker'
+    ).getAttribute('ng-reflect-selected-country-code');
+
+    let lang;
+
+    if (url == 'br') {
+      lang = '?lang=pt-br'
+    }
+    else if (url == 'us') {
+      lang = '?lang=en-us'
+    }
+
+    this.target =  '/service/upload/spatial-file' + lang;  
+  
     const fileUpload = document.getElementById(
       'fileUpload'
     ) as HTMLInputElement;
@@ -126,6 +144,8 @@ export class FileUploadComponent implements OnInit {
     fd.append(this.param, file.data);
 
     this.loading = true; 
+    this.response.error = false; 
+    this.response.msg = ''; 
 
     const req = new HttpRequest('POST', this.target, fd, {
       reportProgress: true
@@ -147,15 +167,24 @@ export class FileUploadComponent implements OnInit {
         tap(message => {}),
         last(),
         catchError((error: HttpErrorResponse) => {
+          this.loading = false; 
           file.inProgress = false;
           file.canRetry = true;
           this.response.error = true; 
-          this.response.msg = error.error
-          this.loading = false; 
+          
+          let msg = error.error.match("<pre>(.*?)</pre>"); 
+
+          if(msg == null){
+            this.response.msg = error.error
+          
+          }else{
+            this.response.msg = msg[1].replace("Error:", "");
+          }
+          
           return of(`${file.data.name} upload failed.`);
         })
       )
-      .subscribe((event: any) => {
+      .subscribe((event: any) => {   
         if (typeof event === 'object') {
           this.removeFileFromArray(file);
           this.complete.emit(event.body);
