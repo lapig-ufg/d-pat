@@ -16,6 +16,7 @@ module.exports = function(app) {
     Internal.targetFilesName = null
     Internal.dirTarget       = null
     Internal.tmpPath         = null; 
+    Internal.language        = null; 
     Internal.response        = {}; 
 
     Internal.acceptedFiles   = ['dbf', 'map', 'prj', 'qlx', 'shp', 'shx', 'sld', 'qpj','cpg', 'qix' , 'kml', 'shp.xml', 'sbx', 'sbn', 'geojson']; 
@@ -46,6 +47,7 @@ module.exports = function(app) {
         geojson.exec(function(er, data) {
             if (er){
                 Internal.response.status(400).send('Something is wrong, please try again!'); 
+                console.error("FILE: ", shapfile, " | ERROR: ", er);
                 return; 
             } else{
                 callback(data, Internal.finish);
@@ -58,8 +60,6 @@ module.exports = function(app) {
     
         try{
 
-            let ext = null; 
-            
             for await (const entry of zip) {
 
                 const arrayName = entry.path.split('.'); 
@@ -85,6 +85,7 @@ module.exports = function(app) {
                     let file = fs.createWriteStream(target_path); 
 
                     entry.pipe(file);
+
                     
                     if(Internal.spatialFiles.includes(extension)){
                         Internal.targetFilesName = file.path
@@ -98,12 +99,14 @@ module.exports = function(app) {
             }
     
           }catch(e){
-                console.error(e.stack);
+            Internal.response.status(400).send("You file can not be extracted!"); 
+            console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", e.stack);
           }
 
           if (!fs.existsSync(Internal.targetFilesName)){
-            Internal.response.status(400).send("Can't read you file!"); 
-            console.error("WRONG FILE: ", Internal.targetFilesName)
+            Internal.response.status(400).send("This is not a spatial file!"); 
+            fs.unlinkSync(Internal.tmpPath);
+            console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", "This is not a spatial file!");
             return; 
           }
 
@@ -112,14 +115,17 @@ module.exports = function(app) {
             fs.readFile(Internal.targetFilesName, "utf8", function(err, data) {
                 if(err){
                     Internal.response.status(400).send("It's not possible to read your file!"); 
-                    console.error(err)
+                    fs.unlinkSync(Internal.tmpPath);
+                    console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", err);
                     return; 
                 }
                 Internal.response.status(200).send(data); 
             });
             
           }else{
+
             callback(Internal.targetFilesName, Internal.clearCache);
+            
           }
 
     }
@@ -132,14 +138,21 @@ module.exports = function(app) {
     }; 
     
     Internal.doRequest = function(request, response) {
-        Internal.response = response;  
+        /** Reset Variables */
+        Internal.targetFilesName = null;
+        Internal.dirTarget       = null;
+        Internal.tmpPath         = null; 
+
+        Internal.language        = request.param('lang'); 
+
+        Internal.response        = response;  
 
         /** When using data come in "request.files" regardless of the attribute "shapefile". **/
-  
         if(request.files.shapefile.length > 0){
             Internal.tmpPath = request.files.shapefile[0].path
         }else{
             response.status(400).send('This request does not have a spatial file!'); 
+            console.error("FILE: ", request.files.shapefile, " | ERROR: ", "This request does not have a spatial file!");
             return;
         }
 
@@ -153,9 +166,7 @@ module.exports = function(app) {
 	}
 
 	Uploader.getGeoJson = function(request, response) {
-        var language = request.param('lang')
         Internal.doRequest(request, response);
-        
 	}
 
     

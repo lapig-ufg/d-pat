@@ -172,6 +172,9 @@ export class FileUploadComponent implements OnInit {
           }else{
             this.response.msg = msg[1].replace("Error:", "");
           }
+
+          this.removeFileFromArray(file);
+          this.complete.emit();
           
           return of(`${file.data.name} upload failed.`);
         })

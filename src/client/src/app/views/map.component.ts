@@ -1403,6 +1403,7 @@ export class MapComponent implements OnInit {
     let map = this.map;
 
     this.layerFromUpload.checked = false;
+    this.layerFromUpload.visible = false;
 
 
     if(this.layerFromUpload.layer != null){
@@ -1412,7 +1413,7 @@ export class MapComponent implements OnInit {
     if(data.features.length > 1) {
       this.layerFromUpload.loading = false; 
 
-      this.layerFromUpload.visible = false;
+      this.layerFromUpload.visible = true;
       this.layerFromUpload.label   = data.name;
       this.layerFromUpload.layer   = data;
 
@@ -1422,19 +1423,18 @@ export class MapComponent implements OnInit {
       if(data.features[0].hasOwnProperty('properties')){
 
         let auxlabel = Object.keys(data.features[0].properties)[0];
-        this.layerFromUpload.visible = false;
+        this.layerFromUpload.visible = true;
         this.layerFromUpload.label   = data.features[0].properties[auxlabel];
         this.layerFromUpload.layer   = data;
 
       } else {
 
-        this.layerFromUpload.visible = false;
+        this.layerFromUpload.visible = true;
         this.layerFromUpload.label   = data.name;
         this.layerFromUpload.layer   = data;
       }
     }
 
-    this.layerFromUpload.visible = true;
 
     var vectorSource = new VectorSource({
       features: (new GeoJSON()).readFeatures(data, {
