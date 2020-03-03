@@ -93,7 +93,7 @@ export class FileUploadComponent implements OnInit {
 
           if(fileUpload.files[index].size > this.maxSize){
             this.response.error = true; 
-            this.response.msg = "File is too big!"
+            this.response.msg = "The file is too large, yours has " + (fileUpload.files[index].size / 1024 / 1024).toFixed(1) + " MB. Maximum size allowed is " + (this.maxSize / 1024 / 1024) + " MB." 
           }else{
             const file = fileUpload.files[index];
             this.files.push({
@@ -224,7 +224,7 @@ export class FileUploadComponent implements OnInit {
               const file = ev.dataTransfer.items[i].getAsFile();
               if(file.size > this.maxSize){
                 this.response.error = true; 
-                this.response.msg = "File is too big!"
+                this.response.msg = "The file is too large, yours has " + (file.size / 1024 / 1024).toFixed(1) + " MB. Maximum size allowed is " + (this.maxSize / 1024 / 1024) + " MB." 
               }else{
 
                 this.files.push({
