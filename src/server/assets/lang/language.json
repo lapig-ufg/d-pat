@@ -115,7 +115,7 @@
             "en-us": "Click to open the full deforestation report"
         },
         "click_more_municipio":{
-            "pt-br": "Clique aproximar deste município",
+            "pt-br": "Clique para aproximar deste município",
             "en-us": "Click to zoom in on this municipality"
         },
         "label_year":{
@@ -499,7 +499,7 @@
                     "pt-br": "Estados",
                     "en-us": "States"
                 },
-                "municipios":{
+                "municipios_cerrado":{
                     "pt-br": "Municípios",
                     "en-us": "Municipality"
                 }
@@ -647,13 +647,42 @@
         },
         "historico_amostral_landsat":{
             "title_tab":{
-                "pt-br": "Validação Amostral and Histórico de Imagens Landsat",
+                "pt-br": "Validação Amostral e Histórico de Imagens Landsat",
                 "en-us": "Sample Validation and Landsat Image History"
             },
             "caption":{
                 "pt-br": "Ano: ",
                 "en-us": "Year: "
+            },
+            "class_lapig_label":{
+                "pt-br": "Classe predominante após inspeção visual: ",
+                "en-us": "Predominant class after visual inspection: "
+            },
+            "amostral_class_vegetation":{
+                "pt-br": "Vegetação Natural",
+                "en-us": "Natural Vegetation"
+            },
+            "amostral_class_water":{
+                "pt-br": "Água",
+                "en-us": "Waters"
+            },
+            "amostral_class_anthropic":{
+                "pt-br": "Antrópico",
+                "en-us": "Anthropic"
+            },
+            "amostral_classes_legend_label":{
+                "pt-br": "Classes utilizadas durante a Validação Amostral",
+                "en-us": "Classes used during the Sample Validation"
+            },
+            "series_modis_title":{
+                "pt-br": "Análise de Séries Temporais - Índice de Vegetação (NDVI) - MODIS",
+                "en-us": "Time Series Analysis - Vegetation Index (NDVI) - MODIS"
+            },
+            "amostral_title":{
+                "pt-br": "Informações da Validação Amostral",
+                "en-us": "Sample Validation Information"
             }
+
         },
         "analise_automatica":{
             "title_tab":{

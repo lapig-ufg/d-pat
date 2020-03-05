@@ -253,7 +253,8 @@
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+	width: 8px;
+	cursor:pointer!important;
 }
  
 ::-webkit-scrollbar-track {

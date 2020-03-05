@@ -29,7 +29,6 @@ module.exports = function(app) {
 			{
 				id: 'desmatamento',
 				sql: "SELECT areamunkm, sucept_desmat, sucept_desmat_peq, sucept_desmat_grd, bfm_pct as bfm, lat, long, rect_bbox(geom) as polygon, classefip FROM " + origin + "_cerrado WHERE gid = " + gid 
-				// sql: "SELECT ST_AsGeoJSON(geom) geojson, area_km2 FROM regions WHERE type=${type} AND value=${region}"
 			},
 			{
 				id: 'car',
@@ -42,7 +41,12 @@ module.exports = function(app) {
 				+ " INNER JOIN geo_car_app_cerrado app on app.idt_imovel = c.idt_imovel "
 				+ " INNER JOIN "+ origin + "_cerrado desmatamento on desmatamento.gid = c." + origin + "_id "
 				+ " WHERE c."+ origin + "_id = " + gid  + " order by area_desmatada DESC"				
+			},
+			{
+				id: 'validacao_amostral',
+				sql: "SELECT lon,lat,d_2000,d_2001,d_2002,d_2003,d_2004,d_2005,d_2006,d_2007,d_2008,d_2009,d_2010,d_2011,d_2012,d_2013,d_2014,d_2015,d_2016,d_2017,d_2018,classe,prodes_id FROM validacao_amostral WHERE prodes_id = " + gid 
 			}
+
 		]
 
 	}

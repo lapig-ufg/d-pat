@@ -26,7 +26,8 @@ module.exports = function(app) {
 		// "ows_host" : 'http://localhost:5001',
 		// "ows" : 'http://localhost:5001',
 		"ows_host" : 'http://ows.lapig.iesa.ufg.br',
-		"ows": "http://ows.lapig.iesa.ufg.br"
+		"ows": "http://ows.lapig.iesa.ufg.br",
+		"lapig-maps": 'http://maps.lapig.iesa.ufg.br/time-series/MOD13Q1_NDVI/values?'
 		
 	};
 
