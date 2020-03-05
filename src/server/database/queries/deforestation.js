@@ -83,7 +83,7 @@ module.exports = function (app) {
 
 	Query.largest = function (params) {
 		return "SELECT view_date,county,uf, ST_ASGEOJSON(geom) FROM prodes_cerrado WHERE year = ${year} ORDER BY areamunkm DESC LIMIT ${amount}"
-	}
+	};
 
 	Query.illegal = function (params) {
 
@@ -100,8 +100,24 @@ module.exports = function (app) {
 				sql: "SELECT * from desmat_on_RL where year = " + year  + Internal.regionFilter(type) + " LIMIT 10;"
 			}
 		]
-	}
+	};
+
+
+	Query.modis = function (params) {
+
+		var gid = params['gid']
+		var table = params['table']
+
+
+		return [
+			{
+				id: 'centroid',
+				sql: "SELECT gid, st_y(ST_PointOnSurface(geom)) as lat, st_x(ST_PointOnSurface(geom)) as long from " + table+"_cerrado where gid = " + gid + ";"
+			}
+		]
+	};
+
 
 	return Query;
 
-}
+};

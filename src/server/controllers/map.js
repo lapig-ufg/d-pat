@@ -32,6 +32,33 @@ module.exports = function (app) {
     };
   };
 
+  Internal.mostFreqString = function (arr) {
+    var obj = {},
+      mostFreq = 0,
+      which = [];
+
+    arr.forEach(ea => {
+      if(ea.includes('20')){
+        ea='antropico'
+      }
+
+      if (!obj[ea]) {
+        obj[ea] = 1;
+      } else {
+        obj[ea]++;
+      }
+
+      if (obj[ea] > mostFreq) {
+        mostFreq = obj[ea];
+        which = [ea];
+      } else if (obj[ea] === mostFreq) {
+        which.push(ea);
+      }
+    });
+
+    return which;
+  };
+
   Controller.fieldData = function (request, response) {
     var id = request.param("id");
     var category = request.param("category");
@@ -74,14 +101,7 @@ module.exports = function (app) {
 
     var queryResultDesmat = request.queryResult["desmatamento"];
 
-    var urlsLandsatMontadas = [];
-
-    let box;
-    let area;
-    let prob_suscept;
-    let prob_bfast;
-    let lat, long;
-    let classefip;
+    let box, area, prob_suscept, prob_suscept_small, prob_suscept_large, prob_bfast, lat, long, classefip;
     queryResultDesmat.forEach(function (row) {
       box = row["polygon"]
         .replace("BOX(", "")
@@ -98,24 +118,73 @@ module.exports = function (app) {
       classefip = row["classefip"]
     });
 
+    var queryResultAmostral = request.queryResult["validacao_amostral"];
+    var amostralPerPoint = [];
+    queryResultAmostral.forEach(function (row) {
+
+      amostralPerPoint.push({
+        lon: row["lon"],
+        lat: row["lat"],
+        classes2000_2018: [row["d_2000"], row["d_2001"], row["d_2002"], row["d_2003"], row["d_2004"], row["d_2005"], row["d_2006"], row["d_2007"], row["d_2008"], row["d_2009"],
+          row["d_2010"], row["d_2011"], row["d_2012"], row["d_2013"], row["d_2014"], row["d_2015"], row["d_2016"], row["d_2017"], row["d_2018"]
+        ],
+        classe: row["classe"]
+      });
+
+    });
+    var classeFinalAmostral = "";
+    var existAmostral = false;
+
+    if (amostralPerPoint.length > 0) {
+      let tmpMostFreq = []
+      for (let index = 0; index < amostralPerPoint.length; index++) {
+        tmpMostFreq.push(amostralPerPoint[index].classe)
+      }
+      var mostFreq = Internal.mostFreqString(tmpMostFreq);
+
+
+      for(let index = 0; index < mostFreq.length; index++){
+        if (mostFreq[index].toUpperCase() === "VEG_NAT") {
+          classeFinalAmostral += languageJson["dialog_relatorio"]["historico_amostral_landsat"]["amostral_class_vegetation"][language]
+        } else if (mostFreq[index].toUpperCase() === "AGUA") {
+          classeFinalAmostral += languageJson["dialog_relatorio"]["historico_amostral_landsat"]["amostral_class_water"][language]
+        } else {
+          classeFinalAmostral += languageJson["dialog_relatorio"]["historico_amostral_landsat"]["amostral_class_anthropic"][language]
+        }
+      }
+
+      classeFinalAmostral.slice(0, -1).replace(" ","/")
+      existAmostral = true;
+    }
+
+    var resultAmostral = {
+      exist: existAmostral,
+      perPoint: amostralPerPoint,
+      finalClass: classeFinalAmostral
+    }
+
     let sizeSrc = 768;
     let sizeThumb = 400;
 
+    var urlsLandsatMontadas = [];
     for (let ano = 2000; ano <= 2019; ano++) {
       urlsLandsatMontadas.push({
         url: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid,
+          ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip,bi_ce_validacao_amostral_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+          sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSAMOSTRAL=prodes_id=" + gid,
         year: ano,
         thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-          sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid
+          ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip,bi_ce_validacao_amostral_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+          sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSAMOSTRAL=prodes_id=" + gid
       });
 
       if (ano < 2012) {
         ano++;
       }
     }
+
+    let legendLandsat = app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_validacao_amostral_fip&format=image/png";
+
     let urlSentinel;
 
     urlSentinel = {
@@ -191,7 +260,11 @@ module.exports = function (app) {
       app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_bfast_fip&format=image/png";
 
     var imagesDesmat = {
-      urlsLandSat: urlsLandsatMontadas,
+      urlsLandSat: {
+        urlsLandsatMontadas: urlsLandsatMontadas,
+        legend: legendLandsat,
+        dadosAmostrais: resultAmostral
+      },
       urlSentinel: urlSentinel,
       urlBfast: {
         urlBfast: urlBfast,
@@ -219,31 +292,23 @@ module.exports = function (app) {
     var urlsLandsatMontadas = [];
 
     var vetCar = [];
-    let cargid;
-    let boxCar;
-    let cod_car;
-    let area_car;
-    let data_ref_car;
-    let qnt_nascente;
-    let area_desmat_rl, area_desmat_app;
-    let area_reserva_legal_total, area_app_total;
     queryCar.forEach(function (row) {
 
-      boxCar = row["bboxcar"]
+      var boxCar = row["bboxcar"]
         .replace("BOX(", "")
         .replace(")", "")
         .split(" ")
         .join(",");
-      area_car = parseFloat(row["areacar"]);
-      cod_car = row["codcar"];
-      data_ref_car = row["datarefcar"];
-      area_desmat_rl = parseFloat(row["area_desmat_rl"]);
-      area_desmat_app = parseFloat(row["area_desmat_app"]);
-      qnt_nascente = parseInt(row["qnt_nascente"]);
-      area_desmatada = parseFloat(row["area_desmatada"]);
-      cargid = parseInt(row["cargid"]);
-      area_reserva_legal_total = parseFloat(row["area_reserva_legal_total"]);
-      area_app_total = parseFloat(row["area_app_total"]);
+      var area_car = parseFloat(row["areacar"]);
+      var cod_car = row["codcar"];
+      var data_ref_car = row["datarefcar"];
+      var area_desmat_rl = parseFloat(row["area_desmat_rl"]);
+      var area_desmat_app = parseFloat(row["area_desmat_app"]);
+      var qnt_nascente = parseInt(row["qnt_nascente"]);
+      var area_desmatada = parseFloat(row["area_desmatada"]);
+      var cargid = parseInt(row["cargid"]);
+      var area_reserva_legal_total = parseFloat(row["area_reserva_legal_total"]);
+      var area_app_total = parseFloat(row["area_app_total"]);
 
       let urlCar = {};
       let metaDataCar = {};
@@ -977,7 +1042,7 @@ module.exports = function (app) {
           },
           {
             value: "municipios_cerrado",
-            Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios"][language],
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_cerrado"][language],
             visible: false,
             layer_limits: true,
             opacity: 1
@@ -1023,10 +1088,10 @@ module.exports = function (app) {
         search_failed: languageJson["layer_box"]["search_failed"][language]
       },
       descriptor: languageJson["descriptor"]
-    
+
     };
 
-        response.send(result);
+    response.send(result);
     response.end();
   };
 
