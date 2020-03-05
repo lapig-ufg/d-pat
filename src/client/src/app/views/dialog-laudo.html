@@ -198,27 +198,29 @@
 
                         <div class="p-col-6">
                             <div *ngIf="dadosValidacao_Amostral.exist" class="p-grid"
-                                        style="font-size: 16px; text-align: center; padding-top: 4px">
-                                        <div class="p-col-12">
-                                            <h5 style="text-align: center">
-                                                <strong><i>{{textOnDialog.historico_amostral_landsat.amostral_title}}</i></strong>
-                                            </h5>
-                                        </div>
-                                        <div class="p-col-5" style="font-weight: bold">
-                                            {{textOnDialog.historico_amostral_landsat.class_lapig_label}} </div>
-                                        <div class="p-col-7">{{dadosValidacao_Amostral.finalClass}}</div>
-                                    </div>
+                                style="font-size: 16px; text-align: center; padding-top: 4px">
+                                <div class="p-col-12" style="text-align: center">
+                                    <h5 >
+                                        <strong><i>{{textOnDialog.historico_amostral_landsat.amostral_title}}</i></strong>
+                                    </h5>
+                                </div>
+                                <div class="p-col-5" style="text-align: center">
+                                    <strong> {{textOnDialog.historico_amostral_landsat.class_lapig_label}} </strong>
+                                </div>
+                                <div class="p-col-7">{{dadosValidacao_Amostral.finalClass}}</div>
+                            </div>
                         </div>
 
                         <div class="p-col-4">
-                            <div *ngIf="dadosValidacao_Amostral.exist">
-                                <h5><strong>{{textOnDialog.historico_amostral_landsat.amostral_classes_legend_label}}</strong>
+                            <div *ngIf="dadosValidacao_Amostral.exist" style="text-align: center">
+                                <h5>
+                                    <strong><i>{{textOnDialog.historico_amostral_landsat.amostral_classes_legend_label}}</i></strong>
                                 </h5>
                                 <img [src]="urlsLandSat.legend">
                             </div>
                         </div>
 
-                         
+
 
                     </div>
 

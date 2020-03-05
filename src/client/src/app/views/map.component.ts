@@ -765,6 +765,8 @@ export class MapComponent implements OnInit {
 
       if (isOficial) {
 
+        let openOficial = false
+
         if ((prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip") || (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")) {
 
           if (this.utfgridsource) {
@@ -772,7 +774,6 @@ export class MapComponent implements OnInit {
               if (data) {
 
                 isCampo = false;
-                let showDeter = true
                 data.origin_table = data.origin_table.toUpperCase();
                 if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) {
                   if (data.origin_table == "PRODES") {
@@ -781,11 +782,11 @@ export class MapComponent implements OnInit {
                     this.infodata.dataFormatada = this.infodata.data_detec == "" ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodata.data_detec), "dd/MM/yyyy");
                     this.infodata.sucept_desmatFormatada = this.infodata.sucept_desmat == null ? this.minireportText.not_computed_message : ("" + (this.infodata.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
                     this.infodata.municipio = this.infodata.municipio.toUpperCase();
-                    showDeter = false;
+                    openOficial = true
                   }
                 }
 
-                if (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip") && showDeter) {
+                if (!openOficial && deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")) {
                   if (data.origin_table == "DETER") {
                     window.document.body.style.cursor = "pointer";
                     this.infodata = data;
@@ -809,7 +810,7 @@ export class MapComponent implements OnInit {
       }
 
       if (isCampo) {
-
+        let openCampo = false
         if ((prodes.selectedType == "bi_ce_prodes_desmatamento_pontos_campo_fip") ||
           (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
 
@@ -830,9 +831,10 @@ export class MapComponent implements OnInit {
                     this.infodataCampo.dataFormatada = this.infodataCampo.data_detec == "" ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodataCampo.data_detec), "dd/MM/yyyy");
                     this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == "" ? this.minireportText.not_computed_message : ("" + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + "%").replace(".", ",");
                     this.infodataCampo.origin_table = this.infodataCampo.origin_table.toUpperCase();
+                    openCampo = true
                   }
                 }
-                if (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
+                if (!openCampo && deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
                   if (data.origin_table == "DETER") {
                     window.document.body.style.cursor = "pointer";
                     this.infodataCampo = data;
@@ -915,27 +917,29 @@ export class MapComponent implements OnInit {
         }
       }
 
+
+
       if (isCampo) {
 
+        let open = false
         if (this.utfgridCampo) {
           this.utfgridCampo.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
 
             if (data) {
               //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-              let showDeter = true
-              if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) {
+              if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_pontos_campo_fip")) {
 
                 isOficial = false;
                 this.dataForDialog = data;
                 this.dataForDialog.coordinate = coordinate;
                 this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
                 this.dataForDialog.datePipe = this.datePipe;
-                showDeter = false
+                open = true
                 this.openDialog();
               }
 
-              if (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip") && showDeter) {
+              if (!open && deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
                 isOficial = false;
                 this.dataForDialog = data;
                 this.dataForDialog.coordinate = coordinate;
@@ -952,21 +956,21 @@ export class MapComponent implements OnInit {
 
     if (isOficial) {
 
+      let openOficial = false
       if (this.utfgridsource) {
         this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
           if (data) {
             //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
-            let showDeter = true
             if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) {
               this.dataForDialog = data;
               this.dataForDialog.coordinate = coordinate;
               this.dataForDialog.datePipe = this.datePipe;
               this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
-              showDeter = false;
+              openOficial = true
               this.openDialog();
             }
 
-            if (deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip") && showDeter) {
+            if (!openOficial && deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip") ) {
               this.dataForDialog = data;
               this.dataForDialog.coordinate = coordinate;
               this.dataForDialog.datePipe = this.datePipe;
@@ -1812,8 +1816,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       result => {
 
         this.tmpModis = result;
-
-        console.log(this.data)
 
       },
       err => {
