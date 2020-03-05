@@ -717,7 +717,9 @@ mat-select {
 	font-size: 20px;
     padding-left: 17px;
     padding-top: 23px;
-    border-left: 8px solid #1c6722;;
+	border-left: 8px solid #1c6722;
+	background-color: #5cbf642e;
+	cursor: pointer;
 }
 
 .map-snack-bar{

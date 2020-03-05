@@ -47,6 +47,7 @@ import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
+import { MetadataComponent } from './views/metadata/metadata.component';
 
 registerLocaleData(localePt);
 
@@ -56,7 +57,8 @@ registerLocaleData(localePt);
     MapComponent,
     DialogOverviewExampleDialog,
     SpinnerImgComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    MetadataComponent
   ],
   imports: [
     TabViewModule,

@@ -77,8 +77,6 @@ export class FileUploadComponent implements OnInit {
 
   onClick() {
 
-    console.log("LANG", this.language);
-
     this.target =  '/service/upload/spatial-file' + "?lang=" + this.language;  
   
     const fileUpload = document.getElementById(
@@ -94,6 +92,7 @@ export class FileUploadComponent implements OnInit {
           if(fileUpload.files[index].size > this.maxSize){
             this.response.error = true; 
             this.response.msg = "The file is too large, yours has " + (fileUpload.files[index].size / 1024 / 1024).toFixed(1) + " MB. Maximum size allowed is " + (this.maxSize / 1024 / 1024) + " MB." 
+            this.complete.emit();
           }else{
             const file = fileUpload.files[index];
             this.files.push({
@@ -225,6 +224,7 @@ export class FileUploadComponent implements OnInit {
               if(file.size > this.maxSize){
                 this.response.error = true; 
                 this.response.msg = "The file is too large, yours has " + (file.size / 1024 / 1024).toFixed(1) + " MB. Maximum size allowed is " + (this.maxSize / 1024 / 1024) + " MB." 
+                this.complete.emit();
               }else{
 
                 this.files.push({

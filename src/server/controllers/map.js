@@ -32,6 +32,22 @@ module.exports = function (app) {
     };
   };
 
+  
+  Internal.getMetadata = function (metadata, lang) { 
+
+    let _metadata =  []; 
+
+    metadata.forEach(data => {
+      console.log("DATA:", data.title[lang]);
+      _metadata.push({"title" : data.title[lang], "description" : data.description[lang]});
+    });
+
+    
+
+    return _metadata; 
+  };
+
+
   Controller.fieldData = function (request, response) {
     var id = request.param("id");
     var category = request.param("category");
@@ -333,6 +349,7 @@ module.exports = function (app) {
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
               visible: true,
               selectedType: "prodes_por_region_fip",
+              metadata: Internal.getMetadata(languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'], language),
               types: [{
                   value: "prodes_por_region_fip",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["view_value"][language],
@@ -523,6 +540,7 @@ module.exports = function (app) {
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["label"][language],
               visible: false,
               selectedType: "bi_ce_deter_desmatamento_100_fip",
+              metadata: Internal.getMetadata(languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]['metadata'], language),
               types: [{
                   value: "bi_ce_deter_desmatamento_100_fip",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["view_value"][language],
@@ -606,6 +624,7 @@ module.exports = function (app) {
               id: "antropico",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]['metadata'], language),
               selectedType: "bi_ce_prodes_antropico_100_fip",
               types: [{
                 value: "bi_ce_prodes_antropico_100_fip",
@@ -672,6 +691,7 @@ module.exports = function (app) {
               label: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["label"][language],
               visible: false,
               selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
+              metadata: Internal.getMetadata(languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]['metadata'], language),
               types: [{
                   value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig"]["view_value"][language],
@@ -700,18 +720,21 @@ module.exports = function (app) {
               types: [{
                   value: "uso_solo_terraclass_fip",
                   Viewvalue: "TerraClass-Cerrado - 2013",
+                  metadata: Internal.getMetadata(languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_terraclass_fip']['metadata'], language),
                   opacity: 0.8,
                   order: 3
                 },
                 {
                   value: "bi_ce_cobertura_vegetal_250_2002_mma",
                   Viewvalue: "PROBIO-Cerrado - 2002",
+                  metadata: Internal.getMetadata(languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['bi_ce_cobertura_vegetal_250_2002_mma']['metadata'], language),
                   opacity: 0.8,
                   order: 3
                 },
                 {
                   value: "agricultura_agrosatelite_fip",
                   Viewvalue: "Agrosatélite 2013/2014",
+                  metadata: Internal.getMetadata(languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['agricultura_agrosatelite_fip']['metadata'], language),
                   opacity: 0.8,
                   order: 3
                 }
@@ -721,6 +744,7 @@ module.exports = function (app) {
               id: "floresta_plantada",
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["floresta_plantada"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["uso_da_terra"]["layers"]['floresta_plantada']['metadata'], language),
               selectedType: "floresta_plantada_fip",
               types: [{
                 value: "floresta_plantada_fip",
@@ -739,6 +763,7 @@ module.exports = function (app) {
               id: "osm_rodovias",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["osm_rodovias"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["infraestrutura"]["layers"]['osm_rodovias']['metadata'], language),
               selectedType: "osm_rodovias",
               types: [{
                 value: "osm_rodovias",
@@ -751,6 +776,7 @@ module.exports = function (app) {
               id: "armazens",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["armazens"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["infraestrutura"]["layers"]['armazens']['metadata'], language),
               selectedType: "armazens_fip",
               types: [{
                 value: "armazens_fip",
@@ -763,6 +789,8 @@ module.exports = function (app) {
               id: "frigorificos",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["frigorificos"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["infraestrutura"]["layers"]['frigorificos']['metadata'], language),
+              selectedType: "armazens_fip",
               selectedType: "matadouros_e_frigorificos",
               types: [{
                 value: "matadouros_e_frigorificos",
@@ -781,6 +809,7 @@ module.exports = function (app) {
               id: "altitude",
               label: languageJson["descriptor"]["geofisico"]["layers"]["altitude"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["geofisico"]["layers"]['altitude']['metadata'], language),
               selectedType: "bi_ce_srtm_altitude_30_2000_lapig",
               types: [{
                 value: "bi_ce_srtm_altitude_30_2000_lapig",
@@ -793,6 +822,7 @@ module.exports = function (app) {
               id: "declividade",
               label: languageJson["descriptor"]["geofisico"]["layers"]["declividade"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["geofisico"]["layers"]['declividade']['metadata'], language),
               selectedType: "bi_ce_srtm_declividade_30_2000_lapig",
               types: [{
                 value: "bi_ce_srtm_declividade_30_2000_lapig",
@@ -811,6 +841,7 @@ module.exports = function (app) {
               id: "solos",
               label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["solos"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["edafoclimaticos"]["layers"]['solos']['metadata'], language),
               selectedType: "solos_ibge",
               types: [{
                 value: "solos_ibge",
@@ -823,6 +854,7 @@ module.exports = function (app) {
               id: "precipitacao",
               label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["precipitacao"]["label"][language],
               visible: false,
+              metadata: Internal.getMetadata(languageJson["descriptor"]["edafoclimaticos"]["layers"]['precipitacao']['metadata'], language),
               selectedType: "bi_ce_precipitacao_historica_30_lapig",
               types: [{
                 value: "bi_ce_precipitacao_historica_30_lapig",
@@ -847,6 +879,7 @@ module.exports = function (app) {
                 Viewvalue: "Landsat",
                 order: 10,
                 opacity: 1,
+                metadata: Internal.getMetadata(languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'], language),
                 timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
                 timeSelected: "bi_ce_mosaico_landsat_completo_30_2019_fip",
                 timeHandler: "layername",
@@ -909,10 +942,11 @@ module.exports = function (app) {
                 ]
               },
               {
-                value: "sentinel",
+                value: "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ",
                 Viewvalue: "Sentinel",
                 order: 10,
                 opacity: 1,
+                metadata: Internal.getMetadata(languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'], language),
                 timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
                 timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
                 timeHandler: "layername",
@@ -1030,7 +1064,7 @@ module.exports = function (app) {
     response.end();
   };
 
-
+  
 
   Controller.textreport = function (request, response) {
     var language = request.param('lang')
