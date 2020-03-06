@@ -1,170 +1,171 @@
 {
-	"legends_box_title": {
-		"pt-br": "Legenda",
-		"en-us": "Legend"
-	},
+        
+    "legends_box_title": {
+        "pt-br": "Legenda",
+        "en-us": "Legend"
+    },
 
-	"charts_box_title": {
-		"pt-br": "Estatísticas de Desmatamento sobre o PRODES-Cerrado",
-		"en-us": "Deforestation Statistics of PRODES-Cerrado"
-	},
+    "charts_box_title": {
+        "pt-br": "Estatísticas de Desmatamento sobre o PRODES-Cerrado",
+        "en-us": "Deforestation Statistics of PRODES-Cerrado"
+    },
 
-	"charts_box_timeseries": {
-		"label": {
-			"pt-br": "Serie Temporal",
-			"en-us": "Timeseries"
-		},
-		"name": {
-			"pt-br": "Área Desmatada",
-			"en-us": "Deforestation increases"
-		},
-		"text": {
-			"pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
-			"en-us": "? presents an Anthropic area of ? km², which represents ?% of its total area."
-		}
-	},
+    "charts_box_timeseries": {
+        "label":{
+            "pt-br": "Serie Temporal",
+            "en-us": "Timeseries"
+        },
+        "name":{
+            "pt-br": "Área Desmatada",
+            "en-us": "Deforestation increases"
+        },
+        "text":{
+            "pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
+            "en-us": "? presents an Anthropic area of ? km², which represents ?% of its total area."
+        }
+    },
 
-	"charts_box_states": {
-		"label": {
-			"pt-br": "Estados",
-			"en-us": "States"
-		},
-		"name": {
-			"pt-br": "Área Desmatada",
-			"en-us": "Deforested Area"
-		},
-		"description": {
-			"pt-br": "Áreas Desmatadas nos Estados: ",
-			"en-us": "States Deforested Area in: "
-		}
-	},
+    "charts_box_states": {
+       "label":{
+            "pt-br": "Estados",
+            "en-us": "States"
+        },
+        "name":{
+            "pt-br": "Área Desmatada",
+            "en-us": "Deforested Area"
+        },
+        "description":{
+            "pt-br": "Áreas Desmatadas nos Estados: ",
+            "en-us": "States Deforested Area in: "
+        }
+    },
 
-	"charts_box_cities": {
-		"label": {
-			"pt-br": "Municípios",
-			"en-us": "Municipalities"
-		},
-		"description": {
-			"pt-br": "Ranking dos Municípios com maiores Desmatamentos: ",
-			"en-us": "Ranking of Municipalities with largest Deforested areas:"
-		},
-		"title": {
-			"pt-br": "#?Município?Estado?Área",
-			"en-us": "#?Municipality?State?Area"
-		},
-		"tooltip_text": {
-			"pt-br": "Clique para visualizar no mapa",
-			"en-us": "Click to view on map"
-		}
-	},
+    "charts_box_cities": {
+        "label":{
+           "pt-br": "Municípios",
+           "en-us": "Municipalities"
+        },
+        "description":{
+            "pt-br": "Ranking dos Municípios com maiores Desmatamentos: ",
+            "en-us": "Ranking of Municipalities with largest Deforested areas:"
+        },
+        "title":{
+            "pt-br": "#?Município?Estado?Área",
+            "en-us": "#?Municipality?State?Area"
+        },
+        "tooltip_text":{
+            "pt-br": "Clique para visualizar no mapa",
+            "en-us": "Click to view on map"
+        }
+    },
 
-	"charts_box_app": {
-		"label": {
-			"pt-br": "Área de Preservação Permanente",
-			"en-us": "APP"
-		},
-		"description": {
-			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em APP declaradas: ",
-			"en-us": "Ranking of Municipalities with largest Deforested areas in declared PPA:"
-		}
-	},
+    "charts_box_app":{
+        "label":{
+            "pt-br": "Área de Preservação Permanente",
+            "en-us": "APP"
+        },
+        "description":{
+            "pt-br": "Ranking dos Municípios com maiores Desmatamentos em APP declaradas: ",
+            "en-us": "Ranking of Municipalities with largest Deforested areas in declared PPA:"
+        }
+    },
 
-	"charts_box_rl": {
-		"label": {
-			"pt-br": "Reserva Legal",
-			"en-us": "Legal Reservation"
-		},
-		"description": {
-			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em Reservas Legais declaradas: ",
-			"en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reservations:"
-		}
-	},
+    "charts_box_rl":{
+        "label":{
+            "pt-br": "Reserva Legal",
+            "en-us": "Legal Reservation"
+        },
+        "description":{
+            "pt-br": "Ranking dos Municípios com maiores Desmatamentos em Reservas Legais declaradas: ",
+            "en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reservations:"
+        }
+    },
 
-	"mini_report_utfgrid": {
-		"area": {
-			"pt-br": "Área Desmatada:",
-			"en-us": "Deforested Area:"
-		},
-		"city": {
-			"pt-br": "Município:",
-			"en-us": "Municipality:"
-		},
-		"detection_date": {
-			"pt-br": "Data de Detecção:",
-			"en-us": "Detection Date:"
-		},
-		"susceptibility": {
-			"pt-br": "Susceptibilidade ao Desmatamento:",
-			"en-us": "Susceptibility to Deforestation:"
-		},
-		"field_number": {
-			"pt-br": "Nº do Campo:",
-			"en-us": "Field:"
-		},
-		"not_computed_message": {
-			"pt-br": "Não Computada",
-			"en-us": "Not Computed"
-		},
-		"undisclosed_message": {
-			"pt-br": "Não Divulgada",
-			"en-us": "Undisclosed"
-		},
-		"click_more_text": {
-			"pt-br": "Clique para visualizar o relatório completo deste desmatamento",
-			"en-us": "Click to open the full deforestation report"
-		},
-		"click_more_municipio": {
-			"pt-br": "Clique aproximar deste município",
-			"en-us": "Click to zoom in on this municipality"
-		},
-		"label_year": {
-			"pt-br": "Ano: ",
-			"en-us": "Year: "
-		},
-		"label_area_app": {
-			"pt-br": "Área Desmatada em APP:",
-			"en-us": "Deforested Area in Preservation Areas:"
-		},
-		"label_area_rl": {
-			"pt-br": "Área Desmatada em Reserva Legal",
-			"en-us": "Deforested Area in Legal Reservation:"
-		}
-	},
+    "mini_report_utfgrid":{
+        "area":{
+            "pt-br": "Área Desmatada:",
+            "en-us": "Deforested Area:"
+        },
+        "city":{
+            "pt-br": "Município:",
+            "en-us": "Municipality:"
+        },
+        "detection_date":{
+            "pt-br": "Data de Detecção:",
+            "en-us": "Detection Date:"
+        },
+        "susceptibility": {
+            "pt-br": "Susceptibilidade ao Desmatamento:",
+            "en-us": "Susceptibility to Deforestation:"
+        },
+        "field_number": {
+            "pt-br": "Nº do Campo:",
+            "en-us": "Field:"
+        },
+        "not_computed_message": {
+            "pt-br": "Não Computada",
+            "en-us": "Not Computed"
+        },
+        "undisclosed_message":{
+            "pt-br": "Não Divulgada",
+            "en-us": "Undisclosed"
+        },
+        "click_more_text":{
+            "pt-br": "Clique para visualizar o relatório completo deste desmatamento",
+            "en-us": "Click to open the full deforestation report"
+        },
+        "click_more_municipio":{
+            "pt-br": "Clique para aproximar deste município",
+            "en-us": "Click to zoom in on this municipality"
+        },
+        "label_year":{
+            "pt-br": "Ano: ",
+            "en-us": "Year: "
+        },
+        "label_area_app":{
+            "pt-br": "Área Desmatada em APP:",
+            "en-us": "Deforested Area in Preservation Areas:"
+        },
+        "label_area_rl":{
+            "pt-br": "Área Desmatada em Reserva Legal",
+            "en-us": "Deforested Area in Legal Reservation:"
+        }
+    },
 
-	"layer_box": {
-		"title": {
-			"pt-br": "Camada de Dados",
-			"en-us": "Layers"
-		},
-		"label_data": {
-			"pt-br": "Desmatamento",
-			"en-us": "Deforestation"
-		},
-		"label_mapabase": {
-			"pt-br": "Mapa Base",
-			"en-us": "BaseMap"
-		},
-		"label_limits": {
-			"pt-br": "Limites",
-			"en-us": "Limits"
-		},
-		"label_upload": {
-			"pt-br": "Upload",
-			"en-us": "Upload"
-		},
-		"search_placeholder": {
-			"pt-br": "Digite um Estado ou Município",
-			"en-us": "Please inform a State or Municipality name"
-		},
-		"search_loading": {
-			"pt-br": "Procurando...",
-			"en-us": "Searching"
-		},
-		"search_failed": {
-			"pt-br": "Desculpe, região não encontrada.",
-			"en-us": "Sorry, region not found."
-		}
-	},
+    "layer_box": {
+        "title":{
+            "pt-br": "Camada de Dados",
+            "en-us": "Layers"
+        },
+        "label_data":{
+            "pt-br": "Desmatamento",
+            "en-us": "Deforestation"
+        },
+        "label_mapabase":{
+            "pt-br": "Mapa Base",
+            "en-us": "BaseMap"
+        },
+        "label_limits":{
+            "pt-br": "Limites",
+            "en-us": "Limits"
+        },
+        "label_upload":{
+            "pt-br": "Upload",
+            "en-us": "Upload"
+        },
+        "search_placeholder":{
+            "pt-br": "Digite um Estado ou Município",
+            "en-us": "Please inform a State or Municipality name"
+        },
+        "search_loading":{
+            "pt-br": "Procurando...",
+            "en-us": "Searching"
+        },
+        "search_failed":{
+            "pt-br": "Desculpe, região não encontrada.",
+            "en-us": "Sorry, region not found."
+        }
+    },
 
 	"descriptor": {
 		"type_of_information_label": {

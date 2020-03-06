@@ -6,17 +6,14 @@
 
 
 	<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 logos-atlas">
-
 		<a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
 				class="logo-cepf" src="assets/logo/fip.png" /></a>
 		<a href="https://www.ufg.br/" target="_blank"><img class="logo-ufg" src="assets/logo/logo-ufg.png" /></a>
 		<a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
 				src="assets/logo/lapig.png" /></a>
-
 	</div>
 
 	<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 title-atlas-div">
-
 
 		<ngx-flag-picker id="lang-picker" [selectedCountryCode]="selectedCountryCode" [countryCodes]="countryCodes"
 			[customLabels]="customLabels" [showFlags]="false" (changedCountryCode)="changeSelectedCountryCode($event)">
@@ -25,13 +22,14 @@
 		<!-- <span class="flag-icon flag-icon-br" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('pt-br')"></span>
 		<span class="flag-icon flag-icon-us" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('en-us')"></span> -->
 	</div>
-
 </nav>
+
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 dpat-ol-div">
 			<div id="map" class="dpat-ol-map"></div>
-			<div id="positionLayers">
+			<div id="positionLayers" class="control-layers" cdkDrag>
 				<div class="titleWindows">
 					{{titlesLayerBox.title}}
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
@@ -273,7 +271,7 @@
 				</div>
 			</div>
 
-			<div id="positionLegend">
+			<div id="positionLegend" class="control-layers" cdkDrag>
 				<div class="titleWindows">
 					{{titlesLayerBox.legendTitle}}
 					<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
@@ -297,7 +295,7 @@
 </div>
 
 <div id="map-info" class="card"
-	[ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden')), 'background-color': '#ffffff99'}">
+	[ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden'))}">
 	<div *ngIf="infodata" class="card-body">
 		<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
 		<table>

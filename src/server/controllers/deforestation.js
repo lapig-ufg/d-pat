@@ -63,7 +63,7 @@ module.exports = function (app) {
 
 		var queryResult = request.queryResult["timeseries"]
 
-		var indicatorYear = Number(request.param('year', 2018));;
+		var indicatorYear = Number(request.param('year', 2019));;
 
 		var anthropicArea = 0
 		var deforestationArea = 0
@@ -264,6 +264,7 @@ module.exports = function (app) {
 				if (err) {
 					return console.log(err);
 				}
+
 				response.send(body)
 				response.end();
 			});
@@ -312,6 +313,38 @@ module.exports = function (app) {
 		})
 		response.end()
 
+	}
+
+	Controller.ndvi_timeseries = function(request, response){
+
+		var queryResultT = request.queryResult;
+
+
+		let long, lat;
+		queryResultT.forEach(function (row) {
+			long =  Number(row['long'])
+			lat = Number(row['lat'])	
+		})
+
+		let returnObject = [];
+		req(
+			config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series",{
+				json: true
+			}, (err, res, body) => {
+				if (err) {
+					return console.log(err);
+				}
+
+				for(let index = 0; index < body.values.length; index++){
+					returnObject.push({date: body.values[index][0],
+						ndvi_original: body.values[index][1],
+						ndvi_wiener: body.values[index][2],
+						ndvi_golay: body.values[index][3]
+					})
+				}
+				response.send(returnObject)
+				response.end();
+			});
 	}
 
 
