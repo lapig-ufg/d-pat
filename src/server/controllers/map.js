@@ -405,70 +405,70 @@ module.exports = function (app) {
                   order: 1,
                   regionFilter: true,
                   timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["timelabel"][language],
-                  timeSelected: "prodes_year=2019",
+                  timeSelected: "region_type = 'city' AND prodes_year=2019",
                   timeHandler: "msfilter",
                   times: [{
-                      value: "prodes_year=2002",
+                      value: "region_type = 'city' AND prodes_year=2002",
                       Viewvalue: "2000/2002",
                       year: 2002
                     },
                     {
-                      value: "prodes_year=2004",
+                      value: "region_type = 'city' AND prodes_year=2004",
                       Viewvalue: "2002/2004",
                       year: 2004
                     },
                     {
-                      value: "prodes_year=2006",
+                      value: "region_type = 'city' AND prodes_year=2006",
                       Viewvalue: "2004/2006",
                       year: 2006
                     },
                     {
-                      value: "prodes_year=2008",
+                      value: "region_type = 'city' AND prodes_year=2008",
                       Viewvalue: "2006/2008",
                       year: 2008
                     },
                     {
-                      value: "prodes_year=2010",
+                      value: "region_type = 'city' AND prodes_year=2010",
                       Viewvalue: "2008/2010",
                       year: 2010
                     },
                     {
-                      value: "prodes_year=2012",
+                      value: "region_type = 'city' AND prodes_year=2012",
                       Viewvalue: "2010/2012",
                       year: 2012
                     },
                     {
-                      value: "prodes_year=2013",
+                      value: "region_type = 'city' AND prodes_year=2013",
                       Viewvalue: "2012/2013",
                       year: 2013
                     },
                     {
-                      value: "prodes_year=2014",
+                      value: "region_type = 'city' AND prodes_year=2014",
                       Viewvalue: "2013/2014",
                       year: 2014
                     },
                     {
-                      value: "prodes_year=2015",
+                      value: "region_type = 'city' AND prodes_year=2015",
                       Viewvalue: "2014/2015",
                       year: 2015
                     },
                     {
-                      value: "prodes_year=2016",
+                      value: "region_type = 'city' AND prodes_year=2016",
                       Viewvalue: "2015/2016",
                       year: 2016
                     },
                     {
-                      value: "prodes_year=2017",
+                      value: "region_type = 'city' AND prodes_year=2017",
                       Viewvalue: "2016/2017",
                       year: 2017
                     },
                     {
-                      value: "prodes_year=2018",
+                      value: "region_type = 'city' AND prodes_year=2018",
                       Viewvalue: "2017/2018",
                       year: 2018
                     },
                     {
-                      value: "prodes_year=2019",
+                      value: "region_type = 'city' AND prodes_year=2019",
                       Viewvalue: "2018/2019",
                       year: 2019
                     }

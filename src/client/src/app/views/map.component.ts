@@ -1154,11 +1154,15 @@ export class MapComponent implements OnInit {
 
   private getTileJSONMunicipio() {
 
-  let text = "1=1";
+  let text = "1=1" ;
 
   let time = this.selectedTimeFromLayerType("prodes_por_region_fip")
 
-  text += " AND " + time.value
+  if (this.selectRegion.type === "city" || this.selectRegion.type === "state") {
+    text += " AND region_type = '" +  this.selectRegion.type + "'";
+  }
+
+  text += " AND " + time.value 
 
   return {
     version: "2.2.0",
