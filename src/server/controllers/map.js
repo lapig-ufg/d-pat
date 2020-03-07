@@ -59,6 +59,12 @@ module.exports = function (app) {
     return which;
   };
 
+  Internal.getMetadata = function(metadata, language){
+    console.log("LANG:", language);
+    return metadata;
+
+  };
+
   Controller.fieldData = function (request, response) {
     var id = request.param("id");
     var category = request.param("category");
