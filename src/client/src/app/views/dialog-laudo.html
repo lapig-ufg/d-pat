@@ -3,9 +3,20 @@
         <nav class="navbar sticky-top navbar-light bg-light nav-title-laudo">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <h3><strong>{{textOnDialog.title}} </strong></h3>
+                    <a href="http://www.cerradodpat.org" target="_blank">
+                        <img class="logo-dpat" src="assets/logo/cerrado-dpat-logo.svg" /></a>
                 </li>
             </ul>
+           
+            <div class="mx-auto order-0">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item" style="text-align: center;">
+                        <h3><strong>{{textOnDialog.title}} </strong></h3>
+                    </li>
+                </ul>
+            </div>
+           
+           
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <mat-dialog-actions>
@@ -200,7 +211,7 @@
                             <div *ngIf="dadosValidacao_Amostral.exist" class="p-grid"
                                 style="font-size: 16px; text-align: center; padding-top: 4px">
                                 <div class="p-col-12" style="text-align: center">
-                                    <h5 >
+                                    <h5>
                                         <strong><i>{{textOnDialog.historico_amostral_landsat.amostral_title}}</i></strong>
                                     </h5>
                                 </div>
@@ -249,13 +260,12 @@
 
                     <div style="margin-top: 3.5em; text-align: center; height: 800px">
                         <h5><strong>{{textOnDialog.historico_amostral_landsat.series_modis_title}}</strong></h5>
-                        <!-- [options]="optionsTimeSeries" -->
-                        <p-chart [type]="dataTimeseriesModis.type" [data]="dataTimeseriesModis"
+                        <img style="height: 50px" *ngIf="!dataTimeseriesModis.type" src="/assets/gif/loadchart.gif"> 
+                        <p-chart *ngIf="dataTimeseriesModis.type" [type]="dataTimeseriesModis.type" [data]="dataTimeseriesModis"
                             [options]="optionsTimeSeries">
                         </p-chart>
 
                     </div>
-
 
                 </p-accordionTab>
                 <p-accordionTab header="{{textOnDialog.analise_automatica.title_tab}}"
@@ -323,22 +333,26 @@
         </div>
 
 
+        <div class="p-grid p-dir-rev">
+            <div class="p-col-6">
+                <nav class="navbar navbar-fixed-bottom" style="margin-left: auto">
+                    <ul class="navbar-nav mr-auto">
 
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
-                            class="logo-cepf" src="assets/logo/fip.png" /></a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://www.ufg.br/" target="_blank"><img class="logo-lapig"
-                            src="assets/logo/logo-ufg.png" /></a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
-                            src="assets/logo/lapig.png" /></a>
-                </li>
-            </ul>
-        </nav>
+                        <li class="nav-item">
+                            <a href="http://climatefundsupdate.org/the-funds/forest-investment-program/"
+                                target="_blank"><img class="logo-cepf" src="assets/logo/fip.png" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.ufg.br/" target="_blank"><img class="logo-lapig"
+                                    src="assets/logo/logo-ufg.png" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
+                                    src="assets/logo/lapig.png" /></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </p-scrollPanel>
 </div>

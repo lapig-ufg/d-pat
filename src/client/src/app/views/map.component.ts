@@ -407,6 +407,9 @@ export class MapComponent implements OnInit {
 
   changeLanguage(lang) {
 
+    var zoom = this.map.getView().getZoom();
+
+    console.log(zoom)
     if (this.language != (lang)) {
       this.language = lang;
 
@@ -626,6 +629,8 @@ export class MapComponent implements OnInit {
       data: this.dataForDialog,
     });
   }
+
+
 
   private createMap() {
     this.createBaseLayers();
@@ -946,569 +951,571 @@ export class MapComponent implements OnInit {
                 this.openDialog();
               }
 
-          }
+            }
           }.bind(this)
           );
+        }
       }
-    }
 
-    if (isOficial) {
+      if (isOficial) {
 
-      let openOficial = false
-      if (this.utfgridsource) {
-        this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-          if (data) {
-            //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
-            if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) {
-              this.dataForDialog = data;
-              this.dataForDialog.coordinate = coordinate;
-              this.dataForDialog.datePipe = this.datePipe;
-              this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
-              openOficial = true
-              this.openDialog();
+        let openOficial = false
+        if (this.utfgridsource) {
+          this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+            if (data) {
+              //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+              if (prodes.visible && (prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip")) {
+                this.dataForDialog = data;
+                this.dataForDialog.coordinate = coordinate;
+                this.dataForDialog.datePipe = this.datePipe;
+                this.dataForDialog.year = this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").year;
+                openOficial = true
+                this.openDialog();
+              }
+
+              if (!openOficial && deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")) {
+                this.dataForDialog = data;
+                this.dataForDialog.coordinate = coordinate;
+                this.dataForDialog.datePipe = this.datePipe;
+                this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
+                this.openDialog();
+              }
+
             }
-
-            if (!openOficial && deter.visible && (deter.selectedType == "bi_ce_deter_desmatamento_100_fip") ) {
-              this.dataForDialog = data;
-              this.dataForDialog.coordinate = coordinate;
-              this.dataForDialog.datePipe = this.datePipe;
-              this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
-              this.openDialog();
-            }
-
-          }
-        }.bind(this)
-        );
-      }
-    }
-  }
-}
-
-  private createBaseLayers() {
-  this.mapbox = {
-    visible: true,
-    layer: new OlTileLayer({
-      source: new OlXYZ({
-        wrapX: false,
-        url:
-          "https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
-      }),
-      visible: true
-    })
-  };
-
-  this.satelite = {
-    visible: false,
-    layer: new OlTileLayer({
-      preload: Infinity,
-      source: new BingMaps({
-        key:
-          "VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY",
-        imagerySet: "Aerial"
-      }),
-      visible: false
-    })
-  };
-
-  this.estradas = {
-    visible: false,
-    layer: new OlTileLayer({
-      preload: Infinity,
-      source: new BingMaps({
-        key:
-          "VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY",
-        imagerySet: "Road"
-      }),
-      visible: false
-    })
-  };
-
-  this.relevo = {
-    visible: false,
-    layer: new OlTileLayer({
-      source: new OlXYZ({
-        url:
-          "https://server.arcgisonline.com/ArcGIS/rest/services/" +
-          "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
-      }),
-      visible: false
-    })
-  };
-
-  this.landsat = {
-    visible: false,
-    layer: new OlTileLayer({
-      source: new TileWMS({
-        url: "http://mapbiomas-staging.terras.agr.br/wms",
-        projection: "EPSG:3857",
-        params: {
-          LAYERS: "rgb",
-          SERVICE: "WMS",
-          TILED: true,
-          VERSION: "1.1.1",
-          TRANSPARENT: "true",
-          MAP: "wms/v/staging/classification/rgb.map",
-          YEAR: 2017
-        },
-        serverType: "mapserver",
-        tileGrid: this.tileGrid
-      }),
-      visible: false
-    })
-  };
-
-  for (let baseName of this.basemapsNames) {
-    this.layers.push(this[baseName.value].layer);
-  }
-}
-
-  private createLayers() {
-  var olLayers: OlTileLayer[] = new Array();
-
-  //layers
-  for (let layer of this.layersTypes) {
-    this.LayersTMS[layer.value] = this.createTMSLayer(layer);
-    this.layers.push(this.LayersTMS[layer.value]);
-  }
-
-  //limits
-  for (let limits of this.limitsNames) {
-    this.limitsTMS[limits.value] = this.createTMSLayer(limits);
-    this.layers.push(this.limitsTMS[limits.value]);
-  }
-
-  this.regionsLimits = this.createVectorLayer("regions", "#666633", 3);
-  this.layers.push(this.regionsLimits);
-
-  this.utfgridsource = new UTFGrid({
-    tileJSON: this.getTileJSON()
-  });
-
-  this.utfgridlayer = new OlTileLayer({
-    source: this.utfgridsource
-  });
-
-  this.utfgridCampo = new UTFGrid({
-    tileJSON: this.getTileJSONCampo()
-  });
-
-  this.utfgridlayerCampo = new OlTileLayer({
-    source: this.utfgridCampo
-  });
-
-  this.utfgridmunicipio = new UTFGrid({
-    tileJSON: this.getTileJSONMunicipio()
-  });
-
-  this.utfgridlayerMunicipio = new OlTileLayer({
-    source: this.utfgridmunicipio
-  });
-
-  this.layers.push(this.utfgridlayer);
-  this.layers.push(this.utfgridlayerCampo);
-  this.layers.push(this.utfgridlayerMunicipio);
-
-  this.layers = this.layers.concat(olLayers.reverse());
-}
-
-  private getTileJSON() {
-
-  let text = "((origin_table = 'prodes' AND " + this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").value + ")"
-    + " OR " + "(origin_table = 'deter' AND " + this.selectedTimeFromLayerType("bi_ce_deter_desmatamento_100_fip").value + "))";
-
-  if (this.selectRegion.type === "city") {
-    text += " AND county = '" + this.selectRegion.value + "'";
-  } else if (this.selectRegion.type === "state") {
-    text += " AND uf = '" + this.selectRegion.value + "'";
-  }
-
-  return {
-    version: "2.2.0",
-    grids: [
-      this.returnUTFGRID("bi_ce_info_utfgrid_fip", text, "{x}+{y}+{z}")
-    ]
-  };
-
-}
-
-  private getTileJSONCampo() {
-
-  let text = "1=1";
-
-  if (this.selectRegion.type === "city") {
-    text += " AND p.county = '" + this.selectRegion.value + "'";
-  } else if (this.selectRegion.type === "state") {
-    text += " AND p.uf = '" + this.selectRegion.value + "'";
-  }
-
-  return {
-    version: "2.2.0",
-    grids: [
-      this.returnUTFGRID("bi_ce_info_utfgrid_pontos_campo_fip", text, "{x}+{y}+{z}")
-    ]
-  };
-
-}
-
-  private getTileJSONMunicipio() {
-
-  let text = "1=1" ;
-
-  let time = this.selectedTimeFromLayerType("prodes_por_region_fip")
-
-  if (this.selectRegion.type === "city" || this.selectRegion.type === "state") {
-    text += " AND region_type = '" +  this.selectRegion.type + "'";
-  }
-
-  text += " AND " + time.value
-
-  return {
-    version: "2.2.0",
-    grids: [
-      this.returnUTFGRID("prodes_por_region_fip", text, "{x}+{y}+{z}")
-    ]
-  };
-
-}
-
-  private returnUTFGRID(layername, filter, tile) {
-  return "/ows?layers=" + layername + "&MSFILTER=" + filter + "&mode=tile&tile=" + tile + "&tilemode=gmap&map.imagetype=utfgrid"
-}
-
-  private createTMSLayer(layer) {
-  return new OlTileLayer({
-    source: new OlXYZ({
-      urls: this.parseUrls(layer)
-    }),
-    tileGrid: this.tileGrid,
-    visible: layer.visible,
-    opacity: layer.opacity
-  });
-}
-
-  private createVectorLayer(layerName, strokeColor, width) {
-  return new VectorLayer({
-    name: layerName,
-    source: new VectorSource(),
-    style: [
-      new Style({
-        stroke: new Stroke({
-          color: "#dedede",
-          width: width + 1
-        })
-      }),
-      new Style({
-        stroke: new Stroke({
-          color: strokeColor,
-          width: width
-        })
-      })
-    ]
-  });
-}
-
-  private parseUrls(layer) {
-  var result = [];
-
-  var filters = [];
-
-  if (layer.timeHandler == "msfilter" && layer.times)
-    filters.push(layer.timeSelected);
-  if (layer.layerfilter) filters.push(layer.layerfilter);
-  if (this.regionFilterDefault) filters.push(this.regionFilterDefault);
-  if (layer.regionFilter && this.msFilterRegion)
-    filters.push(this.msFilterRegion);
-
-  var msfilter = "";
-  if (filters.length > 0) msfilter += "&MSFILTER=" + filters.join(" AND ");
-
-  var layername = layer.value;
-  if (layer.timeHandler == "layername") layername = layer.timeSelected;
-
-  for (let url of this.urls) {
-    result.push(url + "?layers=" + layername + msfilter + "&mode=tile&tile={x}+{y}+{z}" + "&tilemode=gmap" + "&map.imagetype=png");
-  }
-  return result;
-}
-
-  private updateSourceAllLayer() {
-  for (let layer of this.layersTypes) {
-    this.updateSourceLayer(layer);
-  }
-}
-
-  private updateSourceLayer(layer) {
-  if (layer["times"]) {
-    this.periodSelected = layer["times"].find(
-      element => element.value === layer.timeSelected
-    );
-  }
-
-  // this.layersNames.find(element => element.id === "desmatamento_prodes")
-
-  if (layer["value"] === "bi_ce_prodes_desmatamento_100_fip" || layer["value"] === "prodes_por_region_fip") {
-    this.desmatInfo = this.periodSelected;
-    this.updateCharts();
-  }
-
-  this.handleInteraction();
-
-  var source_layers = this.LayersTMS[layer.value].getSource();
-  source_layers.setUrls(this.parseUrls(layer));
-  source_layers.refresh();
-}
-
-  baseLayerChecked(base, e) {
-  for (let basemap of this.basemapsNames) {
-    if (base.value == basemap.value && e.checked) {
-      this[base.value].layer.setVisible(true);
-      basemap.visible = true;
-    } else if (basemap.value != base.value) {
-      this[basemap.value].layer.setVisible(false);
-      basemap.visible = false;
-    } else {
-      this[this.descriptor.basemaps[0].defaultBaseMap].layer.setVisible(true);
-      if (basemap.value != this.descriptor.basemaps[0].defaultBaseMap) {
-        this[basemap.value].layer.setVisible(false);
-        this[basemap.value].visible = false;
-      }
-    }
-  }
-}
-
-  groupLayerschecked(layers, e) {
-  if (e.checked) {
-    this.LayersTMS[layers].setVisible(e.checked);
-  } else {
-    this.LayersTMS[layers].setVisible(e.checked);
-  }
-}
-
-  limitsLayersChecked(layers, e) {
-  //limits
-  for (let limits of this.limitsNames) {
-    if (layers.value == limits.value && e.checked) {
-      this.limitsTMS[limits.value].setVisible(true);
-      limits.visible = true;
-    } else {
-      this.limitsTMS[limits.value].setVisible(false);
-      limits.visible = false;
-    }
-  }
-}
-
-  private handleInteraction() {
-
-  let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
-  let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
-
-
-  if (prodes.visible || deter.visible) {
-
-    if ((prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip") || (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")) {
-
-      if (this.utfgridsource) {
-        var tileJSON = this.getTileJSON();
-
-        this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
-        this.utfgridsource.tileJSON = tileJSON;
-        this.utfgridsource.refresh();
-
-        this.utfgridlayer.setVisible(true);
-      }
-    }
-
-    if ((prodes.selectedType == "bi_ce_prodes_desmatamento_pontos_campo_fip") || (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
-      if (this.utfgridCampo) {
-        var tileJSONCampo = this.getTileJSONCampo();
-
-        this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
-        this.utfgridCampo.tileJSON = tileJSONCampo;
-        this.utfgridCampo.refresh();
-
-        this.utfgridlayerCampo.setVisible(true);
-      }
-
-    }
-
-    if ((prodes.selectedType == "prodes_por_region_fip")) {
-      if (this.utfgridmunicipio) {
-        var tileJSONMunicipio = this.getTileJSONMunicipio();
-
-        this.utfgridmunicipio.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONMunicipio.grids, this.utfgridmunicipio.tileGrid);
-        this.utfgridmunicipio.tileJSON = tileJSONMunicipio;
-        this.utfgridmunicipio.refresh();
-
-        this.utfgridlayerMunicipio.setVisible(true);
-      }
-    }
-
-  }
-  else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio) {
-    this.utfgridlayer.setVisible(false);
-    this.utfgridlayerCampo.setVisible(false);
-    this.utfgridlayerMunicipio.setVisible(false);
-  }
-
-
-}
-
-  changeVisibility(layer, e) {
-
-  for (let layerType of layer.types) {
-    this.LayersTMS[layerType.value].setVisible(false);
-  }
-
-  if (e != undefined) {
-    layer.visible = e.checked;
-  }
-
-  this.LayersTMS[layer.selectedType].setVisible(layer.visible);
-
-  this.handleInteraction();
-
-}
-
-  private updateDescriptor() {
-
-  this.descriptor.type = this.descriptorText.type_of_information_label[this.language];
-
-  // console.log("descriptor text - ", this.descriptorText)
-
-  for (let group of this.descriptor.groups) {
-
-    group.label = this.descriptorText[group.id].label[this.language];
-
-    for (let layer of group.layers) {
-      // console.log("Layer - ", layer)
-      layer.label = this.descriptorText[group.id].layers[layer.id].label[this.language]
-
-      for (let layerType of layer.types) {
-
-        if (this.descriptorText[group.id].layers[layer.id].hasOwnProperty("types")) {
-
-          if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("view_value")) {
-            layerType.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].view_value[this.language]
-          }
-          if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("timelabel")) {
-            layerType.timeLabel = this.descriptorText[group.id].layers[layer.id].types[layerType.value].timelabel[this.language]
-          }
-
-          if (layerType.times) {
-            for (let time of layerType.times) {
-
-              if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("times[time.value]"))
-                time.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].times[time.value][this.language]
-            }
-          }
+          }.bind(this)
+          );
         }
       }
     }
   }
 
-  // console.log("desc  - ", this.descriptor)
+  private createBaseLayers() {
+    this.mapbox = {
+      visible: true,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          wrapX: false,
+          url:
+            "https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+        }),
+        visible: true
+      })
+    };
 
-  for (let basemap of this.descriptor.basemaps) {
-    for (let types of basemap.types) {
-      types.viewValue = this.descriptorText.basemaps.types[types.value][this.language]
+    this.satelite = {
+      visible: false,
+      layer: new OlTileLayer({
+        preload: Infinity,
+        source: new BingMaps({
+          key:
+            "VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY",
+          imagerySet: "Aerial"
+        }),
+        visible: false
+      })
+    };
+
+    this.estradas = {
+      visible: false,
+      layer: new OlTileLayer({
+        preload: Infinity,
+        source: new BingMaps({
+          key:
+            "VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY",
+          imagerySet: "Road"
+        }),
+        visible: false
+      })
+    };
+
+    this.relevo = {
+      visible: false,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+            "https://server.arcgisonline.com/ArcGIS/rest/services/" +
+            "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+        }),
+        visible: false
+      })
+    };
+
+    this.landsat = {
+      visible: false,
+      layer: new OlTileLayer({
+        source: new TileWMS({
+          url: "http://mapbiomas-staging.terras.agr.br/wms",
+          projection: "EPSG:3857",
+          params: {
+            LAYERS: "rgb",
+            SERVICE: "WMS",
+            TILED: true,
+            VERSION: "1.1.1",
+            TRANSPARENT: "true",
+            MAP: "wms/v/staging/classification/rgb.map",
+            YEAR: 2017
+          },
+          serverType: "mapserver",
+          tileGrid: this.tileGrid
+        }),
+        visible: false
+      })
+    };
+
+    for (let baseName of this.basemapsNames) {
+      this.layers.push(this[baseName.value].layer);
     }
   }
 
-  for (let limits of this.descriptor.limits) {
-    for (let types of limits.types) {
-      types.Viewvalue = this.descriptorText.limits.types[types.value][this.language]
+  private createLayers() {
+    var olLayers: OlTileLayer[] = new Array();
+
+    //layers
+    for (let layer of this.layersTypes) {
+      this.LayersTMS[layer.value] = this.createTMSLayer(layer);
+      this.layers.push(this.LayersTMS[layer.value]);
+    }
+
+    //limits
+    for (let limits of this.limitsNames) {
+      this.limitsTMS[limits.value] = this.createTMSLayer(limits);
+      this.layers.push(this.limitsTMS[limits.value]);
+    }
+
+    this.regionsLimits = this.createVectorLayer("regions", "#666633", 3);
+    this.layers.push(this.regionsLimits);
+
+    this.utfgridsource = new UTFGrid({
+      tileJSON: this.getTileJSON()
+    });
+
+    this.utfgridlayer = new OlTileLayer({
+      source: this.utfgridsource
+    });
+
+    this.utfgridCampo = new UTFGrid({
+      tileJSON: this.getTileJSONCampo()
+    });
+
+    this.utfgridlayerCampo = new OlTileLayer({
+      source: this.utfgridCampo
+    });
+
+    this.utfgridmunicipio = new UTFGrid({
+      tileJSON: this.getTileJSONMunicipio()
+    });
+
+    this.utfgridlayerMunicipio = new OlTileLayer({
+      source: this.utfgridmunicipio
+    });
+
+    this.layers.push(this.utfgridlayer);
+    this.layers.push(this.utfgridlayerCampo);
+    this.layers.push(this.utfgridlayerMunicipio);
+
+    this.layers = this.layers.concat(olLayers.reverse());
+  }
+
+  private getTileJSON() {
+
+    let text = "((origin_table = 'prodes' AND " + this.selectedTimeFromLayerType("bi_ce_prodes_desmatamento_100_fip").value + ")"
+      + " OR " + "(origin_table = 'deter' AND " + this.selectedTimeFromLayerType("bi_ce_deter_desmatamento_100_fip").value + "))";
+
+    if (this.selectRegion.type === "city") {
+      text += " AND county = '" + this.selectRegion.value + "'";
+    } else if (this.selectRegion.type === "state") {
+      text += " AND uf = '" + this.selectRegion.value + "'";
+    }
+
+    return {
+      version: "2.2.0",
+      grids: [
+        this.returnUTFGRID("bi_ce_info_utfgrid_fip", text, "{x}+{y}+{z}")
+      ]
+    };
+
+  }
+
+  private getTileJSONCampo() {
+
+    let text = "1=1";
+
+    if (this.selectRegion.type === "city") {
+      text += " AND p.county = '" + this.selectRegion.value + "'";
+    } else if (this.selectRegion.type === "state") {
+      text += " AND p.uf = '" + this.selectRegion.value + "'";
+    }
+
+    return {
+      version: "2.2.0",
+      grids: [
+        this.returnUTFGRID("bi_ce_info_utfgrid_pontos_campo_fip", text, "{x}+{y}+{z}")
+      ]
+    };
+
+  }
+
+  private getTileJSONMunicipio() {
+
+    let text = "1=1";
+
+    let time = this.selectedTimeFromLayerType("prodes_por_region_fip")
+
+    if (this.selectRegion.type === "city" || this.selectRegion.type === "state") {
+      text += " AND region_type = '" + this.selectRegion.type + "'";
+    }
+
+    text += " AND " + time.value
+
+    return {
+      version: "2.2.0",
+      grids: [
+        this.returnUTFGRID("prodes_por_region_fip", text, "{x}+{y}+{z}")
+      ]
+    };
+
+  }
+
+  private returnUTFGRID(layername, filter, tile) {
+    return "/ows?layers=" + layername + "&MSFILTER=" + filter + "&mode=tile&tile=" + tile + "&tilemode=gmap&map.imagetype=utfgrid"
+  }
+
+  private createTMSLayer(layer) {
+    return new OlTileLayer({
+      source: new OlXYZ({
+        urls: this.parseUrls(layer)
+      }),
+      tileGrid: this.tileGrid,
+      visible: layer.visible,
+      opacity: layer.opacity
+    });
+  }
+
+  private createVectorLayer(layerName, strokeColor, width) {
+    return new VectorLayer({
+      name: layerName,
+      source: new VectorSource(),
+      style: [
+        new Style({
+          stroke: new Stroke({
+            color: "#dedede",
+            width: width + 1
+          })
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: strokeColor,
+            width: width
+          })
+        })
+      ]
+    });
+  }
+
+  private parseUrls(layer) {
+    var result = [];
+
+    var filters = [];
+
+    if (layer.timeHandler == "msfilter" && layer.times)
+      filters.push(layer.timeSelected);
+    if (layer.layerfilter) filters.push(layer.layerfilter);
+    if (this.regionFilterDefault) filters.push(this.regionFilterDefault);
+    if (layer.regionFilter && this.msFilterRegion)
+      filters.push(this.msFilterRegion);
+
+    var msfilter = "";
+    if (filters.length > 0) msfilter += "&MSFILTER=" + filters.join(" AND ");
+
+    var layername = layer.value;
+    if (layer.timeHandler == "layername") layername = layer.timeSelected;
+
+    for (let url of this.urls) {
+      result.push(url + "?layers=" + layername + msfilter + "&mode=tile&tile={x}+{y}+{z}" + "&tilemode=gmap" + "&map.imagetype=png");
+    }
+    return result;
+  }
+
+  private updateSourceAllLayer() {
+    for (let layer of this.layersTypes) {
+      this.updateSourceLayer(layer);
     }
   }
 
-}
+  private updateSourceLayer(layer) {
+    if (layer["times"]) {
+      this.periodSelected = layer["times"].find(
+        element => element.value === layer.timeSelected
+      );
+    }
+
+    // this.layersNames.find(element => element.id === "desmatamento_prodes")
+
+    if (layer["value"] === "bi_ce_prodes_desmatamento_100_fip" || layer["value"] === "prodes_por_region_fip") {
+      this.desmatInfo = this.periodSelected;
+      this.updateCharts();
+    }
+
+    this.handleInteraction();
+
+    var source_layers = this.LayersTMS[layer.value].getSource();
+    source_layers.setUrls(this.parseUrls(layer));
+    source_layers.refresh();
+  }
+
+  baseLayerChecked(base, e) {
+    for (let basemap of this.basemapsNames) {
+      if (base.value == basemap.value && e.checked) {
+        this[base.value].layer.setVisible(true);
+        basemap.visible = true;
+      } else if (basemap.value != base.value) {
+        this[basemap.value].layer.setVisible(false);
+        basemap.visible = false;
+      } else {
+        this[this.descriptor.basemaps[0].defaultBaseMap].layer.setVisible(true);
+        if (basemap.value != this.descriptor.basemaps[0].defaultBaseMap) {
+          this[basemap.value].layer.setVisible(false);
+          this[basemap.value].visible = false;
+        }
+      }
+    }
+  }
+
+  groupLayerschecked(layers, e) {
+    if (e.checked) {
+      this.LayersTMS[layers].setVisible(e.checked);
+    } else {
+      this.LayersTMS[layers].setVisible(e.checked);
+    }
+  }
+
+  limitsLayersChecked(layers, e) {
+    //limits
+    for (let limits of this.limitsNames) {
+      if (layers.value == limits.value && e.checked) {
+        this.limitsTMS[limits.value].setVisible(true);
+        limits.visible = true;
+      } else {
+        this.limitsTMS[limits.value].setVisible(false);
+        limits.visible = false;
+      }
+    }
+  }
+
+  private handleInteraction() {
+
+    let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
+    let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
+
+
+    if (prodes.visible || deter.visible) {
+
+      if ((prodes.selectedType == "bi_ce_prodes_desmatamento_100_fip") || (deter.selectedType == "bi_ce_deter_desmatamento_100_fip")) {
+
+        if (this.utfgridsource) {
+          var tileJSON = this.getTileJSON();
+
+          this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
+          this.utfgridsource.tileJSON = tileJSON;
+          this.utfgridsource.refresh();
+
+          this.utfgridlayer.setVisible(true);
+        }
+      }
+
+      if ((prodes.selectedType == "bi_ce_prodes_desmatamento_pontos_campo_fip") || (deter.selectedType == "bi_ce_deter_desmatamento_pontos_campo_fip")) {
+        if (this.utfgridCampo) {
+          var tileJSONCampo = this.getTileJSONCampo();
+
+          this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
+          this.utfgridCampo.tileJSON = tileJSONCampo;
+          this.utfgridCampo.refresh();
+
+          this.utfgridlayerCampo.setVisible(true);
+        }
+
+      }
+
+      if ((prodes.selectedType == "prodes_por_region_fip")) {
+        if (this.utfgridmunicipio) {
+          var tileJSONMunicipio = this.getTileJSONMunicipio();
+
+          this.utfgridmunicipio.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONMunicipio.grids, this.utfgridmunicipio.tileGrid);
+          this.utfgridmunicipio.tileJSON = tileJSONMunicipio;
+          this.utfgridmunicipio.refresh();
+
+          this.utfgridlayerMunicipio.setVisible(true);
+        }
+      }
+
+    }
+    else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio) {
+      this.utfgridlayer.setVisible(false);
+      this.utfgridlayerCampo.setVisible(false);
+      this.utfgridlayerMunicipio.setVisible(false);
+    }
+
+
+  }
+
+  changeVisibility(layer, e) {
+
+    for (let layerType of layer.types) {
+      this.LayersTMS[layerType.value].setVisible(false);
+    }
+
+    if (e != undefined) {
+      layer.visible = e.checked;
+    }
+
+    this.LayersTMS[layer.selectedType].setVisible(layer.visible);
+
+    this.handleInteraction();
+
+  }
+
+  private updateDescriptor() {
+
+    this.descriptor.type = this.descriptorText.type_of_information_label[this.language];
+
+    // console.log("descriptor text - ", this.descriptorText)
+
+    for (let group of this.descriptor.groups) {
+
+      group.label = this.descriptorText[group.id].label[this.language];
+
+      for (let layer of group.layers) {
+        // console.log("Layer - ", layer)
+        layer.label = this.descriptorText[group.id].layers[layer.id].label[this.language]
+
+        for (let layerType of layer.types) {
+
+          if (this.descriptorText[group.id].layers[layer.id].hasOwnProperty("types")) {
+
+            if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("view_value")) {
+              layerType.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].view_value[this.language]
+            }
+            if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("timelabel")) {
+              layerType.timeLabel = this.descriptorText[group.id].layers[layer.id].types[layerType.value].timelabel[this.language]
+            }
+
+            if (layerType.times) {
+              for (let time of layerType.times) {
+
+                if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("times[time.value]"))
+                  time.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].times[time.value][this.language]
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for (let basemap of this.descriptor.basemaps) {
+      for (let types of basemap.types) {
+        types.viewValue = this.descriptorText.basemaps.types[types.value][this.language]
+      }
+    }
+
+    for (let limits of this.descriptor.limits) {
+      for (let types of limits.types) {
+        types.Viewvalue = this.descriptorText.limits.types[types.value][this.language]
+      }
+    }
+
+
+
+
+  }
 
   public onFileComplete(data: any) {
 
-  let map = this.map;
+    let map = this.map;
 
-  this.layerFromUpload.checked = false;
+    this.layerFromUpload.checked = false;
 
-  if (this.layerFromUpload.layer != null) {
-    map.removeLayer(this.layerFromUpload.layer);
-  }
 
-  if (data.features.length > 1) {
-    this.layerFromUpload.loading = false;
+    if (this.layerFromUpload.layer != null) {
+      map.removeLayer(this.layerFromUpload.layer);
+    }
 
-    this.layerFromUpload.visible = false;
-    this.layerFromUpload.label = data.name;
-    this.layerFromUpload.layer = data;
-
-  } else {
-    this.layerFromUpload.loading = false;
-
-    if (data.features[0].hasOwnProperty('properties')) {
-
-      let auxlabel = Object.keys(data.features[0].properties)[0];
-      this.layerFromUpload.visible = false;
-      this.layerFromUpload.label = data.features[0].properties[auxlabel];
-      this.layerFromUpload.layer = data;
-
-    } else {
+    if (data.features.length > 1) {
+      this.layerFromUpload.loading = false;
 
       this.layerFromUpload.visible = false;
       this.layerFromUpload.label = data.name;
       this.layerFromUpload.layer = data;
+
+    } else {
+      this.layerFromUpload.loading = false;
+
+      if (data.features[0].hasOwnProperty('properties')) {
+
+        let auxlabel = Object.keys(data.features[0].properties)[0];
+        this.layerFromUpload.visible = false;
+        this.layerFromUpload.label = data.features[0].properties[auxlabel];
+        this.layerFromUpload.layer = data;
+
+      } else {
+
+        this.layerFromUpload.visible = false;
+        this.layerFromUpload.label = data.name;
+        this.layerFromUpload.layer = data;
+      }
     }
-  }
 
-  this.layerFromUpload.visible = true;
+    this.layerFromUpload.visible = true;
 
-  var vectorSource = new VectorSource({
-    features: (new GeoJSON()).readFeatures(data, {
-      dataProjection: "EPSG:4326",
-      featureProjection: "EPSG:3857"
-    })
-  });
-
-
-  this.layerFromUpload.layer = new VectorLayer({
-    source: vectorSource,
-    style: [
-      new Style({
-        stroke: new Stroke({
-          color: this.layerFromUpload.strokeColor,
-          width: 4
-        })
-      }),
-      new Style({
-        stroke: new Stroke({
-          color: this.layerFromUpload.strokeColor,
-          width: 4,
-          lineCap: 'round',
-          zIndex: 1
-        })
+    var vectorSource = new VectorSource({
+      features: (new GeoJSON()).readFeatures(data, {
+        dataProjection: "EPSG:4326",
+        featureProjection: "EPSG:3857"
       })
-    ]
-  });
+    });
 
-}
+
+    this.layerFromUpload.layer = new VectorLayer({
+      source: vectorSource,
+      style: [
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromUpload.strokeColor,
+            width: 4
+          })
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromUpload.strokeColor,
+            width: 4,
+            lineCap: 'round',
+            zIndex: 1
+          })
+        })
+      ]
+    });
+
+  }
 
   onChangeCheckUpload(event) {
-  let map = this.map;
-  this.layerFromUpload.checked = !this.layerFromUpload.checked;
+    let map = this.map;
+    this.layerFromUpload.checked = !this.layerFromUpload.checked;
 
-  if (this.layerFromUpload.checked) {
+    if (this.layerFromUpload.checked) {
 
-    map.addLayer(this.layerFromUpload.layer);
-    let extent = this.layerFromUpload.layer.getSource().getExtent();
-    map.getView().fit(extent, { duration: 1800 });
+      map.addLayer(this.layerFromUpload.layer);
+      let extent = this.layerFromUpload.layer.getSource().getExtent();
+      map.getView().fit(extent, { duration: 1800 });
 
-    let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
-    prodes.selectedType = "bi_ce_prodes_desmatamento_100_fip";
-    this.changeVisibility(prodes, undefined)
-    this.infodataMunicipio = null;
+      let prodes = this.layersNames.find(element => element.id === "desmatamento_prodes");
+      prodes.selectedType = "bi_ce_prodes_desmatamento_100_fip";
+      this.changeVisibility(prodes, undefined)
+      this.infodataMunicipio = null;
 
-  } else {
-    map.removeLayer(this.layerFromUpload.layer);
+    } else {
+      map.removeLayer(this.layerFromUpload.layer);
+    }
+
   }
-
-}
 
   private getMetadata(metadata, language){
     let _metadata = [];
@@ -1522,51 +1529,51 @@ export class MapComponent implements OnInit {
 
 ngOnInit() {
 
-  let descriptorURL = "/service/map/descriptor" + this.getServiceParams();
+    let descriptorURL = "/service/map/descriptor" + this.getServiceParams();
 
-  this.http.get(descriptorURL).subscribe(result => {
-    this.descriptor = result;
-    this.regionFilterDefault = this.descriptor.regionFilterDefault;
+    this.http.get(descriptorURL).subscribe(result => {
+      this.descriptor = result;
+      this.regionFilterDefault = this.descriptor.regionFilterDefault;
 
 
-    for (let group of this.descriptor.groups) {
-      for (let layer of group.layers) {
-        if (layer.id != "satelite") {
-          for (let type of layer.types) {
-            type.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + type.value + "&format=image/png";
+      for (let group of this.descriptor.groups) {
+        for (let layer of group.layers) {
+          if (layer.id != "satelite") {
+            for (let type of layer.types) {
+              type.urlLegend = this.urls[0] + "?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + type.value + "&format=image/png";
+            }
+            this.layersNames.push(layer);
           }
-          this.layersNames.push(layer);
+
+          for (let layerType of layer.types) {
+            layerType.visible = false;
+            if (layer.selectedType == layerType.value)
+              layerType.visible = layer.visible;
+
+            this.layersTypes.push(layerType);
+            this.layersTypes.sort(function (e1, e2) {
+              return e2.order - e1.order;
+            });
+          }
         }
+      }
 
-        for (let layerType of layer.types) {
-          layerType.visible = false;
-          if (layer.selectedType == layerType.value)
-            layerType.visible = layer.visible;
-
-          this.layersTypes.push(layerType);
-          this.layersTypes.sort(function (e1, e2) {
-            return e2.order - e1.order;
-          });
+      for (let basemap of this.descriptor.basemaps) {
+        for (let types of basemap.types) {
+          this.basemapsNames.push(types);
         }
       }
-    }
 
-    for (let basemap of this.descriptor.basemaps) {
-      for (let types of basemap.types) {
-        this.basemapsNames.push(types);
+      for (let limits of this.descriptor.limits) {
+        for (let types of limits.types) {
+          this.limitsNames.push(types);
+        }
       }
-    }
-
-    for (let limits of this.descriptor.limits) {
-      for (let types of limits.types) {
-        this.limitsNames.push(types);
-      }
-    }
-    this.createMap();
-  });
+      this.createMap();
+    });
 
 
-}
+  }
 }
 
 @Component({
