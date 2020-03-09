@@ -40,17 +40,17 @@ module.exports = function(app) {
 	Internal.clearCache = function(data, callback) {
 		return callback(true, data);
 
-		fs.readdir(dir_upload, (err, files) => {
-			files = files.filter(file => file.includes(Internal.targetFilesName));
-			let len = files.length;
-			for (const file of files) {
-				fs.unlink(dir_upload + "/" + file, err => {
-					if (--len <= 0) {
-						callback(true, data);
-					}
-				});
-			}
-		});
+		// fs.readdir(dir_upload, (err, files) => {
+		// 	files = files.filter(file => file.includes(Internal.targetFilesName));
+		// 	let len = files.length;
+		// 	for (const file of files) {
+		// 		fs.unlink(dir_upload + "/" + file, err => {
+		// 			if (--len <= 0) {
+		// 				callback(true, data);
+		// 			}
+		// 		});
+		// 	}
+		// });
 	};
 
 	Internal.toGeoJson = function(shapfile, callback) {
@@ -60,8 +60,9 @@ module.exports = function(app) {
 			if (er) {
 				Internal.response
 					.status(400)
-					.send("Something is wrong, please try again!");
+					.send("Can't parse your file!!");
 				console.error("FILE: ", shapfile, " | ERROR: ", er);
+				fs.unlinkSync(Internal.tmpPath);
 				return;
 			} else {
 				callback(data, Internal.finish);
@@ -92,6 +93,12 @@ module.exports = function(app) {
 				}
 
 				if (type == "File" && Internal.acceptedFiles.includes(extension)) {
+					let time = "";
+
+					if(extension == "kml"){
+						time = "-" + new Date().getTime();
+					}
+
 					let target_path =
 						Internal.dirTarget +
 						"/" +
@@ -99,6 +106,7 @@ module.exports = function(app) {
 							.split("/")
 							.pop()
 							.toLowerCase() +
+							time +
 						"." +
 						extension;
 
@@ -116,6 +124,7 @@ module.exports = function(app) {
 		} catch (e) {
 			Internal.response.status(400).send("You file can not be extracted!");
 			console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", e.stack);
+			fs.unlinkSync(Internal.tmpPath);
 		}
 
 		if (!fs.existsSync(Internal.targetFilesName)) {
