@@ -627,8 +627,6 @@ export class MapComponent implements OnInit {
     });
   }
 
-
-
   private createMap() {
     this.createBaseLayers();
     this.createLayers();
@@ -1260,7 +1258,7 @@ export class MapComponent implements OnInit {
   source_layers.refresh();
 }
 
-baseLayerChecked(base, e) {
+  baseLayerChecked(base, e) {
   for (let basemap of this.basemapsNames) {
     if (base.value == basemap.value && e.checked) {
       this[base.value].layer.setVisible(true);
@@ -1278,7 +1276,7 @@ baseLayerChecked(base, e) {
   }
 }
 
-groupLayerschecked(layers, e) {
+  groupLayerschecked(layers, e) {
   if (e.checked) {
     this.LayersTMS[layers].setVisible(e.checked);
   } else {
@@ -1286,7 +1284,7 @@ groupLayerschecked(layers, e) {
   }
 }
 
-limitsLayersChecked(layers, e) {
+  limitsLayersChecked(layers, e) {
   //limits
   for (let limits of this.limitsNames) {
     if (layers.value == limits.value && e.checked) {
@@ -1355,7 +1353,7 @@ limitsLayersChecked(layers, e) {
 
 }
 
-changeVisibility(layer, e) {
+  changeVisibility(layer, e) {
 
   for (let layerType of layer.types) {
     this.LayersTMS[layerType.value].setVisible(false);
@@ -1422,7 +1420,6 @@ changeVisibility(layer, e) {
     }
   }
 
-
 }
 
   public onFileComplete(data: any) {
@@ -1430,7 +1427,6 @@ changeVisibility(layer, e) {
   let map = this.map;
 
   this.layerFromUpload.checked = false;
-
 
   if (this.layerFromUpload.layer != null) {
     map.removeLayer(this.layerFromUpload.layer);
@@ -1493,7 +1489,7 @@ changeVisibility(layer, e) {
 
 }
 
-onChangeCheckUpload(event) {
+  onChangeCheckUpload(event) {
   let map = this.map;
   this.layerFromUpload.checked = !this.layerFromUpload.checked;
 
@@ -1513,6 +1509,16 @@ onChangeCheckUpload(event) {
   }
 
 }
+
+  private getMetadata(metadata, language){
+    let _metadata = [];
+
+    metadata.forEach(function (data) {
+      _metadata.push({'title': data.title[language], 'description': data.description[language]});
+    });
+
+    return _metadata;
+  };
 
 ngOnInit() {
 
