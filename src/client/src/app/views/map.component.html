@@ -1,27 +1,41 @@
-<nav class="navbar barra-titulo navbar-title">
-	<div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 title-atlas-div">
-		<div class="row" class="title-atlas"> Cerrado-DPAT</div>
-		<div class="row" class="title-atlas"> Deforestation Polygon Assessment Tool</div>
+<nav class="navbar  navbar-title">
+	<div class="p-grid p-justify-between">
+		<!-- <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 title-atlas-div"> -->
+		<div class="p-col-1-fixed ">
+
+			<a href="http://www.cerradodpat.org" target="_blank">
+				<img class="logo-dpat" src="assets/logo/cerrado-dpat-logo.svg" /></a>
+
+			<!-- <div class="row" class="title-atlas"> Cerrado-DPAT</div>
+			<div class="row" class="title-atlas"> Deforestation Polygon Assessment Tool</div> -->
+		</div>
+
+		<div class="p-col-4 p-align-end">
+			<!-- <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 logos-atlas"> -->
+			<div class="p-grid p-align-start vertical-container p-align-end">
+				<div class="p-col-3">
+					<a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
+							class="logo-cepf" src="assets/logo/fip.png" /></a>
+				</div>
+				<div class="p-col-3">
+					<a href="https://www.ufg.br/" target="_blank"><img class="logo-ufg"
+							src="assets/logo/logo-ufg.png" /></a>
+				</div>
+				<div class="p-col-3">
+					<a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
+							src="assets/logo/lapig.png" /></a>
+				</div>
+				<!-- <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 title-atlas-div"> -->
+				<div class="p-col-3">
+					<ngx-flag-picker id="lang-picker" [selectedCountryCode]="selectedCountryCode"
+						[countryCodes]="countryCodes" [customLabels]="customLabels" [showFlags]="false"
+						(changedCountryCode)="changeSelectedCountryCode($event)">
+					</ngx-flag-picker>
+				</div>
+			</div>
+		</div>
 	</div>
 
-
-	<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 logos-atlas">
-		<a href="http://climatefundsupdate.org/the-funds/forest-investment-program/" target="_blank"><img
-				class="logo-cepf" src="assets/logo/fip.png" /></a>
-		<a href="https://www.ufg.br/" target="_blank"><img class="logo-ufg" src="assets/logo/logo-ufg.png" /></a>
-		<a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
-				src="assets/logo/lapig.png" /></a>
-	</div>
-
-	<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 title-atlas-div">
-
-		<ngx-flag-picker id="lang-picker" [selectedCountryCode]="selectedCountryCode" [countryCodes]="countryCodes"
-			[customLabels]="customLabels" [showFlags]="false" (changedCountryCode)="changeSelectedCountryCode($event)">
-		</ngx-flag-picker>
-
-		<!-- <span class="flag-icon flag-icon-br" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('pt-br')"></span>
-		<span class="flag-icon flag-icon-us" style="width:30%;height:25px;cursor: pointer;" (click)="changeLanguage('en-us')"></span> -->
-	</div>
 </nav>
 
 
@@ -128,23 +142,26 @@
 
 						<mat-tab label="{{titlesLayerBox.label_upload}}">
 
-							<div class="info-header">Clique no botão abaixo para carrregar seu arquivo compactado (.zip ou .kmz).</div>
+							<div class="info-header">Clique no botão abaixo para carrregar seu arquivo compactado (.zip
+								ou .kmz).</div>
 
-							<app-file-upload [loading]="layerFromUpload.loading" [language]="language" [ddarea]="layerFromUpload.dragArea" (complete)="onFileComplete($event)"></app-file-upload>
-							
+							<app-file-upload [loading]="layerFromUpload.loading" [language]="language"
+								[ddarea]="layerFromUpload.dragArea" (complete)="onFileComplete($event)">
+							</app-file-upload>
+
 							<div class="info-footer">Formatos suportados: geojson, kml e shp.</div>
 
-							<mat-card *ngIf="layerFromUpload.visible" class="card-checkbox-upload mat-elevation-z8" color="primary">
+							<mat-card *ngIf="layerFromUpload.visible" class="card-checkbox-upload mat-elevation-z8"
+								color="primary">
 								<mat-card-subtitle>
-									<mat-checkbox  class="example-margin"
-										(change)="onChangeCheckUpload($event)"
-										[checked]="layerFromUpload.checked"> 
+									<mat-checkbox class="example-margin" (change)="onChangeCheckUpload($event)"
+										[checked]="layerFromUpload.checked">
 										{{"Seu arquivo"}}
 									</mat-checkbox>
 								</mat-card-subtitle>
 							</mat-card>
 						</mat-tab>
-						
+
 					</mat-tab-group>
 				</div>
 			</div>
@@ -354,7 +371,7 @@
 		<p class="card-text">{{ infodataMunicipio.region_display }}</p>
 		<table>
 			<tbody>
-				
+
 				<tr>
 					<th>{{minireportText.area}} </th>
 					<td>{{infodataMunicipio.area_prodes | number:'1.2-3' }} km²</td>
@@ -371,7 +388,7 @@
 					<th>{{minireportText.label_area_rl}} </th>
 					<td>{{infodataMunicipio.area_rl_show}}</td>
 				</tr>
-				
+
 			</tbody>
 		</table>
 		<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_municipio}} </strong></div>

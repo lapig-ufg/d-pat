@@ -313,11 +313,6 @@ h6 {
 
 }
 
-.title-atlas-div {
-	text-align: left;
-	/* padding-left: 0px; */
-}
-
 .paddingLayerLegend {
 	padding-left: 0px;
 	padding-right: 0px;
@@ -326,27 +321,33 @@ h6 {
 .baseMap {
 	padding: 20px 10px 5px 30px
 }
-
-.logos-atlas {
-	text-align: right;
+.logo-dpat {
+	width:80%; 
+	object-fit: cover;
 }
 
 .logo-cepf {
-	height: 39px;
+	height: 56px;
 	margin-right: 8px;
 	margin-top: 5px;
+	width:80%; 
+	object-fit: scale-down;
 }
+
 
 .logo-lapig {
 	height: 40px;
 	margin-left: 8px;
+	width:80%; 
+	object-fit: scale-down;
 }
 
 .logo-ufg {
 	height: 60px;
 	margin-left: 8px;
-	/* margin-top: 5px; */
+	margin-top: 5px;
 	margin-right: 8px;
+	object-fit: scale-down;
 }
 
 .clear-region-btn {
