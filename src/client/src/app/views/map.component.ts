@@ -1423,20 +1423,19 @@ export class MapComponent implements OnInit {
       }
     }
 
-
-
-
   }
 
   public onFileComplete(data: any) {
 
-    let map = this.map;
+    const map = this.map;
 
     this.layerFromUpload.checked = false;
-
-
+    
     if (this.layerFromUpload.layer != null) {
       map.removeLayer(this.layerFromUpload.layer);
+    }
+    if(!data.hasOwnProperty('features')){
+      return;
     }
 
     if (data.features.length > 1) {
@@ -1451,7 +1450,7 @@ export class MapComponent implements OnInit {
 
       if (data.features[0].hasOwnProperty('properties')) {
 
-        let auxlabel = Object.keys(data.features[0].properties)[0];
+        const auxlabel = Object.keys(data.features[0].properties)[0];
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.features[0].properties[auxlabel];
         this.layerFromUpload.layer = data;
