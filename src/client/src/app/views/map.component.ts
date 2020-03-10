@@ -30,6 +30,9 @@ import {
   switchMap
 } from "rxjs/operators";
 
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+
 import BingMaps from "ol/source/BingMaps";
 import { unByKey } from "ol/Observable";
 import OlObservable from "ol/Observable";
@@ -201,7 +204,9 @@ export class MapComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private _service: SearchService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
   ) {
     this.projection = OlProj.get("EPSG:900913");
     this.currentZoom = 5.8;
@@ -1571,7 +1576,22 @@ ngOnInit() {
       this.createMap();
     });
 
+    //Register of SVG icons
 
+  this.matIconRegistry.addSvgIcon(
+      `info`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/info.svg")
+  );
+
+    this.matIconRegistry.addSvgIcon(
+        `shp`,
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/shp.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+        `csv`,
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/csv.svg")
+    );
   }
 }
 
