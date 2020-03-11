@@ -47,9 +47,10 @@ hr {
 }
 
 .dpat-ol-map {
-	height: calc(100vh - 55px);
+	/*height: calc(100vh - 55px);*/
 	/* 100% of the viewport height - navbar height */
 	background-color: rgba(0, 0, 0, 0.5) !important;
+	overflow: hidden;
 }
 
 .dpat-ol-map .ol-viewport canvas {
@@ -119,12 +120,13 @@ hr {
 	/*bottom: 2%;*/
 	/*height: 90%;*/
 	min-width: 320px;
-	top: 8%;
-	width: 42vh;
+	top: 19%;
+	width: 43vh;
 	background-color: #FFF;
 	color: #754c26;
 	text-align: left;
 	z-index: 1000;
+	max-height: 500px;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
 }
@@ -133,19 +135,20 @@ hr {
 	position: absolute;
 	right: 1%;
 	bottom: 2%;
-	width: 600px;
+	width: 60vh;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
 	z-index: 1000;
-	border: 1px solid #808080;
+	/*border: 1px solid #808080;*/
 	opacity: .93;
+	max-height: 462px;
 }
 
 #positionLegend {
 	position: absolute;
 	right: 1%;
-	top: 4%;
+	top: 9%;
 	width: 350px;
 	background-color: #FFF;
 	color: #666;
@@ -156,7 +159,7 @@ hr {
 }
 
 .layersConteudo {
-	max-height: 800px;
+	max-height: 702px;
 	overflow: auto;
 }
 
@@ -297,7 +300,7 @@ h6 {
 	background-color: #69ce69;
 	padding: 10px;
 	font-weight: bold;
-	font-size: 22px;
+	font-size: 18px;
 }
 
 .title-atlas {
@@ -808,7 +811,7 @@ mat-select {
 
 .btn-actions button{
 	margin-left: 5px;
-	font-weight: bold;
+	font-weight: 900;
 }
 
 .btn-info{
@@ -817,4 +820,31 @@ mat-select {
 
 .space{
 	flex: 1 1 auto;
+}
+
+.logo-dpat{
+	position: absolute;
+	left: 2%;
+	top: 2%;
+	width: 256px;
+	border-radius: 10px;
+	background-color: #fff;
+	z-index: 1000;
+}
+
+.btn-languages{
+	position: absolute;
+	right: 2%;
+	top: 2%;
+	border-radius: 10px;
+	z-index: 1000;
+}
+.btn-languages button{
+	margin-left: 15px;
+}
+
+/deep/ .mat-tab-body-wrapper {
+	padding: 10px;
+	overflow-y:scroll;
+	overflow-x:hidden;
 }

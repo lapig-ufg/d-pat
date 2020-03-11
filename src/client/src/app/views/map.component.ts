@@ -6,6 +6,7 @@ import {
   LOCALE_ID,
   OnDestroy,
   ChangeDetectorRef,
+  HostListener,
   ChangeDetectionStrategy
 } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
@@ -201,6 +202,8 @@ export class MapComponent implements OnInit {
     strokeColor: "#2224ba",
   };
 
+  innerHeigth: any
+
   constructor(
     private http: HttpClient,
     private _service: SearchService,
@@ -209,7 +212,7 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer
   ) {
     this.projection = OlProj.get("EPSG:900913");
-    this.currentZoom = 5.8;
+    this.currentZoom = 5.3;
     this.layers = [];
 
     this.dataSeries = {};
@@ -1531,6 +1534,11 @@ export class MapComponent implements OnInit {
     return _metadata;
   };
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerHeigth = window.innerHeight;
+  }
+
 ngOnInit() {
 
     let descriptorURL = "/service/map/descriptor" + this.getServiceParams();
@@ -1575,9 +1583,9 @@ ngOnInit() {
       }
       this.createMap();
     });
-
+    //keep height of window
+  this.innerHeigth = window.innerHeight;
     //Register of SVG icons
-
   this.matIconRegistry.addSvgIcon(
       `info`,
       this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/info.svg")
