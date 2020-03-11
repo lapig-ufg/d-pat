@@ -39,6 +39,7 @@
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^2.0.0",
     "primeng": "^8.0.2",
+    "roboto-fontface": "^0.10.0",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "ssh2-sftp-client": "^4.1.0",

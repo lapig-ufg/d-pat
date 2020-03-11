@@ -648,9 +648,11 @@ export class MapComponent implements OnInit {
       target: "map",
       layers: this.layers,
       view: new OlView({
-        center: OlProj.fromLonLat([-52, -14]),
+        center: OlProj.fromLonLat([-49, -14]),
         projection: this.projection,
-        zoom: this.currentZoom
+        zoom: this.currentZoom,
+        maxZoom: 18,
+        minZoom: 2
       }),
       loadTilesWhileAnimating: true,
       loadTilesWhileInteracting: true,

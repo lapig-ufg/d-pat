@@ -2,6 +2,7 @@ html,
 body {
 	margin: 0;
 	height: 100%;
+	font-family: 'Roboto', sans-serif;
 }
 
 .bckgdisabled {
@@ -97,6 +98,7 @@ hr {
 	z-index: 99999999;
 	top: 10vh;
 	background-color: #FFF;
+	border-radius: 10px !important;
 }
 
 .card-text {
@@ -120,15 +122,19 @@ hr {
 	/*bottom: 2%;*/
 	/*height: 90%;*/
 	min-width: 320px;
-	top: 19%;
+	top: 21.5%;
 	width: 43vh;
 	background-color: #FFF;
 	color: #754c26;
 	text-align: left;
 	z-index: 1000;
-	max-height: 500px;
+	max-height: 690px;
+	border-radius:10px;
+	overflow:hidden;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
+	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
+	box-shadow: -1px 1px 10px 0px #257a33;
 }
 
 #positionCharts {
@@ -140,9 +146,13 @@ hr {
 	color: #666;
 	text-align: left;
 	z-index: 1000;
+	border-radius:10px;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	max-height: 462px;
+	height: 460px;
+	overflow:hidden;
+	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
+	box-shadow: -1px 1px 10px 0px #257a33;
 }
 
 #positionLegend {
@@ -154,8 +164,11 @@ hr {
 	color: #666;
 	text-align: left;
 	z-index: 1000;
-	border: 1px solid #808080;
+	border-radius:10px !important;
+	/*border: 1px solid #808080;*/
 	opacity: .93;
+	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
+	box-shadow: -1px 1px 10px 0px #257a33;
 }
 
 .layersConteudo {
@@ -296,8 +309,8 @@ h6 {
  
 
 .titleWindows {
-	color: #424242;
-	background-color: #69ce69;
+	color: #271616;
+	background-color: #7cb359;
 	padding: 10px;
 	font-weight: bold;
 	font-size: 18px;
@@ -306,7 +319,7 @@ h6 {
 .title-atlas {
 	font-weight: bold;
 	font-size: 30px;
-	font-family: Gill Sans, Verdana;
+	/*font-family: Gill Sans, Verdana;*/
 	color: rgb(19, 134, 67);
 	margin: 0;
 	padding: 0px 0px 6px 0px;
@@ -408,8 +421,9 @@ button {
 }
 
 h5.expansion-layer  {
-	padding-left: 7.5%;
-	font-size: 1rem;
+	padding-top: 2%;
+	font-size: 0.98rem;
+	width: 100%;
 }
 
 .fotosCampo {
@@ -475,8 +489,8 @@ h5.expansion-layer  {
 	}
 
 	#positionCharts {
-		width: 350px;
-		max-height: 287px;
+		width: 350vm;
+		max-height: 287vm;
 	}
 
 	h6 {
@@ -484,7 +498,8 @@ h5.expansion-layer  {
 	}
 
 	.titleWindows {
-		font-size: 0.95em
+		font-size: 0.95em;
+		color: #7cb359;
 	}
 
 	.table-municipios {
@@ -637,6 +652,7 @@ h5.expansion-layer  {
 .expansion-header-layer-legend {
 	margin-left: 0px;
 	margin-top: 0px;
+	padding-left: 10px;
 }
 
 #dropdownPoints {
@@ -652,8 +668,8 @@ h5.expansion-layer  {
 }
 
 .mat-expansion-panel-header.mat-expanded {
-	background: #4e4e4e!important;
-	color: #eeeeee !important;
+	background: #eeeeee;
+	color: #4e4e4e;
 	border-radius: 0px;
 	border-left: 5px solid #0e9909;
 }
@@ -661,7 +677,7 @@ h5.expansion-layer  {
 /* .mat-expansion-panel-header:focus,  */
 
 .mat-expansion-panel-header {
-	background: #4e4e4e;
+	background:#5a4320;
 	color: #eeeeee;
 	/* border: solid #eeeeee 3px; */
 	justify-content: space-between;
@@ -822,11 +838,13 @@ mat-select {
 	flex: 1 1 auto;
 }
 
-.logo-dpat{
+.dpat-logo{
 	position: absolute;
+	display: flex;
+	justify-content: center;
 	left: 2%;
 	top: 2%;
-	width: 256px;
+	width: 43vh;
 	border-radius: 10px;
 	background-color: #fff;
 	z-index: 1000;
@@ -845,6 +863,19 @@ mat-select {
 
 /deep/ .mat-tab-body-wrapper {
 	padding: 10px;
-	overflow-y:scroll;
-	overflow-x:hidden;
+}
+
+.color-buttons{
+	background-color:#707070;
+	font-weight: 900;
+}
+
+#positionLayers .mat-accordion .mat-expansion-panel:last-of-type {
+	border-radius: 0 !important;
+	margin-top: 8px;
+
+}
+.mat-expansion-indicator::after {
+	height: 10px;
+	width: 10px;
 }

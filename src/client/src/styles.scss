@@ -4,6 +4,13 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+html,
+body {
+	margin: 0;
+	height: 100%;
+	font-family: 'Roboto', sans-serif !important;
+}
+
 .mat-tab-label{
 	min-width: 100px !important;
 	padding: 10px 10px !important;
@@ -116,7 +123,7 @@
 
 
 #positionLayers .mat-tab-body-content {
-	overflow: inherit !important;
+	overflow: hidden !important;
 }
 
 /*#positionCharts .mat-tab-body-content {
