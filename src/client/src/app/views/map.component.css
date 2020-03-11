@@ -120,7 +120,7 @@ hr {
 	/*height: 90%;*/
 	min-width: 320px;
 	top: 8%;
-	width: 22%;
+	width: 42vh;
 	background-color: #FFF;
 	color: #754c26;
 	text-align: left;
@@ -621,7 +621,10 @@ h5.expansion-layer  {
 }
 
 .layersContent {
-	padding: 1.5% 4%;
+	padding: 15px;
+	margin: 8px;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+	border-radius: 5px;
 }
 
 .expansion-header-layer {
@@ -798,9 +801,20 @@ mat-select {
 }
 
 .btn-actions{
-	margin-left: 0.5%;
+	display: flex;
+	margin-left: 0.9%;
+	justify-content: center;
 }
 
 .btn-actions button{
-	margin-left: 2px;
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+.btn-info{
+	justify-content: flex-end;
+}
+
+.space{
+	flex: 1 1 auto;
 }
