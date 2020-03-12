@@ -149,7 +149,7 @@ hr {
 	border-radius:10px;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
-	height: 460px;
+	max-height: 460px;
 	overflow:hidden;
 	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
 	box-shadow: -1px 1px 10px 0px #257a33;
@@ -159,7 +159,7 @@ hr {
 	position: absolute;
 	right: 1%;
 	top: 9%;
-	width: 350px;
+	width: 39vh;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
@@ -313,7 +313,7 @@ h6 {
 	background-color: #7cb359;
 	padding: 10px;
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 1.9vh;
 }
 
 .title-atlas {
@@ -781,11 +781,29 @@ mat-select {
 .card-checkbox-upload{
 	margin: 40px;
 	font-size: 20px;
-    padding-left: 17px;
     padding-top: 23px;
-	border-left: 8px solid #1c6722;
 	background-color: #5cbf642e;
 	cursor: pointer;
+	padding: 0px !important;
+	position: relative;
+}
+
+.card-checkbox-upload.mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
+	padding-top: 32px;
+	padding-left: 20px;
+}
+
+.title-file-card{
+	position: absolute;
+	top: 0;
+	font-size: 11px;
+	font-weight: bolder;
+	text-align: center;
+	width: 100%;
+	color: white;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	background-color:#257a33;
 }
 
 .map-snack-bar{
@@ -799,7 +817,7 @@ mat-select {
 }
 
 .info-header{
-	font-size: 15px;
+	font-size: 0.5vh;
 	padding: 5px;
 	margin: 10px;
 	border-radius: 6px;
@@ -878,4 +896,34 @@ mat-select {
 .mat-expansion-indicator::after {
 	height: 10px;
 	width: 10px;
+}
+
+.legends{
+	/*margin-top: 10px;*/
+	/*margin-bottom: 10px;*/
+	/*margin-left: 5px;*/
+	/*margin-right: 5px;*/
+	margin:10px;
+	border-radius: 4px;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+#positionLegend .mat-expansion-panel-header{
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-left: none;
+	padding-left: 10px;
+	font-weight: 700;
+}
+
+#positionLegend .titleWindows{
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.radius-bottom {
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 }

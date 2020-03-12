@@ -159,14 +159,15 @@
 
 				<mat-tab label="{{titlesLayerBox.label_upload}}">
 
-					<div class="info-header">Clique no botão abaixo para carrregar seu arquivo compactado (.zip ou .kmz).</div>
+					<div class="info-header">
+						<p>Clique no botão abaixo para carrregar seu arquivo compactado (.zip ou .kmz).</p>
+						<p>Formatos suportados: geojson, kml e shp.</p>
+					</div>
 
 					<app-file-upload [loading]="layerFromUpload.loading" [language]="language" [ddarea]="layerFromUpload.dragArea" (complete)="onFileComplete($event)"></app-file-upload>
 
-					<div class="info-footer">Formatos suportados: geojson, kml e shp.</div>
-
 					<mat-card *ngIf="layerFromUpload.visible" class="card-checkbox-upload mat-elevation-z8" color="primary">
-						<div> Seu arquivo</div>
+						<div class="title-file-card"> Seu arquivo</div>
 						<mat-card-subtitle>
 							<mat-checkbox  class="example-margin"
 										   (change)="onChangeCheckUpload($event)"
@@ -310,22 +311,25 @@
 	</div>
 
 	<div id="positionLegend" class="control-layers" cdkDrag>
-		<div class="titleWindows">
+		<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >
 			{{titlesLayerBox.legendTitle}}
 			<button type="button" class="collapse-btn btn btn-light btn-sm float-right"
 					(click)="collapseLegends = !collapseLegends" [attr.aria-expanded]="!collapseLegends"
 					aria-controls="camadageografica">-</button>
 		</div>
 		<div [ngbCollapse]="collapseLegends" class="legendasConteudo">
-			<mat-expansion-panel [expanded]="layer.visible" *ngFor="let layer of layersNames">
-				<mat-expansion-panel-header  [collapsedHeight]="'70px'" [expandedHeight]="'70px'"
-											class="expansion-header-layer" *ngIf="layer.visible">
-					{{layer.label}}
-				</mat-expansion-panel-header>
-				<div *ngFor="let type of layer.types">
-					<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
-				</div>
-			</mat-expansion-panel>
+			<div class="legends"  *ngFor="let layer of layersNames">
+				<mat-expansion-panel [expanded]="layer.visible" >
+						<mat-expansion-panel-header  [collapsedHeight]="'40px'" [expandedHeight]="'40px'"
+													class="expansion-header-layer" *ngIf="layer.visible">
+							{{layer.label}}
+						</mat-expansion-panel-header>
+						<div *ngFor="let type of layer.types">
+							<img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
+						</div>
+
+				</mat-expansion-panel>
+			</div>
 		</div>
 	</div>
 
@@ -412,5 +416,6 @@
 
 
 	</div>
+
 </div>
 

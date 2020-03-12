@@ -1539,6 +1539,14 @@ export class MapComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerHeigth = window.innerHeight;
+    if(window.innerWidth < 1600){
+      this.collapseLegends = false;
+      this.collapseLayer   = true;
+      this.collapseCharts  = true;
+    }else{
+      this.collapseLayer   = false;
+      this.collapseCharts  = false;
+    }
   }
 
 ngOnInit() {
@@ -1587,6 +1595,13 @@ ngOnInit() {
     });
     //keep height of window
   this.innerHeigth = window.innerHeight;
+
+  if(window.innerWidth < 1600){
+    this.collapseLegends = false;
+    this.collapseLayer   = true;
+    this.collapseCharts  = true;
+  }
+
     //Register of SVG icons
   this.matIconRegistry.addSvgIcon(
       `info`,
