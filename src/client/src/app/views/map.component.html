@@ -311,7 +311,7 @@
 									<div>
 										<p style="font-weight: bold">{{ selectRegion.text }}</p>
 										<div>{{uso.text}}</div>
-										<p-chart id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw" height="20vh"></p-chart>
+										<p-chart [ngStyle]="{'overflow-x': hidden}"id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw" height="20vh"></p-chart>
 									</div>
 								</p-tabPanel>
 							</p-tabView>
