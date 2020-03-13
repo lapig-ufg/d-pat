@@ -1,63 +1,37 @@
-<h1 mat-dialog-title style="text-align: center;">Metadados</h1>
-<div mat-dialog-content style="text-align: justify;">
-  <h3 class="title-metadados">{{ data.name.title }}</h3>
-  <table>
-    <tbody>
-      <tr class="table-row a01">
-        <td class="title-row"><b>Descrição:</b></td>
-        <td class="content-row">
-          {{ data.name.description }}
-          <p *ngIf="data.name.link_description">Para saber mais, <a href="{{ data.name.link_description }}" target="_blank"> clique aqui! </a></p>
-        </td>
+<div class="metadata-title">Metadados</div>
+<div class="metadata-container">
+  <div mat-dialog-content style="text-align: justify;">
+    <h4 class="title-metadados">{{title}}</h4>
+    <table>
+      <tbody>
+        <tr class="table-row" *ngFor="let data of metadata">
+          <td class="title-row"><b>{{data.title}}</b></td>
+          <td *ngIf="!isDetails(data.title); else linkDetails" class="content-row">{{data.description}}</td>
+
+          <ng-template #linkDetails>
+              <td class="content-row" [innerHTML]="data.description"></td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+      <tr class="table-row" *ngFor="let data of metadata">
+        <td class="title-row"><b>{{data.title}}</b></td>
+        <td *ngIf="!isDetails(data.title); else linkDetails" class="content-row">{{data.description}}</td>
+
+        <ng-template #linkDetails>
+          <td class="content-row" [innerHTML]="data.description"></td>
+        </ng-template>
       </tr>
-      <tr class="table-row">
-        <td class="title-row"><b>Formato:</b></td>
-        <td class="content-row">{{ data.name.format }}</td>
-      </tr>
-      <tr class="table-row a01">
-        <td class="title-row"><b>Região:</b></td>
-        <td class="content-row">{{ data.name.region }}</td> 
-      </tr>
-      <tr class="table-row">
-        <td class="title-row"><b>Data:</b></td>
-        <td class="content-row">{{ data.name.period }}</td>
-      </tr>
-      <tr class="table-row a01">
-        <td class="title-row"><b>Escala:</b></td>
-        <td class="content-row">{{ data.name.scale }}</td>
-      </tr>
-      <tr class="table-row">
-        <td class="title-row"><b>Sistemas de Referência e Coordenadas</b></td>
-        <td class="content-row">{{ data.name.system_coordinator }}</td>
-      </tr>
-      <tr class="table-row a01">
-        <td class="title-row"><b>Projeção cartográfica:</b></td>
-        <td class="content-row">{{ data.name.cartographic_projection }}</td>
-      </tr>
-      <tr class="table-row" *ngIf="data.name.update">
-        <td class="title-row"><b>Atualização:</b></td>
-        <td class="content-row">{{ data.name.update }}</td>
-      </tr>
-      <tr class="table-row a01">
-        <td class="title-row"><b>Codificação de caractere:</b></td>
-        <td class="content-row">{{ data.name.cod_caracter }}</td>
-      </tr>
-      <tr class="table-row">
-        <td class="title-row"><b>Fonte:</b></td>
-        <td class="content-row">
-          {{ data.name.fonte }}
-          <p *ngIf="data.name.link_fonte">Para saber mais, <a href="{{ data.name.link_fonte }}" target="_blank"> clique aqui! </a></p>
-        </td>
-      </tr>
-      <tr class="table-row a01">
-        <td class="title-row"><b>Contato:</b></td>
-        <td class="content-row">{{ data.name.contato }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()" class="button-close-metadados">Ok</button>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div mat-dialog-actions class="actions-meta">
+    <button style="margin-left: 8vh" mat-button (click)="closeDialog()"  class="button-close-metadados">Ok</button>
+  </div>
 </div>
 
 

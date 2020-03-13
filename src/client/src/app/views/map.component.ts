@@ -64,6 +64,8 @@ import {
   NgxGalleryAnimation
 } from "ngx-image-video-gallery";
 
+import {MetadataComponent} from "./metadata/metadata.component";
+
 
 const SEARCH_URL = "/service/map/search";
 const PARAMS = new HttpParams({
@@ -638,8 +640,6 @@ export class MapComponent implements OnInit {
     });
   }
 
-
-
   private createMap() {
     this.createBaseLayers();
     this.createLayers();
@@ -648,7 +648,7 @@ export class MapComponent implements OnInit {
       target: "map",
       layers: this.layers,
       view: new OlView({
-        center: OlProj.fromLonLat([-49, -14]),
+        center: OlProj.fromLonLat([-49, -13.5]),
         projection: this.projection,
         zoom: this.currentZoom,
         maxZoom: 18,
@@ -1526,15 +1526,38 @@ export class MapComponent implements OnInit {
 
   }
 
-  private getMetadata(metadata, language){
+  private getMetadata(metadata){
     let _metadata = [];
+    let lang = this.language;
 
     metadata.forEach(function (data) {
-      _metadata.push({'title': data.title[language], 'description': data.description[language]});
+      _metadata.push({'title': data.title[lang], 'description': data.description[lang]});
     });
 
     return _metadata;
   };
+
+  openDialogMetadata(layer){
+
+    let metadata = [];
+
+    if(layer.hasOwnProperty('metadata')){
+      metadata = this.getMetadata(layer.metadata);
+    }
+
+    const dialogRef = this.dialog.open(MetadataComponent, {
+      width: '100vh',
+      data: {metadata: metadata}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  onCloseDialogMetadata(){
+
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -1543,9 +1566,11 @@ export class MapComponent implements OnInit {
       this.collapseLegends = false;
       this.collapseLayer   = true;
       this.collapseCharts  = true;
+      this.currentZoom = 4;
     }else{
       this.collapseLayer   = false;
       this.collapseCharts  = false;
+      this.currentZoom = 6;
     }
   }
 
@@ -1600,6 +1625,9 @@ ngOnInit() {
     this.collapseLegends = false;
     this.collapseLayer   = true;
     this.collapseCharts  = true;
+    this.currentZoom = 5.3;
+  }else{
+    this.currentZoom = 5.8;
   }
 
     //Register of SVG icons
