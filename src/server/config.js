@@ -2,7 +2,7 @@ var appRoot = require('app-root-path');
 
 module.exports = function (app) {
 
-	var appProducao = '/storage/dpat-files';
+	var appProducao = '/STORAGE/dpat-files';
 
 	var config = {
 		"appRoot": appRoot,
