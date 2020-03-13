@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './metadata.component.html',
   styleUrls: ['./metadata.component.css']
 })
+
 export class MetadataComponent implements OnInit {
   title:string;
   metadata:any = [];

@@ -1,5 +1,6 @@
 const unzipper = require("unzipper"),
 	fs = require("fs"),
+	path = require('path'),
 	ogr2ogr = require("ogr2ogr");
 
 module.exports = function(app) {
@@ -8,9 +9,12 @@ module.exports = function(app) {
 	const Internal = {};
 	const Uploader = {};
 
+	const jsonPath = path.join(__dirname, '..', 'assets', 'lang', 'language.json');
+	const languageJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+
 	/**
     Directory where the code will to put tmp files**/
-	Internal.dirUpload = config.tmp;
+	Internal.dirUpload = config.uploadDataDir;
 
 	Internal.targetFilesName = null;
 	Internal.dirTarget = null;
@@ -30,7 +34,6 @@ module.exports = function(app) {
 		"cpg",
 		"qix",
 		"kml",
-		"shp.xml",
 		"sbx",
 		"sbn",
 		"geojson",
@@ -60,7 +63,7 @@ module.exports = function(app) {
 			if (er) {
 				Internal.response
 					.status(400)
-					.send("Can't parse your file!!");
+					.send(languageJson['upload_messages']['cant_parse_file'][Internal.language]);
 				console.error("FILE: ", shapfile, " | ERROR: ", er);
 				fs.unlinkSync(Internal.tmpPath);
 				return;
@@ -122,19 +125,19 @@ module.exports = function(app) {
 				}
 			}
 		} catch (e) {
-			Internal.response.status(400).send("You file can not be extracted!");
+			Internal.response.status(400).send(languageJson['upload_messages']['cant_extract'][Internal.language]);
 			console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", e.stack);
 			fs.unlinkSync(Internal.tmpPath);
 		}
 
 		if (!fs.existsSync(Internal.targetFilesName)) {
-			Internal.response.status(400).send("This is not a spatial file!");
+			Internal.response.status(400).send(languageJson['upload_messages']['no_spatial_file'][Internal.language]);
 			fs.unlinkSync(Internal.tmpPath);
 			console.error(
 				"FILE: ",
 				Internal.targetFilesName,
 				" | ERROR: ",
-				"This is not a spatial file!",
+				languageJson['upload_messages']['no_spatial_file'][Internal.language],
 			);
 			return;
 		}
@@ -144,7 +147,7 @@ module.exports = function(app) {
 				if (err) {
 					Internal.response
 						.status(400)
-						.send("It's not possible to read your file!");
+						.send(languageJson['upload_messages']['cant_read_file'][Internal.language]);
 					fs.unlinkSync(Internal.tmpPath);
 					console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", err);
 					return;
@@ -178,12 +181,12 @@ module.exports = function(app) {
 		if (request.files.shapefile.length > 0) {
 			Internal.tmpPath = request.files.shapefile[0].path;
 		} else {
-			response.status(400).send("This request does not have a spatial file!");
+			response.status(400).send(languageJson['upload_messages']['has_not_spatial_file'][Internal.language]);
 			console.error(
 				"FILE: ",
 				request.files.shapefile,
 				" | ERROR: ",
-				"This request does not have a spatial file!",
+				languageJson['upload_messages']['has_not_spatial_file'][Internal.language],
 			);
 			return;
 		}

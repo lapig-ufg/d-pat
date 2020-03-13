@@ -1,38 +1,39 @@
 var appRoot = require('app-root-path');
 
 module.exports = function(app) {
-	
+
+	var appProducao = '/storage/dpat-files';
+
 	var config = {
-		"appRoot": appRoot, 
+		"appRoot": appRoot,
 		"clientDir": appRoot + "/../client/dist/",
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
-		"tmp": appRoot + "/uploads/", 
-		"remoteFieldDataDir": '/media/campo/',
+		"tmp": appRoot + "/tmp/",
 		"fieldDataDir": appRoot+ '/media/campo/',
+		"uploadDataDir": appRoot + "/uploads/",
+		"downloadDataDir": appProducao + "/download-dpat/",
 		"pg": {
-			//"user": 'postgres',
+			// "user": 'postgres',
 			"user": 'fip_cerrado',
-			//"host": '10.0.0.14',
+			// "host": '10.0.0.14',
 			"host": 'localhost',
 			"database": 'fip_cerrado',
-			//"password": 'postgres',
-		  	"password": 'fip_cerrado123',
-			//"port": 5432,
-		  	"port": 5433,
+			// "password": 'postgres',
+			  "password": 'fip_cerrado123',
+			// "port": 5432,
+			  "port": 5433,
 			"debug": true
 		},
 		"port": 3000,
 		// "ows_host" : 'http://localhost:5001',
-		// "ows" : 'http://localhost:5001',
 		"ows_host" : 'http://ows.lapig.iesa.ufg.br',
 		"ows": "http://ows.lapig.iesa.ufg.br",
 		"lapig-maps": 'http://maps.lapig.iesa.ufg.br/time-series/MOD13Q1_NDVI/values?'
-		
+
 	};
 
 	if(process.env.NODE_ENV == 'prod') {
-		// config["mongo"]["port"] = "27017"
 		config['dbpath'] = "/data/catalog/Ocultos/d-pat.sqlite"
 		config["pg"] = {
 			"user": 'fip_cerrado',
@@ -44,11 +45,11 @@ module.exports = function(app) {
 		}
 		config["clientDir"] = appRoot + "/../client/dist/lapig-dpat/"
 		config["ows_host"] = "http://ows.lapig.iesa.ufg.br"
-		// config["ows_host"] = "http://localhost:5001"
-		config["fieldDataDir"] = "/STORAGE/d-pat-campo/"
-		config["remoteFieldDataDir"] = "/STORAGE/d-pat-campo/"
+		config["fieldDataDir"] = appProducao + "/campo-dpat/"
+		config["uploadDataDir"] = appProducao + "/upload-dpat/"
+
 	}
-	
+
 	return config;
 
 }

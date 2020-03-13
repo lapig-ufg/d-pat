@@ -1121,6 +1121,9 @@ module.exports = function (app) {
         label_mapabase: languageJson["layer_box"]["label_mapabase"][language],
         label_limits: languageJson["layer_box"]["label_limits"][language],
         label_upload: languageJson["layer_box"]["label_upload"][language],
+        label_upload_msg: languageJson["layer_box"]["label_upload_msg"][language],
+        label_upload_title_file: languageJson["layer_box"]["label_upload_title_file"][language],
+        label_upload_max_size_msg: languageJson["layer_box"]["label_upload_max_size_msg"][language],
         search_placeholder: languageJson["layer_box"]["search_placeholder"][language],
         search_loading: languageJson["layer_box"]["search_loading"][language],
         search_failed: languageJson["layer_box"]["search_failed"][language]

@@ -144,6 +144,24 @@
 			"pt-br": "Upload",
 			"en-us": "Upload"
 		},
+		"label_upload_msg": {
+			"pt-br": "<p> Clique no botão abaixo para carrregar seu arquivo compactado (.zip ou .kmz).</p> <p>Formatos suportados: geojson, kml e shp.</p>",
+			"en-us": "<p> Click the button below to upload your compressed file (.zip or .kmz).</p> <p>Supported formats: geojson, kml and shp.</p>"
+		},
+		"label_upload_title_file": {
+			"pt-br": "Seu arquivo",
+			"en-us": "Your file"
+		},
+		"label_upload_tooltip": {
+			"pt-br": "Enviar arquivo espacial",
+			"en-us": "Send spatial file"
+		},
+
+		"label_upload_max_size_msg": {
+			"pt-br": "Este arquivo tem [current-size] MB. O tamanho máximo permitido é de [max-size] MB.",
+			"en-us": "This file has [current-size] MB. Maximum size allowed is [max-size] MB."
+		},
+
 		"search_placeholder": {
 			"pt-br": "Digite um Estado ou Município",
 			"en-us": "Please inform a State or Municipality name"
@@ -3517,6 +3535,32 @@
 				"pt-br": "inferior",
 				"en-us": "smaller"
 			}
+		}
+	},
+	"upload_messages": {
+		"has_not_spatial_file": {
+			"pt-br": "Esta solicitação não possui um arquivo espacial!",
+			"en-us": "This request does not have a spatial file!"
+		},
+		"cant_read_file": {
+			"pt-br": "Não é possível ler seu arquivo!",
+			"en-us": "It's not possible to read your file!"
+		},
+		"no_spatial_file": {
+			"pt-br": "Este não é um arquivo espacial!",
+			"en-us": "This is not a spatial file!"
+		},
+		"cant_extract": {
+			"pt-br": "Relatório do Desmatamento",
+			"en-us": "Your file cannot be extracted!"
+		},
+		"cant_parse_file": {
+			"pt-br": "Não é possível analisar seu arquivo!",
+			"en-us": "Can't parse your file!"
+		},
+		"suported_files": {
+			"pt-br": "O upload de arquivo suporta apenas os seguintes tipos de arquivos (.kmz ou .zip).",
+			"en-us": "File upload only supports the following filetypes (.kmz or .zip)."
 		}
 	}
 }

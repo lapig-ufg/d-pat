@@ -7,7 +7,7 @@
 }
 
 .title-row {
-    width: 25vh;
+    width: 28vh;
     font-size: 0.95rem;
     padding: 10px;
     text-align: left;
@@ -37,6 +37,7 @@ table{
 table tr{
     border-bottom: 5px solid white;
     border-top: 5px solid white;
+    border-radius: 5px;
 }
 
 .metadata-container{

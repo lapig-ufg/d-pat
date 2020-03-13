@@ -1540,24 +1540,114 @@ export class MapComponent implements OnInit {
   openDialogMetadata(layer){
 
     let metadata = [];
+    let self = this;
 
     if(layer.hasOwnProperty('metadata')){
       metadata = this.getMetadata(layer.metadata);
+    }else{
+      let selectedType = layer.selectedType;
+      layer.types.forEach(function (type) {
+        if(type.value == selectedType){
+          metadata = self.getMetadata(type.metadata);
+        }
+      });
     }
 
     const dialogRef = this.dialog.open(MetadataComponent, {
-      width: '100vh',
+      width: '130vh',
       data: {metadata: metadata}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
     });
   }
 
-  onCloseDialogMetadata(){
-
-  }
+  // buttonDownload(tipo, layer, e) {
+  //
+  //   if(layer == 'pasture'){
+  //     if(tipo == 'csv') {
+  //       var paramsDownload = 'file='+layer+'&region=year='+this.year+''+this.msFilterRegion+'&filter='+this.msFilterRegionCharts;
+  //       this.linkDownload = 'atlas/service/map/downloadCSV?'+paramsDownload
+  //     } else if (tipo == 'shp') {
+  //       if (this.layerPastureShow == 'areas-pastagens') {
+  //         var paramsDownload = 'file='+layer+'&regionType='+this.downloadRegionType+'&region='+this.downloadRegion+'&year='+this.year
+  //         this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //       } else if (this.layerPastureShow == 'municipios-pastagens') {
+  //         var paramsDownload = '&MSFILTER=year='+this.year+''+this.msFilterRegion
+  //         this.linkDownload = 'http://ows.lapig.iesa.ufg.br/ows?REQUEST=GetFeature&SERVICE=wfs&VERSION=1.0.0&TYPENAME=pasture_regions_municipios&OUTPUTFORMAT=shape-zip'+paramsDownload+'&WIDTH=1&HEIGHT=1'
+  //       } else if (this.layerPastureShow == 'pastagens-zero-transicao') {
+  //         var paramsDownload = 'file=old_pasture&regionType='+this.downloadRegionType+'&region='+this.downloadRegion+'&year='+this.year
+  //         this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //       } else if (this.layerPastureShow == 'pastagens-todas-transicoes') {
+  //         var paramsDownload = 'file=pasture_all_transitions&regionType='+this.downloadRegionType+'&region='+this.downloadRegion+'&year='+this.year
+  //         this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //       } else if (this.layerPastureShow == 'pastagens-uma-transicao') {
+  //         var paramsDownload = 'file=pasture_all_transitions&regionType='+this.downloadRegionType+'&region='+this.downloadRegion+'&year='+this.year
+  //         this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //       }
+  //     }
+  //   } else if (tipo == 'shp' && layer == 'pasture_degraded') {
+  //     var layerDow;
+  //
+  //     if(this.msFilterRegionCharts != ''){
+  //       var paramsDownload = "&MSFILTER=category='1'"+''+this.msFilterRegion
+  //     } else {
+  //       var paramsDownload = "&MSFILTER=category='1'"
+  //     }
+  //
+  //     if (this.layerPastureDegradedShow = 'areas-pastagens-degraded') {
+  //       var paramsDownload = 'file='+layer+'&regionType='+this.downloadRegionType+'&region='+this.downloadRegion
+  //       this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //     } else {
+  //       this.linkDownload = 'http://ows.lapig.iesa.ufg.br/ows?REQUEST=GetFeature&SERVICE=wfs&VERSION=1.0.0&TYPENAME=pasture_degraded_regions_municipios&OUTPUTFORMAT=shape-zip'+paramsDownload+'&WIDTH=1&HEIGHT=1'
+  //     }
+  //
+  //   }else if (tipo == 'csv' && layer == 'pasture_degraded') {
+  //     var paramsDownload = 'file='+layer+"&filter=category='1'"+''+this.msFilterRegion;
+  //     this.linkDownload = 'atlas/service/map/downloadCSV?'+paramsDownload
+  //   } else if(layer == 'lotacao_bovina_regions') {
+  //     var yearRebanhoBovino;
+  //     if(this.year == '2018') {
+  //       yearRebanhoBovino = '2017'
+  //     } else {
+  //       yearRebanhoBovino = this.year
+  //     }
+  //
+  //     if(tipo == 'csv') {
+  //       var paramsDownload = 'file='+layer+'&region=year='+yearRebanhoBovino+''+this.msFilterRegion+'&filter='+this.msFilterRegionCharts;
+  //       this.linkDownload = 'atlas/service/map/downloadCSV?'+paramsDownload
+  //     } else {
+  //       var paramsDownload = '&MSFILTER=year='+yearRebanhoBovino+''+this.msFilterRegion
+  //       this.linkDownload = 'http://ows.lapig.iesa.ufg.br/ows?REQUEST=GetFeature&SERVICE=wfs&VERSION=1.0.0&TYPENAME=lotacao_bovina_regions&OUTPUTFORMAT=shape-zip'+paramsDownload+'&WIDTH=1&HEIGHT=1'
+  //     }
+  //   } else if (layer == 'pontos_campo') {
+  //     var paramsDownload = 'file=pontos_campo_parada';
+  //
+  //     if (tipo == "carro") {
+  //       paramsDownload = 'file=pontos_campo_sem_parada'
+  //     }
+  //
+  //     this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //   } else if (layer == 'pontos_tvi') {
+  //     var paramsDownload = 'file=pontos_tvi_treinamento';
+  //
+  //     if (tipo == "validacao") {
+  //       paramsDownload = 'file=pontos_tvi_validacao'
+  //     }
+  //
+  //     this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //   } else if (layer == 'potencial_intensificacao_pecuaria') {
+  //     if(tipo == 'csv') {
+  //       var paramsDownload = 'file='+layer+'&filter='+this.msFilterRegionCharts;
+  //       this.linkDownload = 'atlas/service/map/downloadCSV?'+paramsDownload;
+  //     } else {
+  //       var paramsDownload = 'file='+layer+'&regionType='+this.downloadRegionType+'&region='+this.downloadRegion
+  //       this.linkDownload = 'atlas/service/map/downloadSHP?'+paramsDownload
+  //     }
+  //   }
+  //
+  // }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
