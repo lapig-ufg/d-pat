@@ -6,6 +6,7 @@ import {
   LOCALE_ID,
   OnDestroy,
   ChangeDetectorRef,
+  HostListener,
   ChangeDetectionStrategy
 } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
@@ -29,6 +30,9 @@ import {
   tap,
   switchMap
 } from "rxjs/operators";
+
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 import BingMaps from "ol/source/BingMaps";
 import { unByKey } from "ol/Observable";
@@ -59,6 +63,8 @@ import {
   NgxGalleryImage,
   NgxGalleryAnimation
 } from "ngx-image-video-gallery";
+
+import {MetadataComponent} from "./metadata/metadata.component";
 
 
 const SEARCH_URL = "/service/map/search";
@@ -199,13 +205,17 @@ export class MapComponent implements OnInit {
     strokeColor: "#2224ba",
   };
 
+  innerHeigth: any
+
   constructor(
     private http: HttpClient,
     private _service: SearchService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
   ) {
     this.projection = OlProj.get("EPSG:900913");
-    this.currentZoom = 5.8;
+    this.currentZoom = 5.3;
     this.layers = [];
 
     this.dataSeries = {};
@@ -580,7 +590,7 @@ export class MapComponent implements OnInit {
       this.http.get(urlUsoSolo).subscribe(usosoloResult => {
 
         this.chartUsoSolo = usosoloResult;
-        
+
         console.log(usosoloResult)
 
         for (let graphic of this.chartUsoSolo) {
@@ -698,8 +708,6 @@ export class MapComponent implements OnInit {
     });
   }
 
-
-
   private createMap() {
     this.createBaseLayers();
     this.createLayers();
@@ -708,9 +716,11 @@ export class MapComponent implements OnInit {
       target: "map",
       layers: this.layers,
       view: new OlView({
-        center: OlProj.fromLonLat([-52, -14]),
+        center: OlProj.fromLonLat([-49, -13.5]),
         projection: this.projection,
-        zoom: this.currentZoom
+        zoom: this.currentZoom,
+        maxZoom: 18,
+        minZoom: 2
       }),
       loadTilesWhileAnimating: true,
       loadTilesWhileInteracting: true,
@@ -1491,20 +1501,19 @@ export class MapComponent implements OnInit {
       }
     }
 
-
-
-
   }
 
   public onFileComplete(data: any) {
 
-    let map = this.map;
+    const map = this.map;
 
     this.layerFromUpload.checked = false;
 
-
     if (this.layerFromUpload.layer != null) {
       map.removeLayer(this.layerFromUpload.layer);
+    }
+    if(!data.hasOwnProperty('features')){
+      return;
     }
 
     if (data.features.length > 1) {
@@ -1519,7 +1528,7 @@ export class MapComponent implements OnInit {
 
       if (data.features[0].hasOwnProperty('properties')) {
 
-        let auxlabel = Object.keys(data.features[0].properties)[0];
+        const auxlabel = Object.keys(data.features[0].properties)[0];
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.features[0].properties[auxlabel];
         this.layerFromUpload.layer = data;
@@ -1585,7 +1594,94 @@ export class MapComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  private getMetadata(metadata){
+    let _metadata = [];
+    let lang = this.language;
+
+    metadata.forEach(function (data) {
+      _metadata.push({'title': data.title[lang], 'description': data.description[lang]});
+    });
+
+    return _metadata;
+  };
+
+  openDialogMetadata(layer){
+
+    let metadata = [];
+    let self = this;
+
+    if(layer.hasOwnProperty('metadata')){
+      metadata = this.getMetadata(layer.metadata);
+    }else{
+      let selectedType = layer.selectedType;
+      layer.types.forEach(function (type) {
+        if(type.value == selectedType){
+          metadata = self.getMetadata(type.metadata);
+        }
+      });
+    }
+
+    const dialogRef = this.dialog.open(MetadataComponent, {
+      width: '130vh',
+      data: {metadata: metadata}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
+  }
+
+  downloadCSV(layer){
+
+    let selected = {
+      layer: layer,
+      selectedRegion: this.selectRegion,
+      year:this.selectedTimeFromLayerType(layer.selectedType)
+    }
+
+    // this.http.get('/service/download/csv', { params: PARAMS.set("data", selected) }).subscribe(result => {
+    //
+    // });
+  }
+
+  downloadSHP(layer){
+    let selected = {
+      layer: layer,
+      selectedRegion: this.selectRegion,
+      year:this.selectedTimeFromLayerType(layer.selectedType)
+    }
+    //
+    // this.http.get('/service/download/shp', { params: PARAMS.set("data", selected) }).subscribe(result => {
+    //
+    // });
+  }
+
+
+  buttonDownload(tipo, layer, e) {
+    console.log("TIPO:", tipo, "LAYER:", layer);
+    if(tipo == 'csv'){
+      this.downloadCSV(layer);
+    }else{
+      this.downloadSHP(layer);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerHeigth = window.innerHeight;
+    if(window.innerWidth < 1600){
+      this.collapseLegends = false;
+      this.collapseLayer   = true;
+      this.collapseCharts  = true;
+      this.currentZoom = 4;
+    }else{
+      this.collapseLayer   = false;
+      this.collapseCharts  = false;
+      this.currentZoom = 6;
+    }
+  }
+
+ngOnInit() {
 
     let descriptorURL = "/service/map/descriptor" + this.getServiceParams();
 
@@ -1629,8 +1725,33 @@ export class MapComponent implements OnInit {
       }
       this.createMap();
     });
+    //keep height of window
+  this.innerHeigth = window.innerHeight;
 
+  if(window.innerWidth < 1600){
+    this.collapseLegends = false;
+    this.collapseLayer   = true;
+    this.collapseCharts  = true;
+    this.currentZoom = 5.3;
+  }else{
+    this.currentZoom = 5.8;
+  }
 
+    //Register of SVG icons
+  this.matIconRegistry.addSvgIcon(
+      `info`,
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/info.svg")
+  );
+
+    this.matIconRegistry.addSvgIcon(
+        `shp`,
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/shp.svg")
+    );
+
+    this.matIconRegistry.addSvgIcon(
+        `csv`,
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/img/csv.svg")
+    );
   }
 }
 

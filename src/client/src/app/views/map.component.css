@@ -2,6 +2,7 @@ html,
 body {
 	margin: 0;
 	height: 100%;
+	font-family: 'Roboto', sans-serif;
 }
 
 .bckgdisabled {
@@ -47,9 +48,10 @@ hr {
 }
 
 .dpat-ol-map {
-	height: calc(100vh - 55px);
+	/*height: calc(100vh - 55px);*/
 	/* 100% of the viewport height - navbar height */
 	background-color: rgba(0, 0, 0, 0.5) !important;
+	overflow: hidden;
 }
 
 .dpat-ol-map .ol-viewport canvas {
@@ -96,6 +98,7 @@ hr {
 	z-index: 99999999;
 	top: 10vh;
 	background-color: #FFF;
+	border-radius: 10px !important;
 }
 
 .card-text {
@@ -119,44 +122,57 @@ hr {
 	/*bottom: 2%;*/
 	/*height: 90%;*/
 	min-width: 320px;
-	top: 8%;
-	width: 22%;
+	top: 21.5%;
+	width: 43vh;
 	background-color: #FFF;
 	color: #754c26;
 	text-align: left;
 	z-index: 1000;
+	max-height: 690px;
+	border-radius:10px;
+	overflow:hidden;
 	/*border: 1px solid #808080;*/
 	opacity: .93;
+	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
+	box-shadow: -1px 1px 10px 0px #257a33;
 }
 
 #positionCharts {
 	position: absolute;
 	right: 1%;
 	bottom: 2%;
-	width: 600px;
+	width: 60vh;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
 	z-index: 1000;
-	border: 1px solid #808080;
+	border-radius:10px;
+	/*border: 1px solid #808080;*/
 	opacity: .93;
+	max-height: 460px;
+	overflow:hidden;
+	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
+	box-shadow: -1px 1px 10px 0px #257a33;
 }
 
 #positionLegend {
 	position: absolute;
 	right: 1%;
-	top: 4%;
-	width: 350px;
+	top: 9%;
+	width: 39vh;
 	background-color: #FFF;
 	color: #666;
 	text-align: left;
 	z-index: 1000;
-	border: 1px solid #808080;
+	border-radius:10px !important;
+	/*border: 1px solid #808080;*/
 	opacity: .93;
+	-webkit-box-shadow: -1px 1px 10px 0px #257a33;
+	box-shadow: -1px 1px 10px 0px #257a33;
 }
 
 .layersConteudo {
-	max-height: 800px;
+	max-height: 702px;
 	overflow: auto;
 }
 
@@ -293,17 +309,17 @@ h6 {
  
 
 .titleWindows {
-	color: #424242;
-	background-color: #69ce69;
+	color: #271616;
+	background-color: #7cb359;
 	padding: 10px;
 	font-weight: bold;
-	font-size: 22px;
+	font-size: 1.9vh;
 }
 
 .title-atlas {
 	font-weight: bold;
 	font-size: 30px;
-	font-family: Gill Sans, Verdana;
+	/*font-family: Gill Sans, Verdana;*/
 	color: rgb(19, 134, 67);
 	margin: 0;
 	padding: 0px 0px 6px 0px;
@@ -405,8 +421,9 @@ button {
 }
 
 h5.expansion-layer  {
-	padding-left: 7.5%;
-	font-size: 1rem;
+	padding-top: 2%;
+	font-size: 0.98rem;
+	width: 100%;
 }
 
 .fotosCampo {
@@ -472,8 +489,8 @@ h5.expansion-layer  {
 	}
 
 	#positionCharts {
-		width: 350px;
-		max-height: 287px;
+		width: 350vm;
+		max-height: 287vm;
 	}
 
 	h6 {
@@ -481,7 +498,8 @@ h5.expansion-layer  {
 	}
 
 	.titleWindows {
-		font-size: 0.95em
+		font-size: 0.95em;
+		color: #7cb359;
 	}
 
 	.table-municipios {
@@ -621,7 +639,10 @@ h5.expansion-layer  {
 }
 
 .layersContent {
-	padding: 1.5% 4%;
+	padding: 15px;
+	margin: 8px;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+	border-radius: 5px;
 }
 
 .expansion-header-layer {
@@ -631,6 +652,7 @@ h5.expansion-layer  {
 .expansion-header-layer-legend {
 	margin-left: 0px;
 	margin-top: 0px;
+	padding-left: 10px;
 }
 
 #dropdownPoints {
@@ -646,8 +668,8 @@ h5.expansion-layer  {
 }
 
 .mat-expansion-panel-header.mat-expanded {
-	background: #4e4e4e!important;
-	color: #eeeeee !important;
+	background: #eeeeee;
+	color: #4e4e4e;
 	border-radius: 0px;
 	border-left: 5px solid #0e9909;
 }
@@ -655,7 +677,7 @@ h5.expansion-layer  {
 /* .mat-expansion-panel-header:focus,  */
 
 .mat-expansion-panel-header {
-	background: #4e4e4e;
+	background:#5a4320;
 	color: #eeeeee;
 	/* border: solid #eeeeee 3px; */
 	justify-content: space-between;
@@ -759,9 +781,29 @@ mat-select {
 .card-checkbox-upload{
 	margin: 40px;
 	font-size: 20px;
-    padding-left: 17px;
     padding-top: 23px;
-    border-left: 8px solid #1c6722;;
+	background-color: #5cbf642e;
+	cursor: pointer;
+	padding: 0px !important;
+	position: relative;
+}
+
+.card-checkbox-upload.mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
+	padding-top: 32px;
+	padding-left: 20px;
+}
+
+.title-file-card{
+	position: absolute;
+	top: 0;
+	font-size: 11px;
+	font-weight: bolder;
+	text-align: center;
+	width: 100%;
+	color: white;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	background-color:#7cb359;
 }
 
 .map-snack-bar{
@@ -775,7 +817,7 @@ mat-select {
 }
 
 .info-header{
-	font-size: 15px;
+	font-size: 0.5vh;
 	padding: 5px;
 	margin: 10px;
 	border-radius: 6px;
@@ -793,4 +835,95 @@ mat-select {
 	background-color: #8080802e;
 	text-align: justify;
 	border-left: 5px solid #f48024;
+}
+
+.btn-actions{
+	display: flex;
+	margin-left: 0.9%;
+	justify-content: center;
+}
+
+.btn-actions button{
+	margin-left: 5px;
+	font-weight: 900;
+}
+
+.btn-info{
+	justify-content: flex-end;
+}
+
+.space{
+	flex: 1 1 auto;
+}
+
+.dpat-logo{
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	left: 2%;
+	top: 2%;
+	width: 43vh;
+	border-radius: 10px;
+	background-color: #fff;
+	z-index: 1000;
+}
+
+.btn-languages{
+	position: absolute;
+	right: 2%;
+	top: 2%;
+	border-radius: 10px;
+	z-index: 1000;
+}
+.btn-languages button{
+	margin-left: 15px;
+}
+
+/deep/ .mat-tab-body-wrapper {
+	padding: 10px;
+}
+
+.color-buttons{
+	background-color:#707070;
+	font-weight: 900;
+}
+
+#positionLayers .mat-accordion .mat-expansion-panel:last-of-type {
+	border-radius: 0 !important;
+	margin-top: 8px;
+
+}
+.mat-expansion-indicator::after {
+	height: 10px;
+	width: 10px;
+}
+
+.legends{
+	/*margin-top: 10px;*/
+	/*margin-bottom: 10px;*/
+	/*margin-left: 5px;*/
+	/*margin-right: 5px;*/
+	margin:10px;
+	border-radius: 4px;
+	box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+#positionLegend .mat-expansion-panel-header{
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-left: none;
+	padding-left: 10px;
+	font-weight: 700;
+}
+
+#positionLegend .titleWindows{
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.radius-bottom {
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 }

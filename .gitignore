@@ -2,6 +2,8 @@
 *.sublime-project
 *.sublime-workspace
 *.pyc
+.idea
+.vscode
 node_modules
 *~
 *#
@@ -10,5 +12,5 @@ node_modules
 *.sqlite
 src/client/dist/
 src/server/tmp
-src/server/media/campo
-src/server/media/campo
+src/server/uploads
+src/server/media

@@ -4,12 +4,12 @@ module.exports = function (app) {
     const multer = require('multer')
     const config = app.config;
 
-    if (!fs.existsSync(config.tmp)){
-        fs.mkdirSync(config.tmp);
+    if (!fs.existsSync(config.uploadDataDir)){
+        fs.mkdirSync(config.uploadDataDir);
     }
     
     const upload = multer({
-        dest: config.tmp,
+        dest: config.uploadDataDir,
         
         fileFilter: function (req, file, cb) {
            
@@ -21,7 +21,7 @@ module.exports = function (app) {
             return cb(null, true);
             }
             
-            cb("File upload only supports the following filetypes (.kmz or .zip).");
+            cb("File upload only supports the following filetypes (.kmz or .zip ).");
         }
       });
 

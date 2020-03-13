@@ -1,0 +1,23 @@
+<div class="metadata-title">Metadados</div>
+<div class="metadata-container">
+  <div mat-dialog-content style="text-align: justify;">
+    <h4 class="title-metadados">{{title}}</h4>
+    <table>
+      <tbody>
+        <tr class="table-row" *ngFor="let data of metadata">
+          <td class="title-row"><b>{{data.title}}</b></td>
+          <td *ngIf="!isDetails(data.title); else linkDetails" class="content-row">{{data.description}}</td>
+
+          <ng-template #linkDetails>
+              <td class="content-row" [innerHTML]="data.description"></td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div mat-dialog-actions class="actions-meta">
+    <button style="margin-left: 11.5vh" mat-button (click)="closeDialog()"  class="button-close-metadados">Ok</button>
+  </div>
+</div>
+
+

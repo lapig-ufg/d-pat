@@ -1,0 +1,61 @@
+
+.title-metadados {
+    text-align: center;
+    font-weight: 600;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.title-row {
+    width: 28vh;
+    font-size: 0.95rem;
+    padding: 10px;
+    text-align: left;
+    background-color: rgb(149, 149, 149);;
+
+}
+
+.content-row {
+    padding: 10px;
+    font-size: 0.9rem;
+    background-color: rgba(183, 183, 183, 0.46);
+}
+
+.a01 {
+    background-color: #efefef;
+}
+
+.actions-meta{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+table{
+    width: 100%;
+}
+
+table tr{
+    border-bottom: 5px solid white;
+    border-top: 5px solid white;
+    border-radius: 5px;
+}
+
+.metadata-container{
+    position: relative;
+    padding: 24px;
+}
+
+.metadata-title{
+    position: relative;
+    top: 0px;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    width: 100%;
+    color: white;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-radius: 5px;
+    border-top-left-radius: 4px;
+    background-color:#7cb359;
+}

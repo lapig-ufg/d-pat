@@ -1,754 +1,3566 @@
 {
-        
-    "legends_box_title": {
-        "pt-br": "Legenda",
-        "en-us": "Legend"
-    },
+	"legends_box_title": {
+		"pt-br": "Legenda",
+		"en-us": "Legend"
+	},
+	"charts_box_title": {
+		"pt-br": "Estatísticas de Desmatamento sobre o PRODES-Cerrado",
+		"en-us": "Deforestation Statistics of PRODES-Cerrado"
+	},
+	"charts_box_timeseries": {
+		"label": {
+			"pt-br": "Serie Temporal",
+			"en-us": "Timeseries"
+		},
+		"name": {
+			"pt-br": "Área Desmatada",
+			"en-us": "Deforestation increases"
+		},
+		"text": {
+			"pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
+			"en-us": "? presents an Anthropic area of ? km², which represents ?% of its total area."
+		}
+	},
+	"charts_box_states": {
+		"label": {
+			"pt-br": "Estados",
+			"en-us": "States"
+		},
+		"name": {
+			"pt-br": "Área Desmatada",
+			"en-us": "Deforested Area"
+		},
+		"description": {
+			"pt-br": "Áreas Desmatadas nos Estados: ",
+			"en-us": "States Deforested Area in: "
+		}
+	},
+	"charts_box_cities": {
+		"label": {
+			"pt-br": "Municípios",
+			"en-us": "Municipalities"
+		},
+		"description": {
+			"pt-br": "Ranking dos Municípios com maiores Desmatamentos: ",
+			"en-us": "Ranking of Municipalities with largest Deforested areas:"
+		},
+		"title": {
+			"pt-br": "#?Município?Estado?Área",
+			"en-us": "#?Municipality?State?Area"
+		},
+		"tooltip_text": {
+			"pt-br": "Clique para visualizar no mapa",
+			"en-us": "Click to view on map"
+		}
+	},
+	"charts_box_app": {
+		"label": {
+			"pt-br": "Área de Preservação Permanente",
+			"en-us": "APP"
+		},
+		"description": {
+			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em APP declaradas: ",
+			"en-us": "Ranking of Municipalities with largest Deforested areas in declared PPA:"
+		}
+	},
+	"charts_box_rl": {
+		"label": {
+			"pt-br": "Reserva Legal",
+			"en-us": "Legal Reservation"
+		},
+		"description": {
+			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em Reservas Legais declaradas: ",
+			"en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reservations:"
+		}
+	},
+	"mini_report_utfgrid": {
+		"area": {
+			"pt-br": "Área Desmatada:",
+			"en-us": "Deforested Area:"
+		},
+		"city": {
+			"pt-br": "Município:",
+			"en-us": "Municipality:"
+		},
+		"detection_date": {
+			"pt-br": "Data de Detecção:",
+			"en-us": "Detection Date:"
+		},
+		"susceptibility": {
+			"pt-br": "Susceptibilidade ao Desmatamento:",
+			"en-us": "Susceptibility to Deforestation:"
+		},
+		"field_number": {
+			"pt-br": "Nº do Campo:",
+			"en-us": "Field:"
+		},
+		"not_computed_message": {
+			"pt-br": "Não Computada",
+			"en-us": "Not Computed"
+		},
+		"undisclosed_message": {
+			"pt-br": "Não Divulgada",
+			"en-us": "Undisclosed"
+		},
+		"click_more_text": {
+			"pt-br": "Clique para visualizar o relatório completo deste desmatamento",
+			"en-us": "Click to open the full deforestation report"
+		},
+		"click_more_municipio": {
+			"pt-br": "Clique para aproximar deste município",
+			"en-us": "Click to zoom in on this municipality"
+		},
+		"label_year": {
+			"pt-br": "Ano: ",
+			"en-us": "Year: "
+		},
+		"label_area_app": {
+			"pt-br": "Área Desmatada em APP:",
+			"en-us": "Deforested Area in Preservation Areas:"
+		},
+		"label_area_rl": {
+			"pt-br": "Área Desmatada em Reserva Legal",
+			"en-us": "Deforested Area in Legal Reservation:"
+		}
+	},
+	"layer_box": {
+		"title": {
+			"pt-br": "Camada de Dados",
+			"en-us": "Layers"
+		},
+		"label_data": {
+			"pt-br": "Desmatamento",
+			"en-us": "Deforestation"
+		},
+		"label_mapabase": {
+			"pt-br": "Mapa Base",
+			"en-us": "BaseMap"
+		},
+		"label_limits": {
+			"pt-br": "Limites",
+			"en-us": "Limits"
+		},
+		"label_upload": {
+			"pt-br": "Upload",
+			"en-us": "Upload"
+		},
+		"label_upload_msg": {
+			"pt-br": "<p> Clique no botão abaixo para carrregar seu arquivo compactado (.zip ou .kmz).</p> <p>Formatos suportados: geojson, kml e shp.</p>",
+			"en-us": "<p> Click the button below to upload your compressed file (.zip or .kmz).</p> <p>Supported formats: geojson, kml and shp.</p>"
+		},
+		"label_upload_title_file": {
+			"pt-br": "Seu arquivo",
+			"en-us": "Your file"
+		},
+		"label_upload_tooltip": {
+			"pt-br": "Enviar arquivo espacial",
+			"en-us": "Send spatial file"
+		},
 
-    "charts_box_title": {
-        "pt-br": "Estatísticas de Desmatamento sobre o PRODES-Cerrado",
-        "en-us": "Deforestation Statistics of PRODES-Cerrado"
-    },
+		"label_upload_max_size_msg": {
+			"pt-br": "Este arquivo tem [current-size] MB. O tamanho máximo permitido é de [max-size] MB.",
+			"en-us": "This file has [current-size] MB. Maximum size allowed is [max-size] MB."
+		},
 
-    "charts_box_timeseries": {
-        "label":{
-            "pt-br": "Serie Temporal",
-            "en-us": "Timeseries"
-        },
-        "name":{
-            "pt-br": "Área Desmatada",
-            "en-us": "Deforestation increases"
-        },
-        "text":{
-            "pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
-            "en-us": "? presents an Anthropic area of ? km², which represents ?% of its total area."
-        }
-    },
+		"search_placeholder": {
+			"pt-br": "Digite um Estado ou Município",
+			"en-us": "Please inform a State or Municipality name"
+		},
+		"search_loading": {
+			"pt-br": "Procurando...",
+			"en-us": "Searching"
+		},
+		"search_failed": {
+			"pt-br": "Desculpe, região não encontrada.",
+			"en-us": "Sorry, region not found."
+		}
+	},
+	"descriptor": {
+		"type_of_information_label": {
+			"pt-br": "Tipo",
+			"en-us": "Type"
+		},
+		"desmatamento": {
+			"label": {
+				"pt-br": "Desmatamento",
+				"en-us": "Deforestation"
+			},
+			"layers": {
+				"desmatamento_prodes": {
+					"label": {
+						"pt-br": "Desmatamentos - PRODES-Cerrado",
+						"en-us": "Deforestation - PRODES-Cerrado"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Desmatamentos - PRODES-Cerrado",
+								"en-us": "Deforestation - PRODES-Cerrado"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Incrementos anuais de desmatamento por corte raso.",
+								"en-us": "Annual increases in clear-cut deforestation."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2000-2019",
+								"en-us": "2000-2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:250.000",
+								"en-us": "1:250.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
+								"en-us": "National Institute for Space Research (INPE)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>"
+							}
+						}
+					],
+					"types": {
+						"bi_ce_prodes_desmatamento_100_fip": {
+							"view_value": {
+								"pt-br": "Polígonos",
+								"en-us": "Polygons"
+							},
+							"timelabel": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							}
+						},
+						"bi_ce_prodes_desmatamento_pontos_campo_fip": {
+							"view_value": {
+								"pt-br": "Polígonos visitados em Campo",
+								"en-us": "Polygons visited in field"
+							}
+						},
+						"prodes_por_region_fip": {
+							"view_value": {
+								"pt-br": "Municípios",
+								"en-us": "Municipalities"
+							},
+							"timelabel": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							}
+						}
+					}
+				},
+				"desmatamento_deter": {
+					"label": {
+						"pt-br": "Avisos - DETER-Cerrado",
+						"en-us": "Warnings - DETER-Cerrado"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Avisos - DETER-Cerrado",
+								"en-us": "Warnings - DETER-Cerrado"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Avisos de evidências de alteração da vegetação nativa.",
+								"en-us": "Warnings of evidence of alteration of native vegetation."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2018-2019",
+								"en-us": "2018-2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:500.000",
+								"en-us": "1:500.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
+								"en-us": "National Institute for Space Research (INPE)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>"
+							}
+						}
+					],
+					"types": {
+						"bi_ce_deter_desmatamento_100_fip": {
+							"view_value": {
+								"pt-br": "Polígonos",
+								"en-us": "Polygons"
+							},
+							"timelabel": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							},
+							"times": {
+								"view_date > (current_date - interval '90' day)": {
+									"pt-br": "Últimos 90 dias",
+									"en-us": "Last 90 days"
+								},
+								"view_date > '2019-01-01'": {
+									"pt-br": "À partir de 2019",
+									"en-us": "From 2019"
+								},
+								"view_date > '2018-01-01'": {
+									"pt-br": "À partir de 2018",
+									"en-us": "From 2018"
+								}
+							}
+						},
+						"bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip": {
+							"view_value_alta_susceptibilidade": {
+								"pt-br": "Polígonos com alta susceptibilidade",
+								"en-us": "High susceptibility polygons"
+							},
+							"timelabel_alta_susceptiblidade": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							},
+							"times_deter_alta_susceptibilidade": {
+								"view_value_last_90_days": {
+									"pt-br": "Últimos 90 dias",
+									"en-us": "Last 90 days"
+								},
+								"view_value_apartir_2019": {
+									"pt-br": "À partir de 2019",
+									"en-us": "From 2019"
+								},
+								"view_value_apartir_2018": {
+									"pt-br": "À partir de 2018",
+									"en-us": "From 2018"
+								}
+							}
+						},
+						"bi_ce_deter_desmatamento_pontos_campo_fip": {
+							"view_value": {
+								"pt-br": "Polígonos visitados em Campo",
+								"en-us": "Polygons visited in field"
+							}
+						}
+					}
+				},
+				"antropico": {
+					"label": {
+						"pt-br": "Antrópico - PRODES-Cerrado",
+						"en-us": "Anthropic - PRODES-Cerrado"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Antrópico - PRODES-Cerrado",
+								"en-us": "Anthropic - PRODES-Cerrado"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Área total convertida até determinado ano.",
+								"en-us": "Total area converted until a given year."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2000-2019",
+								"en-us": "2000-2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:250.000",
+								"en-us": "1:250.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
+								"en-us": "National Institute for Space Research (INPE)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>"
+							}
+						}
+					],
+					"types": {
+						"bi_ce_prodes_antropico_100_fip": {
+							"view_value": {
+								"pt-br": "Polígonos",
+								"en-us": "Polygons"
+							},
+							"timelabel": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							},
+							"times": {
+								"year < 2002": {
+									"pt-br": "Até 2002",
+									"en-us": "Until 2002"
+								},
+								"year < 2004": {
+									"pt-br": "Até 2004",
+									"en-us": "Until 2004"
+								},
+								"year < 2006": {
+									"pt-br": "Até 2006",
+									"en-us": "Until 2006"
+								},
+								"year < 2008": {
+									"pt-br": "Até 2009",
+									"en-us": "Until 2008"
+								},
+								"year < 2010": {
+									"pt-br": "Até 2010",
+									"en-us": "Until 2010"
+								},
+								"year < 2012": {
+									"pt-br": "Até 2012",
+									"en-us": "Until 2012"
+								},
+								"year < 2013": {
+									"pt-br": "Até 2013",
+									"en-us": "Until 2013"
+								},
+								"year < 2014": {
+									"pt-br": "Até 2014",
+									"en-us": "Until 2014"
+								},
+								"year < 2015": {
+									"pt-br": "Até 2015",
+									"en-us": "Until 2015"
+								},
+								"year < 2016": {
+									"pt-br": "Até 2016",
+									"en-us": "Until 2016"
+								},
+								"year < 2017": {
+									"pt-br": "Até 2017",
+									"en-us": "Until 2017"
+								},
+								"year < 2018": {
+									"pt-br": "Até 2018",
+									"en-us": "Until 2018"
+								}
+							}
+						}
+					}
+				},
+				"susceptibilidade": {
+					"label": {
+						"pt-br": "Susceptibilidade a Desmatamentos",
+						"en-us": "Susceptibility to Deforestation"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Susceptibilidade a Desmatamentos",
+								"en-us": "Susceptibility to Deforestation"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Áreas com alto e baixo potencial de serem convertidas de acordo com os padrões observados entre os anos de 2010 e 2015.",
+								"en-us": "Areas with high and low potential to be converted according to the standards observed between the years 2010 and 2015."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2015",
+								"en-us": "2015"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "30 metros",
+								"en-us": "30 meters"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
+								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "Texto LAPIG",
+								"en-us": "Text LAPIG"
+							}
+						}
+					],
+					"types": {
+						"bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig": {
+							"view_value": {
+								"pt-br": "Polígonos pequenos (< 0.5 km²)",
+								"en-us": "Small Polygons (< 0.5 km²)"
+							}
+						},
+						"bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig": {
+							"view_value": {
+								"pt-br": "Polígonos grandes (< 0.5 km²)",
+								"en-us": "Large Polygons (< 0.5 km²)"
+							}
+						}
+					}
+				}
+			}
+		},
+		"uso_da_terra": {
+			"label": {
+				"pt-br": "Uso da Terra",
+				"en-us": "Land Use"
+			},
+			"layers": {
+				"terraclass": {
+					"label": {
+						"pt-br": "Uso e Cobertura da Terra",
+						"en-us": "Land Use and Cover"
+					},
+					"uso_solo_terraclass_fip": {
+						"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "TerraClass Cerrado",
+									"en-us": "TerraClass Cerrado"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Mapeamento do uso e cobertura do solo do cerrado para o ano de 2013, a partir da compilação de dados  do TerraClass Cerrado.",
+									"en-us": "Mapping the use and coverage of the cerrado soil for the year 2013, based on the compilation of data from the TerraClass Cerrado."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2013",
+									"en-us": "2013"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "1:250.000",
+									"en-us": "1:250.000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Reference and Coordinate System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal de Mercator.",
+									"en-us": "Mercator Universal."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "Ministério do Meio Ambiente (MMA)",
+									"en-us": "Ministry of the Environment (MMA)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Contato",
+									"en-us": "Contact"
+								},
+								"description": {
+									"pt-br": "cerradodpat@gmail.com",
+									"en-us": "cerradodpat@gmail.com"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado'> https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado</a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado'> https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado</a>"
+								}
+							}
+						]
+					},
 
-    "charts_box_states": {
-       "label":{
-            "pt-br": "Estados",
-            "en-us": "States"
-        },
-        "name":{
-            "pt-br": "Área Desmatada",
-            "en-us": "Deforested Area"
-        },
-        "description":{
-            "pt-br": "Áreas Desmatadas nos Estados: ",
-            "en-us": "States Deforested Area in: "
-        }
-    },
+					"bi_ce_cobertura_vegetal_250_2002_mma": {
+						"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "PROBIO Cerrado",
+									"en-us": "PROBIO Cerrado"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Mapeamento dos Remanescentes e Ocupação Antrópica do Bioma Cerrado, com base no PROBIO - Projeto de Conservação e Utilização Sustentável da Diversidade Biológica Brasileira.",
+									"en-us": "Mapping the Remnants and Anthropic Occupation of the Cerrado Biome, based on PROBIO - Project for the Conservation and Sustainable Use of Brazilian Biological Diversity."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2002",
+									"en-us": "2002"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "1:250.000",
+									"en-us": "1:250.000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Reference and Coordinate System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal de Mercator.",
+									"en-us": "Mercator Universal."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "Ministério do Meio Ambiente (MMA)",
+									"en-us": "Ministry of the Environment (MMA)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Contato",
+									"en-us": "Contact"
+								},
+								"description": {
+									"pt-br": "cerradodpat@gmail.com",
+									"en-us": "cerradodpat@gmail.com"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='https://www.infoteca.cnptia.embrapa.br/bitstream/doc/570887/1/doc190.pdf'> https://www.infoteca.cnptia.embrapa.br/bitstream/doc/570887/1/doc190.pdf</a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://www.infoteca.cnptia.embrapa.br/bitstream/doc/570887/1/doc190.pdf'> https://www.infoteca.cnptia.embrapa.br/bitstream/doc/570887/1/doc190.pdf</a>"
+								}
+							}
+						]
+					},
 
-    "charts_box_cities": {
-        "label":{
-           "pt-br": "Municípios",
-           "en-us": "Municipalities"
-        },
-        "description":{
-            "pt-br": "Ranking dos Municípios com maiores Desmatamentos: ",
-            "en-us": "Ranking of Municipalities with largest Deforested areas:"
-        },
-        "title":{
-            "pt-br": "#?Município?Estado?Área",
-            "en-us": "#?Municipality?State?Area"
-        },
-        "tooltip_text":{
-            "pt-br": "Clique para visualizar no mapa",
-            "en-us": "Click to view on map"
-        }
-    },
+					"agricultura_agrosatelite_fip": {
+						"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Reference and Coordinate System"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Contato",
+									"en-us": "Contact"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "",
+									"en-us": ""
+								}
+							}
+						]
+					}
+				},
+				"floresta_plantada": {
+					"label": {
+						"pt-br": "Floresta Plantada",
+						"en-us": "Planted Forest"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Floresta Plantada",
+								"en-us": "Planted Forest"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Recorte do mapeamento global de silvicultura para o bioma Cerrado.",
+								"en-us": "Outline of the global mapping of forestry for the Cerrado biome."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2014",
+								"en-us": "2014"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "30 metros",
+								"en-us": "30 meters"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Global Forest Watch (GFW)",
+								"en-us": "Global Forest Watch (GFW)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://data.globalforestwatch.org/datasets/planted-forests'> http://data.globalforestwatch.org/datasets/planted-forests</a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://data.globalforestwatch.org/datasets/planted-forests'> http://data.globalforestwatch.org/datasets/planted-forests</a>"
+							}
+						}
+					]
+				}
+			}
+		},
+		"infraestrutura": {
+			"label": {
+				"pt-br": "Infraestrutura",
+				"en-us": "Infrastructure"
+			},
+			"layers": {
+				"osm_rodovias": {
+					"label": {
+						"pt-br": "Malha Viária (Federal/Estadual)",
+						"en-us": "Roads Network (Federal/State)"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Malha Viária (Federal/Estadual)",
+								"en-us": "Roads Network (Federal/State)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Malha viária produzida a partir da copilação dos dados da plataforma do OpenStreetMap.",
+								"en-us": "Road network produced from the data collection of the OpenStreetMap platform."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:15.000",
+								"en-us": "1:15.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Open Street Maps (OSM)",
+								"en-us": "Open Street Maps (OSM)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://www.openstreetmap.org/about'> https://www.openstreetmap.org/about </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://www.openstreetmap.org/about'> https://www.openstreetmap.org/about </a>"
+							}
+						}
+					]
+				},
+				"armazens": {
+					"label": {
+						"pt-br": "Armazéns",
+						"en-us": "Warehouses"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Armazéns",
+								"en-us": "Warehouses"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Número de armazéns destinados a armazenamento e controle de produção no Brasil.",
+								"en-us": "Number of warehouses for storage and production control in Brazil."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "Pontual",
+								"en-us": "Point"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Companhia Nacional de Abastecimento (CONAB) (Revisado pelo LAPIG-UFG)",
+								"en-us": "National Supply Company (CONAB) (Reviewed by LAPIG-UFG)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://portaldeinformacoes.conab.gov.br/armazem'> https://portaldeinformacoes.conab.gov.br/armazem </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://portaldeinformacoes.conab.gov.br/armazem'> https://portaldeinformacoes.conab.gov.br/armazem </a>"
+							}
+						}
+					]
+				},
+				"frigorificos": {
+					"label": {
+						"pt-br": "Matadouros e Frigoríficos",
+						"en-us": "Slaughterhouses & Freezers"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Matadouros e Frigoríficos",
+								"en-us": "Slaughterhouses & Freezers"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Dado produzido a partir de informações de Matadouros e/ou Frigoríficos Bovinos do Brasil aptos a exportação (SIF-MAPA), com localização revisada pelo LAPIG.",
+								"en-us": "Data produced from information on slaughterhouses and / or Brazilian beef slaughterhouses suitable for export (SIF-MAPA), with location reviewed by LAPIG."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "Pontual",
+								"en-us": "Point"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Ministério da Agricultura, Pecuária e Abastecimento (MAPA) (Revisado por LAPIG-UFG)",
+								"en-us": "Ministry of Agriculture, Livestock and Supply (MAPA) (Revised by LAPIG-UFG)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif'> http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif'> http://www.agricultura.gov.br/assuntos/inspecao/produtos-animal/sif </a>"
+							}
+						}
+					]
+				}
+			}
+		},
+		"geofisico": {
+			"label": {
+				"pt-br": "Geofísico",
+				"en-us": "Geophysical"
+			},
+			"layers": {
+				"altitude": {
+					"label": {
+						"pt-br": "Altitude",
+						"en-us": "Altitude"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Altitude",
+								"en-us": "Altitude"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Altitude em relação ao nivel do mar expressa em um modelo digital de terreno (MDT).",
+								"en-us": "Altitude in relation to the sea level expressed in a digital terrain model (MDT)."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2000",
+								"en-us": "2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "30 metros",
+								"en-us": "30 meters"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Shuttle Radar Topography Mission (SRTM)",
+								"en-us": "Shuttle Radar Topography Mission (SRTM)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://www2.jpl.nasa.gov/srtm/'> https://www2.jpl.nasa.gov/srtm/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://www2.jpl.nasa.gov/srtm/'> https://www2.jpl.nasa.gov/srtm/ </a>"
+							}
+						}
+					]
+				},
+				"declividade": {
+					"label": {
+						"pt-br": "Declividade",
+						"en-us": "Slope"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Declividade",
+								"en-us": "Slope"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Ângulo de inclinação (zenital) da superfície do terreno em relação à horizontal. Expressa o quão ingreme é uma superfície.",
+								"en-us": "Inclination angle (zenith) of the land surface in relation to the horizontal. Expresses how steep a surface is."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2000",
+								"en-us": "2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "30 metros",
+								"en-us": "30 meters"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Shuttle Radar Topography Mission (SRTM)",
+								"en-us": "Shuttle Radar Topography Mission (SRTM)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						}
+					]
+				}
+			}
+		},
+		"edafoclimaticos": {
+			"label": {
+				"pt-br": "Edafoclimáticos",
+				"en-us": "Edaphoclimatic"
+			},
+			"layers": {
+				"solos": {
+					"label": {
+						"pt-br": "Solos (1:250.000)",
+						"en-us": "Soils (1:250.000)"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Solos ",
+								"en-us": "Soils"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Mapeamento de solos do Brasil, a partir de compilações (Embrapa, IBGE) e conversão para o meio digital de levantamentos de solos produzidos pelo Projeto RADAMBRASIL.",
+								"en-us": "Mapping of soils in Brazil, from compilations (Embrapa, IBGE) and conversion to digital media of soil surveys produced by the RADAMBRASIL Project."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:250.000",
+								"en-us": "1:250.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+								"en-us": "Brazilian Institute of Geography and Statistics (IBGE)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='ftp://geoftp.ibge.gov.br/informacoes_ambientais/pedologia/vetores/escala_250_mil/'> ftp://geoftp.ibge.gov.br/informacoes_ambientais/pedologia/vetores/escala_250_mil/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='ftp://geoftp.ibge.gov.br/informacoes_ambientais/pedologia/vetores/escala_250_mil/'> ftp://geoftp.ibge.gov.br/informacoes_ambientais/pedologia/vetores/escala_250_mil/ </a>"
+							}
+						}
+					]
+				},
+				"precipitacao": {
+					"label": {
+						"pt-br": "Média da Precipitação Acumulada",
+						"en-us": "Average Accumulated Precipitation"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Média da Precipitação Acumulada",
+								"en-us": "Average Accumulated Precipitation"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Mapeamento de solos do Brasil, a partir de compilações (Embrapa, IBGE) e conversão para o meio digital de levantamentos de solos produzidos pelo Projeto RADAMBRASIL.",
+								"en-us": "Average annual accumulated precipitation, between the years 2000 and 2014, obtained through the interpolation between TRMM data and INMET meteorological stations."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2000-2014",
+								"en-us": "2000-2014"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "30 metros",
+								"en-us": "30 meters"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Tropical Rainfall Measuring Mission (TRMM) e Global Precipitation Measurement (GPM)",
+								"en-us": "Tropical Rainfall Measuring Mission (TRMM) e Global Precipitation Measurement (GPM)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						}
+					]
+				}
+			}
+		},
+		"imagens": {
+			"label": {
+				"pt-br": "Acervo de Imagens",
+				"en-us": "Satellite Image Collection"
+			},
+			"layers": {
+				"satelite": {
+					"label": {
+						"pt-br": "Mosaico de Imagens",
+						"en-us": "Image Mosaics"
+					},
+					"timelabel": {
+						"pt-br": "Ano",
+						"en-us": "Year"
+					},
 
-    "charts_box_app":{
-        "label":{
-            "pt-br": "Área de Preservação Permanente",
-            "en-us": "APP"
-        },
-        "description":{
-            "pt-br": "Ranking dos Municípios com maiores Desmatamentos em APP declaradas: ",
-            "en-us": "Ranking of Municipalities with largest Deforested areas in declared PPA:"
-        }
-    },
+					"landsat": {
+						"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "Landsat",
+									"en-us": "Landsat"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Mosaico com as imagens de satélite inspecionadas pelo INPE para a construção do PRODES-Cerrado.",
+									"en-us": "Mosaic with satellite images inspected by INPE for the construction of PRODES-Cerrado."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2000-2019",
+									"en-us": "2000-2019"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "30 metros",
+									"en-us": "30 meters"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Reference and Coordinate System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal de Mercator.",
+									"en-us": "Mercator Universal."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "United States Geological Service (USGS)",
+									"en-us": "United States Geological Service (USGS)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Contato",
+									"en-us": "Contact"
+								},
+								"description": {
+									"pt-br": "cerradodpat@gmail.com",
+									"en-us": "cerradodpat@gmail.com"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='https://landsat.gsfc.nasa.gov/landsat-data-continuity-mission/'> https://landsat.gsfc.nasa.gov/landsat-data-continuity-mission/ </a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://landsat.gsfc.nasa.gov/landsat-data-continuity-mission/'> https://landsat.gsfc.nasa.gov/landsat-data-continuity-mission/ </a>"
+								}
+							}
+						]
+					},
 
-    "charts_box_rl":{
-        "label":{
-            "pt-br": "Reserva Legal",
-            "en-us": "Legal Reservation"
-        },
-        "description":{
-            "pt-br": "Ranking dos Municípios com maiores Desmatamentos em Reservas Legais declaradas: ",
-            "en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reservations:"
-        }
-    },
+					"sentinel": {
+						"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "Sentinel",
+									"en-us": "Sentinel"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Mosaico de imagens de satélite com resulução espacial de 10 metros, com data diferente das imagens utilizadas para a produção do PRODES-Cerrado.",
+									"en-us": "Mosaic of satellite images with spatial resolution of 10 meters, with a different date from the images used for the production of PRODES-Cerrado."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2017-2019",
+									"en-us": "2017-2019"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "10 metros",
+									"en-us": "10 meters"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Reference and Coordinate System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal de Mercator.",
+									"en-us": "Mercator Universal."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "European Space Agency (ESA)",
+									"en-us": "European Space Agency (ESA)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Contato",
+									"en-us": "Contact"
+								},
+								"description": {
+									"pt-br": "cerradodpat@gmail.com",
+									"en-us": "cerradodpat@gmail.com"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='https://sentinel.esa.int/web/sentinel/home'> https://sentinel.esa.int/web/sentinel/home </a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://sentinel.esa.int/web/sentinel/home'> https://sentinel.esa.int/web/sentinel/home </a>"
+								}
+							}
+						]
+					}
+				}
+			}
+		},
+		"basemaps": {
+			"types": {
+				"mapbox": {
+					"pt-br": "Geopolítico",
+					"en-us": "Geopolitical"
+				},
+				"satelite": {
+					"pt-br": "Satélite",
+					"en-us": "Satellite"
+				},
+				"estradas": {
+					"pt-br": "Estradas",
+					"en-us": "Roads"
+				},
+				"relevo": {
+					"pt-br": "Relevo",
+					"en-us": "Geographical Relief"
+				}
+			}
+		},
+		"limits": {
+			"types": {
+				"biomas": {
+					"pt-br": "Cerrado",
+					"en-us": "Cerrado"
+				},
+				"estados": {
+					"pt-br": "Estados",
+					"en-us": "States"
+				},
+				"municipios_cerrado": {
+					"pt-br": "Municípios",
+					"en-us": "Municipality"
+				}
+			}
+		}
+	},
+	"dialog_relatorio": {
+		"title": {
+			"pt-br": "Relatório do Desmatamento",
+			"en-us": "Deforestation Report"
+		},
+		"close_button_label": {
+			"pt-br": "Fechar",
+			"en-us": "Close"
+		},
+		"information_tab": {
+			"title_tab": {
+				"pt-br": "Informações sobre o Polígono",
+				"en-us": "Polygon Information"
+			},
+			"metadados_label": 	{
+				"pt-br": "Metadados",
+				"en-us": "Metadata"
+			},
+			"polygon_label": {
+				"pt-br": "Polígono:",
+				"en-us": "Polygon:"
+			},
+			"area_label": {
+				"pt-br": "Área Desmatada:",
+				"en-us": "Deforested Area:"
+			},
+			"municipio_label": {
+				"pt-br": "Município:",
+				"en-us": "Municipality:"
+			},
+			"detection_date_label": {
+				"pt-br": "Data da Detecção:",
+				"en-us": "Detection Date:"
+			},
+			"latitude_label": {
+				"pt-br": "Latitude:",
+				"en-us": "Latitude:"
+			},
+			"longitude_label": {
+				"pt-br": "Longitude:",
+				"en-us": "Longitude:"
+			},
+			"landsat_image_description": {
+				"pt-br": "Imagem Landsat inspecionada pelo",
+				"en-us": "Landsat image inspected by"
+			},
+			"unit_measure": {
+				"pt-br": "km²",
+				"en-us": "km²"
+			}
+		},
+		"car_tab": {
+			"title_tab": {
+				"pt-br": "Cadastro Ambiental Rural (CAR)",
+				"en-us": "Rural Environmental Registry (CAR)"
+			},
+			"title_info": {
+				"pt-br": "Informações Cruzadas",
+				"en-us": "Spatial Relation Information"
+			},
+			"cod_car_label": {
+				"pt-br": "Código CAR:",
+				"en-us": "CAR Code:"
+			},
+			"area_car_label": {
+				"pt-br": "Área total da Propriedade:",
+				"en-us": "Total Property Area"
+			},
+			"reference_date_car_label": {
+				"pt-br": "Data de Referência informada:",
+				"en-us": "Informed Reference Date:"
+			},
+			"rl_car_label": {
+				"pt-br": "Área desmatada dentro da Reserva Legal: ? km² (? da área total da Reserva Legal)",
+				"en-us": "Deforested area within the Legal Reservation:? km² (?of the Legal Reservation total area)"
+			},
+			"nascente_car_label": {
+				"pt-br": "Quantidade de Nascentes na Propriedade Rural:",
+				"en-us": "Number of Springs in Rural Property:"
+			},
+			"app_car_label": {
+				"pt-br": "Área desmatada dentro de APP: ? km² (? da área total da APP)",
+				"en-us": "Deforested Area within the APP: ? km² (? of the APP total area)"
+			},
+			"deforestation_car_description": {
+				"pt-br": "Este desmatamento detectado pelo ? corresponde a ? da área total da propriedade rural.",
+				"en-us": "This deforestation detected by ? corresponds to ? of the Rural Property total area."
+			},
+			"undisclosed_message_car": {
+				"pt-br": "Não Divulgada",
+				"en-us": "Undisclosed"
+			},
+			"rl_car_metadata": {
+				"property": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Propriedade",
+								"en-us": "Property"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Propriedades com Cadastro Ambiental Rural (CAR).",
+								"en-us": "Properties with Rural Environmental Registry (CAR)."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:5.000",
+								"en-us": "1:5.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-    "charts_box_lulc":{
-        "label": {
-            "pt-br": "Uso do Solo",
-            "en-us": "Land Use and Land Cover"
-        },
-        "text":{
-            "pt-br": "Utilizando o mapa disponibilizado pelo projeto ? (referente ao ano de 2002), a cobertura do solo mais afetada pelo desmatamento no ano de ? foi a ? cobrindo cerca de ? de km².",
-            "en-us": "Using the map provided by the project ? (referring to 2002), the land cover most affected by deforestation in the year of ? was ? which covered about ? km²."
-        }
-    },
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
+								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>"
+							}
+						}
+					]
+				},
+				"legal_reserve": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Reserva Legal (RL)",
+								"en-us": "Legal Reserve (RL)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Área da propriedade com a função de assegurar o uso econômico de modo sustentável dos recursos naturais do imóvel rural, auxiliar a conservação e a reabilitação dos processos ecológicos e promover a conservação da biodiversidade.",
+								"en-us": "Property area with the function of ensuring the sustainable economic use of the natural resources of the rural property, assisting the conservation and rehabilitation of ecological processes and promoting the conservation of biodiversity."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:5.000",
+								"en-us": "1:5.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-    "mini_report_utfgrid":{
-        "area":{
-            "pt-br": "Área Desmatada:",
-            "en-us": "Deforested Area:"
-        },
-        "city":{
-            "pt-br": "Município:",
-            "en-us": "Municipality:"
-        },
-        "detection_date":{
-            "pt-br": "Data de Detecção:",
-            "en-us": "Detection Date:"
-        },
-        "susceptibility": {
-            "pt-br": "Susceptibilidade ao Desmatamento:",
-            "en-us": "Susceptibility to Deforestation:"
-        },
-        "field_number": {
-            "pt-br": "Nº do Campo:",
-            "en-us": "Field:"
-        },
-        "not_computed_message": {
-            "pt-br": "Não Computada",
-            "en-us": "Not Computed"
-        },
-        "undisclosed_message":{
-            "pt-br": "Não Divulgada",
-            "en-us": "Undisclosed"
-        },
-        "click_more_text":{
-            "pt-br": "Clique para visualizar o relatório completo deste desmatamento",
-            "en-us": "Click to open the full deforestation report"
-        },
-        "click_more_municipio":{
-            "pt-br": "Clique para aproximar deste município",
-            "en-us": "Click to zoom in on this municipality"
-        },
-        "label_year":{
-            "pt-br": "Ano: ",
-            "en-us": "Year: "
-        },
-        "label_area_app":{
-            "pt-br": "Área Desmatada em APP:",
-            "en-us": "Deforested Area in Preservation Areas:"
-        },
-        "label_area_rl":{
-            "pt-br": "Área Desmatada em Reserva Legal",
-            "en-us": "Deforested Area in Legal Reservation:"
-        }
-    },
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
+								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12651.htm'> http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12651.htm </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12651.htm'> http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12651.htm </a>"
+							}
+						}
+					]
+				},
+				"permanent_preservation_area": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Área de Preservação Permanente (APP)",
+								"en-us": "Permanent Preservation Area (APP)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Área da propriedade situada no entorno de cursos hídricos, coberta ou não por vegetação nativa, com a função ambiental de preservar os rios, a paisagem, a estabilidade geológica e a biodiversidade.",
+								"en-us": "Property area located around water courses, covered or not by native vegetation, with the environmental function of preserving rivers, the landscape, geological stability and biodiversity."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:5.000",
+								"en-us": "1:5.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-    "layer_box": {
-        "title":{
-            "pt-br": "Camada de Dados",
-            "en-us": "Layers"
-        },
-        "label_data":{
-            "pt-br": "Desmatamento",
-            "en-us": "Deforestation"
-        },
-        "label_mapabase":{
-            "pt-br": "Mapa Base",
-            "en-us": "BaseMap"
-        },
-        "label_limits":{
-            "pt-br": "Limites",
-            "en-us": "Limits"
-        },
-        "label_upload":{
-            "pt-br": "Upload",
-            "en-us": "Upload"
-        },
-        "search_placeholder":{
-            "pt-br": "Digite um Estado ou Município",
-            "en-us": "Please inform a State or Municipality name"
-        },
-        "search_loading":{
-            "pt-br": "Procurando...",
-            "en-us": "Searching"
-        },
-        "search_failed":{
-            "pt-br": "Desculpe, região não encontrada.",
-            "en-us": "Sorry, region not found."
-        }
-    },
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
+								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>"
+							}
+						}
+					]
+				},
+				"source": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Nascentes",
+								"en-us": "Source"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Local onde se inicia um curso d'água.",
+								"en-us": "Place where a watercourse begins."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "Pontual",
+								"en-us": "Point"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-    "descriptor": {
-        "type_of_information_label":{
-            "pt-br": "Tipo",
-            "en-us": "Type"
-        },
-        "desmatamento":{
-            "label":{
-                "pt-br": "Desmatamento",
-                "en-us": "Deforestation"
-            },
-            "layers":{
-                "desmatamento_prodes":{
-                    "label":{
-                        "pt-br": "Desmatamentos - PRODES-Cerrado",
-                        "en-us": "Deforestation - PRODES-Cerrado"
-                    },
-                    "types":{
-                        "bi_ce_prodes_desmatamento_100_fip":{
-                            "view_value":{
-                                "pt-br": "Polígonos",
-                                "en-us": "Polygons"
-                            },
-                            "timelabel":{
-                                "pt-br": "Período",
-                                "en-us": "Period"
-                            }
-                        },
-                        "bi_ce_prodes_desmatamento_pontos_campo_fip":{
-                            "view_value":{
-                                "pt-br": "Polígonos visitados em Campo",
-                                "en-us": "Polygons visited in field"
-                            }
-                        },
-                        "prodes_por_region_fip":{
-                            "view_value":{
-                                "pt-br": "Municípios",
-                                "en-us": "Municipalities"
-                            },
-                            "timelabel":{
-                                "pt-br": "Período",
-                                "en-us": "Period"
-                            }
-                        }
-                    }
-                },
-                "desmatamento_deter":{
-                    "label":{
-                        "pt-br": "Avisos - DETER-Cerrado",
-                        "en-us": "Warnings - DETER-Cerrado"
-                    },
-                    "types":{
-                        "bi_ce_deter_desmatamento_100_fip":{
-                            "view_value":{
-                                "pt-br": "Polígonos",
-                                "en-us": "Polygons"
-                            },
-                            "timelabel":{
-                                "pt-br": "Período",
-                                "en-us": "Period"
-                            },
-                            "times":{
-                                "view_date > (current_date - interval '90' day)":{
-                                    "pt-br": "Últimos 90 dias",
-                                    "en-us": "Last 90 days"
-                                },
-                                "view_date > '2019-01-01'":{
-                                    "pt-br": "À partir de 2019",
-                                    "en-us": "From 2019"
-                                },
-                                "view_date > '2018-01-01'":{
-                                    "pt-br": "À partir de 2018",
-                                    "en-us": "From 2018"
-                                }
-                            }
-                        },
-                        "bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip":{
-                            "view_value_alta_susceptibilidade":{
-                                "pt-br": "Polígonos com alta susceptibilidade",
-                                "en-us": "High susceptibility polygons"
-                            },
-                            "timelabel_alta_susceptiblidade":{
-                                "pt-br": "Período",
-                                "en-us": "Period"
-                            },
-                            "times_deter_alta_susceptibilidade":{
-                                "view_value_last_90_days":{
-                                    "pt-br": "Últimos 90 dias",
-                                    "en-us": "Last 90 days"
-                                },
-                                "view_value_apartir_2019":{
-                                    "pt-br": "À partir de 2019",
-                                    "en-us": "From 2019"
-                                },
-                                "view_value_apartir_2018":{
-                                    "pt-br": "À partir de 2018",
-                                    "en-us": "From 2018"
-                                }
-                            }
-                        },
-                        "bi_ce_deter_desmatamento_pontos_campo_fip":{
-                            "view_value":{
-                                "pt-br": "Polígonos visitados em Campo",
-                                "en-us": "Polygons visited in field"
-                            }
-                        }
-                    }
-                },
-                "antropico":{
-                    "label":{
-                        "pt-br": "Antrópico - PRODES-Cerrado",
-                        "en-us": "Anthropic - PRODES-Cerrado"
-                    },
-                    "types":{
-                        "bi_ce_prodes_antropico_100_fip":{
-                            "view_value":{
-                                "pt-br": "Polígonos",
-                                "en-us": "Polygons"
-                            },
-                            "timelabel":{
-                                "pt-br": "Período",
-                                "en-us": "Period"
-                            },
-                            "times":{
-                                "year < 2002":{
-                                    "pt-br": "Até 2002",
-                                    "en-us": "Until 2002"
-                                },
-                                "year < 2004":{
-                                    "pt-br": "Até 2004",
-                                    "en-us": "Until 2004"
-                                },
-                                "year < 2006":{
-                                    "pt-br": "Até 2006",
-                                    "en-us": "Until 2006"
-                                },
-                                "year < 2008":{
-                                    "pt-br": "Até 2009",
-                                    "en-us": "Until 2008"
-                                },
-                                "year < 2010":{
-                                    "pt-br": "Até 2010",
-                                    "en-us": "Until 2010"
-                                },
-                                "year < 2012":{
-                                    "pt-br": "Até 2012",
-                                    "en-us": "Until 2012"
-                                },
-                                "year < 2013":{
-                                    "pt-br": "Até 2013",
-                                    "en-us": "Until 2013"
-                                },
-                                "year < 2014":{
-                                    "pt-br": "Até 2014",
-                                    "en-us": "Until 2014"
-                                },
-                                "year < 2015":{
-                                    "pt-br": "Até 2015",
-                                    "en-us": "Until 2015"
-                                },
-                                "year < 2016":{
-                                    "pt-br": "Até 2016",
-                                    "en-us": "Until 2016"
-                                },
-                                "year < 2017":{
-                                    "pt-br": "Até 2017",
-                                    "en-us": "Until 2017"
-                                },
-                                "year < 2018":{
-                                    "pt-br": "Até 2018",
-                                    "en-us": "Until 2018"
-                                }
-                            }
-                        }
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
+								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>"
+							}
+						}
+					]
+				},
+				"sample_validation": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Validação Amostral",
+								"en-us": "Sample Validation"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Conjunto de pontos inspecionado em imagens de satélite para auxilio no processo de validação dos dados PRODES-Cerrado.",
+								"en-us": "Set of points inspected in satellite images to aid in the validation process of PRODES-Cerrado data."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2019",
+								"en-us": "2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "Pontual",
+								"en-us": "Point"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-                    }
-                },
-                "susceptibilidade":{
-                    "label":{
-                        "pt-br": "Susceptibilidade a Desmatamentos",
-                        "en-us": "Susceptibility to Deforestation"
-                    },
-                    "types":{
-                        "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig":{
-                            "view_value":{
-                                "pt-br": "Polígonos pequenos (< 0.5 km²)",
-                                "en-us": "Small Polygons (< 0.5 km²)"
-                            }
-                        },
-                        "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig":{
-                            "view_value":{
-                                "pt-br": "Polígonos grandes (< 0.5 km²)",
-                                "en-us": "Large Polygons (< 0.5 km²)"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "uso_da_terra":{
-            "label":{
-                "pt-br": "Uso da Terra",
-                "en-us": "Land Use"
-            },
-            "layers":{
-                "terraclass":{
-                    "label":{
-                        "pt-br": "Uso e Cobertura da Terra",
-                        "en-us": "Land Use and Cover"
-                    }
-                },
-                "floresta_plantada":{
-                    "label":{
-                        "pt-br": "Floresta Plantada",
-                        "en-us": "Planted Forest"
-                    }
-                }
-            }
-        },
-        "infraestrutura":{
-            "label":{
-                "pt-br": "Infraestrutura",
-                "en-us": "Infrastructure"
-            },
-            "layers":{
-                "osm_rodovias":{
-                    "label":{
-                        "pt-br": "Malha Viária (Federal/Estadual)",
-                        "en-us": "Roads Network (Federal/State)"
-                    }
-                },
-                "armazens":{
-                    "label":{
-                        "pt-br": "Armazéns",
-                        "en-us": "Warehouses"
-                    }
-                },
-                "frigorificos":{
-                    "label":{
-                        "pt-br": "Matadouros e Frigoríficos",
-                        "en-us": "Slaughterhouses & Freezers"
-                    }
-                }
-            }
-        },
-        "geofisico":{
-            "label":{
-                "pt-br": "Geofísico",
-                "en-us": "Geophysical"
-            },
-            "layers":{
-                "altitude":{
-                    "label":{
-                        "pt-br": "Altitude",
-                        "en-us": "Altitude"
-                    }
-                },
-                "declividade":{
-                    "label":{
-                        "pt-br": "Declividade",
-                        "en-us": "Slope"
-                    }
-                }
-            }
-        },
-        "edafoclimaticos":{
-            "label":{
-                "pt-br": "Edafoclimáticos",
-                "en-us": "Edaphoclimatic"
-            },
-            "layers":{
-                "solos":{
-                    "label":{
-                        "pt-br": "Solos (1:250.000)",
-                        "en-us": "Soils (1:250.000)"
-                    }
-                },
-                "precipitacao":{
-                    "label":{
-                        "pt-br": "Média da Precipitação Acumulada",
-                        "en-us": "Average Accumulated Precipitation"
-                    }
-                }
-            }
-        },
-        "imagens":{
-            "label":{
-                "pt-br": "Acervo de Imagens",
-                "en-us": "Satellite Image Collection"
-            },
-            "layers":{
-                "satelite":{
-                    "label":{
-                        "pt-br": "Mosaico de Imagens",
-                        "en-us": "Image Mosaics"
-                    },
-                    "timelabel":{
-                        "pt-br": "Ano",
-                        "en-us": "Year"
-                    }
-                }
-            }
-        },
-        "basemaps":{
-            "types":{
-                "mapbox":{
-                    "pt-br": "Geopolítico",
-                    "en-us": "Geopolitical"
-                },
-                "satelite":{
-                    "pt-br": "Satélite",
-                    "en-us": "Satellite"
-                },
-                "estradas":{
-                    "pt-br": "Estradas",
-                    "en-us": "Roads"
-                },
-                "relevo":{
-                    "pt-br": "Relevo",
-                    "en-us": "Geographical Relief"
-                }
-            }
-        },
-        "limits":{
-            "types":{
-                "biomas":{
-                    "pt-br": "Cerrado",
-                    "en-us": "Cerrado"
-                },
-                "estados":{
-                    "pt-br": "Estados",
-                    "en-us": "States"
-                },
-                "municipios_cerrado":{
-                    "pt-br": "Municípios",
-                    "en-us": "Municipality"
-                }
-            }
-        }        
-    },
-    "dialog_relatorio":{
-        "title":{
-            "pt-br": "Relatório do Desmatamento",
-            "en-us": "Deforestation Report"
-        },
-        "close_button_label":{
-            "pt-br": "Fechar",
-            "en-us": "Close"
-        },
-        "information_tab":{
-            "title_tab":{
-                "pt-br": "Informações sobre o Polígono",
-                "en-us": "Polygon Information"
-            },
-            "metadados_label":{
-                "pt-br": "Metadados",
-                "en-us": "Metadata"
-            },
-            "polygon_label":{
-                "pt-br": "Polígono:",
-                "en-us": "Polygon:"
-            },
-            "metadados_label":{
-                "pt-br": "Metadados",
-                "en-us": "Metadata"
-            },
-            "area_label":{
-                "pt-br": "Área Desmatada:",
-                "en-us": "Deforested Area:"
-            },
-            "municipio_label":{
-                "pt-br": "Município:",
-                "en-us": "Municipality:"
-            },
-            "detection_date_label":{
-                "pt-br": "Data da Detecção:",
-                "en-us": "Detection Date:"
-            },
-            "latitude_label":{
-                "pt-br": "Latitude:",
-                "en-us": "Latitude:"
-            },
-            "longitude_label":{
-                "pt-br": "Longitude:",
-                "en-us": "Longitude:"
-            },
-            "landsat_image_description":{
-                "pt-br": "Imagem Landsat inspecionada pelo",
-                "en-us": "Landsat image inspected by"
-            },
-            "unit_measure":{
-                "pt-br": "km²",
-                "en-us": "km²"
-            }
-        },
-        "car_tab":{
-            "title_tab":{
-                "pt-br": "Cadastro Ambiental Rural (CAR)",
-                "en-us": "Rural Environmental Registry (CAR)"
-            },
-            "title_info":{
-                "pt-br": "Informações Cruzadas",
-                "en-us": "Spatial Relation Information"
-            },
-            "cod_car_label":{
-                "pt-br": "Código CAR:",
-                "en-us": "CAR Code:"
-            },
-            "area_car_label":{
-                "pt-br": "Área total da Propriedade:",
-                "en-us": "Total Property Area"
-            },
-            "reference_date_car_label":{
-                "pt-br": "Data de Referência informada:",
-                "en-us": "Informed Reference Date:"
-            },
-            "rl_car_label":{
-                "pt-br": "Área desmatada dentro da Reserva Legal: ? km² (? da área total da Reserva Legal)",
-                "en-us": "Deforested area within the Legal Reservation:? km² (?of the Legal Reservation total area)"
-            },
-            "nascente_car_label":{
-                "pt-br": "Quantidade de Nascentes na Propriedade Rural:",
-                "en-us": "Number of Springs in Rural Property:"
-            },
-            "app_car_label":{
-                "pt-br": "Área desmatada dentro de APP: ? km² (? da área total da APP)",
-                "en-us": "Deforested Area within the APP: ? km² (? of the APP total area)"
-            },
-            "deforestation_car_description":{
-                "pt-br": "Este desmatamento detectado pelo ? corresponde a ? da área total da propriedade rural.",
-                "en-us": "This deforestation detected by ? corresponds to ? of the Rural Property total area."
-            },
-            "undisclosed_message_car":{
-                "pt-br": "Não Divulgada",
-                "en-us": "Undisclosed"
-            }
-        },
-        "campo_tab":{
-            "title_tab":{
-                "pt-br": "Validação de Campo",
-                "en-us": "Field Validation"
-            },
-            "title_camera_tab":{
-                "pt-br": "Fotos de Câmera",
-                "en-us": "Camera Photos"
-            },
-            "title_drone_photo_tab":{
-                "pt-br": "Fotos de Drone",
-                "en-us": "Drone Photos"
-            },
-            "title_drone_video_tab":{
-                "pt-br": "Vídeos de Drone",
-                "en-us": "Drone Videos"
-            },
-            "field_data_label":{
-                "pt-br": "Dados do Campo",
-                "en-us": "Field Data"
-            },
-            "field_number_label":{
-                "pt-br": "Nº do Campo:",
-                "en-us": "Field Number:"
-            },
-            "field_visit_date_label":{
-                "pt-br": "Data da Visita:",
-                "en-us": "Date of Visit:"
-            },
-            "field_uso_do_solo_label":{
-                "pt-br": "Uso e Cobertura do Solo:",
-                "en-us": "Land Use and Cover:"
-            },
-            "field_observation_label":{
-                "pt-br": "Observações:",
-                "en-us": "Comments:"
-            },
-            "caption_undisclosed":{
-                "pt-br": "Não Divulgada",
-                "en-us": "Undisclosed"
-            }
-        },
-        "historico_amostral_landsat":{
-            "title_tab":{
-                "pt-br": "Validação Amostral e Histórico de Imagens Landsat",
-                "en-us": "Sample Validation and Landsat Image History"
-            },
-            "caption":{
-                "pt-br": "Ano: ",
-                "en-us": "Year: "
-            },
-            "class_lapig_label":{
-                "pt-br": "Classe predominante após inspeção visual: ",
-                "en-us": "Predominant class after visual inspection: "
-            },
-            "amostral_class_vegetation":{
-                "pt-br": "Vegetação Natural",
-                "en-us": "Natural Vegetation"
-            },
-            "amostral_class_water":{
-                "pt-br": "Água",
-                "en-us": "Waters"
-            },
-            "amostral_class_anthropic":{
-                "pt-br": "Antrópico",
-                "en-us": "Anthropic"
-            },
-            "amostral_classes_legend_label":{
-                "pt-br": "Classes utilizadas durante a Validação Amostral",
-                "en-us": "Classes used during the Sample Validation"
-            },
-            "series_modis_title":{
-                "pt-br": "Análise de Séries Temporais - Índice de Vegetação (NDVI) - MODIS",
-                "en-us": "Time Series Analysis - Vegetation Index (NDVI) - MODIS"
-            },
-            "amostral_title":{
-                "pt-br": "Informações da Validação Amostral",
-                "en-us": "Sample Validation Information"
-            }
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
+								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "Texto LAPIG",
+								"en-us": "Text LAPIG"
+							}
+						}
+					]
+				},
+				"field_validation": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Validação em Campo",
+								"en-us": "Field Validation"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Conjunto de pontos coletados em campo para auxilio no processo de validação dos dados PRODES-Cerrado.",
+								"en-us": "Set of points collected in the field to assist in the validation process of PRODES-Cerrado data."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2018-2019",
+								"en-us": "2018-2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "Pontual",
+								"en-us": "Point"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-        },
-        "analise_automatica":{
-            "title_tab":{
-                "pt-br": "Análise Automática",
-                "en-us": "Automatic Analysis"
-            },
-            "title_info_susceptibility":{
-                "pt-br": "Superfície de Susceptibilidade ao Desmatamento",
-                "en-us": "Deforestation Susceptibility Surface"
-            },
-            "info_susceptibility_faixas":{
-                "pt-br": "*Faixas de probabilidade de desmatamento*",
-                "en-us": "*Deforestation probability ranges*"
-            },
-            "info_susceptibility_description":{
-                "pt-br": "A susceptibilidade a desmatamentos ? a 0,5 km² neste polígono é de ",
-                "en-us": "The susceptibility to deforestation ? than 0.5 km² of this polygon is "
-            },
-            "title_info_bfast":{
-                "pt-br": "BFAST-Monitor",
-                "en-us": "BFAST-Monitor"
-            },
-            "info_bfast_faixas":{
-                "pt-br": "*Informações sobre quebras nos pixels MODIS*",
-                "en-us": "*Information on breaks in pixels MODIS*"
-            },
-            "info_bfast_description":{
-                "pt-br": "A taxa de pixels MODIS que sofreram quebras em suas séries temporais foi de:",
-                "en-us": "The rate of MODIS pixels that suffered breaks in their time series was:"
-            },
-            "caption_bfast":{
-                "pt-br": " do polígono apresentou quebras em sua série temporal.",
-                "en-us": " of the polygon presented breaks in its time series."
-            },
-            "caption_suscept":{
-                "pt-br": "Susceptibilidade a Desmatamento: ",
-                "en-us": "Susceptibility to Deforestation: "
-            },
-            "not_computed":{
-                "pt-br": "não foi computada.",
-                "en-us": "was not computed."
-            },
-            "type_suscept_larger":{
-                "pt-br": "superior",
-                "en-us": "larger"
-            },
-            "type_suscept_smaller":{
-                "pt-br": "inferior",
-                "en-us": "smaller"
-            }
-        }
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
+								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "Texto LAPIG",
+								"en-us": "Text LAPIG"
+							}
+						}
+					]
+				},
+				"indigenous_lands": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Terras Indígenas (TI)",
+								"en-us": "Indigenous Lands (TI)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Áreas de terras indígenas brasileiras.",
+								"en-us": "Areas of Brazilian indigenous lands."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "ND",
+								"en-us": "ND"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-    }
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Fundação Nacional do Índio (FUNAI)",
+								"en-us": "National Indian Foundation (FUNAI)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm </a>"
+							}
+						}
+					]
+				},
+				"cu_integral_protection": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Unidades de Conservação (Proteção Integral)",
+								"en-us": "Conservation Units (Integral Protection)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Localização das unidades de conservação de proteção integral.",
+								"en-us": "Location of full protection conservation units."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "ND",
+								"en-us": "ND"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)",
+								"en-us": "Chico Mendes Institute for Biodiversity Conservation (ICMBio)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+							}
+						}
+					]
+				},
+				"cu_sustainable_use": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Unidades de Conservação (Uso Sustentável)",
+								"en-us": "Conservation Units (Sustainable Use)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Localização das unidades de conservação de uso sustentável.",
+								"en-us": "Location of conservation units for sustainable use."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "ND",
+								"en-us": "ND"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)",
+								"en-us": "Chico Mendes Institute for Biodiversity Conservation (ICMBio)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+							}
+						}
+					]
+				},
+				"biodiversity_conservation": {
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Áreas Prioritárias para Conservação da Biodiversidade",
+								"en-us": "Priority Areas for Biodiversity Conservation"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Áreas prioritárias para o estabelecimento de ações com o propósito complementar o sistema de unidades de conservação já existente.",
+								"en-us": "Priority areas for the establishment of actions with the purpose of complementing the existing protected area system."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2015",
+								"en-us": "2015"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:250.000",
+								"en-us": "1:250.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
 
-    
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal de Mercator.",
+								"en-us": "Mercator Universal."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Ministério do Meio Ambiente (MMA)",
+								"en-us": "Ministry of the Environment (MMA)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "cerradodpat@gmail.com",
+								"en-us": "cerradodpat@gmail.com"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://www.wwf.org.br/?50322'> https://www.wwf.org.br/?50322 </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://www.wwf.org.br/?50322'> https://www.wwf.org.br/?50322 </a>"
+							}
+						}
+					]
+				}
+			}
+		},
+		"campo_tab": {
+			"title_tab": {
+				"pt-br": "Validação de Campo",
+				"en-us": "Field Validation"
+			},
+			"title_camera_tab": {
+				"pt-br": "Fotos de Câmera",
+				"en-us": "Camera Photos"
+			},
+			"title_drone_photo_tab": {
+				"pt-br": "Fotos de Drone",
+				"en-us": "Drone Photos"
+			},
+			"title_drone_video_tab": {
+				"pt-br": "Vídeos de Drone",
+				"en-us": "Drone Videos"
+			},
+			"field_data_label": {
+				"pt-br": "Dados do Campo",
+				"en-us": "Field Data"
+			},
+			"field_number_label": {
+				"pt-br": "Nº do Campo:",
+				"en-us": "Field Number:"
+			},
+			"field_visit_date_label": {
+				"pt-br": "Data da Visita:",
+				"en-us": "Date of Visit:"
+			},
+			"field_uso_do_solo_label": {
+				"pt-br": "Uso e Cobertura do Solo:",
+				"en-us": "Land Use and Cover:"
+			},
+			"field_observation_label": {
+				"pt-br": "Observações:",
+				"en-us": "Comments:"
+			},
+			"caption_undisclosed": {
+				"pt-br": "Não Divulgada",
+				"en-us": "Undisclosed"
+			}
+		},
+		"historico_amostral_landsat": {
+			"title_tab": {
+				"pt-br": "Validação Amostral e Histórico de Imagens Landsat",
+				"en-us": "Sample Validation and Landsat Image History"
+			},
+			"caption": {
+				"pt-br": "Ano: ",
+				"en-us": "Year: "
+			},
+			"class_lapig_label": {
+				"pt-br": "Classe predominante após inspeção visual: ",
+				"en-us": "Predominant class after visual inspection: "
+			},
+			"amostral_class_vegetation": {
+				"pt-br": "Vegetação Natural",
+				"en-us": "Natural Vegetation"
+			},
+			"amostral_class_water": {
+				"pt-br": "Água",
+				"en-us": "Waters"
+			},
+			"amostral_class_anthropic": {
+				"pt-br": "Antrópico",
+				"en-us": "Anthropic"
+			},
+			"amostral_classes_legend_label": {
+				"pt-br": "Classes utilizadas durante a Validação Amostral",
+				"en-us": "Classes used during the Sample Validation"
+			},
+			"series_modis_title": {
+				"pt-br": "Análise de Séries Temporais - Índice de Vegetação (NDVI) - MODIS",
+				"en-us": "Time Series Analysis - Vegetation Index (NDVI) - MODIS"
+			},
+			"amostral_title": {
+				"pt-br": "Informações da Validação Amostral",
+				"en-us": "Sample Validation Information"
+			}
+		},
+		"analise_automatica": {
+			"title_tab": {
+				"pt-br": "Análise Automática",
+				"en-us": "Automatic Analysis"
+			},
+			"title_info_susceptibility": {
+				"pt-br": "Superfície de Susceptibilidade ao Desmatamento",
+				"en-us": "Deforestation Susceptibility Surface"
+			},
+			"info_susceptibility_faixas": {
+				"pt-br": "*Faixas de probabilidade de desmatamento*",
+				"en-us": "*Deforestation probability ranges*"
+			},
+			"info_susceptibility_description": {
+				"pt-br": "A susceptibilidade a desmatamentos ? a 0,5 km² neste polígono é de ",
+				"en-us": "The susceptibility to deforestation ? than 0.5 km² of this polygon is "
+			},
+			"title_info_bfast": {
+				"pt-br": "BFAST-Monitor",
+				"en-us": "BFAST-Monitor"
+			},
+			"info_bfast_faixas": {
+				"pt-br": "*Informações sobre quebras nos pixels MODIS*",
+				"en-us": "*Information on breaks in pixels MODIS*"
+			},
+			"info_bfast_description": {
+				"pt-br": "A taxa de pixels MODIS que sofreram quebras em suas séries temporais foi de:",
+				"en-us": "The rate of MODIS pixels that suffered breaks in their time series was:"
+			},
+			"caption_bfast": {
+				"pt-br": " do polígono apresentou quebras em sua série temporal.",
+				"en-us": " of the polygon presented breaks in its time series."
+			},
+			"caption_suscept": {
+				"pt-br": "Susceptibilidade a Desmatamento: ",
+				"en-us": "Susceptibility to Deforestation: "
+			},
+			"not_computed": {
+				"pt-br": "não foi computada.",
+				"en-us": "was not computed."
+			},
+			"type_suscept_larger": {
+				"pt-br": "superior",
+				"en-us": "larger"
+			},
+			"type_suscept_smaller": {
+				"pt-br": "inferior",
+				"en-us": "smaller"
+			}
+		}
+	},
+	"upload_messages": {
+		"has_not_spatial_file": {
+			"pt-br": "Esta solicitação não possui um arquivo espacial!",
+			"en-us": "This request does not have a spatial file!"
+		},
+		"cant_read_file": {
+			"pt-br": "Não é possível ler seu arquivo!",
+			"en-us": "It's not possible to read your file!"
+		},
+		"no_spatial_file": {
+			"pt-br": "Este não é um arquivo espacial!",
+			"en-us": "This is not a spatial file!"
+		},
+		"cant_extract": {
+			"pt-br": "Relatório do Desmatamento",
+			"en-us": "Your file cannot be extracted!"
+		},
+		"cant_parse_file": {
+			"pt-br": "Não é possível analisar seu arquivo!",
+			"en-us": "Can't parse your file!"
+		},
+		"suported_files": {
+			"pt-br": "O upload de arquivo suporta apenas os seguintes tipos de arquivos (.kmz ou .zip).",
+			"en-us": "File upload only supports the following filetypes (.kmz or .zip)."
+		}
+	}
 }

@@ -49,7 +49,7 @@ module.exports = function (app) {
 		config["uploadDataDir"] = appProducao + "/upload-dpat/"
 
 	}
-
+	
 	return config;
 
 }

@@ -51,8 +51,12 @@ export class FileUploadComponent implements OnInit {
   /** Allow you to configure drag and drop area shown or not. */
   @Input() ddarea = false;
 
+  @Input() tooltip: string;
+
   /** Max size allowed in MB*/
   @Input() maxSize: number = 15;
+
+  @Input() maxSizeMsg:string;
 
   /** Max size allowed in MB*/
   @Input() language: string = "pt_br";
@@ -77,10 +81,9 @@ export class FileUploadComponent implements OnInit {
 
   onClick() {
 
-    console.log("LANG", this.language);
-
     this.target =  '/service/upload/spatial-file' + "?lang=" + this.language;  
-  
+    let self = this;
+
     const fileUpload = document.getElementById(
       'fileUpload'
     ) as HTMLInputElement;
@@ -92,8 +95,11 @@ export class FileUploadComponent implements OnInit {
         }else{
 
           if(fileUpload.files[index].size > this.maxSize){
-            this.response.error = true; 
-            this.response.msg = "File is too big!"
+            this.response.error = true;
+            let msg = this.maxSizeMsg.replace("[current-size]", (fileUpload.files[index].size / 1024 / 1024).toFixed(1) );
+            msg = msg.replace("[max-size]", ((self.maxSize / 1024) / 1024).toString());
+            this.response.msg = msg;
+            this.complete.emit();
           }else{
             const file = fileUpload.files[index];
             this.files.push({
@@ -172,6 +178,9 @@ export class FileUploadComponent implements OnInit {
           }else{
             this.response.msg = msg[1].replace("Error:", "");
           }
+
+          this.removeFileFromArray(file);
+          this.complete.emit();
           
           return of(`${file.data.name} upload failed.`);
         })
@@ -209,6 +218,8 @@ export class FileUploadComponent implements OnInit {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
 
+    let self = this;
+
     if (ev.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
       for (let i = 0; i < ev.dataTransfer.items.length; i++) {
@@ -220,8 +231,11 @@ export class FileUploadComponent implements OnInit {
             if (ev.dataTransfer.items[i].kind === 'file') {
               const file = ev.dataTransfer.items[i].getAsFile();
               if(file.size > this.maxSize){
-                this.response.error = true; 
-                this.response.msg = "File is too big!"
+                this.response.error = true;
+                let msg = this.maxSizeMsg.replace("[current-size]", (file.size / 1024 / 1024).toFixed(1) );
+                msg = msg.replace("[max-size]", ((self.maxSize / 1024) / 1024).toString());
+                this.response.msg = msg;
+                this.complete.emit();
               }else{
 
                 this.files.push({
