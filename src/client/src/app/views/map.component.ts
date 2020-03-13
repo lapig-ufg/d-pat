@@ -108,6 +108,7 @@ export class MapComponent implements OnInit {
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
+  chartUsoSolo = <any>[]
   periodSelected: any;
   desmatInfo: any;
 
@@ -225,6 +226,7 @@ export class MapComponent implements OnInit {
     };
     this.chartResultCitiesIllegalAPP = {};
     this.chartResultCitiesIllegalRL = {};
+    this.chartUsoSolo = [];
 
     this.defaultRegion = {
       type: "biome",
@@ -455,6 +457,7 @@ export class MapComponent implements OnInit {
     var statesUrl = "/service/deforestation/states" + this.getServiceParams();
     var citiesUrl = "/service/deforestation/cities" + this.getServiceParams();
     var citiesIllegal = "/service/deforestation/illegal" + this.getServiceParams();
+    var urlUsoSolo = "/service/deforestation/indicators" + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
 
@@ -466,13 +469,15 @@ export class MapComponent implements OnInit {
             label: timeseriesResult["name"],
             data: timeseriesResult["series"].map(element => element.value),
             fill: false,
-            borderColor: "#289628"
+            borderColor: "#289628",
+            backgroundColor: "#289628"
           }
         ],
         area_antropica: timeseriesResult["indicator"].anthropic,
         description: timeseriesResult["getText"],
         label: timeseriesResult["label"],
-        type: timeseriesResult["type"]
+        type: timeseriesResult["type"],
+        pointStyle: 'line'
 
       };
 
@@ -500,10 +505,13 @@ export class MapComponent implements OnInit {
         },
         title: {
           display: false,
-          text: "Testing Title",
-          fontSize: 16
+          fontSize: 14
         },
         legend: {
+          labels: {
+            usePointStyle: true,
+            fontSize: 14
+          },
           position: "bottom"
         }
       };
@@ -523,7 +531,8 @@ export class MapComponent implements OnInit {
             }
           ],
           description: statesResult["description"],
-          label: statesResult["label"]
+          label: statesResult["label"],
+          pointStyle: 'rect'
         };
 
         this.optionsStates = {
@@ -549,7 +558,11 @@ export class MapComponent implements OnInit {
             ]
           },
           legend: {
-            position: "bottom"
+            position: "bottom",
+            labels: {
+              usePointStyle: true,
+              fontSize: 16
+            }
           }
         };
       });
@@ -571,6 +584,61 @@ export class MapComponent implements OnInit {
         });
       }
     }
+    else {
+      /* Atualiza indicadores de uso do Solo */
+
+      this.http.get(urlUsoSolo).subscribe(usosoloResult => {
+
+        this.chartUsoSolo = usosoloResult;
+
+        console.log(usosoloResult)
+
+        for (let graphic of this.chartUsoSolo) {
+
+          graphic.data = {
+            labels: graphic.indicators.map(element => element.classe_lulc),
+            datasets: [
+              {
+                data: graphic.indicators.map(element => element.desmat_area_classe_lulc),
+                backgroundColor: graphic.indicators.map(element => element.color),
+                hoverBackgroundColor: graphic.indicators.map(element => element.color)
+              }
+            ]
+          }
+
+          graphic.options.legend.onHover = function (event) {
+            event.target.style.cursor = 'pointer';
+            graphic.options.legend.labels.fontColor = "#0335fc";
+          }
+
+          graphic.options.legend.onLeave = function (event) {
+
+            event.target.style.cursor = 'default';
+            graphic.options.legend.labels.fontColor = "#fa1d00";
+          }
+
+          graphic.options.tooltips.callbacks = {
+            title: function (tooltipItem, data) {
+              return data['labels'][tooltipItem[0]['index']];
+            },
+            label: function (tooltipItem, data) {
+              var percent = parseFloat(
+                data["datasets"][0]["data"][tooltipItem["index"]]
+              ).toLocaleString("de-DE");
+              return percent + " km²";
+            },
+            // afterLabel: function (tooltipItem, data) {
+            //   return "a calcular";
+            // }
+          }
+
+
+
+
+        }
+      }
+      )
+    };
 
   }
 
@@ -587,7 +655,7 @@ export class MapComponent implements OnInit {
         year: 2019
       };
 
-      prodes.selectedType = "prodes_por_region_fip";
+      prodes.selectedType = "prodes_por_region_fip_img";
 
     }
     else {
@@ -741,7 +809,7 @@ export class MapComponent implements OnInit {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == "prodes_por_region_fip")) {
+      if ((prodes.selectedType == "prodes_por_region_fip_img")) {
         isMunicipio = true;
       }
 
@@ -751,7 +819,7 @@ export class MapComponent implements OnInit {
           this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              if (prodes.visible && (prodes.selectedType == "prodes_por_region_fip")) {
+              if (prodes.visible && (prodes.selectedType == "prodes_por_region_fip_img")) {
                 // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = "pointer";
                 this.infodataMunicipio = data;
@@ -898,7 +966,7 @@ export class MapComponent implements OnInit {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == "prodes_por_region_fip")) {
+      if ((prodes.selectedType == "prodes_por_region_fip_img")) {
         isMunicipio = true;
       }
 
@@ -909,7 +977,7 @@ export class MapComponent implements OnInit {
             if (data) {
               //console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-              if (prodes.visible && (prodes.selectedType == "prodes_por_region_fip")) {
+              if (prodes.visible && (prodes.selectedType == "prodes_por_region_fip_img")) {
 
                 this.http.get(SEARCH_URL, { params: PARAMS.set("key", data.region_name) }).subscribe(result => {
                   let ob = result[0];
@@ -1169,7 +1237,7 @@ export class MapComponent implements OnInit {
 
     let text = "1=1";
 
-    let time = this.selectedTimeFromLayerType("prodes_por_region_fip")
+    let time = this.selectedTimeFromLayerType("prodes_por_region_fip_img")
 
     if (this.selectRegion.type === "city" || this.selectRegion.type === "state") {
       text += " AND region_type = '" + this.selectRegion.type + "'";
@@ -1180,7 +1248,7 @@ export class MapComponent implements OnInit {
     return {
       version: "2.2.0",
       grids: [
-        this.returnUTFGRID("prodes_por_region_fip", text, "{x}+{y}+{z}")
+        this.returnUTFGRID("prodes_por_region_fip_utfgrid", text, "{x}+{y}+{z}")
       ]
     };
 
@@ -1261,7 +1329,7 @@ export class MapComponent implements OnInit {
 
     // this.layersNames.find(element => element.id === "desmatamento_prodes")
 
-    if (layer["value"] === "bi_ce_prodes_desmatamento_100_fip" || layer["value"] === "prodes_por_region_fip") {
+    if (layer["value"] === "bi_ce_prodes_desmatamento_100_fip" || layer["value"] === "prodes_por_region_fip_img") {
       this.desmatInfo = this.periodSelected;
       this.updateCharts();
     }
@@ -1346,7 +1414,7 @@ export class MapComponent implements OnInit {
 
       }
 
-      if ((prodes.selectedType == "prodes_por_region_fip")) {
+      if ((prodes.selectedType == "prodes_por_region_fip_img")) {
         if (this.utfgridmunicipio) {
           var tileJSONMunicipio = this.getTileJSONMunicipio();
 
@@ -1440,7 +1508,7 @@ export class MapComponent implements OnInit {
     const map = this.map;
 
     this.layerFromUpload.checked = false;
-    
+
     if (this.layerFromUpload.layer != null) {
       map.removeLayer(this.layerFromUpload.layer);
     }
@@ -1962,7 +2030,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
               fill: false,
               borderColor: "#ff0003",
+              backgroundColor: "#ff0003",
               pointRadius: 1,
+              pointStyle: 'rect',
               pointHoverRadius: 3
             },
             {
@@ -1970,8 +2040,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
               fill: false,
               borderColor: "#208f0a",
+              backgroundColor: "#208f0a",
               hidden: true,
               pointRadius: 1,
+              pointStyle: 'rect',
               pointHoverRadius: 3
             },
             {
@@ -1979,9 +2051,11 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),
               fill: false,
               borderColor: "#0007db",
+              backgroundColor: "#0007db",
               hidden: true,
               pointRadius: 1,
-              pointHoverRadius: 3
+              pointHoverRadius: 3,
+              pointStyle: 'rect'
             }
           ],
           type: "line"
@@ -2012,18 +2086,20 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           },
           title: {
             display: false,
-            text: "Testing Title",
             fontSize: 16
           },
           legend: {
+            labels: {
+              usePointStyle: true,
+              fontSize: 16
+            },
+            // onHover: function (event) {
+            //   event.target.style.cursor = 'pointer';
+            // },
+            // onLeave: function (event) {
+            //   event.target.style.cursor = 'default';
+            // },
             position: "bottom"
-          },
-          options: {
-            elements: {
-              point: {
-                radius: 0
-              }
-            }
           }
         };
 

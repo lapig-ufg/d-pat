@@ -417,10 +417,10 @@ module.exports = function (app) {
               id: "desmatamento_prodes",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
               visible: true,
-              selectedType: "prodes_por_region_fip",
+              selectedType: "prodes_por_region_fip_img",
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'],
               types: [{
-                  value: "prodes_por_region_fip",
+                  value: "prodes_por_region_fip_img",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
@@ -609,7 +609,6 @@ module.exports = function (app) {
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["label"][language],
               visible: false,
               selectedType: "bi_ce_deter_desmatamento_100_fip",
-              metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]['metadata'],
               types: [{
                   value: "bi_ce_deter_desmatamento_100_fip",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["view_value"][language],
@@ -786,7 +785,14 @@ module.exports = function (app) {
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
               visible: false,
               selectedType: "uso_solo_terraclass_fip",
-              types: [{
+              types: [
+                // {
+                //   value: "uso_solo_mapbiomas",
+                //   Viewvalue: "Mapbiomas - 2018",
+                //   opacity: 0.8,
+                //   order: 3
+                // },
+                {
                   value: "uso_solo_terraclass_fip",
                   Viewvalue: "TerraClass-Cerrado - 2013",
                   metadata:languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_terraclass_fip']['metadata'],
@@ -1065,7 +1071,7 @@ module.exports = function (app) {
       limits: [{
         id: "limits_bioma",
         types: [{
-            value: "biomas",
+            value: "limite_cerrado",
             Viewvalue: languageJson["descriptor"]["limits"]["types"]["biomas"][language],
             visible: true,
             layer_limits: true,
@@ -1086,7 +1092,7 @@ module.exports = function (app) {
             opacity: 1
           }
         ],
-        selectedType: "biomas"
+        selectedType: "limite_cerrado"
       }]
     };
 

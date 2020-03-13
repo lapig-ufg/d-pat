@@ -135,31 +135,30 @@ module.exports = function (app) {
 
 			regionTypeBr += queryResultExtent[0].name
 
-		}
-		else if(language == "en-us"){
+		} else if (language == "en-us") {
 			regionTypeBr = "The " + region + " " + type;
 
 			if (type == "city") {
 				regionTypeBr = "The City of " + queryResultExtent[0].name;
 			} else if (type == "state") {
-					regionTypeBr = "The State of " + queryResultExtent[0].name;
+				regionTypeBr = "The State of " + queryResultExtent[0].name;
 			}
 		}
 
 		var text = languageJson["charts_box_timeseries"]["text"][language].split("?");
 
 		result = {
-				title: languageJson["charts_box_title"][language],
-				label: languageJson["charts_box_timeseries"]["label"][language],
-				name: languageJson["charts_box_timeseries"]["name"][language],
-				series: series,
-				indicator: {
-					anthropic: anthropicArea,
-					deforestation: deforestationArea,
-					totalArea: 2045064
-				},
-				getText: regionTypeBr + text[1] + numberFormat(parseFloat(anthropicArea)) + text[2] + numberFormat(parseFloat(percentArea)) + text[3],
-				  type: "line"
+			title: languageJson["charts_box_title"][language],
+			label: languageJson["charts_box_timeseries"]["label"][language],
+			name: languageJson["charts_box_timeseries"]["name"][language],
+			series: series,
+			indicator: {
+				anthropic: anthropicArea,
+				deforestation: deforestationArea,
+				totalArea: 2045064
+			},
+			getText: regionTypeBr + text[1] + numberFormat(parseFloat(anthropicArea)) + text[2] + numberFormat(parseFloat(percentArea)) + text[3],
+			type: "line"
 
 		}
 
@@ -207,10 +206,10 @@ module.exports = function (app) {
 		}
 
 		var result = {
-				label: languageJson["charts_box_states"]["label"][language],
-				description: languageJson["charts_box_states"]["description"][language],
-				nameChart: languageJson["charts_box_states"]["name"][language],
-				series: regionResult
+			label: languageJson["charts_box_states"]["label"][language],
+			description: languageJson["charts_box_states"]["description"][language],
+			nameChart: languageJson["charts_box_states"]["name"][language],
+			series: regionResult
 		}
 
 		response.send(result)
@@ -315,28 +314,27 @@ module.exports = function (app) {
 
 	}
 
-	Controller.ndvi_timeseries = function(request, response){
+	Controller.ndvi_timeseries = function (request, response) {
 
 		var queryResultT = request.queryResult;
-
-
-		let long, lat;
+		let long, lat
 		queryResultT.forEach(function (row) {
-			long =  Number(row['long'])
-			lat = Number(row['lat'])	
+			long = Number(row['long'])
+			lat = Number(row['lat'])
 		})
 
 		let returnObject = [];
 		req(
-			config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series",{
+			config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series", {
 				json: true
 			}, (err, res, body) => {
 				if (err) {
 					return console.log(err);
 				}
 
-				for(let index = 0; index < body.values.length; index++){
-					returnObject.push({date: body.values[index][0],
+				for (let index = 0; index < body.values.length; index++) {
+					returnObject.push({
+						date: body.values[index][0],
 						ndvi_original: body.values[index][1],
 						ndvi_wiener: body.values[index][2],
 						ndvi_golay: body.values[index][3]
@@ -347,6 +345,164 @@ module.exports = function (app) {
 			});
 	}
 
+	Controller.indicators = function (request, response) {
+
+		var language = request.param('lang')
+
+		var chartResult = [
+			// {
+			// 	"id": "uso_solo_mapbiomas",
+			// 	"title": "Mapbiomas",
+			// 	"type": "doughnut",
+			// 	"pointStyle": 'rect',
+			// 	"disabled": true,
+			// 	"options": {
+			// 		title: {
+			// 			display: false,
+			// 		},
+			// 		legend: {
+			// 			labels: {
+			// 				usePointStyle: true,
+			// 				fontColor: "#85560c"
+			// 			},
+			// 			position: "bottom"
+			// 		},
+			// 		tooltips: {}
+			// 	},
+			// 	"getText": function (chart) {
+			// 		var label = chart['indicators'][0]["classe_lulc"]
+			// 		var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
+			// 		var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+			// 		var ano = chart['indicators'][0]["year"]
+			// 		var projeto = "Terraclass Cerrado"
+
+			// 		var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
+
+			// 		var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+
+			// 		var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4] + Math.round(percentual_area_km) + message[5]
+
+			// 		return text
+			// 	}
+
+			// },
+			{
+				"id": "uso_solo_terraclass",
+				"title": "Terraclass",
+				"type": "doughnut",
+				"pointStyle": 'rect',
+				"disabled": false,
+				"options": {
+					title: {
+						display: false,
+					},
+					legend: {
+						labels: {
+							usePointStyle: true,
+							fontColor: "#85560c"
+						},
+						position: "bottom"
+					},
+					tooltips: {}
+				},
+				"getText": function (chart) {
+					var label = chart['indicators'][0]["classe_lulc"]
+					var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
+					var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+					var ano = chart['indicators'][0]["year"]
+					var projeto = "Terraclass Cerrado"
+
+					var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
+
+					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4]
+
+					return text
+				}
+
+			},
+			// {
+			// 	"id": "uso_solo_probio",
+			// 	"title": "PROBIO",
+			// 	"type": "pie",
+			// 	"disabled": true,
+			// 	"options": {
+			// 		title: {
+			// 			display: false,
+			// 		},
+			// 		legend: {
+			// 			position: "bottom"
+			// 		},
+			// 		tooltips: {}
+			// 	},
+			// 	"getText": function (chart) {
+			// 		var label = chart['indicators'][0]["classe_lulc"]
+			// 		var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
+			// 		var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+			// 		var ano = chart['indicators'][0]["year"]
+			// 		var projeto = "PROBIO Cerrado"
+
+			// 		var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
+
+			// 		var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+
+			// 		var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4] + Math.round(percentual_area_km) + message[5]
+
+			// 		return text
+			// 	}
+
+			// },
+			// {
+			// 	"id": "uso_solo_agrosatelite",
+			// 	"title": "Agrosatélite",
+			// 	"type": "doughnut",
+			// 	"pointStyle": 'rect',
+			// 	"disabled": true,
+			// 	"options": {
+			// 		title: {
+			// 			display: false,
+			// 		},
+			// 		legend: {
+			// 			labels: {
+			// 				usePointStyle: true,
+			// 				fontColor: "orange"
+			// 			},
+			// 			position: "bottom"
+			// 		},
+			// 		tooltips: {}
+			// 	},
+			// 	"getText": function (chart) {
+			// 		var label = chart['indicators'][0]["classe_lulc"]
+			// 		var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
+			// 		var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+			// 		var ano = chart['indicators'][0]["year"]
+			// 		var projeto = "Terraclass Cerrado"
+
+			// 		var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
+
+			// 		var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+
+			// 		var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4] + Math.round(percentual_area_km) + message[5]
+
+			// 		return text
+			// 	}
+			// }
+		]
+
+		for (let chart of chartResult) {
+
+			chart['indicators'] = request.queryResult[chart.id]
+			chart['label'] = languageJson['charts_box_lulc']['label']
+			chart['text'] = chart.getText(chart)
+
+		}
+
+		response.send(chartResult)
+		response.end();
+
+
+	}
 
 	return Controller;
-}
+};

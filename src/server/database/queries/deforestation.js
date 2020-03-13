@@ -9,6 +9,7 @@ module.exports = function (app) {
 	}
 
 	Internal.regionFilter = function (type, region) {
+
 		if (type == 'city')
 			return " AND county = ${region}"
 		else if (type == 'state')
@@ -24,12 +25,48 @@ module.exports = function (app) {
 	Query.indicators = function (params) {
 
 		var type = params['type']
+		var region = params['region']
+		var year = params['year']
 
-		return " SELECT classname, source, SUM(areamunkm) as areamunkm " +
-			" FROM prodes_cerrado " +
-			" WHERE classname != 'AGUA' " + Internal.regionFilter(type) +
-			" GROUP BY 1,2 " +
-			" ORDER BY classname ASC;";
+
+		return [
+			// {
+			// 	id: 'desmat_per_region',
+			// 	sql: " SELECT classname, source, SUM(areamunkm) as areamunkm " +
+			// 		" FROM prodes_cerrado " +
+			// 		" WHERE classname != 'AGUA' " + Internal.regionFilter(type) +
+			// 		" GROUP BY 1,2 " +
+			// 		" ORDER BY classname ASC;"
+			// },
+			{
+				id: 'uso_solo_terraclass',
+				sql: "select r.text as region, r.area_km2 as area_region, lc.classe_lulc, total_area_classe_lulc, desmat_area_classe_lulc, lc.color, lc.year from prodes_regions_lulc lc inner join regions r on "
+				+ "(r.gid = lc.region_id) where lc.fonte = 'terraclass' and lc.type = '" + type + "' AND unaccent(r.value) ilike unaccent('" + region + "') and lc.year = " + year + " ORDER BY 5 DESC;"
+
+			},
+			{
+				id: 'uso_solo_probio',
+				sql: "select 1 from graphic_colors limit 1"
+
+			},
+			{
+				id: 'uso_solo_mapbiomas',
+				sql: "select 1 from graphic_colors limit 1"
+
+			},
+			{
+				id: 'uso_solo_agrosatelite',
+				sql: "select 1 from graphic_colors limit 1"
+
+			},
+			// {
+			// 	id: 'lulc_mapbiomas',
+			// 	sql: "select fonte, classe, sum(proporcao) as proporcao from prodes_cerrado p inner join prodes_cerrado_lulc lc on prodes_id = p.gid where fonte = TerraClass-Cerrado" +
+			// 		Internal.regionFilter(type, region) + " group by 1,2"
+			// }
+
+
+		]
 	}
 
 	Query.timeseries = function (params) {
@@ -37,25 +74,18 @@ module.exports = function (app) {
 		var type = params['type']
 		var region = params['region']
 
-		return [
-			{
+		return [{
 				id: 'timeseries',
-				sql:" SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
-									" FROM prodes_cerrado " +
-									" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
-									" GROUP BY 1;"
+				sql: " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
+					" FROM prodes_cerrado " +
+					" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
+					" GROUP BY 1;"
 			},
 			{
 				id: 'extent',
 				sql: "SELECT area_km2 as areaRegion, text as name FROM regions WHERE type=${type} AND value=${region}"
 			}
 		]
-		/* ----> For future referece on the return pattern for two or more queries as dictionaries on [id, sql] 
-
-		return " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
-			" FROM prodes_cerrado " +
-			" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
-			" GROUP BY 1;"*/
 	}
 
 	Query.states = function () {
@@ -90,18 +120,16 @@ module.exports = function (app) {
 		var year = params['year']
 		var type = params['type']
 
-		return [
-			{
+		return [{
 				id: 'app',
 				sql: "SELECT * from desmat_on_APP where year = " + year + Internal.regionFilter(type) + " LIMIT 10;"
 			},
 			{
 				id: 'rl',
-				sql: "SELECT * from desmat_on_RL where year = " + year  + Internal.regionFilter(type) + " LIMIT 10;"
+				sql: "SELECT * from desmat_on_RL where year = " + year + Internal.regionFilter(type) + " LIMIT 10;"
 			}
 		]
 	};
-
 
 	Query.modis = function (params) {
 
@@ -109,12 +137,10 @@ module.exports = function (app) {
 		var table = params['table']
 
 
-		return [
-			{
-				id: 'centroid',
-				sql: "SELECT gid, st_y(ST_PointOnSurface(geom)) as lat, st_x(ST_PointOnSurface(geom)) as long from " + table+"_cerrado where gid = " + gid + ";"
-			}
-		]
+		return [{
+			id: 'centroid',
+			sql: "SELECT gid, st_y(ST_PointOnSurface(geom)) as lat, st_x(ST_PointOnSurface(geom)) as long from " + table + "_cerrado where gid = " + gid + ";"
+		}]
 	};
 
 

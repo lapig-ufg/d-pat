@@ -301,11 +301,27 @@
 									</tr>
 								</ng-template>
 							</p-table>
-						</p-scrollPanel>
-					</mat-tab>
-			</mat-tab-group>
-		</div>
-	</div>
+							</p-scrollPanel>
+						</mat-tab>
+
+						<mat-tab *ngIf="isFilteredByCity" label="{{chartUsoSolo[0].label}}">
+
+							<p-tabView>
+								<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="uso.disabled">
+									<div>
+										<p style="font-weight: bold">{{ selectRegion.text }}</p>
+										<div>{{uso.text}}</div>
+										<p-chart id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options"></p-chart>
+									</div>
+								</p-tabPanel>
+							</p-tabView>
+
+						</mat-tab>
+
+
+					</mat-tab-group>
+				</div>
+			</div>
 
 	<div id="positionLegend" class="control-layers" cdkDrag>
 		<div [class]="collapseLegends ? 'titleWindows radius-bottom' : 'titleWindows'" >
