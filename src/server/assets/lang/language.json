@@ -81,6 +81,17 @@
         }
     },
 
+    "charts_box_lulc":{
+        "label": {
+            "pt-br": "Uso do Solo",
+            "en-us": "Land Use and Land Cover"
+        },
+        "text":{
+            "pt-br": "Utilizando o mapa disponibilizado pelo projeto ? (referente ao ano de 2002), a cobertura do solo mais afetada pelo desmatamento no ano de ? foi a ? cobrindo cerca de ? de km².",
+            "en-us": "Using the map provided by the project ? (referring to 2002), the land cover most affected by deforestation in the year of ? was ? which covered about ? km²."
+        }
+    },
+
     "mini_report_utfgrid":{
         "area":{
             "pt-br": "Área Desmatada:",

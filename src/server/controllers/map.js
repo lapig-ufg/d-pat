@@ -397,9 +397,9 @@ module.exports = function (app) {
               id: "desmatamento_prodes",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
               visible: true,
-              selectedType: "prodes_por_region_fip",
+              selectedType: "prodes_por_region_fip_img",
               types: [{
-                  value: "prodes_por_region_fip",
+                  value: "prodes_por_region_fip_img",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
@@ -762,7 +762,14 @@ module.exports = function (app) {
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
               visible: false,
               selectedType: "uso_solo_terraclass_fip",
-              types: [{
+              types: [
+                // {
+                //   value: "uso_solo_mapbiomas",
+                //   Viewvalue: "Mapbiomas - 2018",
+                //   opacity: 0.8,
+                //   order: 3
+                // },
+                {
                   value: "uso_solo_terraclass_fip",
                   Viewvalue: "TerraClass-Cerrado - 2013",
                   opacity: 0.8,
@@ -1027,7 +1034,7 @@ module.exports = function (app) {
       limits: [{
         id: "limits_bioma",
         types: [{
-            value: "biomas",
+            value: "limite_cerrado",
             Viewvalue: languageJson["descriptor"]["limits"]["types"]["biomas"][language],
             visible: true,
             layer_limits: true,
@@ -1048,7 +1055,7 @@ module.exports = function (app) {
             opacity: 1
           }
         ],
-        selectedType: "biomas"
+        selectedType: "limite_cerrado"
       }]
     };
 
