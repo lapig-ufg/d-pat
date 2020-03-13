@@ -493,7 +493,7 @@ module.exports = function (app) {
 		for (let chart of chartResult) {
 
 			chart['indicators'] = request.queryResult[chart.id]
-			chart['label'] = languageJson['charts_box_lulc']['label']
+			chart['label'] = languageJson['charts_box_lulc']['label'][language]
 			chart['text'] = chart.getText(chart)
 
 		}

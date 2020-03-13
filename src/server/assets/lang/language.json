@@ -320,7 +320,7 @@
 								"en-us": "Polygons visited in field"
 							}
 						},
-						"prodes_por_region_fip": {
+						"prodes_por_region_fip_img": {
 							"view_value": {
 								"pt-br": "Municípios",
 								"en-us": "Municipalities"
@@ -2256,7 +2256,7 @@
 		},
 		"limits": {
 			"types": {
-				"biomas": {
+				"limite_cerrado": {
 					"pt-br": "Cerrado",
 					"en-us": "Cerrado"
 				},

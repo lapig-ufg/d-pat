@@ -595,6 +595,8 @@ export class MapComponent implements OnInit {
 
         for (let graphic of this.chartUsoSolo) {
 
+          
+
           graphic.data = {
             labels: graphic.indicators.map(element => element.classe_lulc),
             datasets: [
@@ -605,6 +607,10 @@ export class MapComponent implements OnInit {
               }
             ]
           }
+
+          // graphic.options.height = "60vh";
+          // graphic.options.responsive = true
+          // graphic.options.maintainAspectRatio = false
 
           graphic.options.legend.onHover = function (event) {
             event.target.style.cursor = 'pointer';
@@ -1471,6 +1477,7 @@ export class MapComponent implements OnInit {
           if (this.descriptorText[group.id].layers[layer.id].hasOwnProperty("types")) {
 
             if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("view_value")) {
+              
               layerType.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].view_value[this.language]
             }
             if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty("timelabel")) {
@@ -1497,6 +1504,7 @@ export class MapComponent implements OnInit {
 
     for (let limits of this.descriptor.limits) {
       for (let types of limits.types) {
+
         types.Viewvalue = this.descriptorText.limits.types[types.value][this.language]
       }
     }

@@ -421,11 +421,11 @@ module.exports = function (app) {
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'],
               types: [{
                   value: "prodes_por_region_fip_img",
-                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["view_value"][language],
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip_img"]["view_value"][language],
                   opacity: 1,
                   order: 1,
                   regionFilter: true,
-                  timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip"]["timelabel"][language],
+                  timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip_img"]["timelabel"][language],
                   timeSelected: "region_type = 'city' AND prodes_year=2019",
                   timeHandler: "msfilter",
                   times: [{
@@ -1072,7 +1072,7 @@ module.exports = function (app) {
         id: "limits_bioma",
         types: [{
             value: "limite_cerrado",
-            Viewvalue: languageJson["descriptor"]["limits"]["types"]["biomas"][language],
+            Viewvalue: languageJson["descriptor"]["limits"]["types"]["limite_cerrado"][language],
             visible: true,
             layer_limits: true,
             opacity: 1

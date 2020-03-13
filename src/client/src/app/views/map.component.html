@@ -305,17 +305,17 @@
 						</mat-tab>
 
 						<mat-tab *ngIf="isFilteredByCity" label="{{chartUsoSolo[0].label}}">
-
+							<p-scrollPanel [style]="{width: '100%', height: '38vh'}" >
 							<p-tabView>
-								<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="uso.disabled">
+								<p-tabPanel  [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="uso.disabled">
 									<div>
 										<p style="font-weight: bold">{{ selectRegion.text }}</p>
 										<div>{{uso.text}}</div>
-										<p-chart id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options"></p-chart>
+										<p-chart id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw" height="20vh"></p-chart>
 									</div>
 								</p-tabPanel>
 							</p-tabView>
-
+						</p-scrollPanel>
 						</mat-tab>
 
 
