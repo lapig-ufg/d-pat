@@ -421,7 +421,7 @@ export class MapComponent implements OnInit {
 
     var zoom = this.map.getView().getZoom();
 
-    console.log(zoom)
+    //console.log(zoom)
     if (this.language != (lang)) {
       this.language = lang;
 
@@ -477,7 +477,7 @@ export class MapComponent implements OnInit {
         description: timeseriesResult["getText"],
         label: timeseriesResult["label"],
         type: timeseriesResult["type"],
-        pointStyle: 'line'
+        pointStyle: 'rect'
 
       };
 
@@ -511,6 +511,12 @@ export class MapComponent implements OnInit {
           labels: {
             usePointStyle: true,
             fontSize: 14
+          },
+          onHover: function (event) {
+            event.target.style.cursor = 'pointer';
+          },
+          onLeave: function (event) {
+            event.target.style.cursor = 'default';
           },
           position: "bottom"
         }
@@ -562,6 +568,12 @@ export class MapComponent implements OnInit {
             labels: {
               usePointStyle: true,
               fontSize: 16
+            },
+            onHover: function (event) {
+              event.target.style.cursor = 'pointer';
+            },
+            onLeave: function (event) {
+              event.target.style.cursor = 'default';
             }
           }
         };
@@ -591,11 +603,9 @@ export class MapComponent implements OnInit {
 
         this.chartUsoSolo = usosoloResult;
 
-        console.log(usosoloResult)
+       // console.log(usosoloResult)
 
         for (let graphic of this.chartUsoSolo) {
-
-          
 
           graphic.data = {
             labels: graphic.indicators.map(element => element.classe_lulc),
@@ -2070,6 +2080,17 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         };
 
+        // graphic.options.legend.onHover = function (event) {
+        //   event.target.style.cursor = 'pointer';
+        //   graphic.options.legend.labels.fontColor = "#0335fc";
+        // }
+
+        // graphic.options.legend.onLeave = function (event) {
+
+        //   event.target.style.cursor = 'default';
+        //   graphic.options.legend.labels.fontColor = "#fa1d00";
+        // }
+
         this.optionsTimeSeries = {
           tooltips: {
             mode: 'index',
@@ -2101,12 +2122,12 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               usePointStyle: true,
               fontSize: 16
             },
-            // onHover: function (event) {
-            //   event.target.style.cursor = 'pointer';
-            // },
-            // onLeave: function (event) {
-            //   event.target.style.cursor = 'default';
-            // },
+            onHover: function (event) {
+              event.target.style.cursor = 'pointer';
+            },
+            onLeave: function (event) {
+              event.target.style.cursor = 'default';
+            },
             position: "bottom"
           }
         };
