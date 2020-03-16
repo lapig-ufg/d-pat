@@ -1,0 +1,69 @@
+<svg id="logo-dpat" data-name="logo-dpat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+	<defs>
+		<style>
+
+			.cls-1{
+				fill:#6a6b67;
+				opacity:0.5;
+			}
+
+			.cls-2{
+				fill:#b2b2b2;
+			}
+
+			.cls-3{
+				fill:#5a4320;
+			}
+
+			.cls-4{
+				fill:#f9b233;
+			}
+
+			.cls-5{
+				fill:#7cb359;
+			}
+
+			.cls-6{
+				fill:#257a33;
+			}
+
+			.cls-7{
+				fill:#ffed00;
+			}
+
+		</style>
+	</defs>
+	<circle class="cls-1" cx="48" cy="39" r="48"/>
+	
+	<polygon class="cls-4" points="45.83 30.9 28.43 30.9 19.73 45.97 28.43 61.04 45.83 61.04 54.53 45.97 45.83 30.9"> 
+		<animate attributeName="fill-opacity"
+             begin="0s" dur="1.8s"
+             values="0;0;0.8;0"
+             calcMode="linear"
+             repeatCount="indefinite" />
+	</polygon>
+
+	<polygon class="cls-5" points="68.37 27.51 54.52 27.51 47.6 39.5 54.52 51.49 68.37 51.49 75.29 39.5 68.37 27.51"> 
+		<animate attributeName="fill-opacity"
+             begin="0s" dur="1.8s"
+             values="0;0.8;0;0"
+             calcMode="linear"
+             repeatCount="indefinite" />
+	</polygon>
+	
+	<polygon class="cls-6" points="57.52 13.47 43.67 13.47 36.75 25.46 43.67 37.45 57.52 37.45 64.44 25.46 57.52 13.47">
+		<animate attributeName="fill-opacity"
+             begin="0s" dur="1.8s"
+             values="0.8;0;0;0"
+             calcMode="linear"
+             repeatCount="indefinite" />
+	</polygon>
+	
+	<polygon class="cls-7" points="37.55 23.29 25.67 23.29 19.73 33.58 25.67 43.87 37.55 43.87 43.49 33.58 37.55 23.29">
+		<animate attributeName="fill-opacity"
+             begin="0s" dur="1.8s"
+             values="0;0;0;0.8"
+             calcMode="linear"
+             repeatCount="indefinite" />
+	</polygon>
+</svg>

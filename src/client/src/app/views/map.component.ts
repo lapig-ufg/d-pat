@@ -1628,6 +1628,8 @@ export class MapComponent implements OnInit {
     let metadata = [];
     let self = this;
 
+    console.log("LAYER: ", layer);
+
     if(layer.hasOwnProperty('metadata')){
       metadata = this.getMetadata(layer.metadata);
     }else{
