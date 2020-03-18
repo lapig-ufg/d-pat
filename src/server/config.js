@@ -12,7 +12,7 @@ module.exports = function (app) {
 		"tmp": appRoot + "/tmp/",
 		"fieldDataDir": appRoot + '/media/campo/',
 		"uploadDataDir": appRoot + "/uploads/",
-		"downloadDataDir": appProducao + "/download-dpat/",
+		"downloadDataDir": appRoot + "/download-dpat/",
 		"pg": {
 			"user": 'postgres',
 			// "user": 'fip_cerrado',

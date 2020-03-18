@@ -1651,32 +1651,31 @@ export class MapComponent implements OnInit {
 
   downloadCSV(layer){
 
-    let selected = {
-      layer: layer,
-      selectedRegion: this.selectRegion,
-      year:this.selectedTimeFromLayerType(layer.selectedType)
-    }
+    let parameters = {
+      "layer": layer,
+      "selectedRegion": this.selectRegion,
+      "year": this.selectedTimeFromLayerType(layer.selectedType)
+    };
+    this.http.post('/service/download/csv', parameters).subscribe(result => {
 
-    // this.http.get('/service/download/csv', { params: PARAMS.set("data", selected) }).subscribe(result => {
-    //
-    // });
+    });
   }
 
   downloadSHP(layer){
-    let selected = {
-      layer: layer,
-      selectedRegion: this.selectRegion,
-      year:this.selectedTimeFromLayerType(layer.selectedType)
-    }
-    //
-    // this.http.get('/service/download/shp', { params: PARAMS.set("data", selected) }).subscribe(result => {
-    //
-    // });
+
+    let parameters = {
+        "layer": layer,
+        "selectedRegion": this.selectRegion,
+        "year": this.selectedTimeFromLayerType(layer.selectedType)
+    };
+
+    this.http.post('/service/download/shp', parameters).subscribe(result => {
+      console.log(result);
+    });
   }
 
 
   buttonDownload(tipo, layer, e) {
-    console.log("TIPO:", tipo, "LAYER:", layer);
     if(tipo == 'csv'){
       this.downloadCSV(layer);
     }else{

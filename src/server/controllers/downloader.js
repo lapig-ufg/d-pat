@@ -1,19 +1,44 @@
 var fs = require("fs");
 var languageJson = require('../assets/lang/language.json');
+var Ows = require('../utils/ows');
 var path = require('path');
+var request = require('request');
 
 module.exports = function (app) {
     var Controller = {};
-    var Internal = {};
+    var self = {};
 
     var config  = app.config;
     var client  = app.database.client;
     var queries = app.database.queries.map;
 
+    self.requestFileFromMapServ = async function (url, pathFile){
+        let file = fs.createWriteStream(pathFile+".zip");
+
+        await new Promise((resolve, reject) => {
+            let stream = request({
+                uri: url,
+                gzip: true
+            })
+            .pipe(file)
+            .on('finish', () => {
+                console.log(`The file is finished downloading.`);
+                resolve();
+            })
+            .on('error', (error) => {
+                reject(error);
+            })
+        })
+        .catch(error => {
+            console.log(`Something happened: ${error}`);
+        });
+    }
+
     Controller.downloadCSV = function(request, response) {
 
         var region = request.param('region', '');
         var file = request.param('file', '');
+        var regionType = request.param('regionType', ''); /* city , state or biome - Select Region*/
         var msfilter = request.param('filter', '');
         var filter = '';
         var filtersPastureDegraded = " WHERE category='1'";
@@ -61,25 +86,38 @@ module.exports = function (app) {
 
     Controller.downloadSHP = function(request, response) {
 
-        var pathFile;
-        var layer = request.param('file', '');
-        var regionType = request.param('regionType', ''); /* city , state or biome - Select Region*/
-        var region = request.param('region', '');
-        var year = request.param('year', '');
-        var fileParam = layer+'_'+year;
+        // request.param('regionType', ''); /* city , state or biome - Select Region*/
 
-        if(layer != 'pasture') {
-            fileParam = layer;
+        let layer  = request.body.layer;
+        let region = request.body.selectedRegion;
+        let time   = request.body.year;
+
+        let owsRequest =  new Ows();
+
+        owsRequest.setTypeName(layer.selectedType);
+        owsRequest.addFilter('prodes_year', time.year);
+        owsRequest.addFilter('region_name', region.value);
+        owsRequest.addFilter('region_type', region.type);
+
+        let fileParam = layer.selectedType+'_'+time.year;
+
+        let diretorio = config.downloadDataDir+layer.selectedType+'/'+region.type+'/'+region.value+'/';
+
+        let	pathFile = diretorio+fileParam;
+
+        if (!fs.existsSync(diretorio)){
+            fs.mkdirSync(diretorio,  {recursive: true});
         }
 
-        var diretorio = config.downloadDir+layer+'/'+regionType+'/'+region+'/';
-        var	pathFile = diretorio+fileParam;
-
         if(fileParam.indexOf("../") == 0){
-            res.send('Arquivo inválido!')
-            res.end();
-        } else if(fs.existsSync(pathFile+'.shp')) {
-            var nameFile = regionType+'_'+region+'_'+fileParam
+            response.send('Arquivo inválido!')
+            response.end();
+        } else if(fs.existsSync(pathFile+'.zip')) {
+
+            var nameFile = layer.selectedType+'_'+region.type+'_'+fileParam;
+
+            self.requestFileFromMapServ(owsRequest.get(), pathFile);
+
             response.setHeader('Content-disposition', 'attachment; filename='+nameFile+'.zip');
             response.setHeader('Content-type', 'application/zip')
 
@@ -99,7 +137,7 @@ module.exports = function (app) {
                 zipFile.finalize();
             })
 
-        } else if(regionType == 'undefined'){
+        } /*else if(regionType == 'undefined'){
             var diretorioBR = config.downloadDir+layer+'/brasil/';
             var fileParamBR = year;
             var	pathFileBR = diretorioBR+fileParamBR;
@@ -141,7 +179,7 @@ module.exports = function (app) {
         } else {
             response.send("Arquivo indisponível");
             response.end();
-        }
+        }*/
     }
 
     return Controller;
