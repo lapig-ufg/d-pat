@@ -91,7 +91,7 @@ registerLocaleData(localePt);
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule
   ],
   entryComponents:[MapComponent, DialogOverviewExampleDialog, MetadataComponent],
   providers: [

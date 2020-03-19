@@ -173,14 +173,6 @@ export class MapComponent implements OnInit {
   utfgridlayerMunicipio: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
-
-  selectedLanguage: any;
-  selectedLanguageItem: any;
-
-  selectedCountryCode: any;
-  countryCodes = [] as any;
-  customLabels: any;
-
   dataForDialog = {} as any;
 
   keyForClick: any;
@@ -188,11 +180,15 @@ export class MapComponent implements OnInit {
   currentData: any;
   language: any;
 
-  languages: any[];
-
   titlesLayerBox: any;
   minireportText: any;
   descriptorText: any;
+
+   bntStylePOR: any;
+   bntStyleENG: any;
+
+   styleSelected: any;
+   styleDefault: any;
 
   /** Variables for upload shapdefiles **/
   layerFromUpload: any = {
@@ -276,20 +272,16 @@ export class MapComponent implements OnInit {
     this.datePipe = new DatePipe('pt-BR');
     this.language = 'pt-br';
 
-    this.selectedLanguageItem = { name: 'Brasil', flag: 'br', lang: 'pt-br' };
-
-    this.selectedLanguage = {
-      label: 'optionLabel',
-      value: this.selectedLanguageItem
+    this.styleSelected = {
+      'background-color': '#fe8321'
     };
 
-    this.selectedCountryCode = 'br';
-    this.countryCodes = ['br', 'us'];
-
-    this.customLabels = {
-      br: 'Português (Portuguese)',
-      us: 'Inglês (English)'
+    this.styleDefault = {
+      'background-color': '#707070'
     };
+
+    this.bntStyleENG = this.styleDefault;
+    this.bntStylePOR = this.styleSelected; 
 
     this.updateCharts();
     this.chartRegionScale = true;
@@ -298,21 +290,6 @@ export class MapComponent implements OnInit {
 
     this.updateTexts();
   }
-
-  changeSelectedCountryCode(value: string): void {
-
-    this.selectedCountryCode = value;
-
-    let lang;
-    if (value == 'br') {
-      lang = 'pt-br';
-    } else if (value == 'us') {
-      lang = 'en-us';
-    }
-
-    this.changeLanguage(lang);
-  }
-
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
@@ -420,14 +397,29 @@ export class MapComponent implements OnInit {
 
     let zoom = this.map.getView().getZoom();
 
-    // console.log(zoom)
     if (this.language != (lang)) {
       this.language = lang;
-
+      
+      
+      this.setStylesLangButton();
       this.updateTexts();
       this.updateCharts();
       this.updateDescriptor();
     }
+  }
+
+
+  private setStylesLangButton() {
+    
+    if(this.language == 'pt-br'){
+      this.bntStyleENG = this.styleDefault;
+      this.bntStylePOR = this.styleSelected; 
+    }
+    else{
+      this.bntStyleENG = this.styleSelected;
+      this.bntStylePOR = this.styleDefault; 
+    }
+
   }
 
   private updateTexts() {
