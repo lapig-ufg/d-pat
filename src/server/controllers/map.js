@@ -797,13 +797,15 @@ module.exports = function (app) {
                   value: "uso_solo_terraclass_fip",
                   Viewvalue: "TerraClass-Cerrado - 2013",
                   metadata:languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_terraclass_fip']['metadata'],
+                  regionFilter: true,
                   opacity: 0.8,
                   order: 3
                 },
                 {
-                  value: "bi_ce_cobertura_vegetal_250_2002_mma",
+                  value: "uso_solo_probio",
                   Viewvalue: "PROBIO-Cerrado - 2002",
                   metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['bi_ce_cobertura_vegetal_250_2002_mma']['metadata'],
+                  regionFilter: true,
                   opacity: 0.8,
                   order: 3
                 },
@@ -811,6 +813,7 @@ module.exports = function (app) {
                   value: "agricultura_agrosatelite_fip",
                   Viewvalue: "Agrosatélite 2013/2014",
                   metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['agricultura_agrosatelite_fip']['metadata'],
+                  regionFilter: true,
                   opacity: 0.8,
                   order: 3
                 }
@@ -825,6 +828,7 @@ module.exports = function (app) {
               types: [{
                 value: "floresta_plantada_fip",
                 Viewvalue: "Transparent World",
+                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
@@ -844,6 +848,7 @@ module.exports = function (app) {
               types: [{
                 value: "osm_rodovias",
                 Viewvalue: "Open Street Map",
+                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
@@ -857,6 +862,7 @@ module.exports = function (app) {
               types: [{
                 value: "armazens_fip",
                 Viewvalue: "LAPIG",
+                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
@@ -871,6 +877,7 @@ module.exports = function (app) {
               types: [{
                 value: "matadouros_e_frigorificos",
                 Viewvalue: "LAPIG",
+                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
@@ -922,6 +929,7 @@ module.exports = function (app) {
               types: [{
                 value: "solos_ibge",
                 Viewvalue: "IBGE",
+                regionFilter: true,
                 opacity: 0.8,
                 order: 3
               }]
