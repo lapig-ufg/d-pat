@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
+// import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -49,6 +50,8 @@ import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
+
+
 
 registerLocaleData(localePt);
 
@@ -93,12 +96,14 @@ registerLocaleData(localePt);
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    RouterModule,
     NgbModule
   ],
   entryComponents:[MapComponent, DialogOverviewExampleDialog, MetadataComponent,HotsiteComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe
+    // {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent],
 })
