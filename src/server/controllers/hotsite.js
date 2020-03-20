@@ -6,7 +6,7 @@ module.exports = function (app) {
 
     self.getLanguageText = function(lang) {
 
-        let txt = {}
+        let txt = {};
 
         txt.abstract                  = languageJson['hotsite']['abstract'][lang];
         txt.hover_btn_info            = languageJson['hotsite']['hover_btn_info'][lang];
@@ -22,12 +22,12 @@ module.exports = function (app) {
         txt.team_title                = languageJson['hotsite']['team_title'][lang];
 
         return txt;
-    }
+    };
     Controller.languagesTexts = function(request, response) {
         let lang =  request.param('lang');
         response.status(200).send(self.getLanguageText(lang));
         response.end();
-    }
+    };
 
     return Controller;
 };
