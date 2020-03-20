@@ -95,7 +95,7 @@ registerLocaleData(localePt);
     FormsModule,
     NgbModule
   ],
-  entryComponents:[MapComponent, DialogOverviewExampleDialog, MetadataComponent],
+  entryComponents:[MapComponent, DialogOverviewExampleDialog, MetadataComponent,HotsiteComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe
