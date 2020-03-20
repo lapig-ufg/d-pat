@@ -48,7 +48,8 @@ export class HotsiteComponent implements OnInit {
         showControls:false,
         startAt:0,
         stopMovieOnBlur: false,
-        opacity:1
+        opacity:1,
+        mute:true
       }
     );
 
