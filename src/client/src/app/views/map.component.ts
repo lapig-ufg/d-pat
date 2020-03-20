@@ -1816,6 +1816,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
   carData: any = [];
 
+  svgLoading:string;
+
   albumLandsat: Array<{ src: string; caption: string; thumb: string }> = [];
 
   galleryOptions: NgxGalleryOptions[];
@@ -1843,6 +1845,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.textOnDialog = data.textosDaDialog;
     this.tmpModis = [];
 
+    this.svgLoading = "/assets/img/loading.svg";
 
 
     this.initGallery();

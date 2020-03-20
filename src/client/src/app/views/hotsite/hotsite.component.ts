@@ -8,11 +8,12 @@ declare  var $: any;
   templateUrl: './hotsite.component.html',
   styleUrls: ['./hotsite.component.css']
 })
-export class HotsiteComponent {
+export class HotsiteComponent implements OnInit, OnDestroy{
  
   pt_br:boolean;
   texts:any = {};
   interValMasks:any = {};
+  fullpage:any = {};
 
   videoplay: any = {};
 
@@ -31,6 +32,7 @@ export class HotsiteComponent {
             this.texts = result;
         });
     }
+    
 
     openMenu() {
 
@@ -54,13 +56,13 @@ export class HotsiteComponent {
         $('#container').YTPPause();
 
         $(".content-overlay, .bg-overlay").addClass("opened"),
-            $("#logo").addClass("pushed"),
-            $(".c-hamburger").addClass("is-active"),
-            $(".info").addClass("is-active"),
-            $(".menu").css('display', 'none'),
-            $(".info-2").css('display', 'block'),
-            $("#dpat-nav").addClass("active"),
-            $.fn.fullpage.moveTo(1)
+        $("#logo").addClass("pushed"),
+        $(".c-hamburger").addClass("is-active"),
+        $(".info").addClass("is-active"),
+        $(".menu").css('display', 'none'),
+        $(".info-2").css('display', 'block'),
+        $("#dpat-nav").addClass("active"),
+        $.fn.fullpage.moveTo(1)
     }
 
     closeMenu() {
@@ -115,21 +117,21 @@ export class HotsiteComponent {
 
     $("#container").YTPlayer({
       mask:{
-          25: '../../../assets/img/background_5.png'
+          20: '../../../assets/img/background_5.png'
       }
     });
 
-
-    $("#fullpage").fullpage({
+    this.fullpage = $("#fullpage").fullpage({
       navigation: !0,
       scrollingSpeed: 1e3
       // navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"]
     });
 
     $(".section").removeClass("active");
-
-
   }
 
+  ngOnDestroy(): void {
+      $.fn.fullpage.destroy('all');
+  }
 
 }
