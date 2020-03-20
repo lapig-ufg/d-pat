@@ -24,7 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
-
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
@@ -45,7 +45,6 @@ import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
-import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 
@@ -67,7 +66,6 @@ registerLocaleData(localePt);
     TabViewModule,
     TooltipModule,
     DropdownModule,
-    NgxFlagPickerModule,
     NgxGalleryModule,
     FieldsetModule,
     CardModule,
@@ -100,7 +98,8 @@ registerLocaleData(localePt);
   entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe
+    DatePipe,
+    { provide: APP_BASE_HREF, useValue: '' }
   ],
   bootstrap: [AppComponent],
 

@@ -5,14 +5,13 @@ import { HotsiteComponent } from './views/hotsite/hotsite.component';
 
 const routes: Routes = [
   /* ROTA RAIZ */
-  { path: '', component: HotsiteComponent },
-
+  { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
+  { path: 'hotsite', component: HotsiteComponent },
   { path: 'plataforma', component: MapComponent }
-  // { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
