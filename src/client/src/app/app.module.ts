@@ -23,8 +23,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-// import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
 import { DropdownModule } from 'primeng/dropdown';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -99,11 +97,10 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent,HotsiteComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe,
-    // {provide: LocationStrategy, useClass: HashLocationStrategy}
+    DatePipe
   ],
   bootstrap: [AppComponent],
 

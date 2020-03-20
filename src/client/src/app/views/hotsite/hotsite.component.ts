@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 declare  var $: any;
@@ -8,12 +8,17 @@ declare  var $: any;
   templateUrl: './hotsite.component.html',
   styleUrls: ['./hotsite.component.css']
 })
-export class HotsiteComponent implements OnInit {
+export class HotsiteComponent implements OnInit,OnDestroy {
+ 
   pt_br:boolean;
   languagestexts:any;
   texts:any = {};
 
-  constructor(private http: HttpClient) { }
+  videoplay: any = {};
+
+  constructor(private http: HttpClient,private elementRef: ElementRef) { 
+
+  }
 
 
     onLangClick(lang){
@@ -28,6 +33,11 @@ export class HotsiteComponent implements OnInit {
         });
     }
 
+    ngOnDestroy(): void {
+      console.log(this.elementRef.nativeElement)
+      this.videoplay.remove();
+    }
+
   ngOnInit() {
     this.pt_br = true;
 
@@ -35,7 +45,7 @@ export class HotsiteComponent implements OnInit {
         this.texts = result;
     });
 
-    let player = $("#container").YTPlayer(
+    this.videoplay = $("#container").YTPlayer(
       {
         useOnMobile:true,
         mobileFallbackImage:'../../../assets/img/background_1.svg',

@@ -4,10 +4,11 @@ import { MapComponent } from './views/map.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 
 const routes: Routes = [
-/* ROTA RAIZ */ 
-  { path: 'hotsite', component: HotsiteComponent },
-  { path: 'plataforma', component: MapComponent },
-  { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
+  /* ROTA RAIZ */
+  { path: '', component: HotsiteComponent },
+
+  { path: 'plataforma', component: MapComponent }
+  // { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
 ]
 
 @NgModule({
