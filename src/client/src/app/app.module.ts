@@ -24,7 +24,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
-import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
@@ -98,8 +97,7 @@ registerLocaleData(localePt);
   entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe,
-    { provide: APP_BASE_HREF, useValue: '' }
+    DatePipe
   ],
   bootstrap: [AppComponent],
 
