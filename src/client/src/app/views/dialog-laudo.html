@@ -35,7 +35,7 @@
                     <div class="p-grid p-justify-even">
                         <div class="p-col-2" *ngIf="infoDesmat.pathclassefip != '1' ">
                             <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="infoDesmat.pathclassefip"
-                                [spinnerSrc]="'/assets/gif/loadImage.gif'">
+                                [spinnerSrc]="svgLoading">
                             </toh-spinner-img>
 
                         </div>
@@ -74,7 +74,7 @@
                         <div class="p-col-6"
                             style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                             <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="urlSentinel[0]?.thumb"
-                                [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
+                                [spinnerSrc]="svgLoading" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
                             <strong>{{textOnDialog.information_tab.landsat_image_description}}
@@ -123,7 +123,7 @@
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
-                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxCAR()">
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxCAR()">
                                     </toh-spinner-img>
                                 </div>
 
@@ -246,7 +246,7 @@
                                     <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
                                 </mat-card-header>
                                 <toh-spinner-img [imgSrc]="landsat.thumb" [largura]="'100%'"
-                                    [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openImage(i)" id="img-landsat"
+                                    [spinnerSrc]="svgLoading" (click)="openImage(i)" id="img-landsat"
                                     class="img-landsat-laudo"></toh-spinner-img>
                                 <mat-card-content>
 
@@ -293,7 +293,7 @@
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb"
-                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" [largura]="'100%'"
+                                        [spinnerSrc]="svgLoading" [largura]="'100%'"
                                         (click)="openLightboxSuscept()">
                                     </toh-spinner-img>
                                     <br>
@@ -319,7 +319,7 @@
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb"
-                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" [largura]="'100%'"
+                                        [spinnerSrc]="svgLoading" [largura]="'100%'"
                                         (click)="openLightboxBfast()">
                                     </toh-spinner-img>
 
