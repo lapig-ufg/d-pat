@@ -11,7 +11,7 @@ declare  var $: any;
 export class HotsiteComponent implements OnInit {
   pt_br:boolean;
   languagestexts:any;
-  texts:any;
+  texts:any = {};
 
   constructor(private http: HttpClient) { }
 
