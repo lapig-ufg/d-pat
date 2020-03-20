@@ -281,7 +281,7 @@ export class MapComponent implements OnInit {
     };
 
     this.bntStyleENG = this.styleDefault;
-    this.bntStylePOR = this.styleSelected; 
+    this.bntStylePOR = this.styleSelected;
 
     this.updateCharts();
     this.chartRegionScale = true;
@@ -360,22 +360,22 @@ export class MapComponent implements OnInit {
   private updateExtent() {
     let extenUrl = '/service/map/extent' + this.getServiceParams();
 
-    if (this.selectRegion.type != '') {
-      let map = this.map;
+    if (this.selectRegion.type != "") {
+      var map = this.map;
       this.http.get(extenUrl).subscribe(extentResult => {
-        let features = new GeoJSON().readFeatures(extentResult, {
-          dataProjection: 'EPSG:4326',
-          featureProjection: 'EPSG:3857'
+        var features = new GeoJSON().readFeatures(extentResult, {
+          dataProjection: "EPSG:4326",
+          featureProjection: "EPSG:3857"
         });
 
         this.regionSource = this.regionsLimits.getSource();
         this.regionSource.clear();
         this.regionSource.addFeature(features[0]);
 
-        let extent = features[0].getGeometry().getExtent();
+        var extent = features[0].getGeometry().getExtent();
         map.getView().fit(extent, { duration: 1500 });
 
-        this.selectRegion.area_region = extentResult['area_km2'];
+        this.selectRegion.area_region = extentResult["area_km2"];
       });
     }
   }
@@ -383,11 +383,11 @@ export class MapComponent implements OnInit {
   changeTab(event) {
     this.changeTabSelected = event.tab.textLabel;
 
-    if (event.tab.textLabel == 'Série Temporal') {
+    if (event.tab.textLabel == "Série Temporal") {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
       this.chartRegionScale = true;
-    } else if (event.tab.textLabel == 'Transições') {
+    } else if (event.tab.textLabel == "Transições") {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
     }
@@ -399,8 +399,8 @@ export class MapComponent implements OnInit {
 
     if (this.language != (lang)) {
       this.language = lang;
-      
-      
+
+
       this.setStylesLangButton();
       this.updateTexts();
       this.updateCharts();
@@ -410,14 +410,14 @@ export class MapComponent implements OnInit {
 
 
   private setStylesLangButton() {
-    
+
     if(this.language == 'pt-br'){
       this.bntStyleENG = this.styleDefault;
-      this.bntStylePOR = this.styleSelected; 
+      this.bntStylePOR = this.styleSelected;
     }
     else{
       this.bntStyleENG = this.styleSelected;
-      this.bntStylePOR = this.styleDefault; 
+      this.bntStylePOR = this.styleDefault;
     }
 
   }

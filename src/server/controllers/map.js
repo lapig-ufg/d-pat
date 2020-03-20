@@ -608,6 +608,7 @@ module.exports = function (app) {
               id: "desmatamento_deter",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["label"][language],
               visible: false,
+              metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]['metadata'],
               selectedType: "bi_ce_deter_desmatamento_100_fip",
               types: [{
                   value: "bi_ce_deter_desmatamento_100_fip",
