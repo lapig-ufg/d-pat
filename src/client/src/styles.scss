@@ -330,6 +330,47 @@ body {
 		text-align: justify
 	}
 
+	.text-sections a{
+		font-weight: 700;
+	}
+
+	.languages{
+		display: flex;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		color: white;
+	}
+
+	.languages a:hover{
+		background-color:white;
+		color: black;
+		cursor: pointer;
+		z-index: 100000;
+	}
+
+	.active-lang{
+		background-color:white;
+		color: black;
+	}
+
+	.lang-pt{
+		padding: 4px;
+		margin-left: 5px;
+		margin-right: 5px;
+		border: 1px solid white;
+		border-radius: 5px;
+	}
+
+	.lang-en{
+
+		padding: 4px;
+		margin-left: 5px;
+		margin-right: 5px;
+		border: 1px solid white;
+		border-radius: 5px;
+	}
+
 	#logo {
 		font-family: 'Roboto', sans-serif;
 		right: 5rem;

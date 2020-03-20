@@ -5285,13 +5285,15 @@ $(document).ready(function() {
 
         $("#fullpage").fullpage({
             navigation: !0,
-            scrollingSpeed: 1e3,
-            navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"]
-        }), $(".section").removeClass("active"), $("#dpat-nav li a").each(function(e, t) {
+            scrollingSpeed: 1e3
+            // navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"]
+        });
 
-            $(this).append('<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" id="Camada_1" data-name="Camada 1" viewBox="0 0 96 96"><polygon xmlns="http://www.w3.org/2000/svg" class="cls-6" points="57.52 13.47 43.67 13.47 36.75 25.46 43.67 37.45 57.52 37.45 64.44 25.46 57.52 13.47" /></svg>')
-            // $(this).append('<svg width="30" height="30"><circle cx="15" cy="15" r="11.5"></circle></svg>')
+        $(".section").removeClass("active")
 
-        })
+        // $("#dpat-nav li a").each(function(e, t) {
+        //     $(this).append('<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" id="Camada_1" data-name="Camada 1" viewBox="0 0 96 96"><polygon xmlns="http://www.w3.org/2000/svg" class="cls-6" points="57.52 13.47 43.67 13.47 36.75 25.46 43.67 37.45 57.52 37.45 64.44 25.46 57.52 13.47" /></svg>')
+        //     // $(this).append('<svg width="30" height="30"><circle cx="15" cy="15" r="11.5"></circle></svg>')
+        // })
     }()
 });
