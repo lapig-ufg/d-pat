@@ -904,7 +904,7 @@ export class MapComponent implements OnInit {
                     this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == '' ? this.minireportText.not_computed_message : ('' + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + '%').replace('.', ',');
                     this.infodataCampo.origin_table = this.infodataCampo.origin_table.toUpperCase();
                     openCampo = true;
-                    // this.infoOverlay.setPosition(this.infodataCampo ? coordinate : undefined);
+                    this.infoOverlay.setPosition(this.infodataCampo ? coordinate : undefined);
                   }
                 }
                 if (!openCampo && deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
@@ -915,7 +915,7 @@ export class MapComponent implements OnInit {
                     this.infodataCampo.sucept_desmatFormatada = this.infodataCampo.sucept_desmat == '' ? this.minireportText.not_computed_message : ('' + (this.infodataCampo.sucept_desmat * 100).toFixed(2) + '%').replace('.', ',');
                     this.infodataCampo.origin_table = this.infodataCampo.origin_table.toUpperCase();
                     this.infodataCampo.municipio = this.infodataCampo.municipio.toUpperCase();
-                    // this.infoOverlay.setPosition(this.infodataCampo ? coordinate : undefined);
+                    this.infoOverlay.setPosition(this.infodataCampo ? coordinate : undefined);
                   }
                 }
 
@@ -1228,23 +1228,23 @@ export class MapComponent implements OnInit {
 
   private getTileJSONCampo() {
 
-    let text = '';
+    let text = '1=1';
 
-    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
-    let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
+    // let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    // let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
 
-    if (prodes.visible && deter.visible) {
-      text = '1=1';
-    }
-    else if (prodes.visible && !deter.visible) {
-      text = 'p.origin_table = \'prodes\' ';
-    }
-    else if (!prodes.visible && deter.visible) {
-      text = 'p.origin_table = \'deter\' ';
-    }
-    else {
-      text = '1=1'
-    }
+    // if (prodes.visible && deter.visible) {
+    //   text = '1=1';
+    // }
+    // else if (prodes.visible && !deter.visible) {
+    //   text = 'p.origin_table = \'prodes\' ';
+    // }
+    // else if (!prodes.visible && deter.visible) {
+    //   text = 'p.origin_table = \'deter\' ';
+    // }
+    // else {
+    //   text = '1=1'
+    // }
 
     if (this.selectRegion.type === 'city') {
       text += ' AND p.cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
@@ -2152,6 +2152,12 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.cdRef.detach();
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.cdRef.detectChanges();
   }
 
   openImage(index: number): void {
