@@ -9,7 +9,7 @@
 	},
 	"charts_box_timeseries": {
 		"label": {
-			"pt-br": "Serie Temporal",
+			"pt-br": "Série Temporal",
 			"en-us": "Timeseries"
 		},
 		"name": {

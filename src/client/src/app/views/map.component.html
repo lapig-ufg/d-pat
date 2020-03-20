@@ -316,10 +316,10 @@
 							</p-scrollPanel>
 						</mat-tab>
 
-						<mat-tab *ngIf="isFilteredByCity" label="{{chartUsoSolo[0]?.label}}">
+						<mat-tab *ngIf="isFilteredByCity" label="{{chartUsoSolo[0]?.label}}"  >
 							<p-scrollPanel [style]="{width: '100%', height: '38vh'}" >
-							<p-tabView>
-								<p-tabPanel  [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="uso.disabled">
+							<p-tabView (onChange)="changeSelectedLulcChart($event)">
+								<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
 									<div>
 										<p style="font-weight: bold">{{ selectRegion.text }}</p>
 										<div>{{uso.text}}</div>

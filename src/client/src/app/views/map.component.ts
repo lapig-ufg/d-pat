@@ -1,70 +1,40 @@
-import {
-  Component,
-  Inject,
-  Injectable,
-  OnInit,
-  LOCALE_ID,
-  OnDestroy,
-  ChangeDetectorRef,
-  HostListener,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialogConfig
-} from '@angular/material';
-
-import { defaults as defaultInteractions } from 'ol/interaction';
-
-import { Observable } from 'rxjs';
-import { of } from 'rxjs/observable/of';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  tap,
-  switchMap
-} from 'rxjs/operators';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
-import BingMaps from 'ol/source/BingMaps';
-import { unByKey } from 'ol/Observable';
-import OlObservable from 'ol/Observable';
-import OlMap from 'ol/Map';
-import OlXYZ from 'ol/source/XYZ';
-import OlTileLayer from 'ol/layer/Tile';
-import TileWMS from 'ol/source/TileWMS';
-import OlView from 'ol/View';
-import * as OlProj from 'ol/proj';
-import TileGrid from 'ol/tilegrid/TileGrid';
+import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
+import { Lightbox } from 'ngx-lightbox';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
+import { defaults as defaultInteractions } from 'ol/interaction';
+import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
-import Style from 'ol/style/Style';
-import Stroke from 'ol/style/Stroke';
-import VectorSource from 'ol/source/Vector';
-import Circle from 'ol/style/Circle.js';
-import Select from 'ol/interaction/Select';
-import UTFGrid from 'ol/source/UTFGrid.js';
-import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
+import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
+import * as OlProj from 'ol/proj';
+import BingMaps from 'ol/source/BingMaps';
+import TileWMS from 'ol/source/TileWMS';
+import UTFGrid from 'ol/source/UTFGrid.js';
+import VectorSource from 'ol/source/Vector';
+import OlXYZ from 'ol/source/XYZ';
+import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
-import * as Condition from 'ol/events/condition.js';
-import { Lightbox } from 'ngx-lightbox';
-import {
-  NgxGalleryOptions,
-  NgxGalleryImage,
-  NgxGalleryAnimation
-} from 'ngx-image-video-gallery';
-
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
+import TileGrid from 'ol/tilegrid/TileGrid';
+import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
+import OlView from 'ol/View';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
+
+
+
+
+
 
 
 let SEARCH_URL = '/service/map/search';
@@ -116,7 +86,7 @@ export class MapComponent implements OnInit {
   optionsStates: any;
   optionsCities: any;
 
-  changeTabSelected: '';
+  changeTabSelected = "";
   viewWidth = 600;
   viewWidthMobile = 350;
   chartRegionScale: boolean;
@@ -184,11 +154,11 @@ export class MapComponent implements OnInit {
   minireportText: any;
   descriptorText: any;
 
-   bntStylePOR: any;
-   bntStyleENG: any;
+  bntStylePOR: any;
+  bntStyleENG: any;
 
-   styleSelected: any;
-   styleDefault: any;
+  styleSelected: any;
+  styleDefault: any;
 
   /** Variables for upload shapdefiles **/
   layerFromUpload: any = {
@@ -239,6 +209,8 @@ export class MapComponent implements OnInit {
     this.valueRegion = {
       text: ''
     };
+
+    this.changeTabSelected = "";
 
     this.urls = [
       'http://o1.lapig.iesa.ufg.br/ows',
@@ -383,14 +355,22 @@ export class MapComponent implements OnInit {
   changeTab(event) {
     this.changeTabSelected = event.tab.textLabel;
 
-    if (event.tab.textLabel == "Série Temporal") {
+    if (event.tab.textLabel == "Série Temporal" || event.tab.textLabel == "Timeseries") {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
       this.chartRegionScale = true;
-    } else if (event.tab.textLabel == "Transições") {
+      
+      let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
+      uso_terra.visible = false;
+
+      this.changeVisibility(uso_terra, undefined)
+
+    } else if (event.tab.textLabel == "Uso do Solo" || event.tab.textLabel == "Land Use and Land Cover") {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
+      this.changeSelectedLulcChart({ index: 0 });
     }
+
   }
 
   changeLanguage(lang) {
@@ -411,11 +391,11 @@ export class MapComponent implements OnInit {
 
   private setStylesLangButton() {
 
-    if(this.language == 'pt-br'){
+    if (this.language == 'pt-br') {
       this.bntStyleENG = this.styleDefault;
       this.bntStylePOR = this.styleSelected;
     }
-    else{
+    else {
       this.bntStyleENG = this.styleSelected;
       this.bntStylePOR = this.styleDefault;
     }
@@ -636,13 +616,28 @@ export class MapComponent implements OnInit {
             // }
           };
 
-
-
-
         }
+
       }
       );
     }
+
+  }
+
+  changeSelectedLulcChart(e) {
+    let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
+
+    if (this.changeTabSelected === "Uso do Solo" || this.changeTabSelected == "Land Use and Land Cover") {
+      if (e.index == 0) {
+        uso_terra.selectedType = "uso_solo_terraclass_fip"
+      }
+      else if (e.index == 1) {
+        uso_terra.selectedType = "agricultura_agrosatelite_fip"
+      }
+      uso_terra.visible = true;
+    }
+
+    this.changeVisibility(uso_terra, undefined);
 
   }
 

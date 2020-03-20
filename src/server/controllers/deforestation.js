@@ -453,48 +453,56 @@ module.exports = function (app) {
 			// 	}
 
 			// },
-			// {
-			// 	"id": "uso_solo_agrosatelite",
-			// 	"title": "Agrosatélite",
-			// 	"type": "doughnut",
-			// 	"pointStyle": 'rect',
-			// 	"disabled": true,
-			// 	"options": {
-			// 		title: {
-			// 			display: false,
-			// 		},
-			// 		legend: {
-			// 			labels: {
-			// 				usePointStyle: true,
-			// 				fontColor: "orange"
-			// 			},
-			// 			position: "bottom"
-			// 		},
-			// 		tooltips: {}
-			// 	},
-			// 	"getText": function (chart) {
-			// 		var label = chart['indicators'][0]["classe_lulc"]
-			// 		var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
-			// 		var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
-			// 		var ano = chart['indicators'][0]["year"]
-			// 		var projeto = "Terraclass Cerrado"
+			{
+				"id": "uso_solo_agrosatelite",
+				"title": "Agrosatélite",
+				"type": "doughnut",
+				"pointStyle": 'rect',
+				"disabled": true,
+				"options": {
+					title: {
+						display: false,
+					},
+					legend: {
+						labels: {
+							usePointStyle: true,
+							fontColor: "orange"
+						},
+						position: "bottom"
+					},
+					tooltips: {}
+				},
+				"getText": function (chart) {
 
-			// 		var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
+					var label = chart['indicators'][0]["classe_lulc"]
+					var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
+					var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+					var ano = chart['indicators'][0]["year"]
+					var projeto = "Agrosatélite"
 
-			// 		var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+					var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
 
-			// 		var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4] + Math.round(percentual_area_km) + message[5]
+					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
 
-			// 		return text
-			// 	}
-			// }
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4]
+
+					return text
+				}
+			}
 		]
 
 		for (let chart of chartResult) {
 
 			chart['indicators'] = request.queryResult[chart.id]
-			chart['label'] = languageJson['charts_box_lulc']['label'][language]
-			chart['text'] = chart.getText(chart)
+			chart['show'] = false
+			if (chart['indicators'].length > 0){
+				chart['show'] = true
+				chart['label'] = languageJson['charts_box_lulc']['label'][language]
+				chart['text'] = chart.getText(chart)
+			}
+
+			
+			
 
 		}
 
