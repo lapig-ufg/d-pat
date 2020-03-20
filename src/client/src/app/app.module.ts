@@ -99,13 +99,15 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[MapComponent, DialogOverviewExampleDialog, MetadataComponent,HotsiteComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent,HotsiteComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe
+    DatePipe,
     // {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent],
+
+
 })
 export class AppModule {
 }
