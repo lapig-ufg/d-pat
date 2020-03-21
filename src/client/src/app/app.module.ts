@@ -98,8 +98,8 @@ registerLocaleData(localePt);
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-    {provide: APP_BASE_HREF, useValue: ''}
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    // {provide: APP_BASE_HREF, useValue: ''}
   ],
   bootstrap: [AppComponent],
 
