@@ -6,8 +6,8 @@ module.exports = function (app) {
 
 	var config = {
 		"appRoot": appRoot,
-		"clientDir": appRoot + "/../hotsite/",
-		// "clientDir": appRoot + "/../client/dist/",
+		// "clientDir": appRoot + "/../hotsite/",
+		"clientDir": appRoot + "/../client/dist/",
 		"langDir": appRoot + "/lang",
 		"logDir": appRoot + "/log/",
 		"tmp": appRoot + "/tmp/",
