@@ -5,8 +5,8 @@ import { HotsiteComponent } from './views/hotsite/hotsite.component';
 
 const routes: Routes = [
   /* ROTA RAIZ */
-  { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
-  { path: 'hotsite', component: HotsiteComponent },
+  // { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
+  { path: '', component: HotsiteComponent },
   { path: 'plataforma', component: MapComponent },
 ]
 
