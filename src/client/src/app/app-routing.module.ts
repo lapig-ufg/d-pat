@@ -7,11 +7,11 @@ const routes: Routes = [
   /* ROTA RAIZ */
   { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
   { path: 'hotsite', component: HotsiteComponent },
-  { path: 'plataforma', component: MapComponent }
+  { path: 'plataforma', component: MapComponent },
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

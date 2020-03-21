@@ -47,7 +47,7 @@ import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 
-
+import { APP_BASE_HREF } from '@angular/common'; 
 
 registerLocaleData(localePt);
 
@@ -98,7 +98,8 @@ registerLocaleData(localePt);
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: APP_BASE_HREF, useValue: ''}
   ],
   bootstrap: [AppComponent],
 
