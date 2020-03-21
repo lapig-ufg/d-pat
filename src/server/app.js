@@ -51,6 +51,10 @@ app.database.client.init(function() {
 		next();
 	});
 
+	app.use(function(req, res) {
+		res.sendFile(path.join(__dirname, '/client', 'index.html'));
+	});
+
 	load('models', {'verbose': false})
 	.then('controllers')
 	.then('routes')
