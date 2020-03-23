@@ -33,10 +33,6 @@ import { MetadataComponent } from './metadata/metadata.component';
 
 
 
-
-
-
-
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
   fromObject: {
