@@ -30,8 +30,7 @@ import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
-
-
+import { Router } from '@angular/router';
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -168,13 +167,17 @@ export class MapComponent implements OnInit {
   };
 
   innerHeigth: any;
+  showDrawer:boolean;
+  controls:any;
+  showStatistics: boolean;
 
   constructor(
     private http: HttpClient,
     private _service: SearchService,
     public dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private router: Router
   ) {
     this.projection = OlProj.get('EPSG:900913');
     this.currentZoom = 5.3;
@@ -257,6 +260,11 @@ export class MapComponent implements OnInit {
     this.minireportText = {};
 
     this.updateTexts();
+
+    this.showDrawer     = false;
+    this.showStatistics = true;
+    this.controls       = {};
+    this.updateControls();
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -381,6 +389,7 @@ export class MapComponent implements OnInit {
       this.updateTexts();
       this.updateCharts();
       this.updateDescriptor();
+      this.updateControls();
     }
   }
 
@@ -417,6 +426,13 @@ export class MapComponent implements OnInit {
         this.textOnDialog = result;
       });
 
+  }
+
+  private updateControls() {
+    let extenUrl = '/service/map/controls' + this.getServiceParams();
+    this.http.get(extenUrl).subscribe(result => {
+     this.controls = result;
+    });
   }
 
   private updateCharts() {
@@ -1682,13 +1698,20 @@ export class MapComponent implements OnInit {
     // });
   }
 
-
   buttonDownload(tipo, layer, e) {
     if (tipo == 'csv') {
       this.downloadCSV(layer);
     } else {
       this.downloadSHP(layer);
     }
+  }
+
+  zoomIn(level = 0.7) {
+    this.map.getView().setZoom(this.map.getView().getZoom() +level)
+  }
+
+  zoomOut(level = 0.7) {
+    this.map.getView().setZoom(this.map.getView().getZoom() -level)
   }
 
   @HostListener('window:resize', ['$event'])
@@ -1704,6 +1727,14 @@ export class MapComponent implements OnInit {
       this.collapseCharts = false;
       this.currentZoom = 6;
     }
+
+    if (window.innerWidth < 900) {
+      this.router.navigate(['/mobile']);
+    }
+  }
+
+  handleDrawer() {
+    this.showDrawer = !this.showDrawer;
   }
 
   ngOnInit() {
@@ -1778,6 +1809,10 @@ export class MapComponent implements OnInit {
       `csv`,
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
+
+    if (window.innerWidth < 900) {
+      this.router.navigate(['/mobile']);
+    }
   }
 }
 

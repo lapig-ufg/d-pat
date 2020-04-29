@@ -2271,6 +2271,61 @@
 			}
 		}
 	},
+	"controls": {
+		"label_close_mun": {
+			"pt-br": "Sair do Seleção",
+			"en-us": "Leave the Selection"
+		},
+		"label_layers": {
+			"pt-br": "Acessar camada de dados",
+			"en-us": "Access data layer"
+		},
+		"label_statistics": {
+			"pt-br": "Estatísticas",
+			"en-us": "Statistics"
+		},
+		"label_zoomin": {
+			"pt-br": "Mais Zoom",
+			"en-us": "Zoom In"
+		},
+		"label_zoomout": {
+			"pt-br": "Menos Zoom",
+			"en-us": "Zoom Out"
+		},
+		"label_tips": {
+			"pt-br": "Dicas",
+			"en-us": "Tips"
+		},
+		"label_historic": {
+			"pt-br": "Histórico",
+			"en-us": "Historic"
+		},
+		"label_restricted_area": {
+			"pt-br": "Área Restrita",
+			"en-us": "Restricted Area"
+		},
+		"text_historic": {
+			"pt-br": "Histórico de casos dos últimos [dias] dias",
+			"en-us": "Case history for the past [dias] days"
+		},
+		"label_name": {
+			"pt-br": "Nome: ",
+			"en-us": "Name: "
+		},
+		"label_institution": {
+			"pt-br": "Instituição: ",
+			"en-us": "Institution: "
+		},
+		"label_coronatransp": {
+			"pt-br": "Painel de Transparência - Coronatransp",
+			"en-us": "Transparency Panel - Coronatransp"
+		},
+		"label_contingency_plan": {
+			"pt-br": "Plano Estadual de Contingência",
+			"en-us": "State Contingency Plan"
+		}
+
+	},
 	"dialog_relatorio": {
 		"title": {
 			"pt-br": "Relatório do Desmatamento",

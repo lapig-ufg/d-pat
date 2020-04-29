@@ -1,5 +1,6 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import {Component, OnInit, ElementRef, OnDestroy, HostListener} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { Router } from '@angular/router';
 
 declare  var $: any;
 
@@ -17,7 +18,11 @@ export class HotsiteComponent implements OnInit, OnDestroy{
 
   videoplay: any = {};
 
-  constructor(private http: HttpClient,private elementRef: ElementRef) { 
+  constructor(
+      private http: HttpClient,
+      private elementRef: ElementRef,
+      private router: Router
+  ) {
 
   }
 
@@ -128,7 +133,18 @@ export class HotsiteComponent implements OnInit, OnDestroy{
     });
 
     $(".section").removeClass("active");
+
+      if (window.innerWidth < 900) {
+          this.router.navigate(['/mobile']);
+      }
   }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth < 900) {
+            this.router.navigate(['/mobile']);
+        }
+    }
 
   ngOnDestroy(): void {
       $.fn.fullpage.destroy('all');
