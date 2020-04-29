@@ -1,0 +1,44 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="100" height="100" viewBox="0 0 16 16" id="svg5442" version="1.1" inkscape:version="0.91 r13725" sodipodi:docname="28,layer,stack,data,layers,tool.svg">
+    <defs id="defs5444">
+        <linearGradient inkscape:collect="always" id="linearGradient5569">
+            <stop style="stop-color:#f9b233;stop-opacity:1;" offset="0" id="stop5571"/>
+            <stop style="stop-color:#f9b233;stop-opacity:1" offset="1" id="stop5573"/>
+        </linearGradient>
+        <linearGradient inkscape:collect="always" id="linearGradient6285">
+            <stop style="stop-color:#7cb359;stop-opacity:1;" offset="0" id="stop6287"/>
+            <stop style="stop-color:#7cb359;stop-opacity:1" offset="1" id="stop6289"/>
+        </linearGradient>
+        <linearGradient inkscape:collect="always" xlink:href="#linearGradient5680" id="linearGradient6148" x1="39.283478" y1="1191.0153" x2="52.716522" y2="1191.0153" gradientUnits="userSpaceOnUse"/>
+        <linearGradient inkscape:collect="always" id="linearGradient5680">
+            <stop style="stop-color:#257a33;stop-opacity:1;" offset="0" id="stop5682"/>
+            <stop style="stop-color:#257a33;stop-opacity:1" offset="1" id="stop5684"/>
+        </linearGradient>
+        <linearGradient inkscape:collect="always" xlink:href="#linearGradient6285" id="linearGradient6156" x1="39" y1="1188.8" x2="53" y2="1188.8" gradientUnits="userSpaceOnUse"/>
+        <linearGradient inkscape:collect="always" xlink:href="#linearGradient5569" id="linearGradient6164" x1="39.614006" y1="1185.2637" x2="52.385986" y2="1185.2637" gradientUnits="userSpaceOnUse"/>
+    </defs>
+    <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="11.2" inkscape:cx="-12.917556" inkscape:cy="5.9422874" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="true" units="px" inkscape:snap-bbox="true" inkscape:bbox-nodes="true" inkscape:bbox-paths="true" inkscape:snap-bbox-edge-midpoints="true" inkscape:snap-bbox-midpoints="true" inkscape:window-width="1366" inkscape:window-height="705" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1">
+        <inkscape:grid type="xygrid" id="grid5450"/>
+    </sodipodi:namedview>
+
+    <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-1036.3622)">
+        <g id="g7053">
+            <g transform="translate(-38,-142.9756)" id="g6166">
+                <path inkscape:connector-curvature="0" style="fill:url(#linearGradient6148);fill-opacity:1;stroke:none;stroke-width:0.99999982;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" d="m 41.201642,1187.6684 -1.918165,1.4875 6.716523,5.2063 6.716523,-5.2063 -1.918165,-1.4875 -4.798358,3.7187 -4.798358,-3.7187 z" id="rect4679-5-1"/>
+                <path inkscape:connector-curvature="0" style="fill:url(#linearGradient6156);fill-opacity:1;stroke:none;stroke-width:0.99999982;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" d="M 40.999127,1185.3118 39,1186.8621 l 7,5.426 7,-5.426 -1.999127,-1.5503 -5.000873,3.8757 -5.000873,-3.8757 z" id="rect4679-4-4"/>
+                <path style="fill:url(#linearGradient6164);fill-opacity:1;stroke:none;stroke-width:0.99999982;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" d="m 39.614005,1185.2637 6.386005,-4.9503 6.385975,4.9503 -6.385995,4.9503 z" id="rect4679-0" inkscape:connector-curvature="0" sodipodi:nodetypes="ccccc"/>
+            </g>
+        </g>
+    </g>
+
+
+    <metadata>
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <rdf:Description about="https://iconscout.com/legal#licenses" dc:title="Layer, Stack, Data, Layers, Tool" dc:description="Layer, Stack, Data, Layers, Tool" dc:publisher="Iconscout" dc:date="2016-12-14" dc:format="image/svg+xml" dc:language="en">
+                <dc:creator>
+                    <rdf:Bag>
+                        <rdf:li>Chamestudio</rdf:li>
+                    </rdf:Bag>
+                </dc:creator>
+            </rdf:Description>
+        </rdf:RDF>
+    </metadata></svg>

@@ -280,6 +280,21 @@ body {
 	background: #229928;
 }
 
+.mat-drawer-backdrop.mat-drawer-shown {
+	background-color:transparent !important;
+	visibility: hidden !important;
+}
+.mat-drawer:not(.mat-drawer-side) {
+	box-shadow:none;
+}
+
+.mat-drawer-inner-container {
+	overflow: hidden!important;
+}
+#mat-tab-content-1-0 .mat-tab-body-content{
+	overflow: hidden !important;
+}
+
  #hotsite {
 
  	/*Style for hotsite*/
@@ -469,16 +484,29 @@ body {
  	}
 
 
- 	@media only screen and (max-width: 768px) {
+ 	@media only screen and (max-width: 1100px) {
  		#logo {
  			font-family: 'Roboto', sans-serif;
- 			top: 127px;
- 			right: 12px;
+			top: 83px;
+			right: 12px;
+			height: 66vh;
+			width: 46vw;
 
  		}
 
  	}
 
+	 @media only screen and (max-width: 900px) {
+		 #logo {
+			 font-family: 'Roboto', sans-serif;
+			 top: 83px;
+			 right: 12px;
+			 height: 50vh;
+			 width: 46vw;
+
+		 }
+
+	 }
 
  	.sphere-overlay {
  		position:absolute;
@@ -1420,4 +1448,6 @@ body {
  		-webkit-transform: translate3d(320px, 0, 0);
  		transform: translate3d(320px, 0, 0);
  	}
+
+
  }

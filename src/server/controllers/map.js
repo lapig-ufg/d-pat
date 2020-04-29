@@ -44,7 +44,6 @@ module.exports = function (app) {
     response.end();
   };
 
-
   Controller.descriptor = function (request, response) {
 
     var language = request.param('lang')
@@ -752,7 +751,6 @@ module.exports = function (app) {
     response.end();
   };
 
-
   Controller.titles = function (request, response) {
 
     var language = request.param('lang')
@@ -793,6 +791,23 @@ module.exports = function (app) {
     response.send(result);
     response.end();
   };
+
+  Controller.controls = function (request, response) {
+    var language = request.param('lang');
+
+    var controlsJson = languageJson["controls"];
+
+    var result = {};
+
+    Object.keys(controlsJson).forEach(function (key, index) {
+      result[key] = controlsJson[key][language];
+    });
+
+    response.send(result);
+    response.end();
+
+  };
+
 
   return Controller;
 };
