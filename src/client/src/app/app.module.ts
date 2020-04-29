@@ -22,16 +22,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DropdownModule } from 'primeng/dropdown';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -46,8 +45,11 @@ import { AccordionModule } from 'primeng/accordion';
 import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
-import { NgxFlagPickerModule } from 'ngx-flag-picker';
 import { MetadataComponent } from './views/metadata/metadata.component';
+import { HotsiteComponent } from './views/hotsite/hotsite.component';
+
+import { APP_BASE_HREF } from '@angular/common';
+import { MobileComponent } from './views/mobile/mobile.component'; 
 
 registerLocaleData(localePt);
 
@@ -58,13 +60,14 @@ registerLocaleData(localePt);
     DialogOverviewExampleDialog,
     SpinnerImgComponent,
     FileUploadComponent,
-    MetadataComponent
+    MetadataComponent,
+    HotsiteComponent,
+    MobileComponent
   ],
   imports: [
     TabViewModule,
     TooltipModule,
     DropdownModule,
-    NgxFlagPickerModule,
     NgxGalleryModule,
     FieldsetModule,
     CardModule,
@@ -86,19 +89,24 @@ registerLocaleData(localePt);
     MatProgressBarModule,
     MatButtonModule,
     MatIconModule,
+    MatSidenavModule,
+    MatTooltipModule,
     MatRadioModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    RouterModule,
+    NgbModule
   ],
-  entryComponents:[MapComponent, DialogOverviewExampleDialog, MetadataComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe
   ],
   bootstrap: [AppComponent],
+
+
 })
 export class AppModule {
 }

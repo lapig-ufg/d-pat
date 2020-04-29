@@ -9,7 +9,7 @@
 	},
 	"charts_box_timeseries": {
 		"label": {
-			"pt-br": "Serie Temporal",
+			"pt-br": "Série Temporal",
 			"en-us": "Timeseries"
 		},
 		"name": {
@@ -2271,6 +2271,61 @@
 			}
 		}
 	},
+	"controls": {
+		"label_close_mun": {
+			"pt-br": "Sair do Seleção",
+			"en-us": "Leave the Selection"
+		},
+		"label_layers": {
+			"pt-br": "Acessar camada de dados",
+			"en-us": "Access data layer"
+		},
+		"label_statistics": {
+			"pt-br": "Estatísticas",
+			"en-us": "Statistics"
+		},
+		"label_zoomin": {
+			"pt-br": "Mais Zoom",
+			"en-us": "Zoom In"
+		},
+		"label_zoomout": {
+			"pt-br": "Menos Zoom",
+			"en-us": "Zoom Out"
+		},
+		"label_tips": {
+			"pt-br": "Dicas",
+			"en-us": "Tips"
+		},
+		"label_historic": {
+			"pt-br": "Histórico",
+			"en-us": "Historic"
+		},
+		"label_restricted_area": {
+			"pt-br": "Área Restrita",
+			"en-us": "Restricted Area"
+		},
+		"text_historic": {
+			"pt-br": "Histórico de casos dos últimos [dias] dias",
+			"en-us": "Case history for the past [dias] days"
+		},
+		"label_name": {
+			"pt-br": "Nome: ",
+			"en-us": "Name: "
+		},
+		"label_institution": {
+			"pt-br": "Instituição: ",
+			"en-us": "Institution: "
+		},
+		"label_coronatransp": {
+			"pt-br": "Painel de Transparência - Coronatransp",
+			"en-us": "Transparency Panel - Coronatransp"
+		},
+		"label_contingency_plan": {
+			"pt-br": "Plano Estadual de Contingência",
+			"en-us": "State Contingency Plan"
+		}
+
+	},
 	"dialog_relatorio": {
 		"title": {
 			"pt-br": "Relatório do Desmatamento",
@@ -3496,6 +3551,37 @@
 				"en-us": "Sample Validation Information"
 			}
 		},
+		"fip_abc_tab": {
+			"title_tab": {
+				"pt-br": "Dados do FIP-ABC",
+				"en-us": "FIP-ABC Project"
+			},
+			"title_info": {
+				"pt-br": "Informações da Propriedade",
+				"en-us": "Property Information"
+			},
+			"property_area_label":{
+				"pt-br": "Área da Propriedade:",
+				"en-us": "Property Area:"
+			},
+			"property_area_explored_label":{
+				"pt-br": "Área Total Explorada:",
+				"en-us": "Total Used Area:"
+			},
+			"property_area_tec_label":{
+				"pt-br": "Área de aplicação da Tecnologia:",
+				"en-us": "Technology Used Area: "
+			},
+			"property_applied_tec_label":{
+				"pt-br": "Tecnologia Aplicada: ",
+				"en-us": "Applied Technology:"
+			},
+			"property_area_deforested_label":{
+				"pt-br": "Área Desmatada na Propriedade:",
+				"en-us": "Deforested Property Area: "
+			}
+			
+		},
 		"analise_automatica": {
 			"title_tab": {
 				"pt-br": "Análise Automática",
@@ -3571,6 +3657,92 @@
 		"suported_files": {
 			"pt-br": "O upload de arquivo suporta apenas os seguintes tipos de arquivos (.kmz ou .zip).",
 			"en-us": "File upload only supports the following filetypes (.kmz or .zip)."
+		}
+	},
+	"hotsite": {
+		"abstract": {
+			"pt-br": "O Cerrado DPAT é uma ferramenta online e gratuita para que gestores, pesquisadores e toda a sociedade adquiram informações sobre o bioma, especialmente sobre as características do desmatamento e as áreas naturais mais susceptíveis ao desmatamento.",
+			"en-us": "Cerrado DPAT platform is an online and free tool to provide Cerrado biome information to researchers, public and private managers, and the whole society, specifically about deforested areas detected by the PRODES-Cerrado and DETER-Cerrado monitoring systems."
+		},
+		"hover_btn_info": {
+			"pt-br": "Exibir informações do Cerrado DPAT",
+			"en-us": "View Cerrado DPAT information"
+		},
+		"hover_btn_access_platform": {
+			"pt-br": "Acessar a plataforma",
+			"en-us": "Access the platform"
+		},
+		"about": [
+			{
+				"pt-br": "O Cerrado Deforestation Polygon Assessment Tool (Cerrado DPAT) é uma ferramenta online e gratuita criada com o propósito de caracterizar os desmatamentos detectados pelos sistemas <a href=\"http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br\" target=\"_blank\"> PRODES-Cerrado</a> e <a style=\"font-weight: 700\" href=\"http://terrabrasilis.dpi.inpe.br/app/map/alerts?hl=pt-br\" target=\"_blank\">DETER-Cerrado</a>.",
+				"en-us": "The Cerrado Deforestation Polygon Assessment Tool (Cerrado DPAT) is a free online tool created with the purpose of characterizing the deforestation detected by the systems <a href=\"http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br\" target=\"_blank\"> PRODES-Cerrado</a> and <a style=\"font-weight: 700\" href=\"http://terrabrasilis.dpi.inpe.br/app/map/alerts?hl=pt-br\" target=\"_blank\">DETER-Cerrado</a>."
+			},
+			{
+				"pt-br": "Para cada área desmatada, o usuário pode visualizar uma compilação de dados geofísicos, edafoclimáticos, fundiários, de cobertura do solo e infraestrutura, além de poder acessar os produtos resultantes do processo de validação amostral e de campo do PRODES-Cerrado.",
+				"en-us": "For each deforested area, the user can view such a compilation of land use and land cover maps, geophysical data, special areas, edaphoclimatic data, properties, and infrastructure, as products resulting from the PRODES-Cerrado validation process."
+			},
+			{
+				"pt-br": "O pesquisador, gestor e a sociedade em geral também pode visualizar as áreas de vegetação naturais mais susceptíveis ao desmatamento, assim como verificar a presença e distância de desmatamentos em relação à Unidades de Conservação, Terras Indígenas, Quilombos e Áreas Prioritárias para Conservação da Biodiversidade.",
+				"en-us": "The user also can view the areas of natural vegetation most susceptible to deforestation, as well as check the deforestation presence and distance to Conservation Units, Indigenous Lands, Quilombos, and Priority Areas for Biodiversity Conservation."
+			}
+		],
+		"about_title": {
+			"pt-br": "Sobre",
+			"en-us": "About"
+		},
+		"innovations": [
+			{
+				"pt-br": "O Cerrado DPAT inova porque além qualificar o desmatamento com dados geográficos de diversas fontes, também oferece a validação dos polígonos de desmatamento, contribuindo para a melhoria do processo de detecção da perda de vegetação nativa no Cerrado.",
+				"en-us": "At the state and municipal levels, a large statistic dataset is shown through graphs and maps (e.g., total deforested areas in APP areas and Legal Reserve). The Cerrado DPAT also innovates by offering the validation data of deforestation polygons, thus contributing to the improvement of the process of detecting the loss of native vegetation and the emission of greenhouse gases in the Cerrado."
+			},
+			{
+				"pt-br": "Ao nível municipal, destaca-se também a apresentação de estatísticas, tais como o total da área desmatada, entre 2000 e 2019, em APP e Reserva Legal . De forma prática, os resultados são apresentados por meio de gráficos e mapas.",
+				"en-us": ""
+			}
+		],
+		"innovations_title": {
+			"pt-br": "Diferencial",
+			"en-us": "Innovations"
+		},
+		"how_to_use":[
+			{
+				"pt-br": "As informações associadas ao polígono de desmatamento são acessadas pelo usuário de forma rápida e intuitiva. Ao clicar no polígono, um relatório com as informações disponíveis para a região é gerado, permitindo que usuários experientes e eventuais possam ter acesso à informação.",
+				"en-us": "The dataset of each deforestation polygon is accessed quickly and intuitively.  With a click on a polygon, a report is generated with the information available for the region, allowing easy access to information.\n"
+			},
+			{
+				"pt-br": "A validação do desmatamento está fundamentada em três métodos: inspeção em campo, inspeção visual de imagens de satélite e análises automáticas. Cada polígono de desmatamento detectado pelo PRODES e DETER foi avaliado por, pelo menos, um destes métodos, o que permitiu gerar um gradiente de confiabilidade ao desmatamento detectado.",
+				"en-us": "The deforestation validation is based on three methods: field inspection, visual inspection of satellite images and automatic analysis. Deforestation polygons detected by PRODES-Cerrado and DETER-Cerrado was evaluated by at least one of these methods, which allowed generating a gradient of reliability to detected deforestation."
+			}
+		],
+		"how_to_use_title": {
+			"pt-br": "Como usar",
+			"en-us": "How to use"
+		},
+		"fip":[
+			{
+				"pt-br": "Em 2016, o Programa de Investimento Florestal (FIP) foi implementado no Brasil no âmbito do Plano de Investimento Brasileiro, gerido pelo Banco Internacional para Reconstrução e Desenvolvimento (IBRD / Banco Mundial) e financiado pelo Fundo Estratégico do Clima, cujo objetivo é desenvolver sistemas de prevenção de incêndios florestais e monitorar a cobertura vegetal no bioma, o qual apresenta longo histórico de perda de vegetação nativa.",
+				"en-us": "In 2016, the Forest Investment Program (FIP) was implemented in Brazil under the Brazilian Investment Plan, managed by the International Bank for Reconstruction and Development (IBRD / World Bank) and financed by the Strategic Climate Fund, whose objective is to develop systems prevention of forest fires and monitor the vegetation cover in the biome, which has a long history of loss of native vegetation."
+			},
+			{
+				"pt-br": "Sob a liderança do Ministério da Ciência, Tecnologia, Inovações e Comunicações (MCTIC), o Instituto Nacional de Pesquisas Espaciais (INPE) desenvolveu no contexto do FIP Cerrado dois sistemas: PRODES - Programa de Monitoramento do Desmatamento, que fornece as taxas anuais e incrementos de desmatamento e o DETER - Detecção do Desmatamento em Tempo Real, que envia avisos de evidências de alteração da vegetação nativa.",
+				"en-us": "Under the leadership of the Ministry of Science, Technology, Innovations and Communications (MCTIC), the National Institute for Space Research (INPE) developed in the context of FIP Cerrado two systems: PRODES - Deforestation Monitoring Program, which provides annual rates and increments deforestation and DETER - Deforestation Detection in Real-Time, which sends notices of evidence of alteration of native vegetation."
+			},
+			{
+				"pt-br": "Especificamente, a Universidade Federal de Goiás (UFG), por meio do Laboratório de Processamento de Imagem e Geoprocessamento (Lapig), desenvolveu a plataforma Cerrado DPAT, com vistas a avaliação qualitativa dos dados PRODES-Cerrado e DETER-Cerrado, bem como ser uma ferramenta de gestão do território em apoio às ações de prevenção do avanço do desmatamento.",
+				"en-us": "Specifically, the Federal University of Goiás (UFG), through the Image Processing and Geoprocessing Laboratory (Lapig), developed the Cerrado DPAT platform, with a view to the qualitative assessment of the PRODES-Cerrado and DETER-Cerrado data, as well as being a territorial management tool in support of actions to prevent the advance of deforestation."
+			}
+		],
+		"fip_title": {
+			"pt-br": "FIP Monitoramento",
+			"en-us": "FIP Monitoring"
+		},
+		"team": {
+			"pt-br": "Exibir informações do Cerrado DPAT",
+			"en-us": "View Cerrado DPAT information"
+		},
+		"team_title": {
+			"pt-br": "Equipe",
+			"en-us": "Team"
 		}
 	}
 }

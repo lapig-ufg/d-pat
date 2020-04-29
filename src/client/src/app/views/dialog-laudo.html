@@ -35,7 +35,7 @@
                     <div class="p-grid p-justify-even">
                         <div class="p-col-2" *ngIf="infoDesmat.pathclassefip != '1' ">
                             <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="infoDesmat.pathclassefip"
-                                [spinnerSrc]="'/assets/gif/loadImage.gif'">
+                                [spinnerSrc]="svgLoading">
                             </toh-spinner-img>
 
                         </div>
@@ -74,7 +74,7 @@
                         <div class="p-col-6"
                             style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                             <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="urlSentinel[0]?.thumb"
-                                [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxSentinel()">
+                                [spinnerSrc]="svgLoading" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
                             <strong>{{textOnDialog.information_tab.landsat_image_description}}
@@ -123,7 +123,7 @@
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
-                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openLightboxCAR()">
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxCAR()">
                                     </toh-spinner-img>
                                 </div>
 
@@ -237,7 +237,7 @@
 
                     <div class="p-grid p-justify-even" style="margin-top: .5em ; text-align: center;">
 
-                        <div class="p-col" style="min-width: 300px; max-width: 350px; width: 100%"
+                        <div class="p-col" style="min-width: 300px; max-width: 390px; width: 100%"
                             *ngFor="let landsat of albumLandsat; let i=index">
 
                             <mat-card class="card-amostral">
@@ -246,7 +246,7 @@
                                     <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
                                 </mat-card-header>
                                 <toh-spinner-img [imgSrc]="landsat.thumb" [largura]="'100%'"
-                                    [spinnerSrc]="'/assets/gif/loadImage.gif'" (click)="openImage(i)" id="img-landsat"
+                                    [spinnerSrc]="svgLoading" (click)="openImage(i)" id="img-landsat"
                                     class="img-landsat-laudo"></toh-spinner-img>
                                 <mat-card-content>
 
@@ -293,7 +293,7 @@
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb"
-                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" [largura]="'100%'"
+                                        [spinnerSrc]="svgLoading" [largura]="'100%'"
                                         (click)="openLightboxSuscept()">
                                     </toh-spinner-img>
                                     <br>
@@ -319,7 +319,7 @@
                                 <div class="p-col-8"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb"
-                                        [spinnerSrc]="'/assets/gif/loadImage.gif'" [largura]="'100%'"
+                                        [spinnerSrc]="svgLoading" [largura]="'100%'"
                                         (click)="openLightboxBfast()">
                                     </toh-spinner-img>
 
@@ -328,6 +328,62 @@
                         </div>
                     </div>
                 </p-accordionTab>
+
+                <p-accordionTab header="{{textOnDialog.fip_abc_tab.title_tab}}"
+                *ngIf="abcData.length > 0">
+                <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of abcData; let i=index">
+                    <div class="p-col-6">
+                        <h5 style="text-align: center"><strong><i>{{textOnDialog.fip_abc_tab.title_info}}</i></strong>
+                        </h5>
+                        <br>
+                        <!-- <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
+                            </b>
+                            {{item.metaData.cod_car}} </p> -->
+                        <p style="font-size: 16px; text-align: left;">
+                            <b>{{textOnDialog.fip_abc_tab.property_area_label}}</b>
+                            {{item.metaData.area_propriedade | number:'1.2-3' }} km²</p>
+                        <p style="font-size: 16px; text-align: left;">
+                            <b>{{textOnDialog.fip_abc_tab.property_area_explored_label}}</b>
+                            {{item.metaData.area_explorada | number:'1.2-3' }} km²</p>
+                            <p style="font-size: 16px; text-align: left;"
+                            *ngIf="item.metaData.area_tecnologia > 0">
+                                <b>{{textOnDialog.fip_abc_tab.property_area_tec_label}}</b>
+                                {{item.metaData.area_tecnologia | number:'1.2-3' }} km² </p>
+                        <p style="font-size: 16px; text-align: left;"
+                            *ngIf="item.metaData.tec_impl != null">
+                            <b>{{textOnDialog.fip_abc_tab.property_applied_tec_label}}</b>
+                            {{item.metaData.tec_impl}} </p>
+                            <p style="font-size: 16px; text-align: left;">
+                                <b>{{textOnDialog.fip_abc_tab.property_area_deforested_label}}</b>
+                                {{item.metaData.area_desmatada | number:'1.2-3' }} km² </p>
+                      
+                    </div>
+
+                    <div class="p-col-6 ">
+                        <div class="p-grid">
+
+                            <div class="p-col-8"
+                                style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetABC[i]?.thumb"
+                                    [spinnerSrc]="svgLoading" (click)="openLightboxABC()">
+                                </toh-spinner-img>
+                            </div>
+
+                            <div class="p-col-4">
+                                <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
+                                <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
+                                <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
+                                <img *ngIf="item.imgsProp.legendDesmatamento" [src]="item.imgsProp.legendDesmatamento">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </p-accordionTab>
+                
+
             </p-accordion>
         </div>
 

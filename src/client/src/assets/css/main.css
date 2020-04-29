@@ -3,11 +3,19 @@ html {
   overflow-x: hidden;
 }
 
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+
 body {
   background: #fff;
   font-size: 14px;
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -23,7 +31,7 @@ h1, h2, h3, h4 {
   font-size: 38px;
   color: #222222;
   font-weight: 700;
-  font-family: 'Arvo', serif;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 a {
@@ -43,7 +51,7 @@ a a:focus {
 
 p {
   font-weight: 400;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
   margin: 0px;
   font-size: 14px;
 }

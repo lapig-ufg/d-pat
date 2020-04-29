@@ -14,3 +14,4 @@ src/client/dist/
 src/server/tmp
 src/server/uploads
 src/server/media
+src/server/.env
