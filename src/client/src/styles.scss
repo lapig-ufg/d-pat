@@ -330,7 +330,7 @@ body {
  	}
 
  	.text-sections{
- 		text-indent:2em;
+ 		text-indent:4em;
  		text-align: justify
  	}
 
@@ -437,6 +437,7 @@ body {
  	.info-2{
  		transition: 0.3s;
  	}
+
  	#container {
  		overflow: hidden;
  		width:100vw;
@@ -721,10 +722,6 @@ body {
  		-ms-transform: translateX(23px) translateY(-1px) rotate(-45deg);
  		transform: translateX(23px) translateY(-1px) rotate(-45deg);
  	}
-
-
-
-
 
  	/* ========== ANIMATIONS ========== */
 
