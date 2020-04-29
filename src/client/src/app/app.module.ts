@@ -24,13 +24,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
-import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -48,7 +47,7 @@ import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 
-
+import { APP_BASE_HREF } from '@angular/common'; 
 
 registerLocaleData(localePt);
 
@@ -98,8 +97,7 @@ registerLocaleData(localePt);
   entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe,
-    { provide: APP_BASE_HREF, useValue: '' }
+    DatePipe
   ],
   bootstrap: [AppComponent],
 

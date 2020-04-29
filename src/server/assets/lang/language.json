@@ -3496,6 +3496,37 @@
 				"en-us": "Sample Validation Information"
 			}
 		},
+		"fip_abc_tab": {
+			"title_tab": {
+				"pt-br": "Dados do FIP-ABC",
+				"en-us": "FIP-ABC Project"
+			},
+			"title_info": {
+				"pt-br": "Informações da Propriedade",
+				"en-us": "Property Information"
+			},
+			"property_area_label":{
+				"pt-br": "Área da Propriedade:",
+				"en-us": "Property Area:"
+			},
+			"property_area_explored_label":{
+				"pt-br": "Área Total Explorada:",
+				"en-us": "Total Used Area:"
+			},
+			"property_area_tec_label":{
+				"pt-br": "Área de aplicação da Tecnologia:",
+				"en-us": "Technology Used Area: "
+			},
+			"property_applied_tec_label":{
+				"pt-br": "Tecnologia Aplicada: ",
+				"en-us": "Applied Technology:"
+			},
+			"property_area_deforested_label":{
+				"pt-br": "Área Desmatada na Propriedade:",
+				"en-us": "Deforested Property Area: "
+			}
+			
+		},
 		"analise_automatica": {
 			"title_tab": {
 				"pt-br": "Análise Automática",

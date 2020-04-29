@@ -33,10 +33,6 @@ import { MetadataComponent } from './metadata/metadata.component';
 
 
 
-
-
-
-
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
   fromObject: {
@@ -414,7 +410,7 @@ export class MapComponent implements OnInit {
 
     });
 
-    let textlangurl = '/service/map/textreport?lang=' + this.language;
+    let textlangurl = '/service/report/textreport?lang=' + this.language;
 
     this.http.get(textlangurl).subscribe(
       result => {
@@ -1799,6 +1795,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   vetBfast: Array<{ src: string; caption: string; thumb: string }> = [];
   vetSuscept: Array<{ src: string; caption: string; thumb: string }> = [];
   vetCar: Array<{ src: string; caption: string; thumb: string }> = [];
+  vetABC: Array<{ src: string; caption: string; thumb: string }> = [];
   dataBfast: any = {};
   dataSuscept: any = {};
   dataCampo: any = [];
@@ -1815,6 +1812,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   textOnDialog = {} as any;
 
   carData: any = [];
+  abcData: any = [];
 
   svgLoading:string;
 
@@ -1888,7 +1886,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    let fieldPhotosUrl = '/service/map/field/' + this.getServiceParams();
+    let fieldPhotosUrl = '/service/report/field/' + this.getServiceParams();
 
     this.http.get(fieldPhotosUrl).subscribe(
       result => {
@@ -1924,6 +1922,23 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
             thumb: element.imgsCar.thumb
           };
           this.vetCar.push(dcar);
+
+        });
+
+
+        this.abcData = result['ABC'];
+        this.abcData.show = result['ABC'].show;
+
+        console.log(this.abcData)
+
+        this.abcData.forEach(element => {
+
+          let dcar = {
+            src: element.imgsProp.src,
+            caption: 'ID: ' + element.metaData.chaveID,
+            thumb: element.imgsProp.thumb
+          };
+          this.vetABC.push(dcar);
 
         });
 
@@ -2014,26 +2029,26 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
           for (let foto = 0; foto < element.fotos_camera.length; foto++) {
             this.galleryCamera.push({
-              small: '/service/map/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
-              medium: '/service/map/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
-              big: '/service/map/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              small: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              medium: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              big: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
             });
           }
 
 
           for (let foto = 0; foto < element.fotos_drone.length; foto++) {
             this.galleryDrones.push({
-              small: '/service/map/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
-              medium: '/service/map/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
-              big: '/service/map/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto]
+              small: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
+              medium: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
+              big: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto]
             });
           }
 
           for (let video = 0; video < element.videos_drone.length; video++) {
             this.galleryVideos.push({
-              small: '/service/map/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
-              medium: '/service/map/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
-              big: '/service/map/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video]
+              small: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
+              medium: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
+              big: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video]
             });
           }
         }
@@ -2184,5 +2199,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   }
   openLightboxCAR(index: number): void {
     this._lightbox.open(this.vetCar, index);
+  }
+
+  openLightboxABC(index: number): void {
+    this._lightbox.open(this.vetABC, index);
   }
 }

@@ -46,7 +46,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "./hotsite/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
