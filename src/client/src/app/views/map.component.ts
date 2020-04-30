@@ -31,6 +31,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -172,6 +173,8 @@ export class MapComponent implements OnInit {
   showDrawer:boolean;
   controls:any;
   showStatistics: boolean;
+  loadingSHP: boolean;
+  loadingCSV: boolean;
 
   constructor(
     private http: HttpClient,
@@ -214,10 +217,10 @@ export class MapComponent implements OnInit {
     this.changeTabSelected = "";
 
     this.urls = [
-      'http://o1.lapig.iesa.ufg.br/ows',
-      'http://o2.lapig.iesa.ufg.br/ows',
-      'http://o3.lapig.iesa.ufg.br/ows',
-      'http://o4.lapig.iesa.ufg.br/ows'
+      'https://o1.lapig.iesa.ufg.br/ows',
+      'https://o2.lapig.iesa.ufg.br/ows',
+      'https://o3.lapig.iesa.ufg.br/ows',
+      'https://o4.lapig.iesa.ufg.br/ows'
       // "http://localhost:5501/ows"
     ];
 
@@ -267,6 +270,8 @@ export class MapComponent implements OnInit {
     this.showStatistics = true;
     this.controls       = {};
     this.updateControls();
+    this.loadingSHP = false;
+    this.loadingCSV = false;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -365,7 +370,7 @@ export class MapComponent implements OnInit {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
       this.chartRegionScale = true;
-      
+
       let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
       uso_terra.visible = false;
 
@@ -1757,28 +1762,42 @@ export class MapComponent implements OnInit {
       selectedRegion: this.selectRegion,
       year: this.selectedTimeFromLayerType(layer.selectedType)
     };
+    let parameters = {
+      "layer": layer,
+      "selectedRegion": this.selectRegion,
+      "year": this.selectedTimeFromLayerType(layer.selectedType)
+    };
 
-    // this.http.get('/service/download/csv', { params: PARAMS.set("data", selected) }).subscribe(result => {
-    //
-    // });
+    this.http.post("/service/download/csv", parameters, {responseType: 'blob'})
+        .toPromise()
+        .then(blob => {
+          saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.year.year + '.zip');
+          this.loadingCSV = false;
+        }).catch(err => this.loadingCSV = false);
   }
 
-  downloadSHP(layer) {
-    let selected = {
-      layer,
-      selectedRegion: this.selectRegion,
-      year: this.selectedTimeFromLayerType(layer.selectedType)
+  downloadSHP(layer){
+
+    let parameters = {
+        "layer": layer,
+        "selectedRegion": this.selectRegion,
+        "year": this.selectedTimeFromLayerType(layer.selectedType)
     };
-    //
-    // this.http.get('/service/download/shp', { params: PARAMS.set("data", selected) }).subscribe(result => {
-    //
-    // });
+
+    this.http.post("/service/download/shp", parameters, {responseType: 'blob'})
+    .toPromise()
+    .then(blob => {
+      saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.year.year + '.zip');
+      this.loadingSHP = false;
+    }).catch(err => this.loadingSHP = false);
   }
 
   buttonDownload(tipo, layer, e) {
     if (tipo == 'csv') {
+      this.loadingCSV = true;
       this.downloadCSV(layer);
     } else {
+      this.loadingSHP = true;
       this.downloadSHP(layer);
     }
   }
