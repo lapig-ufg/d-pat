@@ -13,6 +13,7 @@ module.exports = function (app) {
     var queries = app.database.queries.map;
 
     self.requestFileFromMapServ = async function (url, pathFile){
+
         let file = fs.createWriteStream(pathFile+".zip");
 
         await new Promise((resolve, reject) => {
