@@ -244,6 +244,13 @@ module.exports = function (app) {
                       Viewvalue: "Campo 04"
                     }
                   ]*/
+                },
+                {
+                  value: "bi_ce_prodes_desmatamento_abc_fip",
+                  Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_abc_fip"]["view_value"][language],
+                  opacity: 1,
+                  order: 1,
+                  regionFilter: true,
                 }
               ]
             },

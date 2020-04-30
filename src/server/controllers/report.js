@@ -412,6 +412,8 @@ module.exports = function (app) {
 
         };
 
+        console.log("bbbbbbbbbbbbb achouuuuuu")
+
         metaDataCar = {
             prop_desmat: prop_desmat,
             tec_impl: tec_impl,

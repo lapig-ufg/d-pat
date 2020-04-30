@@ -40,7 +40,7 @@ module.exports = function(app) {
                 + " ST_AREA(tec.geom,true) / 1000000.0 as area_tecnologia, (SELECT SUM(ST_AREA(exp.geom,true) / 1000000.0) FROM fip_abc_cerrado_area_explorada exp where exp.chave_id = a.chave_id) as area_exp"
                 + " from fip_abc_prodes a " 
                 + " inner join fip_abc_cerrado_perimetro_prop prop on prop.chave_id = a.chave_id "
-                + " inner join fip_abc_cerrado_area_tecnologia tec on tec.chave_id = a.chave_id "
+                + " left join fip_abc_cerrado_area_tecnologia tec on tec.chave_id = a.chave_id "
                 + " where a.prodes_id = " + gid + " order by area_desmatada DESC"	
             }
 
