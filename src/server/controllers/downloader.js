@@ -89,6 +89,7 @@ module.exports = function (app) {
 
         // request.param('regionType', ''); /* city , state or biome - Select Region*/
 
+
         let layer  = request.body.layer;
         let region = request.body.selectedRegion;
         let time   = request.body.year;
@@ -99,6 +100,8 @@ module.exports = function (app) {
         owsRequest.addFilter('prodes_year', time.year);
         owsRequest.addFilter('region_name', region.value);
         owsRequest.addFilter('region_type', region.type);
+
+        console.log("URL", owsRequest.get());
 
         let fileParam = layer.selectedType+'_'+time.year;
 
@@ -117,10 +120,11 @@ module.exports = function (app) {
 
             var nameFile = layer.selectedType+'_'+region.type+'_'+fileParam;
 
+
             self.requestFileFromMapServ(owsRequest.get(), pathFile);
 
             response.setHeader('Content-disposition', 'attachment; filename='+nameFile+'.zip');
-            response.setHeader('Content-type', 'application/zip')
+            response.setHeader('Content-type', 'application/zip');
 
             var zipFile = archiver('zip');
             zipFile.pipe(response);
