@@ -136,6 +136,8 @@ export class MapComponent implements OnInit {
   utfgridlayerCampo: OlTileLayer;
   utfgridmunicipio: UTFGrid;
   utfgridlayerMunicipio: OlTileLayer;
+  utfgridabc: UTFGrid;
+  utfgridlayerabc: OlTileLayer;
   infoOverlay: Overlay;
   datePipe: DatePipe;
   dataForDialog = {} as any;
@@ -961,8 +963,9 @@ export class MapComponent implements OnInit {
       let isCampo = false;
       let isOficial = false;
       let isMunicipio = false;
+      let isABC = false;
 
-      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip' || deter.selectedType == 'bi_ce_deter_desmatamento_100_fip') {
+      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip' || deter.selectedType == 'bi_ce_deter_desmatamento_100_fip' ) {
         isOficial = true;
       }
 
@@ -973,6 +976,10 @@ export class MapComponent implements OnInit {
 
       if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
         isMunicipio = true;
+      }
+
+      if(prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip'){
+        isABC = true;
       }
 
       if (isMunicipio) {
@@ -1003,7 +1010,30 @@ export class MapComponent implements OnInit {
         }
       }
 
+      if(isABC)
+      {
+        if (this.utfgridabc) {
+          this.utfgridabc.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
 
+            if (data) {
+              // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+
+              if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
+                this.dataForDialog = data;
+                this.dataForDialog.origin_table = 'PRODES';
+                this.dataForDialog.dataFormatada = this.dataForDialog.data_detec == '' ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.dataForDialog.data_detec), 'dd/MM/yyyy');
+                this.dataForDialog.coordinate = coordinate;
+                this.dataForDialog.datePipe = this.datePipe;
+                this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear() ;
+              
+                this.openDialog();
+
+              }
+            }
+          }.bind(this)
+          );
+        }
+      }
 
       if (isCampo) {
 
@@ -1057,6 +1087,7 @@ export class MapComponent implements OnInit {
                 this.openDialog();
               }
 
+
               if (!openOficial && deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
                 console.log(deter, data, openOficial)
                 this.dataForDialog = data;
@@ -1066,11 +1097,16 @@ export class MapComponent implements OnInit {
                 this.openDialog();
               }
 
+             
+
             }
           }.bind(this)
           );
         }
       }
+
+      
+
     }
   }
 
@@ -1194,9 +1230,18 @@ export class MapComponent implements OnInit {
       source: this.utfgridmunicipio
     });
 
+    this.utfgridabc = new UTFGrid({
+      tileJSON: this.getTileJSONABC()
+    });
+
+    this.utfgridlayerabc = new OlTileLayer({
+      source: this.utfgridabc
+    });
+
     this.layers.push(this.utfgridlayer);
     this.layers.push(this.utfgridlayerCampo);
     this.layers.push(this.utfgridlayerMunicipio);
+    this.layers.push(this.utfgridlayerabc);
 
     this.layers = this.layers.concat(olLayers.reverse());
   }
@@ -1289,6 +1334,25 @@ export class MapComponent implements OnInit {
       version: '2.2.0',
       grids: [
         this.returnUTFGRID('prodes_por_region_fip_utfgrid', text, '{x}+{y}+{z}')
+      ]
+    };
+
+  }
+
+  private getTileJSONABC() {
+
+    let text = '1=1';
+
+    if (this.selectRegion.type === 'city') {
+      text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
+    } else if (this.selectRegion.type === 'state') {
+      text += ' AND uf = \'' + this.selectRegion.value + '\'';
+    }
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID('bi_ce_prodes_desmatamento_abc_fip', text, '{x}+{y}+{z}')
       ]
     };
 
@@ -1465,10 +1529,23 @@ export class MapComponent implements OnInit {
         }
       }
 
-    } else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio) {
+      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
+        if (this.utfgridabc) {
+          let tileJSONabc = this.getTileJSONABC();
+
+          this.utfgridabc.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONabc.grids, this.utfgridabc.tileGrid);
+          this.utfgridabc.tileJSON = tileJSONabc;
+          this.utfgridabc.refresh();
+
+          this.utfgridlayerabc.setVisible(true);
+        }
+      }
+
+    } else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc) {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerCampo.setVisible(false);
       this.utfgridlayerMunicipio.setVisible(false);
+      this.utfgridlayerabc.setVisible(false);
     }
 
 
@@ -1962,9 +2039,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 
         this.abcData = result['ABC'];
-        this.abcData.show = result['ABC'].show;
 
-        console.log(this.abcData)
+        // console.log(this.abcData)
 
         this.abcData.forEach(element => {
 

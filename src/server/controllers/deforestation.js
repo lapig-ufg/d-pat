@@ -324,8 +324,10 @@ module.exports = function (app) {
 		})
 
 		let returnObject = [];
+
+		let q = config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series";
 		req(
-			config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series", {
+			q, {
 				json: true
 			}, (err, res, body) => {
 				if (err) {

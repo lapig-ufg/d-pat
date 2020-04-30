@@ -320,6 +320,12 @@
 								"en-us": "Polygons visited in field"
 							}
 						},
+						"bi_ce_prodes_desmatamento_abc_fip": {
+							"view_value": {
+								"pt-br": "Polígonos em propriedades do FIP-ABC",
+								"en-us": "Polygons on FIP-ABC Properties"
+							}
+						},
 						"prodes_por_region_fip_img": {
 							"view_value": {
 								"pt-br": "Municípios",
