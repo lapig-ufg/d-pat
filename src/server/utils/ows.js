@@ -1,7 +1,7 @@
 module.exports = class Ows {
 
     constructor(
-        url = "http://ows.lapig.iesa.ufg.br/ows",
+        url = "https://ows.lapig.iesa.ufg.br/ows",
         request = "GetFeature",
         service = "wfs",
         version = "1.0.0",

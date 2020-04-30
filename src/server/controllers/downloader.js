@@ -3,6 +3,7 @@ var languageJson = require('../assets/lang/language.json');
 var Ows = require('../utils/ows');
 var path = require('path');
 var request = require('request');
+var archiver = require('archiver');
 
 module.exports = function (app) {
     var Controller = {};
@@ -12,7 +13,7 @@ module.exports = function (app) {
     var client  = app.database.client;
     var queries = app.database.queries.map;
 
-    self.requestFileFromMapServ = async function (url, pathFile){
+    self.requestFileFromMapServ = async function (url, pathFile, response){
 
         let file = fs.createWriteStream(pathFile+".zip");
 
@@ -23,10 +24,12 @@ module.exports = function (app) {
             })
             .pipe(file)
             .on('finish', () => {
-                console.log(`The file is finished downloading.`);
+                response.download(pathFile+'.zip');
                 resolve();
             })
             .on('error', (error) => {
+                response.send(error)
+                response.end();
                 reject(error);
             })
         })
@@ -87,9 +90,6 @@ module.exports = function (app) {
 
     Controller.downloadSHP = function(request, response) {
 
-        // request.param('regionType', ''); /* city , state or biome - Select Region*/
-
-
         let layer  = request.body.layer;
         let region = request.body.selectedRegion;
         let time   = request.body.year;
@@ -104,91 +104,27 @@ module.exports = function (app) {
             owsRequest.addFilter('region_type', region.type);
         }
 
-        console.log("URL", owsRequest.get());
-
         let fileParam = layer.selectedType+'_'+time.year;
 
-        let diretorio = config.downloadDataDir+layer.selectedType+'/'+region.type+'/'+region.value+'/';
+        let diretorio = config.downloadDataDir+layer.selectedType+'/';
+        // let diretorio = config.downloadDataDir+layer.selectedType+'/'+region.type+'/'+region.value+'/';
 
-        let	pathFile = diretorio+fileParam;
+        let	pathFile  = diretorio+fileParam;
+
+        var nameFile  = layer.selectedType+'_'+region.type+'_'+fileParam;
+
+        var zipFile = archiver('zip');
 
         if (!fs.existsSync(diretorio)){
             fs.mkdirSync(diretorio,  {recursive: true});
         }
 
-        if(fileParam.indexOf("../") == 0){
-            response.send('Arquivo inválido!')
-            response.end();
-        } else if(fs.existsSync(pathFile+'.zip')) {
-
-            var nameFile = layer.selectedType+'_'+region.type+'_'+fileParam;
-
-
-            self.requestFileFromMapServ(owsRequest.get(), pathFile);
-
-            response.setHeader('Content-disposition', 'attachment; filename='+nameFile+'.zip');
-            response.setHeader('Content-type', 'application/zip');
-
-            var zipFile = archiver('zip');
-            zipFile.pipe(response);
-
-            fs.readdir(diretorio, (err, files) => {
-                files.forEach(fileresult => {
-
-                    if(fileresult.indexOf(fileParam) == 0){
-                        var pathFile = diretorio+fileresult;
-                        zipFile.file(pathFile, {name:fileresult});
-                    }
-
-                });
-
-                zipFile.finalize();
-            })
-
-        } /*else if(regionType == 'undefined'){
-            var diretorioBR = config.downloadDir+layer+'/brasil/';
-            var fileParamBR = year;
-            var	pathFileBR = diretorioBR+fileParamBR;
-            var nameFile = 'br_'+layer+'_'+year;
-
-            if(layer != 'pasture') {
-                pathFileBR = diretorioBR
-                nameFile = 'br_'+layer
-            }
-
-            response.setHeader('Content-disposition', 'attachment; filename='+nameFile+'.zip');
-            response.setHeader('Content-type', 'application/zip')
-
-            var zipFile = archiver('zip');
-            zipFile.pipe(response);
-
-            if(fs.existsSync(pathFileBR)) {
-                zipFile.directory(pathFileBR, fileParam);
-            }
-
-            zipFile.finalize();
-
-        } else if (layer == 'pontos_campo_sem_parada' || layer == 'pontos_campo_parada' || layer == 'pontos_tvi_treinamento' || layer == 'pontos_tvi_validacao'){
-
-            response.setHeader('Content-disposition', 'attachment; filename=' + layer+'.zip');
-            response.setHeader('Content-type', 'application/zip')
-
-            var diretorio = config.downloadDir+layer;
-
-            var zipFile = archiver('zip');
-            zipFile.pipe(response);
-
-            if(fs.existsSync(diretorio)) {
-                zipFile.directory(diretorio, layer);
-            }
-
-            zipFile.finalize();
-
-        } else {
-            response.send("Arquivo indisponível");
-            response.end();
-        }*/
-    }
+        if(fs.existsSync(pathFile+'.zip')) {
+            response.download(pathFile+'.zip');
+        }else{
+            self.requestFileFromMapServ(owsRequest.get(), pathFile, response);
+        }
+    };
 
     return Controller;
 };
