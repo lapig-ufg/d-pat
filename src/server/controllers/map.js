@@ -59,6 +59,7 @@ module.exports = function (app) {
               id: "desmatamento_prodes",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
               visible: true,
+              download:true,
               selectedType: "prodes_por_region_fip_img",
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'],
               types: [{
@@ -257,6 +258,7 @@ module.exports = function (app) {
               id: "desmatamento_deter",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["label"][language],
               visible: false,
+              download:true,
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]['metadata'],
               selectedType: "bi_ce_deter_desmatamento_100_fip",
               types: [{
@@ -342,6 +344,7 @@ module.exports = function (app) {
               id: "antropico",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["label"][language],
               visible: false,
+              download:true,
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]['metadata'],
               selectedType: "bi_ce_prodes_antropico_100_fip",
               types: [{
@@ -408,6 +411,7 @@ module.exports = function (app) {
               id: "susceptibilidade",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["label"][language],
               visible: false,
+              download:true,
               selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]['metadata'],
               types: [{
@@ -434,6 +438,7 @@ module.exports = function (app) {
               id: "terraclass",
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
               visible: false,
+              download:true,
               selectedType: "uso_solo_terraclass_fip",
               types: [
                 // {
@@ -472,6 +477,7 @@ module.exports = function (app) {
               id: "floresta_plantada",
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["floresta_plantada"]["label"][language],
               visible: false,
+              download:true,
               metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]['floresta_plantada']['metadata'],
               selectedType: "floresta_plantada_fip",
               types: [{
@@ -492,6 +498,7 @@ module.exports = function (app) {
               id: "osm_rodovias",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["osm_rodovias"]["label"][language],
               visible: false,
+              download:false,
               metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['osm_rodovias']['metadata'],
               selectedType: "osm_rodovias",
               types: [{
@@ -506,6 +513,7 @@ module.exports = function (app) {
               id: "armazens",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["armazens"]["label"][language],
               visible: false,
+              download:false,
               metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['armazens']['metadata'],
               selectedType: "armazens_fip",
               types: [{
@@ -520,6 +528,7 @@ module.exports = function (app) {
               id: "frigorificos",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["frigorificos"]["label"][language],
               visible: false,
+              download:false,
               metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['frigorificos']['metadata'],
               selectedType: "armazens_fip",
               selectedType: "matadouros_e_frigorificos",
@@ -541,6 +550,7 @@ module.exports = function (app) {
               id: "altitude",
               label: languageJson["descriptor"]["geofisico"]["layers"]["altitude"]["label"][language],
               visible: false,
+              download:true,
               metadata: languageJson["descriptor"]["geofisico"]["layers"]['altitude']['metadata'],
               selectedType: "bi_ce_srtm_altitude_30_2000_lapig",
               types: [{
@@ -554,6 +564,7 @@ module.exports = function (app) {
               id: "declividade",
               label: languageJson["descriptor"]["geofisico"]["layers"]["declividade"]["label"][language],
               visible: false,
+              download:false,
               metadata: languageJson["descriptor"]["geofisico"]["layers"]['declividade']['metadata'],
               selectedType: "bi_ce_srtm_declividade_30_2000_lapig",
               types: [{
@@ -573,6 +584,7 @@ module.exports = function (app) {
               id: "solos",
               label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["solos"]["label"][language],
               visible: false,
+              download:true,
               metadata: languageJson["descriptor"]["edafoclimaticos"]["layers"]['solos']['metadata'],
               selectedType: "solos_ibge",
               types: [{
@@ -587,6 +599,7 @@ module.exports = function (app) {
               id: "precipitacao",
               label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["precipitacao"]["label"][language],
               visible: false,
+              download:true,
               metadata: languageJson["descriptor"]["edafoclimaticos"]["layers"]['precipitacao']['metadata'],
               selectedType: "bi_ce_precipitacao_historica_30_lapig",
               types: [{
