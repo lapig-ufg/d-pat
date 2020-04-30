@@ -97,9 +97,12 @@ module.exports = function (app) {
         let owsRequest =  new Ows();
 
         owsRequest.setTypeName(layer.selectedType);
-        owsRequest.addFilter('prodes_year', time.year);
-        owsRequest.addFilter('region_name', region.value);
-        owsRequest.addFilter('region_type', region.type);
+        owsRequest.addFilter('year', time.year);
+
+        if(region.type == 'city' || region.type == 'state'){
+            owsRequest.addFilter('region_name', region.value);
+            owsRequest.addFilter('region_type', region.type);
+        }
 
         console.log("URL", owsRequest.get());
 
