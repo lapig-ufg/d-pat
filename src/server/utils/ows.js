@@ -6,15 +6,15 @@ module.exports = class Ows {
         service = "wfs",
         version = "1.0.0",
         outPutFormat = "shape-zip") {
-        this._url          = url;
-        this._request      = request;
-        this._service      = service;
-        this._version      = version;
+        this._url = url;
+        this._request = request;
+        this._service = service;
+        this._version = version;
         this._outPutFormat = outPutFormat;
-        this._typeName     = null;
-        this._msFilter     = [];
-        this._width        = 1;
-        this._height       = 1;
+        this._typeName = null;
+        this._msFilter = [];
+        this._width = 1;
+        this._height = 1;
 
     }
 
@@ -76,9 +76,20 @@ module.exports = class Ows {
         return this._msFilter;
     }
 
-    addFilter(attribute, value){
-         this._msFilter.push({"_attr": attribute, "_value": value});
-         return this;
+    addFilter(attribute, value) {
+        this._msFilter.push({
+            "_attr": attribute,
+            "_value": value
+        });
+        return this;
+    }
+
+    addFilterDirect(value) {
+        this._msFilter.push({
+            "_attr": "default",
+            "_value": value
+        });
+        return this;
     }
 
     getWidth() {
@@ -99,35 +110,44 @@ module.exports = class Ows {
         return this;
     }
 
-    get(){
+    get() {
         let url = "";
 
-        if(this._typeName == undefined || this._typeName ==  null){
-             new Error('The type name is required');
-             return
+        if (this._typeName == undefined || this._typeName == null) {
+            new Error('The type name is required');
+            return
         }
 
-        url  = (this._url != null || this._url != undefined) ? this._url + "?" : "";
-        url += (this._request != null || this._request != undefined) ? "REQUEST=" + this._request  : "";
+        url = (this._url != null || this._url != undefined) ? this._url + "?" : "";
+        url += (this._request != null || this._request != undefined) ? "REQUEST=" + this._request : "";
         url += (this._service != null || this._service != undefined) ? "&SERVICE=" + this._service : "";
         url += (this._version != null || this._version != undefined) ? "&VERSION=" + this._version : "";
         url += (this._typeName != null || this._typeName != undefined) ? "&TYPENAME=" + this._typeName : "";
         url += (this._outPutFormat != null || this._outPutFormat != undefined) ? "&OUTPUTFORMAT=" + this._outPutFormat : "";
 
-        if(this._msFilter.length > 0){
+        if (this._msFilter.length > 0) {
 
             url += "&MSFILTER=";
 
             let length = this._msFilter.length - 1;
 
-            this._msFilter.forEach(function(item, index) {
-                if(index < length){
-                    url += item._attr+"="+item._value + "%20AND%20";
-                }else{
-                    url += item._attr+"="+item._value;
+            this._msFilter.forEach(function (item, index) {
+                if (index < length) {
+                    if (item._attr == "default") {
+                        url += item._value + "%20AND%20";
+                    } else {
+                        url += item._attr + "=" + item._value + "%20AND%20";
+                    }
+                } else {
+                    if (item._attr == "default") {
+                        url += item._value
+                    } else {
+                        url += item._attr + "=" + item._value;
+                    }
                 }
             });
         }
+
 
         url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
         url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";

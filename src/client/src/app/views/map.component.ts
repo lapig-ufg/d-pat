@@ -1781,7 +1781,7 @@ export class MapComponent implements OnInit {
     let parameters = {
         "layer": layer,
         "selectedRegion": this.selectRegion,
-        "year": this.selectedTimeFromLayerType(layer.selectedType)
+        "times": this.selectedTimeFromLayerType(layer.selectedType.value)
     };
 
     this.http.post("/service/download/shp", parameters, {responseType: 'blob'})

@@ -92,17 +92,29 @@ module.exports = function (app) {
 
         let layer  = request.body.layer;
         let region = request.body.selectedRegion;
-        let time   = request.body.year;
+        let time   = request.body.times;
 
         let owsRequest =  new Ows();
 
         owsRequest.setTypeName(layer.selectedType);
-        owsRequest.addFilter('year', time.year);
+        // owsRequest.addFilter('year', time.year);
 
-        if(region.type == 'city' || region.type == 'state'){
-            owsRequest.addFilter('region_name', region.value);
-            owsRequest.addFilter('region_type', region.type);
+
+        if(region.type == 'city')
+        {
+            owsRequest.addFilter('cd_geocmu', region.cd_geocmu);
         }
+        else if (region.type == 'state')
+        {
+            owsRequest.addFilter('uf', region.value);
+        }
+
+        if(time != null || time != '' || time != undefined)
+        {
+            owsRequest.addFilterDirect(region.value);
+        }
+
+        
 
         let fileParam = layer.selectedType+'_'+time.year;
 
