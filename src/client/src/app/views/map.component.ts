@@ -1757,15 +1757,10 @@ export class MapComponent implements OnInit {
 
   downloadCSV(layer) {
 
-    let selected = {
-      layer,
-      selectedRegion: this.selectRegion,
-      year: this.selectedTimeFromLayerType(layer.selectedType)
-    };
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
-      "year": this.selectedTimeFromLayerType(layer.selectedType)
+      "times": this.selectedTimeFromLayerType(layer.selectedType.value)
     };
 
     this.http.post("/service/download/csv", parameters, {responseType: 'blob'})

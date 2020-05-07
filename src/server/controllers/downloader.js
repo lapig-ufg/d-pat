@@ -40,33 +40,37 @@ module.exports = function (app) {
 
     Controller.downloadCSV = function(request, response) {
 
-        var region = request.param('region', '');
-        var file = request.param('file', '');
-        var regionType = request.param('regionType', ''); /* city , state or biome - Select Region*/
-        var msfilter = request.param('filter', '');
-        var filter = '';
-        var filtersPastureDegraded = " WHERE category='1'";
-        var sqlQuery;
+        let layer  = request.body.layer;
+        let region = request.body.selectedRegion;
+        let time   = request.body.times;
 
-        if(file == 'pasture') {
-            sqlQuery =  "SELECT cd_geouf, cd_geocmu, uf, estado, municipio, SUM(area_ha) as area_pastagem, year FROM pasture WHERE "+region+" GROUP BY 1,2,3,4,5,7"
-        } else if (file == 'pasture_degraded') {
-
-            if(msfilter) {
-                filtersPastureDegraded = filtersPastureDegraded+" AND "+msfilter;
-            }
-
-            sqlQuery =  "SELECT cd_geouf, cd_geocmu, uf, estado, municipio, SUM(area_ha) as area_past_degradada FROM pasture_degraded_class "+filtersPastureDegraded+" GROUP BY 1,2,3,4,5"
-        } else if (file == 'lotacao_bovina_regions') {
-            sqlQuery =  "SELECT cd_geouf, cd_geocmu, uf, estado, municipio, SUM(ua) as ua, sum(n_kbcs) as kbc, year FROM lotacao_bovina_regions WHERE "+region+" GROUP BY 1,2,3,4,5,8"
-        } else if (file == 'potencial_intensificacao_pecuaria') {
-
-            if(msfilter) {
-                filter = " WHERE "+msfilter;
-            }
-
-            sqlQuery =  "SELECT cd_geouf, cd_geocmu, uf, estado, municipio, AVG(potencial_int) as potencial_intensificacao FROM potencial_intensificacao "+filter+" GROUP BY 1,2,3,4,5"
+        let mapper = {
+            "bi_ce_prodes_desmatamento_100_fip" : "select origin_gid,view_date,source, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, sum(areamunkm) from prodes_cerrado",
+            "bi_ce_deter_desmatamento_100_fip" : "select origin_gid,view_date,source, cd_geocmu, uf, sucept_desmat, bfm_pct, date_part('year', deter_cerrado.view_date) AS year, classefip, sum(areamunkm) from deter_cerrado",
+            "bi_ce_prodes_antropico_100_fip" : "select origin_gid,view_date,source, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, sum(areamunkm) from prodes_cerrado"
         }
+
+        var sqlQuery = mapper[layer];
+
+        if(region.type == 'city')
+        {
+            sqlQuery += " WHERE cd_geocmu='"+region.cd_geocmu+"'";
+        }
+        else if (region.type == 'state')
+        {
+            sqlQuery += " WHERE uf='"+region.value+"'";
+        }
+        else{
+            sqlQuery += " WHERE " + region.value
+        }
+
+        if(region.type != 'biome' && (time != undefined))
+        {
+            sqlQuery += " AND " + region.value
+        }
+
+        sqlQuery+= " GROUP BY 1,2,3,4,5,6,7,8,9"
+
 
         client.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -109,7 +113,7 @@ module.exports = function (app) {
             owsRequest.addFilter('uf', region.value);
         }
 
-        if(time != null || time != '' || time != undefined)
+        if(time != undefined)
         {
             owsRequest.addFilterDirect(region.value);
         }
