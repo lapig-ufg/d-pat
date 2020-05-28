@@ -307,11 +307,14 @@ export class MapComponent implements OnInit {
   private selectedTimeFromLayerType(layerName) {
     for (let layer of this.layersTypes) {
       if (layer.value == layerName) {
-        for (let time of layer.times) {
-          if (time.value == layer.timeSelected) {
-            return time;
+        if(layer.hasOwnProperty('times')){
+          for (let time of layer.times) {
+            if (time.value == layer.timeSelected) {
+              return time;
+            }
           }
         }
+
       }
     }
 
@@ -1755,6 +1758,10 @@ export class MapComponent implements OnInit {
     });
   }
 
+  hasDownload(type, typeData){
+    return typeData.download.includes(type);
+  }
+
   downloadCSV(layer) {
 
     let parameters = {
@@ -1766,23 +1773,22 @@ export class MapComponent implements OnInit {
     this.http.post("/service/download/csv", parameters, {responseType: 'blob'})
         .toPromise()
         .then(blob => {
-          saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.year.year + '.zip');
+          saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.times + '.zip');
           this.loadingCSV = false;
         }).catch(err => this.loadingCSV = false);
   }
 
   downloadSHP(layer){
-
     let parameters = {
         "layer": layer,
         "selectedRegion": this.selectRegion,
-        "times": this.selectedTimeFromLayerType(layer.selectedType.value)
+        "times": this.selectedTimeFromLayerType(layer.selectedType)
     };
 
     this.http.post("/service/download/shp", parameters, {responseType: 'blob'})
     .toPromise()
     .then(blob => {
-      saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.year.year + '.zip');
+      saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ layer.selectedType.year + '.zip');
       this.loadingSHP = false;
     }).catch(err => this.loadingSHP = false);
   }

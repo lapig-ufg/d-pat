@@ -59,7 +59,6 @@ module.exports = function (app) {
               id: "desmatamento_prodes",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
               visible: true,
-              download:true,
               selectedType: "prodes_por_region_fip_img",
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'],
               types: [{
@@ -67,6 +66,7 @@ module.exports = function (app) {
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip_img"]["view_value"][language],
                   opacity: 1,
                   order: 1,
+                  download: [],
                   regionFilter: true,
                   timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip_img"]["timelabel"][language],
                   timeSelected: "region_type = 'city' AND year=2019",
@@ -143,6 +143,7 @@ module.exports = function (app) {
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
+                  download: ['csv','shp'],
                   regionFilter: true,
                   timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel"][language],
                   timeSelected: "year=2019",
@@ -219,6 +220,7 @@ module.exports = function (app) {
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
+                  download:['shp'],
                   regionFilter: true,
                   /*timeLabel: "Campo",
                   timeSelected: "1=1",
@@ -250,6 +252,7 @@ module.exports = function (app) {
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_abc_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
+                  download: ['shp'],
                   regionFilter: true,
                 }
               ]
@@ -266,6 +269,7 @@ module.exports = function (app) {
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
+                  download: ['csv','shp'],
                   regionFilter: true,
                   timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["timelabel"][language],
                   timeSelected: "view_date > '2019-01-01'",
@@ -312,6 +316,7 @@ module.exports = function (app) {
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value"][language],
                   opacity: 1,
                   order: 1,
+                  download: ['shp'],
                   regionFilter: true,
                   /*timeLabel: "Campo",
                   timeSelected: "1=1",
@@ -344,7 +349,6 @@ module.exports = function (app) {
               id: "antropico",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["label"][language],
               visible: false,
-              download:true,
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]['metadata'],
               selectedType: "bi_ce_prodes_antropico_100_fip",
               types: [{
@@ -352,6 +356,7 @@ module.exports = function (app) {
                 Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["view_value"][language],
                 opacity: 0.8,
                 order: 2,
+                download: ['csv','shp'],
                 regionFilter: true,
                 timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["timelabel"][language],
                 timeSelected: "year < 2018",
@@ -411,19 +416,20 @@ module.exports = function (app) {
               id: "susceptibilidade",
               label: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["label"][language],
               visible: false,
-              download:true,
               selectedType: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
               metadata: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]['metadata'],
               types: [{
                   value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig"]["view_value"][language],
                   order: 5,
+                  download: ['tiff'],
                   opacity: 1
                 },
                 {
                   value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
                   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]["view_value"][language],
                   order: 5,
+                  download: ['tiff'],
                   opacity: 1
                 }
               ]
@@ -438,7 +444,6 @@ module.exports = function (app) {
               id: "terraclass",
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
               visible: false,
-              download:true,
               selectedType: "uso_solo_terraclass_fip",
               types: [
                 // {
@@ -453,7 +458,8 @@ module.exports = function (app) {
                   metadata:languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_terraclass_fip']['metadata'],
                   regionFilter: true,
                   opacity: 0.8,
-                  order: 3
+                  order: 3,
+                  download: ['shp']
                 },
                 {
                   value: "uso_solo_probio",
@@ -461,7 +467,8 @@ module.exports = function (app) {
                   metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['bi_ce_cobertura_vegetal_250_2002_mma']['metadata'],
                   regionFilter: true,
                   opacity: 0.8,
-                  order: 3
+                  order: 3,
+                  download: ['shp']
                 },
                 {
                   value: "agricultura_agrosatelite_fip",
@@ -469,7 +476,8 @@ module.exports = function (app) {
                   metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['agricultura_agrosatelite_fip']['metadata'],
                   regionFilter: true,
                   opacity: 0.8,
-                  order: 3
+                  order: 3,
+                  download: ['shp']
                 }
               ]
             },
@@ -477,7 +485,6 @@ module.exports = function (app) {
               id: "floresta_plantada",
               label: languageJson["descriptor"]["uso_da_terra"]["layers"]["floresta_plantada"]["label"][language],
               visible: false,
-              download:true,
               metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]['floresta_plantada']['metadata'],
               selectedType: "floresta_plantada_fip",
               types: [{
@@ -485,7 +492,8 @@ module.exports = function (app) {
                 Viewvalue: "Transparent World",
                 regionFilter: true,
                 opacity: 0.8,
-                order: 3
+                order: 3,
+                download: ['shp']
               }]
             }
           ]
@@ -498,7 +506,6 @@ module.exports = function (app) {
               id: "osm_rodovias",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["osm_rodovias"]["label"][language],
               visible: false,
-              download:false,
               metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['osm_rodovias']['metadata'],
               selectedType: "osm_rodovias",
               types: [{
@@ -506,6 +513,7 @@ module.exports = function (app) {
                 Viewvalue: "Open Street Map",
                 regionFilter: true,
                 opacity: 0.8,
+                download: [],
                 order: 3
               }]
             },
@@ -513,7 +521,6 @@ module.exports = function (app) {
               id: "armazens",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["armazens"]["label"][language],
               visible: false,
-              download:false,
               metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['armazens']['metadata'],
               selectedType: "armazens_fip",
               types: [{
@@ -521,6 +528,7 @@ module.exports = function (app) {
                 Viewvalue: "LAPIG",
                 regionFilter: true,
                 opacity: 0.8,
+                download: [],
                 order: 3
               }]
             },
@@ -528,7 +536,6 @@ module.exports = function (app) {
               id: "frigorificos",
               label: languageJson["descriptor"]["infraestrutura"]["layers"]["frigorificos"]["label"][language],
               visible: false,
-              download:false,
               metadata: languageJson["descriptor"]["infraestrutura"]["layers"]['frigorificos']['metadata'],
               selectedType: "armazens_fip",
               selectedType: "matadouros_e_frigorificos",
@@ -537,6 +544,7 @@ module.exports = function (app) {
                 Viewvalue: "LAPIG",
                 regionFilter: true,
                 opacity: 0.8,
+                download: [],
                 order: 3
               }]
             }
@@ -557,21 +565,22 @@ module.exports = function (app) {
                 value: "bi_ce_srtm_altitude_30_2000_lapig",
                 Viewvalue: "SRTM",
                 opacity: 0.8,
-                order: 3
+                order: 3,
+                download: ['tiff']
               }]
             },
             {
               id: "declividade",
               label: languageJson["descriptor"]["geofisico"]["layers"]["declividade"]["label"][language],
               visible: false,
-              download:false,
               metadata: languageJson["descriptor"]["geofisico"]["layers"]['declividade']['metadata'],
               selectedType: "bi_ce_srtm_declividade_30_2000_lapig",
               types: [{
                 value: "bi_ce_srtm_declividade_30_2000_lapig",
                 Viewvalue: "SRTM",
                 opacity: 0.8,
-                order: 3
+                order: 3,
+                download: ['tiff']
               }]
             }
           ]
@@ -584,7 +593,6 @@ module.exports = function (app) {
               id: "solos",
               label: languageJson["descriptor"]["edafoclimaticos"]["layers"]["solos"]["label"][language],
               visible: false,
-              download:true,
               metadata: languageJson["descriptor"]["edafoclimaticos"]["layers"]['solos']['metadata'],
               selectedType: "solos_ibge",
               types: [{
@@ -592,7 +600,8 @@ module.exports = function (app) {
                 Viewvalue: "IBGE",
                 regionFilter: true,
                 opacity: 0.8,
-                order: 3
+                order: 3,
+                download: ['shp']
               }]
             },
             {
@@ -606,6 +615,7 @@ module.exports = function (app) {
                 value: "bi_ce_precipitacao_historica_30_lapig",
                 Viewvalue: "TRMM/GPM",
                 opacity: 0.8,
+                download: [],
                 order: 3
               }]
             }
@@ -624,6 +634,7 @@ module.exports = function (app) {
                 value: "landsat",
                 Viewvalue: "Landsat",
                 order: 10,
+                download: [],
                 opacity: 1,
                 metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'],
                 timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
@@ -691,6 +702,7 @@ module.exports = function (app) {
                 value: "sentinel",
                 Viewvalue: "Sentinel",
                 order: 10,
+                download: [],
                 opacity: 1,
                 metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
                 timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],

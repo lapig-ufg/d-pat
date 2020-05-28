@@ -1,5 +1,7 @@
 var fs = require("fs");
 var languageJson = require('../assets/lang/language.json');
+const { convertArrayToCSV } = require('convert-array-to-csv');
+const moment = require('moment');
 var Ows = require('../utils/ows');
 var path = require('path');
 var request = require('request');
@@ -36,7 +38,7 @@ module.exports = function (app) {
         .catch(error => {
             console.log(`Something happened: ${error}`);
         });
-    }
+    };
 
     Controller.downloadCSV = function(request, response) {
 
@@ -49,8 +51,8 @@ module.exports = function (app) {
             "bi_ce_deter_desmatamento_100_fip" : "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, date_part('year', deter_cerrado.view_date) AS year, classefip, sum(areamunkm) from deter_cerrado",
             "bi_ce_prodes_antropico_100_fip" : "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, sum(areamunkm) from prodes_cerrado"
         }
-
-        var sqlQuery = mapper[layer];
+        
+        var sqlQuery = mapper[layer.selectedType];
 
         if(region.type == 'city')
         {
@@ -71,6 +73,7 @@ module.exports = function (app) {
 
         sqlQuery+= " GROUP BY 1,2,3,4,5,6,7,8"
 
+        console.log("QUERY",sqlQuery);
 
         client.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -90,7 +93,7 @@ module.exports = function (app) {
 
             }
         });
-    }
+    };
 
     Controller.downloadSHP = function(request, response) {
 
@@ -101,8 +104,7 @@ module.exports = function (app) {
         let owsRequest =  new Ows();
 
         owsRequest.setTypeName(layer.selectedType);
-        // owsRequest.addFilter('year', time.year);
-
+        owsRequest.addFilter('1', '1');
 
         if(region.type == 'city')
         {
@@ -115,12 +117,10 @@ module.exports = function (app) {
 
         if(time != undefined)
         {
-            owsRequest.addFilterDirect(region.value);
+            owsRequest.addFilterDirect(time.value);
         }
 
-        
-
-        let fileParam = layer.selectedType+'_'+time.year;
+        let fileParam = layer.selectedType+'_'+time;
 
         let diretorio = config.downloadDataDir+layer.selectedType+'/';
         // let diretorio = config.downloadDataDir+layer.selectedType+'/'+region.type+'/'+region.value+'/';

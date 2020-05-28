@@ -10,7 +10,7 @@ declare  var $: any;
   styleUrls: ['./hotsite.component.css']
 })
 export class HotsiteComponent implements OnInit, OnDestroy{
- 
+
   pt_br:boolean;
   texts:any = {};
   interValMasks:any = {};
@@ -37,7 +37,7 @@ export class HotsiteComponent implements OnInit, OnDestroy{
             this.texts = result;
         });
     }
-    
+
 
     openMenu() {
 
@@ -47,16 +47,16 @@ export class HotsiteComponent implements OnInit, OnDestroy{
 
             if(firstMask){
                 $('#container').YTPPause();
-                $('#container').YTPAddMask('../assets/img/background_overlay_1.svg');
+                $('#container').YTPAddMask('../assets/img/background_overlay_1.png');
             }else{
                 $('#container').YTPPause();
-                $('#container').YTPAddMask('../assets/img/background_overlay_2.svg');
+                $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
             }
             firstMask = !firstMask;
 
         }, 5000);
 
-        $('#container').YTPAddMask('../assets/img/background_overlay_2.svg');
+        $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
         $('#container').YTPMute();
         $('#container').YTPPause();
 
@@ -122,14 +122,14 @@ export class HotsiteComponent implements OnInit, OnDestroy{
 
     $("#container").YTPlayer({
       mask:{
-          20: '../../../assets/img/background_5.png'
+          20: '../../../assets/img/background_3.png'
       }
     });
 
     this.fullpage = $("#fullpage").fullpage({
-      navigation: !0,
-      scrollingSpeed: 1e3
-      // navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"]
+      navigation: 0,
+      scrollingSpeed: 1e3,
+      navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"]
     });
 
     $(".section").removeClass("active");

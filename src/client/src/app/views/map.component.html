@@ -443,21 +443,24 @@
 																	</mat-option>
 																</mat-select>
 															</mat-form-field>
-														</span>
+															<section class="btn-actions">
+																<button class="color-buttons" *ngIf="hasDownload('csv', type)" (click)="buttonDownload('csv', layer, $event)" mat-raised-button color="accent"><mat-icon>cloud_download</mat-icon>&nbsp;CSV
+																	<mat-progress-bar *ngIf="loadingCSV" mode="indeterminate" color="warn" ></mat-progress-bar>
+																</button>
+
+																<div class="space"></div>
+
+																<button class="color-buttons"  *ngIf="hasDownload('shp', type)" (click)="buttonDownload('shp', layer, $event)"  mat-raised-button color="warn"><mat-icon>cloud_download</mat-icon>&nbsp;SHP
+																	<mat-progress-bar *ngIf="loadingSHP" mode="indeterminate" color="warn"></mat-progress-bar>
+																</button>
+
+																<button class="color-buttons" *ngIf="hasDownload('tiff', type)" (click)="buttonDownload('tiff', layer, $event)"  mat-raised-button color="warn"><mat-icon>cloud_download</mat-icon>&nbsp;TIFF
+																	<mat-progress-bar *ngIf="loadingSHP" mode="indeterminate" color="warn"></mat-progress-bar>
+																</button>
+
+															</section>
+													</span>
 												</div>
-
-												<section *ngIf="layer.visible && layer.download" class="btn-actions">
-													<button class="color-buttons" (click)="buttonDownload('csv', layer, $event)" mat-raised-button color="accent"><mat-icon>cloud_download</mat-icon>&nbsp;CSV
-														<mat-progress-bar *ngIf="loadingCSV" mode="indeterminate" color="warn" ></mat-progress-bar>
-													</button>
-
-													<div class="space"></div>
-
-													<button class="color-buttons" (click)="buttonDownload('shp', layer, $event)"  mat-raised-button color="warn"><mat-icon>cloud_download</mat-icon>&nbsp;SHP
-														<mat-progress-bar *ngIf="loadingSHP" mode="indeterminate" color="warn"></mat-progress-bar>
-													</button>
-
-												</section>
 											</div>
 										</mat-expansion-panel>
 
