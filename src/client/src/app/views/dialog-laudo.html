@@ -1,49 +1,60 @@
 <div class="container-fluid">
-    <p-scrollPanel [style]="{width: '100%', height: '100%'}">
-        <nav class="navbar sticky-top navbar-light bg-light nav-title-laudo">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a href="http://www.cerradodpat.org" target="_blank">
-                        <img class="logo-dpat" src="assets/logo/cerrado-dpat-logo.svg" /></a>
-                </li>
-            </ul>
-           
-            <div class="mx-auto order-0">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item" style="text-align: center;">
-                        <h3><strong>{{textOnDialog.title}} </strong></h3>
-                    </li>
-                </ul>
+    <p-scrollPanel [style]="{width: '98%', height: '100%'}">
+        <div class="row">
+            <div class="col-10">
+                <h4 class="title-report">{{textOnDialog.title}}</h4>
             </div>
-           
-           
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <mat-dialog-actions>
-                        <ng-container ngProjectAs="btn-close">
-                            <button mat-raised-button style="background-color: #f72424; color: white"
-                                (click)="dialogRef.close()">{{textOnDialog.close_button_label}}</button>
-                        </ng-container>
-                    </mat-dialog-actions>
-                </li>
-            </ul>
-        </nav>
+            <div class="col-2">
+                <a href="https://cerradodpat.org" target="_blank">
+                    <img class="logo-report" src="assets/logo/cerrado-dpat-logo.svg" /></a>
+            </div>
+        </div>
 
+<!--        <nav class="navbar sticky-top navbar-light bg-light nav-title-laudo">-->
+<!--           -->
+<!--            <ul class="navbar-nav mr-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a href="https://cerradodpat.org" target="_blank">-->
+<!--                        <img class="logo-dpat" src="assets/logo/cerrado-dpat-logo.svg" /></a>-->
+<!--                </li>-->
+<!--            </ul>-->
+
+<!--            <div class="mx-auto order-0">-->
+<!--                <ul class="navbar-nav mx-auto">-->
+<!--                    <li class="nav-item" style="text-align: center;">-->
+<!--                      -->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+
+
+<!--            <ul class="navbar-nav ml-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <mat-dialog-actions>-->
+<!--                        <ng-container ngProjectAs="btn-close">-->
+<!--                            <button mat-raised-button style="background-color: #f72424; color: white"-->
+<!--                                (click)="dialogRef.close()">{{textOnDialog.close_button_label}}</button>-->
+<!--                        </ng-container>-->
+<!--                    </mat-dialog-actions>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
         <div class="row">
             <p-accordion [multiple]="true">
                 <p-accordionTab header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even">
                         <div class="p-col-2" *ngIf="infoDesmat.pathclassefip != '1' ">
-                            <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="infoDesmat.pathclassefip"
+                            <toh-spinner-img style="max-width: 100%" [largura]="'100%'" [imgSrc]="infoDesmat.pathclassefip"
                                 [spinnerSrc]="svgLoading">
                             </toh-spinner-img>
 
                         </div>
                         <div class="p-col-4">
-                            <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
+                            <div class="p-grid" >
                                 <div class="p-col-12">
-                                    <h5 style="text-align: center">
-                                        <strong><i>{{textOnDialog.information_tab.metadados_label}}</i></strong></h5>
+                                    <h5 class="subtitles-report" >
+                                        <strong>{{textOnDialog.information_tab.metadados_label}}</strong>
+                                    </h5>
                                 </div>
                                 <div class="p-col-5" style="font-weight: bold">
                                     {{textOnDialog.information_tab.polygon_label}} </div>
@@ -77,8 +88,7 @@
                                 [spinnerSrc]="svgLoading" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
-                            <strong>{{textOnDialog.information_tab.landsat_image_description}}
-                                {{data.origin_table}}-Cerrado</strong>
+                            {{textOnDialog.information_tab.landsat_image_description}} {{data.origin_table}}-Cerrado
                         </div>
                     </div>
                 </p-accordionTab>
@@ -87,29 +97,29 @@
                     *ngIf="carData.length > 0 && data.year >= 2013">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of carData; let i=index">
                         <div class="p-col-6">
-                            <h5 style="text-align: center"><strong><i>{{textOnDialog.car_tab.title_info}}</i></strong>
+                            <h5 class="subtitles-report">{{textOnDialog.car_tab.title_info}}
                             </h5>
                             <br>
-                            <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
+                            <p style="font-size: 14px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
                                 </b>
                                 {{item.metaData.cod_car}} </p>
-                            <p style="font-size: 16px; text-align: left;">
+                            <p style="font-size: 14px; text-align: left;">
                                 <b>{{textOnDialog.car_tab.area_car_label}}</b>
                                 {{item.metaData.area_car | number:'1.2-3' }} km²</p>
-                            <p style="font-size: 16px; text-align: left;">
+                            <p style="font-size: 14px; text-align: left;">
                                 <b>{{textOnDialog.car_tab.reference_date_car_label}}</b>
                                 {{item.metaData.dataRefFormatada}} </p>
-                            <p style="font-size: 16px; text-align: left;"
+                            <p style="font-size: 14px; text-align: left;"
                                 *ngIf="item.metaData.qnt_nascente || item.metaData.qnt_nascente > 0">
                                 <b>{{textOnDialog.car_tab.nascente_car_label}}</b>
                                 {{item.metaData.qnt_nascente}} </p>
-                            <p style="font-size: 16px; text-align: left;"
+                            <p style="font-size: 14px; text-align: left;"
                                 *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0.1 ">
                                 <b>{{textOnDialog.car_tab.display_rl_message[0]}}</b>
                                 {{item.metaData.area_desmat_rl | number:'1.2-3' }}
                                 {{textOnDialog.car_tab.display_rl_message[1]}} {{item.metaData.percentRL}}
                                 {{textOnDialog.car_tab.display_rl_message[2]}} </p>
-                            <p style="font-size: 16px; text-align: left;"
+                            <p style="font-size: 14px; text-align: left;"
                                 *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0.1">
                                 <b>{{textOnDialog.car_tab.display_app_message[0]}}</b>
                                 {{item.metaData.area_desmat_app | number:'1.2-3' }}
@@ -174,10 +184,10 @@
                         </div>
 
                         <div class="p-col-4">
-                            <div class="p-grid" style="font-size: 16px; text-align: center; padding-top: 4px">
+                            <div class="p-grid" style="font-size: 16px; text-align: left; padding-top: 4px">
                                 <div class="p-col-12">
-                                    <h5 style="text-align: center">
-                                        <strong><i>{{textOnDialog.campo_tab.field_data_label}}</i></strong>
+                                    <h5 class="subtitles-report">
+                                        {{textOnDialog.campo_tab.field_data_label}}
                                     </h5>
                                 </div>
                                 <div class="p-col-5" style="font-weight: bold">
@@ -211,8 +221,8 @@
                             <div *ngIf="dadosValidacao_Amostral.exist" class="p-grid"
                                 style="font-size: 16px; text-align: center; padding-top: 4px">
                                 <div class="p-col-12" style="text-align: center">
-                                    <h5>
-                                        <strong><i>{{textOnDialog.historico_amostral_landsat.amostral_title}}</i></strong>
+                                    <h5 class="subtitles-report">
+                                       {{textOnDialog.historico_amostral_landsat.amostral_title}}
                                     </h5>
                                 </div>
                                 <div class="p-col-5" style="text-align: center">
@@ -224,8 +234,8 @@
 
                         <div class="p-col-4">
                             <div *ngIf="dadosValidacao_Amostral.exist" style="text-align: center">
-                                <h5>
-                                    <strong><i>{{textOnDialog.historico_amostral_landsat.amostral_classes_legend_label}}</i></strong>
+                                <h5 class="subtitles-report">
+                                   {{textOnDialog.historico_amostral_landsat.amostral_classes_legend_label}}
                                 </h5>
                                 <img [src]="urlsLandSat.legend">
                             </div>
@@ -235,7 +245,7 @@
 
                     </div>
 
-                    <div class="p-grid p-justify-even" style="margin-top: .5em ; text-align: center;">
+                    <div class="p-grid p-justify-even" style="margin-top: .5em ; text-align: center; padding: 26px;">
 
                         <div class="p-col" style="min-width: 300px; max-width: 390px; width: 100%"
                             *ngFor="let landsat of albumLandsat; let i=index">
@@ -256,10 +266,10 @@
 
                         </div>
                     </div>
-                    
+
                     <div style="margin-top: 4.5em; text-align: center; ">
-                        <h5><strong>{{textOnDialog.historico_amostral_landsat.series_modis_title}}</strong></h5>
-                        <img style="height: 50px" *ngIf="!dataTimeseriesModis.type" src="/assets/gif/loadchart.gif"> 
+                        <h5 class="subtitles-report">{{textOnDialog.historico_amostral_landsat.series_modis_title}}</h5>
+                        <img style="height: 50px" *ngIf="!dataTimeseriesModis.type" src="/assets/gif/loadchart.gif">
                         <p-chart *ngIf="dataTimeseriesModis.type" [type]="dataTimeseriesModis.type" [data]="dataTimeseriesModis"
                             [options]="optionsTimeSeries">
                         </p-chart>
@@ -271,16 +281,16 @@
                     *ngIf="data.year > 2015 && data.year < 2019">
                     <div class="p-grid" style="margin-top: .5em">
                         <div class="p-col" style="text-align: center;">
-                            <h5><strong>{{textOnDialog.analise_automatica.title_info_susceptibility}}</strong></h5>
+                            <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}</h5>
                             <div class="p-grid" style="margin-top: .3em">
                                 <div class="p-col-4" style="text-align: center;">
                                     <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
                                     <br>
-                                    <span style="font-size: small">
+                                    <span style="font-size: 14px">
                                         <strong>{{textOnDialog.analise_automatica.info_susceptibility_faixas}}</strong>
                                     </span> <br>
                                     <br>
-                                    <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept != null">
+                                    <span style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
                                         {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
                                         {{dataSuscept.type}}
                                         {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
@@ -300,24 +310,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-col" style="text-align: center;"
+                        <div class="p-col" style="text-align: left;"
                             *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
-                            <h5><strong>{{textOnDialog.analise_automatica.title_info_bfast}}</strong></h5>
+                            <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
                             <div class="p-grid" style="margin-top: .5em">
-                                <div class="p-col-4" style="text-align: center;">
+                                <div class="p-col-4" style="text-align: center; ">
                                     <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">
                                     <br>
-                                    <span style="font-size: small">
+                                    <span style="font-size: 14px;">
                                         <strong>{{textOnDialog.analise_automatica.info_bfast_faixas}}</strong>
                                     </span>
                                     <br>
                                     <br>
-                                    <span style="font-size: medium">
+                                    <span style="font-size: 14px;">
                                         {{textOnDialog.analise_automatica.info_bfast_description}}
                                         <strong>{{dataBfast.prob_Formatada}}.</strong></span>
                                 </div>
                                 <div class="p-col-8"
-                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                    style="text-align: left; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb"
                                         [spinnerSrc]="svgLoading" [largura]="'100%'"
                                         (click)="openLightboxBfast()">
@@ -356,7 +366,7 @@
                             <p style="font-size: 16px; text-align: left;">
                                 <b>{{textOnDialog.fip_abc_tab.property_area_deforested_label}}</b>
                                 {{item.metaData.area_desmatada | number:'1.2-3' }} km² </p>
-                      
+
                     </div>
 
                     <div class="p-col-6 ">
@@ -382,31 +392,16 @@
                 </div>
 
             </p-accordionTab>
-                
+
 
             </p-accordion>
         </div>
-
-
-        <div class="p-grid p-dir-rev">
-            <div class="p-col-6">
-                <nav class="navbar navbar-fixed-bottom" style="margin-left: auto">
-                    <ul class="navbar-nav mr-auto">
-
-                        <li class="nav-item">
-                            <a href="http://climatefundsupdate.org/the-funds/forest-investment-program/"
-                                target="_blank"><img class="logo-cepf" src="assets/logo/fip.png" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.ufg.br/" target="_blank"><img class="logo-lapig"
-                                    src="assets/logo/logo-ufg.png" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.lapig.iesa.ufg.br/lapig/" target="_blank"><img class="logo-lapig"
-                                    src="assets/logo/lapig.png" /></a>
-                        </li>
-                    </ul>
-                </nav>
+        <div class="row">
+            <div class="p-grid p-dir-rev mt-5">
+                <div class="p-col-12">
+                    <a href=""
+                       target="_blank"><img class="report-partners" src="assets/img/assinatura.png" /></a>
+                </div>
             </div>
         </div>
     </p-scrollPanel>

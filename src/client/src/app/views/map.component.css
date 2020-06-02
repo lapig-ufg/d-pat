@@ -21,13 +21,13 @@ hr {
 .card {
 	border-radius: 0px;
 	color: black;
-	box-shadow: 10px 10px 60px #555;
+	box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)!important;
 }
 .card-amostral {
-	max-width: 400px;
-	border-radius: 0px;
+	max-width: 350px;
+	border-radius: 10px;
 	color: black;
-	box-shadow: 10px 10px 60px #555;
+	box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12)!important;
   }
 
 .custom-select,
@@ -78,9 +78,9 @@ hr {
 #map-info .card-body {
     color: #000 !important;
     padding: 0px !important;
-} 
+}
 #map-info .card-body p.card-text {
-   background: #104e14 !important; 
+   background: #104e14 !important;
     color: #fff !important;
    height: 24px;
 }
@@ -307,7 +307,7 @@ h6 {
     background: #f9f5e3;
     font-weight: bold;
  }
- 
+
 
 .titleWindows {
 	color: #271616;
@@ -345,7 +345,7 @@ h6 {
 	padding: 20px 10px 5px 30px
 }
 .logo-dpat {
-	width:80%; 
+	width:80%;
 	object-fit: cover;
 }
 
@@ -353,7 +353,7 @@ h6 {
 	height: 56px;
 	margin-right: 8px;
 	margin-top: 5px;
-	width:80%; 
+	width:80%;
 	object-fit: scale-down;
 }
 
@@ -361,7 +361,7 @@ h6 {
 .logo-lapig {
 	height: 40px;
 	margin-left: 8px;
-	width:80%; 
+	width:80%;
 	object-fit: scale-down;
 }
 
@@ -698,7 +698,7 @@ h5.expansion-layer  {
 .mat-expansion-panel-header:hover {
 	background: #eeeeee;
 	color: #4e4e4e;
-	
+
 }
 
 mat-select {
@@ -1235,12 +1235,47 @@ mat-slider {
 	text-indent: 2em;
 }
 
+
 .title-team{
 	padding: 20px;
 	text-align: center;
 	font-size: 2em;
 }
 
+.report-partners{
+	max-width: 100%;
+}
+.title-report{
+	font-family: "Conthrax Sb"!important;
+	text-align: left;
+	text-transform: uppercase;
+	color: #0b4e26 !important;
+	position: absolute;
+	bottom: 0;
+	left: 14px;
+}
+.img-class-report img{
+	max-width: 100%!important;
+}
+.logo-report{
+	max-width: 100%;
+}
+
+.subtitles-report::before {
+	content: '';
+	display: inline-block;
+	width: 12px;
+	margin-right: 8px;
+	height: 12px;
+	background: #0b4e26 !important
+}
+.subtitles-report{
+	font-family: "Conthrax Sb";
+	text-align: left;
+	color: #0b4e26 !important;
+	text-transform: uppercase;
+	font-size: 16px;
+}
 
 @media screen and (max-width: 1050px) {
 

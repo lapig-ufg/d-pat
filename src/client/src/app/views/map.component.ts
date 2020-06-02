@@ -32,6 +32,8 @@ import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } f
 import { MetadataComponent } from './metadata/metadata.component';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { GoogleAnalyticsService } from '../services/google-analytics.service';
+
 
 let SEARCH_URL = '/service/map/search';
 let PARAMS = new HttpParams({
@@ -182,6 +184,7 @@ export class MapComponent implements OnInit {
     public dialog: MatDialog,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router
   ) {
     this.projection = OlProj.get('EPSG:900913');
@@ -384,7 +387,7 @@ export class MapComponent implements OnInit {
       this.viewWidthMobile = this.viewWidthMobile + 1;
       this.changeSelectedLulcChart({ index: 0 });
     }
-
+    // this.googleAnalyticsService.eventEmitter("changeTab", "charts", this.changeTabSelected);
   }
 
   changeLanguage(lang) {
@@ -1033,7 +1036,7 @@ export class MapComponent implements OnInit {
                 this.dataForDialog.coordinate = coordinate;
                 this.dataForDialog.datePipe = this.datePipe;
                 this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear() ;
-              
+
                 this.openDialog();
 
               }
@@ -1105,7 +1108,7 @@ export class MapComponent implements OnInit {
                 this.openDialog();
               }
 
-             
+
 
             }
           }.bind(this)
@@ -1113,7 +1116,7 @@ export class MapComponent implements OnInit {
         }
       }
 
-      
+
 
     }
   }
@@ -1773,7 +1776,7 @@ export class MapComponent implements OnInit {
     this.http.post("/service/download/csv", parameters, {responseType: 'blob'})
         .toPromise()
         .then(blob => {
-          saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.times + '.zip');
+          saveAs(blob, parameters.layer.selectedType+'_'+ parameters.selectedRegion.type +'_'+ parameters.times + '.csv');
           this.loadingCSV = false;
         }).catch(err => this.loadingCSV = false);
   }

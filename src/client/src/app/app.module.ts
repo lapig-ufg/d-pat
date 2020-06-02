@@ -47,9 +47,12 @@ import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
+import { GoogleAnalyticsService } from  './services/google-analytics.service'
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-interceptor.interceptor';
 
 import { APP_BASE_HREF } from '@angular/common';
-import { MobileComponent } from './views/mobile/mobile.component'; 
+import { MobileComponent } from './views/mobile/mobile.component';
 
 registerLocaleData(localePt);
 
@@ -102,7 +105,13 @@ registerLocaleData(localePt);
   entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    DatePipe
+    DatePipe,
+    GoogleAnalyticsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NoCacheHeadersInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent],
 

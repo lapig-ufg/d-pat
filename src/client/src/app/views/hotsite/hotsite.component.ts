@@ -106,7 +106,7 @@ export class HotsiteComponent implements OnInit, OnDestroy{
         useOnMobile:true,
         mobileFallbackImage:'../../../assets/img/background_1.svg',
         videoURL:'https://youtu.be/lXV5cSMoAuw',
-        quality: 'medium',
+        quality: 'highres',
         coverImage: '../../../assets/img/background_1.svg',
         containment:'#hotsite',
         autoPlay:true,

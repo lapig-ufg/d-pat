@@ -2,6 +2,7 @@
 
 /*@import "./assets/bootstrap/css/bootstrap.css";*/
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url(//db.onlinewebfonts.com/c/41d16a1ca7334fead72ba0ee36582ccb?family=Conthrax+Sb);
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html,
@@ -1452,3 +1453,9 @@ body {
 
 
  }
+.ui-scrollpanel-content {
+	overflow: hidden !important;
+}
+.ui-scrollpanel:hover .ui-scrollpanel-bar, .ui-scrollpanel:active .ui-scrollpanel-bar {
+	display: none;
+}

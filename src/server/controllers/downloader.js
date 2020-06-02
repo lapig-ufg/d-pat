@@ -12,8 +12,10 @@ module.exports = function (app) {
     var self = {};
 
     var config  = app.config;
-    var client  = app.database.client;
-    var queries = app.database.queries.map;
+
+    if (!fs.existsSync(config.downloadDataDir)) {
+        fs.mkdirSync(config.downloadDataDir);
+    }
 
     self.requestFileFromMapServ = async function (url, pathFile, response){
 
@@ -42,56 +44,20 @@ module.exports = function (app) {
 
     Controller.downloadCSV = function(request, response) {
 
-        let layer  = request.body.layer;
-        let region = request.body.selectedRegion;
-        let time   = request.body.times;
+        let data = request.queryResult['csv'];
 
-        let mapper = {
-            "bi_ce_prodes_desmatamento_100_fip" : "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, sum(areamunkm) from prodes_cerrado",
-            "bi_ce_deter_desmatamento_100_fip" : "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, date_part('year', deter_cerrado.view_date) AS year, classefip, sum(areamunkm) from deter_cerrado",
-            "bi_ce_prodes_antropico_100_fip" : "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, sum(areamunkm) from prodes_cerrado"
-        }
-        
-        var sqlQuery = mapper[layer.selectedType];
+        data.forEach(function (item, index) {
+            data[index].view_date = moment(item.view_date).format('DD/MM/YYYY')
+        });
 
-        if(region.type == 'city')
-        {
-            sqlQuery += " WHERE cd_geocmu='"+region.cd_geocmu+"'";
-        }
-        else if (region.type == 'state')
-        {
-            sqlQuery += " WHERE uf='"+region.value+"'";
-        }
-        else{
-            sqlQuery += " WHERE " + region.value
-        }
+        var filename = "dados_"+moment().format('YYYY-MM-DD-HH:mm')+".csv";
+        var csv  = convertArrayToCSV(data);
 
-        if(region.type != 'biome' && (time != undefined))
-        {
-            sqlQuery += " AND " + region.value
-        }
+        console.log(config.downloadDataDir+filename);
 
-        sqlQuery+= " GROUP BY 1,2,3,4,5,6,7,8"
-
-        console.log("QUERY",sqlQuery);
-
-        client.query(sqlQuery, (err, rows) => {
-            if (err) {
-                console.log(err)
-                response.end()
-            } else {
-
-                var output = layer+".csv";
-                var csv = json2csv(rows.rows);
-
-                fs.writeFile(output, csv, function(err) {
-                    response.setHeader('Content-disposition', 'attachment; filename='+output);
-                    response.set('Content-Type', 'text/csv');
-                    response.send(csv);
-                    response.end();
-                });
-
-            }
+        fs.appendFile(config.downloadDataDir+filename, csv, function (err) {
+            if (err) throw err;
+            response.download(config.downloadDataDir+filename);
         });
     };
 
