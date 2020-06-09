@@ -796,6 +796,126 @@
 				}
 			}
 		},
+		"areas_car": {
+			"label": {
+				"pt-br": "Áreas Declaradas",
+				"en-us": "Declared Areas"
+			},
+			"layers": {
+				"car": {
+					"label": {
+						"pt-br": "Cadastro Ambiental Rural (CAR)",
+						"en-us": "Rural Environmental Registry (CAR)"
+					},
+					"types": {
+						"car_imoveis_cerrado_fip": {
+							"view_value": {
+								"pt-br": "Propriedades Rurais",
+								"en-us": "Rural Properties"
+							}
+						}
+					}
+				},
+				"reserva_legal": {
+					"label": {
+						"pt-br": "Reserva Legal",
+						"en-us": "Legal Reservations"
+					},
+					"types": {
+						"car_reserva_legal_cerrado_fip": {
+							"view_value": {
+								"pt-br": "Polígonos",
+								"en-us": "Polygons"
+							}
+						}
+					}
+				},
+				"app": {
+					"label": {
+						"pt-br": "Área de Preservação Permanente",
+						"en-us": "Permanent Preservation Areas"
+					},
+					"types": {
+						"car_app_cerrado_fip": {
+							"view_value": {
+								"pt-br": "Áreas",
+								"en-us": "Areas"
+							}
+						}
+					}
+				},
+				"nascente": {
+					"label": {
+						"pt-br": "Nascentes de Rios",
+						"en-us": "Spring River"
+					},
+					"types": {
+						"car_nascente_cerrado_fip": {
+							"view_value": {
+								"pt-br": "Pontos",
+								"en-us": "Points"
+							}
+						}
+					}
+				}
+			}
+		},
+		"areas_especiais": {
+			"label": {
+				"pt-br": "Áreas Especiais",
+				"en-us": "Special Areas"
+			},
+			"layers": {
+				"terra_indigena": {
+					"label": {
+						"pt-br": "Terras Indígenas",
+						"en-us": "Indigenous Lands"
+					},
+					"types": {
+						"terra_indigena_cerrado": {
+							"view_value": {
+								"pt-br": "Limites",
+								"en-us": "Limits"
+							}
+						}
+					}
+				},
+				"quilombola": {
+					"label": {
+						"pt-br": "Comunidades Quilombolas",
+						"en-us": "Quilombola Communities"
+					},
+					"types": {
+						"areas_quilombola_cerrado": {
+							"view_value": {
+								"pt-br": "Comunidades",
+								"en-us": "Communities"
+							}
+						}
+					}
+				},
+				"ucs": {
+					"label": {
+						"pt-br": "Unidades de Conservação",
+						"en-us": "Conservation Units"
+					},
+					"types": {
+						"ucs_uso_sustentavel_cerrado": {
+							"view_value": {
+								"pt-br": "Uso Sustentável",
+								"en-us": "Sustainable Use"
+							}
+						},
+						"ucs_protecao_integral_cerrado": {
+							"view_value": {
+								"pt-br": "Proteção Integral",
+								"en-us": "Sustainable Use"
+							}
+						}
+					}
+				}
+			}
+		},
 		"uso_da_terra": {
 			"label": {
 				"pt-br": "Uso da Terra",

@@ -437,6 +437,150 @@ module.exports = function (app) {
           ]
         },
         {
+          id: "areas_especiais",
+          label: languageJson["descriptor"]["areas_especiais"]["label"][language],
+          group_expanded: false,
+          layers: [
+            {
+              id: "terra_indigena",
+              label: languageJson["descriptor"]["areas_especiais"]["layers"]["terra_indigena"]["label"][language],
+              visible: false,
+              selectedType: "terra_indigena_cerrado",
+              types: [
+                {
+                  value: "terra_indigena_cerrado",
+                  Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["terra_indigena"]["types"]["terra_indigena_cerrado"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            },
+            {
+              id: "quilombola",
+              label: languageJson["descriptor"]["areas_especiais"]["layers"]["quilombola"]["label"][language],
+              visible: false,
+              selectedType: "areas_quilombola_cerrado",
+              types: [
+                {
+                  value: "areas_quilombola_cerrado",
+                  Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["quilombola"]["types"]["areas_quilombola_cerrado"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            },
+            {
+              id: "ucs",
+              label: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["label"][language],
+              visible: false,
+              selectedType: "ucs_uso_sustentavel_cerrado",
+              types: [
+                {
+                  value: "ucs_uso_sustentavel_cerrado",
+                  Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["types"]["ucs_uso_sustentavel_cerrado"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                },
+                {
+                  value: "ucs_protecao_integral_cerrado",
+                  Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["types"]["ucs_protecao_integral_cerrado"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            }
+            
+          ]
+        },
+        {
+          id: "areas_car",
+          label: languageJson["descriptor"]["areas_car"]["label"][language],
+          group_expanded: false,
+          layers: [
+            {
+              id: "car",
+              label: languageJson["descriptor"]["areas_car"]["layers"]["car"]["label"][language],
+              visible: false,
+              selectedType: "car_imoveis_cerrado_fip",
+              types: [
+                {
+                  value: "car_imoveis_cerrado_fip",
+                  Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["car"]["types"]["car_imoveis_cerrado_fip"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            },
+            {
+              id: "reserva_legal",
+              label: languageJson["descriptor"]["areas_car"]["layers"]["reserva_legal"]["label"][language],
+              visible: false,
+              selectedType: "car_reserva_legal_cerrado_fip",
+              types: [
+                {
+                  value: "car_reserva_legal_cerrado_fip",
+                  Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["reserva_legal"]["types"]["car_reserva_legal_cerrado_fip"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            },
+            {
+              id: "app",
+              label: languageJson["descriptor"]["areas_car"]["layers"]["app"]["label"][language],
+              visible: false,
+              selectedType: "car_app_cerrado_fip",
+              types: [
+                {
+                  value: "car_app_cerrado_fip",
+                  Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["app"]["types"]["car_app_cerrado_fip"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            },
+            {
+              id: "nascente",
+              label: languageJson["descriptor"]["areas_car"]["layers"]["nascente"]["label"][language],
+              visible: false,
+              selectedType: "car_nascente_cerrado_fip",
+              types: [
+                {
+                  value: "car_nascente_cerrado_fip",
+                  Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["nascente"]["types"]["car_nascente_cerrado_fip"]["view_value"][language],
+                  //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                  regionFilter: true,
+                  opacity: 0.8,
+                  order: 3,
+                  download: ['shp']
+                }
+              ]
+            }
+            
+          ]
+        },
+        {
           id: "uso_da_terra",
           label: languageJson["descriptor"]["uso_da_terra"]["label"][language],
           group_expanded: false,

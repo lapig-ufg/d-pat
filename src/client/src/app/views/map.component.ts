@@ -2028,7 +2028,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         this.infoDesmat = result['info'];
 
-
         if (this.infoDesmat.classefip == null) {
           this.infoDesmat.pathclassefip = '1';
         } else {
