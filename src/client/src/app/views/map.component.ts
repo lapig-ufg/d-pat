@@ -2228,7 +2228,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               fill: false,
               borderColor: '#0007db',
               backgroundColor: '#0007db',
-              hidden: true,
+              hidden: false,
               pointRadius: 1,
               pointHoverRadius: 3,
               pointStyle: 'rect'
