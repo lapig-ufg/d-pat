@@ -1,4 +1,5 @@
 var fs = require("fs");
+var fsp = require("fs").promises;
 var languageJson = require('../assets/lang/language.json');
 const { convertArrayToCSV } = require('convert-array-to-csv');
 const moment = require('moment');
@@ -42,7 +43,10 @@ module.exports = function (app) {
         });
     };
 
-    Controller.downloadCSV = function(request, response) {
+    Controller.downloadCSV = async function(request, response) {
+        let layer  = request.body.layer;
+        let region = request.body.selectedRegion;
+        let time   = request.body.times;
 
         let data = request.queryResult['csv'];
 
@@ -50,15 +54,17 @@ module.exports = function (app) {
             data[index].view_date = moment(item.view_date).format('DD/MM/YYYY')
         });
 
-        var filename = "dados_"+moment().format('YYYY-MM-DD-HH:mm')+".csv";
+        var filename = "dados_"+region+".csv";
         var csv  = convertArrayToCSV(data);
 
+        await fs.writeFile(config.downloadDataDir+filename, csv);
+        response.download(config.downloadDataDir+filename);
         console.log(config.downloadDataDir+filename);
 
-        fs.appendFile(config.downloadDataDir+filename, csv, function (err) {
-            if (err) throw err;
-            response.download(config.downloadDataDir+filename);
-        });
+        // fsp.appendFile(config.downloadDataDir+filename, csv, function (err) {
+        //     if (err) throw err;
+        //
+        // });
     };
 
     Controller.downloadSHP = function(request, response) {
