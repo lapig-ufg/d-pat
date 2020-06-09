@@ -2191,44 +2191,39 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     let ndvi_time_series = '/service/deforestation/modis?table=' + this.data.origin_table + '&gid=' + this.data.gid;
     this.http.get(ndvi_time_series).subscribe(
       result => {
-
         this.tmpModis = result;
-
       },
       err => {
         console.log('Error: ', err);
       },
       () => {
-        // <---- chamada ao finalizar o subscribe.
-
-        // TODO API- Grafico
 
         this.dataTimeseriesModis = {
           labels: this.tmpModis.map(element => element.date),
           datasets: [
+            // {
+            //   label: 'NDVI',
+            //   data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
+            //   fill: false,
+            //   borderColor: '#ff0003',
+            //   backgroundColor: '#ff0003',
+            //   pointRadius: 1,
+            //   pointStyle: 'rect',
+            //   pointHoverRadius: 3
+            // },
+            // {
+            //   label: 'NDVI-Wiener',
+            //   data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
+            //   fill: false,
+            //   borderColor: '#208f0a',
+            //   backgroundColor: '#208f0a',
+            //   hidden: true,
+            //   pointRadius: 1,
+            //   pointStyle: 'rect',
+            //   pointHoverRadius: 3
+            // },
             {
               label: 'NDVI',
-              data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
-              fill: false,
-              borderColor: '#ff0003',
-              backgroundColor: '#ff0003',
-              pointRadius: 1,
-              pointStyle: 'rect',
-              pointHoverRadius: 3
-            },
-            {
-              label: 'NDVI-Wiener',
-              data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
-              fill: false,
-              borderColor: '#208f0a',
-              backgroundColor: '#208f0a',
-              hidden: true,
-              pointRadius: 1,
-              pointStyle: 'rect',
-              pointHoverRadius: 3
-            },
-            {
-              label: 'NDVI-Savitzky Golay',
               data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),
               fill: false,
               borderColor: '#0007db',
