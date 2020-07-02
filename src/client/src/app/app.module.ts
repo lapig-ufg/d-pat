@@ -28,7 +28,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, DecimalPipe } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
@@ -106,6 +106,7 @@ registerLocaleData(localePt);
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,
+    DecimalPipe,
     GoogleAnalyticsService,
     {
       provide: HTTP_INTERCEPTORS,

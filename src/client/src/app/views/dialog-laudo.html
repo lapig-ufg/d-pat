@@ -1,11 +1,16 @@
-<div id="laudo" class="container-fluid">
-    <div style="text-align: right">
-        <button (click)="dialogRef.close()" color="accent" classs="btn-info " mat-icon-button>
-            <mat-icon>highlight_off</mat-icon>
-        </button>
+<div #report id="laudo" class="container-fluid">
+    <div style="position: relative">
+        <div style="display: grid; position: fixed; right: 11vw;top: 10%;">
+            <button style="margin: 10px" (click)="printReport()" color="primary" classs="btn-info " mat-icon-button>
+                <mat-icon>print</mat-icon>
+            </button>
+            <button  style="margin: 10px"  (click)="dialogRef.close()" color="accent" classs="btn-info " mat-icon-button>
+                <mat-icon>highlight_off</mat-icon>
+            </button>
+        </div>
     </div>
 
-    <p-scrollPanel [style]="{width: '98%', height: '100%', 'margin-top': '-41px'}">
+    <p-scrollPanel [style]="{width: '98%', height: '100%'}">
         <div class="row">
             <div class="col-10">
                 <h4 class="title-report">{{textOnDialog.title}}</h4>
@@ -46,6 +51,7 @@
 <!--            </ul>-->
 <!--        </nav>-->
         <div class="row">
+            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>
             <p-accordion [multiple]="true">
                 <p-accordionTab header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even">
@@ -94,11 +100,10 @@
                                 [spinnerSrc]="svgLoading" (click)="openLightboxSentinel()">
                             </toh-spinner-img>
                             <br>
-                            {{textOnDialog.information_tab.landsat_image_description}} {{data.origin_table}}-Cerrado
+                                {{textOnDialog.information_tab.landsat_image_description}} {{data.origin_table}}-Cerrado
                         </div>
                     </div>
                 </p-accordionTab>
-
                 <p-accordionTab header="{{textOnDialog.car_tab.title_tab}}"
                     *ngIf="carData.length > 0 && data.year >= 2013">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of carData; let i=index">
@@ -168,7 +173,6 @@
                     </div>
 
                 </p-accordionTab>
-
                 <p-accordionTab header="{{textOnDialog.campo_tab.title_tab}}" *ngIf="dataCampo.length > 0">
 
                     <div class="p-grid p-justify-even">
@@ -273,12 +277,14 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 4.5em; text-align: center; ">
+                    <div  style="margin-top: 4.5em; text-align: center; ">
                         <h5 class="subtitles-report">{{textOnDialog.historico_amostral_landsat.series_modis_title}}</h5>
                         <img style="height: 50px" *ngIf="!dataTimeseriesModis.type" src="/assets/gif/loadchart.gif">
-                        <p-chart *ngIf="dataTimeseriesModis.type" [type]="dataTimeseriesModis.type" [data]="dataTimeseriesModis"
-                            [options]="optionsTimeSeries">
-                        </p-chart>
+                        <div id="reportChart"  #reportChart>
+                            <p-chart  *ngIf="dataTimeseriesModis.type" [type]="dataTimeseriesModis.type" [data]="dataTimeseriesModis"
+                                [options]="optionsTimeSeries">
+                            </p-chart>
+                        </div>
 
                     </div>
 
@@ -344,61 +350,57 @@
                         </div>
                     </div>
                 </p-accordionTab>
-
                 <p-accordionTab header="{{textOnDialog.fip_abc_tab.title_tab}}"
-                *ngIf="abcData.length > 0">
-                <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of abcData; let i=index">
-                    <div class="p-col-6">
-                        <h5 style="text-align: center"><strong><i>{{textOnDialog.fip_abc_tab.title_info}}</i></strong>
-                        </h5>
-                        <br>
-                        <!-- <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
-                            </b>
-                            {{item.metaData.cod_car}} </p> -->
-                        <p style="font-size: 16px; text-align: left;">
-                            <b>{{textOnDialog.fip_abc_tab.property_area_label}}</b>
-                            {{item.metaData.area_propriedade | number:'1.2-3' }} km²</p>
-                        <p style="font-size: 16px; text-align: left;">
-                            <b>{{textOnDialog.fip_abc_tab.property_area_explored_label}}</b>
-                            {{item.metaData.area_explorada | number:'1.2-3' }} km²</p>
-                            <p style="font-size: 16px; text-align: left;"
-                            *ngIf="item.metaData.area_tecnologia > 0">
-                                <b>{{textOnDialog.fip_abc_tab.property_area_tec_label}}</b>
-                                {{item.metaData.area_tecnologia | number:'1.2-3' }} km² </p>
-                        <p style="font-size: 16px; text-align: left;"
-                            *ngIf="item.metaData.tec_impl != null">
-                            <b>{{textOnDialog.fip_abc_tab.property_applied_tec_label}}</b>
-                            {{item.metaData.tec_impl}} </p>
+                    *ngIf="abcData.length > 0">
+                    <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of abcData; let i=index">
+                        <div class="p-col-6">
+                            <h5 class="subtitles-report">{{textOnDialog.fip_abc_tab.title_info}}</h5>
+                            <br>
+                            <!-- <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
+                                </b>
+                                {{item.metaData.cod_car}} </p> -->
                             <p style="font-size: 16px; text-align: left;">
-                                <b>{{textOnDialog.fip_abc_tab.property_area_deforested_label}}</b>
-                                {{item.metaData.area_desmatada | number:'1.2-3' }} km² </p>
-
-                    </div>
-
-                    <div class="p-col-6 ">
-                        <div class="p-grid">
-
-                            <div class="p-col-8"
-                                style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
-                                <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetABC[i]?.thumb"
-                                    [spinnerSrc]="svgLoading" (click)="openLightboxABC()">
-                                </toh-spinner-img>
-                            </div>
-
-                            <div class="p-col-4">
-                                <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
-                                <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
-                                <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
-                                <img *ngIf="item.imgsProp.legendDesmatamento" [src]="item.imgsProp.legendDesmatamento">
-
-                            </div>
+                                <b>{{textOnDialog.fip_abc_tab.property_area_label}}</b>
+                                {{item.metaData.area_propriedade | number:'1.2-3' }} km²</p>
+                            <p style="font-size: 16px; text-align: left;">
+                                <b>{{textOnDialog.fip_abc_tab.property_area_explored_label}}</b>
+                                {{item.metaData.area_explorada | number:'1.2-3' }} km²</p>
+                                <p style="font-size: 16px; text-align: left;"
+                                *ngIf="item.metaData.area_tecnologia > 0">
+                                    <b>{{textOnDialog.fip_abc_tab.property_area_tec_label}}</b>
+                                    {{item.metaData.area_tecnologia | number:'1.2-3' }} km² </p>
+                            <p style="font-size: 16px; text-align: left;"
+                                *ngIf="item.metaData.tec_impl != null">
+                                <b>{{textOnDialog.fip_abc_tab.property_applied_tec_label}}</b>
+                                {{item.metaData.tec_impl}} </p>
+                                <p style="font-size: 16px; text-align: left;">
+                                    <b>{{textOnDialog.fip_abc_tab.property_area_deforested_label}}</b>
+                                    {{item.metaData.area_desmatada | number:'1.2-3' }} km² </p>
 
                         </div>
+
+                        <div class="p-col-6 ">
+                            <div class="p-grid">
+
+                                <div class="p-col-8"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                    <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetABC[i]?.thumb"
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxABC()">
+                                    </toh-spinner-img>
+                                </div>
+
+                                <div class="p-col-4">
+                                    <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
+                                    <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
+                                    <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
+                                    <img *ngIf="item.imgsProp.legendDesmatamento" [src]="item.imgsProp.legendDesmatamento">
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-            </p-accordionTab>
-
+                </p-accordionTab>
 
             </p-accordion>
         </div>

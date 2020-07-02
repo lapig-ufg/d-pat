@@ -2501,6 +2501,10 @@
 			"unit_measure": {
 				"pt-br": "km²",
 				"en-us": "km²"
+			},
+			"info_qrcode": {
+				"pt-br": "Leia o QR Code ou acesse o link para visualizar o relatório na plataforma.",
+				"en-us": "Read the QR Code or access the link to view the report on the platform."
 			}
 		},
 		"car_tab": {
@@ -3706,7 +3710,7 @@
 				"pt-br": "Área Desmatada na Propriedade:",
 				"en-us": "Deforested Property Area: "
 			}
-			
+
 		},
 		"analise_automatica": {
 			"title_tab": {

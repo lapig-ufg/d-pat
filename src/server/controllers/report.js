@@ -481,7 +481,17 @@ module.exports = function (app) {
 
   };
 
+  Controller.store = function (request, response) {
+    let token = request.queryResult['store'];
+    response.send(token);
+    response.end()
+  };
 
+  Controller.reportByToken = function (request, response) {
+    let report = request.queryResult['reportByToken'];
+    response.send(report);
+    response.end()
+  };
 
   return Controller;
 };

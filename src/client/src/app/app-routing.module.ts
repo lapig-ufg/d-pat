@@ -12,10 +12,12 @@ const routes: Routes = [
   // { path: '', redirectTo: '/hotsite', pathMatch: 'full' },
   { path: '', component: HotsiteComponent },
   { path: 'plataforma', component: MapComponent },
+  { path: "plataforma/:token", component: MapComponent }
 ]
 
 const routesMobile = [
   { path: 'mobile', component: MobileComponent},
+  { path: "mobile/:token", component: MobileComponent }
 ]
 
 @NgModule({
