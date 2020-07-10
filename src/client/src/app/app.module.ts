@@ -53,6 +53,7 @@ import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-inter
 
 import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
+import { ProjectComponent } from './views/project/project.component';
 
 registerLocaleData(localePt);
 
@@ -65,7 +66,8 @@ registerLocaleData(localePt);
     FileUploadComponent,
     MetadataComponent,
     HotsiteComponent,
-    MobileComponent
+    MobileComponent,
+    ProjectComponent
   ],
   imports: [
     TabViewModule,
@@ -102,7 +104,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

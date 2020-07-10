@@ -443,7 +443,7 @@ export class MapComponent implements OnInit {
 
     });
 
-    let textlangurl = '/service/report/textreport?lang=' + this.language;
+    let textlangurl = '/service/projeto/textreport?lang=' + this.language;
 
     this.http.get(textlangurl).subscribe(
       result => {
@@ -1855,7 +1855,7 @@ export class MapComponent implements OnInit {
     let paramsReport = null;
     let token = params.params.token;
 
-    let dados = await this.http.get('/service/report/reportByToken/' + token).toPromise();
+    let dados = await this.http.get('http://covid.bio.br/' + token).toPromise();
 
     if(Array.isArray(dados)){
       paramsReport = JSON.parse(atob(dados[0].params))
@@ -2856,9 +2856,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       token: new Date().getTime(),
       params:this.data
     }
-    this.http.post('/service/report/store',JSON.stringify(dados, null, 2), this.httpOptions).subscribe(result => {
-      console.log(result);;
-
+    this.http.post('/service/projeto/store',JSON.stringify(dados, null, 2), this.httpOptions).subscribe(result => {
       if(Array.isArray(result) ){
         // @ts-ignore
         dd.content.push( { text:this.textOnDialog.information_tab.info_qrcode, alignment: 'center', style: 'textFooter', margin: [190, 80, 190, 10], pageBreak:false});
@@ -2876,9 +2874,110 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  async printReportCounty(){
+    let language = this.data.language;
+    let self = this;
+
+    let dd = {
+      pageSize: 'A4',
+      // by default we use portrait, you can change it to landscape if you wish
+      pageOrientation: 'portrait',
+
+      // [left, top, right, bottom]
+      pageMargins: [ 40, 70, 40, 80 ],
+
+      header: {
+        margin:[ 24, 10, 24, 30 ],
+        columns: [
+          {
+            image: logos.logoDPAT,
+            width: 130
+          },
+          {
+            // [left, top, right, bottom]
+            margin:[ 65, 15, 10, 10 ],
+            text: this.textOnDialog.title.toUpperCase(),
+            style: 'titleReport',
+          },
+
+        ]
+      },
+      footer: function (currentPage, pageCount) {
+        return {
+          table: {
+            widths: '*',
+            body: [
+              [
+                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [300, 43]},
+                {},
+                {},
+              ],
+              [
+                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0]},
+                { text:moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0]},
+                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0]},
+              ],
+            ]
+          },
+          layout: 'noBorders'
+        };
+      },
+      content:[],
+      styles: {
+        titleReport: {
+          fontSize: 16,
+          bold: true
+        },
+        textFooter: {
+          fontSize: 9
+        },
+        textImglegend: {
+          fontSize: 9
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        data: {
+          bold: true,
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        codCar: {
+          fontSize: 11,
+          bold: true,
+        },
+        textObs: {
+          fontSize: 11,
+        },
+        tableDpat: {
+          margin: [0, 5, 0, 15],
+          fontSize: 11,
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        metadata:{
+          background: '#0b4e26',
+          color: '#fff'
+        }
+      }
+    };
+
+    let filename = 'reportCounty.pdf';
+
+    pdfMake.createPdf(dd).download(filename);
+  }
+
   ngOnInit() {
 
-    let fieldPhotosUrl = '/service/report/field/' + this.getServiceParams();
+    let fieldPhotosUrl = '/service/projeto/field/' + this.getServiceParams();
 
     this.http.get(fieldPhotosUrl).subscribe(
       result => {
@@ -3017,26 +3116,26 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
           for (let foto = 0; foto < element.fotos_camera.length; foto++) {
             this.galleryCamera.push({
-              small: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
-              medium: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
-              big: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              small: '/service/projeto/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              medium: '/service/projeto/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              big: '/service/projeto/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
             });
           }
 
 
           for (let foto = 0; foto < element.fotos_drone.length; foto++) {
             this.galleryDrones.push({
-              small: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
-              medium: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
-              big: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto]
+              small: '/service/projeto/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
+              medium: '/service/projeto/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
+              big: '/service/projeto/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto]
             });
           }
 
           for (let video = 0; video < element.videos_drone.length; video++) {
             this.galleryVideos.push({
-              small: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
-              medium: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
-              big: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video]
+              small: '/service/projeto/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
+              medium: '/service/projeto/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
+              big: '/service/projeto/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video]
             });
           }
         }
