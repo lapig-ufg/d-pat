@@ -3802,6 +3802,10 @@
 			"pt-br": "Acessar a plataforma",
 			"en-us": "Access the platform"
 		},
+		"hover_btn_results": {
+			"pt-br": "Acessar resultados",
+			"en-us": "Access results"
+		},
 		"about": [
 			{
 				"pt-br": "O Cerrado Deforestation Polygon Assessment Tool (Cerrado DPAT) é uma ferramenta online e gratuita criada com o propósito de caracterizar os desmatamentos detectados pelos sistemas <a href=\"http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br\" target=\"_blank\"> PRODES-Cerrado</a> e <a style=\"font-weight: 700\" href=\"http://terrabrasilis.dpi.inpe.br/app/map/alerts?hl=pt-br\" target=\"_blank\">DETER-Cerrado</a>.",

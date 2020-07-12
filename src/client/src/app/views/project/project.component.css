@@ -1,5 +1,6 @@
 .bg-dark {
     background-color:#5a432082!important;
+    /*background-color: #5f970094!important;*/
     border-radius: 10px!important;
 }
 .carousel-item img {
@@ -61,4 +62,30 @@ figcaption{
 
 body{
     background: linear-gradient(0deg, rgba(99,195,34,0.35057773109243695) 0%, rgba(253,187,45,0.16010154061624648) 100%) ;
+}
+
+.sticky-top {
+    top: 8px !important;
+}
+
+.navbar-nav .nav-link{
+    text-transform: uppercase;
+    transition: 0.5s!important;
+}
+
+.nav-link a:hover{
+    color: white !important;
+    cursor: pointer !important;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+}
+.show-scrollTop {
+    opacity: 1;
+    transition: all .2s ease-in-out;
 }

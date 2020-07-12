@@ -1,5 +1,5 @@
 <div class="container">
-    <nav class=" shadow-lg mt-5 navbar navbar-expand-lg  navbar-dark bg-dark">
+    <nav class=" shadow-lg mt-5 navbar navbar-expand-lg  bg-dark">
         <a class="navbar-brand ml-4" href="#">
             <img class="img-logo" src="../../../assets/logo/logo-dpat.png" alt="Cerrado DAPT" loading="lazy">
         </a>
@@ -8,21 +8,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-<!--                <a class="nav-item ml-4 nav-link active" href="#dapt">DPAT <span class="sr-only">(current)</span></a>-->
-<!--                <a class="nav-item ml-4 nav-link " href="#conversao">Conversão da cobertura nativa </a>-->
-<!--                <a class="nav-item ml-4 nav-link " href="#supserfice">Superfície de susceptibilidade a desmatamento </a>-->
-<!--                <a class="nav-item ml-4 nav-link " href="#validacao-amostral">Validação Amostral</a>-->
-<!--                <a class="nav-item ml-4 nav-link " href="#validacao-campo">Validação em campo </a>-->
+                <a class="nav-item ml-4 nav-link active" (click)="goToSection('dapt')" > <span class="sr-only">(current)</span></a>
+                <a class="nav-item ml-4 nav-link" title="Conversão da cobertura nativa" (click)="goToSection('conversao')" >Conversão da cobertura</a>
+                <a class="nav-item ml-4 nav-link" title="Superfície de susceptibilidade a desmatamento" (click)="goToSection('superfice')" >Sup. de Susceptibilidade</a>
+                <a class="nav-item ml-4 nav-link" title="Validação Amostral" (click)="goToSection('validacao-amostral')">Val. Amostral</a>
+                <a class="nav-item ml-4 nav-link" title="Validação em campo" (click)="goToSection('validacao-campo')" > Val. em campo </a>
             </div>
             <div class="navbar-nav ml-auto mr-4">
-                <a href="#" class="nav-item ml-4 nav-link"><strong>BR</strong></a>
-                <a href="#" class="nav-item ml-4 nav-link"><strong>US</strong></a>
+<!--                <a href="#" class="nav-item ml-4 nav-link"><strong>BR</strong></a>-->
+<!--                <a href="#" class="nav-item ml-4 nav-link"><strong>US</strong></a>-->
             </div>
         </div>
     </nav>
 
     <section id="slider">
-        <h4 class="mt-5 text-center">Projeto e implementação de um sistema de controle de qualidade de dados para o sistema de monitoramento do desmatamento do Cerrado</h4>
+        <h4 class="mt-5 text-center">Subcomponente 1.3: Projeto e implementação de um sistema de controle de qualidade de dados para o sistema de monitoramento do desmatamento do Cerrado</h4>
         <div id="carouselExampleIndicators" class="carousel slide shadow-lg m-3" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -56,7 +56,7 @@
             No âmbito do projeto de <strong>“Desenvolvimento de sistemas de prevenção de incêndios florestais e monitoramento da cobertura vegetal no cerrado brasileiro”</strong>, o subcomponente 1.3 tem como objetivo definir e desenvolver uma ferramenta computacional capaz mensurar a incerteza dos polígonos gerados pelo PRODES e DETER-Cerrado, considerando análises automatizadas e validações por inspeção visual e visitas em campo. Tais estimativas podem ser utilizadas nos modelos de propagação de erro das estimativas de emissões de GEE, gerados pelo INPE-EM, bem como contribuírem com a melhoria contínua do processo de detecção e compreensão das dinâmicas relacionadas ao desmatamento no bioma Cerrado.
         </p>
         <p  class="mt-2 text-justify lead">
-            Nessa perspectiva, foi implementada a ferramenta computacional <strong><i> Deforestation Polygon Assessment Tool-DPAT </i> </strong>(ver: http://www.cerradodpat.org/), responsável por disponibilizar publicamente o resultado de todas análises realizadas com o PRODES e DETER-Cerrado no Subcomponente 1.3, incluindo dados obtidos em campo (e.g. coordenadas geográficas, fotos e vídeos), pontos de validação visualmente inspecionados, e métodos para análise automática para detecção de desmatamentos (e.g. superfície de susceptibilidade ao desmatamento e análise de séries temporais em imagens de satélite), produzidos no âmbito do programa FIP-Cerrado (http://cerrado.obt.inpe.br/). Para tal, foram reunidas diversas bases de dados produzidas por organizações externas ao programa (e.g. IBGE, Global Forest Watch, Open Street Map) a fim de prover informações contextuais para caracterização dos desmatamentos no bioma Cerrado. As entregas relacionadas ao DPAT foram organizadas em <strong>Base de Dados, Métricas de Qualidade, Validação em Campo e Desenvolvimento</strong>, e serão apresentadas apresentadas nas próximas seções deste documento.
+            Nessa perspectiva, foi implementada a ferramenta computacional <strong><i> Deforestation Polygon Assessment Tool-DPAT </i> </strong>(ver:<a target="_blank" href="https://www.cerradodpat.org/"> https://www.cerradodpat.org/</a>) , responsável por disponibilizar publicamente o resultado de todas análises realizadas com o PRODES e DETER-Cerrado no Subcomponente 1.3, incluindo dados obtidos em campo (e.g. coordenadas geográficas, fotos e vídeos), pontos de validação visualmente inspecionados, e métodos para análise automática para detecção de desmatamentos (e.g. superfície de susceptibilidade ao desmatamento e análise de séries temporais em imagens de satélite), produzidos no âmbito do programa FIP-Cerrado (<a target="_blank" href="http://cerrado.obt.inpe.br/">http://cerrado.obt.inpe.br/</a>). Para tal, foram reunidas diversas bases de dados produzidas por organizações externas ao programa (e.g. IBGE, Global Forest Watch, Open Street Map) a fim de prover informações contextuais para caracterização dos desmatamentos no bioma Cerrado. As entregas relacionadas ao DPAT foram organizadas em <strong>Base de Dados, Métricas de Qualidade, Validação em Campo e Desenvolvimento</strong>, e serão apresentadas apresentadas nas próximas seções deste documento.
         </p>
     </section>
 
@@ -65,18 +65,18 @@
         <div class="row">
             <div class="col-md-12">
                 <p  class="mt-2 text-justify lead ">
-                    O Lapig/UFG desenvolveu a ferramenta <strong><i>Deforestation Polygon Assessment Tool-DPAT</i></strong> (ver:<a target="_blank" href="https://www.cerradodpat.org/"> https://www.cerradodpat.org/</a>) conforme a arquitetura de desenvolvimento de software baseado em webservices, de forma que a implementação da comunicação entre cliente e servidor, via requisições REST, permite um maior desempenho e dinamismo na apresentação dos dados no mapa interativo do sistema. A Figura 43 apresenta a página inicial do DPAT, que disponibiliza a visualização de todos os dados inseridos até o presente momento. Nela também é possível visualizar os dados de forma filtrada por estado, município e ano, bem como verificar algumas análises estatísticas sobre o desmatamento no Cerrado para um estado específico e um ranking Top-10 com os municípios com maior área desmatada, também em APP e Reserva Legal. Tal funcionalidade foi planejada como forma de apoiar organizações, em diferentes esferas, a também terem acesso a esta informação e assim realizarem análises e ações para reduzir os índices de desmatamento.
+                    O Lapig/UFG desenvolveu a ferramenta <strong><i>Deforestation Polygon Assessment Tool-DPAT</i></strong> (ver:<a target="_blank" href="https://www.cerradodpat.org/"> https://www.cerradodpat.org/</a>)  conforme a arquitetura de desenvolvimento de software baseado em webservices, de forma que a implementação da comunicação entre cliente e servidor, via requisições REST, permite um maior desempenho e dinamismo na apresentação dos dados no mapa interativo do sistema. A Figura 1 apresenta a página inicial do DPAT, que disponibiliza a visualização de todos os dados inseridos até o presente momento (1), a legenda para as camadas carregadas no mapa interativo (2) e um breve resumo sobre os dados de desmatamento apresentados em uma localização no mapa (3). Por fim, também é possível visualizar os dados de forma filtrada por estado, município e ano, bem como verificar algumas análises estatísticas sobre o desmatamento no Cerrado para um estado específico e um ranking Top-10 com os municípios com maior área desmatada, também em APP e Reserva Legal (4). Tal funcionalidade foi planejada como forma de apoiar organizações, em diferentes esferas, a também terem acesso a esta informação e assim realizarem análises e ações para reduzir os índices de desmatamento.
                 </p>
                 <figure class="figure m-4 ">
                     <img src="../../../assets/img/projeto/image6.png" class="img-fluid shadow-lg" alt="Tela principal da aplicação.">
-                    <figcaption class="figure-caption text-center">Figura 1. Tela principal da aplicação.</figcaption>
+                    <figcaption class="figure-caption text-center">Figura 1. Página inicial do Cerrado DPAT</figcaption>
                 </figure>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <p  class="mt-2 text-justify lead ">
-                    Além do mapa interativo, também foi implementada a funcionalidade do Relatório do Desmatamento para cada polígono PRODES e DETER-Cerrado, capaz de permitir a visualização dos níveis de análise e validação estabelecidos pelo subcomponente 1.3. O Relatório do Desmatamento apresenta todas as informações geradas por este subcomponente de maneira rápida e intuitiva aos usuários da plataforma. A Figura XX apresenta um desmatamento detectado pelo PRODES-Cerrado na data de 16 de Julho de 2017, na cidade de Loreto-MA e contém as seguintes informações:
+                    Além do mapa interativo, também foi implementada a funcionalidade do Relatório do Desmatamento para cada polígono PRODES e DETER-Cerrado, capaz de permitir a visualização dos níveis de análise e validação estabelecidos pelo subcomponente 1.3. O Relatório do Desmatamento apresenta todas as informações geradas por este subcomponente de maneira rápida e intuitiva aos usuários da plataforma. A Figura 2 apresenta um desmatamento detectado pelo PRODES-Cerrado na data de 16 de Julho de 2017, na cidade de Loreto-MA e contém as seguintes informações:
                 </p>
                 <ul>
                     <li class="lead">
@@ -102,7 +102,10 @@
                     A paisagem no bioma Cerrado é caracterizada por uma série de particularidades ambientais (e.g., clima, vegetação) que se refletem em determinados padrões espectrais captados por sensores orbitais. Assim, a identificação do desmatamento por imagens de satélite é subsidiada tanto pelo conhecimento prévio destes padrões quanto pelo respectivo comportamento ao longo do tempo, identificado tanto de forma visual quanto por assinaturas ou quebras de tendência observadas em séries temporais.
                 </p>
                 <p  class="mt-2 text-justify lead">
-                    Por outro lado, a probabilidade de ocorrência de um desmatamento não é a mesma em todo o bioma. A conversão da cobertura nativa para o uso antrópico é influenciada por diferentes fatores socioambientais (e.g., declividade, fertilidade dos solos, infraestrutura e incentivos econômicos), atribuindo assim uma maior susceptibilidade de ocorrência para determinadas regiões (e.g., áreas planas localizadas em topos de chapada). Tais caracteristicas nortearam a criação de métricas de qualidade, atribuidas a cada uma das detecções PRODES-Cerrado e DETER-Cerrado. Nesse sentido, uma contextualização espectro-temporal da conversão da cobertura nativa nas áreas detectadas foi realizada a partir da aplicação do algoritmo <i>Bfast-Monitor</i>.
+                    Por outro lado, a probabilidade de ocorrência de um desmatamento não é a mesma em todo o bioma. A conversão da cobertura nativa para o uso antrópico é influenciada por diferentes fatores socioambientais (e.g., declividade, fertilidade dos solos, infraestrutura e incentivos econômicos), atribuindo assim uma maior susceptibilidade de ocorrência para determinadas regiões (e.g., áreas planas localizadas em topos de chapada).
+                </p>
+                <p  class="mt-2 text-justify lead">
+                    Tais características nortearam a criação de métricas de qualidade, atribuídas a cada uma das detecções PRODES-Cerrado e DETER-Cerrado. Nesse sentido, uma contextualização espectro-temporal da conversão da cobertura nativa nas áreas detectadas foi realizada a partir da aplicação do algoritmo <i>Bfast-Monitor</i>.
                 </p>
             </div>
             <div class="col-md-6">
@@ -115,10 +118,10 @@
         <div class="row">
             <div class="col-md-12">
                 <p  class="text-justify lead">
-                    Essa métrica permitiu a identificação automática de rupturas de tendência (i.e. breakpoints) em séries temporais de NDVI obtidas a partir do produto MOD13Q1 (sensor MODIS). Uma outra métrica correspondeu à contextualização espacial das detecções realizadas a partir de 2016. Assim, uma superficie de susceptibilidade ao desmatamento foi gerada a partir da sintese da influência dos fatores sociobambientais observados em desmatamentos ocorridos entre 2010 e 2015. Para tal, o método adotado foi o <i>Weights of Evidence</i>, implementado e adaptado para análises espaciais no software Dinamica EGO.
+                    Essa métrica permitiu a identificação automática de rupturas de tendência (i.e. <i>breakpoints</i>) em séries temporais de NDVI obtidas a partir do produto MOD13Q1 (sensor MODIS). Uma outra métrica correspondeu à contextualização espacial das detecções realizadas a partir de 2016. Assim, uma superfície de susceptibilidade ao desmatamento foi gerada a partir da síntese da influência dos fatores socioambientais observados em desmatamentos ocorridos entre 2010 e 2015. Para tal, o método adotado foi o <i>Weights of Evidence</i>, implementado e adaptado para análises espaciais no software Dinamica EGO.
                 </p>
                 <p  class="text-justify lead">
-                    Destaca-se também o produto final obtido por meio da validação amostral do PRODES-Cerrado, constituido por um conjunto de pontos visualmente inspecionados e distribuidos aleatoriamente por toda a extensão do bioma Cerrado. Por fim, até o momento, foram realizadas 4 visitas em campos com o propósito de avaliar os desmatamentos detectados pelo PRODES-Cerrado em 2016, 2017 e 2018. Ao final, todos os resultados obtidos por meio das metodologias supracitadas serão combinadas a fim de se computar uma métrica final a cada polígono de desmatamento produzido pelo projeto, apresentando um detalhamento a partir dos dados gerados, bem como níveis de validação sobre os mesmos.
+                    Destaca-se também o produto final obtido por meio da validação amostral do PRODES-Cerrado, constituído por um conjunto de pontos visualmente inspecionados e distribuídos aleatoriamente por toda a extensão do bioma Cerrado. Por fim, até o momento, foram realizadas 4 visitas em campos com o propósito de avaliar os desmatamentos detectados pelo PRODES-Cerrado em 2016, 2017 e 2018. Ao final, todos os resultados obtidos por meio das metodologias supracitadas serão combinadas a fim de se computar uma métrica final a cada polígono de desmatamento produzido pelo projeto, apresentando um detalhamento a partir dos dados gerados, bem como níveis de validação sobre os mesmos.
                 </p>
             </div>
         </div>
@@ -132,7 +135,7 @@
                     Após a execução do Bfast-Monitor em todos os pixels MODIS contidos nos polígonos PRODES-Cerrado, entre 2016 e 2018 (i.e. 525.038), foi observado que cerca de 82% dos polígonos apresentaram pixels com quebras em suas séries temporais, e dentre estes, polígonos com área de pelo menos 0,25 km² apresentaram mais de 50% dos pixels com quebras, um indicativo da eficiência deste método em detectar desmatamentos grandes. Em contrapartida, os polígonos que apresentaram até 25% de pixels com quebra representam cerca de 46% do total de polígonos do PRODES-Cerrado, porém este valor é equivalente a uma área total de 2.369 km², que representa apenas 11% do total desmatamento entre 2016 e 2018.
                 </p>
                 <p  class="mt-2 text-justify lead">
-                    A figura 3 apresenta um exemplo de polígono de desmatamento detectado pelo PRODES-Cerrado em 2017 e também confirmado automaticamente pelo Bfast-Monitor. Nela é possível observar um polígono com uma área total de 18 km² no município de Mateiros-TO, onde sua imagem MODIS apresenta 350 pixels sendo que 218 destes sofreram rupturas. Em 2018 foi realizada uma visita de campo nesta área e foram encontrados sinais de supressão da vegetação nativa, como por exemplo:  troncos cortados e caídos; ausência total de árvores; diferença da estrutura da vegetação em relação aos fragmentos de remanescentes vizinhos.
+                    A Figura 3 apresenta um exemplo de polígono de desmatamento detectado pelo PRODES-Cerrado em 2017 e também confirmado automaticamente pelo Bfast-Monitor. Nela é possível observar um polígono com uma área total de 18 km² no município de Mateiros-TO, onde sua imagem MODIS apresenta 350 pixels sendo que 218 destes sofreram rupturas. Em 2018 foi realizada uma visita de campo nesta área e foram encontrados sinais de supressão da vegetação nativa, como por exemplo:  troncos cortados e caídos; ausência total de árvores; diferença da estrutura da vegetação em relação aos fragmentos de remanescentes vizinhos.
                 </p>
                 <figure class="text-center mt-3 mb-3">
                     <img src="../../../assets/img/projeto/image8.png" class="img-fluid shadow-lg" alt="Bfast-Monitor">
@@ -145,7 +148,7 @@
 
     </section>
 
-    <section class="m-2 mt-4" id="supserfice">
+    <section class="m-2 mt-4" id="superfice">
         <h5>Superfície de susceptibilidade a desmatamento</h5>
         <div class="row">
             <div class="col-md-12">
@@ -153,7 +156,7 @@
                     Como subsídio à qualificação e contextualização espacial dos polígonos detectados a partir de 2016, foram criadas duas superfícies de susceptibilidade ao desmatamento: com área desmatada superiores e inferiores a 0,5 km². Essas superfície foram desenvolvidas a partir de uma síntese e da verificação de influência de 11 variáveis (i.e., distância de áreas antrópicas; distância de rodovias; distância de silos e armazéns; categoria fundiária; tamanho da propriedade; textura e tipo de solo; geomorfologia, média anual da precipitação acumulada entre 2000-2015; declividade; altitude) nos desmatamentos ocorridos entre os anos de 2010 e 2015.
                 </p>
                 <p  class="mt-2 text-justify lead">
-                    A Figura 33 apresenta a superfície de susceptibilidade aos desmatamentos grandes no Oeste Baiano juntamente com os polígonos detectados pelo PRODES-Cerrado 2016 e 2017. É interessante observar que diversos polígonos com áreas grandes se encontram na região com alta susceptibilidade a desmatamentos grandes, enquanto desmatamentos com pequenas áreas estão localizados em área menos susceptíveis a desmatamentos maiores que 0,5 km². Com isto, pode-se observar a boa aderência do modelo em relação aos dados do PRODES-Cerrado, desta forma, a ideia é continuar monitorando os desmatamentos ao longo dos próximos anos e verificar se esta condição permanece, ou se será necessária uma nova calibração utilizando os novos dados disponibilizados.
+                    A Figura 4 apresenta a superfície de susceptibilidade aos desmatamentos grandes no Oeste Baiano juntamente com os polígonos detectados pelo PRODES-Cerrado 2016 e 2017. É interessante observar que diversos polígonos com áreas grandes se encontram na região com alta susceptibilidade a desmatamentos grandes, enquanto desmatamentos com pequenas áreas estão localizados em área menos susceptíveis a desmatamentos maiores que 0,5 km². Com isto, pode-se observar a boa aderência do modelo em relação aos dados do PRODES-Cerrado, desta forma, a ideia é continuar monitorando os desmatamentos ao longo dos próximos anos e verificar se esta condição permanece, ou se será necessária uma nova calibração utilizando os novos dados disponibilizados.
                 </p>
                 <figure class="figure m-4 mt-3">
                     <img src="../../../assets/img/projeto/image4.png" class="img-fluid shadow-lg" alt="Susceptibilidade">
@@ -173,8 +176,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p  class="mt-2 mb-3 text-justify lead">
-                    Foram sorteados 6.187 pontos, como mostra a tabela 1 seguindo uma amostragem estratificada com alocação proporcional (CHOCHRAN, 1965), conforme apresentado no relatório anterior. Neste processo foram avaliadas 4 classes: área antrópica referente ao ano de 2015; desmatamentos detectados em 2016; desmatamentos detectados em 2017, desmatamentos detectados em 2018; e vegetação natural (i.e. pontos sorteados fora das áreas antrópicas mapeadas pelo PRODES-Cerrado). Cada ponto foi inspecionado visualmente em imagens anuais, provenientes dos satélites Landsat e Resourcesat, por 2 intérpretes. Os pontos com discordância entre estes 2 intérpretes foram inspecionados por uma terceira pessoa.
-                </p>
+                    Foram sorteados 6.187 pontos, como mostra a Tabela 1 seguindo uma amostragem estratificada com alocação proporcional. Neste processo foram avaliadas 4 classes: área antrópica referente ao ano de 2015; desmatamentos detectados em 2016; desmatamentos detectados em 2017, desmatamentos detectados em 2018; e vegetação natural (i.e. pontos sorteados fora das áreas antrópicas mapeadas pelo PRODES-Cerrado). Cada ponto foi inspecionado visualmente em imagens anuais, provenientes dos satélites <i>Landsat</i> e <i>Resourcesat</i>, por 2 intérpretes. Os pontos com discordância entre estes 2 intérpretes foram inspecionados por uma terceira pessoa.                </p>
                 <table class="table w-auto m-auto">
                     <thead>
                     <tr>
@@ -210,7 +212,7 @@
                     Neste processo foram utilizadas as mesmas imagens utilizadas pelo INPE, e para uma melhor contextualização temporal dos pontos avaliados, também foram inspecionadas imagens Landsat para o período 1985-1999, entretanto no processo de validação foi considerado apenas os anos posteriores a 2000.
                 </p>
                 <p  class="mt-2 text-justify lead">
-                    O resultado apontou uma elevada acurácia para todas as classes avaliadas (Figura 36). No que tange à avaliação da classe “Natural”, foi verificado que 8% das áreas não mapeada pelo PRODES-Cerrado encontram-se antropizadas. Considerando a avaliação da área antrópica, até 2015, 5% do total mapeado encontra-se com remanescentes de vegetação nativa. Desta forma, aproximadamente 102.000 km² de vegetação não estão sendo monitorados pelo PRODES-Cerrado. Para os desmatamento correspondentes aos anos de 2016, 2017 e 2018, verificou-se que, respectivamente, 4%, 6% e 6% da área desmatada nesses anos correspondiam à remanescentes de vegetação nativa. Todas estas estimativas consideraram um erro amostral de 3% e um intervalo de confiança de 95%.
+                    O resultado apontou uma elevada acurácia para todas as classes avaliadas (Figura 5). No que tange à avaliação da classe “Natural”, foi verificado que 8% das áreas não mapeada pelo PRODES-Cerrado encontram-se antropizadas. Considerando a avaliação da área antrópica, até 2015, 5% do total mapeado encontra-se com remanescentes de vegetação nativa. Desta forma, aproximadamente 102.000 km² de vegetação não estão sendo monitorados pelo PRODES-Cerrado. Para os desmatamento correspondentes aos anos de 2016, 2017 e 2018, verificou-se que, respectivamente, 4%, 6% e 6% da área desmatada nesses anos correspondiam à remanescentes de vegetação nativa. Todas estas estimativas consideraram um erro amostral de 3% e um intervalo de confiança de 95%.
                 </p>
                 <figure class=" text-center mt-3 mb-3" >
                     <img src="../../../assets/img/projeto/image9.png" class="img-fluid shadow-lg" alt="Acurácia">
@@ -226,7 +228,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p  class="mt-2 text-justify lead">
-                    Até o momento, foram realizadas 4 visitas em campos (Figura 37) com o propósito de avaliar os desmatamentos detectados pelo PRODES-Cerrado em 2016, 2017 e 2018. Nestes campos, foram utilizados formulários eletrônicos, GPS, drones e câmeras fotográficas. Com o propósito de buscar uma maior variabilidade de condições, foram selecionadas regiões com diferentes fitofisionomias, relevos, solos, condições climáticas e elementos socioeconômicos. Posteriormente, houve uma inspeção visual em imagens históricas (2000-2017) das áreas visitadas para checagem se as mesmas já estavam antropizadas ano de detecção.
+                    Até o momento, foram realizadas 4 visitas em campos (Figura 6) com o propósito de avaliar os desmatamentos detectados pelo PRODES-Cerrado em 2016, 2017 e 2018. Nestes campos, foram utilizados formulários eletrônicos, GPS, drones e câmeras fotográficas. Com o propósito de buscar uma maior variabilidade de condições, foram selecionadas regiões com diferentes fitofisionomias, relevos, solos, condições climáticas e elementos socioeconômicos. Posteriormente, houve uma inspeção visual em imagens históricas (2000-2017) das áreas visitadas para checagem se as mesmas já estavam antropizadas ano de detecção.
                 </p>
 
                 <figure class="text-center m-4 ">
@@ -235,7 +237,7 @@
                 </figure>
 
                 <p  class="mt-2 text-justify lead">
-                    De um total de 367‬ áreas visitadas em campo, 361‬ (98,3%) estavam antropizadas. O total de acertos por campo está registrado na Figura 41. Além da validação realizada, os principais aspectos identificados e campo foram: detecções DETER-Cerrado verdadeiras; áreas desmatadas, porém sem uso consolidado e com presença de vegetação secundária; áreas agrícolas abandonadas após o desmatamento; presença de tratores em algumas áreas desmatadas.
+                    De um total de 367‬ áreas visitadas em campo, 361‬ (98,3%) estavam antropizadas. O total de acertos por campo está registrado na Figura 7. Além da validação realizada, os principais aspectos identificados e campo foram: detecções DETER-Cerrado verdadeiras; áreas desmatadas, porém sem uso consolidado e com presença de vegetação secundária; áreas agrícolas abandonadas após o desmatamento; presença de tratores em algumas áreas desmatadas.
                 </p>
 
                 <figure class="text-center m-4 ">
@@ -244,7 +246,7 @@
                 </figure>
 
                 <p  class="mt-2 text-justify lead">
-                    No primeiro campo, que ocorreu entre 27/08 à 02/09 de 2018, foram visitados os estados do Piauí, Maranhão, Tocantins e Bahia. A equipe, formada por 5 pessoas (i.e. 2 representantes do LAPIG e 3 do INPE) percorreu 2.077 km, avaliando um total de 72 polígonos, com 26 com sobrevoos de drone. Neste campo, 97% dos pontos visitados estavam antropizados. Observa-se na Figura 38 um talhão agrícola situado sobre um solo do tipo Latossolo Vermelho-Amarelo, em topo de chapada, e cercada por remanescentes de Cerrado Denso no município de Corrente-PI. Esta área foi detectada pelo PRODES-Cerrado como desmatamento no ano de 2016, ano confirmado por meio da inspeção de imagens de satélite.
+                    No primeiro campo, que ocorreu entre 27/08 à 02/09 de 2018, foram visitados os estados do Piauí, Maranhão, Tocantins e Bahia. A equipe, formada por 5 pessoas (i.e. 2 representantes do LAPIG e 3 do INPE) percorreu 2.077 km, avaliando um total de 72 polígonos, com 26 com sobrevoos de drone. Neste campo, 97% dos pontos visitados estavam antropizados. Observa-se na Figura 8 um talhão agrícola situado sobre um solo do tipo Latossolo Vermelho-Amarelo, em topo de chapada, e cercada por remanescentes de Cerrado Denso no município de Corrente-PI. Esta área foi detectada pelo PRODES-Cerrado como desmatamento no ano de 2016, ano confirmado por meio da inspeção de imagens de satélite.
                 </p>
 
                 <figure class="text-center m-4 ">
@@ -253,7 +255,7 @@
                 </figure>
 
                 <p  class="mt-2 text-justify lead">
-                    No segundo campo, que ocorreu entre 18/03 a 22/03 de 2019, foram visitados os estados de Goiás, Tocantins e Bahia. A equipe, formada por 4 pessoas (i.e. 2 representantes do LAPIG e 2 do INPE) percorreu 1951 km, avaliando um total de 99 polígonos, com 32 com sobrevoos de drone. Neste campo, todos os pontos estavam antropizados. A Figura 39 revela um desmatamento de 8 km² no município de Dianópolis-TO. Apesar do desmatamento ter sido detectado e realizado em 2017, conforme inspeção em imagens de satélite, foram observados tratores e madeiras sendo queimadas, indicando a ocorrência de um processo de supressão da vegetação secundária nesta área.
+                    No segundo campo, que ocorreu entre 18/03 a 22/03 de 2019, foram visitados os estados de Goiás, Tocantins e Bahia. A equipe, formada por 4 pessoas (i.e. 2 representantes do LAPIG e 2 do INPE) percorreu 1951 km, avaliando um total de 99 polígonos, com 32 com sobrevoos de drone. Neste campo, todos os pontos estavam antropizados. A Figura 9 revela um desmatamento de 8 km² no município de Dianópolis-TO. Apesar do desmatamento ter sido detectado e realizado em 2017, conforme inspeção em imagens de satélite, foram observados tratores e madeiras sendo queimadas, indicando a ocorrência de um processo de supressão da vegetação secundária nesta área.
                 </p>
 
                 <figure class="text-center m-4 ">
@@ -262,7 +264,7 @@
                 </figure>
 
                 <p  class="mt-2 text-justify lead">
-                    No terceiro campo, que ocorreu em 13/07 a 19/07 de 2019, foram visitados os estados do Maranhão e Piauí. A equipe formada por 6 pessoas (i.e. 2 representantes do LAPIG e 4 do INPE) percorreu 2181 km, avaliando um total de 144 polígonos, com 38 com sobrevoos de drone. Neste campo, 98% das áreas estavam antropizadas. Observa-se na Figura 40 uma área localizada entre Alexandre Costa-MA e São João do Soter-MA, situada em uma região de ecótono conhecida como Mata de Cocais, e com uma alta incidência de pequenos desmatamentos pequenos (i.e. inferiores à 0,5 km²). Durante o campo realizado constatou-se nesta área uma alta quantidade de fragmentos de vegetação nativa compostos por formações florestais e com predomínio de palmeirais. Apesar do processo de antropização nesta região ser conduzido por pequenos desmatamentos, para extração de lenha e formação de pequenos pastos, também foram visitadas áreas desmatadas com detecções iguais ou superiores à 1 km, com pastagens formadas por B. brizantha e capim Mombaça. Em alguns pastos também foi observada uma grande quantidade de plantas invasoras, como ervas daninhas, além de áreas abandonadas com indícios de regeneração da vegetação nativa.
+                    No terceiro campo, que ocorreu em 13/07 a 19/07 de 2019, foram visitados os estados do Maranhão e Piauí. A equipe formada por 6 pessoas (i.e. 2 representantes do LAPIG e 4 do INPE) percorreu 2181 km, avaliando um total de 144 polígonos, com 38 com sobrevoos de drone. Neste campo, 98% das áreas estavam antropizadas. Observa-se na Figura 10 uma área localizada entre Alexandre Costa-MA e São João do Soter-MA, situada em uma região de ecótono conhecida como Mata de Cocais, e com uma alta incidência de pequenos desmatamentos pequenos (i.e. inferiores à 0,5 km²). Durante o campo realizado constatou-se nesta área uma alta quantidade de fragmentos de vegetação nativa compostos por formações florestais e com predomínio de palmeirais. Apesar do processo de antropização nesta região ser conduzido por pequenos desmatamentos, para extração de lenha e formação de pequenos pastos, também foram visitadas áreas desmatadas com detecções iguais ou superiores à 1 km, com pastagens formadas por B. brizantha e capim Mombaça. Em alguns pastos também foi observada uma grande quantidade de plantas invasoras, como ervas daninhas, além de áreas abandonadas com indícios de regeneração da vegetação nativa.
                 </p>
 
                 <figure class="text-center m-4 ">
@@ -271,7 +273,8 @@
                 </figure>
 
                 <p  class="mt-2 text-justify lead">
-                    No quarto campo, realizado entre os dias 08 e 15 de novembro de 2019, nos Estados do Tocantins e de Goiás, foram visitadas 126 áreas detectadas pelos PRODES (anos de 2016 e 2017) e DETER (ano de 2019). A equipe formada por 08 pessoas (i.e. 02 representantes do LAPIG, 05 do INPE e 01 jornalista vinculada à rede alemã Deutsche Welle) percorreu 1810 km, avaliando um total de 126 polígonos e com 38 sobrevoos de drone. Neste campo, apenas 01 área não se encontrava antropizada.
+                    No quarto campo, realizado entre os dias 08 e 15 de novembro de 2019, nos Estados do Tocantins e de Goiás, foram visitadas 126 áreas detectadas pelos PRODES (anos de 2016 e 2017) e DETER (ano de 2019). A equipe formada por 08 pessoas (i.e. 02 representantes do LAPIG, 05 do INPE e 01 jornalista vinculada à rede alemã Deutsche Welle) percorreu 1810 km, avaliando um total de 126 polígonos e com 38 sobrevoos de drone. Neste campo, apenas 01 área não se encontrava antropizada. Na Figura 11 são apresentadas fotografias e imagens de satélites de um desmatamento detectado em 2018 e devidamente comprovado durante a visita de campo, devido ao período de visita foi possível observar que a área foi desmatada foi destinada para cultivo de arroz.
+
                 </p>
 
                 <figure class="text-center m-4 ">
@@ -288,5 +291,6 @@
             <small>Copyright &copy; Cerrado DPAT</small>
         </div>
     </footer>
+
 </div>
 
