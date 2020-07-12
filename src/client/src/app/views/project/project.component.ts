@@ -7,7 +7,6 @@ import { Component, OnInit, Inject, HostListener } from '@angular/core';
 })
 
 export class ProjectComponent implements OnInit {
-  windowScrolled:boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -16,7 +15,6 @@ export class ProjectComponent implements OnInit {
   @HostListener("click", ["$event"])
   goToSection(id){
     try {
-      event.stopPropagation();
       let el = document.querySelector('#' + id).scrollIntoView({ behavior: 'smooth', block: 'nearest'});
     } catch (e) { }
   }
