@@ -728,16 +728,17 @@ export class MapComponent implements OnInit {
   }
 
   openDialog(): void {
-    window.document.body.style.cursor = 'auto';
-
-    this.dataForDialog.language = this.language;
-    this.dataForDialog.textosDaDialog = this.textOnDialog;
-
-    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: window.innerWidth - 150 + 'px',
-      height: window.innerHeight - 50 + 'px',
-      data: this.dataForDialog,
-    });
+    //  @todo REMOVE
+    // window.document.body.style.cursor = 'auto';
+    //
+    // this.dataForDialog.language = this.language;
+    // this.dataForDialog.textosDaDialog = this.textOnDialog;
+    //
+    // let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    //   width: window.innerWidth - 150 + 'px',
+    //   height: window.innerHeight - 50 + 'px',
+    //   data: this.dataForDialog,
+    // });
   }
 
   private createMap() {
