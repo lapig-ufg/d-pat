@@ -766,110 +766,111 @@ module.exports = function (app) {
           ]
         },
         //  @todo REMOVE
-        // {
-        //   id: "imagens",
-        //   label: languageJson["descriptor"]["imagens"]["label"][language],
-        //   group_expanded: false,
-        //   layers: [{
-        //     id: "satelite",
-        //     label: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["label"][language],
-        //     visible: false,
-        //     selectedType: "landsat",
-        //     types: [{
-        //         value: "landsat",
-        //         Viewvalue: "Landsat",
-        //         order: 10,
-        //         download: [],
-        //         opacity: 1,
-        //         metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'],
-        //         timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-        //         timeSelected: "bi_ce_mosaico_landsat_completo_30_2019_fip",
-        //         timeHandler: "layername",
-        //         times: [{
-        //             value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
-        //             Viewvalue: "2000"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2002_fip",
-        //             Viewvalue: "2002"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2004_fip",
-        //             Viewvalue: "2004"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2006_fip",
-        //             Viewvalue: "2006"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2008_fip",
-        //             Viewvalue: "2008"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2010_fip",
-        //             Viewvalue: "2010"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2012_fip",
-        //             Viewvalue: "2012"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2013_fip",
-        //             Viewvalue: "2013"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2014_fip",
-        //             Viewvalue: "2014"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2015_fip",
-        //             Viewvalue: "2015"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2016_fip",
-        //             Viewvalue: "2016"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2017_fip",
-        //             Viewvalue: "2017"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2018_fip",
-        //             Viewvalue: "2018"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_landsat_completo_30_2019_fip",
-        //             Viewvalue: "2019"
-        //           }
-        //         ]
-        //       },
-        //       {
-        //         value: "sentinel",
-        //         Viewvalue: "Sentinel",
-        //         order: 10,
-        //         download: [],
-        //         opacity: 1,
-        //         metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
-        //         timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-        //         timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
-        //         timeHandler: "layername",
-        //         times: [{
-        //             value: "bi_ce_mosaico_sentinel_10_2016_lapig",
-        //             Viewvalue: "2016"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_sentinel_10_2017_lapig",
-        //             Viewvalue: "2017"
-        //           },
-        //           {
-        //             value: "bi_ce_mosaico_sentinel_10_2018_lapig",
-        //             Viewvalue: "2018"
-        //           }
-        //         ]
-        //       }
-        //     ]
-        //   }]
-        // }
+        {
+          id: "imagens",
+          label: languageJson["descriptor"]["imagens"]["label"][language],
+          group_expanded: false,
+          layers: [{
+            id: "satelite",
+            label: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["label"][language],
+            visible: false,
+            selectedType: "landsat",
+            types: [{
+                value: "landsat",
+                Viewvalue: "Landsat",
+                order: 10,
+                download: [],
+                opacity: 1,
+                metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'],
+                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
+                timeSelected: "bi_ce_mosaico_landsat_completo_30_2019_fip",
+                timeHandler: "layername",
+                times: [{
+                    value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
+                    Viewvalue: "2000"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2002_fip",
+                    Viewvalue: "2002"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2004_fip",
+                    Viewvalue: "2004"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2006_fip",
+                    Viewvalue: "2006"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2008_fip",
+                    Viewvalue: "2008"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2010_fip",
+                    Viewvalue: "2010"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2012_fip",
+                    Viewvalue: "2012"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2013_fip",
+                    Viewvalue: "2013"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2014_fip",
+                    Viewvalue: "2014"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2015_fip",
+                    Viewvalue: "2015"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2016_fip",
+                    Viewvalue: "2016"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2017_fip",
+                    Viewvalue: "2017"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2018_fip",
+                    Viewvalue: "2018"
+                  },
+                  {
+                    value: "bi_ce_mosaico_landsat_completo_30_2019_fip",
+                    Viewvalue: "2019"
+                  }
+                ]
+              },
+              {
+                value: "sentinel",
+                Viewvalue: "Sentinel",
+                order: 10,
+                download: [],
+                opacity: 1,
+                metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
+                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
+                timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
+                timeHandler: "layername",
+                times: [
+                  // {
+                  //   value: "bi_ce_mosaico_sentinel_10_2016_lapig",
+                  //   Viewvalue: "2016"
+                  // },
+                  {
+                    value: "bi_ce_mosaico_sentinel_10_2017_lapig",
+                    Viewvalue: "2017"
+                  },
+                  {
+                    value: "bi_ce_mosaico_sentinel_10_2018_lapig",
+                    Viewvalue: "2018"
+                  }
+                ]
+              }
+            ]
+          }]
+        }
       ],
       basemaps: [{
         id: "basemaps",
