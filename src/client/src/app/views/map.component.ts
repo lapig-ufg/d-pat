@@ -823,7 +823,6 @@ export class MapComponent implements OnInit {
       let isCampo = false;
       let isOficial = false;
       let isMunicipio = false;
-      let isABC = false;
 
 
       if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip' || deter.selectedType === 'bi_ce_deter_desmatamento_100_fip') {
@@ -837,10 +836,6 @@ export class MapComponent implements OnInit {
 
       if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
         isMunicipio = true;
-      }
-
-      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
-        isABC = true;
       }
 
       if (isMunicipio) {
@@ -968,14 +963,6 @@ export class MapComponent implements OnInit {
           }
         }
 
-      }
-
-      if(isABC)
-      {
-        coordinate = this.map.getEventCoordinate(evt.originalEvent);
-        let viewResolution = this.map.getView().getResolution();
-
-        this.utfgridabc.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
       }
     }
   }
