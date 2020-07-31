@@ -443,7 +443,7 @@ export class MapComponent implements OnInit {
 
     });
 
-    let textlangurl = '/service/projeto/textreport?lang=' + this.language;
+    let textlangurl = '/service/report/textreport?lang=' + this.language;
 
     this.http.get(textlangurl).subscribe(
       result => {
@@ -2857,7 +2857,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       token: new Date().getTime(),
       params:this.data
     }
-    this.http.post('/service/projeto/store',JSON.stringify(dados, null, 2), this.httpOptions).subscribe(result => {
+    this.http.post('/service/report/store',JSON.stringify(dados, null, 2), this.httpOptions).subscribe(result => {
       if(Array.isArray(result) ){
         // @ts-ignore
         dd.content.push( { text:this.textOnDialog.information_tab.info_qrcode, alignment: 'center', style: 'textFooter', margin: [190, 80, 190, 10], pageBreak:false});
@@ -2978,7 +2978,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    let fieldPhotosUrl = '/service/projeto/field/' + this.getServiceParams();
+    let fieldPhotosUrl = '/service/report/field/' + this.getServiceParams();
 
     this.http.get(fieldPhotosUrl).subscribe(
       result => {
@@ -3117,138 +3117,140 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
           for (let foto = 0; foto < element.fotos_camera.length; foto++) {
             this.galleryCamera.push({
-              small: '/service/projeto/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
-              medium: '/service/projeto/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
-              big: '/service/projeto/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              small: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              medium: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
+              big: '/service/report/field/fotos_camera/' + element.campo_id + '/' + element.fotos_camera[foto],
             });
           }
 
 
           for (let foto = 0; foto < element.fotos_drone.length; foto++) {
             this.galleryDrones.push({
-              small: '/service/projeto/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
-              medium: '/service/projeto/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
-              big: '/service/projeto/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto]
+              small: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
+              medium: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
+              big: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto]
             });
           }
 
           for (let video = 0; video < element.videos_drone.length; video++) {
             this.galleryVideos.push({
-              small: '/service/projeto/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
-              medium: '/service/projeto/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
-              big: '/service/projeto/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video]
+              small: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
+              medium: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video],
+              big: '/service/report/field/videos_drone/' + element.campo_id + '/' + element.videos_drone[video]
             });
           }
         }
       }
     );
 
-    let ndvi_time_series = '/service/deforestation/modis?table=' + this.data.origin_table + '&gid=' + this.data.gid;
-    this.http.get(ndvi_time_series).subscribe(
-      result => {
-        this.tmpModis = result;
-      },
-      err => {
-        console.log('Error: ', err);
-      },
-      () => {
 
-        this.dataTimeseriesModis = {
-          labels: this.tmpModis.map(element => element.date),
-          datasets: [
-            // {
-            //   label: 'NDVI',
-            //   data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
-            //   fill: false,
-            //   borderColor: '#ff0003',
-            //   backgroundColor: '#ff0003',
-            //   pointRadius: 1,
-            //   pointStyle: 'rect',
-            //   pointHoverRadius: 3
-            // },
-            // {
-            //   label: 'NDVI-Wiener',
-            //   data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
-            //   fill: false,
-            //   borderColor: '#208f0a',
-            //   backgroundColor: '#208f0a',
-            //   hidden: true,
-            //   pointRadius: 1,
-            //   pointStyle: 'rect',
-            //   pointHoverRadius: 3
-            // },
-            {
-              label: 'NDVI',
-              data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),
-              fill: false,
-              borderColor: '#0007db',
-              backgroundColor: '#0007db',
-              hidden: false,
-              pointRadius: 1,
-              pointHoverRadius: 3,
-              pointStyle: 'rect'
-            }
-          ],
-          type: 'line'
+     //  @todo REMOVE
+    // let ndvi_time_series = '/service/deforestation/modis?table=' + this.data.origin_table + '&gid=' + this.data.gid;
+    // this.http.get(ndvi_time_series).subscribe(
+    //   result => {
+    //     this.tmpModis = result;
+    //   },
+    //   err => {
+    //     console.log('Error: ', err);
+    //   },
+    //   () => {
 
-        };
+    //     this.dataTimeseriesModis = {
+    //       labels: this.tmpModis.map(element => element.date),
+    //       datasets: [
+    //         // {
+    //         //   label: 'NDVI',
+    //         //   data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
+    //         //   fill: false,
+    //         //   borderColor: '#ff0003',
+    //         //   backgroundColor: '#ff0003',
+    //         //   pointRadius: 1,
+    //         //   pointStyle: 'rect',
+    //         //   pointHoverRadius: 3
+    //         // },
+    //         // {
+    //         //   label: 'NDVI-Wiener',
+    //         //   data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
+    //         //   fill: false,
+    //         //   borderColor: '#208f0a',
+    //         //   backgroundColor: '#208f0a',
+    //         //   hidden: true,
+    //         //   pointRadius: 1,
+    //         //   pointStyle: 'rect',
+    //         //   pointHoverRadius: 3
+    //         // },
+    //         {
+    //           label: 'NDVI',
+    //           data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),
+    //           fill: false,
+    //           borderColor: '#0007db',
+    //           backgroundColor: '#0007db',
+    //           hidden: false,
+    //           pointRadius: 1,
+    //           pointHoverRadius: 3,
+    //           pointStyle: 'rect'
+    //         }
+    //       ],
+    //       type: 'line'
 
-        // graphic.options.legend.onHover = function (event) {
-        //   event.target.style.cursor = 'pointer';
-        //   graphic.options.legend.labels.fontColor = "#0335fc";
-        // }
+    //     };
 
-        // graphic.options.legend.onLeave = function (event) {
+    //     // graphic.options.legend.onHover = function (event) {
+    //     //   event.target.style.cursor = 'pointer';
+    //     //   graphic.options.legend.labels.fontColor = "#0335fc";
+    //     // }
 
-        //   event.target.style.cursor = 'default';
-        //   graphic.options.legend.labels.fontColor = "#fa1d00";
-        // }
+    //     // graphic.options.legend.onLeave = function (event) {
 
-        this.optionsTimeSeries = {
-          tooltips: {
-            mode: 'index',
-            intersect: true,
-          },
-          maintainAspectRatio: false,
-          resposive: true,
-          radius: 1,
-          scales: {
-            yAxes: [{
-              ticks: {
-                autoSkip: true,
-                stepSize: 0.2
-              }
-            }],
-            xAxes: [{
-              type: 'time',
-              ticks: {
-                autoSkip: true
-              }
-            }]
-          },
-          title: {
-            display: false,
-            fontSize: 16
-          },
-          legend: {
-            labels: {
-              usePointStyle: true,
-              fontSize: 16
-            },
-            onHover(event) {
-              event.target.style.cursor = 'pointer';
-            },
-            onLeave(event) {
-              event.target.style.cursor = 'default';
-            },
-            position: 'bottom'
-          }
-        };
+    //     //   event.target.style.cursor = 'default';
+    //     //   graphic.options.legend.labels.fontColor = "#fa1d00";
+    //     // }
+
+    //     this.optionsTimeSeries = {
+    //       tooltips: {
+    //         mode: 'index',
+    //         intersect: true,
+    //       },
+    //       maintainAspectRatio: false,
+    //       resposive: true,
+    //       radius: 1,
+    //       scales: {
+    //         yAxes: [{
+    //           ticks: {
+    //             autoSkip: true,
+    //             stepSize: 0.2
+    //           }
+    //         }],
+    //         xAxes: [{
+    //           type: 'time',
+    //           ticks: {
+    //             autoSkip: true
+    //           }
+    //         }]
+    //       },
+    //       title: {
+    //         display: false,
+    //         fontSize: 16
+    //       },
+    //       legend: {
+    //         labels: {
+    //           usePointStyle: true,
+    //           fontSize: 16
+    //         },
+    //         onHover(event) {
+    //           event.target.style.cursor = 'pointer';
+    //         },
+    //         onLeave(event) {
+    //           event.target.style.cursor = 'default';
+    //         },
+    //         position: 'bottom'
+    //       }
+    //     };
 
 
 
-      }
-    );
+    //   }
+    // );
   }
 
   ngOnDestroy() {

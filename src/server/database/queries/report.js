@@ -8,10 +8,12 @@ module.exports = function(app) {
 		let origin = params['origin']
 		let gid = params['gid']
 
+		console.log(origin, gid)
+
 		return [
 			{
 				id: 'pontos_campo',
-				sql:"SELECT ST_AsGeoJSON(geom) geojson, id AS campo_id, data, cobertura, obs, " + origin +"_id as desmat_id, latitude, longitude, campo FROM pontos_campo where " + origin +"_id = " + gid
+				sql: "SELECT ST_AsGeoJSON(geom) geojson, id AS campo_id, data, cobertura, obs, " + origin +"_id as desmat_id, latitude, longitude, campo FROM pontos_campo where " + origin +"_id = " + gid
 			},
 			{
 				id: 'desmatamento',

@@ -81,7 +81,10 @@ module.exports = function (app) {
     var language = request.param('lang')
 
     var resultCampo = [];
+    console.log(origin_table, gid)
     var queryResultCampo = request.queryResult["pontos_campo"];
+    console.log(queryResultCampo)
+
 
     queryResultCampo.forEach(function (row) {
       var campoId = row["campo_id"];
@@ -411,8 +414,6 @@ module.exports = function (app) {
           legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
 
         };
-
-        console.log("bbbbbbbbbbbbb achouuuuuu")
 
         metaDataCar = {
             prop_desmat: prop_desmat,
