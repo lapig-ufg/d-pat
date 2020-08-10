@@ -2566,10 +2566,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       return canvas.toDataURL('image/png');
     }
 
-    // @ts-ignore
-    dd.content.push({text:this.textOnDialog.historico_amostral_landsat.series_modis_title, style: 'subheader', margin:[ 0, 10, 0, 0]})
-    // @ts-ignore
-    dd.content.push({image: await canvasToBase64Modis(), width: 520, alignment: 'center', margin:[ 2, 10, 2, 0]})
+    // // @ts-ignore
+    // dd.content.push({text:this.textOnDialog.historico_amostral_landsat.series_modis_title, style: 'subheader', margin:[ 0, 10, 0, 0]})
+    // // @ts-ignore
+    // dd.content.push({image: await canvasToBase64Modis(), width: 520, alignment: 'center', margin:[ 2, 10, 2, 0]})
 
     if(this.dataCampo.length > 0){
       // @ts-ignore
