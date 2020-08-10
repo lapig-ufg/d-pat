@@ -843,7 +843,7 @@ module.exports = function (app) {
                   }
                 ]
               },
-              // {
+              {
               //   value: "sentinel",
               //   Viewvalue: "Sentinel",
               //   order: 10,
@@ -854,10 +854,10 @@ module.exports = function (app) {
               //   timeSelected: "bi_ce_mosaico_sentinel_10_2018_lapig",
               //   timeHandler: "layername",
               //   times: [
-              //     // {
-              //     //   value: "bi_ce_mosaico_sentinel_10_2016_lapig",
-              //     //   Viewvalue: "2016"
-              //     // },
+              //     {
+              //       value: "bi_ce_mosaico_sentinel_10_2016_lapig",
+              //       Viewvalue: "2016"
+              //     },
               //     {
               //       value: "bi_ce_mosaico_sentinel_10_2017_lapig",
               //       Viewvalue: "2017"
@@ -865,6 +865,10 @@ module.exports = function (app) {
               //     {
               //       value: "bi_ce_mosaico_sentinel_10_2018_lapig",
               //       Viewvalue: "2018"
+              //     },
+              //     {
+              //       value: "bi_ce_mosaico_sentinel_10_2019_lapig",
+              //       Viewvalue: "2019"
               //     }
               //   ]
               // }
