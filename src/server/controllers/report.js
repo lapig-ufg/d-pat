@@ -40,8 +40,8 @@ module.exports = function (app) {
       which = [];
 
     arr.forEach(ea => {
-      if(ea.includes('20')){
-        ea='antropico'
+      if (ea.includes('20')) {
+        ea = 'antropico'
       }
 
       if (!obj[ea]) {
@@ -71,9 +71,6 @@ module.exports = function (app) {
     response.sendFile(filepath);
   };
 
-
-
-
   Controller.field = function (request, response) {
     var gid = request.param("gid");
     var origin_table = request.param("origin");
@@ -81,9 +78,8 @@ module.exports = function (app) {
     var language = request.param('lang')
 
     var resultCampo = [];
-    console.log(origin_table, gid)
     var queryResultCampo = request.queryResult["pontos_campo"];
-    console.log(queryResultCampo)
+    // console.log(queryResultCampo)
 
 
     queryResultCampo.forEach(function (row) {
@@ -105,7 +101,6 @@ module.exports = function (app) {
         campo: row["campo"]
       });
     });
-
 
     var queryResultDesmat = request.queryResult["desmatamento"];
 
@@ -134,7 +129,7 @@ module.exports = function (app) {
         lon: row["lon"],
         lat: row["lat"],
         classes2000_2018: [row["d_2000"], row["d_2001"], row["d_2002"], row["d_2003"], row["d_2004"], row["d_2005"], row["d_2006"], row["d_2007"], row["d_2008"], row["d_2009"],
-          row["d_2010"], row["d_2011"], row["d_2012"], row["d_2013"], row["d_2014"], row["d_2015"], row["d_2016"], row["d_2017"], row["d_2018"]
+        row["d_2010"], row["d_2011"], row["d_2012"], row["d_2013"], row["d_2014"], row["d_2015"], row["d_2016"], row["d_2017"], row["d_2018"]
         ],
         classe: row["classe"]
       });
@@ -151,7 +146,7 @@ module.exports = function (app) {
       var mostFreq = Internal.mostFreqString(tmpMostFreq);
 
 
-      for(let index = 0; index < mostFreq.length; index++){
+      for (let index = 0; index < mostFreq.length; index++) {
         if (mostFreq[index].toUpperCase() === "VEG_NAT") {
           classeFinalAmostral += languageJson["dialog_relatorio"]["historico_amostral_landsat"]["amostral_class_vegetation"][language]
         } else if (mostFreq[index].toUpperCase() === "AGUA") {
@@ -161,7 +156,7 @@ module.exports = function (app) {
         }
       }
 
-      classeFinalAmostral.slice(0, -1).replace(" ","/")
+      classeFinalAmostral.slice(0, -1).replace(" ", "/")
       existAmostral = true;
     }
 
@@ -379,7 +374,7 @@ module.exports = function (app) {
         .split(" ")
         .join(",");
       var prop_desmat = parseFloat(row["prop_desm"]);
-    //   var cod_car = row["codcar"];
+      //   var cod_car = row["codcar"];
       var tec_impl = row["tec_impl"];
       var chave_id = row["chave_id"];
       var area_propriedade = parseFloat(row["area_propriedade"]);
@@ -399,14 +394,14 @@ module.exports = function (app) {
         urlProp = {
           show: true,
           thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          ano + "_fip," + "fip_abc_cerrado_area_explorada," + "fip_abc_cerrado_perimetro_prop," + "fip_abc_cerrado_area_tecnologia," +
-             "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + boxCar + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=chave_id='" + chave_id+"'",
+            ano + "_fip," + "fip_abc_cerrado_area_explorada," + "fip_abc_cerrado_perimetro_prop," + "fip_abc_cerrado_area_tecnologia," +
+            "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + boxCar + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=chave_id='" + chave_id + "'",
 
           src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-          ano + "_fip," + "fip_abc_cerrado_area_explorada," + "fip_abc_cerrado_perimetro_prop," +  "fip_abc_cerrado_area_tecnologia," +
-             "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + boxCar + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=chave_id='" + chave_id+"'",
+            ano + "_fip," + "fip_abc_cerrado_area_explorada," + "fip_abc_cerrado_perimetro_prop," + "fip_abc_cerrado_area_tecnologia," +
+            "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + boxCar + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=chave_id='" + chave_id + "'",
 
           legendProp: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=fip_abc_cerrado_perimetro_prop&format=image/png",
           legendTec: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=fip_abc_cerrado_area_tecnologia&format=image/png",
@@ -416,9 +411,9 @@ module.exports = function (app) {
         };
 
         metaDataCar = {
-            prop_desmat: prop_desmat,
-            tec_impl: tec_impl,
-        //   cod_car: cod_car,
+          prop_desmat: prop_desmat,
+          tec_impl: tec_impl,
+          //   cod_car: cod_car,
           area_desmatada: area_desmatada,
           area_propriedade: area_propriedade,
           area_tecnologia: area_tecnologia,
@@ -437,13 +432,155 @@ module.exports = function (app) {
 
     });
 
+    var queryEspeciais = request.queryResult['areas_especiais'];
+    var vetEspeciais = []
+
+    queryEspeciais.forEach(function (row) {
+
+      let dataEspeciais = row;
+
+      dataEspeciais.bbox_ti = dataEspeciais["bbox_ti"].replace("BOX(", "").replace(")", "").split(" ").join(",");
+      dataEspeciais.bbox_q = dataEspeciais["bbox_q"].replace("BOX(", "").replace(")", "").split(" ").join(",");
+      dataEspeciais.bbox_ucpi = dataEspeciais["bbox_ucpi"].replace("BOX(", "").replace(")", "").split(" ").join(",");
+      dataEspeciais.bbox_ucus = dataEspeciais["bbox_ucus"].replace("BOX(", "").replace(")", "").split(" ").join(",");
+      // dataEspeciais.bbox_ap = dataEspeciais["bbox_ap"].replace("BOX(", "").replace(")", "").split(" ").join(",");
+
+      let urlTI = {};
+      let urlQ = {};
+      let urlUCPI = {};
+      let urlUCUS = {};
+      let urlAP = {};
+
+      if (dataEspeciais.bbox_ti == undefined) {
+        urlTI = {
+          show: false
+        };
+      } else {
+        urlTI = {
+          show: (dataEspeciais.ti_dist <= 20) ? true : false,
+          thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "terra_indigena_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ti + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ti_gid,
+
+          src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "terra_indigena_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ti + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ti_gid,
+
+          legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=terra_indigena_cerrado&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          ti_nom: dataEspeciais.ti_nom,
+          ti_dist: parseFloat(dataEspeciais.ti_dist).toFixed(2)
+        };
+      }
+
+      if (dataEspeciais.bbox_q == undefined) {
+        urlQ = {
+          show: false
+        };
+      } else {
+        urlQ = {
+          show: (dataEspeciais.q_dist <= 20) ? true : false,
+          thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "areas_quilombola_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_q + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.q_gid,
+
+          src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "areas_quilombola_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_q + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.q_gid,
+
+          legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=areas_quilombola_cerrado&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          q_nom: dataEspeciais.q_nom,
+          q_dist: parseFloat(dataEspeciais.q_dist).toFixed(2)
+        };
+      }
+
+      if (dataEspeciais.bbox_ucpi == undefined) {
+        urlUCPI = {
+          show: false
+        };
+      } else {
+        urlUCPI = {
+          show: (dataEspeciais.ucpi_dist <= 20) ? true : false,
+          thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "ucs_protecao_integral_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucpi + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucpi_gid,
+
+          src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "ucs_protecao_integral_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucpi + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucpi_gid,
+
+          legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=ucs_protecao_integral_cerrado&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          ucpi_nom: dataEspeciais.ucpi_nom,
+          ucpi_dist: parseFloat(dataEspeciais.ucpi_dist).toFixed(2)
+        };
+      }
+
+      if (dataEspeciais.bbox_ucus == undefined) {
+        urlUCUS = {
+          show: false
+        };
+      } else {
+        urlUCUS = {
+          show: (dataEspeciais.ucus_dist <= 20) ? true : false,
+          thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "ucs_uso_sustentavel_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucus + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucus_gid,
+
+          src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+            year + "_fip," + "ucs_uso_sustentavel_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucus + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucus_gid,
+
+          legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=ucs_uso_sustentavel_cerrado&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          ucus_nom: dataEspeciais.ucus_nom,
+          ucus_dist: parseFloat(dataEspeciais.ucus_dist).toFixed(2)
+        };
+      }
+
+      // if (dataEspeciais.bbox_ap == undefined) {
+      //   urlAP = {
+      //     show: false
+      //   };
+      // } else {
+      //   urlAP = {
+      //     // show: (dataEspeciais.ap_dist <= 20) ? true : false,
+      //     show: false,
+      //     thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+      //       year + "_fip," + "areas_prioritarias_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ap + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+      //       sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ap_gid,
+
+      //     src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+      //       year + "_fip," + "areas_prioritarias_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ap + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+      //       sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ap_gid,
+
+      //     legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=areas_prioritarias_cerrado&format=image/png",
+      //     legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+      //     ap_nom: dataEspeciais.ap_nom,
+      //     ap_dist: parseFloat(dataEspeciais.ap_dist).toFixed(2)
+      //   };
+      // }
+
+      var resultEspecial = {
+        ti: urlTI,
+        ucpi: urlUCPI,
+        ucus: urlUCUS,
+        // ap: urlAP,
+        q: urlQ
+      };
+
+      vetEspeciais.push(resultEspecial);
+
+    });
 
     response.send({
       info: infoDesmat,
       ponto_campo: resultCampo,
       images: imagesDesmat,
       car: vetCar,
-      ABC: vetABC
+      ABC: vetABC,
+      especial: vetEspeciais[0]
     });
     response.end();
   };

@@ -894,6 +894,20 @@
 						}
 					}
 				},
+				"areas_prioritarias": {
+					"label": {
+						"pt-br": "Áreas Prioritárias",
+						"en-us": "Priority areas"
+					},
+					"types": {
+						"areas_prioritarias_cerrado": {
+							"view_value": {
+								"pt-br": "Áreas",
+								"en-us": "Areas"
+							}
+						}
+					}
+				},
 				"ucs": {
 					"label": {
 						"pt-br": "Unidades de Conservação",
@@ -909,7 +923,7 @@
 						"ucs_protecao_integral_cerrado": {
 							"view_value": {
 								"pt-br": "Proteção Integral",
-								"en-us": "Sustainable Use"
+								"en-us": "Comprehensive Protection"
 							}
 						}
 					}
@@ -3760,6 +3774,40 @@
 			"type_suscept_smaller": {
 				"pt-br": "inferior",
 				"en-us": "smaller"
+			}
+		},
+		"especial_area":{
+			"title_tab": {
+				"pt-br": "Áreas Especiais",
+				"en-us": "Special Areas"
+			},
+			"titleTI": {
+				"pt-br": "Terras Indígenas",
+				"en-us": "Indigenous Land"
+			},
+			"titleQ": {
+				"pt-br": "Áreas Quilombola",
+				"en-us": "Quilombola Lands"
+			},
+			"titleAP": {
+				"pt-br": "Áreas Prioritárias",
+				"en-us": "Priority Areas"
+			},
+			"titleUCPI": {
+				"pt-br": "Unidades de Conservação para Proteção Integral",
+				"en-us": "Conservation Units for Integral Protection"
+			},
+			"titleUCUS": {
+				"pt-br": "Unidades de Conservação para Uso Sustentável",
+				"en-us": "Conservation Units for Sustainable Use"
+			},
+			"distancia": {
+				"pt-br": "Distância do Desmatamento: ",
+				"en-us": "Deforestation distance: "
+			},
+			"meiodistancia": {
+				"pt-br": "está a ? km deste desmatamento.",
+				"en-us": "is ? from this deforestation. "
 			}
 		}
 	},
