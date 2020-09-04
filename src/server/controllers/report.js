@@ -459,15 +459,15 @@ module.exports = function (app) {
         urlTI = {
           show: (dataEspeciais.ti_dist <= 20) ? true : false,
           thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "terra_indigena_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ti + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "terra_indigena_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ti + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ti_gid,
 
           src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "terra_indigena_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ti + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "terra_indigena_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ti + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ti_gid,
 
           legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=terra_indigena_cerrado&format=image/png",
-          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior&format=image/png",
           ti_nom: dataEspeciais.ti_nom,
           ti_dist: parseFloat(dataEspeciais.ti_dist).toFixed(2)
         };
@@ -481,15 +481,15 @@ module.exports = function (app) {
         urlQ = {
           show: (dataEspeciais.q_dist <= 20) ? true : false,
           thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "areas_quilombola_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_q + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "areas_quilombola_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_q + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.q_gid,
 
           src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "areas_quilombola_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_q + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "areas_quilombola_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_q + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.q_gid,
 
           legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=areas_quilombola_cerrado&format=image/png",
-          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior&format=image/png",
           q_nom: dataEspeciais.q_nom,
           q_dist: parseFloat(dataEspeciais.q_dist).toFixed(2)
         };
@@ -503,15 +503,15 @@ module.exports = function (app) {
         urlUCPI = {
           show: (dataEspeciais.ucpi_dist <= 20) ? true : false,
           thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "ucs_protecao_integral_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucpi + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "ucs_protecao_integral_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucpi + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucpi_gid,
 
           src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "ucs_protecao_integral_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucpi + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "ucs_protecao_integral_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucpi + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucpi_gid,
 
           legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=ucs_protecao_integral_cerrado&format=image/png",
-          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior&format=image/png",
           ucpi_nom: dataEspeciais.ucpi_nom,
           ucpi_dist: parseFloat(dataEspeciais.ucpi_dist).toFixed(2)
         };
@@ -525,15 +525,15 @@ module.exports = function (app) {
         urlUCUS = {
           show: (dataEspeciais.ucus_dist <= 20) ? true : false,
           thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "ucs_uso_sustentavel_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucus + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "ucs_uso_sustentavel_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucus + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucus_gid,
 
           src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-            year + "_fip," + "ucs_uso_sustentavel_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucus + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+            year + "_fip," + "ucs_uso_sustentavel_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ucus + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
             sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ucus_gid,
 
           legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=ucs_uso_sustentavel_cerrado&format=image/png",
-          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+          legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior&format=image/png",
           ucus_nom: dataEspeciais.ucus_nom,
           ucus_dist: parseFloat(dataEspeciais.ucus_dist).toFixed(2)
         };
@@ -548,15 +548,15 @@ module.exports = function (app) {
       //     // show: (dataEspeciais.ap_dist <= 20) ? true : false,
       //     show: false,
       //     thumb: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-      //       year + "_fip," + "areas_prioritarias_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ap + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+      //       year + "_fip," + "areas_prioritarias_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ap + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
       //       sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ap_gid,
 
       //     src: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-      //       year + "_fip," + "areas_prioritarias_cerrado," + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ap + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+      //       year + "_fip," + "areas_prioritarias_cerrado," + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior" + "&bbox=" + dataEspeciais.bbox_ap + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
       //       sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=gid=" + gid + "&MSFILTERCAR=gid=" + dataEspeciais.ap_gid,
 
       //     legendEspecial: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=areas_prioritarias_cerrado&format=image/png",
-      //     legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=bi_ce_prodes_desmatamento_100_fip_realce_maior&format=image/png",
+      // legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_" + origin_table + "_desmatamento_100_fip_realce_maior&format=image/png",
       //     ap_nom: dataEspeciais.ap_nom,
       //     ap_dist: parseFloat(dataEspeciais.ap_dist).toFixed(2)
       //   };

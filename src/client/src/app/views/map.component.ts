@@ -3044,36 +3044,45 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
 
-        this.vetEspecial.push({
-          src: this.dataEspecial.ti.src,
-          thumb: this.dataEspecial.ti.thumb,
-          caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
-        });
+        if (this.dataEspecial.ti.show) {
+          this.vetEspecial.push({
+            src: this.dataEspecial.ti.src,
+            thumb: this.dataEspecial.ti.thumb,
+            caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
+          });
+        }
 
-        this.vetEspecial.push({
-          src: this.dataEspecial.q.src,
-          thumb: this.dataEspecial.q.thumb,
-          caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
-        });
+        if (this.dataEspecial.q.show) {
+          this.vetEspecial.push({
+            src: this.dataEspecial.q.src,
+            thumb: this.dataEspecial.q.thumb,
+            caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
+          });
+        }
 
+        // if (this.dataEspecial.ap.show) {
         // this.vetEspecial.push({
         //   src: this.dataEspecial.ap.src,
         //   thumb: this.dataEspecial.ap.thumb,
         //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
         // });
+        // }
 
-        this.vetEspecial.push({
-          src: this.dataEspecial.ucpi.src,
-          thumb: this.dataEspecial.ucpi.thumb,
-          caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
-        });
+        if (this.dataEspecial.ucpi.show) {
+          this.vetEspecial.push({
+            src: this.dataEspecial.ucpi.src,
+            thumb: this.dataEspecial.ucpi.thumb,
+            caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
+          });
+        }
 
-        this.vetEspecial.push({
-          src: this.dataEspecial.ucus.src,
-          thumb: this.dataEspecial.ucus.thumb,
-          caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
-        });
-
+        if (this.dataEspecial.ucus.show) {
+          this.vetEspecial.push({
+            src: this.dataEspecial.ucus.src,
+            thumb: this.dataEspecial.ucus.thumb,
+            caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
+          });
+        }
 
         let sent = {
           src: result['images'].urlSentinel.src,
