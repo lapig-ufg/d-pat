@@ -1855,7 +1855,7 @@ export class MapComponent implements OnInit {
     let paramsReport = null;
     let token = params.params.token;
 
-    let dados = await this.http.get('http://covid.bio.br/' + token).toPromise();
+    let dados = await this.http.get('/service/report/reportByToken/' + token).toPromise();
 
     if (Array.isArray(dados)) {
       paramsReport = JSON.parse(atob(dados[0].params))
