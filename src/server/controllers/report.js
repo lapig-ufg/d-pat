@@ -290,7 +290,11 @@ module.exports = function (app) {
       classefip: classefip
     };
 
-    var queryCar = request.queryResult["car"];
+    var qc = request.queryResult["car"];
+
+    let stringified = qc.map(i => JSON.stringify(i));
+    var queryCar = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
+      .map(j => JSON.parse(j))
 
     var vetCar = [];
     queryCar.forEach(function (row) {
@@ -630,6 +634,7 @@ module.exports = function (app) {
     response.send(report);
     response.end()
   };
+
 
   return Controller;
 };

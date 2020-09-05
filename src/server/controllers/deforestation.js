@@ -2,12 +2,85 @@ var fs = require('fs');
 const req = require('request');
 var languageJson = require('../assets/lang/language.json');
 
+var ChildProcess = require('child_process')
+	, async = require('async')
+	, unidecode = require('unidecode')
+	, csvWriter = require('csv-write-stream');
+
 module.exports = function (app) {
 
 	const config = app.config;
 
 	var Internal = {}
 	var Controller = {}
+
+	Internal.getCircleCoords = function (longitude, latitude, radius) {
+		var lon = 0;
+		var lat = 0;
+		var numPoints = 20;
+		var theta = 350.00 / numPoints;
+
+		//Considera a terra uma esfera perfeita
+		var radiusDegrees = (0.00001 * radius) / 1.1132;
+		var coords = [];
+		for (var i = 0; i < numPoints; i++) {
+
+			// calc x/y
+			lon = radiusDegrees * Math.cos(2 * Math.PI * i / numPoints + theta) + parseFloat(longitude);
+			lat = radiusDegrees * Math.sin(2 * Math.PI * i / numPoints + theta) + parseFloat(latitude);
+
+			coords[i] = [lon, lat];
+		}
+
+		return coords;
+	}
+
+	Internal.createGeoJson = function (longitude, latitude, radius) {
+		var geoJsonGeometry = "{";
+		if (radius != undefined && radius > 0) {
+			var coords = Internal.getCircleCoords(longitude, latitude, radius);
+
+			geoJsonGeometry += '"type": "Polygon",';
+			geoJsonGeometry += '"coordinates": [[';
+			geoJsonGeometry += '[' + coords.join('],[') + ']';
+			geoJsonGeometry += ',[' + coords[0] + ']'
+			geoJsonGeometry += ']';
+		} else {
+			geoJsonGeometry += '"type": "Point",';
+			geoJsonGeometry += '"coordinates": [';
+			geoJsonGeometry += longitude + ',' + latitude;
+		}
+
+		geoJsonGeometry += ']}';
+
+		return geoJsonGeometry;
+	}
+
+	Internal.requestTimeSeries = function (id, longitude, latitude, mode, radius, callback) {
+		var geoJsonGeometry = Internal.createGeoJson(longitude, latitude, radius);
+
+		var pythonEnv = "export PYTHON_ENV=" + process.env.NODE_ENV;
+
+		var params = "TS " + id + " " + mode + " '" + geoJsonGeometry + "'";
+		var cmd = pythonEnv + ";python " + "'" + config.pathTimeSeries + "'" + " " + params;
+
+		console.log(cmd)
+
+		ChildProcess.exec(cmd, { maxBuffer: 1024 * 5000 }, function (error, stdout, stderr) {
+
+			if (stderr) {
+				console.log(stderr)
+			}
+
+			stdout = stdout.replace(/\'/g, '"');
+
+			console.log(stdout);
+
+			var result = JSON.parse(stdout);
+
+			callback(result);
+		});
+	}
 
 	Controller.periods = function (request, response) {
 
@@ -258,15 +331,15 @@ module.exports = function (app) {
 
 		req(
 			config["ows_host"] + '/ows?layers=' + layername + '&MSFILTER=' + filter + '&mode=tile&tile=' + tile + '&tilemode=gmap&map.imagetype=utfgrid', {
-				json: true
-			}, (err, res, body) => {
-				if (err) {
-					return console.log(err);
-				}
+			json: true
+		}, (err, res, body) => {
+			if (err) {
+				return console.log(err);
+			}
 
-				response.send(body)
-				response.end();
-			});
+			response.send(body)
+			response.end();
+		});
 	}
 
 	Controller.illegal = function (request, response) {
@@ -314,38 +387,56 @@ module.exports = function (app) {
 
 	}
 
-	Controller.ndvi_timeseries = function (request, response) {
+	// Controller.ndvi_timeseries = function (request, response) {
 
-		var queryResultT = request.queryResult;
-		let long, lat
-		queryResultT.forEach(function (row) {
-			long = Number(row['long'])
-			lat = Number(row['lat'])
+	// 	var queryResultT = request.queryResult;
+	// 	let long, lat
+	// 	queryResultT.forEach(function (row) {
+	// 		long = Number(row['long'])
+	// 		lat = Number(row['lat'])
+	// 	})
+
+	// 	let returnObject = [];
+
+	// 	let q = config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series";
+	// 	req(
+	// 		q, {
+	// 		json: true
+	// 	}, (err, res, body) => {
+	// 		if (err) {
+	// 			return console.log(err);
+	// 		}
+
+	// 		for (let index = 0; index < body.values.length; index++) {
+	// 			returnObject.push({
+	// 				date: body.values[index][0],
+	// 				ndvi_original: body.values[index][1],
+	// 				ndvi_wiener: body.values[index][2],
+	// 				ndvi_golay: body.values[index][3]
+	// 			})
+	// 		}
+	// 		response.send(returnObject)
+	// 		response.end();
+	// 	});
+	// }
+
+
+
+	Controller.ndvi_data = function (request, response) {
+
+		var id = request.param('id');
+		var latitude = request.param('latitude');
+		var longitude = request.param('longitude');
+		// var mode = request.param('mode');
+		var mode = "series";
+		var radius = request.param('radius');
+
+		Internal.requestTimeSeries(id, longitude, latitude, mode, radius, function (result) {
+			response.send(result);
+			response.end();
 		})
+	};
 
-		let returnObject = [];
-
-		let q = config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series";
-		req(
-			q, {
-				json: true
-			}, (err, res, body) => {
-				if (err) {
-					return console.log(err);
-				}
-
-				for (let index = 0; index < body.values.length; index++) {
-					returnObject.push({
-						date: body.values[index][0],
-						ndvi_original: body.values[index][1],
-						ndvi_wiener: body.values[index][2],
-						ndvi_golay: body.values[index][3]
-					})
-				}
-				response.send(returnObject)
-				response.end();
-			});
-	}
 
 	Controller.indicators = function (request, response) {
 
@@ -497,21 +588,18 @@ module.exports = function (app) {
 
 			chart['indicators'] = request.queryResult[chart.id]
 			chart['show'] = false
-			if (chart['indicators'].length > 0){
+			if (chart['indicators'].length > 0) {
 				chart['show'] = true
 				chart['label'] = languageJson['charts_box_lulc']['label'][language]
 				chart['text'] = chart.getText(chart)
 			}
 
-			
-			
+
+
 
 		}
-
 		response.send(chartResult)
 		response.end();
-
-
 	}
 
 	return Controller;

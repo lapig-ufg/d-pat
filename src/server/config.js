@@ -1,11 +1,11 @@
 const appRoot = require('app-root-path');
-const dotenv  = require('dotenv');
+const dotenv = require('dotenv');
 
 const result = dotenv.config();
 if (result.error) {
 	throw result.error;
 }
-const { parsed: env} = result;
+const { parsed: env } = result;
 
 module.exports = function (app) {
 
@@ -13,6 +13,7 @@ module.exports = function (app) {
 
 	var config = {
 		"appRoot": appRoot,
+		"pathTimeSeries": appRoot + "/integration/py/time-series/time_series.py",
 		"clientDir": appRoot + env.CLIENT_DIR,
 		"langDir": appRoot + env.LANG_DIR,
 		"logDir": appRoot + env.LOG_DIR,
@@ -45,12 +46,12 @@ module.exports = function (app) {
 			"port": env.PG_PORT,
 			"debug": env.PG_DEBUG
 		};
-		config["clientDir"] = appRoot +  env.CLIENT_DIR;
-		config["ows_host"] =  env.OWS_HOST;
-		config["fieldDataDir"] = appProducao +  env.FIELD_DATA_DIR;
-		config["uploadDataDir"] = appProducao +  env.UPLOAD_DATA_DIR
+		config["clientDir"] = appRoot + env.CLIENT_DIR;
+		config["ows_host"] = env.OWS_HOST;
+		config["fieldDataDir"] = appProducao + env.FIELD_DATA_DIR;
+		config["uploadDataDir"] = appProducao + env.UPLOAD_DATA_DIR
 
 	}
-	
+
 	return config;
 }
