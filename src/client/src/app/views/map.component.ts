@@ -2575,9 +2575,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     }
 
     // // @ts-ignore
-    // dd.content.push({text:this.textOnDialog.historico_amostral_landsat.series_modis_title, style: 'subheader', margin:[ 0, 10, 0, 0]})
+    // dd.content.push({ text: this.textOnDialog.historico_amostral_landsat.series_modis_title, style: 'subheader', margin: [0, 10, 0, 0] })
     // // @ts-ignore
-    // dd.content.push({image: await canvasToBase64Modis(), width: 520, alignment: 'center', margin:[ 2, 10, 2, 0]})
+    // dd.content.push({ image: await canvasToBase64Modis(), width: 520, alignment: 'center', margin: [2, 10, 2, 0] })
 
     if (this.dataCampo.length > 0) {
       // @ts-ignore
@@ -3199,112 +3199,112 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 
     //  @todo REMOVE
-    // let ndvi_time_series = '/service/deforestation/modis?table=' + this.data.origin_table + '&gid=' + this.data.gid;
-    // this.http.get(ndvi_time_series).subscribe(
-    //   result => {
-    //     this.tmpModis = result;
-    //   },
-    //   err => {
-    //     console.log('Error: ', err);
-    //   },
-    //   () => {
+    let ndvi_time_series = '/service/deforestation/modis?table=' + this.data.origin_table + '&gid=' + this.data.gid;
+    this.http.get(ndvi_time_series).subscribe(
+      result => {
+        this.tmpModis = result;
+      },
+      err => {
+        console.log('Error: ', err);
+      },
+      () => {
 
-    //     this.dataTimeseriesModis = {
-    //       labels: this.tmpModis.map(element => element.date),
-    //       datasets: [
-    //         // {
-    //         //   label: 'NDVI',
-    //         //   data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
-    //         //   fill: false,
-    //         //   borderColor: '#ff0003',
-    //         //   backgroundColor: '#ff0003',
-    //         //   pointRadius: 1,
-    //         //   pointStyle: 'rect',
-    //         //   pointHoverRadius: 3
-    //         // },
-    //         // {
-    //         //   label: 'NDVI-Wiener',
-    //         //   data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
-    //         //   fill: false,
-    //         //   borderColor: '#208f0a',
-    //         //   backgroundColor: '#208f0a',
-    //         //   hidden: true,
-    //         //   pointRadius: 1,
-    //         //   pointStyle: 'rect',
-    //         //   pointHoverRadius: 3
-    //         // },
-    //         {
-    //           label: 'NDVI',
-    //           data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),
-    //           fill: false,
-    //           borderColor: '#0007db',
-    //           backgroundColor: '#0007db',
-    //           hidden: false,
-    //           pointRadius: 1,
-    //           pointHoverRadius: 3,
-    //           pointStyle: 'rect'
-    //         }
-    //       ],
-    //       type: 'line'
+        this.dataTimeseriesModis = {
+          labels: this.tmpModis.map(element => element.date),
+          datasets: [
+            // {
+            //   label: 'NDVI',
+            //   data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
+            //   fill: false,
+            //   borderColor: '#ff0003',
+            //   backgroundColor: '#ff0003',
+            //   pointRadius: 1,
+            //   pointStyle: 'rect',
+            //   pointHoverRadius: 3
+            // },
+            // {
+            //   label: 'NDVI-Wiener',
+            //   data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
+            //   fill: false,
+            //   borderColor: '#208f0a',
+            //   backgroundColor: '#208f0a',
+            //   hidden: true,
+            //   pointRadius: 1,
+            //   pointStyle: 'rect',
+            //   pointHoverRadius: 3
+            // },
+            {
+              label: 'NDVI',
+              data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),
+              fill: false,
+              borderColor: '#0007db',
+              backgroundColor: '#0007db',
+              hidden: false,
+              pointRadius: 1,
+              pointHoverRadius: 3,
+              pointStyle: 'rect'
+            }
+          ],
+          type: 'line'
 
-    //     };
+        };
 
-    //     // graphic.options.legend.onHover = function (event) {
-    //     //   event.target.style.cursor = 'pointer';
-    //     //   graphic.options.legend.labels.fontColor = "#0335fc";
-    //     // }
+        // graphic.options.legend.onHover = function (event) {
+        //   event.target.style.cursor = 'pointer';
+        //   graphic.options.legend.labels.fontColor = "#0335fc";
+        // }
 
-    //     // graphic.options.legend.onLeave = function (event) {
+        // graphic.options.legend.onLeave = function (event) {
 
-    //     //   event.target.style.cursor = 'default';
-    //     //   graphic.options.legend.labels.fontColor = "#fa1d00";
-    //     // }
+        //   event.target.style.cursor = 'default';
+        //   graphic.options.legend.labels.fontColor = "#fa1d00";
+        // }
 
-    //     this.optionsTimeSeries = {
-    //       tooltips: {
-    //         mode: 'index',
-    //         intersect: true,
-    //       },
-    //       maintainAspectRatio: false,
-    //       resposive: true,
-    //       radius: 1,
-    //       scales: {
-    //         yAxes: [{
-    //           ticks: {
-    //             autoSkip: true,
-    //             stepSize: 0.2
-    //           }
-    //         }],
-    //         xAxes: [{
-    //           type: 'time',
-    //           ticks: {
-    //             autoSkip: true
-    //           }
-    //         }]
-    //       },
-    //       title: {
-    //         display: false,
-    //         fontSize: 16
-    //       },
-    //       legend: {
-    //         labels: {
-    //           usePointStyle: true,
-    //           fontSize: 16
-    //         },
-    //         onHover(event) {
-    //           event.target.style.cursor = 'pointer';
-    //         },
-    //         onLeave(event) {
-    //           event.target.style.cursor = 'default';
-    //         },
-    //         position: 'bottom'
-    //       }
-    //     };
+        this.optionsTimeSeries = {
+          tooltips: {
+            mode: 'index',
+            intersect: true,
+          },
+          maintainAspectRatio: false,
+          resposive: true,
+          radius: 1,
+          scales: {
+            yAxes: [{
+              ticks: {
+                autoSkip: true,
+                stepSize: 0.2
+              }
+            }],
+            xAxes: [{
+              type: 'time',
+              ticks: {
+                autoSkip: true
+              }
+            }]
+          },
+          title: {
+            display: false,
+            fontSize: 16
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              fontSize: 16
+            },
+            onHover(event) {
+              event.target.style.cursor = 'pointer';
+            },
+            onLeave(event) {
+              event.target.style.cursor = 'default';
+            },
+            position: 'bottom'
+          }
+        };
 
 
 
-    //   }
-    // );
+      }
+    );
   }
 
   ngOnDestroy() {

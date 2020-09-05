@@ -387,38 +387,38 @@ module.exports = function (app) {
 
 	}
 
-	// Controller.ndvi_timeseries = function (request, response) {
+	Controller.ndvi_timeseries = function (request, response) {
 
-	// 	var queryResultT = request.queryResult;
-	// 	let long, lat
-	// 	queryResultT.forEach(function (row) {
-	// 		long = Number(row['long'])
-	// 		lat = Number(row['lat'])
-	// 	})
+		var queryResultT = request.queryResult;
+		let long, lat
+		queryResultT.forEach(function (row) {
+			long = Number(row['long'])
+			lat = Number(row['lat'])
+		})
 
-	// 	let returnObject = [];
+		let returnObject = [];
 
-	// 	let q = config["lapig-maps"] + "longitude=" + long + "&latitude=" + lat + "&mode=series";
-	// 	req(
-	// 		q, {
-	// 		json: true
-	// 	}, (err, res, body) => {
-	// 		if (err) {
-	// 			return console.log(err);
-	// 		}
+		let q = config["lapig-maps"] + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
+		req(
+			q, {
+			json: true
+		}, (err, res, body) => {
+			if (err) {
+				return console.log(err);
+			}
 
-	// 		for (let index = 0; index < body.values.length; index++) {
-	// 			returnObject.push({
-	// 				date: body.values[index][0],
-	// 				ndvi_original: body.values[index][1],
-	// 				ndvi_wiener: body.values[index][2],
-	// 				ndvi_golay: body.values[index][3]
-	// 			})
-	// 		}
-	// 		response.send(returnObject)
-	// 		response.end();
-	// 	});
-	// }
+			for (let index = 0; index < body.values.length; index++) {
+				returnObject.push({
+					date: body.values[index][0],
+					ndvi_original: body.values[index][1],
+					ndvi_wiener: body.values[index][2],
+					ndvi_golay: body.values[index][3]
+				})
+			}
+			response.send(returnObject)
+			response.end();
+		});
+	}
 
 
 

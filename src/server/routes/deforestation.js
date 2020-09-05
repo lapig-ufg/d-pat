@@ -11,7 +11,7 @@ module.exports = function (app) {
 	app.get('/service/deforestation/largest', dataInjector);
 	app.get('/service/deforestation/info', dataInjector, deforestation.infoUTFGrid);
 	app.get('/service/deforestation/illegal', dataInjector, deforestation.illegal);
-	// app.get('/service/deforestation/modis',dataInjector, deforestation.ndvi_timeseries);
+	app.get('/service/deforestation/modis', dataInjector, deforestation.ndvi_timeseries);
 	app.get('/service/deforestation/modist', dataInjector, deforestation.ndvi_data);
 
 
