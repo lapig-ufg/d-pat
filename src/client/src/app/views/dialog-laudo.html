@@ -419,7 +419,7 @@
 
                 </p-accordionTab>
                 <p-accordionTab header="{{textOnDialog.analise_automatica.title_tab}}"
-                    *ngIf="data.year > 2015 && data.year < 2019">
+                    *ngIf="data.year > 2015 && data.year <= 2019">
                     <div class="p-grid" style="margin-top: .5em">
                         <div class="p-col" style="text-align: center;">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}
@@ -434,7 +434,7 @@
                                     <br>
                                     <span style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
                                         {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
-                                        {{dataSuscept.type}}
+                                        <b>{{dataSuscept.type}}</b>
                                         {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
                                         <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
 
