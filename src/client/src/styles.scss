@@ -560,7 +560,7 @@ body {
  		align-items: center;
  		justify-content: center;
  		flex-direction: row;
-
+		padding: 15px;
  	}
 
  	.content-container {
@@ -1128,6 +1128,7 @@ body {
  		-o-transition: opacity 0.5s ease-in-out .3s;
  		transition: opacity 0.5s ease-in-out .3s;
  	}
+
  	#dpat-nav.active {
  		opacity: 1;
  	}

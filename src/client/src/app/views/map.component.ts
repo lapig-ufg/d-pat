@@ -2219,6 +2219,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         ]
       },
+
       footer: function (currentPage, pageCount) {
         return {
           table: {
@@ -2239,6 +2240,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           layout: 'noBorders'
         };
       },
+
       content: [
         { text: this.textOnDialog.information_tab.title_tab, style: 'subheader' },
         {
@@ -2335,6 +2337,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         }
       }
     }
+
     if (this.carData.length > 0 && this.data.year >= 2013) {
 
       dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader' })
@@ -2503,6 +2506,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         dd.content.push({ canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 2 }] })
       }
     }
+
     // @ts-ignore
     dd.content.push({ text: this.textOnDialog.historico_amostral_landsat.title_tab, style: 'subheader', pageBreak: this.carData.length > 0 ? "before" : false })
 
@@ -2574,10 +2578,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       return canvas.toDataURL('image/png');
     }
 
-    // // @ts-ignore
-    // dd.content.push({ text: this.textOnDialog.historico_amostral_landsat.series_modis_title, style: 'subheader', margin: [0, 10, 0, 0] })
-    // // @ts-ignore
-    // dd.content.push({ image: await canvasToBase64Modis(), width: 520, alignment: 'center', margin: [2, 10, 2, 0] })
+    // @ts-ignore
+    dd.content.push({ text: this.textOnDialog.historico_amostral_landsat.series_modis_title, style: 'subheader', margin: [0, 10, 0, 0] })
+    // @ts-ignore
+    dd.content.push({ image: await canvasToBase64Modis(), width: 520, alignment: 'center', margin: [2, 10, 2, 0] })
 
     if (this.dataCampo.length > 0) {
       // @ts-ignore
