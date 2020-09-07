@@ -2,7 +2,7 @@ const { Pool, Client } = require('pg')
 const csv = require('csv-parser');
 const fs = require('fs');
 
-var config = require('../config.js')()
+var config = require('../../config.js')()
 var pool = new Pool(config['pg'])
 
 var csvRows = []

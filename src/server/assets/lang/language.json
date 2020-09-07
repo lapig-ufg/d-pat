@@ -73,12 +73,12 @@
 			"en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reservations:"
 		}
 	},
-	"charts_box_lulc":{
+	"charts_box_lulc": {
 		"label": {
 			"pt-br": "Uso do Solo",
 			"en-us": "Land Use and Land Cover"
 		},
-		"text":{
+		"text": {
 			"pt-br": "Utilizando o mapa disponibilizado pelo projeto ? (referente ao ano de 2002), a cobertura do solo mais afetada pelo desmatamento no ano de ? foi a ? cobrindo cerca de ? de km².",
 			"en-us": "Using the map provided by the project ? (referring to 2002), the land cover most affected by deforestation in the year of ? was ? which covered about ? km²."
 		}
@@ -166,12 +166,10 @@
 			"pt-br": "Enviar arquivo espacial",
 			"en-us": "Send spatial file"
 		},
-
 		"label_upload_max_size_msg": {
 			"pt-br": "Este arquivo tem [current-size] MB. O tamanho máximo permitido é de [max-size] MB.",
 			"en-us": "This file has [current-size] MB. Maximum size allowed is [max-size] MB."
 		},
-
 		"search_placeholder": {
 			"pt-br": "Digite um Estado ou Município",
 			"en-us": "Please inform a State or Municipality name"
@@ -667,6 +665,10 @@
 								"year < 2018": {
 									"pt-br": "Até 2018",
 									"en-us": "Until 2018"
+								},
+								"year < 2019": {
+									"pt-br": "Até 2019",
+									"en-us": "Until 2019"
 								}
 							}
 						}
@@ -1045,7 +1047,6 @@
 							}
 						]
 					},
-
 					"bi_ce_cobertura_vegetal_250_2002_mma": {
 						"metadata": [
 							{
@@ -1150,7 +1151,6 @@
 							}
 						]
 					},
-
 					"agricultura_agrosatelite_fip": {
 						"metadata": [
 							{
@@ -2161,7 +2161,6 @@
 						"pt-br": "Ano",
 						"en-us": "Year"
 					},
-
 					"landsat": {
 						"metadata": [
 							{
@@ -2266,7 +2265,6 @@
 							}
 						]
 					},
-
 					"sentinel": {
 						"metadata": [
 							{
@@ -2464,7 +2462,6 @@
 			"pt-br": "Plano Estadual de Contingência",
 			"en-us": "State Contingency Plan"
 		}
-
 	},
 	"dialog_relatorio": {
 		"title": {
@@ -2480,7 +2477,7 @@
 				"pt-br": "Informações sobre o Polígono",
 				"en-us": "Polygon Information"
 			},
-			"metadados_label": 	{
+			"metadados_label": {
 				"pt-br": "Metadados",
 				"en-us": "Metadata"
 			},
@@ -2610,7 +2607,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -2715,7 +2711,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -2820,7 +2815,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -2925,7 +2919,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3030,7 +3023,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3135,7 +3127,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3240,7 +3231,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3345,7 +3335,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3450,7 +3439,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3555,7 +3543,6 @@
 								"pt-br": "Sistema de Referência e Coordenadas",
 								"en-us": "Reference and Coordinate System"
 							},
-
 							"description": {
 								"pt-br": "SIRGAS 2000",
 								"en-us": "SIRGAS 2000"
@@ -3704,27 +3691,26 @@
 				"pt-br": "Informações da Propriedade",
 				"en-us": "Property Information"
 			},
-			"property_area_label":{
+			"property_area_label": {
 				"pt-br": "Área da Propriedade:",
 				"en-us": "Property Area:"
 			},
-			"property_area_explored_label":{
+			"property_area_explored_label": {
 				"pt-br": "Área Total Explorada:",
 				"en-us": "Total Used Area:"
 			},
-			"property_area_tec_label":{
+			"property_area_tec_label": {
 				"pt-br": "Área de aplicação da Tecnologia:",
 				"en-us": "Technology Used Area: "
 			},
-			"property_applied_tec_label":{
+			"property_applied_tec_label": {
 				"pt-br": "Tecnologia Aplicada: ",
 				"en-us": "Applied Technology:"
 			},
-			"property_area_deforested_label":{
+			"property_area_deforested_label": {
 				"pt-br": "Área Desmatada na Propriedade:",
 				"en-us": "Deforested Property Area: "
 			}
-
 		},
 		"analise_automatica": {
 			"title_tab": {
@@ -3776,7 +3762,7 @@
 				"en-us": "smaller"
 			}
 		},
-		"especial_area":{
+		"especial_area": {
 			"title_tab": {
 				"pt-br": "Áreas Especiais",
 				"en-us": "Special Areas"
@@ -3886,7 +3872,7 @@
 			"pt-br": "Diferencial",
 			"en-us": "Innovations"
 		},
-		"how_to_use":[
+		"how_to_use": [
 			{
 				"pt-br": "As informações associadas ao polígono de desmatamento são acessadas pelo usuário de forma rápida e intuitiva. Ao clicar no polígono, um relatório com as informações disponíveis para a região é gerado, permitindo que usuários experientes e eventuais possam ter acesso à informação.",
 				"en-us": "The dataset of each deforestation polygon is accessed quickly and intuitively.  With a click on a polygon, a report is generated with the information available for the region, allowing easy access to information.\n"
@@ -3900,7 +3886,7 @@
 			"pt-br": "Como usar",
 			"en-us": "How to use"
 		},
-		"fip":[
+		"fip": [
 			{
 				"pt-br": "Em 2016, o Programa de Investimento Florestal (FIP) foi implementado no Brasil no âmbito do Plano de Investimento Brasileiro, gerido pelo Banco Internacional para Reconstrução e Desenvolvimento (IBRD / Banco Mundial) e financiado pelo Fundo Estratégico do Clima, cujo objetivo é desenvolver sistemas de prevenção de incêndios florestais e monitorar a cobertura vegetal no bioma, o qual apresenta longo histórico de perda de vegetação nativa.",
 				"en-us": "In 2016, the Forest Investment Program (FIP) was implemented in Brazil under the Brazilian Investment Plan, managed by the International Bank for Reconstruction and Development (IBRD / World Bank) and financed by the Strategic Climate Fund, whose objective is to develop systems prevention of forest fires and monitor the vegetation cover in the biome, which has a long history of loss of native vegetation."

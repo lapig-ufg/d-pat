@@ -408,6 +408,10 @@ module.exports = function (app) {
             {
               value: "year < 2018",
               Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2018"][language]
+            },
+            {
+              value: "year < 2019",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2019"][language]
             }
             ]
           }]

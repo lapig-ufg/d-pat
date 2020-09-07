@@ -36,6 +36,7 @@
     "response-time": "^2.3.0",
     "session-memory-store": "^1.0.0",
     "ssh2-sftp-client": "^4.1.0",
+    "tiles-in-bbox": "^1.0.2",
     "underscore": "~1.6.0",
     "unidecode": "^0.1.8",
     "unzipper": "^0.10.9",
