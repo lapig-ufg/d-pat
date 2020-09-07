@@ -876,7 +876,6 @@ export class MapComponent implements OnInit {
           if (this.utfgridsource) {
             this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
               if (data) {
-
                 isCampo = false;
                 data.origin_table = data.origin_table.toUpperCase();
                 if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {

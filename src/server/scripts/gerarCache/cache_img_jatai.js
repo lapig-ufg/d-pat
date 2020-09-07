@@ -21,13 +21,17 @@ var years = [2002, 2004, 2006, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2
 
 //var years = [2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
+var layers = ["bi_ce_prodes_desmatamento_100_fip", "bi_ce_prodes_antropico_100_fip"]
+
+var city = "5211909"
+
 var urls = []
 
-for (var uf = 0; uf < ufs.length; uf++) {
+for (var layername = 0; layername < layers.length; layername++) {
 
 	for (var year = (years.length - 1); year >= 0; year--) {
 		// console.log("Year: " + years[year])
-		for (var zoom = 0; zoom <= 12; zoom++) {
+		for (var zoom = 0; zoom <= 14; zoom++) {
 			var tiles = t.tilesInBbox(bbox, zoom)
 
 			tiles.forEach(function (tile) {
@@ -35,12 +39,18 @@ for (var uf = 0; uf < ufs.length; uf++) {
 					+ "?layers=" + layername
 					+ "&mode=tile"
 					+ "&tilemode=gmap"
-					//+ "&map.imagetype=png"
-					+ "&map.imagetype=utfgrid"
+					+ "&map.imagetype=png"
+					//+ "&map.imagetype=utfgrid"
 					+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
 
-				//url += "&MSFILTER=year=" + years[year] + " AND uf = '" + ufs[uf] + "'"
-				url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"
+
+				if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+					url += "&MSFILTER=year=" + years[year] + " AND cd_geocmu = '5211909'"
+				}
+				else if (layername == "bi_ce_prodes_antropico_100_fip") {
+					url += "&MSFILTER=year < " + years[year] + " AND cd_geocmu = '5211909'"
+				}
+				//url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"
 
 				// console.log(url)
 				urls.push(url)
