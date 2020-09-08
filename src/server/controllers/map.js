@@ -274,18 +274,19 @@ module.exports = function (app) {
             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["timelabel"][language],
             timeSelected: "view_date > '2019-01-01'",
             timeHandler: "msfilter",
-            times: [{
-              value: "view_date > (current_date - interval '90' day)",
-              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > (current_date - interval '90' day)"][language]
-            },
-            {
-              value: "view_date > '2019-01-01'",
-              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2019-01-01'"][language]
-            },
-            {
-              value: "view_date > '2018-01-01'",
-              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2018-01-01'"][language]
-            }
+            times: [
+              // {
+              //   value: "view_date > (current_date - interval '90' day)",
+              //   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > (current_date - interval '90' day)"][language]
+              // },
+              {
+                value: "view_date > '2019-01-01'",
+                Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2019-01-01'"][language]
+              },
+              {
+                value: "view_date > '2018-01-01'",
+                Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2018-01-01'"][language]
+              }
             ]
           },
           // {
@@ -359,7 +360,7 @@ module.exports = function (app) {
             download: ['csv', 'shp'],
             regionFilter: true,
             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["timelabel"][language],
-            timeSelected: "year < 2018",
+            timeSelected: "year < 2019",
             timeHandler: "msfilter",
             times: [{
               value: "year < 2002",
