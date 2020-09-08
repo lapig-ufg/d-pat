@@ -36,7 +36,7 @@ for (var layername = 0; layername < layers.length; layername++) {
 
 			tiles.forEach(function (tile) {
 				var url = "http://127.0.0.1:3000/ows"
-					+ "?layers=" + layername
+					+ "?layers=" + layers[layername]
 					+ "&mode=tile"
 					+ "&tilemode=gmap"
 					+ "&map.imagetype=png"
@@ -44,10 +44,10 @@ for (var layername = 0; layername < layers.length; layername++) {
 					+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
 
 
-				if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+				if (layers[layername] == "bi_ce_prodes_desmatamento_100_fip") {
 					url += "&MSFILTER=year=" + years[year] + " AND cd_geocmu = '5211909'"
 				}
-				else if (layername == "bi_ce_prodes_antropico_100_fip") {
+				else if (layers[layername] == "bi_ce_prodes_antropico_100_fip") {
 					url += "&MSFILTER=year < " + years[year] + " AND cd_geocmu = '5211909'"
 				}
 				//url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"

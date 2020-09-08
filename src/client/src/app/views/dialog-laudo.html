@@ -106,7 +106,7 @@
                 </p-accordionTab>
                 <p-accordionTab header="{{textOnDialog.especial_area.title_tab}}">
                     <div class="p-grid " *ngIf="dataEspecial">
-                        <div class="p-col-4">
+                        <div class="p-col-4" *ngIf="dataEspecial.ti">
                             <mat-card class="card-amostral">
                                 <mat-card-header>
                                     <mat-card-title><strong>{{textOnDialog.especial_area.titleTI}}</strong>
@@ -130,7 +130,7 @@
                             </mat-card>
                         </div>
 
-                        <div class="p-col-4">
+                        <div class="p-col-4" *ngIf="dataEspecial.q">
                             <mat-card class="card-amostral">
                                 <mat-card-header>
                                     <mat-card-title><strong>{{textOnDialog.especial_area.titleQ}}</strong>
