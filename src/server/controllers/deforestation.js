@@ -500,16 +500,17 @@ module.exports = function (app) {
 				},
 				"getText": function (chart) {
 					var label = chart['indicators'][0]["classe_lulc"]
-					var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
-					var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+					var areaDesmatClasse = parseFloat(chart['indicators'][0]["desmat_area_classe_lulc"]);
+					var areaTotalClasse = parseFloat(chart['indicators'][0]["total_area_classe_lulc"]);
 					var ano = chart['indicators'][0]["year"]
 					var projeto = "Terraclass Cerrado"
 
-					var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
+					var percentual_area_km = (areaDesmatClasse / areaTotalClasse) * 100;
 
 					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
 
-					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4]
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4] +
+						numberFormat(percentual_area_km) + message[5]
 
 					return text
 				}
@@ -568,8 +569,8 @@ module.exports = function (app) {
 				"getText": function (chart) {
 
 					var label = chart['indicators'][0]["classe_lulc"]
-					var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
-					var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+					var areaDesmatClasse = parseFloat(chart['indicators'][0]["desmat_area_classe_lulc"])
+					var areaTotalClasse = parseFloat(chart['indicators'][0]["total_area_classe_lulc"])
 					var ano = chart['indicators'][0]["year"]
 					var projeto = "Agrosatélite"
 
@@ -577,17 +578,29 @@ module.exports = function (app) {
 
 					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
 
-					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4]
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4] +
+						numberFormat(percentual_area_km) + message[5]
 
 					return text
 				}
 			}
 		]
 
+
+
+
 		for (let chart of chartResult) {
 
-			chart['indicators'] = request.queryResult[chart.id]
+			var qc = request.queryResult[chart.id];
+
+			let stringified = qc.map(i => JSON.stringify(i));
+			var queryCar = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
+				.map(j => JSON.parse(j))
+
+			chart['indicators'] = queryCar
 			chart['show'] = false
+
+			console.log(chart)
 			if (chart['indicators'].length > 0) {
 				chart['show'] = true
 				chart['label'] = languageJson['charts_box_lulc']['label'][language]

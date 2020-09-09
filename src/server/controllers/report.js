@@ -367,7 +367,11 @@ module.exports = function (app) {
     });
 
 
-    var queryABC = request.queryResult["abc"];
+    var qabc = request.queryResult["abc"];
+
+    stringified = qabc.map(i => JSON.stringify(i));
+    var queryABC = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
+      .map(j => JSON.parse(j))
 
     var vetABC = [];
     queryABC.forEach(function (row) {
