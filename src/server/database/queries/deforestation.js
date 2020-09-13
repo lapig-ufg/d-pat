@@ -144,15 +144,23 @@ module.exports = function (app) {
 		var type = params['type']
 		var region = params['region']
 
+		let regionfilter = ""
+		if (type == 'city')
+			regionfilter = " AND cd_geocmu = ${region}"
+		else if (type == 'state')
+			regionfilter = " AND region_name ilike unaccent(${region})"
+		else
+			return ''
+
 
 		return [
 			{
 				id: 'metadata',
-				sql: "select region_display, area_region, sum(area_prodes) as area_antropica from info_prodes_regions where region_type = '" + type + "' and region_name ilike unaccent('" + region + "') group by 1,2"
+				sql: "select '" + type + "' as type, region_display, area_region, sum(area_prodes) as area_antropica from info_prodes_regions where region_type = '" + type + "' " + regionfilter + " group by 1,2,3"
 			},
 			{
 				id: 'estastica_anual',
-				sql: "select rect_bbox(geometry) as bbox,region_display, area_region, area_prodes, area_app, area_rl, year from info_prodes_regions where region_type = '" + type + "' and region_name ilike unaccent('" + region + "') order by year"
+				sql: "select rect_bbox(geometry) as bbox,region_display, area_region, area_prodes, area_app, area_rl, year from info_prodes_regions where region_type = '" + type + "' " + regionfilter + " order by year"
 			}
 		]
 

@@ -452,7 +452,7 @@ module.exports = function (app) {
 
 		let regionfilter = ""
 		if (type == 'city') {
-			regionfilter = "cdgeocmu"
+			regionfilter = "cd_geocmu"
 		}
 		else {
 			regionfilter = "uf"
