@@ -148,11 +148,11 @@ module.exports = function (app) {
 		return [
 			{
 				id: 'metadata',
-				sql: "select region_display, area_region, sum(area_prodes) as area_antropica from info_prodes_regions where region_type = '" + type + "' and region_name = '" + region + "' group by 1,2"
+				sql: "select region_display, area_region, sum(area_prodes) as area_antropica from info_prodes_regions where region_type = '" + type + "' and region_name ilike unaccent('" + region + "') group by 1,2"
 			},
 			{
 				id: 'estastica_anual',
-				sql: "select rect_bbox(geometry) as bbox,region_display, area_region, area_prodes, area_app, area_rl, year from info_prodes_regions where region_type = '" + type + "' and region_name = '" + region + "' order by year"
+				sql: "select rect_bbox(geometry) as bbox,region_display, area_region, area_prodes, area_app, area_rl, year from info_prodes_regions where region_type = '" + type + "' and region_name ilike unaccent('" + region + "') order by year"
 			}
 		]
 
