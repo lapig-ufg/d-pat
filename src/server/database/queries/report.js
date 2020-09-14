@@ -46,10 +46,6 @@ module.exports = function (app) {
 					+ " where a.prodes_id = " + gid + " order by area_desmatada DESC"
 			},
 			{
-				id: 'validacao_amostral',
-				sql: "SELECT lon,lat,d_2000,d_2001,d_2002,d_2003,d_2004,d_2005,d_2006,d_2007,d_2008,d_2009,d_2010,d_2011,d_2012,d_2013,d_2014,d_2015,d_2016,d_2017,d_2018,classe,prodes_id FROM validacao_amostral WHERE prodes_id = " + gid
-			},
-			{
 				id: 'areas_especiais',
 				sql: "SELECT pd.ti_dist, ST_AREA(ST_Intersection(ti.geom,desmatamento.geom)::GEOGRAPHY) / 1000000.0 as area_desmat_ti, ti.name as ti_nom, pd.ti_gid,"
 					+ " rect_bbox(ST_Envelope(ST_Union(ti.geom,desmatamento.geom))) as bbox_ti,"

@@ -437,48 +437,84 @@ module.exports = function (app) {
 		})
 	};
 
+	Controller.regionreport = function (request, response) {
+
+		var type = request.param('type')
+		var region = request.param('region')
+
+		let sizeSrc = 768;
+		let sizeThumb = 400;
+
+		var queryMetaData = request.queryResult["metadata"];
+
+
+		var queryResultDesmat = request.queryResult["estastica_anual"];
+
+		let regionfilter = ""
+		if (type == 'city') {
+			regionfilter = "cd_geocmu"
+		}
+		else {
+			regionfilter = "uf"
+		}
+
+		let anual_statistic = [];
+		queryResultDesmat.forEach(function (row) {
+			let box = row["bbox"].replace("BOX(", "")
+				.replace(")", "")
+				.split(" ")
+				.join(",");
+			let ano = Number(row["year"]);
+			anual_statistic.push({
+				box: box,
+				region_display: row["region_display"],
+				area_region: parseFloat(row["area_region"]),
+				area_prodes: parseFloat(row["area_prodes"]),
+				area_app: parseFloat(row["area_app"]),
+				area_rl: parseFloat(row["area_rl"]),
+				year: Number(row["year"]),
+				imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+					sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and value = '" + region + "'",
+				imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
+					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+					sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and value = '" + region + "'"
+			});
+		});
+
+
+		var legendas = {
+			legendTerraclass: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=uso_solo_terraclass_fip&format=image/png",
+			legendRegion: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=regions_fip_realce_maior&format=image/png",
+			legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&format=image/png",
+
+		}
+
+		let box = anual_statistic[0].box;
+
+		let urlTerraclass = {
+			imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+				sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and value = '" + region + "'",
+			imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+				sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and value = '" + region + "'",
+		};
+
+		response.send({
+			metadata: queryMetaData,
+			anual_statistic: anual_statistic,
+			legendas: legendas,
+			terraclass: urlTerraclass
+		});
+		response.end();
+
+	};
+
 
 	Controller.indicators = function (request, response) {
 
 		var language = request.param('lang')
 
 		var chartResult = [
-			// {
-			// 	"id": "uso_solo_mapbiomas",
-			// 	"title": "Mapbiomas",
-			// 	"type": "doughnut",
-			// 	"pointStyle": 'rect',
-			// 	"disabled": true,
-			// 	"options": {
-			// 		title: {
-			// 			display: false,
-			// 		},
-			// 		legend: {
-			// 			labels: {
-			// 				usePointStyle: true,
-			// 				fontColor: "#85560c"
-			// 			},
-			// 			position: "bottom"
-			// 		},
-			// 		tooltips: {}
-			// 	},
-			// 	"getText": function (chart) {
-			// 		var label = chart['indicators'][0]["classe_lulc"]
-			// 		var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
-			// 		var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
-			// 		var ano = chart['indicators'][0]["year"]
-			// 		var projeto = "Terraclass Cerrado"
-
-			// 		var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
-
-			// 		var message = languageJson["charts_box_lulc"]["text"][language].split("?");
-
-			// 		var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4] + Math.round(percentual_area_km) + message[5]
-
-			// 		return text
-			// 	}
-
-			// },
 			{
 				"id": "uso_solo_terraclass",
 				"title": "Terraclass",

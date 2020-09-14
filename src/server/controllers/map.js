@@ -627,9 +627,9 @@ module.exports = function (app) {
               download: ['shp']
             },
             {
-              value: "uso_solo_probio",
+              value: "uso_solo_probio_fip",
               Viewvalue: "PROBIO-Cerrado - 2002",
-              metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['bi_ce_cobertura_vegetal_250_2002_mma']['metadata'],
+              metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_probio_fip']['metadata'],
               regionFilter: true,
               opacity: 0.8,
               order: 3,
