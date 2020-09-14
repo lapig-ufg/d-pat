@@ -1,0 +1,11 @@
+#laudo {
+
+  .ui-scrollpanel-content {
+    overflow: hidden !important;
+  }
+
+  .ui-scrollpanel:hover .ui-scrollpanel-bar, .ui-scrollpanel:active .ui-scrollpanel-bar {
+    display: none;
+  }
+
+}

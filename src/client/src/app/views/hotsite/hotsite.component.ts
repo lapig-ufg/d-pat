@@ -37,8 +37,6 @@ export class HotsiteComponent implements OnInit, OnDestroy{
             this.texts = result;
         });
     }
-
-
     openMenu() {
 
         let firstMask = true;
@@ -69,7 +67,6 @@ export class HotsiteComponent implements OnInit, OnDestroy{
         $("#dpat-nav").addClass("active"),
         $.fn.fullpage.moveTo(1)
     }
-
     closeMenu() {
         clearInterval(this.interValMasks);
 
@@ -83,7 +80,6 @@ export class HotsiteComponent implements OnInit, OnDestroy{
         $(".info").removeClass("is-active"),
         $(".section, #dpat-nav").removeClass("active")
     }
-
     handleMenu(event){
       clearInterval(this.interValMasks);
       if(event.target.classList.contains("is-active")){
@@ -91,7 +87,6 @@ export class HotsiteComponent implements OnInit, OnDestroy{
       }else{
           this.openMenu();
       }
-
     }
 
   ngOnInit() {
@@ -122,19 +117,20 @@ export class HotsiteComponent implements OnInit, OnDestroy{
 
     $("#container").YTPlayer({
       mask:{
-          20: '../../../assets/img/background_3.png'
+          5: '../../../assets/img/background_3.png',
       }
     });
 
     this.fullpage = $("#fullpage").fullpage({
-      navigation: 0,
-      scrollingSpeed: 1e3,
-      navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"]
+        navigation: true,
+        showActiveTooltip: true,
+        slidesNavigation: true,
+        navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"],
     });
 
-    $(".section").removeClass("active");
+    // $(".section").removeClass("active");
 
-      if (window.innerWidth < 900) {
+      if(window.innerWidth < 900) {
           this.router.navigate(['/mobile']);
       }
   }

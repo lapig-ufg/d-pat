@@ -69,8 +69,8 @@
         <button style="display: none" class="c-hamburger c-hamburger--htla info-2" (click)="handleMenu($event)">
             <span>toggle menu</span>
         </button>
-    </div>
 
+    </div>
 
     <div class="content-overlay">
 
@@ -83,13 +83,10 @@
         <div id="fullpage">
             <div class="section" id="section0">
                 <div class="text-container">
-
                     <h1><span></span>CERRADO DPAT</h1>
                     <h2>
                         <span class="splited-line"><span class="splited-line__wrapper">{{texts.about_title}}</span></span>
-                        <!-- <span class="splited-line"><span class="splited-line__wrapper">Future</span></span> -->
                     </h2>
-
                     <div *ngFor="let paragrah of texts.about">
                         <p class="text-sections"  [innerHTML]="paragrah"></p>
                     </div>

@@ -1,33 +1,27 @@
+/* ----- 1: SETTINGS ------- */
+@import '1-settings/s-variables';
+@import '1-settings/s-typography';
+@import '1-settings/s-globals';
 
-// Preset Color Styles
-@import "colors/presets";
+/* ----- 2: ATOMS ------- */
+@import '2-atoms/a-mixins';
+@import '2-atoms/a-spacing';
+@import '2-atoms/a-typography';
 
-// Global Styles
-@import "global";
 
-// Feature Styles
-@import "feature";
+/* ----- 3: LAYOUT ------- */
+@import '3-layout/l-header';
+@import '3-layout/l-footer';
+@import '3-layout/l-form';
 
-// Service Area
-@import "service";
+/* ----- 4: COMPONENTS ------- */
+@import '4-components/c-button';
+@import '4-components/c-card';
+@import '4-components/c-modal';
+@import '4-components/c-built-select';
 
-// Navbar
-@import "navbar";
 
-// Hero Slider Area
-@import "hero-area";
-
-// Team Area
-@import "team";
-
-// Pricing Area
-@import "pricing";
-
-// Testimonial Area
-@import "testimonial";
-
-// Contact
-@import "contact";
-
-// Contact Area
-@import "footer";
+/* ----- 5: PAGES ------- */
+@import '5-pages/p-general';
+@import '5-pages/p-hotsite';
+@import '5-pages/p-laudo';
