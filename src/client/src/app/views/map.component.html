@@ -393,7 +393,6 @@
 				</div>
 
 			</div>
-
 			<div id="map-info" class="card" [ngStyle]="showDialogUTFGrid()">
 				<div *ngIf="infodata" class="card-body">
 					<p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
@@ -449,6 +448,52 @@
 					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
 						</strong></div>
 				</div>
+
+				<div *ngIf="infodataABC" class="card-body">
+					<p class="card-text">{{ infodataABC.origin_table }}-Cerrado</p>
+					<table>
+						<tbody>
+							<tr>
+								<th>{{minireportText.area}} </th>
+								<td>{{infodataABC.area_desmat | number:'1.2-3' }} km²</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.city}} </th>
+								<td>{{infodataABC.municipio }} - {{infodataABC.uf }}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.detection_date}} </th>
+								<td>{{infodataABC.dataFormatada}}</td>
+							</tr>
+							<!-- <tr *ngIf="infodataABC.year >= 2015 && infodataABC.year != ''">
+								<th>{{minireportText.susceptibility}} </th>
+								<td>{{infodataABC.sucept_desmatFormatada}}</td>
+							</tr> -->
+							<tr *ngIf="infodataABC.area_propriedade != ''">
+								<th>{{minireportText.area_property}} </th>
+								<td>{{infodataABC.area_propriedade | number:'1.2-3' }} km²</td>
+							</tr>
+							<tr *ngIf="infodataABC.area_exp != ''">
+								<th>{{minireportText.area_explorada}} </th>
+								<td>{{infodataABC.area_exp | number:'1.2-3' }} km²</td>
+							</tr>
+							<tr *ngIf="infodataABC.producao != ''">
+								<th>{{minireportText.producao}} </th>
+								<td>{{infodataABC.producao}}</td>
+							</tr>
+							<tr *ngIf="infodataABC.tec_impl != ''">
+								<th>{{minireportText.tecnologia}} </th>
+								<td>{{infodataABC.tec_impl}}</td>
+							</tr>
+							<tr *ngIf="infodataABC.area_tecnologia != ''">
+								<th>{{minireportText.area_tecnologia}} </th>
+								<td>{{infodataABC.area_tecnologia | number:'1.2-3' }} km²</td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
+						</strong></div>
+				</div>
 				<div *ngIf="infodataMunicipio" class="card-body">
 					<p class="card-text">{{ infodataMunicipio.region_display }}</p>
 					<table>
@@ -474,52 +519,6 @@
 						</tbody>
 					</table>
 					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_municipio}}
-						</strong></div>
-				</div>
-
-				<div *ngIf="infodataABC" class="card-body">
-					<p class="card-text">{{ infodataABC.origin_table }}-Cerrado</p>
-					<table>
-						<tbody>
-							<tr>
-								<th>{{minireportText.area}} </th>
-								<td>{{infodataABC.area_desmat | number:'1.2-3' }} km²</td>
-							</tr>
-							<tr>
-								<th>{{minireportText.city}} </th>
-								<td>{{infodataABC.municipio }} - {{infodataABC.uf }}</td>
-							</tr>
-							<tr>
-								<th>{{minireportText.detection_date}} </th>
-								<td>{{infodataABC.dataFormatada}}</td>
-							</tr>
-							<tr *ngIf="infodataABC.year >= 2015 && !infodataABC.year === ''">
-								<th>{{minireportText.susceptibility}} </th>
-								<td>{{infodataABC.sucept_desmatFormatada}}</td>
-							</tr>
-							<tr *ngIf="infodataABC.area_propriedade != ''">
-								<th>{{minireportText.area_property}} </th>
-								<td>{{infodataABC.area_propriedade | number:'1.2-3' }} km²</td>
-							</tr>
-							<tr *ngIf="infodataABC.area_exp != ''">
-								<th>{{minireportText.area_explorada}} </th>
-								<td>{{infodataABC.area_exp | number:'1.2-3' }} km²</td>
-							</tr>
-							<tr *ngIf="infodataABC.producao != ''">
-								<th>{{minireportText.producao}} </th>
-								<td>{{infodataABC.producao}}</td>
-							</tr>
-							<tr *ngIf="infodataABC.tec_impl != ''">
-								<th>{{minireportText.tecnologia}} </th>
-								<td>{{infodataABC.tec_impl}}</td>
-							</tr>
-							<tr *ngIf="infodataABC.area_tecnologia != ''">
-								<th>{{minireportText.area_tecnologia}} </th>
-								<td>{{infodataABC.area_tecnologia | number:'1.2-3' }} km²</td>
-							</tr>
-						</tbody>
-					</table>
-					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
 						</strong></div>
 				</div>
 

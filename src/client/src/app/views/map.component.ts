@@ -869,6 +869,11 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    let utfgridlayerVisibleABC = this.utfgridlayerabc.getVisible();
+    if (!utfgridlayerVisibleABC || evt.dragging) {
+      return;
+    }
+
 
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
@@ -1028,12 +1033,13 @@ export class MapComponent implements OnInit {
       }
 
       if (isABC) {
-        if (this.utfgridabc) {
-          this.utfgridabc.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
-            if (data) {
-              // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+        if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
+          if (this.utfgridabc) {
+            coordinate = this.map.getEventCoordinate(evt.originalEvent);
+            this.utfgridabc.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+              if (data) {
+                // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-              if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
                 window.document.body.style.cursor = 'pointer';
                 this.infodataABC = data;
                 this.infodataABC.origin_table = 'PRODES';
@@ -1070,13 +1076,13 @@ export class MapComponent implements OnInit {
 
 
               }
-            }
-            else {
-              this.infodataABC = null;
-              window.document.body.style.cursor = 'auto';
-            }
-          }.bind(this)
-          );
+              else {
+                this.infodataABC = null;
+                window.document.body.style.cursor = 'auto';
+              }
+            }.bind(this)
+            );
+          }
         }
       }
 
@@ -1495,7 +1501,7 @@ export class MapComponent implements OnInit {
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('bi_ce_prodes_desmatamento_abc_fip', text, '{x}+{y}+{z}')
+        this.returnUTFGRID('bi_ce_prodes_desmatamento_abc_fip_utfgrid', text, '{x}+{y}+{z}')
       ]
     };
 
@@ -3209,51 +3215,54 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         });
 
-        console.log(this.abcData)
-
         this.dataEspecial = result['especial'];
 
-        let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
+        if (this.dataEspecial == null || this.dataEspecial == undefined) {
+          this.dataEspecial = null
+        } else {
+          let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
 
-        if (this.dataEspecial.ti.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.ti.src,
-            thumb: this.dataEspecial.ti.thumb,
-            caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
-          });
+          if (this.dataEspecial.ti.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.ti.src,
+              thumb: this.dataEspecial.ti.thumb,
+              caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.q.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.q.src,
+              thumb: this.dataEspecial.q.thumb,
+              caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
+            });
+          }
+
+          // if (this.dataEspecial.ap.show) {
+          // this.vetEspecial.push({
+          //   src: this.dataEspecial.ap.src,
+          //   thumb: this.dataEspecial.ap.thumb,
+          //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
+          // });
+          // }
+
+          if (this.dataEspecial.ucpi.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.ucpi.src,
+              thumb: this.dataEspecial.ucpi.thumb,
+              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.ucus.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.ucus.src,
+              thumb: this.dataEspecial.ucus.thumb,
+              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
+            });
+          }
         }
 
-        if (this.dataEspecial.q.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.q.src,
-            thumb: this.dataEspecial.q.thumb,
-            caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
-          });
-        }
-
-        // if (this.dataEspecial.ap.show) {
-        // this.vetEspecial.push({
-        //   src: this.dataEspecial.ap.src,
-        //   thumb: this.dataEspecial.ap.thumb,
-        //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
-        // });
-        // }
-
-        if (this.dataEspecial.ucpi.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.ucpi.src,
-            thumb: this.dataEspecial.ucpi.thumb,
-            caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
-          });
-        }
-
-        if (this.dataEspecial.ucus.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.ucus.src,
-            thumb: this.dataEspecial.ucus.thumb,
-            caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
-          });
-        }
 
         let sent = {
           src: result['images'].urlSentinel.src,
