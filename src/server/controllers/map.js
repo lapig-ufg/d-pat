@@ -972,7 +972,12 @@ module.exports = function (app) {
         click_more_municipio: languageJson["mini_report_utfgrid"]["click_more_municipio"][language],
         label_year: languageJson["mini_report_utfgrid"]["label_year"][language],
         label_area_app: languageJson["mini_report_utfgrid"]["label_area_app"][language],
-        label_area_rl: languageJson["mini_report_utfgrid"]["label_area_rl"][language]
+        label_area_rl: languageJson["mini_report_utfgrid"]["label_area_rl"][language],
+        area_property: languageJson["mini_report_utfgrid"]["area_property"][language],
+        area_explorada: languageJson["mini_report_utfgrid"]["area_explorada"][language],
+        producao: languageJson["mini_report_utfgrid"]["producao"][language],
+        tecnologia: languageJson["mini_report_utfgrid"]["tecnologia"][language],
+        area_tecnologia: languageJson["mini_report_utfgrid"]["area_tecnologia"][language],
       },
       layer_box: {
         title: languageJson["layer_box"]["title"][language],

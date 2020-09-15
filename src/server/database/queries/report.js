@@ -37,13 +37,10 @@ module.exports = function (app) {
 			},
 			{
 				id: 'abc',
-				sql: "SELECT rect_bbox(prop.geom) as bboxprop, ST_AREA(ST_Intersection(a.geom, prop.geom)::GEOGRAPHY) / 1000000.0 as area_desmatada, "
-					+ " a.chave_id, a.prop_desm, a.prodes as year, ST_AREA(prop.geom,true) / 1000000.0 as area_propriedade, tec.tec_impl, "
-					+ " ST_AREA(tec.geom,true) / 1000000.0 as area_tecnologia, (SELECT SUM(ST_AREA(exp.geom,true) / 1000000.0) FROM fip_abc_cerrado_area_explorada exp where exp.chave_id = a.chave_id) as area_exp"
-					+ " from fip_abc_prodes a "
-					+ " inner join fip_abc_cerrado_perimetro_prop prop on prop.chave_id = a.chave_id "
-					+ " left join fip_abc_cerrado_area_tecnologia tec on tec.chave_id = a.chave_id "
-					+ " where a.prodes_id = " + gid + " order by area_desmatada DESC"
+				sql: "SELECT rect_bbox(prop.geom) as bboxprop, abc.*"
+					+ " from prodes_fip_abc abc "
+					+ " inner join fip_abc_cerrado_perimetro_prop prop on prop.chave_id = abc.chave_id "
+					+ " where abc.prodes_id = " + gid + ";"
 			},
 			{
 				id: 'areas_especiais',
