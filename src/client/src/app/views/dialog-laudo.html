@@ -3,8 +3,9 @@
         <div style="display: grid; position: fixed; right: 11vw;top: 10%;">
             <button style="margin: 10px" (click)="printReport()" color="primary" classs="btn-info " mat-icon-button>
                 <mat-icon>print</mat-icon>
+                <mat-spinner  [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate" style="margin: 0 auto;"></mat-spinner>
             </button>
-            <button style="margin: 10px" (click)="dialogRef.close()" color="accent" classs="btn-info " mat-icon-button>
+            <button style="margin: 12px" (click)="dialogRef.close()" color="primary" classs="btn-info " mat-icon-button>
                 <mat-icon>highlight_off</mat-icon>
             </button>
         </div>
@@ -51,7 +52,7 @@
         <!--            </ul>-->
         <!--        </nav>-->
         <div class="row">
-            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>
+<!--            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>-->
             <p-accordion [multiple]="true">
                 <p-accordionTab header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even">

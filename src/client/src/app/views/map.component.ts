@@ -40,6 +40,7 @@ import * as Chart from 'chart.js'
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {RegionReportComponent} from "./region-report/region-report.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -1960,6 +1961,25 @@ export class MapComponent implements OnInit {
       }
 
     }
+  }
+
+  async openRegionReport() {
+    let url = '/service/deforestation/regionreport?';
+
+    if ( this.selectRegion.type === 'state' ) {
+      url += 'type=state&region=' + this.selectRegion.value.toLowerCase();
+    } else if ( this.selectRegion.type === 'city' ) {
+      url += 'type=city&region=' + this.selectRegion.cd_geocmu.toLowerCase();
+    } else {
+      return;
+    }
+
+    const dados = await this.http.get(url).toPromise();
+    this.dialog.open(RegionReportComponent,{
+            width: 'calc(100% - 5vw)',
+            height: 'calc(100% - 5vh)',
+            data: { dados }
+        });
   }
 
   ngOnInit() {

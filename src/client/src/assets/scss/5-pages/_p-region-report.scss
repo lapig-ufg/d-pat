@@ -1,0 +1,16 @@
+#regionReport{
+  .container-buttons{
+    display: grid;
+    position: absolute;
+    right: 111px;
+    top: 32px;
+  }
+
+  button{
+    margin: 10px
+  }
+
+  .spinner{
+    margin: 0 auto;
+  }
+}

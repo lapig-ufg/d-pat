@@ -1,3 +1,16 @@
+
+/* ----- CHANGING DEFAULT COLORS ------- */
+@import '~@angular/material/theming';
+@include mat-core();
+
+$primary: mat-palette($mat-green,800);
+$accent: mat-palette($mat-orange,300);
+$warn: mat-palette($mat-brown,600);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+
 /* ----- 1: SETTINGS ------- */
 @import '1-settings/s-variables';
 @import '1-settings/s-typography';
@@ -12,6 +25,7 @@
 /* ----- 3: LAYOUT ------- */
 @import '3-layout/l-header';
 @import '3-layout/l-footer';
+@import '3-layout/l-base';
 @import '3-layout/l-form';
 
 /* ----- 4: COMPONENTS ------- */
@@ -25,3 +39,5 @@
 @import '5-pages/p-general';
 @import '5-pages/p-hotsite';
 @import '5-pages/p-laudo';
+@import '5-pages/p-map';
+@import '5-pages/p-region-report';
