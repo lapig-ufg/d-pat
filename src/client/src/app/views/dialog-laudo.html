@@ -105,8 +105,8 @@
                         </div>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab header="{{textOnDialog.especial_area.title_tab}}">
-                    <div class="p-grid " *ngIf="dataEspecial">
+                <p-accordionTab *ngIf="dataEspecial" header="{{textOnDialog.especial_area.title_tab}}">
+                    <div class="p-grid">
                         <div class="p-col-4" *ngIf="dataEspecial.ti">
                             <mat-card class="card-amostral">
                                 <mat-card-header>
@@ -495,6 +495,9 @@
                             <p style="font-size: 16px; text-align: left;">
                                 <b>{{textOnDialog.fip_abc_tab.property_area_explored_label}}</b>
                                 {{item.metaData.area_explorada | number:'1.2-3' }} km²</p>
+                            <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.producao != null">
+                                <b>{{textOnDialog.fip_abc_tab.producao_label}}</b>
+                                {{item.metaData.producao}} </p>
                             <p style="font-size: 16px; text-align: left;" *ngIf="item.metaData.area_tecnologia > 0">
                                 <b>{{textOnDialog.fip_abc_tab.property_area_tec_label}}</b>
                                 {{item.metaData.area_tecnologia | number:'1.2-3' }} km² </p>

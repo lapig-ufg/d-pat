@@ -129,8 +129,28 @@
 			"en-us": "Deforested Area in Preservation Areas:"
 		},
 		"label_area_rl": {
-			"pt-br": "Área Desmatada em Reserva Legal",
+			"pt-br": "Área Desmatada em Reserva Legal:",
 			"en-us": "Deforested Area in Legal Reservation:"
+		},
+		"area_property": {
+			"pt-br": "Área da Propriedade Rural:",
+			"en-us": "Rural Property Area:"
+		},
+		"area_explorada": {
+			"pt-br": "Área Explorada:",
+			"en-us": "Area Explored:"
+		},
+		"producao": {
+			"pt-br": "Cadeia de Produção Declarada:",
+			"en-us": "Declared Production Activity:"
+		},
+		"tecnologia": {
+			"pt-br": "Tecnologia Aplicada:",
+			"en-us": "Applied Technology:"
+		},
+		"area_tecnologia": {
+			"pt-br": "Área de Aplicação da Tecnologia:",
+			"en-us": "Technology Application Area:"
 		}
 	},
 	"layer_box": {
@@ -3710,6 +3730,10 @@
 			"property_area_deforested_label": {
 				"pt-br": "Área Desmatada na Propriedade:",
 				"en-us": "Deforested Property Area: "
+			},
+			"producao_label": {
+				"pt-br": "Atividade de Produção Declarada:",
+				"en-us": "Production Activity Declared: "
 			}
 		},
 		"analise_automatica": {

@@ -142,6 +142,7 @@ export class MapComponent implements OnInit {
   infodata: any;
   infodataCampo: any;
   infodataMunicipio: any;
+  infodataABC: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
@@ -159,6 +160,9 @@ export class MapComponent implements OnInit {
   keyForPointer: any;
   currentData: any;
   language: any;
+
+  mapForABC: any = [];
+  mapForProducao: any = [];
 
   titlesLayerBox: any;
   minireportText: any;
@@ -261,6 +265,60 @@ export class MapComponent implements OnInit {
     };
     this.datePipe = new DatePipe('pt-BR');
     this.language = 'pt-br';
+
+    this.mapForABC = new Map([
+      ["RPD", {
+        "pt-br": "Recuperação de Pastagens Degradada (RPD)",
+        "en-us": "Degraded Pasture Recovery (RPD)"
+      }],
+      ["ILPF", {
+        "pt-br": "Integração Lavoura Pecuária Floresta (ILPF)",
+        "en-us": "Forestry Livestock Integration (ILPF)"
+      }],
+      ["FP", {
+        "pt-br": "Floresta Plantada (FP)",
+        "en-us": "Planted Forest (FP)"
+      }], ["SPD", {
+        "pt-br": "Sistema de Plantio Direto (SPD)",
+        "en-us": "No-Tillage System (SPD)"
+      }]
+    ]);
+
+
+
+
+    this.mapForProducao = new Map([
+      ["GADO LEITEIRO", {
+        "pt-br": "Criação de Gado Leiteiro",
+        "en-us": "Dairy Cattle"
+      }],
+      ["FLORESTA", {
+        "pt-br": "Floresta",
+        "en-us": "Forest"
+      }],
+      ["GADO DE CORTE", {
+        "pt-br": "Criação de Gado de Corte",
+        "en-us": "Beef Cattle Breeding"
+      }],
+      ["AGRICULTURA", {
+        "pt-br": "Agricultura",
+        "en-us": "Agriculture"
+      }],
+      ["ARRENDAMENTO", {
+        "pt-br": "Área para Arrendamento",
+        "en-us": "Lease Area"
+      }],
+      ["ARRENDATARIO", {
+        "pt-br": "Área para Arrendantário",
+        "en-us": "Tenant Area"
+      }],
+      ["PECUARIA", {
+        "pt-br": "Pecuária",
+        "en-us": "Livestock"
+      }]
+    ]);
+
+
 
     this.styleSelected = {
       'background-color': '#fe8321'
@@ -812,6 +870,11 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    let utfgridlayerVisibleABC = this.utfgridlayerabc.getVisible();
+    if (!utfgridlayerVisibleABC || evt.dragging) {
+      return;
+    }
+
 
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
@@ -824,6 +887,7 @@ export class MapComponent implements OnInit {
       let isCampo = false;
       let isOficial = false;
       let isMunicipio = false;
+      let isABC = false;
 
 
       if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip' || deter.selectedType === 'bi_ce_deter_desmatamento_100_fip') {
@@ -837,6 +901,10 @@ export class MapComponent implements OnInit {
 
       if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
         isMunicipio = true;
+      }
+
+      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip') {
+        isABC = true;
       }
 
       if (isMunicipio) {
@@ -964,6 +1032,63 @@ export class MapComponent implements OnInit {
         }
 
       }
+
+      if (isABC) {
+        if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
+          if (this.utfgridabc) {
+            coordinate = this.map.getEventCoordinate(evt.originalEvent);
+            this.utfgridabc.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+              if (data) {
+                // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
+
+                window.document.body.style.cursor = 'pointer';
+                this.infodataABC = data;
+                this.infodataABC.origin_table = 'PRODES';
+                this.infodataABC.dataFormatada = this.infodataABC.data_detec == '' ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodataABC.data_detec), 'dd/MM/yyyy');
+                this.infodataABC.year = new Date(this.infodataABC.data_detec).getFullYear();
+
+                if (this.infodataABC.tec_impl != '') {
+
+                  for (const m of this.mapForABC) {
+                    if (m[0] === this.infodataABC.tec_impl) {
+                      if (this.language === 'pt-br') {
+                        this.infodataABC.tec_impl = m[1]['pt-br'];
+                      }
+                      else {
+                        this.infodataABC.tec_impl = m[1]['en-us'];
+                      }
+                    }
+                  }
+                }
+
+                if (this.infodataABC.producao != '') {
+
+                  for (const m of this.mapForProducao) {
+                    if (m[0] === this.infodataABC.producao) {
+                      if (this.language === 'pt-br') {
+                        this.infodataABC.producao = m[1]['pt-br'];
+                      }
+                      else {
+                        this.infodataABC.producao = m[1]['en-us'];
+                      }
+                    }
+                  }
+                }
+
+
+              }
+              else {
+                this.infodataABC = null;
+                window.document.body.style.cursor = 'auto';
+              }
+            }.bind(this)
+            );
+          }
+        }
+      }
+
+
+
     }
   }
 
@@ -1047,6 +1172,8 @@ export class MapComponent implements OnInit {
                 this.dataForDialog.datePipe = this.datePipe;
                 this.dataForDialog.layers = layers;
                 this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
+                this.dataForDialog.mapForABC = this.mapForABC;
+                this.dataForDialog.mapForProducao = this.mapForProducao;
 
                 this.openDialog();
 
@@ -1375,7 +1502,7 @@ export class MapComponent implements OnInit {
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('bi_ce_prodes_desmatamento_abc_fip', text, '{x}+{y}+{z}')
+        this.returnUTFGRID('bi_ce_prodes_desmatamento_abc_fip_utfgrid', text, '{x}+{y}+{z}')
       ]
     };
 
@@ -1570,8 +1697,27 @@ export class MapComponent implements OnInit {
       this.utfgridlayerMunicipio.setVisible(false);
       this.utfgridlayerabc.setVisible(false);
     }
+  }
 
+  showDialogUTFGrid() {
+    let dialog = { visibility: 'hidden' };
 
+    if (this.infodata) {
+      dialog.visibility = 'visible'
+    }
+
+    if (this.infodataCampo) {
+      dialog.visibility = 'visible'
+    }
+    if (this.infodataMunicipio) {
+      dialog.visibility = 'visible'
+    }
+
+    if (this.infodataABC) {
+      dialog.visibility = 'visible'
+    }
+
+    return dialog;
   }
 
   changeVisibility(layer, e) {
@@ -1589,8 +1735,6 @@ export class MapComponent implements OnInit {
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
-
-
   }
 
   private updateDescriptor() {
@@ -3061,51 +3205,84 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           };
           this.vetABC.push(dcar);
 
+          if (element.metaData.tec_impl != '') {
+
+            for (const m of this.data.mapForABC) {
+              if (m[0] === element.metaData.tec_impl) {
+                if (this.data.language === 'pt-br') {
+                  element.metaData.tec_impl = m[1]['pt-br'];
+                }
+                else {
+                  element.metaData.tec_impl = m[1]['en-us'];
+                }
+              }
+            }
+          }
+
+          if (element.metaData.producao != '') {
+
+            for (const m of this.data.mapForProducao) {
+              if (m[0] === element.metaData.producao) {
+                if (this.data.language === 'pt-br') {
+                  element.metaData.producao = m[1]['pt-br'];
+                }
+                else {
+                  element.metaData.producao = m[1]['en-us'];
+                }
+              }
+            }
+          }
+
         });
 
         this.dataEspecial = result['especial'];
 
-        let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
+        if (this.dataEspecial == null || this.dataEspecial == undefined) {
+          this.dataEspecial = null
+        } else {
+          let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
 
-        if (this.dataEspecial.ti.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.ti.src,
-            thumb: this.dataEspecial.ti.thumb,
-            caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
-          });
+          if (this.dataEspecial.ti.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.ti.src,
+              thumb: this.dataEspecial.ti.thumb,
+              caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.q.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.q.src,
+              thumb: this.dataEspecial.q.thumb,
+              caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
+            });
+          }
+
+          // if (this.dataEspecial.ap.show) {
+          // this.vetEspecial.push({
+          //   src: this.dataEspecial.ap.src,
+          //   thumb: this.dataEspecial.ap.thumb,
+          //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
+          // });
+          // }
+
+          if (this.dataEspecial.ucpi.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.ucpi.src,
+              thumb: this.dataEspecial.ucpi.thumb,
+              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.ucus.show) {
+            this.vetEspecial.push({
+              src: this.dataEspecial.ucus.src,
+              thumb: this.dataEspecial.ucus.thumb,
+              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
+            });
+          }
         }
 
-        if (this.dataEspecial.q.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.q.src,
-            thumb: this.dataEspecial.q.thumb,
-            caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
-          });
-        }
-
-        // if (this.dataEspecial.ap.show) {
-        // this.vetEspecial.push({
-        //   src: this.dataEspecial.ap.src,
-        //   thumb: this.dataEspecial.ap.thumb,
-        //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
-        // });
-        // }
-
-        if (this.dataEspecial.ucpi.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.ucpi.src,
-            thumb: this.dataEspecial.ucpi.thumb,
-            caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
-          });
-        }
-
-        if (this.dataEspecial.ucus.show) {
-          this.vetEspecial.push({
-            src: this.dataEspecial.ucus.src,
-            thumb: this.dataEspecial.ucus.thumb,
-            caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
-          });
-        }
 
         let sent = {
           src: result['images'].urlSentinel.src,

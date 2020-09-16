@@ -5,7 +5,7 @@ var numCPUs = 24;
 
 if (cluster.isMaster) {
   if (process.env.NODE_ENV == 'dev') {
-    var numCPUs = 2
+    var numCPUs = 4
   }
 
   for (var i = 0; i < numCPUs; i++) {
