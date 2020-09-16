@@ -410,7 +410,7 @@
 								<th>{{minireportText.detection_date}} </th>
 								<td>{{infodata.dataFormatada}}</td>
 							</tr>
-							<tr *ngIf="infodata.year >= 2015">
+							<tr *ngIf="infodata.year > 2015">
 								<th>{{minireportText.susceptibility}} </th>
 								<td>{{infodata.sucept_desmatFormatada}}</td>
 							</tr>
@@ -448,7 +448,6 @@
 					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
 						</strong></div>
 				</div>
-
 				<div *ngIf="infodataABC" class="card-body">
 					<p class="card-text">{{ infodataABC.origin_table }}-Cerrado</p>
 					<table>
@@ -465,10 +464,6 @@
 								<th>{{minireportText.detection_date}} </th>
 								<td>{{infodataABC.dataFormatada}}</td>
 							</tr>
-							<!-- <tr *ngIf="infodataABC.year >= 2015 && infodataABC.year != ''">
-								<th>{{minireportText.susceptibility}} </th>
-								<td>{{infodataABC.sucept_desmatFormatada}}</td>
-							</tr> -->
 							<tr *ngIf="infodataABC.area_propriedade != ''">
 								<th>{{minireportText.area_property}} </th>
 								<td>{{infodataABC.area_propriedade | number:'1.2-3' }} km²</td>

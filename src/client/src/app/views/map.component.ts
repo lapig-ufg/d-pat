@@ -283,9 +283,6 @@ export class MapComponent implements OnInit {
       }]
     ]);
 
-
-
-
     this.mapForProducao = new Map([
       ["GADO LEITEIRO", {
         "pt-br": "Criação de Gado Leiteiro",
@@ -874,7 +871,6 @@ export class MapComponent implements OnInit {
       return;
     }
 
-
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
 
@@ -988,9 +984,6 @@ export class MapComponent implements OnInit {
           (deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
 
           if (this.utfgridCampo) {
-            coordinate = this.map.getEventCoordinate(evt.originalEvent);
-            let viewResolution = this.map.getView().getResolution();
-
             this.utfgridCampo.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
               if (data) {
 
@@ -1035,7 +1028,6 @@ export class MapComponent implements OnInit {
       if (isABC) {
         if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
           if (this.utfgridabc) {
-            coordinate = this.map.getEventCoordinate(evt.originalEvent);
             this.utfgridabc.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
               if (data) {
                 // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
@@ -1061,7 +1053,6 @@ export class MapComponent implements OnInit {
                 }
 
                 if (this.infodataABC.producao != '') {
-
                   for (const m of this.mapForProducao) {
                     if (m[0] === this.infodataABC.producao) {
                       if (this.language === 'pt-br') {
@@ -1074,7 +1065,7 @@ export class MapComponent implements OnInit {
                   }
                 }
 
-
+                this.infoOverlay.setPosition(data ? coordinate : undefined);
               }
               else {
                 this.infodataABC = null;
