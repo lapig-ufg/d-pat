@@ -1,16 +1,65 @@
 #regionReport{
+  overflow: hidden;
+
   .container-buttons{
     display: grid;
-    position: absolute;
-    right: 111px;
+    position: fixed;
+    right: calc(100% - 90vw);
     top: 32px;
+  }
+
+  .title-report{
+    font-family: "Conthrax Sb"!important;
+    text-align: left;
+    text-transform: uppercase;
+    color: #0b4e26 !important;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    @include fluid-type(16px, 28px);
+  }
+
+  .p-grid{
+    padding: 20px;
   }
 
   button{
     margin: 10px
   }
 
+  .title-report{
+    font-family: "Conthrax Sb"!important;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    @include fluid-type(16px, 21px);
+  }
+
   .spinner{
     margin: 0 auto;
+  }
+
+  .row{
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .dados{
+    margin: 5px;
+    width: 100%;
+  }
+
+  .ui-scrollpanel-bar-x{
+    visibility: hidden;
+  }
+
+  .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
+    background-color: #0b4e26;
+    border: 1px solid #0b4e26;
+    color: #ffffff;
   }
 }

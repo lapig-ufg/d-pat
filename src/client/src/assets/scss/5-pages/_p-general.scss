@@ -11,6 +11,7 @@ body {
   min-width: 60px !important;
 }
 
+
 @media (max-width: 600px) {
   .mat-tab-label-container {
     height: 40px !important;
@@ -95,6 +96,7 @@ body {
   background: #229928;
   -webkit-box-shadow: inset 0 0 6px #229928;
 }
+
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #229928;
 }
@@ -103,6 +105,7 @@ body {
   background-color:transparent !important;
   visibility: hidden !important;
 }
+
 .mat-drawer:not(.mat-drawer-side) {
   box-shadow:none;
 }
@@ -110,6 +113,7 @@ body {
 .mat-drawer-inner-container {
   overflow: hidden!important;
 }
+
 #mat-tab-content-1-0 .mat-tab-body-content{
   overflow: hidden !important;
 }

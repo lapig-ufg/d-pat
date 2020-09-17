@@ -66,25 +66,29 @@ hr {
   background: #fff !important;
 
 }
-#map-info .card table {
-  margin: 10px;
-  border-radius: 10px ;
-}
-#map-info table tr th,
-#map-info table tr td {
-  padding-left: 10px !important;
+#map-info {
+  .card table {
+    margin: 10px;
+    border-radius: 10px ;
+  }
+
+  table tr th, table tr td{
+    padding-left: 10px !important;
+  }
+
+  .card-body {
+    color: #000 !important;
+    padding: 0px !important;
+  }
+  .card-body p.card-text {
+    background: #104e14 !important;
+    color: #fff !important;
+    height: 24px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
 }
 
-
-#map-info .card-body {
-  color: #000 !important;
-  padding: 0px !important;
-}
-#map-info .card-body p.card-text {
-  background: #104e14 !important;
-  color: #fff !important;
-  height: 24px;
-}
 .ol-zoom-in,
 .ol-zoom-out {
   background-color: rgba(0, 0, 0, 0.5) !important;
@@ -156,6 +160,10 @@ hr {
   box-shadow: -1px 1px 10px 0px #257a33;
   .mat-tab-body-wrapper{
     margin: 20px;
+  }
+
+  .mat-icon-button .mat-icon, .mat-icon-button i {
+    line-height: 19px;
   }
 }
 
@@ -315,7 +323,7 @@ h6 {
 
 
 .titleWindows {
-  @include fluid-type(14px, 20px);
+  @include fluid-type(16px, 20px);
   color: #271616;
   background-color: #7cb359;
   padding: 10px;
@@ -1279,15 +1287,6 @@ mat-slider {
   max-width: 100%;
 }
 
-.title-report{
-  font-family: "Conthrax Sb"!important;
-  text-align: left;
-  text-transform: uppercase;
-  color: #0b4e26 !important;
-  position: absolute;
-  bottom: 0;
-  left: 14px;
-}
 .img-class-report img{
   max-width: 100%!important;
 }

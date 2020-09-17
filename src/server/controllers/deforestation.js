@@ -509,6 +509,21 @@ module.exports = function (app) {
 
 	};
 
+	Controller.regionReportTexts = function (request, response) {
+		var language = request.param('lang');
+
+		var controlsJson = languageJson["regionReportTexts"];
+
+		var result = {};
+
+		Object.keys(controlsJson).forEach(function (key, index) {
+			result[key] = controlsJson[key][language];
+		});
+
+		response.send(result);
+		response.end();
+
+	};
 
 	Controller.indicators = function (request, response) {
 

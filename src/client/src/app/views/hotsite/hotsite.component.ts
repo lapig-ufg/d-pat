@@ -6,8 +6,7 @@ declare  var $: any;
 
 @Component({
     selector: 'app-hotsite',
-    templateUrl: './hotsite.component.html',
-    styleUrls: ['./hotsite.component.css']
+    templateUrl: './hotsite.component.html'
 })
 export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     pt_br: boolean;
@@ -97,11 +96,12 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
         this.http.get('/service/hotsite/lang?lang=pt-br').subscribe(result => {
             this.texts = result;
         });
+
         this.fullpage = $("#fullpage").fullpage({
             navigation: true,
             showActiveTooltip: true,
             slidesNavigation: true,
-            navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"],
+            // navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"],
         });
 
         this.videoplay = $("#container").YTPlayer(

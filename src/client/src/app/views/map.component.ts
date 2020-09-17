@@ -838,7 +838,6 @@ export class MapComponent implements OnInit {
         offset: [15, 15],
         stopEvent: false
       });
-
       this.keyForPointer = this.map.on(
         'pointermove',
         this.callbackPointerMoveMap.bind(this)
@@ -1075,7 +1074,7 @@ export class MapComponent implements OnInit {
                   }
                 }
 
-
+                this.infoOverlay.setPosition(data ? coordinate : undefined);
               }
               else {
                 this.infodataABC = null;
@@ -2108,6 +2107,7 @@ export class MapComponent implements OnInit {
   }
 
   async openRegionReport() {
+    let dados = {};
     let url = '/service/deforestation/regionreport?';
 
     if ( this.selectRegion.type === 'state' ) {
@@ -2118,7 +2118,18 @@ export class MapComponent implements OnInit {
       return;
     }
 
-    const dados = await this.http.get(url).toPromise();
+    dados = await this.http.get(url).toPromise();
+
+    dados['language'] = 'lang=' + this.language;
+
+    if (dados) {
+      dados['graphic'] = {
+        type: this.dataSeries.type,
+        data: this.dataSeries,
+        options: this.optionsTimeSeries
+      };
+    }
+
     this.dialog.open(RegionReportComponent,{
             width: 'calc(100% - 5vw)',
             height: 'calc(100% - 5vh)',
@@ -2283,7 +2294,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.dataEspecial = null;
 
     this.svgLoading = "/assets/img/loading.svg";
-
+    console.log(this.urlsLandSat);
     this.initGallery();
 
     this.httpOptions = {

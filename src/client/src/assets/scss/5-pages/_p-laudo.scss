@@ -1,4 +1,24 @@
 #laudo {
+  .p-grid{
+    padding: 20px;
+  }
+
+  .title-report{
+    font-family: "Conthrax Sb"!important;
+    text-align: left;
+    text-transform: uppercase;
+    color: #0b4e26 !important;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    @include fluid-type(16px, 28px);
+  }
+
+  .card-amostral{
+    height: 100%;
+  }
 
   .ui-scrollpanel-content {
     overflow: hidden !important;
@@ -8,4 +28,23 @@
     display: none;
   }
 
+  .row{
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .dados{
+    margin: 5px;
+    width: 100%;
+  }
+
+  .tab{
+    margin: 0.5px;
+    max-width: calc(100% - 2vw);
+  }
+
+  .table-label{
+    width: 155px;
+    font-weight: bolder;
+  }
 }

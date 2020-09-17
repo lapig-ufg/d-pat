@@ -10,7 +10,6 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
-
 /* ----- 1: SETTINGS ------- */
 @import '1-settings/s-variables';
 @import '1-settings/s-typography';
@@ -41,3 +40,6 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @import '5-pages/p-laudo';
 @import '5-pages/p-map';
 @import '5-pages/p-region-report';
+@import '5-pages/p-project';
+@import '5-pages/p-metadata';
+@import '5-pages/p-file-upload';

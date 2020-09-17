@@ -2483,6 +2483,24 @@
 			"en-us": "State Contingency Plan"
 		}
 	},
+	"regionReportTexts": {
+		"label_title_county": {
+			"pt-br": "Relatório de desmatamento do município de [county]",
+			"en-us": "Report of deforestation in the municipality of [county]"
+		},
+		"label_title_state": {
+			"pt-br": "Relatório de Desmatamento do Estado - [state]",
+			"en-us": "[state] State Deforestation Report"
+		},
+		"label_info_county": {
+			"pt-br": "Informações do município",
+			"en-us": "Municipality information"
+		},
+		"label_info_state": {
+			"pt-br": "Informações do Estado",
+			"en-us": "State Information"
+		}
+	},
 	"dialog_relatorio": {
 		"title": {
 			"pt-br": "Relatório do Desmatamento",

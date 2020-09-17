@@ -43,70 +43,70 @@
 .mat-slide-toggle-content {
   font-size: 15px !important
 }
-
-.slideEstados.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #33322e !important;
-}
-
-.slideEstados.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #060606ad !important;
-}
-
-.slideMunicipios.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #33322e !important;
-}
-
-.slideMunicipios.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #060606ad !important;
-}
-
-.slideBiomas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #33322e !important;
-}
-
-.slideBiomas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #060606ad !important;
-}
-
-.slideTerrasIndigenas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #7d691e !important;
-}
-
-.slideTerrasIndigenas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #7d691eb5 !important;
-}
-
-.slideUnidadesConservacao.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #467507 !important;
-}
-
-.slideUnidadesConservacao.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #4675079e !important;
-}
-
-.slideFrigorificos.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #ff0000 !important;
-}
-
-.slideFrigorificos.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: #ff000094 !important;
-}
+//
+//.slideEstados.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #33322e !important;
+//}
+//
+//.slideEstados.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: #060606ad !important;
+//}
+//
+//.slideMunicipios.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #33322e !important;
+//}
+//
+//.slideMunicipios.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: #060606ad !important;
+//}
+//
+//.slideBiomas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #33322e !important;
+//}
+//
+//.slideBiomas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: #060606ad !important;
+//}
+//
+//.slideTerrasIndigenas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #7d691e !important;
+//}
+//
+//.slideTerrasIndigenas.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: #7d691eb5 !important;
+//}
+//
+//.slideUnidadesConservacao.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #467507 !important;
+//}
+//
+//.slideUnidadesConservacao.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: #4675079e !important;
+//}
+//
+//.slideFrigorificos.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #ff0000 !important;
+//}
+//
+//.slideFrigorificos.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: #ff000094 !important;
+//}
 
 #mat-tab-content-1-0 .mat-tab-body-content {
   overflow: inherit !important;
 }
-
-#dropdownPoints .mat-form-field-infix {
-  border-top: none !important;
-}
-
-#dropdownPoints .mat-form-field {
-  width: 110px !important;
-}
-
-#dropdowYearRebanho .mat-form-field-infix {
-  padding-top: 0px !important;
-}
+//
+//#dropdownPoints .mat-form-field-infix {
+//  border-top: none !important;
+//}
+//
+//#dropdownPoints .mat-form-field {
+//  width: 110px !important;
+//}
+//
+//#dropdowYearRebanho .mat-form-field-infix {
+//  padding-top: 0px !important;
+//}
 
 
 #positionLayers .mat-tab-body-content {
@@ -116,51 +116,51 @@
 /*#positionCharts .mat-tab-body-content {
 	overflow: inherit !important;
 }*/
-
-#layers_degradacao .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #b81111 !important;
-}
-
-#layers_degradacao .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: rgba(183,16,16,.5) !important;
-}
-
-#layers_degradacao .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #da8c8c !important;
-}
-
-#layers_degradacao .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #da8c8c !important;
-}
-
-#layers_produtividade .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #f68e42 !important;
-}
-
-#layers_produtividade .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: rgba(246,142,66,.5) !important;
-}
-
-#layer_potencial .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #2a9f5c !important;
-}
-
-#layer_potencial .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: rgba(42,159,92,.5) !important;
-}
-
-#layers_pontos .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #7b2800 !important;
-}
-
-#layers_pontos .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: rgba(123, 40, 0,.5) !important;
-}
-
-#layers_pontos_tvi .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  background-color: #1f4423 !important;
-}
-
-#layers_pontos_tvi .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  background-color: rgba(31, 68, 35,.5) !important;
-}
+//
+//#layers_degradacao .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #b81111 !important;
+//}
+//
+//#layers_degradacao .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: rgba(183,16,16,.5) !important;
+//}
+//
+//#layers_degradacao .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+//  border-color: #da8c8c !important;
+//}
+//
+//#layers_degradacao .mat-radio-button.mat-accent .mat-radio-inner-circle {
+//  background-color: #da8c8c !important;
+//}
+//
+//#layers_produtividade .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #f68e42 !important;
+//}
+//
+//#layers_produtividade .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: rgba(246,142,66,.5) !important;
+//}
+//
+//#layer_potencial .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #2a9f5c !important;
+//}
+//
+//#layer_potencial .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: rgba(42,159,92,.5) !important;
+//}
+//
+//#layers_pontos .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #7b2800 !important;
+//}
+//
+//#layers_pontos .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: rgba(123, 40, 0,.5) !important;
+//}
+//
+//#layers_pontos_tvi .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//  background-color: #1f4423 !important;
+//}
+//
+//#layers_pontos_tvi .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//  background-color: rgba(31, 68, 35,.5) !important;
+//}
