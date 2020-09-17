@@ -45,6 +45,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 declare let html2canvas: any;
 
 let SEARCH_URL = '/service/map/search';
+let SEARCH_REGION = '/service/map/searchregion';
 let PARAMS = new HttpParams({
   fromObject: {
     format: 'json'
@@ -62,6 +63,21 @@ export class SearchService {
 
     return this.http
       .get(SEARCH_URL, { params: PARAMS.set('key', term) })
+      .pipe(map(response => response));
+  }
+}
+
+@Injectable()
+export class SearchRegionService {
+  constructor(private http: HttpClient) { }
+
+  search(term: string, type: string) {
+    if (term === '') {
+      return of([]);
+    }
+
+    return this.http
+      .get(SEARCH_REGION, { params: PARAMS.set('key', term).set('type', type) })
       .pipe(map(response => response));
   }
 }
@@ -365,7 +381,46 @@ export class MapComponent implements OnInit {
     let name = event.data.name;
 
     this.http.get(SEARCH_URL, { params: PARAMS.set('key', name) }).subscribe(result => {
-      let ob = result[0];
+      let ob: any = { text: '' };
+
+      if (Array.isArray(result)) {
+        for (let item of result) {
+          if (name.toUpperCase() === item.value.toUpperCase()) {
+            ob = item;
+          }
+        }
+      }
+      else {
+        ob = result
+      }
+      this.currentData = ob.text;
+      this.updateRegion(ob);
+
+    });
+  };
+
+  onStateSelect(e) {
+    let name = e.element._model.label;
+
+    // console.log(e.dataset);
+    // console.log(e.element);
+    // console.log(e.element._datasetIndex);
+    // console.log(e.element._index);
+
+    PARAMS.append('key', name)
+    PARAMS.append('type', 'state')
+    this.http.get(SEARCH_REGION, { params: PARAMS.set('key', name).set('type', 'state') }).subscribe(result => {
+      let ob: any = { text: '' };
+
+      if (Array.isArray(result)) {
+        for (let item of result) {
+          if (name.toUpperCase() === item.value.toUpperCase()) {
+            ob = item;
+          }
+        }
+      } else {
+        ob = result
+      }
 
       this.currentData = ob.text;
       this.updateRegion(ob);
@@ -657,7 +712,9 @@ export class MapComponent implements OnInit {
 
         });
       }
-    } else {
+    }
+
+    if (this.isFilteredByCity || this.isFilteredByState) {
       /* Atualiza indicadores de uso do Solo */
 
       this.http.get(urlUsoSolo).subscribe(usosoloResult => {
@@ -744,7 +801,7 @@ export class MapComponent implements OnInit {
         year: 2019
       };
 
-      prodes.selectedType = 'prodes_por_region_fip_img';
+      prodes.selectedType = 'prodes_por_region_city_fip_img';
 
     } else {
       prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
@@ -894,7 +951,7 @@ export class MapComponent implements OnInit {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
@@ -907,7 +964,7 @@ export class MapComponent implements OnInit {
           this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              if (prodes.visible && (prodes.selectedType == 'prodes_por_region_fip_img')) {
+              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
                 // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = 'pointer';
                 this.infodataMunicipio = data;
@@ -1111,7 +1168,7 @@ export class MapComponent implements OnInit {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
@@ -1126,10 +1183,16 @@ export class MapComponent implements OnInit {
             if (data) {
               // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-              if (prodes.visible && (prodes.selectedType == 'prodes_por_region_fip_img')) {
+              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
 
-                this.http.get(SEARCH_URL, { params: PARAMS.set('key', data.region_name) }).subscribe(result => {
-                  let ob = result[0];
+                this.http.get(SEARCH_REGION, { params: PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
+                  let ob = { text: '' };
+
+                  for (let item of result) {
+                    if (item.type === data.region_type && data.region_name.toUpperCase() === item.value.toUpperCase()) {
+                      ob = item;
+                    }
+                  }
 
                   this.currentData = ob.text;
                   this.updateRegion(ob);
@@ -1461,10 +1524,28 @@ export class MapComponent implements OnInit {
   private getTileJSONMunicipio() {
 
     let text = '1=1';
+    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    let time = { value: '' }
+    let layerutf = ''
 
-    let time = this.selectedTimeFromLayerType('prodes_por_region_fip_img');
+    if (prodes.selectedType == 'prodes_por_region_city_fip_img') {
+      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
+      layerutf = 'prodes_por_region_city_fip_utfgrid'
+    }
+    else if (prodes.selectedType == 'prodes_por_region_state_fip_img') {
+      time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
+      layerutf = 'prodes_por_region_state_fip_utfgrid'
+    }
 
-    if (this.selectRegion.type === 'city' || this.selectRegion.type === 'state') {
+
+    if (this.selectRegion.type === 'city') {
+      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
+      text += ' AND region_type = \'' + this.selectRegion.type + '\'';
+      layerutf = 'prodes_por_region_city_fip_utfgrid'
+    }
+    else if (this.selectRegion.type === 'state') {
+      time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
+      layerutf = 'prodes_por_region_state_fip_utfgrid'
       text += ' AND region_type = \'' + this.selectRegion.type + '\'';
     }
 
@@ -1473,7 +1554,7 @@ export class MapComponent implements OnInit {
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('prodes_por_region_fip_utfgrid', text, '{x}+{y}+{z}')
+        this.returnUTFGRID(layerutf, text, '{x}+{y}+{z}')
       ]
     };
 
@@ -1573,7 +1654,7 @@ export class MapComponent implements OnInit {
       );
     }
 
-    if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'prodes_por_region_fip_img') {
+    if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'prodes_por_region_city_fip_img' || layer['value'] === 'prodes_por_region_state_fip_img') {
       this.desmatInfo = this.periodSelected;
       this.updateCharts();
     }
@@ -1657,7 +1738,7 @@ export class MapComponent implements OnInit {
 
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         if (this.utfgridmunicipio) {
           let tileJSONMunicipio = this.getTileJSONMunicipio();
 
@@ -2019,7 +2100,7 @@ export class MapComponent implements OnInit {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
