@@ -279,7 +279,8 @@
 								<h6>
 									<b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
 								</h6>
-								<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
+								<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"
+									(onDataSelect)="onStateSelect($event)"></p-chart>
 							</p-scrollPanel>
 						</mat-tab>
 						<mat-tab label="{{chartResultCities.label}}" *ngIf="selectRegion.type != 'city'"
@@ -311,6 +312,23 @@
 <!--								<div style="height: 20vh"></div>-->
 							</p-scrollPanel>
 
+						</mat-tab>
+						<mat-tab *ngIf="isFilteredByCity || isFilteredByState" label="{{chartUsoSolo[0]?.label}}">
+							<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
+								<p-tabView (onChange)="changeSelectedLulcChart($event)">
+									<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
+										[selected]="i == 0" [disabled]="!uso.show" [cache]="true">
+										<div>
+											<p style="font-weight: bold">{{ selectRegion.text }}</p>
+											<div>{{uso.text}}</div>
+											<p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
+												[type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
+												height="20vh"></p-chart>
+										</div>
+									</p-tabPanel>
+								</p-tabView>
+								<div style="height: 20vh"></div>
+							</p-scrollPanel>
 						</mat-tab>
 						<mat-tab label="{{chartResultCitiesIllegalAPP.label}}"
 							*ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013">
@@ -413,7 +431,7 @@
 								<th>{{minireportText.detection_date}} </th>
 								<td>{{infodata.dataFormatada}}</td>
 							</tr>
-							<tr *ngIf="infodata.year >= 2015">
+							<tr *ngIf="infodata.year > 2015">
 								<th>{{minireportText.susceptibility}} </th>
 								<td>{{infodata.sucept_desmatFormatada}}</td>
 							</tr>
@@ -451,7 +469,6 @@
 					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
 						</strong></div>
 				</div>
-
 				<div *ngIf="infodataABC" class="card-body">
 					<p class="card-text">{{ infodataABC.origin_table }}-Cerrado</p>
 					<table>
@@ -468,10 +485,6 @@
 								<th>{{minireportText.detection_date}} </th>
 								<td>{{infodataABC.dataFormatada}}</td>
 							</tr>
-							<!-- <tr *ngIf="infodataABC.year >= 2015 && infodataABC.year != ''">
-								<th>{{minireportText.susceptibility}} </th>
-								<td>{{infodataABC.sucept_desmatFormatada}}</td>
-							</tr> -->
 							<tr *ngIf="infodataABC.area_propriedade != ''">
 								<th>{{minireportText.area_property}} </th>
 								<td>{{infodataABC.area_propriedade | number:'1.2-3' }} km²</td>

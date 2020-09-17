@@ -651,7 +651,7 @@ module.exports = function (app) {
 			chart['indicators'] = queryCar
 			chart['show'] = false
 
-			console.log(chart)
+			// console.log(chart)
 			if (chart['indicators'].length > 0) {
 				chart['show'] = true
 				chart['label'] = languageJson['charts_box_lulc']['label'][language]

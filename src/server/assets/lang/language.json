@@ -344,10 +344,20 @@
 								"en-us": "Polygons on FIP-ABC Properties"
 							}
 						},
-						"prodes_por_region_fip_img": {
+						"prodes_por_region_city_fip_img": {
 							"view_value": {
 								"pt-br": "Municípios",
 								"en-us": "Municipalities"
+							},
+							"timelabel": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							}
+						},
+						"prodes_por_region_state_fip_img": {
+							"view_value": {
+								"pt-br": "Estados",
+								"en-us": "States"
 							},
 							"timelabel": {
 								"pt-br": "Período",
