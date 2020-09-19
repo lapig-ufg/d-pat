@@ -183,7 +183,6 @@ export class RegionReportComponent implements OnInit {
       //       style: 'data'
       //     }
       // );
-
       columns.push(
           {
             image: await self.getBase64ImageFromUrl(self.dados.region.terraclass.imgLarge),
@@ -193,7 +192,6 @@ export class RegionReportComponent implements OnInit {
           },
           // legend,
       );
-
       document.content.push({ columns: columns });
     }
 

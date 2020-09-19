@@ -2543,20 +2543,20 @@
 			"en-us": "Year"
 		},
 		"label_statistc_app": {
-			"pt-br": "Área de Preservação Permanente",
-			"en-us": "Permanent preservation area"
+			"pt-br": "Área total desmatada em APP",
+			"en-us": "Total deforested area in APP"
 		},
 		"label_statistc_area_prodes": {
-			"pt-br": "Área PRODES",
-			"en-us": "PRODES area"
+			"pt-br": "Área total desmatada - PRODES",
+			"en-us": "Total deforested area - PRODES"
 		},
 		"label_statistc_area": {
-			"pt-br": "Área",
-			"en-us": "Area"
+			"pt-br": "Área regional",
+			"en-us": "Regional area"
 		},
 		"label_statistc_area_rl": {
-			"pt-br": "Área de Reserva Legal",
-			"en-us": "Legal Reserve Area"
+			"pt-br": "Área total desmatada em Res. Legal",
+			"en-us": "Total area deforested in Res. Legal"
 		},
 		"label_images": {
 			"pt-br": "Histórico de Imagens Landsat",

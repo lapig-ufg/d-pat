@@ -28,18 +28,18 @@
                                         <h5 class="subtitles-report">
                                             <strong>{{texts.label_metadata}}</strong>
                                         </h5>
-                                        <table style="width:100%">
+                                        <table class="tb-metadata" style="width:100%">
                                             <tr>
                                                 <th class="table-label">{{texts.label_region}}</th>
                                                 <th class="table-value">{{dados.region.metadata[0]?.region_display}}</th>
                                             </tr>
                                             <tr>
-                                                <th class="table-label">{{texts.label_area_antropica}}</th>
-                                                <th class="table-value">{{dados.region.metadata[0]?.area_antropica | number:'1.2-3'}}</th>
+                                                <th class="table-label">{{texts.label_area}}</th>
+                                                <th class="table-value">{{dados.region.metadata[0]?.area_region | number:'1.2-2' }} km²</th>
                                             </tr>
                                             <tr>
-                                                <th class="table-label">{{texts.label_area}}</th>
-                                                <th class="table-value">{{dados.region.metadata[0]?.area_region | number:'1.2-3' }}</th>
+                                                <th class="table-label">{{texts.label_area_antropica}}</th>
+                                                <th class="table-value">{{dados.region.metadata[0]?.area_antropica | number:'1.2-2'}} km²</th>
                                             </tr>
                                         </table>
                                         <br><br>
@@ -78,23 +78,26 @@
                                                     [spinnerSrc]="svgLoading">
                                             </toh-spinner-img>
 
+                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">
+
                                             <mat-card-content >
                                                 <table class="tb-imgs" style="width:100%">
-                                                    <tr *ngIf="item.area_app" >
-                                                        <th class="table-label">{{texts.label_statistc_app}}</th>
-                                                        <th class="table-value">{{item.area_app}}</th>
+
+                                                    <tr>
+                                                        <th class="table-label">{{texts.label_statistc_area}}</th>
+                                                        <th class="table-value">{{item.area_region | number:'1.2-2' }} km²</th>
                                                     </tr>
                                                     <tr>
                                                         <th class="table-label">{{texts.label_statistc_area_prodes}}</th>
-                                                        <th class="table-value">{{item.area_prodes | number:'1.2-3'}}</th>
+                                                        <th class="table-value">{{item.area_prodes | number:'1.2-2'}} km²</th>
                                                     </tr>
-                                                    <tr>
-                                                        <th class="table-label">{{texts.label_statistc_area}}</th>
-                                                        <th class="table-value">{{item.area_region | number:'1.2-3' }}</th>
+                                                    <tr *ngIf="item.area_app" >
+                                                        <th class="table-label">{{texts.label_statistc_app}}</th>
+                                                        <th class="table-value">{{item.area_app | number:'1.2-2'}} km²</th>
                                                     </tr>
                                                     <tr *ngIf="item.area_rl">
                                                         <th class="table-label">{{texts.label_statistc_area_rl}}</th>
-                                                        <th class="table-value">{{item.area_rl | number:'1.2-3' }}</th>
+                                                        <th class="table-value">{{item.area_rl | number:'1.2-2' }} km²</th>
                                                     </tr>
                                                 </table>
                                             </mat-card-content>

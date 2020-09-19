@@ -69,11 +69,16 @@
     color: #ffffff;
   }
   .table-label{
-    width: 155px;
     font-weight: bolder;
   }
   .table-value{
     font-weight: normal;
+  }
+  .tb-metadata{
+    font-size: 17px;
+    .table-label{
+      width: 137px;
+    }
   }
 
   .card-amostral{
@@ -92,10 +97,11 @@
   }
   .tb-imgs {
    tr {
+      //border-top: 1px solid black;
       //border-bottom: 1px solid black;
     }
-    .table-label{
-      width: 200px;
+    .table-value{
+      width: 100px;
     }
   }
 
@@ -105,4 +111,9 @@
       width: 100%;
     }
   }
+
+ .mat-card > :last-child:not(.mat-card-footer) {
+   padding-top: 5px;
+   padding-left: 0;
+ }
 }
