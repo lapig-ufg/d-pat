@@ -447,15 +447,23 @@ module.exports = function (app) {
 
 		var queryMetaData = request.queryResult["metadata"];
 
-
 		var queryResultDesmat = request.queryResult["estastica_anual"];
 
-		let regionfilter = ""
+		let regionfilter = {
+			msfilter: "",
+			msregion: ""
+		}
 		if (type == 'city') {
-			regionfilter = "cd_geocmu"
+			regionfilter = {
+				msfilter: "cd_geocmu",
+				msregion: "cd_geocmu"
+			}
 		}
 		else {
-			regionfilter = "uf"
+			regionfilter = {
+				msfilter: "uf",
+				msregion: "value"
+			}
 		}
 
 		let anual_statistic = [];
@@ -474,11 +482,11 @@ module.exports = function (app) {
 				area_rl: parseFloat(row["area_rl"]),
 				year: Number(row["year"]),
 				imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-					sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and value = '" + region + "'",
+					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior_relatorio&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+					sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter.msfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and " + regionfilter.msregion + " = '" + region + "'",
 				imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
-					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-					sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and value = '" + region + "'"
+					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior_relatorio&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+					sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter.msfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and " + regionfilter.msregion + " = '" + region + "'"
 			});
 		});
 
@@ -486,17 +494,17 @@ module.exports = function (app) {
 		var legendas = {
 			legendTerraclass: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=uso_solo_terraclass_fip&format=image/png",
 			legendRegion: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=regions_fip_realce_maior&format=image/png",
-			legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_prodes_desmatamento_100_fip_realce_maior" + "&format=image/png",
+			legendDesmatamento: app.config.ows_host + "/ows?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=" + "bi_ce_prodes_desmatamento_100_fip_realce_maior_relatorio" + "&format=image/png",
 
 		}
 
 		let box = anual_statistic[0].box;
 
 		let urlTerraclass = {
-			imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=regions_fip_realce_maior,uso_solo_terraclass_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-				sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and value = '" + region + "'",
-			imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=regions_fip_realce_maior,uso_solo_terraclass_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-				sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and value = '" + region + "'",
+			imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+				sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and " + regionfilter.msregion + "= '" + region + "'",
+			imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+				sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and " + regionfilter.msregion + "= '" + region + "'",
 		};
 
 		response.send({
@@ -636,9 +644,6 @@ module.exports = function (app) {
 				}
 			}
 		]
-
-
-
 
 		for (let chart of chartResult) {
 
