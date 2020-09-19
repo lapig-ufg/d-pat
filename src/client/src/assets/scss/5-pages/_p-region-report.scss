@@ -22,7 +22,7 @@
   }
 
   .p-grid{
-    padding: 20px;
+    padding: 3px;
   }
 
   button{
@@ -49,8 +49,10 @@
   }
 
   .dados{
-    margin: 5px;
     width: 100%;
+  }
+  .tabs{
+    margin: 10px;
   }
 
   .ui-scrollpanel-bar-x{
@@ -61,5 +63,46 @@
     background-color: #0b4e26;
     border: 1px solid #0b4e26;
     color: #ffffff;
+  }
+ .ui-table .ui-table-tbody > tr.ui-state-highlight {
+    background-color:#0b4e26;
+    color: #ffffff;
+  }
+  .table-label{
+    width: 155px;
+    font-weight: bolder;
+  }
+  .table-value{
+    font-weight: normal;
+  }
+
+  .card-amostral{
+    height: 100%;
+  }
+
+  .legend{
+    display: grid;
+  }
+
+  .resume{
+    font-weight: normal;
+    text-align: center;
+    line-height: 30px;
+    @include fluid-type(16px, 18px);
+  }
+  .tb-imgs {
+   tr {
+      //border-bottom: 1px solid black;
+    }
+    .table-label{
+      width: 200px;
+    }
+  }
+
+  toh-spinner-img{
+    display: flex;
+    img{
+      width: 100%;
+    }
   }
 }

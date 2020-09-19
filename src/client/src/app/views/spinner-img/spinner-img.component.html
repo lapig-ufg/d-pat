@@ -1,2 +1,2 @@
-    <img *ngIf="loading" src="{{spinnerSrc}}" alt="loading" style="width: 50%; height:70%;"/>
+    <img *ngIf="loading" src="{{spinnerSrc}}" alt="loading" style="max-width: 30%; margin: 0 auto;"/>
     <img class="imageUp" [hidden]="loading" (load)="onLoad()" src="{{imgSrc}}" alt="Image" [ngStyle]="{'width': largura, 'height': altura}"/>

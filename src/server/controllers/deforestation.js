@@ -493,9 +493,9 @@ module.exports = function (app) {
 		let box = anual_statistic[0].box;
 
 		let urlTerraclass = {
-			imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+			imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=regions_fip_realce_maior,uso_solo_terraclass_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
 				sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and value = '" + region + "'",
-			imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
+			imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=regions_fip_realce_maior,uso_solo_terraclass_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
 				sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and value = '" + region + "'",
 		};
 

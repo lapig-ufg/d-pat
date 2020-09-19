@@ -2509,6 +2509,66 @@
 		"label_info_state": {
 			"pt-br": "Informações do Estado",
 			"en-us": "State Information"
+		},
+		"label_area_antropica": {
+			"pt-br": "Área Antrópica",
+			"en-us": "Anthropic area"
+		},
+		"label_area": {
+			"pt-br": "Área",
+			"en-us": "Area"
+		},
+		"label_legend": {
+			"pt-br": "Legenda",
+			"en-us": "Legend"
+		},
+		"label_county": {
+			"pt-br": "Município",
+			"en-us": "County"
+		},
+		"label_state": {
+			"pt-br": "Estado",
+			"en-us": "State"
+		},
+		"label_timeseries": {
+			"pt-br": "Série Temporal",
+			"en-us": "Timeseries"
+		},
+		"label_metadata": {
+			"pt-br": "Metadados",
+			"en-us": "Metadata"
+		},
+		"label_year": {
+			"pt-br": "Ano",
+			"en-us": "Year"
+		},
+		"label_statistc_app": {
+			"pt-br": "Área de Preservação Permanente",
+			"en-us": "Permanent preservation area"
+		},
+		"label_statistc_area_prodes": {
+			"pt-br": "Área PRODES",
+			"en-us": "PRODES area"
+		},
+		"label_statistc_area": {
+			"pt-br": "Área",
+			"en-us": "Area"
+		},
+		"label_statistc_area_rl": {
+			"pt-br": "Área de Reserva Legal",
+			"en-us": "Legal Reserve Area"
+		},
+		"label_images": {
+			"pt-br": "Histórico de Imagens Landsat",
+			"en-us": "Landsat Image History"
+		},
+		"label_ranking": {
+			"pt-br": "Histórico de Imagens Landsat",
+			"en-us": "Landsat Image History"
+		},
+		"label_municipalities": {
+			"pt-br": "Municípios",
+			"en-us": "Municipalities"
 		}
 	},
 	"dialog_relatorio": {

@@ -2182,15 +2182,18 @@ export class MapComponent implements OnInit {
     let dados = {};
     let url = '/service/deforestation/regionreport?';
 
+    dados['ranking'] = null;
+
     if ( this.selectRegion.type === 'state' ) {
       url += 'type=state&region=' + this.selectRegion.value.toLowerCase();
+      dados['ranking'] = { table: this.chartResultCities, desmatInfo: this.desmatInfo };
     } else if ( this.selectRegion.type === 'city' ) {
       url += 'type=city&region=' + this.selectRegion.cd_geocmu.toLowerCase();
     } else {
       return;
     }
 
-    dados = await this.http.get(url).toPromise();
+    dados['region'] = await this.http.get(url).toPromise();
 
     dados['language'] = 'lang=' + this.language;
 
@@ -3133,107 +3136,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       this.loading = false;
     });
     this.loading = false;
-  }
-
-  async printReportCounty() {
-    let language = this.data.language;
-    let self = this;
-
-    let dd = {
-      pageSize: 'A4',
-      // by default we use portrait, you can change it to landscape if you wish
-      pageOrientation: 'portrait',
-
-      // [left, top, right, bottom]
-      pageMargins: [40, 70, 40, 80],
-
-      header: {
-        margin: [24, 10, 24, 30],
-        columns: [
-          {
-            image: logos.logoDPAT,
-            width: 130
-          },
-          {
-            // [left, top, right, bottom]
-            margin: [65, 15, 10, 10],
-            text: this.textOnDialog.title.toUpperCase(),
-            style: 'titleReport',
-          },
-
-        ]
-      },
-      footer: function (currentPage, pageCount) {
-        return {
-          table: {
-            widths: '*',
-            body: [
-              [
-                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [300, 43] },
-                {},
-                {},
-              ],
-              [
-                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
-                { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
-                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
-              ],
-            ]
-          },
-          layout: 'noBorders'
-        };
-      },
-      content: [],
-      styles: {
-        titleReport: {
-          fontSize: 16,
-          bold: true
-        },
-        textFooter: {
-          fontSize: 9
-        },
-        textImglegend: {
-          fontSize: 9
-        },
-        header: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 0, 0, 10]
-        },
-        data: {
-          bold: true,
-        },
-        subheader: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 10, 0, 5]
-        },
-        codCar: {
-          fontSize: 11,
-          bold: true,
-        },
-        textObs: {
-          fontSize: 11,
-        },
-        tableDpat: {
-          margin: [0, 5, 0, 15],
-          fontSize: 11,
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        },
-        metadata: {
-          background: '#0b4e26',
-          color: '#fff'
-        }
-      }
-    };
-
-    let filename = 'reportCounty.pdf';
-
-    pdfMake.createPdf(dd).download(filename);
   }
 
   ngOnInit() {
