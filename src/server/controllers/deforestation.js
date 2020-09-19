@@ -483,10 +483,10 @@ module.exports = function (app) {
 				year: Number(row["year"]),
 				imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
 					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior_relatorio&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-					sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter.msfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and " + regionfilter.msregion + " = '" + region + "'",
+					sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter.msfilter + " ilike '" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and " + regionfilter.msregion + " = '" + region + "'",
 				imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
 					ano + "_fip,regions_fip_realce_maior,bi_ce_prodes_desmatamento_100_fip_realce_maior_relatorio&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-					sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter.msfilter + "='" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and " + regionfilter.msregion + " = '" + region + "'"
+					sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSFILTER=" + regionfilter.msfilter + " ilike '" + region + "' and year = " + ano + "&MSREGION=type='" + type + "' and " + regionfilter.msregion + " = '" + region + "'"
 			});
 		});
 
@@ -502,9 +502,9 @@ module.exports = function (app) {
 
 		let urlTerraclass = {
 			imgSmall: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-				sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and " + regionfilter.msregion + "= '" + region + "'",
+				sizeThumb + "&height=" + sizeThumb + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and " + regionfilter.msregion + " ilike '" + region + "'",
 			imgLarge: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=uso_solo_terraclass_fip,regions_fip_realce_maior&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
-				sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and " + regionfilter.msregion + "= '" + region + "'",
+				sizeSrc + "&height=" + sizeSrc + "&format=image/png&styles=&ENHANCE=TRUE&MSREGION=type='" + type + "' and " + regionfilter.msregion + " ilike '" + region + "'",
 		};
 
 		response.send({
