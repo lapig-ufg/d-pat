@@ -200,6 +200,8 @@ export class MapComponent implements OnInit {
     strokeColor: '#2224ba',
   };
 
+  originalLayerFromUpload = { features: [] };
+
   innerHeigth: any;
   showDrawer: boolean;
   controls: any;
@@ -1888,12 +1890,14 @@ export class MapComponent implements OnInit {
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.features[0].properties[auxlabel];
         this.layerFromUpload.layer = data;
+        this.originalLayerFromUpload = data;
 
       } else {
 
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.name;
         this.layerFromUpload.layer = data;
+        this.originalLayerFromUpload = data;
       }
     }
 
@@ -1947,6 +1951,39 @@ export class MapComponent implements OnInit {
     } else {
       map.removeLayer(this.layerFromUpload.layer);
     }
+
+  }
+
+  private analyzeUploadShape() {
+    console.log("analise@!")
+
+    console.log(this.originalLayerFromUpload)
+
+    let url = '/service/upload/desmatperyear'
+
+    if (!this.originalLayerFromUpload.hasOwnProperty('features')) {
+      return;
+    }
+
+    let parameters = {
+      "shape": this.originalLayerFromUpload.features[0].geometry.coordinates,
+      "type": this.originalLayerFromUpload.features[0].geometry.type,
+    };
+
+    // this.http.get(url, parameters).subscribe(result => {
+
+
+    // });
+
+    this.http.get(url, {
+      params: parameters,
+      observe: 'response'
+    })
+      .toPromise()
+      .then(response => {
+        console.log("f- ", response);
+      })
+      .catch(console.log);
 
   }
 

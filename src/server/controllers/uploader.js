@@ -3,7 +3,7 @@ const unzipper = require("unzipper"),
 	path = require('path'),
 	ogr2ogr = require("ogr2ogr");
 
-module.exports = function(app) {
+module.exports = function (app) {
 	const config = app.config;
 
 	const Internal = {};
@@ -40,7 +40,7 @@ module.exports = function(app) {
 	];
 	Internal.spatialFiles = ["shp", "kml", "geojson"];
 
-	Internal.clearCache = function(data, callback) {
+	Internal.clearCache = function (data, callback) {
 		return callback(true, data);
 
 		// fs.readdir(dir_upload, (err, files) => {
@@ -56,10 +56,10 @@ module.exports = function(app) {
 		// });
 	};
 
-	Internal.toGeoJson = function(shapfile, callback) {
+	Internal.toGeoJson = function (shapfile, callback) {
 		let geojson = ogr2ogr(shapfile).timeout(300000); // 5 minutes
 
-		geojson.exec(function(er, data) {
+		geojson.exec(function (er, data) {
 			if (er) {
 				Internal.response
 					.status(400)
@@ -73,7 +73,7 @@ module.exports = function(app) {
 		});
 	};
 
-	Internal.extractFiles = async function(zip, callback) {
+	Internal.extractFiles = async function (zip, callback) {
 		try {
 			for await (const entry of zip) {
 				const arrayName = entry.path.split(".");
@@ -98,7 +98,7 @@ module.exports = function(app) {
 				if (type == "File" && Internal.acceptedFiles.includes(extension)) {
 					let time = "";
 
-					if(extension == "kml"){
+					if (extension == "kml") {
 						time = "-" + new Date().getTime();
 					}
 
@@ -109,7 +109,7 @@ module.exports = function(app) {
 							.split("/")
 							.pop()
 							.toLowerCase() +
-							time +
+						time +
 						"." +
 						extension;
 
@@ -143,7 +143,7 @@ module.exports = function(app) {
 		}
 
 		if (Internal.targetFilesName.split(".").pop() == "geojson") {
-			fs.readFile(Internal.targetFilesName, "utf8", function(err, data) {
+			fs.readFile(Internal.targetFilesName, "utf8", function (err, data) {
 				if (err) {
 					Internal.response
 						.status(400)
@@ -160,14 +160,14 @@ module.exports = function(app) {
 		}
 	};
 
-	Internal.finish = function(finished, geoJson) {
+	Internal.finish = function (finished, geoJson) {
 		if (finished) {
 			Internal.response.status(200).send(JSON.stringify(geoJson));
 			fs.unlinkSync(Internal.tmpPath);
 		}
 	};
 
-	Internal.doRequest = function(request, response) {
+	Internal.doRequest = function (request, response) {
 		/** Reset Variables */
 		Internal.targetFilesName = null;
 		Internal.dirTarget = null;
@@ -199,8 +199,34 @@ module.exports = function(app) {
 		Internal.extractFiles(zip, Internal.toGeoJson);
 	};
 
-	Uploader.getGeoJson = function(request, response) {
+	Uploader.getGeoJson = function (request, response) {
 		Internal.doRequest(request, response);
+	};
+
+	Uploader.compareToDeforestation = function (request, response) {
+
+		var language = request.param('lang')
+		var shape = request.param('shape')
+
+		var queryResult = request.queryResult["desmat_per_year_prodes"]
+
+		var resultByYear = []
+
+		queryResult.forEach(function (row) {
+
+			var year = Number(row['year'])
+			var area = Number(row['areamunkm'])
+
+			resultByYear.push({
+				'area_desmat': area,
+				'year': year
+			})
+		});
+
+		response.send(resultByYear)
+		response.end()
+
+
 	};
 
 	return Uploader;
