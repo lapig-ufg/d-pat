@@ -1018,6 +1018,7 @@
             } while (i = i.parentNode);
             return t(r)
         }
+
         e.each(["backgroundColor", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor", "color", "outlineColor"], function(n, r) {
             e.fx.step[r] = function(e) {
                 0 == e.state && (e.start = i(e.elem, r), e.end = t(e.end)), e.elem.style[r] = "rgb(" + [Math.max(Math.min(parseInt(e.pos * (e.end[0] - e.start[0]) + e.start[0]), 255), 0), Math.max(Math.min(parseInt(e.pos * (e.end[1] - e.start[1]) + e.start[1]), 255), 0), Math.max(Math.min(parseInt(e.pos * (e.end[2] - e.start[2]) + e.start[2]), 255), 0)].join(",") + ")"
@@ -1068,4 +1069,5 @@
             white: [255, 255, 255],
             yellow: [255, 255, 0]
         }
+
     }(jQuery);

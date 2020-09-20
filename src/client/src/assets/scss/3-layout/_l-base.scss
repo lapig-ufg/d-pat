@@ -1,0 +1,53 @@
+.mat-tab-label{
+  min-width: 100px !important;
+  padding: 10px 10px !important;
+}
+
+.mat-mini-fab {
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 0px !important;
+  background-color: #9cd699 !important;
+}
+
+.mat-slide-toggle-content {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background: #595959 !important;
+}
+
+.chart-legend {
+  padding: 10px !important;
+}
+
+.chart-legend .legend-labels {
+  background: none !important;
+
+}
+
+.chart-legend .legend-label {
+  color: black !important;
+}
+
+.chart-legend .legend-wrap {
+  width: auto !important;
+}
+
+.chart-legend div {
+  width: auto !important;
+}
+
+.mat-slide-toggle-content {
+  font-size: 15px !important
+}
+
+#mat-tab-content-1-0 .mat-tab-body-content {
+  overflow: inherit !important;
+}
+
+#positionLayers .mat-tab-body-content {
+  overflow: hidden !important;
+}
