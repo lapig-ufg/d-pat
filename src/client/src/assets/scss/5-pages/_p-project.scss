@@ -1,0 +1,91 @@
+#project{
+
+  .bg-dark {
+    background-color:#5a432082!important;
+    border-radius: 10px!important;
+  }
+  .carousel-item img {
+    border-radius: 10px !important;
+  }
+  .carousel-inner {
+    border-radius: 10px !important;
+  }
+
+  img {
+    border-radius: 10px !important;
+  }
+
+  p{
+    font-size: 16px;
+    text-indent: 4em;
+  }
+
+  .img-logo{
+    max-width: 100%!important;
+    height: 50px !important;
+    width: 120px !important;
+  }
+
+  ol, ul {
+    margin-left: 6em;
+    text-indent: -3em;
+  }
+
+  ol, ul .lead{
+    font-size: 16.5px;
+  }
+
+  li{
+    margin-top: 6px
+  }
+
+  .center-block {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  table, tr, th {
+    text-align: center;
+  }
+  caption{
+    text-align: center;
+    color: black!important;
+  }
+
+  table, tr .lead{
+    font-size: 16.5px;
+  }
+
+  figcaption{
+    color: black!important;
+  }
+
+  .sticky-top {
+    top: 8px !important;
+  }
+
+  .navbar-nav .nav-link{
+    text-transform: uppercase;
+    transition: 0.5s!important;
+  }
+
+  .nav-link a:hover{
+    color: white !important;
+    cursor: pointer !important;
+  }
+
+  .scroll-to-top {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+  }
+  .show-scrollTop {
+    opacity: 1;
+    transition: all .2s ease-in-out;
+  }
+}
+
+

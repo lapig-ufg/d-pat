@@ -2493,6 +2493,84 @@
 			"en-us": "State Contingency Plan"
 		}
 	},
+	"regionReportTexts": {
+		"label_title_county": {
+			"pt-br": "Relatório de desmatamento do município de [county]",
+			"en-us": "Report of deforestation in the municipality of [county]"
+		},
+		"label_title_state": {
+			"pt-br": "Relatório de Desmatamento do Estado - [state]",
+			"en-us": "[state] State Deforestation Report"
+		},
+		"label_info_county": {
+			"pt-br": "Informações do município",
+			"en-us": "Municipality information"
+		},
+		"label_info_state": {
+			"pt-br": "Informações do Estado",
+			"en-us": "State Information"
+		},
+		"label_area_antropica": {
+			"pt-br": "Área Antrópica",
+			"en-us": "Anthropic area"
+		},
+		"label_area": {
+			"pt-br": "Área",
+			"en-us": "Area"
+		},
+		"label_legend": {
+			"pt-br": "Legenda",
+			"en-us": "Legend"
+		},
+		"label_county": {
+			"pt-br": "Município",
+			"en-us": "County"
+		},
+		"label_state": {
+			"pt-br": "Estado",
+			"en-us": "State"
+		},
+		"label_timeseries": {
+			"pt-br": "Série Temporal",
+			"en-us": "Timeseries"
+		},
+		"label_metadata": {
+			"pt-br": "Metadados",
+			"en-us": "Metadata"
+		},
+		"label_year": {
+			"pt-br": "Ano",
+			"en-us": "Year"
+		},
+		"label_statistc_app": {
+			"pt-br": "Área total desmatada em APP",
+			"en-us": "Total deforested area in APP"
+		},
+		"label_statistc_area_prodes": {
+			"pt-br": "Área total desmatada - PRODES",
+			"en-us": "Total deforested area - PRODES"
+		},
+		"label_statistc_area": {
+			"pt-br": "Área regional",
+			"en-us": "Regional area"
+		},
+		"label_statistc_area_rl": {
+			"pt-br": "Área total desmatada em Res. Legal",
+			"en-us": "Total area deforested in Res. Legal"
+		},
+		"label_images": {
+			"pt-br": "Histórico de Imagens Landsat",
+			"en-us": "Landsat Image History"
+		},
+		"label_ranking": {
+			"pt-br": "Histórico de Imagens Landsat",
+			"en-us": "Landsat Image History"
+		},
+		"label_municipalities": {
+			"pt-br": "Municípios",
+			"en-us": "Municipalities"
+		}
+	},
 	"dialog_relatorio": {
 		"title": {
 			"pt-br": "Relatório do Desmatamento",

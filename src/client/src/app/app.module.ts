@@ -24,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -54,6 +55,7 @@ import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-inter
 import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
+import { RegionReportComponent } from './views/region-report/region-report.component';
 
 registerLocaleData(localePt);
 
@@ -67,7 +69,8 @@ registerLocaleData(localePt);
     MetadataComponent,
     HotsiteComponent,
     MobileComponent,
-    ProjectComponent
+    ProjectComponent,
+    RegionReportComponent
   ],
   imports: [
     TabViewModule,
@@ -97,6 +100,7 @@ registerLocaleData(localePt);
     MatSidenavModule,
     MatTooltipModule,
     MatRadioModule,
+    MatProgressSpinnerModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -104,7 +108,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, RegionReportComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

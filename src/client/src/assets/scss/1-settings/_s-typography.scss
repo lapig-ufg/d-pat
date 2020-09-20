@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+@font-face {
+  font-family: "Conthrax Sb";
+  src: url("src/assets/fonts/conthrax/conthrax.eot"); /* IE9*/
+  src: url("src/assets/fonts/conthrax/conthrax.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("src/assets/fonts/conthrax/conthrax.woff2") format("woff2"), /* chrome firefox */
+  url("src/assets/fonts/conthrax/conthrax.woff") format("woff"), /* chrome firefox */
+  url("src/assets/fonts/conthrax/conthrax.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
+  url("src/assets/fonts/conthrax/conthrax.svg#Conthrax Sb") format("svg"); /* iOS 4.1- */
+}
