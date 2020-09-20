@@ -19,10 +19,11 @@
                                         <toh-spinner-img
                                                 [largura]="'100%'"
                                                 [altura]="'100%'"
-                                                [imgSrc]="dados.region.terraclass.imgLarge"
+                                                [imgSrc]="dados.region.terraclass.imgSmall"
                                                 [spinnerSrc]="svgLoading"
                                                 (click)="openLightBoxTerraClass()">
                                         </toh-spinner-img>
+                                        <p class="title-info">{{texts.label_img_mun}}</p>
                                     </div>
                                     <div class="p-col">
                                         <h5 class="subtitles-report">
@@ -47,7 +48,7 @@
                                             <strong>{{texts.label_legend}}</strong>
                                         </h5>
                                         <div class="legend">
-                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">
+<!--                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">-->
                                             <img *ngIf="dados.region.legendas.legendRegion" [src]="dados.region.legendas.legendRegion">
                                             <img *ngIf="dados.region.legendas.legendTerraclass" [src]="dados.region.legendas.legendTerraclass">
                                         </div>
@@ -55,7 +56,7 @@
                                 </div>
                             </p-accordionTab>
                             <p-accordionTab class="tabs" header="{{texts.label_timeseries}}">
-                                <div class="p-grid " *ngIf="dados.graphic">
+                                <div id="reportChart" class="p-grid " *ngIf="dados.graphic">
                                     <div class="p-col" style="width: 98%;">
                                         <p class="resume">{{dados.graphic.data.description}}</p><br>
                                         <p-chart [type]="dados.graphic.type" [data]="dados.graphic.data" [options]="dados.graphic.options">
@@ -75,7 +76,8 @@
                                                     class="img-landsat-laudo"
                                                     [largura]="'100%'"
                                                     [imgSrc]="item.imgSmall"
-                                                    [spinnerSrc]="svgLoading">
+                                                    [spinnerSrc]="svgLoading"
+                                                    (click)="openLightBoxImagesLandSat(item)">
                                             </toh-spinner-img>
 
                                             <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">
