@@ -1,7 +1,7 @@
 #laudo {
-  .p-grid{
-    padding: 20px;
-  }
+  //.p-grid{
+  //  padding: 20px;
+  //}
 
   .title-report{
     font-family: "Conthrax Sb"!important;
@@ -53,6 +53,10 @@
 
   .table-value{
     font-weight: normal;
+  }
+
+  .seal{
+    margin: 0 auto;
   }
 
   toh-spinner-img{

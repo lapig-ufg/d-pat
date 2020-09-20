@@ -165,6 +165,11 @@ hr {
   .mat-icon-button .mat-icon, .mat-icon-button i {
     line-height: 19px;
   }
+
+  .ui-table .ui-table-tbody > tr.ui-state-highlight {
+    background-color:#0b4e26;
+    color: #ffffff;
+  }
 }
 
 #positionLegend {
@@ -910,7 +915,7 @@ mat-select {
   justify-content: center;
   left: 2%;
   top: 2%;
-  width: 43vh;
+  width: 33vh;
   border-radius: 10px;
   background-color: #fff;
   z-index: 1000;

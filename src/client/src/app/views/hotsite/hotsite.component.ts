@@ -56,6 +56,7 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
         $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
         $('#container').YTPMute();
         $('#container').YTPPause();
+        $('.btn-navigate').css('display', 'grid').fadeIn()
 
         $(".content-overlay, .bg-overlay").addClass("opened"),
             $("#logo").addClass("pushed"),
@@ -72,6 +73,7 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
 
         $('#container').YTPRemoveMask();
         $('#container').YTPPlay();
+        $('.btn-navigate').fadeOut()
         $(".content-overlay, .bg-overlay").removeClass("opened"),
             $("#logo").removeClass("pushed"),
             $(".menu").css('display', 'block'),
@@ -79,6 +81,13 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
             $(".info-2").css('display', 'none'),
             $(".info").removeClass("is-active"),
             $(".section, #dpat-nav").removeClass("active")
+    }
+
+    moveUp() {
+        $.fn.fullpage.moveSectionUp();
+    }
+    moveDown() {
+        $.fn.fullpage.moveSectionDown();
     }
 
     handleMenu(event) {

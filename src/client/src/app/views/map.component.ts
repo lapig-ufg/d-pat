@@ -2468,7 +2468,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         ]
       },
-
       footer: function (currentPage, pageCount) {
         return {
           table: {
@@ -2489,7 +2488,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           layout: 'noBorders'
         };
       },
-
       content: [
         { text: this.textOnDialog.information_tab.title_tab, style: 'subheader' },
         {
@@ -2587,9 +2585,194 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       }
     }
 
-    if (this.carData.length > 0 && this.data.year >= 2013) {
+    if (this.dataEspecial) {
+      let columns = [];
+      let images  = [];
 
-      dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader' })
+      dd.content.push({ text: this.textOnDialog.especial_area.title_tab, style: 'subheader' });
+
+      if ( this.dataEspecial.ti ) {
+
+          if ( this.dataEspecial.ti.show ) {
+              images.push(
+                  {
+                      image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.thumb),
+                      width: 180,
+                      alignment: 'center'
+                  }
+              );
+
+              if(this.dataEspecial.ti.legendDesmatamento){
+                  images.push(
+                      {
+                          image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendDesmatamento),
+                          width: 180,
+                          alignment: 'center'
+                      }
+                  );
+              }
+
+              if(this.dataEspecial.ti.legendEspecial){
+                  images.push(
+                      {
+                          image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendEspecial),
+                          width: 180,
+                          alignment: 'center'
+                      }
+                  );
+              }
+
+          }
+
+          columns.push(
+              [
+                  { text: this.textOnDialog.especial_area.titleTI, alignment: 'left', margin: [0, 25, 0, 10] },
+                  { text: this.dataEspecial.ti.ti_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+                  { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ti.ti_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
+                  // images,
+              ],
+          );
+      }
+      if ( this.dataEspecial.ucus ) {
+
+            if ( this.dataEspecial.ucus.show ) {
+                images.push(
+                    {
+                        image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.thumb),
+                        width: 180,
+                        alignment: 'center'
+                    }
+                );
+
+                if(this.dataEspecial.ucus.legendDesmatamento){
+                    images.push(
+                        {
+                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendDesmatamento),
+                            width: 180,
+                            alignment: 'center'
+                        }
+                    );
+                }
+
+                if(this.dataEspecial.ucus.legendEspecial){
+                    images.push(
+                        {
+                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendEspecial),
+                            width: 180,
+                            alignment: 'center'
+                        }
+                    );
+                }
+
+            }
+
+            columns.push(
+                [
+                    { text: this.textOnDialog.especial_area.titleUCUS, alignment: 'left', margin: [0, 25, 0, 10] },
+                    { text: this.dataEspecial.ucus.ucus_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucus.ucus_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
+                    // images,
+                ],
+            );
+        }
+
+      dd.content.push({ columns: columns });
+      // @ts-ignore
+      dd.content.push({ canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 2 }] });
+
+      columns = [];
+      images  = [];
+      if ( this.dataEspecial.ucpi ) {
+
+            if ( this.dataEspecial.ucpi.show ) {
+                images.push(
+                    {
+                        image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.thumb),
+                        width: 180,
+                        alignment: 'center'
+                    }
+                );
+
+                if(this.dataEspecial.ucpi.legendDesmatamento){
+                    images.push(
+                        {
+                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendDesmatamento),
+                            width: 180,
+                            alignment: 'center'
+                        }
+                    );
+                }
+
+                if(this.dataEspecial.ucpi.legendEspecial){
+                    images.push(
+                        {
+                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendEspecial),
+                            width: 180,
+                            alignment: 'center'
+                        }
+                    );
+                }
+
+            }
+
+            columns.push(
+                [
+                    { text: this.textOnDialog.especial_area.titleUCPI, alignment: 'left', margin: [0, 25, 0, 10] },
+                    { text: this.dataEspecial.ucpi.ucpi_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucpi.ucpi_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
+                    // images,
+                ],
+            );
+        }
+      if ( this.dataEspecial.q ) {
+            if ( this.dataEspecial.q.show ) {
+                images.push(
+                    {
+                        image: await self.getBase64ImageFromUrl(self.dataEspecial.q.thumb),
+                        width: 180,
+                        alignment: 'center'
+                    }
+                );
+
+                if(this.dataEspecial.q.legendDesmatamento){
+                    images.push(
+                        {
+                            image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendDesmatamento),
+                            width: 180,
+                            alignment: 'center'
+                        }
+                    );
+                }
+
+                if(this.dataEspecial.q.legendEspecial){
+                    images.push(
+                        {
+                            image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendEspecial),
+                            width: 180,
+                            alignment: 'center'
+                        }
+                    );
+                }
+
+            }
+            columns.push(
+                [
+                    { text: this.textOnDialog.especial_area.titleQ, alignment: 'left', margin: [0, 25, 0, 10] },
+                    { text: this.dataEspecial.ucus.q_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.q.q_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
+                    // images,
+                ],
+            );
+        }
+
+      dd.content.push({ columns: columns });
+      // @ts-ignore
+      dd.content.push({ canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 2 }] });
+    }
+
+    if (this.carData.length > 0 && this.data.year >= 2013) {
+        // @ts-ignore
+      dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader', margin: [0, 25, 0, 10]})
 
       for (const [index, item] of this.carData.entries()) {
         let columns = [];
@@ -2699,7 +2882,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           );
         }
         // @ts-ignore
-        dd.content.push({ text: self.textOnDialog.car_tab.title_info.toUpperCase(), alignment: 'left', margin: [0, 10, 0, 0] });
+        dd.content.push({ text: self.textOnDialog.car_tab.title_info.toUpperCase(), alignment: 'left', margin: [0, 8, 0, 0] });
 
         // @ts-ignore
         dd.content.push({ text: self.textOnDialog.car_tab.cod_car_label + ' ' + item.metaData.cod_car, alignment: 'left', style: 'codCar', margin: [0, 8, 0, 5] });
@@ -2907,7 +3090,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     }
 
-    if (this.data.year > 2015 && this.data.year < 2019) {
+    if (this.data.year > 2015 && this.data.year <= 2019) {
       let columns = [];
       // @ts-ignore
       dd.content.push({ text: this.textOnDialog.analise_automatica.title_tab, style: 'subheader', pageBreak: this.albumLandsat.length > 0 ? "before" : false })
@@ -3127,7 +3310,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         // @ts-ignore
         dd.content.push({ qr: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
         // @ts-ignore
-        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter', margin: [190, 10, 190, 0] });
+        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter'});
         let filename = this.textOnDialog.title.toLowerCase() + ' - ' + result[0].token + '.pdf'
         pdfMake.createPdf(dd).download(filename);
       }
