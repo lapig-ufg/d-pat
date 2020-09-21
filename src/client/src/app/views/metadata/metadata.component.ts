@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-metadata',
-  templateUrl: './metadata.component.html',
-  styleUrls: ['./metadata.component.css']
+  templateUrl: './metadata.component.html'
 })
 
 export class MetadataComponent implements OnInit {

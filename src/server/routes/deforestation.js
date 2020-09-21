@@ -13,6 +13,7 @@ module.exports = function (app) {
 	app.get('/service/deforestation/illegal', dataInjector, deforestation.illegal);
 	app.get('/service/deforestation/modis', dataInjector, deforestation.ndvi_timeseries);
 	app.get('/service/deforestation/modist', dataInjector, deforestation.ndvi_data);
-
+	app.get('/service/deforestation/regionreport', dataInjector, deforestation.regionreport);
+	app.get('/service/deforestation/regionReportTexts', deforestation.regionReportTexts);
 
 }

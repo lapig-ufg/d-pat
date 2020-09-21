@@ -384,6 +384,7 @@ module.exports = function (app) {
       var prop_desmat = parseFloat(row["prop_desm"]);
       //   var cod_car = row["codcar"];
       var tec_impl = row["tec_impl"];
+      var producao = row["producao"];
       var chave_id = row["chave_id"];
       var area_propriedade = parseFloat(row["area_propriedade"]);
       var area_tecnologia = parseFloat(row["area_tecnologia"]);
@@ -392,7 +393,7 @@ module.exports = function (app) {
       var ano = parseInt(row["year"]);
 
       let urlProp = {};
-      let metaDataCar = {};
+      let metaDataABC = {};
 
       if (boxCar == undefined) {
         urlProp = {
@@ -418,10 +419,10 @@ module.exports = function (app) {
 
         };
 
-        metaDataCar = {
+        metaDataABC = {
           prop_desmat: prop_desmat,
           tec_impl: tec_impl,
-          //   cod_car: cod_car,
+          producao: producao,
           area_desmatada: area_desmatada,
           area_propriedade: area_propriedade,
           area_tecnologia: area_tecnologia,
@@ -430,13 +431,13 @@ module.exports = function (app) {
         }
       }
 
-      var resultCar = {
+      var resultABC = {
         show: urlProp.show,
         imgsProp: urlProp,
-        metaData: metaDataCar
+        metaData: metaDataABC
       };
 
-      vetABC.push(resultCar);
+      vetABC.push(resultABC);
 
     });
 

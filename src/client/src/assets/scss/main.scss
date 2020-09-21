@@ -1,33 +1,45 @@
 
-// Preset Color Styles
-@import "colors/presets";
+/* ----- CHANGING DEFAULT COLORS ------- */
+@import '~@angular/material/theming';
+@include mat-core();
 
-// Global Styles
-@import "global";
+$primary: mat-palette($mat-green,800);
+$accent: mat-palette($mat-orange,300);
+$warn: mat-palette($mat-brown,600);
+$theme: mat-light-theme($primary, $accent, $warn);
 
-// Feature Styles
-@import "feature";
+@include angular-material-theme($theme);
 
-// Service Area
-@import "service";
+/* ----- 1: SETTINGS ------- */
+@import '1-settings/s-variables';
+@import '1-settings/s-typography';
+@import '1-settings/s-globals';
 
-// Navbar
-@import "navbar";
+/* ----- 2: ATOMS ------- */
+@import '2-atoms/a-mixins';
+@import '2-atoms/a-spacing';
+@import '2-atoms/a-typography';
 
-// Hero Slider Area
-@import "hero-area";
 
-// Team Area
-@import "team";
+/* ----- 3: LAYOUT ------- */
+@import '3-layout/l-header';
+@import '3-layout/l-footer';
+@import '3-layout/l-base';
+@import '3-layout/l-form';
 
-// Pricing Area
-@import "pricing";
+/* ----- 4: COMPONENTS ------- */
+@import '4-components/c-button';
+@import '4-components/c-card';
+@import '4-components/c-modal';
+@import '4-components/c-built-select';
 
-// Testimonial Area
-@import "testimonial";
 
-// Contact
-@import "contact";
-
-// Contact Area
-@import "footer";
+/* ----- 5: PAGES ------- */
+@import '5-pages/p-general';
+@import '5-pages/p-hotsite';
+@import '5-pages/p-laudo';
+@import '5-pages/p-map';
+@import '5-pages/p-region-report';
+@import '5-pages/p-project';
+@import '5-pages/p-metadata';
+@import '5-pages/p-file-upload';

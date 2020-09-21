@@ -1,15 +1,19 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import {Component, OnInit, Inject, HostListener, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css']
+  templateUrl: './project.component.html'
 })
 
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+    document.body.style.overflow = 'auto';
+  }
+
+  ngOnDestroy() {
+    document.body.style.overflow = 'hidden';
   }
 
   @HostListener("click", ["$event"])

@@ -59,202 +59,280 @@ module.exports = function (app) {
           id: "desmatamento_prodes",
           label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
           visible: true,
-          selectedType: "prodes_por_region_fip_img",
+          selectedType: "prodes_por_region_city_fip_img",
           metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'],
-          types: [{
-            value: "prodes_por_region_fip_img",
-            Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip_img"]["view_value"][language],
-            opacity: 1,
-            order: 1,
-            download: [],
-            regionFilter: true,
-            timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_fip_img"]["timelabel"][language],
-            timeSelected: "region_type = 'city' AND year=2019",
-            timeHandler: "msfilter",
-            times: [{
-              value: "region_type = 'city' AND year=2002",
-              Viewvalue: "2000/2002",
-              year: 2002
-            },
+          types: [
             {
-              value: "region_type = 'city' AND year=2004",
-              Viewvalue: "2002/2004",
-              year: 2004
-            },
-            {
-              value: "region_type = 'city' AND year=2006",
-              Viewvalue: "2004/2006",
-              year: 2006
-            },
-            {
-              value: "region_type = 'city' AND year=2008",
-              Viewvalue: "2006/2008",
-              year: 2008
-            },
-            {
-              value: "region_type = 'city' AND year=2010",
-              Viewvalue: "2008/2010",
-              year: 2010
-            },
-            {
-              value: "region_type = 'city' AND year=2012",
-              Viewvalue: "2010/2012",
-              year: 2012
-            },
-            {
-              value: "region_type = 'city' AND year=2013",
-              Viewvalue: "2012/2013",
-              year: 2013
-            },
-            {
-              value: "region_type = 'city' AND year=2014",
-              Viewvalue: "2013/2014",
-              year: 2014
-            },
-            {
-              value: "region_type = 'city' AND year=2015",
-              Viewvalue: "2014/2015",
-              year: 2015
-            },
-            {
-              value: "region_type = 'city' AND year=2016",
-              Viewvalue: "2015/2016",
-              year: 2016
-            },
-            {
-              value: "region_type = 'city' AND year=2017",
-              Viewvalue: "2016/2017",
-              year: 2017
-            },
-            {
-              value: "region_type = 'city' AND year=2018",
-              Viewvalue: "2017/2018",
-              year: 2018
-            },
-            {
-              value: "region_type = 'city' AND year=2019",
-              Viewvalue: "2018/2019",
-              year: 2019
-            }
-            ]
-          },
-          {
-            value: "bi_ce_prodes_desmatamento_100_fip",
-            Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["view_value"][language],
-            opacity: 1,
-            order: 1,
-            download: ['csv', 'shp'],
-            regionFilter: true,
-            timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel"][language],
-            timeSelected: "year=2019",
-            timeHandler: "msfilter",
-            times: [{
-              value: "year=2002",
-              Viewvalue: "2000/2002",
-              year: 2002
-            },
-            {
-              value: "year=2004",
-              Viewvalue: "2002/2004",
-              year: 2004
-            },
-            {
-              value: "year=2006",
-              Viewvalue: "2004/2006",
-              year: 2006
-            },
-            {
-              value: "year=2008",
-              Viewvalue: "2006/2008",
-              year: 2008
-            },
-            {
-              value: "year=2010",
-              Viewvalue: "2008/2010",
-              year: 2010
-            },
-            {
-              value: "year=2012",
-              Viewvalue: "2010/2012",
-              year: 2012
-            },
-            {
-              value: "year=2013",
-              Viewvalue: "2012/2013",
-              year: 2013
-            },
-            {
-              value: "year=2014",
-              Viewvalue: "2013/2014",
-              year: 2014
-            },
-            {
-              value: "year=2015",
-              Viewvalue: "2014/2015",
-              year: 2015
-            },
-            {
-              value: "year=2016",
-              Viewvalue: "2015/2016",
-              year: 2016
-            },
-            {
-              value: "year=2017",
-              Viewvalue: "2016/2017",
-              year: 2017
-            },
-            {
-              value: "year=2018",
-              Viewvalue: "2017/2018",
-              year: 2018
-            },
-            {
-              value: "year=2019",
-              Viewvalue: "2018/2019",
-              year: 2019
-            }
-            ]
-          },
-          {
-            value: "bi_ce_prodes_desmatamento_pontos_campo_fip",
-            Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value"][language],
-            opacity: 1,
-            order: 1,
-            download: ['shp'],
-            regionFilter: true,
-            /*timeLabel: "Campo",
-            timeSelected: "1=1",
-            timeHandler: "msfilter",
-            times: [{
-                value: "1=1",
-                Viewvalue: "Todos"
+              value: "prodes_por_region_city_fip_img",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["view_value"][language],
+              opacity: 1,
+              order: 1,
+              download: [],
+              regionFilter: true,
+              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["timelabel"][language],
+              timeSelected: "year=2019",
+              timeHandler: "msfilter",
+              times: [{
+                value: "year=2002",
+                Viewvalue: "2000/2002",
+                year: 2002
               },
               {
-                value: "pc.campo like 'Campo_01'",
-                Viewvalue: "Campo 01"
+                value: "year=2004",
+                Viewvalue: "2002/2004",
+                year: 2004
               },
               {
-                value: "pc.campo like 'Campo_02'",
-                Viewvalue: "Campo 02"
+                value: "year=2006",
+                Viewvalue: "2004/2006",
+                year: 2006
               },
               {
-                value: "pc.campo like 'Campo_03'",
-                Viewvalue: "Campo 03"
+                value: "year=2008",
+                Viewvalue: "2006/2008",
+                year: 2008
               },
               {
-                value: "pc.campo like 'Campo_04'",
-                Viewvalue: "Campo 04"
+                value: "year=2010",
+                Viewvalue: "2008/2010",
+                year: 2010
+              },
+              {
+                value: "year=2012",
+                Viewvalue: "2010/2012",
+                year: 2012
+              },
+              {
+                value: "year=2013",
+                Viewvalue: "2012/2013",
+                year: 2013
+              },
+              {
+                value: "year=2014",
+                Viewvalue: "2013/2014",
+                year: 2014
+              },
+              {
+                value: "year=2015",
+                Viewvalue: "2014/2015",
+                year: 2015
+              },
+              {
+                value: "year=2016",
+                Viewvalue: "2015/2016",
+                year: 2016
+              },
+              {
+                value: "year=2017",
+                Viewvalue: "2016/2017",
+                year: 2017
+              },
+              {
+                value: "year=2018",
+                Viewvalue: "2017/2018",
+                year: 2018
+              },
+              {
+                value: "year=2019",
+                Viewvalue: "2018/2019",
+                year: 2019
               }
-            ]*/
-          },
-          {
-            value: "bi_ce_prodes_desmatamento_abc_fip",
-            Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_abc_fip"]["view_value"][language],
-            opacity: 1,
-            order: 1,
-            download: ['shp'],
-            regionFilter: true,
-          }
+              ]
+            },
+            {
+              value: "prodes_por_region_state_fip_img",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_state_fip_img"]["view_value"][language],
+              opacity: 1,
+              order: 1,
+              download: [],
+              regionFilter: true,
+              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_state_fip_img"]["timelabel"][language],
+              timeSelected: "year=2019",
+              timeHandler: "msfilter",
+              times: [{
+                value: "year=2002",
+                Viewvalue: "2000/2002",
+                year: 2002
+              },
+              {
+                value: "year=2004",
+                Viewvalue: "2002/2004",
+                year: 2004
+              },
+              {
+                value: "year=2006",
+                Viewvalue: "2004/2006",
+                year: 2006
+              },
+              {
+                value: "year=2008",
+                Viewvalue: "2006/2008",
+                year: 2008
+              },
+              {
+                value: "year=2010",
+                Viewvalue: "2008/2010",
+                year: 2010
+              },
+              {
+                value: "year=2012",
+                Viewvalue: "2010/2012",
+                year: 2012
+              },
+              {
+                value: "year=2013",
+                Viewvalue: "2012/2013",
+                year: 2013
+              },
+              {
+                value: "year=2014",
+                Viewvalue: "2013/2014",
+                year: 2014
+              },
+              {
+                value: "year=2015",
+                Viewvalue: "2014/2015",
+                year: 2015
+              },
+              {
+                value: "year=2016",
+                Viewvalue: "2015/2016",
+                year: 2016
+              },
+              {
+                value: "year=2017",
+                Viewvalue: "2016/2017",
+                year: 2017
+              },
+              {
+                value: "year=2018",
+                Viewvalue: "2017/2018",
+                year: 2018
+              },
+              {
+                value: "year=2019",
+                Viewvalue: "2018/2019",
+                year: 2019
+              }
+              ]
+            },
+            {
+              value: "bi_ce_prodes_desmatamento_100_fip",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["view_value"][language],
+              opacity: 1,
+              order: 1,
+              download: ['csv', 'shp'],
+              regionFilter: true,
+              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel"][language],
+              timeSelected: "year=2019",
+              timeHandler: "msfilter",
+              times: [{
+                value: "year=2002",
+                Viewvalue: "2000/2002",
+                year: 2002
+              },
+              {
+                value: "year=2004",
+                Viewvalue: "2002/2004",
+                year: 2004
+              },
+              {
+                value: "year=2006",
+                Viewvalue: "2004/2006",
+                year: 2006
+              },
+              {
+                value: "year=2008",
+                Viewvalue: "2006/2008",
+                year: 2008
+              },
+              {
+                value: "year=2010",
+                Viewvalue: "2008/2010",
+                year: 2010
+              },
+              {
+                value: "year=2012",
+                Viewvalue: "2010/2012",
+                year: 2012
+              },
+              {
+                value: "year=2013",
+                Viewvalue: "2012/2013",
+                year: 2013
+              },
+              {
+                value: "year=2014",
+                Viewvalue: "2013/2014",
+                year: 2014
+              },
+              {
+                value: "year=2015",
+                Viewvalue: "2014/2015",
+                year: 2015
+              },
+              {
+                value: "year=2016",
+                Viewvalue: "2015/2016",
+                year: 2016
+              },
+              {
+                value: "year=2017",
+                Viewvalue: "2016/2017",
+                year: 2017
+              },
+              {
+                value: "year=2018",
+                Viewvalue: "2017/2018",
+                year: 2018
+              },
+              {
+                value: "year=2019",
+                Viewvalue: "2018/2019",
+                year: 2019
+              }
+              ]
+            },
+            {
+              value: "bi_ce_prodes_desmatamento_pontos_campo_fip",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value"][language],
+              opacity: 1,
+              order: 1,
+              download: ['shp'],
+              regionFilter: true,
+              /*timeLabel: "Campo",
+              timeSelected: "1=1",
+              timeHandler: "msfilter",
+              times: [{
+                  value: "1=1",
+                  Viewvalue: "Todos"
+                },
+                {
+                  value: "pc.campo like 'Campo_01'",
+                  Viewvalue: "Campo 01"
+                },
+                {
+                  value: "pc.campo like 'Campo_02'",
+                  Viewvalue: "Campo 02"
+                },
+                {
+                  value: "pc.campo like 'Campo_03'",
+                  Viewvalue: "Campo 03"
+                },
+                {
+                  value: "pc.campo like 'Campo_04'",
+                  Viewvalue: "Campo 04"
+                }
+              ]*/
+            },
+            {
+              value: "bi_ce_prodes_desmatamento_abc_fip",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_abc_fip"]["view_value"][language],
+              opacity: 1,
+              order: 1,
+              download: ['shp'],
+              regionFilter: true,
+            }
           ]
         },
         {
@@ -627,9 +705,9 @@ module.exports = function (app) {
               download: ['shp']
             },
             {
-              value: "uso_solo_probio",
+              value: "uso_solo_probio_fip",
               Viewvalue: "PROBIO-Cerrado - 2002",
-              metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['bi_ce_cobertura_vegetal_250_2002_mma']['metadata'],
+              metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_probio_fip']['metadata'],
               regionFilter: true,
               opacity: 0.8,
               order: 3,
@@ -972,7 +1050,12 @@ module.exports = function (app) {
         click_more_municipio: languageJson["mini_report_utfgrid"]["click_more_municipio"][language],
         label_year: languageJson["mini_report_utfgrid"]["label_year"][language],
         label_area_app: languageJson["mini_report_utfgrid"]["label_area_app"][language],
-        label_area_rl: languageJson["mini_report_utfgrid"]["label_area_rl"][language]
+        label_area_rl: languageJson["mini_report_utfgrid"]["label_area_rl"][language],
+        area_property: languageJson["mini_report_utfgrid"]["area_property"][language],
+        area_explorada: languageJson["mini_report_utfgrid"]["area_explorada"][language],
+        producao: languageJson["mini_report_utfgrid"]["producao"][language],
+        tecnologia: languageJson["mini_report_utfgrid"]["tecnologia"][language],
+        area_tecnologia: languageJson["mini_report_utfgrid"]["area_tecnologia"][language],
       },
       layer_box: {
         title: languageJson["layer_box"]["title"][language],

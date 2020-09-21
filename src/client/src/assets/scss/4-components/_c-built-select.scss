@@ -1,0 +1,26 @@
+.select2-container {
+    margin-top: 40px;
+    margin-bottom: 60px;
+
+    .select2-choice {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 51px;
+        padding-left: 18px;
+        color: #666666;
+        font-family: $f-body;
+        font-size: 1rem;
+        letter-spacing: 0;
+        line-height: 1.375rem;
+        
+        .select2-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid #979797;
+            padding: 0 14px;
+            background: #F5F5F5;
+        }
+    }
+}

@@ -25,6 +25,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -56,6 +57,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
 import { MapMobileComponent } from './views/map-mobile/map-mobile.component';
+import { RegionReportComponent } from './views/region-report/region-report.component';
 
 registerLocaleData(localePt);
 
@@ -70,7 +72,8 @@ registerLocaleData(localePt);
     HotsiteComponent,
     MobileComponent,
     ProjectComponent,
-    MapMobileComponent
+    MapMobileComponent,
+    RegionReportComponent
   ],
   imports: [
     TabViewModule,
@@ -101,6 +104,7 @@ registerLocaleData(localePt);
     MatTooltipModule,
     MatRadioModule,
     MatToolbarModule,
+    MatProgressSpinnerModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -108,7 +112,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function (app) {
 
 	var Internal = {}
 	var Query = {};
@@ -8,12 +8,16 @@ module.exports = function(app) {
 		'region': 'Cerrado'
 	}
 
-	Query.extent = function() {
+	Query.extent = function () {
 		return "SELECT ST_AsGeoJSON(geom) geojson, area_km2 FROM regions WHERE type=${type} AND value=${region}";
 	}
 
-	Query.search = function() {
+	Query.search = function () {
 		return "SELECT text, value, type, cd_geocmu FROM regions WHERE unaccent(text) ILIKE unaccent(${key}%) AND type in ('state', 'city') LIMIT 10";
+	}
+
+	Query.searchregion = function () {
+		return "SELECT text, value, type, cd_geocmu FROM regions WHERE unaccent(value) ILIKE unaccent(${key}) AND type = (${type}) LIMIT 10";
 	}
 
 
