@@ -2474,7 +2474,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
             widths: '*',
             body: [
               [
-                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [300, 43] },
+                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [400, 45] },
                 {},
                 {},
               ],
