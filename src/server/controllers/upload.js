@@ -3,7 +3,15 @@ const unzipper = require("unzipper"),
 	path = require('path'),
 	ogr2ogr = require("ogr2ogr");
 
-module.exports = function(app) {
+var configJS = require('../config.js')()
+
+const moment = require("moment");
+const { Pool, Client } = require('pg')
+const pool = new Pool(configJS['pg'])
+
+
+
+module.exports = function (app) {
 	const config = app.config;
 
 	const Internal = {};
@@ -21,6 +29,7 @@ module.exports = function(app) {
 	Internal.tmpPath = null;
 	Internal.language = null;
 	Internal.response = {};
+	Internal.geojson = {}
 
 	Internal.acceptedFiles = [
 		"dbf",
@@ -40,7 +49,7 @@ module.exports = function(app) {
 	];
 	Internal.spatialFiles = ["shp", "kml", "geojson"];
 
-	Internal.clearCache = function(data, callback) {
+	Internal.clearCache = function (data, callback) {
 		return callback(true, data);
 
 		// fs.readdir(dir_upload, (err, files) => {
@@ -56,10 +65,10 @@ module.exports = function(app) {
 		// });
 	};
 
-	Internal.toGeoJson = function(shapfile, callback) {
+	Internal.toGeoJson = function (shapfile, callback) {
 		let geojson = ogr2ogr(shapfile).timeout(300000); // 5 minutes
 
-		geojson.exec(function(er, data) {
+		geojson.exec(function (er, data) {
 			if (er) {
 				Internal.response
 					.status(400)
@@ -73,7 +82,7 @@ module.exports = function(app) {
 		});
 	};
 
-	Internal.extractFiles = async function(zip, callback) {
+	Internal.extractFiles = async function (zip, callback) {
 		try {
 			for await (const entry of zip) {
 				const arrayName = entry.path.split(".");
@@ -98,7 +107,7 @@ module.exports = function(app) {
 				if (type == "File" && Internal.acceptedFiles.includes(extension)) {
 					let time = "";
 
-					if(extension == "kml"){
+					if (extension == "kml") {
 						time = "-" + new Date().getTime();
 					}
 
@@ -109,7 +118,7 @@ module.exports = function(app) {
 							.split("/")
 							.pop()
 							.toLowerCase() +
-							time +
+						time +
 						"." +
 						extension;
 
@@ -143,7 +152,7 @@ module.exports = function(app) {
 		}
 
 		if (Internal.targetFilesName.split(".").pop() == "geojson") {
-			fs.readFile(Internal.targetFilesName, "utf8", function(err, data) {
+			fs.readFile(Internal.targetFilesName, "utf8", function (err, data) {
 				if (err) {
 					Internal.response
 						.status(400)
@@ -160,14 +169,65 @@ module.exports = function(app) {
 		}
 	};
 
-	Internal.finish = function(finished, geoJson) {
+	Internal.finish = function (finished, geoJson) {
 		if (finished) {
+
+			let token = Internal.saveToPostGis(geoJson);
+			geoJson.token = token;
+
 			Internal.response.status(200).send(JSON.stringify(geoJson));
 			fs.unlinkSync(Internal.tmpPath);
 		}
 	};
 
-	Internal.doRequest = function(request, response) {
+	Internal.import_feature = function (token) {
+
+		var data_atualizacao = new Date(moment().format('YYYY-MM-DD HH:mm'))
+
+		if (Internal.geojson.type == 'FeatureCollection') {
+			for (const [index, feature] of Internal.geojson.features.entries()) {
+				let geom = JSON.stringify((feature.geometry))
+				Internal.insertToPostgis(token, geom, data_atualizacao)
+			}
+		}
+		else if (Internal.geojson.type == 'Feature') {
+			let geom = JSON.stringify((Internal.geojson.geometry))
+			Internal.insertToPostgis(token, geom, data_atualizacao)
+		}
+	};
+
+	Internal.insertToPostgis = async function (token, geom, data_atualizacao) {
+		let INSERT_STATEMENT = 'INSERT INTO upload_shapes (token, geom, data_insercao) values ($1, ST_SetSRID(ST_GeomFromGeoJSON($2), 4674), $3) returning token;'
+
+		const client = await pool.connect()
+		try {
+			await client.query('BEGIN')
+			/* for initial population*/
+			var rowValues = [token, geom, data_atualizacao]
+			const res = await client.query(INSERT_STATEMENT, rowValues)
+			console.log(token + ' inserted.')
+
+			await client.query('COMMIT')
+		} catch (e) {
+			console.error("Doing rollback - ", e)
+			await client.query('ROLLBACK')
+			throw e
+		} finally {
+			client.release()
+		}
+	}
+
+	Internal.saveToPostGis = function (geojson) {
+
+		let token = new Date().getTime()
+		Internal.geojson = geojson;
+
+		Internal.import_feature(token)
+
+		return token;
+	};
+
+	Internal.doRequest = function (request, response) {
 		/** Reset Variables */
 		Internal.targetFilesName = null;
 		Internal.dirTarget = null;
@@ -199,8 +259,80 @@ module.exports = function(app) {
 		Internal.extractFiles(zip, Internal.toGeoJson);
 	};
 
-	Uploader.getGeoJson = function(request, response) {
+	Uploader.getGeoJson = function (request, response) {
 		Internal.doRequest(request, response);
+	};
+
+	Uploader.desmatperyear = function (request, response) {
+
+		var queryResult = request.queryResult['desmat_per_year_prodes']
+
+		var resultByYear = []
+		queryResult.forEach(function (row) {
+
+			var year = Number(row['year'])
+			var area = Number(row['area_desmat'])
+
+			resultByYear.push({
+				'area_desmat': area,
+				'year': year
+			})
+		});
+
+		queryResult = request.queryResult['info_upload']
+		let info_area = queryResult[0]['area_upload']
+
+		queryResult = request.queryResult['desmat_per_year_deter']
+		var resultByYearDeter = []
+
+		queryResult.forEach(function (row) {
+
+			var year = Number(row['year'])
+			var area = Number(row['area_desmat'])
+
+			resultByYearDeter.push({
+				'area_desmat': area,
+				'year': year
+			})
+		});
+
+		queryResult = request.queryResult['regions_pershape']
+		var regions = []
+
+		queryResult.forEach(function (row) {
+
+			regions.push({
+				'type': row['type'],
+				'name': row['value']
+			})
+		});
+
+		// Accepts the array and key
+		const groupBy = (array, key) => {
+			// Return the end result
+			return array.reduce((result, currentValue) => {
+				// If an array already present for key, push it to the array. Else create an array and push the object
+				(result[currentValue[key]] = result[currentValue[key]] || []).push(
+					currentValue
+				);
+				// Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+				return result;
+			}, {}); // empty object is the initial value for result object
+		};
+
+		// Group by color as key to the person array
+		const regionGroupedByType = groupBy(regions, 'type');
+
+		let res = {
+			regions_intersected: regionGroupedByType,
+			prodes: resultByYear,
+			deter: resultByYearDeter,
+			area_upload: info_area
+		}
+
+		response.send(res)
+		response.end()
+
 	};
 
 	return Uploader;

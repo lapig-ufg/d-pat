@@ -54,12 +54,8 @@ module.exports = function (app) {
 				sql: "select r.text as region, r.area_km2 as area_region, lc.classe_lulc, total_area_classe_lulc, desmat_area_classe_lulc, lc.color, lc.year from prodes_regions_lulc lc inner join regions r on "
 					+ "(r.gid = lc.region_id) where lc.fonte = 'agrosatelite' and lc.type = '" + type + "' AND unaccent(r.value) ilike unaccent('" + region + "') and lc.year = " + year + " ORDER BY 5 DESC;"
 
-			},
-			// {
-			// 	id: 'lulc_mapbiomas',
-			// 	sql: "select fonte, classe, sum(proporcao) as proporcao from prodes_cerrado p inner join prodes_cerrado_lulc lc on prodes_id = p.gid where fonte = TerraClass-Cerrado" +
-			// 		Internal.regionFilter(type, region) + " group by 1,2"
-			// }
+			}
+
 
 
 		]

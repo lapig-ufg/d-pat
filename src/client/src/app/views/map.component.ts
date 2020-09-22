@@ -40,7 +40,7 @@ import * as Chart from 'chart.js'
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {RegionReportComponent} from "./region-report/region-report.component";
+import { RegionReportComponent } from "./region-report/region-report.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -132,6 +132,8 @@ export class MapComponent implements OnInit {
   msFilterRegion = '';
   selectRegion: any;
 
+  httpOptions: any;
+
   region_geom: any;
   regionSource: any;
   regionTypeFilter: any;
@@ -199,7 +201,9 @@ export class MapComponent implements OnInit {
     loading: false,
     dragArea: true,
     strokeColor: '#2224ba',
+    token: ''
   };
+
 
   innerHeigth: any;
   showDrawer: boolean;
@@ -224,6 +228,10 @@ export class MapComponent implements OnInit {
 
     this.dataSeries = {};
     this.dataStates = {};
+
+    this.httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
     this.chartResultCities = {
       split: []
@@ -1878,6 +1886,7 @@ export class MapComponent implements OnInit {
       this.layerFromUpload.visible = false;
       this.layerFromUpload.label = data.name;
       this.layerFromUpload.layer = data;
+      this.layerFromUpload.token = data.token;
 
     } else {
       this.layerFromUpload.loading = false;
@@ -1888,14 +1897,17 @@ export class MapComponent implements OnInit {
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.features[0].properties[auxlabel];
         this.layerFromUpload.layer = data;
+        this.layerFromUpload.token = data.token;
 
       } else {
-
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.name;
         this.layerFromUpload.layer = data;
+        this.layerFromUpload.token = data.token;
       }
     }
+
+    console.log(this.layerFromUpload)
 
     this.layerFromUpload.visible = true;
 
@@ -1947,6 +1959,23 @@ export class MapComponent implements OnInit {
     } else {
       map.removeLayer(this.layerFromUpload.layer);
     }
+
+  }
+
+  analyzeUploadShape() {
+
+    let params = [];
+    params.push('token=' + this.layerFromUpload.token)
+
+    let urlParams = '/service/upload/desmatperyear?' + params.join('&');
+
+    this.http.get(urlParams).subscribe(result => {
+
+      console.log(result)
+    }
+    );
+
+
 
   }
 
@@ -2184,10 +2213,10 @@ export class MapComponent implements OnInit {
 
     dados['ranking'] = null;
 
-    if ( this.selectRegion.type === 'state' ) {
+    if (this.selectRegion.type === 'state') {
       url += 'type=state&region=' + this.selectRegion.value.toLowerCase();
       dados['ranking'] = { table: this.chartResultCities, desmatInfo: this.desmatInfo };
-    } else if ( this.selectRegion.type === 'city' ) {
+    } else if (this.selectRegion.type === 'city') {
       url += 'type=city&region=' + this.selectRegion.cd_geocmu.toLowerCase();
     } else {
       return;
@@ -2205,11 +2234,11 @@ export class MapComponent implements OnInit {
       };
     }
 
-    this.dialog.open(RegionReportComponent,{
-            width: 'calc(100% - 5vw)',
-            height: 'calc(100% - 5vh)',
-            data: { dados }
-        });
+    this.dialog.open(RegionReportComponent, {
+      width: 'calc(100% - 5vw)',
+      height: 'calc(100% - 5vh)',
+      data: { dados }
+    });
   }
 
   ngOnInit() {
@@ -2587,183 +2616,183 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     if (this.dataEspecial) {
       let columns = [];
-      let images  = [];
+      let images = [];
 
       dd.content.push({ text: this.textOnDialog.especial_area.title_tab, style: 'subheader' });
 
-      if ( this.dataEspecial.ti ) {
+      if (this.dataEspecial.ti) {
 
-          if ( this.dataEspecial.ti.show ) {
-              images.push(
-                  {
-                      image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.thumb),
-                      width: 180,
-                      alignment: 'center'
-                  }
-              );
+        if (this.dataEspecial.ti.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.thumb),
+              width: 180,
+              alignment: 'center'
+            }
+          );
 
-              if(this.dataEspecial.ti.legendDesmatamento){
-                  images.push(
-                      {
-                          image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendDesmatamento),
-                          width: 180,
-                          alignment: 'center'
-                      }
-                  );
+          if (this.dataEspecial.ti.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
               }
-
-              if(this.dataEspecial.ti.legendEspecial){
-                  images.push(
-                      {
-                          image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendEspecial),
-                          width: 180,
-                          alignment: 'center'
-                      }
-                  );
-              }
-
+            );
           }
 
-          columns.push(
-              [
-                  { text: this.textOnDialog.especial_area.titleTI, alignment: 'left', margin: [0, 25, 0, 10] },
-                  { text: this.dataEspecial.ti.ti_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                  { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ti.ti_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                  // images,
-              ],
-          );
-      }
-      if ( this.dataEspecial.ucus ) {
-
-            if ( this.dataEspecial.ucus.show ) {
-                images.push(
-                    {
-                        image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.thumb),
-                        width: 180,
-                        alignment: 'center'
-                    }
-                );
-
-                if(this.dataEspecial.ucus.legendDesmatamento){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendDesmatamento),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-                if(this.dataEspecial.ucus.legendEspecial){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendEspecial),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-            }
-
-            columns.push(
-                [
-                    { text: this.textOnDialog.especial_area.titleUCUS, alignment: 'left', margin: [0, 25, 0, 10] },
-                    { text: this.dataEspecial.ucus.ucus_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucus.ucus_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                    // images,
-                ],
+          if (this.dataEspecial.ti.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
             );
+          }
+
         }
+
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleTI, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ti.ti_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ti.ti_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
+      if (this.dataEspecial.ucus) {
+
+        if (this.dataEspecial.ucus.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.thumb),
+              width: 180,
+              alignment: 'center'
+            }
+          );
+
+          if (this.dataEspecial.ucus.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
+          if (this.dataEspecial.ucus.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
+        }
+
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleUCUS, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ucus.ucus_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucus.ucus_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
 
       dd.content.push({ columns: columns });
       // @ts-ignore
       dd.content.push({ canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 2 }] });
 
       columns = [];
-      images  = [];
-      if ( this.dataEspecial.ucpi ) {
+      images = [];
+      if (this.dataEspecial.ucpi) {
 
-            if ( this.dataEspecial.ucpi.show ) {
-                images.push(
-                    {
-                        image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.thumb),
-                        width: 180,
-                        alignment: 'center'
-                    }
-                );
-
-                if(this.dataEspecial.ucpi.legendDesmatamento){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendDesmatamento),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-                if(this.dataEspecial.ucpi.legendEspecial){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendEspecial),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
+        if (this.dataEspecial.ucpi.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.thumb),
+              width: 180,
+              alignment: 'center'
             }
+          );
 
-            columns.push(
-                [
-                    { text: this.textOnDialog.especial_area.titleUCPI, alignment: 'left', margin: [0, 25, 0, 10] },
-                    { text: this.dataEspecial.ucpi.ucpi_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucpi.ucpi_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                    // images,
-                ],
+          if (this.dataEspecial.ucpi.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
+              }
             );
+          }
+
+          if (this.dataEspecial.ucpi.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
         }
-      if ( this.dataEspecial.q ) {
-            if ( this.dataEspecial.q.show ) {
-                images.push(
-                    {
-                        image: await self.getBase64ImageFromUrl(self.dataEspecial.q.thumb),
-                        width: 180,
-                        alignment: 'center'
-                    }
-                );
 
-                if(this.dataEspecial.q.legendDesmatamento){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendDesmatamento),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-                if(this.dataEspecial.q.legendEspecial){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendEspecial),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleUCPI, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ucpi.ucpi_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucpi.ucpi_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
+      if (this.dataEspecial.q) {
+        if (this.dataEspecial.q.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.q.thumb),
+              width: 180,
+              alignment: 'center'
             }
-            columns.push(
-                [
-                    { text: this.textOnDialog.especial_area.titleQ, alignment: 'left', margin: [0, 25, 0, 10] },
-                    { text: this.dataEspecial.ucus.q_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.q.q_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                    // images,
-                ],
+          );
+
+          if (this.dataEspecial.q.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
+              }
             );
+          }
+
+          if (this.dataEspecial.q.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
         }
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleQ, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ucus.q_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.q.q_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
 
       dd.content.push({ columns: columns });
       // @ts-ignore
@@ -2771,8 +2800,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     }
 
     if (this.carData.length > 0 && this.data.year >= 2013) {
-        // @ts-ignore
-      dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader', margin: [0, 25, 0, 10]})
+      // @ts-ignore
+      dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader', margin: [0, 25, 0, 10] })
 
       for (const [index, item] of this.carData.entries()) {
         let columns = [];
@@ -3310,7 +3339,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         // @ts-ignore
         dd.content.push({ qr: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
         // @ts-ignore
-        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter'});
+        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter' });
         let filename = this.textOnDialog.title.toLowerCase() + ' - ' + result[0].token + '.pdf'
         pdfMake.createPdf(dd).download(filename);
       }
