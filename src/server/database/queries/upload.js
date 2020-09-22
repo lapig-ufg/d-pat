@@ -19,7 +19,7 @@ module.exports = function (app) {
         },
         {
             id: 'info_upload',
-            sql: "select SUM(ST_AREA(geom::GEOGRAPHY) / 1000000.0) as area_upload from upload_shapes where token= ${token}"
+            sql: "select ST_ASGEOJSON(geom) as geojson,  SUM(ST_AREA(geom::GEOGRAPHY) / 1000000.0) as area_upload from upload_shapes where token= ${token} group by 1"
         },
         ]
 
