@@ -279,11 +279,13 @@ module.exports = function (app) {
 			})
 		});
 
-		queryResult = request.queryResult['info_upload']
+		queryResult = request.queryResult['area_upload']
 		let info_area = {
-			area_upload: queryResult[0]['area_upload'],
-			geojson: queryResult[0]['geojson']
+			area_upload: queryResult[0]['area_upload']
 		}
+
+		queryResult = request.queryResult['geojson_upload']
+		info_area.geojson = queryResult[0]['geojson']
 
 		queryResult = request.queryResult['desmat_per_year_deter']
 		var resultByYearDeter = []
