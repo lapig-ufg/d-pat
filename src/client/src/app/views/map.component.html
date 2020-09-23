@@ -57,7 +57,7 @@
 													</button>
 												</div>
 												<div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
-													<mat-form-field >
+													<mat-form-field>
 														<mat-label>{{descriptor.type}}</mat-label>
 														<mat-select (selectionChange)="changeVisibility(layer)"
 															[(value)]="layer.selectedType">
@@ -83,10 +83,10 @@
 															<button class="color-buttons"
 																*ngIf="hasDownload('csv', type)"
 																(click)="buttonDownload('csv', layer, $event)"
-																mat-raised-button >
+																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;CSV
 																<mat-progress-bar *ngIf="loadingCSV"
-																	mode="indeterminate" >
+																	mode="indeterminate">
 																</mat-progress-bar>
 															</button>
 
@@ -98,7 +98,7 @@
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;SHP
 																<mat-progress-bar *ngIf="loadingSHP"
-																	mode="indeterminate" >
+																	mode="indeterminate">
 																</mat-progress-bar>
 															</button>
 
@@ -250,8 +250,7 @@
 				</div>
 
 				<div [ngbCollapse]="collapseCharts" id="matgroup">
-					<mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
-						(selectedTabChange)="changeTab($event)">
+					<mat-tab-group class="charts" #matgroup (selectedTabChange)="changeTab($event)">
 
 						<mat-tab label={{dataSeries.label}} *ngIf="true" id="tabGraficoLinhas">
 							<p-scrollPanel [style]="{width: '100%', height: '38vh'}">
@@ -259,7 +258,9 @@
 									<div class="col-md-4">
 										<div class="chart-region">
 											<h5>
-												<button *ngIf="selectRegion.type != 'biome'" color="primary" (click)="openRegionReport()" style="font-size: 30px;" mat-icon-button>
+												<button *ngIf="selectRegion.type != 'biome'" color="primary"
+													(click)="openRegionReport()" style="font-size: 30px;"
+													mat-icon-button>
 													<mat-icon>text_snippet</mat-icon>
 												</button>
 												<strong> {{ selectRegion.text }} </strong>
@@ -313,12 +314,12 @@
 										</tr>
 									</ng-template>
 								</p-table>
-<!--								<div style="height: 20vh"></div>-->
+								<!--								<div style="height: 20vh"></div>-->
 							</p-scrollPanel>
 
 						</mat-tab>
 						<mat-tab *ngIf="isFilteredByCity || isFilteredByState" label="{{chartUsoSolo[0]?.label}}">
-							<p-scrollPanel [style]="{width: '100%', height: '40vh'}">
+							<p-scrollPanel [style]="{width: '100%', height: '50vh'}">
 								<p-tabView (onChange)="changeSelectedLulcChart($event)">
 									<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
 										[selected]="i == 0" [disabled]="!uso.show" [cache]="true">
@@ -326,8 +327,8 @@
 											<p style="font-weight: bold">{{ selectRegion.text }}</p>
 											<div>{{uso.text}}</div>
 											<p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
-												[type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
-												height="20vh"></p-chart>
+												[type]="uso.type" [data]="uso.data" [options]="uso.options" width="32vw"
+												height="24vh"></p-chart>
 										</div>
 									</p-tabPanel>
 								</p-tabView>
@@ -360,7 +361,7 @@
 										</tr>
 									</ng-template>
 								</p-table>
-<!--								<div style="height: 20vh"></div>-->
+								<!--								<div style="height: 20vh"></div>-->
 							</p-scrollPanel>
 
 						</mat-tab>
@@ -390,28 +391,10 @@
 										</tr>
 									</ng-template>
 								</p-table>
-<!--								<div style="height: 20vh"></div>-->
+								<!--								<div style="height: 20vh"></div>-->
 							</p-scrollPanel>
-
 						</mat-tab>
 
-<!--						<mat-tab *ngIf="isFilteredByCity" label="{{chartUsoSolo[0]?.label}}">-->
-<!--							<p-scrollPanel [style]="{width: '100%', height: '40vh'}">-->
-<!--								<p-tabView (onChange)="changeSelectedLulcChart($event)">-->
-<!--									<p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"-->
-<!--										[selected]="i == 0" [disabled]="!uso.show" [cache]="true">-->
-<!--										<div>-->
-<!--											<p style="font-weight: bold">{{ selectRegion.text }}</p>-->
-<!--											<div>{{uso.text}}</div>-->
-<!--											<p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"-->
-<!--												[type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"-->
-<!--												height="20vh"></p-chart>-->
-<!--										</div>-->
-<!--									</p-tabPanel>-->
-<!--								</p-tabView>-->
-<!--&lt;!&ndash;								<div style="height: 20vh"></div>&ndash;&gt;-->
-<!--							</p-scrollPanel>-->
-<!--						</mat-tab>-->
 					</mat-tab-group>
 				</div>
 

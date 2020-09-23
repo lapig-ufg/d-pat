@@ -348,8 +348,7 @@ module.exports = function (app) {
 
 		var queryResultAPP = request.queryResult["app"];
 
-
-		var index = 1;
+		let index = 1;
 		for (var i = 0; i < 10; i++) {
 			queryResultAPP[i].index = (index++) + 'º'
 			queryResultAPP[i].value = Number(queryResultAPP[i].value)
@@ -568,44 +567,13 @@ module.exports = function (app) {
 
 					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
 
-					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4] +
-						numberFormat(percentual_area_km) + message[5]
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4];
+					// numberFormat(percentual_area_km) + message[5]
 
 					return text
 				}
 
 			},
-			// {
-			// 	"id": "uso_solo_probio",
-			// 	"title": "PROBIO",
-			// 	"type": "pie",
-			// 	"disabled": true,
-			// 	"options": {
-			// 		title: {
-			// 			display: false,
-			// 		},
-			// 		legend: {
-			// 			position: "bottom"
-			// 		},
-			// 		tooltips: {}
-			// 	},
-			// 	"getText": function (chart) {
-			// 		var label = chart['indicators'][0]["classe_lulc"]
-			// 		var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
-			// 		var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
-			// 		var ano = chart['indicators'][0]["year"]
-			// 		var projeto = "PROBIO Cerrado"
-
-			// 		var percentual_area_km = ((areaDesmatClasse * 100) / areaTotalClasse);
-
-			// 		var message = languageJson["charts_box_lulc"]["text"][language].split("?");
-
-			// 		var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(parseFloat(areaDesmatClasse)) + message[4] + Math.round(percentual_area_km) + message[5]
-
-			// 		return text
-			// 	}
-
-			// },
 			{
 				"id": "uso_solo_agrosatelite",
 				"title": "Agrosatélite",
@@ -619,7 +587,7 @@ module.exports = function (app) {
 					legend: {
 						labels: {
 							usePointStyle: true,
-							fontColor: "orange"
+							fontColor: "#85560c"
 						},
 						position: "bottom"
 					},
@@ -637,14 +605,49 @@ module.exports = function (app) {
 
 					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
 
-					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4] +
-						numberFormat(percentual_area_km) + message[5]
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4];
+					// numberFormat(percentual_area_km) + message[5]
 
 					return text
 				}
+			},
+			{
+				"id": "uso_solo_probio",
+				"title": "PROBIO",
+				"type": "pie",
+				"disabled": false,
+				"options": {
+					title: {
+						display: false,
+					},
+					legend: {
+						labels: {
+							usePointStyle: true,
+							fontColor: "#85560c"
+						},
+						position: "bottom"
+					},
+					tooltips: {}
+				},
+				"getText": function (chart) {
+					var label = chart['indicators'][0]["classe_lulc"]
+					var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
+					var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
+					var ano = chart['indicators'][0]["year"]
+					var projeto = "PROBIO Cerrado"
+
+					var percentual_area_km = (areaDesmatClasse / areaTotalClasse) * 100;
+
+					var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+
+					var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4]
+					// numberFormat(percentual_area_km) + message[5]
+					return text
+				}
+
 			}
 		]
-
+		let chartFinal = []
 		for (let chart of chartResult) {
 
 			var qc = request.queryResult[chart.id];
@@ -661,13 +664,12 @@ module.exports = function (app) {
 				chart['show'] = true
 				chart['label'] = languageJson['charts_box_lulc']['label'][language]
 				chart['text'] = chart.getText(chart)
+
+				chartFinal.push(chart);
 			}
 
-
-
-
 		}
-		response.send(chartResult)
+		response.send(chartFinal)
 		response.end();
 	}
 

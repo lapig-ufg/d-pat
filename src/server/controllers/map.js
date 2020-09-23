@@ -689,12 +689,6 @@ module.exports = function (app) {
           visible: false,
           selectedType: "uso_solo_terraclass_fip",
           types: [
-            // {
-            //   value: "uso_solo_mapbiomas",
-            //   Viewvalue: "Mapbiomas - 2018",
-            //   opacity: 0.8,
-            //   order: 3
-            // },
             {
               value: "uso_solo_terraclass_fip",
               Viewvalue: "TerraClass-Cerrado - 2013",
@@ -712,17 +706,24 @@ module.exports = function (app) {
               opacity: 0.8,
               order: 3,
               download: ['shp']
-            },
-            {
-              value: "agricultura_agrosatelite_fip",
-              Viewvalue: "Agrosatélite 2013/2014",
-              metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['agricultura_agrosatelite_fip']['metadata'],
-              regionFilter: true,
-              opacity: 0.8,
-              order: 3,
-              download: ['shp']
             }
           ]
+        },
+        {
+          id: "agricultura",
+          label: languageJson["descriptor"]["uso_da_terra"]["layers"]["agricultura_agrosatelite_fip"]["label"][language],
+          visible: false,
+          metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]['agricultura_agrosatelite_fip']['metadata'],
+          selectedType: "agricultura_agrosatelite_fip",
+          types: [{
+            value: "agricultura_agrosatelite_fip",
+            Viewvalue: "Agrosatélite 2013/2014",
+            metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]['agricultura_agrosatelite_fip']['metadata'],
+            regionFilter: true,
+            opacity: 0.8,
+            order: 3,
+            download: ['shp']
+          }]
         },
         {
           id: "floresta_plantada",
