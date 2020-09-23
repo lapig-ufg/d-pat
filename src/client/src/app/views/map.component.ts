@@ -201,7 +201,10 @@ export class MapComponent implements OnInit {
     loading: false,
     dragArea: true,
     strokeColor: '#2224ba',
-    token: ''
+    token: '',
+    analyzedAreaLoading: false,
+    analyzedArea: {},
+    loadingPrintReport: false
   };
 
 
@@ -220,7 +223,8 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private decimalPipe: DecimalPipe
   ) {
     this.projection = OlProj.get('EPSG:900913');
     this.currentZoom = 5.3;
@@ -1907,17 +1911,14 @@ export class MapComponent implements OnInit {
       }
     }
 
-    console.log(this.layerFromUpload)
-
+    this.printRegionsIdentification(data.token)
     this.layerFromUpload.visible = true;
-
     let vectorSource = new VectorSource({
       features: (new GeoJSON()).readFeatures(data, {
         dataProjection: 'EPSG:4326',
         featureProjection: 'EPSG:3857'
       })
     });
-
 
     this.layerFromUpload.layer = new VectorLayer({
       source: vectorSource,
@@ -1963,20 +1964,17 @@ export class MapComponent implements OnInit {
   }
 
   analyzeUploadShape() {
-
+    this.layerFromUpload.analyzedAreaLoading = true;
     let params = [];
     params.push('token=' + this.layerFromUpload.token)
 
     let urlParams = '/service/upload/desmatperyear?' + params.join('&');
-
     this.http.get(urlParams).subscribe(result => {
-
-      console.log(result)
-    }
+          this.layerFromUpload.analyzedArea = result;
+          console.log(this.layerFromUpload.analyzedArea);
+          this.layerFromUpload.analyzedAreaLoading = false;
+        }
     );
-
-
-
   }
 
   private getMetadata(metadata) {
@@ -2240,6 +2238,293 @@ export class MapComponent implements OnInit {
       data: { dados }
     });
   }
+  async printRegionsIdentification(token) {
+    let language = this.language;
+    let self = this;
+
+    let dd = {
+      pageSize: { width: 400, height: 400 },
+
+      // by default we use portrait, you can change it to landscape if you wish
+      pageOrientation: 'portrait',
+
+      content: [],
+      styles: {
+        titleReport: {
+          fontSize: 16,
+          bold: true
+        },
+        textFooter: {
+          fontSize: 9
+        },
+        textImglegend: {
+          fontSize: 9
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        data: {
+          bold: true,
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        codCar: {
+          fontSize: 11,
+          bold: true,
+        },
+        textObs: {
+          fontSize: 11,
+        },
+        tableDpat: {
+          margin: [0, 5, 0, 15],
+          fontSize: 11,
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        token: {
+          bold: true,
+          fontSize: 16,
+        },
+        metadata: {
+          background: '#0b4e26',
+          color: '#fff'
+        }
+      }
+    }
+
+    // @ts-ignore
+    dd.content.push(         {
+      image: logos.logoDPAT,
+      width: 130,
+      alignment: 'center'
+    });
+    dd.content.push({ text: logos.upload.description[language], alignment: 'center', margin: [10, 10, 20, 0]});
+
+    dd.content.push({ text: token, alignment: 'center', style: 'token', margin: [20, 20, 20, 0]});
+
+    // @ts-ignore
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + token, fit: '150', alignment: 'center'});
+    // @ts-ignore
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + token, alignment: 'center', style: 'textFooter', margin: [20, 10, 20, 60]});
+
+    const filename = logos.upload.title[language] + ' - ' + token + '.pdf'
+    pdfMake.createPdf(dd).download(filename);
+  }
+  async printAnalyzedAreaReport() {
+    let language = this.language;
+    let self = this;
+    this.layerFromUpload.loadingPrintReport = true;
+
+    let dd = {
+      pageSize: 'A4',
+
+      // by default we use portrait, you can change it to landscape if you wish
+      pageOrientation: 'portrait',
+
+      // [left, top, right, bottom]
+      pageMargins: [40, 70, 40, 80],
+
+      header: {
+        margin: [24, 10, 24, 30],
+        columns: [
+          {
+            image: logos.logoDPAT,
+            width: 130
+          },
+          {
+            // [left, top, right, bottom]
+            margin: [65, 15, 10, 10],
+            text: this.titlesLayerBox.label_analyzed_area_title.toUpperCase(),
+            style: 'titleReport',
+          },
+
+        ]
+      },
+      footer: function (currentPage, pageCount) {
+        return {
+          table: {
+            widths: '*',
+            body: [
+              [
+                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [400, 45] },
+                {},
+                {},
+              ],
+              [
+                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
+                { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
+                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
+              ],
+            ]
+          },
+          layout: 'noBorders'
+        };
+      },
+      content: [],
+      styles: {
+        titleReport: {
+          fontSize: 16,
+          bold: true
+        },
+        textFooter: {
+          fontSize: 9
+        },
+        textImglegend: {
+          fontSize: 9
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        data: {
+          bold: true,
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        codCar: {
+          fontSize: 11,
+          bold: true,
+        },
+        textObs: {
+          fontSize: 11,
+        },
+        tableDpat: {
+          margin: [0, 5, 0, 15],
+          fontSize: 11,
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        metadata: {
+          background: '#0b4e26',
+          color: '#fff'
+        }
+      }
+    }
+
+    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(this.layerFromUpload.analyzedArea.area_upload, '1.2-2') + '  km²', style: 'subheader' });
+    if( this.layerFromUpload.analyzedArea.deter.length > 0 ) {
+      dd.content.push({ text: self.titlesLayerBox.table_deter_title, style: 'subheader', alignment: 'center' });
+      let tableDeter = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths:  ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableDeter.table.body.push([
+        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center'},
+        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center'}
+      ]);
+      for (let [index, area] of self.layerFromUpload.analyzedArea.deter.entries()) {
+        tableDeter.table.body.push([
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center'},
+          { text: area.year, alignment: 'center'}
+        ]);
+      }
+      dd.content.push(tableDeter);
+    }
+    if( this.layerFromUpload.analyzedArea.prodes.length > 0 ) {
+      dd.content.push({ text: self.titlesLayerBox.table_prodes_title, style: 'subheader', alignment: 'center' });
+      let tableProdes = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths:  ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableProdes.table.body.push([
+        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center'},
+        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center'}
+      ]);
+      for (let [index, area] of self.layerFromUpload.analyzedArea.prodes.entries()) {
+        tableProdes.table.body.push([
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center'},
+          { text: area.year, alignment: 'center'}
+        ]);
+      }
+      dd.content.push(tableProdes);
+    }
+    if( this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+      dd.content.push({ text: self.titlesLayerBox.table_city_title, style: 'subheader', alignment: 'center' });
+      let tableCities = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableCities.table.body.push([
+        { text: '#', alignment: 'center'},
+        { text: self.titlesLayerBox.header_table_city[0], alignment: 'center'}
+      ]);
+      for (let [index, city] of self.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
+        tableCities.table.body.push([
+          { text: index + 1, alignment: 'center'},
+          { text: city.name, alignment: 'left'}
+        ]);
+      }
+      dd.content.push(tableCities);
+    }
+    if( this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+      dd.content.push({ text: self.titlesLayerBox.table_state_title, style: 'subheader', alignment: 'center' });
+      let tableStates = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths:  ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableStates.table.body.push([
+        { text: '#', alignment: 'center'},
+        { text: self.titlesLayerBox.header_table_state[0], alignment: 'center'}
+      ]);
+      for (let [index, state] of self.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
+        tableStates.table.body.push([
+          { text: index + 1, alignment: 'center'},
+          { text: state.name, alignment: 'left'}
+        ]);
+      }
+      dd.content.push(tableStates);
+    }
+
+    // @ts-ignore
+    dd.content.push({ text: this.layerFromUpload.token, alignment: 'center', style: 'textFooter', margin: [25, 60, 30, 10], pageBreak: false });
+    // @ts-ignore
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, fit: '150', alignment: 'center' });
+    // @ts-ignore
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, alignment: 'center', margin: [0, 30, 10, 0],style: 'textFooter' });
+    let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + this.layerFromUpload.token + '.pdf'
+    pdfMake.createPdf(dd).download(filename);
+
+    this.layerFromUpload.loadingPrintReport  = false;
+  }
 
   ngOnInit() {
 
@@ -2320,8 +2605,13 @@ export class MapComponent implements OnInit {
 
     let self = this;
     self.route.paramMap.subscribe(function (params) {
-      if (params.keys.length > 0) {
-        self.openReport(params);
+      if (self.router.url.includes('plataforma')) {
+        if ( params.keys.includes('token') ) {
+          self.openReport(params);
+        }
+      }
+      if (self.router.url.includes('regions')) {
+        console.log(params);
       }
     });
   }
@@ -2398,7 +2688,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.dataEspecial = null;
 
     this.svgLoading = "/assets/img/loading.svg";
-    console.log(this.urlsLandSat);
     this.initGallery();
 
     this.httpOptions = {

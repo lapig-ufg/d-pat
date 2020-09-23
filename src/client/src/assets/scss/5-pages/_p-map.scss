@@ -832,10 +832,9 @@ mat-select {
 }
 
 .card-checkbox-upload{
-  margin: 40px;
+  margin: 10px;
   font-size: 20px;
   padding-top: 23px;
-  background-color: #5cbf642e;
   cursor: pointer;
   padding: 0px !important;
   position: relative;
@@ -844,6 +843,53 @@ mat-select {
 .card-checkbox-upload.mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
   padding-top: 32px;
   padding-left: 20px;
+}
+.upload-token{
+  padding-bottom: 10px;
+  text-align: center;
+  @include fluid-type(14px, 17px);
+}
+
+.card-upload-analysed{
+  margin: 10px;
+  border-radius: 4px;
+  color: rgba(0,0,0,.54);
+  font-weight: 500;
+  .title-file-card{
+    padding: 9px;
+    font-size: 13px;
+  }
+  &-table{
+    margin-bottom: 15px;
+    margin-top: 15px;
+
+    .ui-table .ui-table-tbody > tr:nth-child(even).ui-state-highlight {
+      background-color: #0b4e26 !important;
+      color: #ffffff!important;
+    }
+    .ui-table .ui-table-tbody > tr.ui-state-highlight {
+      background-color: rgba(11, 78, 38, 0.87) !important;
+      color: #ffffff!important;
+    }
+    &-title{
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  &-content{
+    font-size: 14px;
+    margin: 10px;
+    padding-top: 32px;
+  }
+}
+
+.btn-analyze{
+  width: 60%;
+  margin: 0 auto !important;
+  display: block !important;
+}
+.progress-analyse{
+  margin-bottom: 10px;
 }
 
 .title-file-card{

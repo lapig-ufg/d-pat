@@ -1068,7 +1068,17 @@ module.exports = function (app) {
         label_upload_max_size_msg: languageJson["layer_box"]["label_upload_max_size_msg"][language],
         search_placeholder: languageJson["layer_box"]["search_placeholder"][language],
         search_loading: languageJson["layer_box"]["search_loading"][language],
-        search_failed: languageJson["layer_box"]["search_failed"][language]
+        search_failed: languageJson["layer_box"]["search_failed"][language],
+        label_upload_token: languageJson["layer_box"]["label_upload_token"][language],
+        label_total_area: languageJson["layer_box"]["label_total_area"][language],
+        label_analyzed_area_title: languageJson["layer_box"]["label_analyzed_area_title"][language],
+        header_table_deforested: languageJson["layer_box"]["header_table_deforested"][language],
+        header_table_city: languageJson["layer_box"]["header_table_city"][language],
+        header_table_state: languageJson["layer_box"]["header_table_state"][language],
+        table_prodes_title: languageJson["layer_box"]["table_prodes_title"][language],
+        table_deter_title: languageJson["layer_box"]["table_deter_title"][language],
+        table_city_title: languageJson["layer_box"]["table_city_title"][language],
+        table_state_title: languageJson["layer_box"]["table_state_title"][language]
       },
       descriptor: languageJson["descriptor"]
 
