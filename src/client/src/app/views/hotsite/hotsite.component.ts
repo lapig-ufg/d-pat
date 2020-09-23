@@ -120,7 +120,7 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
                 videoURL: 'https://youtu.be/lXV5cSMoAuw',
                 quality: 'highres',
                 coverImage: '../../../assets/img/background_1.svg',
-                containment: '#hotsite',
+                containment: '#hotsite, #body-mobile-hotsite',
                 autoPlay: true,
                 onReady: true,
                 optimizeDisplay: true,
