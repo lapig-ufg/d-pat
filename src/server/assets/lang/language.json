@@ -201,6 +201,46 @@
 		"search_failed": {
 			"pt-br": "Desculpe, região não encontrada.",
 			"en-us": "Sorry, region not found."
+		},
+		"label_upload_token": {
+			"pt-br": "Identificação: ",
+			"en-us": "Identification: "
+		},
+		"label_total_area": {
+			"pt-br": "Área total submetida: ",
+			"en-us": "Total area submitted: "
+		},
+		"label_analyzed_area_title": {
+			"pt-br": "Relatório da área  submetida",
+			"en-us": "Report of the submitted area"
+		},
+		"header_table_deforested": {
+			"pt-br": ["Área desmatada", "Ano"],
+			"en-us": ["Deforested area", "Year"]
+		},
+		"header_table_city": {
+			"pt-br": ["Município"],
+			"en-us": ["County"]
+		},
+		"header_table_state": {
+			"pt-br": ["Estado"],
+			"en-us": ["State"]
+		},
+		"table_prodes_title": {
+			"pt-br": "Dematamentos PRODES",
+			"en-us": "PRODES deforestation"
+		},
+		"table_deter_title": {
+			"pt-br": "Alertas DETER",
+			"en-us": "DETER Alerts"
+		},
+		"table_city_title": {
+			"pt-br": "Municípios que cruzam com a área submetida",
+			"en-us": "Municipalities that intersect with the submitted area"
+		},
+		"table_state_title": {
+			"pt-br": "Estados que cruzam com a área submetida",
+			"en-us": "States that intersect with the submitted area"
 		}
 	},
 	"descriptor": {

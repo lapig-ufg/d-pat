@@ -1,6 +1,7 @@
 import {Component, OnInit, ElementRef, OnDestroy, AfterViewInit, HostListener} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
+import {loadConfigurationFromPath} from "tslint/lib/configuration";
 
 declare  var $: any;
 
@@ -13,15 +14,15 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     texts: any = {};
     interValMasks: any = {};
     fullpage: any = {};
-
     videoplay: any = {};
-
+    showInfo: boolean;
     constructor(
         private http: HttpClient,
         private elementRef: ElementRef,
         private router: Router
     ) {
-
+        this.showInfo = false;
+        clearInterval(this.interValMasks);
     }
 
     onLangClick(lang) {
@@ -92,10 +93,11 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
 
     handleMenu(event) {
         clearInterval(this.interValMasks);
-        if (event.target.classList.contains("is-active")) {
-            this.closeMenu();
-        } else {
+        this.showInfo = !this.showInfo;
+        if (this.showInfo) {
             this.openMenu();
+        } else {
+            this.closeMenu();
         }
     }
 

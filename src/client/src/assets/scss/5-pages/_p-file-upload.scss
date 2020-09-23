@@ -1,4 +1,5 @@
-.upload-card {
+#upload {
+  margin: 20px;
   ul,
   li {
     margin: 0;
@@ -58,6 +59,8 @@
     font-size: 16px;
     overflow-x: hidden !important;
     white-space: pre-wrap !important;
+    display: flex;
+    word-break: break-all;
   }
 
   .upload-card{
@@ -77,8 +80,15 @@
     overflow-y: hidden;
   }
 
+  .mat-card{
+    overflow: hidden;
+  }
+  .mat-progress-bar {
+    display: grid;
+  }
 
   .card-error {
     background-color: salmon;
   }
+
 }

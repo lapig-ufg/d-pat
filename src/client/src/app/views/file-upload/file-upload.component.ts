@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   trigger,
@@ -81,7 +80,7 @@ export class FileUploadComponent implements OnInit {
 
   onClick() {
 
-    this.target =  '/service/upload/spatial-file' + "?lang=" + this.language;  
+    this.target =  '/service/upload/spatial-file' + "?lang=" + this.language;
     let self = this;
 
     const fileUpload = document.getElementById(
@@ -141,8 +140,8 @@ export class FileUploadComponent implements OnInit {
     const fd = new FormData();
     fd.append(this.param, file.data);
 
-    this.loading = true; 
-    this.response.error = false; 
+    this.loading = true;
+    this.response.error = false;
     this.response.msg = ''; 
 
     const req = new HttpRequest('POST', this.target, fd, {
@@ -187,6 +186,7 @@ export class FileUploadComponent implements OnInit {
       )
       .subscribe((event: any) => {   
         if (typeof event === 'object') {
+          this.loading = false;
           this.removeFileFromArray(file);
           this.complete.emit(event.body);
         }

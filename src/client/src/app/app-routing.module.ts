@@ -15,13 +15,15 @@ const routes: Routes = [
   { path: '', component: HotsiteComponent },
   { path: 'plataforma', component: MapComponent },
   { path: 'projeto', component: ProjectComponent },
-  { path: "plataforma/:token", component: MapComponent }
+  { path: 'plataforma/:token', component: MapComponent },
+  { path: 'regions/:token', component: MapComponent }
 ]
 
 const routesMobile = [
   { path: 'mobile', component: MobileComponent},
   { path: 'projeto', component: ProjectComponent },
-  { path: "mobile/:token", component: MobileComponent }
+  { path: 'mobile/:token', component: MobileComponent },
+  { path: 'mobile/regions/:token', component: MobileComponent }
 ]
 
 @NgModule({
