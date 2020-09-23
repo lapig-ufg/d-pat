@@ -884,10 +884,16 @@ mat-select {
 }
 
 .btn-analyze{
-  width: 60%;
-  margin: 0 auto !important;
   display: block !important;
 }
+
+.buttons-analyze{
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
 .progress-analyse{
   margin-bottom: 10px;
 }
@@ -923,6 +929,16 @@ mat-select {
   background-color: #8080802e;
   text-align: justify;
   border-left: 5px solid #585858;
+}
+
+.info-error{
+  font-size: 0.5vh;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 6px;
+  background-color: rgba(128, 83, 58, 0.18);
+  text-align: justify;
+  border-left: 5px solid #58070e;
 }
 
 

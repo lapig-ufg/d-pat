@@ -1079,7 +1079,11 @@ module.exports = function (app) {
         table_prodes_title: languageJson["layer_box"]["table_prodes_title"][language],
         table_deter_title: languageJson["layer_box"]["table_deter_title"][language],
         table_city_title: languageJson["layer_box"]["table_city_title"][language],
-        table_state_title: languageJson["layer_box"]["table_state_title"][language]
+        table_state_title: languageJson["layer_box"]["table_state_title"][language],
+        btn_analyze: languageJson["layer_box"]["btn_analyze"][language],
+        btn_clear: languageJson["layer_box"]["btn_clear"][language],
+        msg_error: languageJson["layer_box"]["msg_error"][language],
+        label_upload_tooltip: languageJson["layer_box"]["label_upload_tooltip"][language]
       },
       descriptor: languageJson["descriptor"]
 

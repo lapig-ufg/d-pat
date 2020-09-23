@@ -202,6 +202,7 @@ export class MapComponent implements OnInit {
     visible: null,
     loading: false,
     dragArea: true,
+    error:false,
     strokeColor: '#2224ba',
     token: '',
     analyzedAreaLoading: false,
@@ -1919,6 +1920,7 @@ export class MapComponent implements OnInit {
     let map = this.map;
 
     this.layerFromUpload.checked = false;
+    this.layerFromUpload.error = false;
 
     if (this.layerFromUpload.layer != null) {
       map.removeLayer(this.layerFromUpload.layer);
@@ -2009,14 +2011,18 @@ export class MapComponent implements OnInit {
   analyzeUploadShape() {
     this.layerFromUpload.analyzedAreaLoading = true;
     let params = [];
+    let self = this;
     params.push('token=' + this.layerFromUpload.token)
-
+    this.layerFromUpload.error = false;
     let urlParams = '/service/upload/desmatperyear?' + params.join('&');
     this.http.get(urlParams).subscribe(result => {
           this.layerFromUpload.analyzedArea = result;
           this.layerFromUpload.analyzedAreaLoading = false;
-        }
-    );
+        },
+        error =>  {
+          self.layerFromUpload.analyzedAreaLoading = false;
+          self.layerFromUpload.error = true;
+        });
   }
 
   private getMetadata(metadata) {
@@ -2458,7 +2464,7 @@ export class MapComponent implements OnInit {
       }
     }
 
-    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(this.layerFromUpload.analyzedArea.area_upload, '1.2-2') + '  km²', style: 'subheader' });
+    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(this.layerFromUpload.analyzedArea.shape_upload.area_upload, '1.2-2') + '  km²', style: 'subheader' });
     if( this.layerFromUpload.analyzedArea.deter.length > 0 ) {
       dd.content.push({ text: self.titlesLayerBox.table_deter_title, style: 'subheader', alignment: 'center' });
       let tableDeter = {

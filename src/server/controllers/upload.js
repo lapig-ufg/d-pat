@@ -161,7 +161,10 @@ module.exports = function (app) {
 					console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", err);
 					return;
 				}
-				Internal.response.status(200).send(data);
+				let ob = JSON.parse(data)
+				let token = Internal.saveToPostGis(ob);
+				ob.token = token;
+				Internal.response.status(200).send(JSON.stringify(ob));
 				fs.unlinkSync(Internal.tmpPath);
 			});
 		} else {
@@ -181,16 +184,15 @@ module.exports = function (app) {
 	};
 
 	Internal.import_feature = function (token) {
-
 		var data_atualizacao = new Date(moment().format('YYYY-MM-DD HH:mm'))
 
-		if (Internal.geojson.type == 'FeatureCollection') {
+		if (Internal.geojson.type.toUpperCase() == 'FeatureCollection'.toUpperCase()) {
 			for (const [index, feature] of Internal.geojson.features.entries()) {
 				let geom = JSON.stringify((feature.geometry))
 				Internal.insertToPostgis(token, geom, data_atualizacao)
 			}
 		}
-		else if (Internal.geojson.type == 'Feature') {
+		else if (Internal.geojson.type.toUpperCase() == 'Feature'.toUpperCase()) {
 			let geom = JSON.stringify((Internal.geojson.geometry))
 			Internal.insertToPostgis(token, geom, data_atualizacao)
 		}
@@ -218,7 +220,6 @@ module.exports = function (app) {
 	}
 
 	Internal.saveToPostGis = function (geojson) {
-
 		let token = new Date().getTime()
 		Internal.geojson = geojson;
 

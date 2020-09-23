@@ -203,20 +203,20 @@
 			"en-us": "Sorry, region not found."
 		},
 		"label_upload_token": {
-			"pt-br": "Identificação: ",
-			"en-us": "Identification: "
+			"pt-br": "Token de acesso: ",
+			"en-us": "Access Token: "
 		},
 		"label_total_area": {
 			"pt-br": "Área total submetida: ",
 			"en-us": "Total area submitted: "
 		},
 		"label_analyzed_area_title": {
-			"pt-br": "Relatório da área  submetida",
+			"pt-br": "Relatório da área submetida",
 			"en-us": "Report of the submitted area"
 		},
 		"header_table_deforested": {
-			"pt-br": ["Área desmatada", "Ano"],
-			"en-us": ["Deforested area", "Year"]
+			"pt-br": ["Ano","Área desmatada"],
+			"en-us": ["Year", "Deforested area"]
 		},
 		"header_table_city": {
 			"pt-br": ["Município"],
@@ -231,8 +231,8 @@
 			"en-us": "PRODES deforestation"
 		},
 		"table_deter_title": {
-			"pt-br": "Alertas DETER",
-			"en-us": "DETER Alerts"
+			"pt-br": "Avisos DETER",
+			"en-us": "DETER notices"
 		},
 		"table_city_title": {
 			"pt-br": "Municípios que cruzam com a área submetida",
@@ -241,6 +241,18 @@
 		"table_state_title": {
 			"pt-br": "Estados que cruzam com a área submetida",
 			"en-us": "States that intersect with the submitted area"
+		},
+		"btn_analyze": {
+			"pt-br": "Analisar",
+			"en-us": "Analyze"
+		},
+		"btn_clear": {
+			"pt-br": "Limpar",
+			"en-us": "Clear"
+		},
+		"msg_error": {
+			"pt-br": "Não foi possível analizar a área submetida, tente uma área menor",
+			"en-us": "Could not analyze the submitted area, try a smaller area"
 		}
 	},
 	"descriptor": {
