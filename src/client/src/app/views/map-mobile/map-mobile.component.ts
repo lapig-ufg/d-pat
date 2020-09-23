@@ -5,7 +5,7 @@ import { SearchService, MapComponent } from '../map.component';
   selector: 'app-map-mobile',
   templateUrl: './map-mobile.component.html',
   providers: [SearchService],
-  styleUrls: ['./map-mobile.component.css']
+  // styleUrls: ['./map-mobile.component.css']
 })
 export class MapMobileComponent extends MapComponent {
 

@@ -335,170 +335,171 @@
         </div>
         </mat-drawer-container>
     </mat-tab>
-    <mat-tab label = "Estatísticas">
+    <mat-tab label = "Estatísticas" *ngIf="showStatistics">
       <!-- <mat-drawer-container class="container-layer-sidenav" autosize> -->
-        <div class="layer-sidenav-content">
-          <div [style.height]="innerHeigth + 'px'">
-            <div *ngIf="showStatistics" id="positionCharts">
-              <!-- <div class="titleWindows">
-                <div>{{dataSeries.title}}</div>
-  
-                <div class="space"></div>
-  
-                <button class="btn-colapse" mat-mini-fab (click)="collapseCharts = !collapseCharts"
-                  [attr.aria-expanded]="!collapseCharts">
-                  <mat-icon> {{collapseCharts ? 'expand_less' : 'expand_more'}}</mat-icon>
-                </button>
-              </div> -->
-  
-              <!-- <div [ngbCollapse]="collapseCharts" id="matgroup"> -->
-                <!-- <mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
-                  (selectedTabChange)="changeTab($event)"> -->
-  
-                  <div *ngIf="true" id="tabGraficoLinhas">
-                    <h4 style="font-size: 30px;">{{dataSeries.label}} </h4>
-                    <div>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="chart-region">
-                            <h5>
-                              <strong> {{ selectRegion.text }} </strong>
-                            </h5>
+        <p-scrollPanel [style]="{width: '100%', height: '75vh'}">
+            <!-- <div class="layer-sidenav-content"> -->
+              <div id="positionCharts">
+                <!-- <div class="titleWindows">
+                  <div>{{dataSeries.title}}</div>
+    
+                  <div class="space"></div>
+    
+                  <button class="btn-colapse" mat-mini-fab (click)="collapseCharts = !collapseCharts"
+                    [attr.aria-expanded]="!collapseCharts">
+                    <mat-icon> {{collapseCharts ? 'expand_less' : 'expand_more'}}</mat-icon>
+                  </button>
+                </div> -->
+    
+                <!-- <div [ngbCollapse]="collapseCharts" id="matgroup"> -->
+                  <!-- <mat-tab-group class="charts" [selectedIndex]="selectedIndex" #matgroup
+                    (selectedTabChange)="changeTab($event)"> -->
+    
+                    <div *ngIf="true" id="tabGraficoLinhas">
+                      <h4 style="font-size: 30px;">{{dataSeries.label}} </h4>
+                      <div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="chart-region">
+                              <h5>
+                                <strong> {{ selectRegion.text }} </strong>
+                              </h5>
+                            </div>
+                          </div>
+                          <div class="col-md-8" style="text-align:justify">
+                            {{ dataSeries.description }}
+                            <!-- <p class="stylePercentual" > </p>  -->
                           </div>
                         </div>
-                        <div class="col-md-8" style="text-align:justify">
-                          {{ dataSeries.description }}
-                          <!-- <p class="stylePercentual" > </p>  -->
-                        </div>
+                        <!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
+    
+                        <p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries">
+                        </p-chart>
                       </div>
-                      <!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
-  
-                      <p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries">
-                      </p-chart>
                     </div>
-                  </div>
-                  <div *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'" id="tabGraficoLinhas">
-                    <h4 style="font-size: 30px;">{{dataStates.label}}</h4>
-                    <div>
-                      <h6>
-                        <b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
-                      </h6>
-                      <p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
+                    <div *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'" id="tabGraficoLinhas">
+                      <h4 style="font-size: 30px;">{{dataStates.label}}</h4>
+                      <div>
+                        <h6>
+                          <b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
+                        </h6>
+                        <p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
+                      </div>
                     </div>
-                  </div>
-                  <div *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
-                    <h4 style="font-size: 30px;">{{chartResultCities.label}}</h4>
-                    <div>
-                      <h6>
-                        <b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
-  
-                      </h6>
-                      <p-table [value]="chartResultCities.series" selectionMode="single"
-                        (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
-                        <ng-template pTemplate="header">
-                          <tr align="center">
-                            <th *ngFor="let header of chartResultCities.split">
-                              {{header}}
-                            </th>
-                          </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-city>
-                          <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                            tooltipPosition="bottom" life="2000">
-                            <td align="center">{{city.index}}</td>
-                            <td align="center">{{city.name}}</td>
-                            <td align="center">{{city.uf}}</td>
-                            <td align="center">{{city.value | number }} km²</td>
-                          </tr>
-                        </ng-template>
-                      </p-table>
+                    <div *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
+                      <h4 style="font-size: 30px;">{{chartResultCities.label}}</h4>
+                      <div>
+                        <h6>
+                          <b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
+    
+                        </h6>
+                        <p-table [value]="chartResultCities.series" selectionMode="single"
+                          (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+                          <ng-template pTemplate="header">
+                            <tr align="center">
+                              <th *ngFor="let header of chartResultCities.split">
+                                {{header}}
+                              </th>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-city>
+                            <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+                              tooltipPosition="bottom" life="2000">
+                              <td align="center">{{city.index}}</td>
+                              <td align="center">{{city.name}}</td>
+                              <td align="center">{{city.uf}}</td>
+                              <td align="center">{{city.value | number }} km²</td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
+    
                     </div>
-  
-                  </div>
-                  <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
-                    <h4 style="font-size: 30px;">{{chartResultCitiesIllegalAPP.label}}</h4>
-                    <div>
-                      <h6>
-                        <b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
-                        <!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
-                      </h6>
-                      <p-table [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
-                        (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
-                        <ng-template pTemplate="header">
-                          <tr align="center">
-                            <th *ngFor="let header of chartResultCities.split">
-                              {{header}}
-                            </th>
-                          </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-city>
-                          <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                            tooltipPosition="bottom" life="2000">
-                            <td align="center">{{city.index}}</td>
-                            <td align="center">{{city.name}}</td>
-                            <td align="center">{{city.uf}}</td>
-                            <td align="center">{{city.value | number }} km²</td>
-                          </tr>
-                        </ng-template>
-                      </p-table>
+                    <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
+                      <h4 style="font-size: 30px;">{{chartResultCitiesIllegalAPP.label}}</h4>
+                      <div>
+                        <h6>
+                          <b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
+                          <!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
+                        </h6>
+                        <p-table [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
+                          (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+                          <ng-template pTemplate="header">
+                            <tr align="center">
+                              <th *ngFor="let header of chartResultCities.split">
+                                {{header}}
+                              </th>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-city>
+                            <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+                              tooltipPosition="bottom" life="2000">
+                              <td align="center">{{city.index}}</td>
+                              <td align="center">{{city.name}}</td>
+                              <td align="center">{{city.uf}}</td>
+                              <td align="center">{{city.value | number }} km²</td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
+    
                     </div>
-  
-                  </div>
-                  <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
-                    <h4 style="font-size: 30px;">{{chartResultCitiesIllegalRL.label}}</h4>
-                    <div>
-                      <h6>
-                        <b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
-                        <!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
-                      </h6>
-                      <p-table [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
-                        (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
-                        <ng-template pTemplate="header">
-                          <tr align="center">
-                            <th *ngFor="let header of chartResultCities.split">
-                              {{header}}
-                            </th>
-                          </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-city>
-                          <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                            tooltipPosition="bottom" life="2000">
-                            <td align="center">{{city.index}}</td>
-                            <td align="center">{{city.name}}</td>
-                            <td align="center">{{city.uf}}</td>
-                            <td align="center">{{city.value | number }} km²</td>
-                          </tr>
-                        </ng-template>
-                      </p-table>
+                    <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
+                      <h4 style="font-size: 30px;">{{chartResultCitiesIllegalRL.label}}</h4>
+                      <div>
+                        <h6>
+                          <b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
+                          <!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
+                        </h6>
+                        <p-table [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
+                          (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+                          <ng-template pTemplate="header">
+                            <tr align="center">
+                              <th *ngFor="let header of chartResultCities.split">
+                                {{header}}
+                              </th>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-city>
+                            <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+                              tooltipPosition="bottom" life="2000">
+                              <td align="center">{{city.index}}</td>
+                              <td align="center">{{city.name}}</td>
+                              <td align="center">{{city.uf}}</td>
+                              <td align="center">{{city.value | number }} km²</td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                      </div>
+    
                     </div>
-  
-                  </div>
-  
-                  <div *ngIf="isFilteredByCity">
-                    <h4 style="font-size: 30px;">{{chartUsoSolo[0]?.label}}</h4>
-                    <div>
-                      <p-tabView (onChange)="changeSelectedLulcChart($event)">
-                        <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
-                          [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
-                          <div>
-                            <p style="font-weight: bold">{{ selectRegion.text }}</p>
-                            <div>{{uso.text}}</div>
-                            <p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
-                              [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
-                              height="20vh"></p-chart>
-                          </div>
-                        </p-tabPanel>
-                      </p-tabView>
+    
+                    <div *ngIf="isFilteredByCity">
+                      <h4 style="font-size: 30px;">{{chartUsoSolo[0]?.label}}</h4>
+                      <div>
+                        <p-tabView (onChange)="changeSelectedLulcChart($event)">
+                          <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
+                            [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
+                            <div>
+                              <p style="font-weight: bold">{{ selectRegion.text }}</p>
+                              <div>{{uso.text}}</div>
+                              <p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
+                                [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
+                                height="20vh"></p-chart>
+                            </div>
+                          </p-tabPanel>
+                        </p-tabView>
+                      </div>
                     </div>
-                  </div>
-  
-  
-                <!-- </mat-tab-group> -->
-              <!-- </div> -->
-  
-            </div>
-          </div>
-        </div>
+    
+    
+                  <!-- </mat-tab-group> -->
+                <!-- </div> -->
+    
+              </div>
+            <!-- </div> -->
+        </p-scrollPanel>
+        
       <!-- </mat-drawer-container> -->
     </mat-tab>
   </mat-tab-group>
