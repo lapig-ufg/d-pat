@@ -329,11 +329,33 @@ module.exports = function (app) {
 		// Group by color as key to the person array
 		const regionGroupedByType = groupBy(regions, 'type');
 
+
+		queryResult = request.queryResult['car']
+		var car = []
+
+		queryResult.forEach(function (row) {
+
+			car.push({
+				cod_car: row['codcar'],
+				area_car: Number(row['areacar']),
+				area_desmat_per_car: Number(row['area_desmatada_per_car']),
+				area_rl: Number(row['area_reserva_legal_total_per_car']),
+				area_desmat_rl: Number(row['area_desmat_rl_per_car']),
+				area_app: Number(row['area_app_total_per_car']),
+				area_desmat_app: Number(row['area_desmat_app_per_car'])
+			})
+		});
+
+		let stringified = car.map(i => JSON.stringify(i));
+		var car_final = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
+			.map(j => JSON.parse(j))
+
 		let res = {
 			regions_intersected: regionGroupedByType,
 			prodes: resultByYear,
 			deter: resultByYearDeter,
-			shape_upload: info_area
+			shape_upload: info_area,
+			car: car_final
 		}
 
 		response.send(res)

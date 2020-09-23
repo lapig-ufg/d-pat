@@ -4,7 +4,7 @@ module.exports = function (app) {
 	var Query = {};
 
 	Query.defaultParams = {
-		'year': 2017,
+		'year': 2019,
 		'amount': 1
 	}
 
@@ -61,7 +61,7 @@ module.exports = function (app) {
 			id: 'timeseries',
 			sql: " SELECT year, 'prodes_cerrado' source, SUM(areamunkm) as areamunkm " +
 				" FROM prodes_cerrado " +
-				" WHERE year IS NOT NULL " + Internal.regionFilter(type) +
+				" WHERE year IS NOT NULL and classname <> 'R_2018'" + Internal.regionFilter(type) +
 				" GROUP BY 1;"
 		},
 		{

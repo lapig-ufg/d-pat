@@ -15,7 +15,7 @@ module.exports = function (app) {
         },
         {
             id: 'regions_pershape',
-            sql: "select r.type as type , r.text as value from regions r INNER JOIN upload_shapes up on ST_Intersects(up.geom,r.geom ) where r.type not in ('biome') and up.token= ${token} group by 1,2 order by 1,2"
+            sql: "select r.type as type , unaccent(r.text), r.text as value  from regions r INNER JOIN upload_shapes up on ST_Intersects(up.geom,r.geom ) where r.type not in ('biome') and up.token= ${token} group by 1,2,3 order by 2"
         },
         {
             id: 'area_upload',
@@ -24,6 +24,20 @@ module.exports = function (app) {
         {
             id: 'geojson_upload',
             sql: "select  ST_ASGEOJSON(ST_Transform(ST_Multi(ST_Union(geom)), 4674)) as geojson from upload_shapes where token= ${token} "
+        },
+        {
+            id: 'car',
+            sql: "SELECT car.cod_car as codcar, SUM(ST_AREA(ST_Intersection(desmatamento.geom, car.geom)::GEOGRAPHY) / 1000000.0) as area_desmatada_per_car , SUM(ST_AREA(app.geom::GEOGRAPHY) / 1000000.0) as area_app_total_per_car, " +
+                "SUM(ST_AREA(rl.geom::GEOGRAPHY) / 1000000.0) as area_reserva_legal_total_per_car, SUM(ST_AREA(ST_Intersection(desmatamento.geom, rl.geom)::GEOGRAPHY) / 1000000.0) as area_desmat_rl_per_car, " +
+                "SUM(ST_AREA(ST_Intersection(desmatamento.geom, app.geom)::GEOGRAPHY) / 1000000.0) as area_desmat_app_per_car , " +
+                "SUM(car.area_ha / 100.0) as areacar FROM car_desmat c " +
+                "INNER JOIN car_cerrado car on car.idt_imovel = c.idt_imovel " +
+                "INNER JOIN geo_car_reserva_legal_cerrado rl on rl.idt_imovel = c.idt_imovel  " +
+                " INNER JOIN geo_car_app_cerrado app on app.idt_imovel = c.idt_imovel " +
+                " INNER JOIN  prodes_cerrado desmatamento on desmatamento.gid = c.prodes_id " +
+                " INNER JOIN upload_shapes up on ST_INTERSECTS(up.geom, car.geom) " +
+                " WHERE desmatamento.year >= 2013 and up.token= ${token}" +
+                "group by 1 order by 2 desc limit 50"
         },
         ]
 

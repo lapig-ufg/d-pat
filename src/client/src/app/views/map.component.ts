@@ -2349,19 +2349,19 @@ export class MapComponent implements OnInit {
     }
 
     // @ts-ignore
-    dd.content.push(         {
+    dd.content.push({
       image: logos.logoDPAT,
       width: 130,
       alignment: 'center'
     });
-    dd.content.push({ text: logos.upload.description[language], alignment: 'center', margin: [10, 10, 20, 0]});
+    dd.content.push({ text: logos.upload.description[language], alignment: 'center', margin: [10, 10, 20, 0] });
 
-    dd.content.push({ text: token, alignment: 'center', style: 'token', margin: [20, 20, 20, 0]});
+    dd.content.push({ text: token, alignment: 'center', style: 'token', margin: [20, 20, 20, 0] });
 
     // @ts-ignore
-    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + token, fit: '150', alignment: 'center'});
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + token, fit: '150', alignment: 'center' });
     // @ts-ignore
-    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + token, alignment: 'center', style: 'textFooter', margin: [20, 10, 20, 60]});
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + token, alignment: 'center', style: 'textFooter', margin: [20, 10, 20, 60] });
 
     const filename = logos.upload.title[language] + ' - ' + token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
@@ -2472,48 +2472,48 @@ export class MapComponent implements OnInit {
         layout: 'lightHorizontalLines',
         table: {
           headerRows: 1,
-          widths:  ['*', '*'],
+          widths: ['*', '*'],
           body: [],
           margin: 10
         }
       };
       tableDeter.table.body.push([
-        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center'},
-        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center'}
+        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
       ]);
       for (let [index, area] of self.layerFromUpload.analyzedArea.deter.entries()) {
         tableDeter.table.body.push([
-          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center'},
-          { text: area.year, alignment: 'center'}
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
+          { text: area.year, alignment: 'center' }
         ]);
       }
       dd.content.push(tableDeter);
     }
-    if( this.layerFromUpload.analyzedArea.prodes.length > 0 ) {
+    if (this.layerFromUpload.analyzedArea.prodes.length > 0) {
       dd.content.push({ text: self.titlesLayerBox.table_prodes_title, style: 'subheader', alignment: 'center' });
       let tableProdes = {
         style: 'tableCounty',
         layout: 'lightHorizontalLines',
         table: {
           headerRows: 1,
-          widths:  ['*', '*'],
+          widths: ['*', '*'],
           body: [],
           margin: 10
         }
       };
       tableProdes.table.body.push([
-        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center'},
-        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center'}
+        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
       ]);
       for (let [index, area] of self.layerFromUpload.analyzedArea.prodes.entries()) {
         tableProdes.table.body.push([
-          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center'},
-          { text: area.year, alignment: 'center'}
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
+          { text: area.year, alignment: 'center' }
         ]);
       }
       dd.content.push(tableProdes);
     }
-    if( this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
       dd.content.push({ text: self.titlesLayerBox.table_city_title, style: 'subheader', alignment: 'center' });
       let tableCities = {
         style: 'tableCounty',
@@ -2526,37 +2526,37 @@ export class MapComponent implements OnInit {
         }
       };
       tableCities.table.body.push([
-        { text: '#', alignment: 'center'},
-        { text: self.titlesLayerBox.header_table_city[0], alignment: 'center'}
+        { text: '#', alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_city[0], alignment: 'center' }
       ]);
       for (let [index, city] of self.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
         tableCities.table.body.push([
-          { text: index + 1, alignment: 'center'},
-          { text: city.name, alignment: 'left'}
+          { text: index + 1, alignment: 'center' },
+          { text: city.name, alignment: 'left' }
         ]);
       }
       dd.content.push(tableCities);
     }
-    if( this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
       dd.content.push({ text: self.titlesLayerBox.table_state_title, style: 'subheader', alignment: 'center' });
       let tableStates = {
         style: 'tableCounty',
         layout: 'lightHorizontalLines',
         table: {
           headerRows: 1,
-          widths:  ['*', '*'],
+          widths: ['*', '*'],
           body: [],
           margin: 10
         }
       };
       tableStates.table.body.push([
-        { text: '#', alignment: 'center'},
-        { text: self.titlesLayerBox.header_table_state[0], alignment: 'center'}
+        { text: '#', alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_state[0], alignment: 'center' }
       ]);
       for (let [index, state] of self.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
         tableStates.table.body.push([
-          { text: index + 1, alignment: 'center'},
-          { text: state.name, alignment: 'left'}
+          { text: index + 1, alignment: 'center' },
+          { text: state.name, alignment: 'left' }
         ]);
       }
       dd.content.push(tableStates);
@@ -2567,11 +2567,11 @@ export class MapComponent implements OnInit {
     // @ts-ignore
     dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, fit: '150', alignment: 'center' });
     // @ts-ignore
-    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, alignment: 'center', margin: [0, 30, 10, 0],style: 'textFooter' });
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, alignment: 'center', margin: [0, 30, 10, 0], style: 'textFooter' });
     let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + this.layerFromUpload.token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
 
-    this.layerFromUpload.loadingPrintReport  = false;
+    this.layerFromUpload.loadingPrintReport = false;
   }
 
   ngOnInit() {
@@ -2654,7 +2654,7 @@ export class MapComponent implements OnInit {
     let self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
-        if ( params.keys.includes('token') ) {
+        if (params.keys.includes('token')) {
           self.openReport(params);
         }
       }
