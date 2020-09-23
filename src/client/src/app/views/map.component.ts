@@ -140,6 +140,7 @@ export class MapComponent implements OnInit {
   regionTypeFilter: any;
 
   defaultRegion: any;
+  defaultPeriod: any;
 
   statePreposition = [];
 
@@ -278,6 +279,12 @@ export class MapComponent implements OnInit {
     };
 
     this.periodSelected = {
+      value: 'year=2019',
+      Viewvalue: '2018/2019',
+      year: 2019
+    };
+
+    this.defaultPeriod = {
       value: 'year=2019',
       Viewvalue: '2018/2019',
       year: 2019
@@ -459,7 +466,13 @@ export class MapComponent implements OnInit {
       params.push('region=' + this.selectRegion.value);
     }
 
+
     let selectedTime = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip');
+
+    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    if (prodes != undefined) {
+      selectedTime = this.selectedTimeFromLayerType(prodes.selectedType);
+    }
 
     if (selectedTime != undefined) {
       params.push('year=' + selectedTime.year);
@@ -787,26 +800,35 @@ export class MapComponent implements OnInit {
   }
 
   changeSelectedLulcChart(e) {
-    let uso_terra = this.layersNames.find(element => element.id === "terraclass");
 
+    let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+    let agricultura = this.layersNames.find(element => element.id === "agricultura");
     if (this.changeTabSelected === "Uso do Solo" || this.changeTabSelected == "Land Use and Land Cover") {
 
       if (this.desmatInfo.year >= 2013) {
         if (e.index == 0) {
           uso_terra.selectedType = "uso_solo_terraclass_fip"
+          uso_terra.visible = true;
+          agricultura.visible = false;
         }
         else if (e.index == 1) {
           uso_terra.selectedType = "agricultura_agrosatelite_fip"
+          uso_terra.visible = false
+          agricultura.visible = true;
         }
       }
       else {
         uso_terra.selectedType = "uso_solo_probio_fip"
+        uso_terra.visible
+        agricultura.visible = false;
       }
 
       uso_terra.visible = true;
     }
 
     this.changeVisibility(uso_terra, undefined);
+    this.changeVisibility(agricultura, undefined);
+
 
   }
 
@@ -816,11 +838,7 @@ export class MapComponent implements OnInit {
     if (region == this.defaultRegion) {
       this.valueRegion = '';
       this.currentData = '';
-      this.desmatInfo = {
-        value: 'year=2019',
-        Viewvalue: '2018/2019',
-        year: 2019
-      };
+      this.desmatInfo = this.defaultPeriod
 
       prodes.selectedType = 'prodes_por_region_city_fip_img';
 
