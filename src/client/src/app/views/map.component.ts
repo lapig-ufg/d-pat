@@ -1996,7 +1996,6 @@ export class MapComponent implements OnInit {
     let urlParams = '/service/upload/desmatperyear?' + params.join('&');
     this.http.get(urlParams).subscribe(result => {
           this.layerFromUpload.analyzedArea = result;
-          console.log(this.layerFromUpload.analyzedArea);
           this.layerFromUpload.analyzedAreaLoading = false;
         }
     );
