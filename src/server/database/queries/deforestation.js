@@ -30,14 +30,6 @@ module.exports = function (app) {
 
 
 		return [
-			// {
-			// 	id: 'desmat_per_region',
-			// 	sql: " SELECT classname, source, SUM(areamunkm) as areamunkm " +
-			// 		" FROM prodes_cerrado " +
-			// 		" WHERE classname != 'AGUA' " + Internal.regionFilter(type) +
-			// 		" GROUP BY 1,2 " +
-			// 		" ORDER BY classname ASC;"
-			// },
 			{
 				id: 'uso_solo_terraclass',
 				sql: "select r.text as region, r.area_km2 as area_region, lc.classe_lulc, total_area_classe_lulc, desmat_area_classe_lulc, lc.color, lc.year from prodes_regions_lulc lc inner join regions r on "
@@ -46,7 +38,8 @@ module.exports = function (app) {
 			},
 			{
 				id: 'uso_solo_probio',
-				sql: "select 1 from graphic_colors limit 1"
+				sql: "select r.text as region, r.area_km2 as area_region, lc.classe_lulc, total_area_classe_lulc, desmat_area_classe_lulc, lc.color, lc.year from prodes_regions_lulc lc inner join regions r on "
+					+ "(r.gid = lc.region_id) where lc.fonte = 'probio' and lc.type = '" + type + "' AND unaccent(r.value) ilike unaccent('" + region + "') and lc.year = " + year + " ORDER BY 5 DESC;"
 
 			},
 			{
@@ -55,8 +48,6 @@ module.exports = function (app) {
 					+ "(r.gid = lc.region_id) where lc.fonte = 'agrosatelite' and lc.type = '" + type + "' AND unaccent(r.value) ilike unaccent('" + region + "') and lc.year = " + year + " ORDER BY 5 DESC;"
 
 			}
-
-
 
 		]
 	}

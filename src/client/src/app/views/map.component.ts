@@ -2,6 +2,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTabGroup } from "@angular/material";
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
@@ -154,7 +155,7 @@ export class MapComponent implements OnInit {
 
   isFilteredByCity = false;
   isFilteredByState = false;
-  selectedIndex: any;
+  @ViewChild("matgroup", { static: false }) matgroup: MatTabGroup;
   collapseLegends = false;
 
   infodata: any;
@@ -415,10 +416,6 @@ export class MapComponent implements OnInit {
   onStateSelect(e) {
     let name = e.element._model.label;
 
-    // console.log(e.dataset);
-    // console.log(e.element);
-    // console.log(e.element._datasetIndex);
-    // console.log(e.element._index);
 
     PARAMS.append('key', name)
     PARAMS.append('type', 'state')
@@ -471,6 +468,9 @@ export class MapComponent implements OnInit {
     if (selectedTime != undefined) {
       params.push('year=' + selectedTime.year);
     }
+    else {
+      params.push('year=' + this.desmatInfo.year);
+    }
 
     params.push('lang=' + this.language);
 
@@ -504,6 +504,7 @@ export class MapComponent implements OnInit {
   }
 
   changeTab(event) {
+
     this.changeTabSelected = event.tab.textLabel;
 
     if (event.tab.textLabel == "Série Temporal" || event.tab.textLabel == "Timeseries") {
@@ -511,10 +512,14 @@ export class MapComponent implements OnInit {
       this.viewWidthMobile = this.viewWidthMobile + 1;
       this.chartRegionScale = true;
 
-      let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
+      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
       uso_terra.visible = false;
 
+      let agricultura = this.layersNames.find(element => element.id === "agricultura");
+      agricultura.visible = false;
+
       this.changeVisibility(uso_terra, undefined)
+      this.changeVisibility(agricultura, undefined)
 
     } else if (event.tab.textLabel == "Uso do Solo" || event.tab.textLabel == "Land Use and Land Cover") {
       this.viewWidth = this.viewWidth + 1;
@@ -786,15 +791,22 @@ export class MapComponent implements OnInit {
   }
 
   changeSelectedLulcChart(e) {
-    let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
+    let uso_terra = this.layersNames.find(element => element.id === "terraclass");
 
     if (this.changeTabSelected === "Uso do Solo" || this.changeTabSelected == "Land Use and Land Cover") {
-      if (e.index == 0) {
-        uso_terra.selectedType = "uso_solo_terraclass_fip"
+
+      if (this.desmatInfo.year >= 2013) {
+        if (e.index == 0) {
+          uso_terra.selectedType = "uso_solo_terraclass_fip"
+        }
+        else if (e.index == 1) {
+          uso_terra.selectedType = "agricultura_agrosatelite_fip"
+        }
       }
-      else if (e.index == 1) {
-        uso_terra.selectedType = "agricultura_agrosatelite_fip"
+      else {
+        uso_terra.selectedType = "uso_solo_probio_fip"
       }
+
       uso_terra.visible = true;
     }
 
@@ -816,6 +828,17 @@ export class MapComponent implements OnInit {
 
       prodes.selectedType = 'prodes_por_region_city_fip_img';
 
+      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+      uso_terra.visible = false;
+
+      let agricultura = this.layersNames.find(element => element.id === "agricultura");
+      agricultura.visible = false;
+
+
+      this.changeVisibility(uso_terra, undefined)
+      this.changeVisibility(agricultura, undefined)
+
+
     } else {
       prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
       this.infodataMunicipio = null;
@@ -824,6 +847,8 @@ export class MapComponent implements OnInit {
     this.changeVisibility(prodes, undefined);
 
     this.selectRegion = region;
+
+    this.matgroup.selectedIndex = 0
 
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
@@ -1256,7 +1281,6 @@ export class MapComponent implements OnInit {
           this.utfgridCampo.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
 
             if (data) {
-              // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
 
@@ -1293,7 +1317,6 @@ export class MapComponent implements OnInit {
           this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
                 this.dataForDialog = data;
                 this.dataForDialog.coordinate = coordinate;
@@ -1672,6 +1695,8 @@ export class MapComponent implements OnInit {
     }
 
     this.handleInteraction();
+
+    this.changeSelectedLulcChart({ index: 0 });
 
     let source_layers = this.LayersTMS[layer.value].getSource();
     source_layers.setUrls(this.parseUrls(layer));

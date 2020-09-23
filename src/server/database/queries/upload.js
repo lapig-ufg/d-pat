@@ -18,8 +18,12 @@ module.exports = function (app) {
             sql: "select r.type as type , r.text as value from regions r INNER JOIN upload_shapes up on ST_Intersects(up.geom,r.geom ) where r.type not in ('biome') and up.token= ${token} group by 1,2 order by 1,2"
         },
         {
-            id: 'info_upload',
-            sql: "select SUM(ST_AREA(geom::GEOGRAPHY) / 1000000.0) as area_upload from upload_shapes where token= ${token}"
+            id: 'area_upload',
+            sql: "select token, SUM(ST_AREA(geom::GEOGRAPHY) / 1000000.0) as area_upload from upload_shapes where token= ${token} group by 1"
+        },
+        {
+            id: 'geojson_upload',
+            sql: "select  ST_ASGEOJSON(ST_Transform(ST_Multi(ST_Union(geom)), 4674)) as geojson from upload_shapes where token= ${token} "
         },
         ]
 
