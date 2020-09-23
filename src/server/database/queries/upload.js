@@ -37,7 +37,7 @@ module.exports = function (app) {
                 " INNER JOIN  prodes_cerrado desmatamento on desmatamento.gid = c.prodes_id " +
                 " INNER JOIN upload_shapes up on ST_INTERSECTS(up.geom, car.geom) " +
                 " WHERE desmatamento.year >= 2013 and up.token= ${token}" +
-                "group by 1 order by 2 desc"
+                "group by 1 order by 2 desc limit 50"
         },
         ]
 
