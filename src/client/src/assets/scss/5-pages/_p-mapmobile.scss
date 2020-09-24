@@ -41,6 +41,10 @@
     border-radius: 0px;
   }
 
+  .form-control {
+    margin-bottom: 5px;
+  }
+
 
   .dpat-ol-div {
     padding: 0px;
@@ -273,7 +277,7 @@
   }
 
   .mat-form-field {
-    width: 70px;
+    width: 85px;
   }
 
   .mat-icon-button {
@@ -682,8 +686,8 @@
   }
 
   .layersContent {
-    padding: 15px;
-    margin: 8px;
+    padding: 10px;
+    margin: 4px;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     border-radius: 5px;
   }
@@ -701,6 +705,10 @@
   #dropdownPoints {
     margin-top: -20px;
     padding-left: 10px;
+  }
+
+  .dropdown-item.active, .dropdown-item:active {
+    color: #fff !important;
   }
 
   .info_clique_mapa {
@@ -933,9 +941,9 @@
     margin-left: 5px;
   }
 
-  /deep/ .mat-tab-body-wrapper {
-    padding: 10px;
-  }
+  // /deep/ .mat-tab-body-wrapper {
+  //   padding: 10px;
+  // }
 
   .color-buttons{
     background-color:#707070;
@@ -985,7 +993,7 @@
 
 
   .layersConteudo .mat-tab-body-wrapper {
-    padding: 10px;
+    padding: 0px;
   }
 
   .container-layer-sidenav {
@@ -1004,14 +1012,32 @@
     overflow: unset;
   }
 
+  .btn-zoom {
+    cursor: pointer;
+    padding: 7px;
+    margin-bottom: 5px;
+    background-color: #0b4e26;
+    border-radius: 5px;
+    transition: 0.3s;
+    color: white;
+    font-size: 2.5em;
+    text-align: center;
+    align-self: center;
+  }
+
+  .layer-sidenav .mat-drawer-inner-container {
+    width: 80%;
+  }
+
   .layer-sidenav {
-    padding: 20px;
+    //padding: 20px;
     width: 47vh;
     background-color: #e5ecef26;
-    margin-left: 117px;
+    margin-left: 0px;
     transition: 0.3s;
     overflow: hidden;
-    top: 18%;
+    top: 10%;
+    margin-top: 10px;
     min-width: 461px;
     height: 78%;
     border-radius: 20px;
@@ -1020,20 +1046,47 @@
 
   .controls {
     position: absolute;
-    left: 21px;
+    left: 1%;
+    top: 1%;
+    z-index: 100000;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: unset;
+  }
+
+  .buttonszoom {
+    position: absolute;
+    right: 2px;
     top: 39%;
     z-index: 100000;
-    padding: 14px;
+    padding: 5px;
     border-radius: 10px;
-    background-color: #584e4f8c;
+    /* background-color: #584e4f8c; */
+  }
+
+  .example-container {
+    width: 500px;
+    height: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
   }
 
   .btn-layers {
     cursor: pointer;
-    padding: 15px;
+    padding: 10px;
     margin-bottom: 10px;
     background-color: #0b4e26;
-    border-radius: 100px;
+    border-radius: 10px;
     transition: 0.3s;
   }
 
@@ -1048,7 +1101,7 @@
   .container-drawer {
     /*margin-top: 166px;*/
     background-color: white;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     transition: 0.3s;
     height: 100%;
@@ -1286,7 +1339,7 @@
 
 
   .mat-accordion {
-    display: block;
+    display: inline;
     transform-origin: top left;
     transform: rotate(-90deg) translateX(-600px); /* rotate and position it; translateX value corresponds to panel height */
     width: 600px; /* this will be the height of the accordion (inversed due to rotation) */
@@ -1353,6 +1406,7 @@
     padding-bottom: 0px;
     background-color: white !important;
     height: 12vh;
+    border-bottom: 1px solid!important
   }
 
 }

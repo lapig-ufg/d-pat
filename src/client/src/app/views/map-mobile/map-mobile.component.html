@@ -24,14 +24,14 @@
   <mat-tab-group id="tab-mobile" style="height: 89%">
     <mat-tab label = "Mapa">
       <mat-drawer-container class="container-layer-sidenav" autosize>
-    
+        
         <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
         [opened]="showDrawer">
-        <div class="container-drawer">
+          <div class="container-drawer">
             <div class="collapseLayer">
               <mat-tab-group class="layersConteudo" dynamicHeight>
                 <mat-tab label="{{titlesLayerBox.label_data}}">
-                  <p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
+                  <p-scrollPanel [style]="{width: '100%',  height: '80vh'}">
                     <mat-accordion>
                       <div id="layers_desmatamentos">
       
@@ -69,7 +69,7 @@
                                   <mat-icon>info</mat-icon>
                                 </button>
                               </div>
-                              <div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 8%">
+                              <div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 2%">
                                 <mat-form-field style="width: 130px">
                                   <mat-label>{{descriptor.type}}</mat-label>
                                   <mat-select (selectionChange)="changeVisibility(layer)"
@@ -92,7 +92,7 @@
                                       </mat-option>
                                     </mat-select>
                                   </mat-form-field>
-                                  <section class="btn-actions">
+                                  <!-- <section class="btn-actions">
                                     <button class="color-buttons"
                                       *ngIf="hasDownload('csv', type)"
                                       (click)="buttonDownload('csv', layer, $event)"
@@ -125,8 +125,12 @@
                                       </mat-progress-bar>
                                     </button>
       
-                                  </section>
+                                  </section> -->
                                 </span>
+                                <div *ngFor="let type of layer.types">
+                                  <img *ngIf="layer.selectedType === type.value"
+                                    [src]="type.urlLegend">
+                                </div>
                               </div>
                             </div>
                           </mat-expansion-panel>
@@ -154,186 +158,121 @@
                     </div>
                   </div>
                 </mat-tab>
-                <mat-tab label="{{titlesLayerBox.label_upload}}">
-      
-                  <div class="info-header" [innerHTML]="titlesLayerBox.label_upload_msg"></div>
-      
-                  <app-file-upload [tooltip]="titlesLayerBox.label_upload_tooltip"
-                    [maxSizeMsg]="titlesLayerBox.label_upload_max_size_msg" [loading]="layerFromUpload.loading"
-                    [language]="language" [ddarea]="layerFromUpload.dragArea"
-                    (complete)="onFileComplete($event)"></app-file-upload>
-      
-                  <mat-card *ngIf="layerFromUpload.visible" class="card-checkbox-upload mat-elevation-z8"
-                    color="primary">
-                    <div class="title-file-card">{{titlesLayerBox.label_upload_title_file}}</div>
-                    <mat-card-subtitle>
-                      <mat-checkbox class="example-margin" (change)="onChangeCheckUpload($event)"
-                        [checked]="layerFromUpload.checked">
-                        {{layerFromUpload.label}}
-                      </mat-checkbox>
-                    </mat-card-subtitle>
-                  </mat-card>
-                </mat-tab>
               </mat-tab-group>
             </div>
-      
           </div>
-      
         </mat-drawer>
+
+        <div class="controls">
+          <!-- <div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
+            [class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
+            <img width="40" height="40" src="../../assets/img/close-button.svg"
+              [alt]="controls.label_close_mun">
+          </div> -->
+          <div [matTooltip]="controls.label_layers"
+            [class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleDrawer()">
+            <img width="40" height="40" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
+          </div>
+        </div>
       
         <div class="layer-sidenav-content">
           <div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'">
-      
-            <!-- <div class="dpat-logo">
-              <a routerLink="/">
-                <div class="container-logos">
-                  <img src="../../assets/logo/logo-dpat.png" alt="DPAT" />
-                </div>
-              </a>
-      
-            </div> -->
-      
-            <div id="positionLegend" class="control-layers" cdkDrag>
-      
-              <div class="titleWindows">
-                <div>{{titlesLayerBox.legendTitle}}</div>
-      
-                <div class="space"></div>
-      
-                <button class="btn-colapse" mat-mini-fab (click)="collapseLegends = !collapseLegends"
-                  [attr.aria-expanded]="!collapseLegends" [attr.aria-expanded]="!collapseLegends">
-                  <mat-icon> {{!collapseLegends ? 'expand_less' : 'expand_more'}}</mat-icon>
-                </button>
-              </div>
-      
-              <div [ngbCollapse]="collapseLegends" class="legendasConteudo">
-                <div class="legends" *ngFor="let layer of layersNames">
-                  <mat-expansion-panel [expanded]="layer.visible">
-                    <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'"
-                      class="expansion-header-layer" *ngIf="layer.visible">
-                      {{layer.label}}
-                    </mat-expansion-panel-header>
-                    <div *ngFor="let type of layer.types">
-                      <img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
-                    </div>
-      
-                  </mat-expansion-panel>
-                </div>
-              </div>
-            </div>
-            
-      
-            <div class="controls">
-              <div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
-                [class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
-                <img width="25" height="25" src="../../assets/img/close-button.svg"
-                  [alt]="controls.label_close_mun">
-              </div>
-              <div [matTooltip]="controls.label_layers"
-                [class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleDrawer()">
-                <img width="25" height="25" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
-              </div>
-      
-              <div [matTooltip]="controls.label_statistics"
-                [class]="showStatistics ? 'btn-layers btn-layers-active' : 'btn-layers'"
-                (click)="showStatistics = !showStatistics">
-                <img width="25" height="25" src="../../assets/img/charts.svg" [alt]="controls.label_statistics">
-              </div>
-              <div [matTooltip]="controls.label_zoomin" [class]="'btn-layers'" (click)="zoomIn()">
+            <div class="buttonszoom">
+              <div [matTooltip]="controls.label_zoomin" [class]="'btn-zoom'" (click)="zoomIn()">
                 <img width="25" height="25" src="../../assets/img/mais.svg" [alt]="controls.label_zoomin">
               </div>
-              <div [matTooltip]="controls.label_zoomout" [class]="'btn-layers'" (click)="zoomOut()">
+              <div [matTooltip]="controls.label_zoomout" [class]="'btn-zoom'" (click)="zoomOut()">
                 <img width="25" height="25" src="../../assets/img/menos.svg" [alt]="controls.label_zoomout">
               </div>
             </div>
-            <div id="map-info" class="card"
-          [ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden'))}">
-          <div *ngIf="infodata" class="card-body">
-            <p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
-            <table>
-              <tbody>
-                <tr>
-                  <th>{{minireportText.area}} </th>
-                  <td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.city}} </th>
-                  <td>{{infodata.municipio }} - {{infodata.uf }}</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.detection_date}} </th>
-                  <td>{{infodata.dataFormatada}}</td>
-                </tr>
-                <tr *ngIf="infodata.year >= 2015">
-                  <th>{{minireportText.susceptibility}} </th>
-                  <td>{{infodata.sucept_desmatFormatada}}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
-              </strong></div>
+            
+            <!-- UTFGRID -->
+            <!-- <div id="map-info" class="card" [ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden'))}">
+              <div *ngIf="infodata" class="card-body">
+                <p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>{{minireportText.area}} </th>
+                      <td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.city}} </th>
+                      <td>{{infodata.municipio }} - {{infodata.uf }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.detection_date}} </th>
+                      <td>{{infodata.dataFormatada}}</td>
+                    </tr>
+                    <tr *ngIf="infodata.year >= 2015">
+                      <th>{{minireportText.susceptibility}} </th>
+                      <td>{{infodata.sucept_desmatFormatada}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
+                  </strong></div>
+              </div>
+              <div *ngIf="infodataCampo" class="card-body">
+                <p class="card-text">{{ infodataCampo.origin_table }}-Cerrado</p>
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>{{minireportText.field_number}} </th>
+                      <td>{{infodataCampo.campo}}</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.area}} </th>
+                      <td>{{infodataCampo.area_desmat | number:'1.2-3' }} km²</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.city}} </th>
+                      <td>{{infodataCampo.municipio }} - {{infodataCampo.uf }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.detection_date}} </th>
+                      <td>{{infodataCampo.dataFormatada}}</td>
+                    </tr>
+                    <tr *ngIf="infodataCampo.year > 2015">
+                      <th>{{minireportText.susceptibility}} </th>
+                      <td>{{infodataCampo.sucept_desmatFormatada}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
+                  </strong></div>
+              </div>
+              <div *ngIf="infodataMunicipio" class="card-body">
+                <p class="card-text">{{ infodataMunicipio.region_display }}</p>
+                <table>
+                  <tbody>
+      
+                    <tr>
+                      <th>{{minireportText.area}} </th>
+                      <td>{{infodataMunicipio.area_prodes | number:'1.2-3' }} km²</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.label_year}} </th>
+                      <td>{{infodataMunicipio.year}}</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.label_area_app}} </th>
+                      <td>{{infodataMunicipio.area_app_show}}</td>
+                    </tr>
+                    <tr>
+                      <th>{{minireportText.label_area_rl}} </th>
+                      <td>{{infodataMunicipio.area_rl_show}}</td>
+                    </tr>
+      
+                  </tbody>
+                </table>
+                <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_municipio}}
+                  </strong></div>
+              </div>
+            </div> -->
           </div>
-          <div *ngIf="infodataCampo" class="card-body">
-            <p class="card-text">{{ infodataCampo.origin_table }}-Cerrado</p>
-            <table>
-              <tbody>
-                <tr>
-                  <th>{{minireportText.field_number}} </th>
-                  <td>{{infodataCampo.campo}}</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.area}} </th>
-                  <td>{{infodataCampo.area_desmat | number:'1.2-3' }} km²</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.city}} </th>
-                  <td>{{infodataCampo.municipio }} - {{infodataCampo.uf }}</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.detection_date}} </th>
-                  <td>{{infodataCampo.dataFormatada}}</td>
-                </tr>
-                <tr *ngIf="infodataCampo.year > 2015">
-                  <th>{{minireportText.susceptibility}} </th>
-                  <td>{{infodataCampo.sucept_desmatFormatada}}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
-              </strong></div>
-          </div>
-          <div *ngIf="infodataMunicipio" class="card-body">
-            <p class="card-text">{{ infodataMunicipio.region_display }}</p>
-            <table>
-              <tbody>
-  
-                <tr>
-                  <th>{{minireportText.area}} </th>
-                  <td>{{infodataMunicipio.area_prodes | number:'1.2-3' }} km²</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.label_year}} </th>
-                  <td>{{infodataMunicipio.year}}</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.label_area_app}} </th>
-                  <td>{{infodataMunicipio.area_app_show}}</td>
-                </tr>
-                <tr>
-                  <th>{{minireportText.label_area_rl}} </th>
-                  <td>{{infodataMunicipio.area_rl_show}}</td>
-                </tr>
-  
-              </tbody>
-            </table>
-            <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_municipio}}
-              </strong></div>
-          </div>
-  
         </div>
-        </div>
-        </div>
-        </mat-drawer-container>
+      </mat-drawer-container>
     </mat-tab>
     <mat-tab label = "Estatísticas" *ngIf="showStatistics">
       <!-- <mat-drawer-container class="container-layer-sidenav" autosize> -->
