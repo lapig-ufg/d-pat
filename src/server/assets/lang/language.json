@@ -215,16 +215,30 @@
 			"en-us": "Report of the submitted area"
 		},
 		"header_table_deforested": {
-			"pt-br": ["Área desmatada", "Ano"],
-			"en-us": ["Deforested area", "Year"]
+			"pt-br": [
+				"Área desmatada",
+				"Ano"
+			],
+			"en-us": [
+				"Deforested area",
+				"Year"
+			]
 		},
 		"header_table_city": {
-			"pt-br": ["Município"],
-			"en-us": ["County"]
+			"pt-br": [
+				"Município"
+			],
+			"en-us": [
+				"County"
+			]
 		},
 		"header_table_state": {
-			"pt-br": ["Estado"],
-			"en-us": ["State"]
+			"pt-br": [
+				"Estado"
+			],
+			"en-us": [
+				"State"
+			]
 		},
 		"table_prodes_title": {
 			"pt-br": "Dematamentos PRODES",
@@ -860,8 +874,8 @@
 						},
 						"bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig": {
 							"view_value": {
-								"pt-br": "Polígonos grandes (< 0.5 km²)",
-								"en-us": "Large Polygons (< 0.5 km²)"
+								"pt-br": "Polígonos grandes (> 0.5 km²)",
+								"en-us": "Large Polygons (> 0.5 km²)"
 							}
 						}
 					}
@@ -1222,115 +1236,114 @@
 						]
 					}
 				},
-
 				"agricultura_agrosatelite_fip": {
 					"label": {
 						"pt-br": "Agricultura",
 						"en-us": "Agriculture"
 					},
-						"metadata": [
-							{
-								"title": {
-									"pt-br": "Dado",
-									"en-us": "Data"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
 							},
-							{
-								"title": {
-									"pt-br": "Descrição",
-									"en-us": "Description"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Data",
-									"en-us": "Date"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Escala",
-									"en-us": "Scale"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Reference and Coordinate System"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Projeção Cartográfica",
-									"en-us": "Cartographic Projection"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Codificação de caractere",
-									"en-us": "Character encoding"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Fonte",
-									"en-us": "Source"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Contato",
-									"en-us": "Contact"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Detalhes",
-									"en-us": "Details"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
+							"description": {
+								"pt-br": "",
+								"en-us": ""
 							}
-						]
-					},
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Contato",
+								"en-us": "Contact"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "",
+								"en-us": ""
+							}
+						}
+					]
+				},
 				"floresta_plantada": {
 					"label": {
 						"pt-br": "Floresta Plantada",

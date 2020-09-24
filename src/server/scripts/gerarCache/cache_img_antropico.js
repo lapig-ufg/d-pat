@@ -23,28 +23,59 @@ var years = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 var urls = []
 
-for (var uf = 0; uf < ufs.length; uf++) {
+var types = ['none', 'city']
+// for (var uf = 0; uf < ufs.length; uf++) {
 
-	for (var year = (years.length - 1); year >= 0; year--) {
-		// console.log("Year: " + years[year])
-		for (var zoom = 0; zoom <= 10; zoom++) {
-			var tiles = t.tilesInBbox(bbox, zoom)
+for (let type of types) {
 
-			tiles.forEach(function (tile) {
-				var url = "http://127.0.0.1:3000/ows"
-					+ "?layers=" + layername
-					+ "&mode=tile"
-					+ "&tilemode=gmap"
-					+ "&map.imagetype=png"
-					//+ "&map.imagetype=utfgrid"
-					+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+	if (type == 'none') {
+		for (var year = (years.length - 1); year >= 0; year--) {
+			// console.log("Year: " + years[year])
+			for (var zoom = 0; zoom <= 13; zoom++) {
+				var tiles = t.tilesInBbox(bbox, zoom)
 
-				url += "&MSFILTER=year < " + years[year] + " AND uf = '" + ufs[uf] + "'"
-				//url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"
+				tiles.forEach(function (tile) {
+					var url = "http://127.0.0.1:3000/ows"
+						+ "?layers=" + layername
+						+ "&mode=tile"
+						+ "&tilemode=gmap"
+						+ "&map.imagetype=png"
+						//+ "&map.imagetype=utfgrid"
+						+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
 
-				// console.log(url)
-				urls.push(url)
-			})
+					url += "&MSFILTER=year < " + years[year]
+					//url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"
+
+					// console.log(url)
+					urls.push(url)
+				})
+			}
+		}
+	}
+	else {
+		for (let mun of muns) {
+			for (var year = (years.length - 1); year >= 0; year--) {
+				// console.log("Year: " + years[year])
+				for (var zoom = 0; zoom <= 13; zoom++) {
+					var tiles = t.tilesInBbox(bbox, zoom)
+
+					tiles.forEach(function (tile) {
+						var url = "http://127.0.0.1:3000/ows"
+							+ "?layers=" + layername
+							+ "&mode=tile"
+							+ "&tilemode=gmap"
+							+ "&map.imagetype=png"
+							//+ "&map.imagetype=utfgrid"
+							+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+						url += "&MSFILTER=year < " + years[year] + " AND cd_geocmu = '" + mun + "'"
+						//url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"
+
+						// console.log(url)
+						urls.push(url)
+					})
+				}
+			}
 		}
 	}
 }

@@ -1543,21 +1543,6 @@ export class MapComponent implements OnInit {
 
     let text = '1=1';
 
-    // let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
-    // let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
-
-    // if (prodes.visible && deter.visible) {
-    //   text = '1=1';
-    // }
-    // else if (prodes.visible && !deter.visible) {
-    //   text = 'p.origin_table = \'prodes\' ';
-    // }
-    // else if (!prodes.visible && deter.visible) {
-    //   text = 'p.origin_table = \'deter\' ';
-    // }
-    // else {
-    //   text = '1=1'
-    // }
 
     if (this.selectRegion.type === 'city') {
       text += ' AND p.cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
@@ -2676,7 +2661,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   vetSuscept: Array<{ src: string; caption: string; thumb: string }> = [];
   vetCar: Array<{ src: string; caption: string; thumb: string }> = [];
   vetABC: Array<{ src: string; caption: string; thumb: string }> = [];
-  vetEspecial: Array<{ src: string; caption: string; thumb: string }> = [];
+  vetEspecial: Array<{ id: string; src: string; caption: string; thumb: string }> = [];
   dataBfast: any = {};
   dataSuscept: any = {};
   dataCampo: any = [];
@@ -3774,19 +3759,41 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
           if (this.dataEspecial.ti.show) {
             this.vetEspecial.push({
+              id: 'ti',
               src: this.dataEspecial.ti.src,
               thumb: this.dataEspecial.ti.thumb,
               caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
             });
           }
 
+          if (this.dataEspecial.ucus.show) {
+
+            this.vetEspecial.push({
+              id: 'ucus',
+              src: this.dataEspecial.ucus.src,
+              thumb: this.dataEspecial.ucus.thumb,
+              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.ucpi.show) {
+            this.vetEspecial.push({
+              id: 'ucpi',
+              src: this.dataEspecial.ucpi.src,
+              thumb: this.dataEspecial.ucpi.thumb,
+              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
+            });
+          }
+
           if (this.dataEspecial.q.show) {
             this.vetEspecial.push({
+              id: 'q',
               src: this.dataEspecial.q.src,
               thumb: this.dataEspecial.q.thumb,
               caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
             });
           }
+          console.log(this.vetEspecial)
 
           // if (this.dataEspecial.ap.show) {
           // this.vetEspecial.push({
@@ -3796,21 +3803,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           // });
           // }
 
-          if (this.dataEspecial.ucpi.show) {
-            this.vetEspecial.push({
-              src: this.dataEspecial.ucpi.src,
-              thumb: this.dataEspecial.ucpi.thumb,
-              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
-            });
-          }
 
-          if (this.dataEspecial.ucus.show) {
-            this.vetEspecial.push({
-              src: this.dataEspecial.ucus.src,
-              thumb: this.dataEspecial.ucus.thumb,
-              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
-            });
-          }
         }
 
 
@@ -4074,8 +4067,16 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this._lightbox.open(this.vetABC, index);
   }
 
-  openLightboxEspecial(index: number): void {
-    this._lightbox.open(this.vetEspecial, index);
+  openLightboxEspecial(index: string): void {
+
+    let pos = 0;
+    for (let i = 0; i < this.vetEspecial.length; i++) {
+      if (this.vetEspecial[i].id.toUpperCase() == index.toUpperCase()) {
+        pos = i;
+      }
+    }
+
+    this._lightbox.open(this.vetEspecial, pos);
   }
 
 
