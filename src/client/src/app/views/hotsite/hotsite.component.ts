@@ -23,6 +23,9 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     ) {
         this.showInfo = false;
         clearInterval(this.interValMasks);
+        this.http.get('/service/hotsite/lang?lang=pt-br').subscribe(result => {
+            this.texts = result;
+        });
     }
 
     onLangClick(lang) {
@@ -103,11 +106,6 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this.pt_br = true;
-
-        this.http.get('/service/hotsite/lang?lang=pt-br').subscribe(result => {
-            this.texts = result;
-        });
-
         this.fullpage = $("#fullpage").fullpage({
             navigation: true,
             showActiveTooltip: true,
