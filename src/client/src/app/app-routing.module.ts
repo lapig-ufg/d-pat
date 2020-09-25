@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MapComponent } from './views/map.component';
+import { MapMobileComponent } from './views/map-mobile/map-mobile.component'
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from "./views/project/project.component";
@@ -19,11 +20,13 @@ const routes: Routes = [
   { path: 'regions/:token', component: MapComponent }
 ]
 
-const routesMobile = [
+const routesMobile: Routes = [
+  { path: '', component: MobileComponent},
   { path: 'mobile', component: MobileComponent},
   { path: 'projeto', component: ProjectComponent },
-  { path: 'mobile/:token', component: MobileComponent },
-  { path: 'mobile/regions/:token', component: MobileComponent }
+  { path: 'map-mobile', component: MapMobileComponent },
+  { path: "map-mobile/:token", component: MapMobileComponent },
+  { path: 'regions/:token', component: MapMobileComponent }
 ]
 
 @NgModule({

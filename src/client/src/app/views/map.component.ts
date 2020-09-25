@@ -2190,7 +2190,7 @@ export class MapComponent implements OnInit {
     }
 
     if (window.innerWidth < 900) {
-      this.router.navigate(['/mobile']);
+      //this.router.navigate(['/mobile']);
     }
   }
 
@@ -2870,7 +2870,7 @@ export class MapComponent implements OnInit {
     );
 
     if (window.innerWidth < 900) {
-      this.router.navigate(['/mobile']);
+      //this.router.navigate(['/mobile']);
     }
 
     let self = this;
