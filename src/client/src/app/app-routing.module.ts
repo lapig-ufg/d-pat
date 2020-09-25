@@ -16,15 +16,17 @@ const routes: Routes = [
   { path: '', component: HotsiteComponent },
   { path: 'plataforma', component: MapComponent },
   { path: 'projeto', component: ProjectComponent },
-  { path: "plataforma/:token", component: MapComponent }
+  { path: 'plataforma/:token', component: MapComponent },
+  { path: 'regions/:token', component: MapComponent }
 ]
 
 const routesMobile: Routes = [
   { path: '', component: MobileComponent},
   { path: 'mobile', component: MobileComponent},
   { path: 'projeto', component: ProjectComponent },
-  { path: 'plataforma', component: MapMobileComponent },
-  { path: "plataforma/:token", component: MapMobileComponent }
+  { path: 'map-mobile', component: MapMobileComponent },
+  { path: "map-mobile/:token", component: MapMobileComponent },
+  { path: 'regions/:token', component: MapMobileComponent }
 ]
 
 @NgModule({

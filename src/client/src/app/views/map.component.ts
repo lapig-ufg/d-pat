@@ -2,6 +2,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTabGroup } from "@angular/material";
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
@@ -40,7 +41,7 @@ import * as Chart from 'chart.js'
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {RegionReportComponent} from "./region-report/region-report.component";
+import { RegionReportComponent } from "./region-report/region-report.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -132,11 +133,14 @@ export class MapComponent implements OnInit {
   msFilterRegion = '';
   selectRegion: any;
 
+  httpOptions: any;
+
   region_geom: any;
   regionSource: any;
   regionTypeFilter: any;
 
   defaultRegion: any;
+  defaultPeriod: any;
 
   statePreposition = [];
 
@@ -152,7 +156,7 @@ export class MapComponent implements OnInit {
 
   isFilteredByCity = false;
   isFilteredByState = false;
-  selectedIndex: any;
+  @ViewChild("matgroup", { static: false }) matgroup: MatTabGroup;
   collapseLegends = false;
 
   infodata: any;
@@ -199,7 +203,12 @@ export class MapComponent implements OnInit {
     loading: false,
     dragArea: true,
     strokeColor: '#2224ba',
+    token: '',
+    analyzedAreaLoading: false,
+    analyzedArea: {},
+    loadingPrintReport: false
   };
+
 
   innerHeigth: any;
   showDrawer: boolean;
@@ -216,7 +225,8 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private decimalPipe: DecimalPipe
   ) {
     this.projection = OlProj.get('EPSG:900913');
     this.currentZoom = 5.3;
@@ -224,6 +234,10 @@ export class MapComponent implements OnInit {
 
     this.dataSeries = {};
     this.dataStates = {};
+
+    this.httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
     this.chartResultCities = {
       split: []
@@ -269,6 +283,12 @@ export class MapComponent implements OnInit {
     };
 
     this.periodSelected = {
+      value: 'year=2019',
+      Viewvalue: '2018/2019',
+      year: 2019
+    };
+
+    this.defaultPeriod = {
       value: 'year=2019',
       Viewvalue: '2018/2019',
       year: 2019
@@ -403,10 +423,6 @@ export class MapComponent implements OnInit {
   onStateSelect(e) {
     let name = e.element._model.label;
 
-    // console.log(e.dataset);
-    // console.log(e.element);
-    // console.log(e.element._datasetIndex);
-    // console.log(e.element._index);
 
     PARAMS.append('key', name)
     PARAMS.append('type', 'state')
@@ -454,10 +470,19 @@ export class MapComponent implements OnInit {
       params.push('region=' + this.selectRegion.value);
     }
 
+
     let selectedTime = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip');
+
+    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    if (prodes != undefined) {
+      selectedTime = this.selectedTimeFromLayerType(prodes.selectedType);
+    }
 
     if (selectedTime != undefined) {
       params.push('year=' + selectedTime.year);
+    }
+    else {
+      params.push('year=' + this.desmatInfo.year);
     }
 
     params.push('lang=' + this.language);
@@ -492,6 +517,7 @@ export class MapComponent implements OnInit {
   }
 
   changeTab(event) {
+
     this.changeTabSelected = event.tab.textLabel;
 
     if (event.tab.textLabel == "Série Temporal" || event.tab.textLabel == "Timeseries") {
@@ -499,10 +525,14 @@ export class MapComponent implements OnInit {
       this.viewWidthMobile = this.viewWidthMobile + 1;
       this.chartRegionScale = true;
 
-      let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
+      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
       uso_terra.visible = false;
 
+      let agricultura = this.layersNames.find(element => element.id === "agricultura");
+      agricultura.visible = false;
+
       this.changeVisibility(uso_terra, undefined)
+      this.changeVisibility(agricultura, undefined)
 
     } else if (event.tab.textLabel == "Uso do Solo" || event.tab.textLabel == "Land Use and Land Cover") {
       this.viewWidth = this.viewWidth + 1;
@@ -774,19 +804,35 @@ export class MapComponent implements OnInit {
   }
 
   changeSelectedLulcChart(e) {
-    let uso_terra = this.layersNames.find(element => element.id === 'terraclass');
 
+    let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+    let agricultura = this.layersNames.find(element => element.id === "agricultura");
     if (this.changeTabSelected === "Uso do Solo" || this.changeTabSelected == "Land Use and Land Cover") {
-      if (e.index == 0) {
-        uso_terra.selectedType = "uso_solo_terraclass_fip"
+
+      if (this.desmatInfo.year >= 2013) {
+        if (e.index == 0) {
+          uso_terra.selectedType = "uso_solo_terraclass_fip"
+          uso_terra.visible = true;
+          agricultura.visible = false;
+        }
+        else if (e.index == 1) {
+          uso_terra.selectedType = "agricultura_agrosatelite_fip"
+          uso_terra.visible = false
+          agricultura.visible = true;
+        }
       }
-      else if (e.index == 1) {
-        uso_terra.selectedType = "agricultura_agrosatelite_fip"
+      else {
+        uso_terra.selectedType = "uso_solo_probio_fip"
+        uso_terra.visible
+        agricultura.visible = false;
       }
+
       uso_terra.visible = true;
     }
 
     this.changeVisibility(uso_terra, undefined);
+    this.changeVisibility(agricultura, undefined);
+
 
   }
 
@@ -796,13 +842,20 @@ export class MapComponent implements OnInit {
     if (region == this.defaultRegion) {
       this.valueRegion = '';
       this.currentData = '';
-      this.desmatInfo = {
-        value: 'year=2019',
-        Viewvalue: '2018/2019',
-        year: 2019
-      };
+      this.desmatInfo = this.defaultPeriod
 
       prodes.selectedType = 'prodes_por_region_city_fip_img';
+
+      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+      uso_terra.visible = false;
+
+      let agricultura = this.layersNames.find(element => element.id === "agricultura");
+      agricultura.visible = false;
+
+
+      this.changeVisibility(uso_terra, undefined)
+      this.changeVisibility(agricultura, undefined)
+
 
     } else {
       prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
@@ -812,6 +865,8 @@ export class MapComponent implements OnInit {
     this.changeVisibility(prodes, undefined);
 
     this.selectRegion = region;
+
+    this.matgroup.selectedIndex = 0
 
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
@@ -1244,7 +1299,6 @@ export class MapComponent implements OnInit {
           this.utfgridCampo.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
 
             if (data) {
-              // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
 
@@ -1281,7 +1335,6 @@ export class MapComponent implements OnInit {
           this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
                 this.dataForDialog = data;
                 this.dataForDialog.coordinate = coordinate;
@@ -1490,21 +1543,6 @@ export class MapComponent implements OnInit {
 
     let text = '1=1';
 
-    // let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
-    // let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
-
-    // if (prodes.visible && deter.visible) {
-    //   text = '1=1';
-    // }
-    // else if (prodes.visible && !deter.visible) {
-    //   text = 'p.origin_table = \'prodes\' ';
-    // }
-    // else if (!prodes.visible && deter.visible) {
-    //   text = 'p.origin_table = \'deter\' ';
-    // }
-    // else {
-    //   text = '1=1'
-    // }
 
     if (this.selectRegion.type === 'city') {
       text += ' AND p.cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
@@ -1660,6 +1698,8 @@ export class MapComponent implements OnInit {
     }
 
     this.handleInteraction();
+
+    this.changeSelectedLulcChart({ index: 0 });
 
     let source_layers = this.LayersTMS[layer.value].getSource();
     source_layers.setUrls(this.parseUrls(layer));
@@ -1878,6 +1918,7 @@ export class MapComponent implements OnInit {
       this.layerFromUpload.visible = false;
       this.layerFromUpload.label = data.name;
       this.layerFromUpload.layer = data;
+      this.layerFromUpload.token = data.token;
 
     } else {
       this.layerFromUpload.loading = false;
@@ -1888,24 +1929,24 @@ export class MapComponent implements OnInit {
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.features[0].properties[auxlabel];
         this.layerFromUpload.layer = data;
+        this.layerFromUpload.token = data.token;
 
       } else {
-
         this.layerFromUpload.visible = false;
         this.layerFromUpload.label = data.name;
         this.layerFromUpload.layer = data;
+        this.layerFromUpload.token = data.token;
       }
     }
 
+    this.printRegionsIdentification(data.token)
     this.layerFromUpload.visible = true;
-
     let vectorSource = new VectorSource({
       features: (new GeoJSON()).readFeatures(data, {
         dataProjection: 'EPSG:4326',
         featureProjection: 'EPSG:3857'
       })
     });
-
 
     this.layerFromUpload.layer = new VectorLayer({
       source: vectorSource,
@@ -1948,6 +1989,21 @@ export class MapComponent implements OnInit {
       map.removeLayer(this.layerFromUpload.layer);
     }
 
+  }
+
+  analyzeUploadShape() {
+    this.layerFromUpload.analyzedAreaLoading = true;
+    let params = [];
+    params.push('token=' + this.layerFromUpload.token)
+
+    let urlParams = '/service/upload/desmatperyear?' + params.join('&');
+    this.http.get(urlParams).subscribe(result => {
+      this.layerFromUpload.analyzedArea = result;
+      this.layerFromUpload.analyzedAreaLoading = false;
+
+      console.log("res- ", this.layerFromUpload.analyzedArea)
+    }
+    );
   }
 
   private getMetadata(metadata) {
@@ -2184,10 +2240,10 @@ export class MapComponent implements OnInit {
 
     dados['ranking'] = null;
 
-    if ( this.selectRegion.type === 'state' ) {
+    if (this.selectRegion.type === 'state') {
       url += 'type=state&region=' + this.selectRegion.value.toLowerCase();
       dados['ranking'] = { table: this.chartResultCities, desmatInfo: this.desmatInfo };
-    } else if ( this.selectRegion.type === 'city' ) {
+    } else if (this.selectRegion.type === 'city') {
       url += 'type=city&region=' + this.selectRegion.cd_geocmu.toLowerCase();
     } else {
       return;
@@ -2205,11 +2261,298 @@ export class MapComponent implements OnInit {
       };
     }
 
-    this.dialog.open(RegionReportComponent,{
-            width: 'calc(100% - 5vw)',
-            height: 'calc(100% - 5vh)',
-            data: { dados }
-        });
+    this.dialog.open(RegionReportComponent, {
+      width: 'calc(100% - 5vw)',
+      height: 'calc(100% - 5vh)',
+      data: { dados }
+    });
+  }
+  async printRegionsIdentification(token) {
+    let language = this.language;
+    let self = this;
+
+    let dd = {
+      pageSize: { width: 400, height: 400 },
+
+      // by default we use portrait, you can change it to landscape if you wish
+      pageOrientation: 'portrait',
+
+      content: [],
+      styles: {
+        titleReport: {
+          fontSize: 16,
+          bold: true
+        },
+        textFooter: {
+          fontSize: 9
+        },
+        textImglegend: {
+          fontSize: 9
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        data: {
+          bold: true,
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        codCar: {
+          fontSize: 11,
+          bold: true,
+        },
+        textObs: {
+          fontSize: 11,
+        },
+        tableDpat: {
+          margin: [0, 5, 0, 15],
+          fontSize: 11,
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        token: {
+          bold: true,
+          fontSize: 16,
+        },
+        metadata: {
+          background: '#0b4e26',
+          color: '#fff'
+        }
+      }
+    }
+
+    // @ts-ignore
+    dd.content.push({
+      image: logos.logoDPAT,
+      width: 130,
+      alignment: 'center'
+    });
+    dd.content.push({ text: logos.upload.description[language], alignment: 'center', margin: [10, 10, 20, 0] });
+
+    dd.content.push({ text: token, alignment: 'center', style: 'token', margin: [20, 20, 20, 0] });
+
+    // @ts-ignore
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + token, fit: '150', alignment: 'center' });
+    // @ts-ignore
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + token, alignment: 'center', style: 'textFooter', margin: [20, 10, 20, 60] });
+
+    const filename = logos.upload.title[language] + ' - ' + token + '.pdf'
+    pdfMake.createPdf(dd).download(filename);
+  }
+  async printAnalyzedAreaReport() {
+    let language = this.language;
+    let self = this;
+    this.layerFromUpload.loadingPrintReport = true;
+
+    let dd = {
+      pageSize: 'A4',
+
+      // by default we use portrait, you can change it to landscape if you wish
+      pageOrientation: 'portrait',
+
+      // [left, top, right, bottom]
+      pageMargins: [40, 70, 40, 80],
+
+      header: {
+        margin: [24, 10, 24, 30],
+        columns: [
+          {
+            image: logos.logoDPAT,
+            width: 130
+          },
+          {
+            // [left, top, right, bottom]
+            margin: [65, 15, 10, 10],
+            text: this.titlesLayerBox.label_analyzed_area_title.toUpperCase(),
+            style: 'titleReport',
+          },
+
+        ]
+      },
+      footer: function (currentPage, pageCount) {
+        return {
+          table: {
+            widths: '*',
+            body: [
+              [
+                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [400, 45] },
+                {},
+                {},
+              ],
+              [
+                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
+                { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
+                { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
+              ],
+            ]
+          },
+          layout: 'noBorders'
+        };
+      },
+      content: [],
+      styles: {
+        titleReport: {
+          fontSize: 16,
+          bold: true
+        },
+        textFooter: {
+          fontSize: 9
+        },
+        textImglegend: {
+          fontSize: 9
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        data: {
+          bold: true,
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        codCar: {
+          fontSize: 11,
+          bold: true,
+        },
+        textObs: {
+          fontSize: 11,
+        },
+        tableDpat: {
+          margin: [0, 5, 0, 15],
+          fontSize: 11,
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        metadata: {
+          background: '#0b4e26',
+          color: '#fff'
+        }
+      }
+    }
+
+    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(this.layerFromUpload.analyzedArea.area_upload, '1.2-2') + '  km²', style: 'subheader' });
+    if (this.layerFromUpload.analyzedArea.deter.length > 0) {
+      dd.content.push({ text: self.titlesLayerBox.table_deter_title, style: 'subheader', alignment: 'center' });
+      let tableDeter = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableDeter.table.body.push([
+        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
+      ]);
+      for (let [index, area] of self.layerFromUpload.analyzedArea.deter.entries()) {
+        tableDeter.table.body.push([
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
+          { text: area.year, alignment: 'center' }
+        ]);
+      }
+      dd.content.push(tableDeter);
+    }
+    if (this.layerFromUpload.analyzedArea.prodes.length > 0) {
+      dd.content.push({ text: self.titlesLayerBox.table_prodes_title, style: 'subheader', alignment: 'center' });
+      let tableProdes = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableProdes.table.body.push([
+        { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
+      ]);
+      for (let [index, area] of self.layerFromUpload.analyzedArea.prodes.entries()) {
+        tableProdes.table.body.push([
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
+          { text: area.year, alignment: 'center' }
+        ]);
+      }
+      dd.content.push(tableProdes);
+    }
+    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+      dd.content.push({ text: self.titlesLayerBox.table_city_title, style: 'subheader', alignment: 'center' });
+      let tableCities = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableCities.table.body.push([
+        { text: '#', alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_city[0], alignment: 'center' }
+      ]);
+      for (let [index, city] of self.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
+        tableCities.table.body.push([
+          { text: index + 1, alignment: 'center' },
+          { text: city.name, alignment: 'left' }
+        ]);
+      }
+      dd.content.push(tableCities);
+    }
+    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+      dd.content.push({ text: self.titlesLayerBox.table_state_title, style: 'subheader', alignment: 'center' });
+      let tableStates = {
+        style: 'tableCounty',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*'],
+          body: [],
+          margin: 10
+        }
+      };
+      tableStates.table.body.push([
+        { text: '#', alignment: 'center' },
+        { text: self.titlesLayerBox.header_table_state[0], alignment: 'center' }
+      ]);
+      for (let [index, state] of self.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
+        tableStates.table.body.push([
+          { text: index + 1, alignment: 'center' },
+          { text: state.name, alignment: 'left' }
+        ]);
+      }
+      dd.content.push(tableStates);
+    }
+
+    // @ts-ignore
+    dd.content.push({ text: this.layerFromUpload.token, alignment: 'center', style: 'textFooter', margin: [25, 60, 30, 10], pageBreak: false });
+    // @ts-ignore
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, fit: '150', alignment: 'center' });
+    // @ts-ignore
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, alignment: 'center', margin: [0, 30, 10, 0], style: 'textFooter' });
+    let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + this.layerFromUpload.token + '.pdf'
+    pdfMake.createPdf(dd).download(filename);
+
+    this.layerFromUpload.loadingPrintReport = false;
   }
 
   ngOnInit() {
@@ -2291,8 +2634,13 @@ export class MapComponent implements OnInit {
 
     let self = this;
     self.route.paramMap.subscribe(function (params) {
-      if (params.keys.length > 0) {
-        self.openReport(params);
+      if (self.router.url.includes('plataforma')) {
+        if (params.keys.includes('token')) {
+          self.openReport(params);
+        }
+      }
+      if (self.router.url.includes('regions')) {
+        console.log(params);
       }
     });
   }
@@ -2313,7 +2661,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   vetSuscept: Array<{ src: string; caption: string; thumb: string }> = [];
   vetCar: Array<{ src: string; caption: string; thumb: string }> = [];
   vetABC: Array<{ src: string; caption: string; thumb: string }> = [];
-  vetEspecial: Array<{ src: string; caption: string; thumb: string }> = [];
+  vetEspecial: Array<{ id: string; src: string; caption: string; thumb: string }> = [];
   dataBfast: any = {};
   dataSuscept: any = {};
   dataCampo: any = [];
@@ -2369,7 +2717,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.dataEspecial = null;
 
     this.svgLoading = "/assets/img/loading.svg";
-    console.log(this.urlsLandSat);
     this.initGallery();
 
     this.httpOptions = {
@@ -2474,7 +2821,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
             widths: '*',
             body: [
               [
-                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [300, 43] },
+                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [400, 45] },
                 {},
                 {},
               ],
@@ -2587,183 +2934,183 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     if (this.dataEspecial) {
       let columns = [];
-      let images  = [];
+      let images = [];
 
       dd.content.push({ text: this.textOnDialog.especial_area.title_tab, style: 'subheader' });
 
-      if ( this.dataEspecial.ti ) {
+      if (this.dataEspecial.ti) {
 
-          if ( this.dataEspecial.ti.show ) {
-              images.push(
-                  {
-                      image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.thumb),
-                      width: 180,
-                      alignment: 'center'
-                  }
-              );
+        if (this.dataEspecial.ti.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.thumb),
+              width: 180,
+              alignment: 'center'
+            }
+          );
 
-              if(this.dataEspecial.ti.legendDesmatamento){
-                  images.push(
-                      {
-                          image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendDesmatamento),
-                          width: 180,
-                          alignment: 'center'
-                      }
-                  );
+          if (this.dataEspecial.ti.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
               }
-
-              if(this.dataEspecial.ti.legendEspecial){
-                  images.push(
-                      {
-                          image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendEspecial),
-                          width: 180,
-                          alignment: 'center'
-                      }
-                  );
-              }
-
+            );
           }
 
-          columns.push(
-              [
-                  { text: this.textOnDialog.especial_area.titleTI, alignment: 'left', margin: [0, 25, 0, 10] },
-                  { text: this.dataEspecial.ti.ti_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                  { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ti.ti_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                  // images,
-              ],
-          );
-      }
-      if ( this.dataEspecial.ucus ) {
-
-            if ( this.dataEspecial.ucus.show ) {
-                images.push(
-                    {
-                        image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.thumb),
-                        width: 180,
-                        alignment: 'center'
-                    }
-                );
-
-                if(this.dataEspecial.ucus.legendDesmatamento){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendDesmatamento),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-                if(this.dataEspecial.ucus.legendEspecial){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendEspecial),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-            }
-
-            columns.push(
-                [
-                    { text: this.textOnDialog.especial_area.titleUCUS, alignment: 'left', margin: [0, 25, 0, 10] },
-                    { text: this.dataEspecial.ucus.ucus_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucus.ucus_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                    // images,
-                ],
+          if (this.dataEspecial.ti.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ti.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
             );
+          }
+
         }
+
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleTI, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ti.ti_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ti.ti_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
+      if (this.dataEspecial.ucus) {
+
+        if (this.dataEspecial.ucus.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.thumb),
+              width: 180,
+              alignment: 'center'
+            }
+          );
+
+          if (this.dataEspecial.ucus.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
+          if (this.dataEspecial.ucus.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucus.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
+        }
+
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleUCUS, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ucus.ucus_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucus.ucus_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
 
       dd.content.push({ columns: columns });
       // @ts-ignore
       dd.content.push({ canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 2 }] });
 
       columns = [];
-      images  = [];
-      if ( this.dataEspecial.ucpi ) {
+      images = [];
+      if (this.dataEspecial.ucpi) {
 
-            if ( this.dataEspecial.ucpi.show ) {
-                images.push(
-                    {
-                        image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.thumb),
-                        width: 180,
-                        alignment: 'center'
-                    }
-                );
-
-                if(this.dataEspecial.ucpi.legendDesmatamento){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendDesmatamento),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-                if(this.dataEspecial.ucpi.legendEspecial){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendEspecial),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
+        if (this.dataEspecial.ucpi.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.thumb),
+              width: 180,
+              alignment: 'center'
             }
+          );
 
-            columns.push(
-                [
-                    { text: this.textOnDialog.especial_area.titleUCPI, alignment: 'left', margin: [0, 25, 0, 10] },
-                    { text: this.dataEspecial.ucpi.ucpi_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucpi.ucpi_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                    // images,
-                ],
+          if (this.dataEspecial.ucpi.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
+              }
             );
+          }
+
+          if (this.dataEspecial.ucpi.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.ucpi.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
         }
-      if ( this.dataEspecial.q ) {
-            if ( this.dataEspecial.q.show ) {
-                images.push(
-                    {
-                        image: await self.getBase64ImageFromUrl(self.dataEspecial.q.thumb),
-                        width: 180,
-                        alignment: 'center'
-                    }
-                );
 
-                if(this.dataEspecial.q.legendDesmatamento){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendDesmatamento),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
-                if(this.dataEspecial.q.legendEspecial){
-                    images.push(
-                        {
-                            image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendEspecial),
-                            width: 180,
-                            alignment: 'center'
-                        }
-                    );
-                }
-
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleUCPI, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ucpi.ucpi_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.ucpi.ucpi_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
+      if (this.dataEspecial.q) {
+        if (this.dataEspecial.q.show) {
+          images.push(
+            {
+              image: await self.getBase64ImageFromUrl(self.dataEspecial.q.thumb),
+              width: 180,
+              alignment: 'center'
             }
-            columns.push(
-                [
-                    { text: this.textOnDialog.especial_area.titleQ, alignment: 'left', margin: [0, 25, 0, 10] },
-                    { text: this.dataEspecial.ucus.q_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
-                    { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.q.q_dist + ' km', alignment: 'left', style: 'data',  margin: [0, 1, 0, 0] },
-                    // images,
-                ],
+          );
+
+          if (this.dataEspecial.q.legendDesmatamento) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendDesmatamento),
+                width: 180,
+                alignment: 'center'
+              }
             );
+          }
+
+          if (this.dataEspecial.q.legendEspecial) {
+            images.push(
+              {
+                image: await self.getBase64ImageFromUrl(self.dataEspecial.q.legendEspecial),
+                width: 180,
+                alignment: 'center'
+              }
+            );
+          }
+
         }
+        columns.push(
+          [
+            { text: this.textOnDialog.especial_area.titleQ, alignment: 'left', margin: [0, 25, 0, 10] },
+            { text: this.dataEspecial.ucus.q_nom, alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            { text: this.textOnDialog.especial_area.distancia + ' ' + this.dataEspecial.q.q_dist + ' km', alignment: 'left', style: 'data', margin: [0, 1, 0, 0] },
+            // images,
+          ],
+        );
+      }
 
       dd.content.push({ columns: columns });
       // @ts-ignore
@@ -2771,8 +3118,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     }
 
     if (this.carData.length > 0 && this.data.year >= 2013) {
-        // @ts-ignore
-      dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader', margin: [0, 25, 0, 10]})
+      // @ts-ignore
+      dd.content.push({ text: this.textOnDialog.car_tab.title_tab, style: 'subheader', margin: [0, 25, 0, 10] })
 
       for (const [index, item] of this.carData.entries()) {
         let columns = [];
@@ -3310,7 +3657,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         // @ts-ignore
         dd.content.push({ qr: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
         // @ts-ignore
-        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter'});
+        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter' });
         let filename = this.textOnDialog.title.toLowerCase() + ' - ' + result[0].token + '.pdf'
         pdfMake.createPdf(dd).download(filename);
       }
@@ -3412,19 +3759,41 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
           if (this.dataEspecial.ti.show) {
             this.vetEspecial.push({
+              id: 'ti',
               src: this.dataEspecial.ti.src,
               thumb: this.dataEspecial.ti.thumb,
               caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
             });
           }
 
+          if (this.dataEspecial.ucus.show) {
+
+            this.vetEspecial.push({
+              id: 'ucus',
+              src: this.dataEspecial.ucus.src,
+              thumb: this.dataEspecial.ucus.thumb,
+              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.ucpi.show) {
+            this.vetEspecial.push({
+              id: 'ucpi',
+              src: this.dataEspecial.ucpi.src,
+              thumb: this.dataEspecial.ucpi.thumb,
+              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
+            });
+          }
+
           if (this.dataEspecial.q.show) {
             this.vetEspecial.push({
+              id: 'q',
               src: this.dataEspecial.q.src,
               thumb: this.dataEspecial.q.thumb,
               caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
             });
           }
+          console.log(this.vetEspecial)
 
           // if (this.dataEspecial.ap.show) {
           // this.vetEspecial.push({
@@ -3434,21 +3803,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           // });
           // }
 
-          if (this.dataEspecial.ucpi.show) {
-            this.vetEspecial.push({
-              src: this.dataEspecial.ucpi.src,
-              thumb: this.dataEspecial.ucpi.thumb,
-              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
-            });
-          }
 
-          if (this.dataEspecial.ucus.show) {
-            this.vetEspecial.push({
-              src: this.dataEspecial.ucus.src,
-              thumb: this.dataEspecial.ucus.thumb,
-              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
-            });
-          }
         }
 
 
@@ -3712,8 +4067,16 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this._lightbox.open(this.vetABC, index);
   }
 
-  openLightboxEspecial(index: number): void {
-    this._lightbox.open(this.vetEspecial, index);
+  openLightboxEspecial(index: string): void {
+
+    let pos = 0;
+    for (let i = 0; i < this.vetEspecial.length; i++) {
+      if (this.vetEspecial[i].id.toUpperCase() == index.toUpperCase()) {
+        pos = i;
+      }
+    }
+
+    this._lightbox.open(this.vetEspecial, pos);
   }
 
 

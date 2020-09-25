@@ -164,7 +164,7 @@ export class RegionReportComponent implements OnInit {
             widths: '*',
             body: [
               [
-                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [300, 43] },
+                { image: logos.signature, colSpan: 3, alignment: 'center', fit: [400, 45] },
                 {},
                 {},
               ],

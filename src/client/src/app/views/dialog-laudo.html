@@ -3,7 +3,8 @@
         <div style="display: grid; position: fixed; right: 10vw;top: 10%;">
             <button style="margin: 10px" (click)="printReport()" color="primary" classs="btn-info " mat-icon-button>
                 <mat-icon>print</mat-icon>
-                <mat-spinner  [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate" style="margin: 0 auto;"></mat-spinner>
+                <mat-spinner [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"
+                    style="margin: 0 auto;"></mat-spinner>
             </button>
             <button style="margin: 12px" (click)="dialogRef.close()" color="primary" classs="btn-info " mat-icon-button>
                 <mat-icon>highlight_off</mat-icon>
@@ -52,7 +53,7 @@
         <!--            </ul>-->
         <!--        </nav>-->
         <div class="row">
-<!--            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>-->
+            <!--            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>-->
             <p-accordion class="dados" [multiple]="true">
                 <p-accordionTab class="tab" header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even">
@@ -72,7 +73,8 @@
                                 </tr>
                                 <tr>
                                     <th class="table-label">{{textOnDialog.information_tab.area_label}}</th>
-                                    <th>{{infoDesmat.area | number:'1.2-3' }}{{textOnDialog.information_tab.unit_measure}}</th>
+                                    <th>{{infoDesmat.area | number:'1.2-3' }}{{textOnDialog.information_tab.unit_measure}}
+                                    </th>
                                 </tr>
                                 <tr>
                                     <td class="table-label">{{textOnDialog.information_tab.municipio_label}}</td>
@@ -117,8 +119,9 @@
 
                                 <mat-card-content *ngIf="dataEspecial.ti.show">
                                     <toh-spinner-img *ngIf="dataEspecial.ti.thumb" [imgSrc]="dataEspecial.ti.thumb"
-                                        [largura]="'100%'" [spinnerSrc]="svgLoading" (click)="openLightboxEspecial(0)"
-                                        class="img-landsat-laudo"></toh-spinner-img>
+                                        [largura]="'100%'" [spinnerSrc]="svgLoading"
+                                        (click)="openLightboxEspecial('ti')" class="img-landsat-laudo">
+                                    </toh-spinner-img>
                                     <br><br>
                                     <img *ngIf="dataEspecial.ti.legendDesmatamento"
                                         [src]="dataEspecial.ti.legendDesmatamento">
@@ -142,7 +145,7 @@
 
                                 <mat-card-content *ngIf="dataEspecial.ucus.show">
                                     <toh-spinner-img [imgSrc]="dataEspecial.ucus.thumb" [largura]="'100%'"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial(1)"
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('ucus')"
                                         class="img-landsat-laudo"></toh-spinner-img>
                                     <br><br>
                                     <img *ngIf="dataEspecial.ucus.legendDesmatamento"
@@ -168,7 +171,7 @@
 
                                 <mat-card-content *ngIf="dataEspecial.ucpi.show">
                                     <toh-spinner-img [imgSrc]="dataEspecial.ucpi.thumb" [largura]="'100%'"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial(2)"
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('ucpi')"
                                         class="img-landsat-laudo"></toh-spinner-img>
                                     <br><br>
                                     <img *ngIf="dataEspecial.ucpi.legendDesmatamento"
@@ -193,7 +196,7 @@
 
                                 <mat-card-content *ngIf="dataEspecial.q.show">
                                     <toh-spinner-img [imgSrc]="dataEspecial.q.thumb" [largura]="'100%'"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial(3)"
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('q')"
                                         class="img-landsat-laudo"></toh-spinner-img>
                                     <br><br>
                                     <img *ngIf="dataEspecial.q.legendDesmatamento"

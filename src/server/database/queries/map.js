@@ -13,7 +13,7 @@ module.exports = function (app) {
 	}
 
 	Query.search = function () {
-		return "SELECT text, value, type, cd_geocmu FROM regions WHERE unaccent(text) ILIKE unaccent(${key}%) AND type in ('state', 'city') LIMIT 10";
+		return "SELECT distinct text, value, type, cd_geocmu FROM regions WHERE unaccent(text) ILIKE unaccent(${key}%) AND type in ('state', 'city') LIMIT 10";
 	}
 
 	Query.searchregion = function () {
