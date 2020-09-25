@@ -41,9 +41,8 @@ import * as Chart from 'chart.js'
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { RegionReportComponent } from "./region-report/region-report.component";
-import {CarReportComponent} from "./car-report/car-report.component";
-import {ReportCarComponent} from "./report-car/report-car.component";
+import { RegionReportComponent } from './region-report/region-report.component';
+import { ReportCarComponent } from './report-car/report-car.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
