@@ -1082,8 +1082,13 @@ module.exports = function (app) {
         table_state_title: languageJson["layer_box"]["table_state_title"][language],
         btn_analyze: languageJson["layer_box"]["btn_analyze"][language],
         btn_clear: languageJson["layer_box"]["btn_clear"][language],
-        msg_error: languageJson["layer_box"]["msg_error"][language],
-        label_upload_tooltip: languageJson["layer_box"]["label_upload_tooltip"][language]
+        warning: languageJson["layer_box"]["warning"][language],
+        label_upload_tooltip: languageJson["layer_box"]["label_upload_tooltip"][language],
+        car_title: languageJson["layer_box"]["car_title"][language],
+        car_table_headers: languageJson["layer_box"]["car_table_headers"][language],
+        car_title_report: languageJson["layer_box"]["car_title_report"][language],
+        upload_submit: languageJson["layer_box"]["upload_submit"][language],
+        upload_search: languageJson["layer_box"]["upload_search"][language]
       },
       descriptor: languageJson["descriptor"]
 

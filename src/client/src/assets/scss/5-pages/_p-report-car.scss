@@ -1,4 +1,4 @@
-#regionReport{
+#reportCar{
   overflow: hidden;
 
   .container-buttons{
@@ -65,12 +65,19 @@
     color: #ffffff;
   }
 
- .ui-table .ui-table-tbody > tr.ui-state-highlight {
+  .ui-table .ui-table-tbody > tr.ui-state-highlight {
     background-color:#0b4e26;
     color: #ffffff;
   }
   .ui-table .ui-table-tbody > tr > td {
-   word-break: break-all;
+    word-break: break-all;
+  }
+  .ui-table .ui-table-tbody > tr > td:nth-child(1) {
+    width: 30%;
+    font-weight: 600;
+  }
+  .ui-table .ui-table-tbody > tr > td:nth-child(6) {
+    font-weight: 600;
   }
   .table-label{
     font-weight: bolder;
@@ -100,7 +107,7 @@
     @include fluid-type(16px, 18px);
   }
   .tb-imgs {
-   tr {
+    tr {
       //border-top: 1px solid black;
       //border-bottom: 1px solid black;
     }
@@ -116,10 +123,10 @@
     }
   }
 
- .mat-card > :last-child:not(.mat-card-footer) {
-   padding-top: 5px;
-   padding-left: 0;
- }
+  .mat-card > :last-child:not(.mat-card-footer) {
+    padding-top: 5px;
+    padding-left: 0;
+  }
 
   .title-info{
     @include fluid-type(14px, 18px);

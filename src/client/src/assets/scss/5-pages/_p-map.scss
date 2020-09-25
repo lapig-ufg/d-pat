@@ -862,6 +862,7 @@ mat-select {
   &-table{
     margin-bottom: 15px;
     margin-top: 15px;
+    text-align: center;
 
     .ui-table .ui-table-tbody > tr:nth-child(even).ui-state-highlight {
       background-color: #0b4e26 !important;
@@ -880,6 +881,19 @@ mat-select {
     font-size: 14px;
     margin: 10px;
     padding-top: 32px;
+    .card{
+      margin: 15px;
+      color: rgba(0, 0, 0, 0.54);
+      cursor: pointer;
+      transition: 0.5s;
+      @include fluid-type(12px, 14px);
+      padding: 14px;
+      border-radius: 6px;
+      &:hover{
+        background-color: rgba(11, 78, 38, 0.87);
+        color: white;
+      }
+    }
   }
 }
 
@@ -894,8 +908,14 @@ mat-select {
   margin-top: 20px;
 }
 
+.progress-analyse-up{
+  margin: -10px;
+  margin-bottom: 5px;
+}
+
 .progress-analyse{
-  margin-bottom: 10px;
+  margin: 10px;
+  margin-left: -3px;
 }
 
 .title-file-card{
@@ -922,7 +942,7 @@ mat-select {
 }
 
 .info-header{
-  font-size: 0.5vh;
+  font-size: 14px;
   padding: 5px;
   margin: 10px;
   border-radius: 6px;
