@@ -8,7 +8,9 @@ var right = -28.835908
 // var layername = process.argv[2]
 //var layername = "bi_ce_prodes_desmatamento_100_fip"
 
-var layers = ["uso_solo_terraclass_fip", "uso_solo_probio_fip", "agricultura_agrosatelite_fip"]
+var layers = ["uso_solo_terraclass_fip"]
+// var layers = ["agricultura_agrosatelite_fip"]
+// var layers = [ "uso_solo_probio_fip"]
 //var layername = "bi_ce_info_utfgrid_fip"
 
 var multipleRequests = 10
@@ -23,7 +25,8 @@ var muns = getMunsCerrado();
 
 var years = [2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
-var types = ['city', 'state']
+var types = ['city']
+// var types = ['state']
 
 var urls = []
 

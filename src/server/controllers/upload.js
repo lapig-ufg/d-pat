@@ -328,7 +328,6 @@ module.exports = function (app) {
 		// Group by color as key to the person array
 		const regionGroupedByType = groupBy(regions, 'type');
 
-
 		queryResult = request.queryResult['car']
 		var car = []
 
@@ -348,6 +347,7 @@ module.exports = function (app) {
 		let stringified = car.map(i => JSON.stringify(i));
 		var car_final = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
 			.map(j => JSON.parse(j))
+
 
 		let res = {
 			regions_intersected: regionGroupedByType,
