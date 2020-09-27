@@ -203,50 +203,36 @@
 			"en-us": "Sorry, region not found."
 		},
 		"label_upload_token": {
-			"pt-br": "Identificação: ",
-			"en-us": "Identification: "
+			"pt-br": "Token de acesso: ",
+			"en-us": "Access Token: "
 		},
 		"label_total_area": {
 			"pt-br": "Área total submetida: ",
 			"en-us": "Total area submitted: "
 		},
 		"label_analyzed_area_title": {
-			"pt-br": "Relatório da área  submetida",
+			"pt-br": "Relatório da área submetida",
 			"en-us": "Report of the submitted area"
 		},
 		"header_table_deforested": {
-			"pt-br": [
-				"Área desmatada",
-				"Ano"
-			],
-			"en-us": [
-				"Deforested area",
-				"Year"
-			]
+			"pt-br": ["Ano","Área desmatada"],
+			"en-us": ["Year", "Deforested area"]
 		},
 		"header_table_city": {
-			"pt-br": [
-				"Município"
-			],
-			"en-us": [
-				"County"
-			]
+			"pt-br": ["Município"],
+			"en-us": ["County"]
 		},
 		"header_table_state": {
-			"pt-br": [
-				"Estado"
-			],
-			"en-us": [
-				"State"
-			]
+			"pt-br": ["Estado"],
+			"en-us": ["State"]
 		},
 		"table_prodes_title": {
 			"pt-br": "Dematamentos PRODES",
 			"en-us": "PRODES deforestation"
 		},
 		"table_deter_title": {
-			"pt-br": "Alertas DETER",
-			"en-us": "DETER Alerts"
+			"pt-br": "Avisos DETER",
+			"en-us": "DETER notices"
 		},
 		"table_city_title": {
 			"pt-br": "Municípios que cruzam com a área submetida",
@@ -255,6 +241,46 @@
 		"table_state_title": {
 			"pt-br": "Estados que cruzam com a área submetida",
 			"en-us": "States that intersect with the submitted area"
+		},
+		"btn_analyze": {
+			"pt-br": "Analisar",
+			"en-us": "Analyze"
+		},
+		"btn_clear": {
+			"pt-br": "Limpar",
+			"en-us": "Clear"
+		},
+		"msg_error": {
+			"pt-br": "Não foi possível analizar a área submetida, tente uma área menor",
+			"en-us": "Could not analyze the submitted area, try a smaller area"
+		},
+		"warning": {
+			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido a quantidade de cruzamentos espaciais sendo realizada.",
+			"en-us": "Area under analysis. This processing may take a while due to the amount of space crossings being performed."
+		},
+		"car_title": {
+			"pt-br": "Visualizar a(s) [count] propriedade(s) inscrita(s) no CAR que cruzam com a área submetida.",
+			"en-us": "View the [count] properties registered in the CAR that intersect with the submitted area."
+		},
+		"car_title_report": {
+			"pt-br": "Propriedade(s) inscrita(s) no CAR que cruzam com a área submetida",
+			"en-us": "Properties registered in the CAR that intersect with the submitted area"
+		},
+		"car_table_headers": {
+			"pt-br": ["Código CAR", "Área da Propriedade", "Área de APP", "Área da Reserva Legal", "Área desmatada em APP", "Área desmatada por CAR", "Área desmatada em Res. Legal"],
+			"en-us": ["CAR Code", "Property Area", "APP Area", "Legal Reserve Area", "Area deforested in APP", "Area deforested by CAR", "Area deforested in Legal Reserve"]
+		},
+		"upload_submit": {
+			"pt-br": ["Código CAR", "Área da Propriedade", "Área de APP", "Área da Reserva Legal", "Área desmatada em APP", "Área desmatada por CAR", "Área desmatada em Res. Legal"],
+			"en-us": ["CAR Code", "Property Area", "APP Area", "Legal Reserve Area", "Area deforested in APP", "Area deforested by CAR", "Area deforested in Legal Reserve"]
+		},
+		"upload_submit": {
+			"pt-br": "Submeter Área",
+			"en-us": "Submit Area"
+		},
+		"upload_search": {
+			"pt-br": "Consultar Área",
+			"en-us": "Consult Area"
 		}
 	},
 	"descriptor": {

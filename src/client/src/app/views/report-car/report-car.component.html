@@ -1,0 +1,55 @@
+<section id="reportCar" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+                <div class="row">
+                    <div class="col-9">
+                        <h5 class="title-report">{{dados.table_title}} </h5>
+                    </div>
+                    <div class="col-3">
+                        <a href="https://cerradodpat.org" target="_blank">
+                            <img class="logo-report" src="assets/logo/cerrado-dpat-logo.svg" /></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <p-table  [paginator]="true" [rows]="5" [responsive]="true" [value]="dados.car" selectionMode="single">
+                        <ng-template pTemplate="header">
+                            <tr align="center">
+                                <th *ngFor="let header of dados.table_headers">
+                                    {{header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-car>
+                            <tr [pSelectableRow]="car" tooltipPosition="bottom" life="2000">
+                                <td align="left">{{car.cod_car}}</td>
+                                <td align="center">{{car.area_car | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_app | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_rl | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_desmat_app | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_desmat_per_car | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_desmat_rl | number :'1.2-2' }}km²</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="row">
+                    <div class="p-grid p-dir-rev mt-5">
+                        <div class="p-col-12">
+                            <img class="report-partners" src="assets/img/assinatura.png" />
+                        </div>
+                    </div>
+                </div>
+            </p-scrollPanel>
+        </div>
+        <div class="container-buttons" >
+            <button color="primary" classs="btn-info " mat-icon-button (click)="print.emit()">
+                <mat-icon>print</mat-icon>
+                <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"></mat-spinner>
+            </button>
+            <button (click)="closeDialog()" color="primary" classs="btn-info " mat-icon-button>
+                <mat-icon>highlight_off</mat-icon>
+            </button>
+        </div>
+    </div>
+</section>

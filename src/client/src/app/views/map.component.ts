@@ -41,7 +41,8 @@ import * as Chart from 'chart.js'
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { RegionReportComponent } from "./region-report/region-report.component";
+import { RegionReportComponent } from './region-report/region-report.component';
+import { ReportCarComponent } from './report-car/report-car.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -202,13 +203,31 @@ export class MapComponent implements OnInit {
     visible: null,
     loading: false,
     dragArea: true,
+    error:false,
     strokeColor: '#2224ba',
     token: '',
     analyzedAreaLoading: false,
     analyzedArea: {},
-    loadingPrintReport: false
   };
 
+  loadingPrintReport: boolean;
+
+  layerFromConsulta: any = {
+    label: null,
+    layer: null,
+    checked: false,
+    visible: null,
+    loading: false,
+    dragArea: true,
+    error: false,
+    strokeColor: '#2224ba',
+    token: '',
+    analyzedAreaLoading: false,
+    analyzedArea: {},
+  };
+
+  selectedIndexConteudo: number;
+  selectedIndexUpload: number;
 
   innerHeigth: any;
   showDrawer: boolean;
@@ -351,8 +370,6 @@ export class MapComponent implements OnInit {
       }]
     ]);
 
-
-
     this.styleSelected = {
       'background-color': '#fe8321'
     };
@@ -377,6 +394,10 @@ export class MapComponent implements OnInit {
     this.updateControls();
     this.loadingSHP = false;
     this.loadingCSV = false;
+    this.loadingPrintReport = false;
+
+    this.selectedIndexConteudo = 0;
+    this.selectedIndexUpload   = 0;
 
   }
   search = (text$: Observable<string>) =>
@@ -1904,6 +1925,7 @@ export class MapComponent implements OnInit {
     let map = this.map;
 
     this.layerFromUpload.checked = false;
+    this.layerFromUpload.error = false;
 
     if (this.layerFromUpload.layer != null) {
       map.removeLayer(this.layerFromUpload.layer);
@@ -1939,7 +1961,6 @@ export class MapComponent implements OnInit {
       }
     }
 
-    this.printRegionsIdentification(data.token)
     this.layerFromUpload.visible = true;
     let vectorSource = new VectorSource({
       features: (new GeoJSON()).readFeatures(data, {
@@ -1991,19 +2012,77 @@ export class MapComponent implements OnInit {
 
   }
 
-  analyzeUploadShape() {
-    this.layerFromUpload.analyzedAreaLoading = true;
-    let params = [];
-    params.push('token=' + this.layerFromUpload.token)
+  loadLayerFromConsultaToMap() {
+    const map = this.map;
+    const vectorSource = new VectorSource({
+      features: (new GeoJSON()).readFeatures(this.layerFromConsulta.analyzedArea.shape_upload.geojson, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
+      })
+    });
+    this.layerFromConsulta.layer = new VectorLayer({
+      source: vectorSource,
+      style: [
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromConsulta.strokeColor,
+            width: 4
+          })
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromConsulta.strokeColor,
+            width: 4,
+            lineCap: 'round',
+            zIndex: 1
+          })
+        })
+      ]
+    });
+    map.addLayer(this.layerFromConsulta.layer);
+    const extent = this.layerFromConsulta.layer.getSource().getExtent();
+    map.getView().fit(extent, { duration: 1800 });
 
-    let urlParams = '/service/upload/desmatperyear?' + params.join('&');
-    this.http.get(urlParams).subscribe(result => {
-      this.layerFromUpload.analyzedArea = result;
-      this.layerFromUpload.analyzedAreaLoading = false;
+    const prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
+    this.changeVisibility(prodes, undefined);
+    this.infodataMunicipio = null;
+  }
 
-      console.log("res- ", this.layerFromUpload.analyzedArea)
+  analyzeUploadShape(fromConsulta = false) {
+    let params    = [];
+    let self      = this;
+    let urlParams = '';
+
+    if ( fromConsulta ) {
+      this.layerFromConsulta.analyzedAreaLoading = true;
+      params.push('token=' + this.layerFromConsulta.token)
+      this.layerFromConsulta.error = false;
+      urlParams = '/service/upload/desmatperyear?' + params.join('&');
+      this.http.get(urlParams, this.httpOptions).subscribe(result => {
+            this.layerFromConsulta.analyzedArea = result;
+            this.layerFromConsulta.analyzedAreaLoading = false;
+            this.loadLayerFromConsultaToMap();
+          },
+          error =>  {
+            self.layerFromConsulta.analyzedAreaLoading = false;
+            self.layerFromConsulta.error = true;
+          });
+    } else {
+      this.layerFromUpload.analyzedAreaLoading = true;
+      params.push('token=' + this.layerFromUpload.token)
+      this.layerFromUpload.error = false;
+      urlParams = '/service/upload/desmatperyear?' + params.join('&');
+      this.http.get(urlParams, this.httpOptions).subscribe(result => {
+            this.layerFromUpload.analyzedArea = result;
+            this.layerFromUpload.analyzedAreaLoading = false;
+          },
+          error =>  {
+            self.layerFromUpload.analyzedAreaLoading = false;
+            self.layerFromUpload.error = true;
+          });
     }
-    );
+
   }
 
   private getMetadata(metadata) {
@@ -2111,7 +2190,7 @@ export class MapComponent implements OnInit {
     }
 
     if (window.innerWidth < 900) {
-      this.router.navigate(['/mobile']);
+      //this.router.navigate(['/mobile']);
     }
   }
 
@@ -2347,10 +2426,19 @@ export class MapComponent implements OnInit {
     const filename = logos.upload.title[language] + ' - ' + token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
   }
-  async printAnalyzedAreaReport() {
+  async printAnalyzedAreaReport(fromConsulta = false) {
     let language = this.language;
     let self = this;
-    this.layerFromUpload.loadingPrintReport = true;
+    let layer = null;
+    let isFromConsulta = false;
+    if ( fromConsulta ) {
+      isFromConsulta = true;
+      layer = this.layerFromConsulta;
+    } else {
+      layer = this.layerFromUpload;
+    }
+
+    this.loadingPrintReport = true;
 
     let dd = {
       pageSize: 'A4',
@@ -2418,7 +2506,7 @@ export class MapComponent implements OnInit {
           bold: true,
         },
         subheader: {
-          fontSize: 16,
+          fontSize: 14,
           bold: true,
           margin: [0, 10, 0, 5]
         },
@@ -2438,15 +2526,54 @@ export class MapComponent implements OnInit {
           fontSize: 13,
           color: 'black'
         },
+        tableCar:{
+          fontSize: 9,
+        },
         metadata: {
           background: '#0b4e26',
           color: '#fff'
+        },
+        bold: {
+            bold: true,
         }
       }
     }
+    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(layer.analyzedArea.shape_upload.area_upload, '1.2-2') + '  km²', style: 'subheader' });
 
-    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(this.layerFromUpload.analyzedArea.area_upload, '1.2-2') + '  km²', style: 'subheader' });
-    if (this.layerFromUpload.analyzedArea.deter.length > 0) {
+    if( layer.analyzedArea.car.length > 0 ) {
+      dd.content.push({ text: self.titlesLayerBox.car_title_report, style: 'subheader', alignment: 'center' });
+      let tableCar = {
+        style: 'tableCar',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [100, 52, 52, 52, 50, 50, 50],
+          body: [],
+          margin: 10
+        }
+      };
+      let headers = []
+      for (let [index, header] of self.titlesLayerBox.car_table_headers.entries()) {
+        headers.push(
+          { text: header, alignment: 'center' }
+        );
+      }
+      tableCar.table.body.push(headers);
+
+      for (let [index, car] of layer.analyzedArea.car.entries()) {
+        tableCar.table.body.push([
+          { text: car.cod_car, alignment: 'left', style: 'bold' },
+          { text: self.decimalPipe.transform(car.area_car, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_app, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_rl, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_desmat_app, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_desmat_per_car, '1.2-2') + ' km²', alignment: 'center', style: 'bold' },
+          { text: self.decimalPipe.transform(car.area_desmat_rl, '1.2-2') + ' km²', alignment: 'center' }
+        ]);
+      }
+      dd.content.push(tableCar);
+    }
+    if( layer.analyzedArea.deter.length > 0 ) {
       dd.content.push({ text: self.titlesLayerBox.table_deter_title, style: 'subheader', alignment: 'center' });
       let tableDeter = {
         style: 'tableCounty',
@@ -2462,15 +2589,15 @@ export class MapComponent implements OnInit {
         { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
         { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
       ]);
-      for (let [index, area] of self.layerFromUpload.analyzedArea.deter.entries()) {
+      for (let [index, area] of layer.analyzedArea.deter.entries()) {
         tableDeter.table.body.push([
-          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
-          { text: area.year, alignment: 'center' }
+          { text: area.year, alignment: 'center' },
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' }
         ]);
       }
       dd.content.push(tableDeter);
     }
-    if (this.layerFromUpload.analyzedArea.prodes.length > 0) {
+    if (layer.analyzedArea.prodes.length > 0) {
       dd.content.push({ text: self.titlesLayerBox.table_prodes_title, style: 'subheader', alignment: 'center' });
       let tableProdes = {
         style: 'tableCounty',
@@ -2486,75 +2613,189 @@ export class MapComponent implements OnInit {
         { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
         { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
       ]);
-      for (let [index, area] of self.layerFromUpload.analyzedArea.prodes.entries()) {
+      for (let [index, area] of layer.analyzedArea.prodes.entries()) {
         tableProdes.table.body.push([
-          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
-          { text: area.year, alignment: 'center' }
+          { text: area.year, alignment: 'center' },
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' }
         ]);
       }
       dd.content.push(tableProdes);
     }
-    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+    if (layer.analyzedArea.regions_intersected.hasOwnProperty('city')) {
       dd.content.push({ text: self.titlesLayerBox.table_city_title, style: 'subheader', alignment: 'center' });
-      let tableCities = {
-        style: 'tableCounty',
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: ['*', '*'],
-          body: [],
-          margin: 10
-        }
-      };
-      tableCities.table.body.push([
-        { text: '#', alignment: 'center' },
-        { text: self.titlesLayerBox.header_table_city[0], alignment: 'center' }
-      ]);
-      for (let [index, city] of self.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
-        tableCities.table.body.push([
-          { text: index + 1, alignment: 'center' },
-          { text: city.name, alignment: 'left' }
-        ]);
-      }
-      dd.content.push(tableCities);
+      dd.content.push({ text: self.getCitiesAnalyzedArea(isFromConsulta), alignment: 'center' });
+      // let tableCities = {
+      //   style: 'tableCounty',
+      //   layout: 'lightHorizontalLines',
+      //   table: {
+      //     headerRows: 1,
+      //     widths: ['*', '*'],
+      //     body: [],
+      //     margin: 10
+      //   }
+      // };
+      // tableCities.table.body.push([
+      //   { text: '#', alignment: 'center' },
+      //   { text: self.titlesLayerBox.header_table_city[0], alignment: 'center' }
+      // ]);
+      // for (let [index, city] of layer.analyzedArea.regions_intersected.city.entries()) {
+      //   tableCities.table.body.push([
+      //     { text: index + 1, alignment: 'center' },
+      //     { text: city.name, alignment: 'left' }
+      //   ]);
+      // }
+      // dd.content.push(tableCities);
     }
-    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+    if (layer.analyzedArea.regions_intersected.hasOwnProperty('state')) {
       dd.content.push({ text: self.titlesLayerBox.table_state_title, style: 'subheader', alignment: 'center' });
-      let tableStates = {
-        style: 'tableCounty',
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: ['*', '*'],
-          body: [],
-          margin: 10
-        }
-      };
-      tableStates.table.body.push([
-        { text: '#', alignment: 'center' },
-        { text: self.titlesLayerBox.header_table_state[0], alignment: 'center' }
-      ]);
-      for (let [index, state] of self.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
-        tableStates.table.body.push([
-          { text: index + 1, alignment: 'center' },
-          { text: state.name, alignment: 'left' }
-        ]);
-      }
-      dd.content.push(tableStates);
+      dd.content.push({ text: self.getStatesAnalyzedArea(isFromConsulta), alignment: 'center' });
+      // let tableStates = {
+      //   style: 'tableCounty',
+      //   layout: 'lightHorizontalLines',
+      //   table: {
+      //     headerRows: 1,
+      //     widths: ['*', '*'],
+      //     body: [],
+      //     margin: 10
+      //   }
+      // };
+      // tableStates.table.body.push([
+      //   { text: '#', alignment: 'center' },
+      //   { text: self.titlesLayerBox.header_table_state[0], alignment: 'center' }
+      // ]);
+      // for (let [index, state] of layer.analyzedArea.regions_intersected.state.entries()) {
+      //   tableStates.table.body.push([
+      //     { text: index + 1, alignment: 'center' },
+      //     { text: state.name, alignment: 'left' }
+      //   ]);
+      // }
+      // dd.content.push(tableStates);
     }
 
     // @ts-ignore
-    dd.content.push({ text: this.layerFromUpload.token, alignment: 'center', style: 'textFooter', margin: [25, 60, 30, 10], pageBreak: false });
+    dd.content.push({ text: layer.token, alignment: 'center', style: 'textFooter', margin: [25, 30, 20, 10], pageBreak: false });
     // @ts-ignore
-    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, fit: '150', alignment: 'center' });
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + layer.token, fit: '150', alignment: 'center' });
     // @ts-ignore
-    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, alignment: 'center', margin: [0, 30, 10, 0], style: 'textFooter' });
-    let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + this.layerFromUpload.token + '.pdf'
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + layer.token, alignment: 'center', margin: [0, 15, 10, 0], style: 'textFooter' });
+    let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + layer.token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
-
-    this.layerFromUpload.loadingPrintReport = false;
+    this.loadingPrintReport = false;
   }
+  getCitiesAnalyzedArea(fromConsulta = false) {
+    let cities = '';
+    if (fromConsulta) {
+      if ( this.layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('city') ) {
+        for (let [index, city] of this.layerFromConsulta.analyzedArea.regions_intersected.city.entries()) {
+          let citiesCount = this.layerFromConsulta.analyzedArea.regions_intersected.city.length;
+          if(citiesCount === 1){
+            cities += city.name + '.';
+            return cities;
+          }
+          if ( index ===  citiesCount - 1) {
+            cities += city.name + '.';
+          } else {
+            cities += city.name + ', ';
+          }
+        }
+      }
+    } else {
+      if ( this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city') ) {
+        for (let [index, city] of this.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
+          let citiesCount = this.layerFromUpload.analyzedArea.regions_intersected.city.length;
+          if(citiesCount === 1){
+            cities += city.name + '.';
+            return cities;
+          }
+          if ( index ===  citiesCount - 1) {
+            cities += city.name + '.';
+          } else {
+            cities += city.name + ', ';
+          }
+        }
+      }
+    }
 
+    return cities;
+  }
+  getStatesAnalyzedArea(fromConsulta = false) {
+    let states = '';
+    if( fromConsulta ){
+      if ( this.layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('state') ) {
+        for (let [index, state] of this.layerFromConsulta.analyzedArea.regions_intersected.state.entries()) {
+          let statesCount = this.layerFromConsulta.analyzedArea.regions_intersected.state.length;
+          if(statesCount === 1){
+            states += state.name + '.';
+            return states;
+          }
+          if ( index ===  statesCount - 1) {
+            states += state.name + '.';
+          } else {
+            states += state.name + ', ';
+          }
+        }
+      }
+    } else {
+      if ( this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state') ) {
+        for (let [index, state] of this.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
+          let statesCount = this.layerFromUpload.analyzedArea.regions_intersected.state.length;
+          if(statesCount === 1){
+            states += state.name + '.';
+            return states;
+          }
+          if ( index ===  statesCount - 1) {
+            states += state.name + '.';
+          } else {
+            states += state.name + ', ';
+          }
+        }
+      }
+    }
+
+    return states;
+  }
+  openCarReport(fromConsulta = false){
+    const self = this;
+    let carDialog = null;
+    let isFromConsulta = false;
+    if( fromConsulta ){
+      isFromConsulta = true;
+      this.layerFromConsulta.analyzedArea['table_title']   = this.titlesLayerBox.car_title_report;
+      this.layerFromConsulta.analyzedArea['table_headers'] = this.titlesLayerBox.car_table_headers;
+      carDialog = this.dialog.open(ReportCarComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados: this.layerFromConsulta.analyzedArea }
+      });
+    } else {
+      this.layerFromUpload.analyzedArea['table_title']   = this.titlesLayerBox.car_title_report;
+      this.layerFromUpload.analyzedArea['table_headers'] = this.titlesLayerBox.car_table_headers;
+      carDialog = this.dialog.open(ReportCarComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados: this.layerFromUpload.analyzedArea }
+      });
+    }
+
+    carDialog.componentInstance.print.subscribe(() => {
+      self.printAnalyzedAreaReport(isFromConsulta);
+    });
+  }
+  clearUpload(fromConsulta = false) {
+    if (fromConsulta){
+      this.layerFromConsulta.analyzedArea = {}
+      this.map.removeLayer(this.layerFromConsulta.layer);
+      this.layerFromConsulta.visible = false;
+      this.layerFromConsulta.checked = false;
+      this.layerFromConsulta.token = '';
+    } else {
+      this.layerFromUpload.analyzedArea = {}
+      this.map.removeLayer(this.layerFromUpload.layer);
+      this.layerFromUpload.visible = false;
+      this.layerFromUpload.checked = false;
+    }
+    this.updateRegion(this.defaultRegion);
+  }
   ngOnInit() {
 
     let descriptorURL = '/service/map/descriptor' + this.getServiceParams();
@@ -2629,7 +2870,7 @@ export class MapComponent implements OnInit {
     );
 
     if (window.innerWidth < 900) {
-      this.router.navigate(['/mobile']);
+      //this.router.navigate(['/mobile']);
     }
 
     let self = this;
@@ -2640,7 +2881,11 @@ export class MapComponent implements OnInit {
         }
       }
       if (self.router.url.includes('regions')) {
-        console.log(params);
+        self.selectedIndexConteudo = 3;
+        self.selectedIndexUpload   = 1;
+        self.layerFromConsulta.token = params.get('token');
+        self.analyzeUploadShape(true);
+        self.handleDrawer();
       }
     });
   }
@@ -2718,9 +2963,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     this.svgLoading = "/assets/img/loading.svg";
     this.initGallery();
-
+    const timeout = 2000 * 60 * 30;
     this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders( { 'Content-Type': 'application/json', timeout: `${timeout}`})
     };
   }
 

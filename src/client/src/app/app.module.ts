@@ -12,6 +12,7 @@ import { DialogOverviewExampleDialog } from './views/map.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -24,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
@@ -55,7 +57,9 @@ import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-inter
 import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
+import { MapMobileComponent } from './views/map-mobile/map-mobile.component';
 import { RegionReportComponent } from './views/region-report/region-report.component';
+import { ReportCarComponent } from './views/report-car/report-car.component';
 
 registerLocaleData(localePt);
 
@@ -70,7 +74,9 @@ registerLocaleData(localePt);
     HotsiteComponent,
     MobileComponent,
     ProjectComponent,
-    RegionReportComponent
+    MapMobileComponent,
+    RegionReportComponent,
+    ReportCarComponent
   ],
   imports: [
     TabViewModule,
@@ -97,9 +103,11 @@ registerLocaleData(localePt);
     MatProgressBarModule,
     MatButtonModule,
     MatIconModule,
+    MatInputModule,
     MatSidenavModule,
     MatTooltipModule,
     MatRadioModule,
+    MatToolbarModule,
     MatProgressSpinnerModule,
     BrowserModule,
     HttpClientModule,
@@ -108,7 +116,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, RegionReportComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent, ReportCarComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

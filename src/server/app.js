@@ -31,7 +31,7 @@ app.database.client.init(function() {
 	var publicDir = path.join(__dirname, '');
 
 	app.use(requestTimeout({
-		'timeout': 1000 * 60 * 30,
+		'timeout': 2000 * 60 * 30,
 		'callback': function(err, options) {
 			var response = options.res;
 			if (err) {

@@ -1,0 +1,136 @@
+#reportCar{
+  overflow: hidden;
+
+  .container-buttons{
+    display: grid;
+    position: fixed;
+    right: calc(100% - 90vw);
+    top: 32px;
+  }
+
+  .title-report{
+    font-family: "Conthrax Sb"!important;
+    text-align: left;
+    text-transform: uppercase;
+    color: #0b4e26 !important;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    @include fluid-type(16px, 28px);
+  }
+
+  .p-grid{
+    padding: 3px;
+  }
+
+  button{
+    margin: 10px
+  }
+
+  .title-report{
+    font-family: "Conthrax Sb"!important;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    @include fluid-type(16px, 21px);
+  }
+
+  .spinner{
+    margin: 0 auto;
+  }
+
+  .row{
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .dados{
+    width: 100%;
+  }
+  .tabs{
+    margin: 10px;
+  }
+
+  .ui-scrollpanel-bar-x{
+    visibility: hidden;
+  }
+
+  .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
+    background-color: #0b4e26;
+    border: 1px solid #0b4e26;
+    color: #ffffff;
+  }
+
+  .ui-table .ui-table-tbody > tr.ui-state-highlight {
+    background-color:#0b4e26;
+    color: #ffffff;
+  }
+  .ui-table .ui-table-tbody > tr > td {
+    word-break: break-all;
+  }
+  .ui-table .ui-table-tbody > tr > td:nth-child(1) {
+    width: 30%;
+    font-weight: 600;
+  }
+  .ui-table .ui-table-tbody > tr > td:nth-child(6) {
+    font-weight: 600;
+  }
+  .table-label{
+    font-weight: bolder;
+  }
+  .table-value{
+    font-weight: normal;
+  }
+  .tb-metadata{
+    font-size: 17px;
+    .table-label{
+      width: 137px;
+    }
+  }
+
+  .card-amostral{
+    height: 100%;
+  }
+
+  .legend{
+    display: grid;
+  }
+
+  .resume{
+    font-weight: normal;
+    text-align: center;
+    line-height: 30px;
+    @include fluid-type(16px, 18px);
+  }
+  .tb-imgs {
+    tr {
+      //border-top: 1px solid black;
+      //border-bottom: 1px solid black;
+    }
+    .table-value{
+      width: 100px;
+    }
+  }
+
+  toh-spinner-img{
+    display: flex;
+    img{
+      width: 100%;
+    }
+  }
+
+  .mat-card > :last-child:not(.mat-card-footer) {
+    padding-top: 5px;
+    padding-left: 0;
+  }
+
+  .title-info{
+    @include fluid-type(14px, 18px);
+    text-align: center;
+    padding: 5px;
+  }
+}
