@@ -41,7 +41,8 @@ import * as Chart from 'chart.js'
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { RegionReportComponent } from "./region-report/region-report.component";
+import { RegionReportComponent } from './region-report/region-report.component';
+import { ReportCarComponent } from './report-car/report-car.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -160,12 +161,15 @@ export class MapComponent implements OnInit {
   collapseLegends = false;
 
   infodata: any;
+  infodataDeter: any;
   infodataCampo: any;
   infodataMunicipio: any;
   infodataABC: any;
   fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
+  utfgridsourceDeter: UTFGrid;
+  utfgridlayerDeter: OlTileLayer;
   utfgridCampo: UTFGrid;
   utfgridlayerCampo: OlTileLayer;
   utfgridmunicipio: UTFGrid;
@@ -202,13 +206,31 @@ export class MapComponent implements OnInit {
     visible: null,
     loading: false,
     dragArea: true,
+    error: false,
     strokeColor: '#2224ba',
     token: '',
     analyzedAreaLoading: false,
     analyzedArea: {},
-    loadingPrintReport: false
   };
 
+  loadingPrintReport: boolean;
+
+  layerFromConsulta: any = {
+    label: null,
+    layer: null,
+    checked: false,
+    visible: null,
+    loading: false,
+    dragArea: true,
+    error: false,
+    strokeColor: '#2224ba',
+    token: '',
+    analyzedAreaLoading: false,
+    analyzedArea: {},
+  };
+
+  selectedIndexConteudo: number;
+  selectedIndexUpload: number;
 
   innerHeigth: any;
   showDrawer: boolean;
@@ -351,8 +373,6 @@ export class MapComponent implements OnInit {
       }]
     ]);
 
-
-
     this.styleSelected = {
       'background-color': '#fe8321'
     };
@@ -377,6 +397,10 @@ export class MapComponent implements OnInit {
     this.updateControls();
     this.loadingSHP = false;
     this.loadingCSV = false;
+    this.loadingPrintReport = false;
+
+    this.selectedIndexConteudo = 0;
+    this.selectedIndexUpload = 0;
 
   }
   search = (text$: Observable<string>) =>
@@ -968,6 +992,11 @@ export class MapComponent implements OnInit {
       return;
     }
 
+    let utfgridlayerVisibleDeter = this.utfgridlayerDeter.getVisible();
+    if (!utfgridlayerVisibleDeter || evt.dragging) {
+      return;
+    }
+
     let utfgridlayerVisibleCampo = this.utfgridlayerCampo.getVisible();
     if (!utfgridlayerVisibleCampo || evt.dragging) {
       return;
@@ -995,10 +1024,15 @@ export class MapComponent implements OnInit {
       let isOficial = false;
       let isMunicipio = false;
       let isABC = false;
+      let isOficialDeter = false
 
 
-      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip' || deter.selectedType === 'bi_ce_deter_desmatamento_100_fip') {
+      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip') {
         isOficial = true;
+      }
+
+      if (deter.selectedType === 'bi_ce_deter_desmatamento_100_fip') {
+        isOficialDeter = true;
       }
 
       if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip') ||
@@ -1043,11 +1077,43 @@ export class MapComponent implements OnInit {
         }
       }
 
+      if (isOficialDeter) {
+
+        if (deter.selectedType === 'bi_ce_deter_desmatamento_100_fip') {
+          if (this.utfgridsourceDeter) {
+            this.utfgridsourceDeter.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+              if (data) {
+                data.origin_table = data.origin_table.toUpperCase();
+
+                if (deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
+                  if (data.origin_table == 'DETER') {
+                    window.document.body.style.cursor = 'pointer';
+                    this.infodataDeter = data;
+                    this.infodataDeter.dataFormatada = this.infodataDeter.data_detec == '' ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodataDeter.data_detec), 'dd/MM/yyyy');
+                    this.infodataDeter.sucept_desmatFormatada = this.infodataDeter.sucept_desmat == '' ? this.minireportText.not_computed_message : ('' + (this.infodataDeter.sucept_desmat * 100).toFixed(2) + '%').replace('.', ',');
+                    this.infodataDeter.municipio = this.infodataDeter.municipio.toUpperCase();
+
+                    this.infoOverlay.setPosition(this.infodataDeter ? coordinate : undefined);
+                  }
+                }
+
+              } else {
+                window.document.body.style.cursor = 'auto';
+                this.infodataDeter = null;
+              }
+
+            }.bind(this)
+            );
+
+          }
+        }
+      }
+
       if (isOficial) {
 
         let openOficial = false;
 
-        if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip') || (deter.selectedType === 'bi_ce_deter_desmatamento_100_fip')) {
+        if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
 
           if (this.utfgridsource) {
             this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
@@ -1065,20 +1131,6 @@ export class MapComponent implements OnInit {
                     this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
                   }
                 }
-                if (!openOficial && deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
-                  if (data.origin_table == 'DETER') {
-                    window.document.body.style.cursor = 'pointer';
-                    this.infodata = data;
-                    this.infodata.dataFormatada = this.infodata.data_detec == '' ? this.minireportText.undisclosed_message : this.datePipe.transform(new Date(this.infodata.data_detec), 'dd/MM/yyyy');
-                    this.infodata.sucept_desmatFormatada = this.infodata.sucept_desmat == '' ? this.minireportText.not_computed_message : ('' + (this.infodata.sucept_desmat * 100).toFixed(2) + '%').replace('.', ',');
-                    this.infodata.municipio = this.infodata.municipio.toUpperCase();
-
-                    this.infoOverlay.setPosition(this.infodata ? coordinate : undefined);
-                  }
-                }
-
-                // this.infoOverlay.setPosition(data ? coordinate : undefined);
-
               } else {
                 window.document.body.style.cursor = 'auto';
                 this.infodata = null;
@@ -1189,7 +1241,12 @@ export class MapComponent implements OnInit {
         }
       }
 
-
+      if (this.infodataABC || this.infodataCampo || this.infodata || this.infodataDeter || this.infodataMunicipio) {
+        window.document.body.style.cursor = 'pointer';
+      }
+      else {
+        window.document.body.style.cursor = 'auto';
+      }
 
     }
   }
@@ -1213,9 +1270,14 @@ export class MapComponent implements OnInit {
       let isOficial = false;
       let isMunicipio = false;
       let isABC = false;
+      let isOficialDeter = false
 
-      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip' || deter.selectedType == 'bi_ce_deter_desmatamento_100_fip') {
+      if (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip') {
         isOficial = true;
+      }
+
+      if (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip') {
+        isOficialDeter = true;
       }
 
       if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip') ||
@@ -1328,9 +1390,10 @@ export class MapComponent implements OnInit {
         }
       }
 
+      let alreadyOpen = false;
       if (isOficial) {
 
-        let openOficial = false;
+        alreadyOpen = false;
         if (this.utfgridsource) {
           this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
@@ -1341,25 +1404,35 @@ export class MapComponent implements OnInit {
                 this.dataForDialog.datePipe = this.datePipe;
                 this.dataForDialog.layers = layers;
                 this.dataForDialog.year = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').year;
-                openOficial = true;
+                alreadyOpen = true;
                 this.openDialog();
               }
-
-
-              if (!openOficial && deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
-                this.dataForDialog = data;
-                this.dataForDialog.coordinate = coordinate;
-                this.dataForDialog.datePipe = this.datePipe;
-                this.dataForDialog.layers = layers;
-                this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
-                this.openDialog();
-              }
-
-
 
             }
           }.bind(this)
           );
+        }
+      }
+
+      if (isOficialDeter && !alreadyOpen) {
+
+        if (deter.selectedType === 'bi_ce_deter_desmatamento_100_fip') {
+          if (this.utfgridsourceDeter) {
+            this.utfgridsourceDeter.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
+              if (data) {
+
+                if (deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
+                  this.dataForDialog = data;
+                  this.dataForDialog.coordinate = coordinate;
+                  this.dataForDialog.datePipe = this.datePipe;
+                  this.dataForDialog.layers = layers;
+                  this.dataForDialog.year = new Date(this.dataForDialog.data_detec).getFullYear();
+                  this.openDialog();
+                }
+              }
+            }.bind(this)
+            );
+          }
         }
       }
 
@@ -1470,6 +1543,14 @@ export class MapComponent implements OnInit {
       source: this.utfgridsource
     });
 
+    this.utfgridsourceDeter = new UTFGrid({
+      tileJSON: this.getTileJSONDeter()
+    });
+
+    this.utfgridlayerDeter = new OlTileLayer({
+      source: this.utfgridsourceDeter
+    });
+
     this.utfgridCampo = new UTFGrid({
       tileJSON: this.getTileJSONCampo()
     });
@@ -1495,6 +1576,7 @@ export class MapComponent implements OnInit {
     });
 
     this.layers.push(this.utfgridlayer);
+    this.layers.push(this.utfgridlayerDeter);
     this.layers.push(this.utfgridlayerCampo);
     this.layers.push(this.utfgridlayerMunicipio);
     this.layers.push(this.utfgridlayerabc);
@@ -1506,22 +1588,7 @@ export class MapComponent implements OnInit {
 
     let text = '';
 
-    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
-    let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
-
-    if (prodes.visible && deter.visible) {
-      text = '((origin_table = \'prodes\' AND ' + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ')'
-        + ' OR ' + '(origin_table = \'deter\' AND ' + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + '))';
-    }
-    else if (prodes.visible && !deter.visible) {
-      text = '(origin_table = \'prodes\' AND ' + this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value + ')';
-    }
-    else if (!prodes.visible && deter.visible) {
-      text = '(origin_table = \'deter\' AND ' + this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value + ')';
-    }
-    else {
-      text = '1=1'
-    }
+    text = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value;
 
 
     if (this.selectRegion.type === 'city') {
@@ -1533,7 +1600,31 @@ export class MapComponent implements OnInit {
     return {
       version: '2.2.0',
       grids: [
-        this.returnUTFGRID('bi_ce_info_utfgrid_fip', text, '{x}+{y}+{z}')
+        this.returnUTFGRID('bi_ce_prodes_desmatamento_100_fip_utfgrid', text, '{x}+{y}+{z}')
+      ]
+    };
+
+  }
+
+  private getTileJSONDeter() {
+
+    let text = '';
+
+    let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
+
+    text = this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value;
+
+
+    if (this.selectRegion.type === 'city') {
+      text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
+    } else if (this.selectRegion.type === 'state') {
+      text += ' AND uf = \'' + this.selectRegion.value + '\'';
+    }
+
+    return {
+      version: '2.2.0',
+      grids: [
+        this.returnUTFGRID('bi_ce_deter_desmatamento_100_fip_utfgrid', text, '{x}+{y}+{z}')
       ]
     };
 
@@ -1750,10 +1841,8 @@ export class MapComponent implements OnInit {
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
 
-    if (prodes.visible || deter.visible) {
-
-      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip') || (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
-
+    if (prodes.visible) {
+      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
         if (this.utfgridsource) {
           let tileJSON = this.getTileJSON();
 
@@ -1764,8 +1853,7 @@ export class MapComponent implements OnInit {
           this.utfgridlayer.setVisible(true);
         }
       }
-
-      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip') || (deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
+      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
         if (this.utfgridCampo) {
           let tileJSONCampo = this.getTileJSONCampo();
 
@@ -1775,7 +1863,6 @@ export class MapComponent implements OnInit {
 
           this.utfgridlayerCampo.setVisible(true);
         }
-
       }
 
       if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
@@ -1802,11 +1889,39 @@ export class MapComponent implements OnInit {
         }
       }
 
-    } else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc) {
+    }
+    else if (deter.visible) {
+
+      if ((deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
+        if (this.utfgridsourceDeter) {
+          let tileJSON = this.getTileJSONDeter();
+
+          this.utfgridsourceDeter.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsourceDeter.tileGrid);
+          this.utfgridsourceDeter.tileJSON = tileJSON;
+          this.utfgridsourceDeter.refresh();
+
+          this.utfgridlayerDeter.setVisible(true);
+        }
+      }
+      if ((deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
+        if (this.utfgridCampo) {
+          let tileJSONCampo = this.getTileJSONCampo();
+
+          this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
+          this.utfgridCampo.tileJSON = tileJSONCampo;
+          this.utfgridCampo.refresh();
+
+          this.utfgridlayerCampo.setVisible(true);
+        }
+      }
+
+    }
+    else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc && this.utfgridsourceDeter) {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerCampo.setVisible(false);
       this.utfgridlayerMunicipio.setVisible(false);
       this.utfgridlayerabc.setVisible(false);
+      this.utfgridlayerDeter.setVisible(false);
     }
   }
 
@@ -1825,6 +1940,10 @@ export class MapComponent implements OnInit {
     }
 
     if (this.infodataABC) {
+      dialog.visibility = 'visible'
+    }
+
+    if (this.infodataDeter) {
       dialog.visibility = 'visible'
     }
 
@@ -1904,6 +2023,7 @@ export class MapComponent implements OnInit {
     let map = this.map;
 
     this.layerFromUpload.checked = false;
+    this.layerFromUpload.error = false;
 
     if (this.layerFromUpload.layer != null) {
       map.removeLayer(this.layerFromUpload.layer);
@@ -1939,7 +2059,6 @@ export class MapComponent implements OnInit {
       }
     }
 
-    this.printRegionsIdentification(data.token)
     this.layerFromUpload.visible = true;
     let vectorSource = new VectorSource({
       features: (new GeoJSON()).readFeatures(data, {
@@ -1991,19 +2110,77 @@ export class MapComponent implements OnInit {
 
   }
 
-  analyzeUploadShape() {
-    this.layerFromUpload.analyzedAreaLoading = true;
+  loadLayerFromConsultaToMap() {
+    const map = this.map;
+    const vectorSource = new VectorSource({
+      features: (new GeoJSON()).readFeatures(this.layerFromConsulta.analyzedArea.shape_upload.geojson, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
+      })
+    });
+    this.layerFromConsulta.layer = new VectorLayer({
+      source: vectorSource,
+      style: [
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromConsulta.strokeColor,
+            width: 4
+          })
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromConsulta.strokeColor,
+            width: 4,
+            lineCap: 'round',
+            zIndex: 1
+          })
+        })
+      ]
+    });
+    map.addLayer(this.layerFromConsulta.layer);
+    const extent = this.layerFromConsulta.layer.getSource().getExtent();
+    map.getView().fit(extent, { duration: 1800 });
+
+    const prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
+    this.changeVisibility(prodes, undefined);
+    this.infodataMunicipio = null;
+  }
+
+  analyzeUploadShape(fromConsulta = false) {
     let params = [];
-    params.push('token=' + this.layerFromUpload.token)
+    let self = this;
+    let urlParams = '';
 
-    let urlParams = '/service/upload/desmatperyear?' + params.join('&');
-    this.http.get(urlParams).subscribe(result => {
-      this.layerFromUpload.analyzedArea = result;
-      this.layerFromUpload.analyzedAreaLoading = false;
-
-      console.log("res- ", this.layerFromUpload.analyzedArea)
+    if (fromConsulta) {
+      this.layerFromConsulta.analyzedAreaLoading = true;
+      params.push('token=' + this.layerFromConsulta.token)
+      this.layerFromConsulta.error = false;
+      urlParams = '/service/upload/desmatperyear?' + params.join('&');
+      this.http.get(urlParams, this.httpOptions).subscribe(result => {
+        this.layerFromConsulta.analyzedArea = result;
+        this.layerFromConsulta.analyzedAreaLoading = false;
+        this.loadLayerFromConsultaToMap();
+      },
+        error => {
+          self.layerFromConsulta.analyzedAreaLoading = false;
+          self.layerFromConsulta.error = true;
+        });
+    } else {
+      this.layerFromUpload.analyzedAreaLoading = true;
+      params.push('token=' + this.layerFromUpload.token)
+      this.layerFromUpload.error = false;
+      urlParams = '/service/upload/desmatperyear?' + params.join('&');
+      this.http.get(urlParams, this.httpOptions).subscribe(result => {
+        this.layerFromUpload.analyzedArea = result;
+        this.layerFromUpload.analyzedAreaLoading = false;
+      },
+        error => {
+          self.layerFromUpload.analyzedAreaLoading = false;
+          self.layerFromUpload.error = true;
+        });
     }
-    );
+
   }
 
   private getMetadata(metadata) {
@@ -2347,10 +2524,19 @@ export class MapComponent implements OnInit {
     const filename = logos.upload.title[language] + ' - ' + token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
   }
-  async printAnalyzedAreaReport() {
+  async printAnalyzedAreaReport(fromConsulta = false) {
     let language = this.language;
     let self = this;
-    this.layerFromUpload.loadingPrintReport = true;
+    let layer = null;
+    let isFromConsulta = false;
+    if (fromConsulta) {
+      isFromConsulta = true;
+      layer = this.layerFromConsulta;
+    } else {
+      layer = this.layerFromUpload;
+    }
+
+    this.loadingPrintReport = true;
 
     let dd = {
       pageSize: 'A4',
@@ -2418,7 +2604,7 @@ export class MapComponent implements OnInit {
           bold: true,
         },
         subheader: {
-          fontSize: 16,
+          fontSize: 14,
           bold: true,
           margin: [0, 10, 0, 5]
         },
@@ -2438,15 +2624,54 @@ export class MapComponent implements OnInit {
           fontSize: 13,
           color: 'black'
         },
+        tableCar: {
+          fontSize: 9,
+        },
         metadata: {
           background: '#0b4e26',
           color: '#fff'
+        },
+        bold: {
+          bold: true,
         }
       }
     }
+    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(layer.analyzedArea.shape_upload.area_upload, '1.2-2') + '  km²', style: 'subheader' });
 
-    dd.content.push({ text: this.titlesLayerBox.label_total_area + this.decimalPipe.transform(this.layerFromUpload.analyzedArea.area_upload, '1.2-2') + '  km²', style: 'subheader' });
-    if (this.layerFromUpload.analyzedArea.deter.length > 0) {
+    if (layer.analyzedArea.car.length > 0) {
+      dd.content.push({ text: self.titlesLayerBox.car_title_report, style: 'subheader', alignment: 'center' });
+      let tableCar = {
+        style: 'tableCar',
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [100, 52, 52, 52, 50, 50, 50],
+          body: [],
+          margin: 10
+        }
+      };
+      let headers = []
+      for (let [index, header] of self.titlesLayerBox.car_table_headers.entries()) {
+        headers.push(
+          { text: header, alignment: 'center' }
+        );
+      }
+      tableCar.table.body.push(headers);
+
+      for (let [index, car] of layer.analyzedArea.car.entries()) {
+        tableCar.table.body.push([
+          { text: car.cod_car, alignment: 'left', style: 'bold' },
+          { text: self.decimalPipe.transform(car.area_car, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_app, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_rl, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_desmat_app, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_desmat_per_car, '1.2-2') + ' km²', alignment: 'center', style: 'bold' },
+          { text: self.decimalPipe.transform(car.area_desmat_rl, '1.2-2') + ' km²', alignment: 'center' }
+        ]);
+      }
+      dd.content.push(tableCar);
+    }
+    if (layer.analyzedArea.deter.length > 0) {
       dd.content.push({ text: self.titlesLayerBox.table_deter_title, style: 'subheader', alignment: 'center' });
       let tableDeter = {
         style: 'tableCounty',
@@ -2462,15 +2687,15 @@ export class MapComponent implements OnInit {
         { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
         { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
       ]);
-      for (let [index, area] of self.layerFromUpload.analyzedArea.deter.entries()) {
+      for (let [index, area] of layer.analyzedArea.deter.entries()) {
         tableDeter.table.body.push([
-          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
-          { text: area.year, alignment: 'center' }
+          { text: area.year, alignment: 'center' },
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' }
         ]);
       }
       dd.content.push(tableDeter);
     }
-    if (this.layerFromUpload.analyzedArea.prodes.length > 0) {
+    if (layer.analyzedArea.prodes.length > 0) {
       dd.content.push({ text: self.titlesLayerBox.table_prodes_title, style: 'subheader', alignment: 'center' });
       let tableProdes = {
         style: 'tableCounty',
@@ -2486,75 +2711,189 @@ export class MapComponent implements OnInit {
         { text: self.titlesLayerBox.header_table_deforested[0], alignment: 'center' },
         { text: self.titlesLayerBox.header_table_deforested[1], alignment: 'center' }
       ]);
-      for (let [index, area] of self.layerFromUpload.analyzedArea.prodes.entries()) {
+      for (let [index, area] of layer.analyzedArea.prodes.entries()) {
         tableProdes.table.body.push([
-          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' },
-          { text: area.year, alignment: 'center' }
+          { text: area.year, alignment: 'center' },
+          { text: self.decimalPipe.transform(area.area_desmat, '1.2-2') + ' km²', alignment: 'center' }
         ]);
       }
       dd.content.push(tableProdes);
     }
-    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+    if (layer.analyzedArea.regions_intersected.hasOwnProperty('city')) {
       dd.content.push({ text: self.titlesLayerBox.table_city_title, style: 'subheader', alignment: 'center' });
-      let tableCities = {
-        style: 'tableCounty',
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: ['*', '*'],
-          body: [],
-          margin: 10
-        }
-      };
-      tableCities.table.body.push([
-        { text: '#', alignment: 'center' },
-        { text: self.titlesLayerBox.header_table_city[0], alignment: 'center' }
-      ]);
-      for (let [index, city] of self.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
-        tableCities.table.body.push([
-          { text: index + 1, alignment: 'center' },
-          { text: city.name, alignment: 'left' }
-        ]);
-      }
-      dd.content.push(tableCities);
+      dd.content.push({ text: self.getCitiesAnalyzedArea(isFromConsulta), alignment: 'center' });
+      // let tableCities = {
+      //   style: 'tableCounty',
+      //   layout: 'lightHorizontalLines',
+      //   table: {
+      //     headerRows: 1,
+      //     widths: ['*', '*'],
+      //     body: [],
+      //     margin: 10
+      //   }
+      // };
+      // tableCities.table.body.push([
+      //   { text: '#', alignment: 'center' },
+      //   { text: self.titlesLayerBox.header_table_city[0], alignment: 'center' }
+      // ]);
+      // for (let [index, city] of layer.analyzedArea.regions_intersected.city.entries()) {
+      //   tableCities.table.body.push([
+      //     { text: index + 1, alignment: 'center' },
+      //     { text: city.name, alignment: 'left' }
+      //   ]);
+      // }
+      // dd.content.push(tableCities);
     }
-    if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+    if (layer.analyzedArea.regions_intersected.hasOwnProperty('state')) {
       dd.content.push({ text: self.titlesLayerBox.table_state_title, style: 'subheader', alignment: 'center' });
-      let tableStates = {
-        style: 'tableCounty',
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: ['*', '*'],
-          body: [],
-          margin: 10
-        }
-      };
-      tableStates.table.body.push([
-        { text: '#', alignment: 'center' },
-        { text: self.titlesLayerBox.header_table_state[0], alignment: 'center' }
-      ]);
-      for (let [index, state] of self.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
-        tableStates.table.body.push([
-          { text: index + 1, alignment: 'center' },
-          { text: state.name, alignment: 'left' }
-        ]);
-      }
-      dd.content.push(tableStates);
+      dd.content.push({ text: self.getStatesAnalyzedArea(isFromConsulta), alignment: 'center' });
+      // let tableStates = {
+      //   style: 'tableCounty',
+      //   layout: 'lightHorizontalLines',
+      //   table: {
+      //     headerRows: 1,
+      //     widths: ['*', '*'],
+      //     body: [],
+      //     margin: 10
+      //   }
+      // };
+      // tableStates.table.body.push([
+      //   { text: '#', alignment: 'center' },
+      //   { text: self.titlesLayerBox.header_table_state[0], alignment: 'center' }
+      // ]);
+      // for (let [index, state] of layer.analyzedArea.regions_intersected.state.entries()) {
+      //   tableStates.table.body.push([
+      //     { text: index + 1, alignment: 'center' },
+      //     { text: state.name, alignment: 'left' }
+      //   ]);
+      // }
+      // dd.content.push(tableStates);
     }
 
     // @ts-ignore
-    dd.content.push({ text: this.layerFromUpload.token, alignment: 'center', style: 'textFooter', margin: [25, 60, 30, 10], pageBreak: false });
+    dd.content.push({ text: layer.token, alignment: 'center', style: 'textFooter', margin: [25, 30, 20, 10], pageBreak: false });
     // @ts-ignore
-    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, fit: '150', alignment: 'center' });
+    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + layer.token, fit: '150', alignment: 'center' });
     // @ts-ignore
-    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + this.layerFromUpload.token, alignment: 'center', margin: [0, 30, 10, 0], style: 'textFooter' });
-    let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + this.layerFromUpload.token + '.pdf'
+    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + layer.token, alignment: 'center', margin: [0, 15, 10, 0], style: 'textFooter' });
+    let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + layer.token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
-
-    this.layerFromUpload.loadingPrintReport = false;
+    this.loadingPrintReport = false;
   }
+  getCitiesAnalyzedArea(fromConsulta = false) {
+    let cities = '';
+    if (fromConsulta) {
+      if (this.layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+        for (let [index, city] of this.layerFromConsulta.analyzedArea.regions_intersected.city.entries()) {
+          let citiesCount = this.layerFromConsulta.analyzedArea.regions_intersected.city.length;
+          if (citiesCount === 1) {
+            cities += city.name + '.';
+            return cities;
+          }
+          if (index === citiesCount - 1) {
+            cities += city.name + '.';
+          } else {
+            cities += city.name + ', ';
+          }
+        }
+      }
+    } else {
+      if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('city')) {
+        for (let [index, city] of this.layerFromUpload.analyzedArea.regions_intersected.city.entries()) {
+          let citiesCount = this.layerFromUpload.analyzedArea.regions_intersected.city.length;
+          if (citiesCount === 1) {
+            cities += city.name + '.';
+            return cities;
+          }
+          if (index === citiesCount - 1) {
+            cities += city.name + '.';
+          } else {
+            cities += city.name + ', ';
+          }
+        }
+      }
+    }
 
+    return cities;
+  }
+  getStatesAnalyzedArea(fromConsulta = false) {
+    let states = '';
+    if (fromConsulta) {
+      if (this.layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+        for (let [index, state] of this.layerFromConsulta.analyzedArea.regions_intersected.state.entries()) {
+          let statesCount = this.layerFromConsulta.analyzedArea.regions_intersected.state.length;
+          if (statesCount === 1) {
+            states += state.name + '.';
+            return states;
+          }
+          if (index === statesCount - 1) {
+            states += state.name + '.';
+          } else {
+            states += state.name + ', ';
+          }
+        }
+      }
+    } else {
+      if (this.layerFromUpload.analyzedArea.regions_intersected.hasOwnProperty('state')) {
+        for (let [index, state] of this.layerFromUpload.analyzedArea.regions_intersected.state.entries()) {
+          let statesCount = this.layerFromUpload.analyzedArea.regions_intersected.state.length;
+          if (statesCount === 1) {
+            states += state.name + '.';
+            return states;
+          }
+          if (index === statesCount - 1) {
+            states += state.name + '.';
+          } else {
+            states += state.name + ', ';
+          }
+        }
+      }
+    }
+
+    return states;
+  }
+  openCarReport(fromConsulta = false) {
+    const self = this;
+    let carDialog = null;
+    let isFromConsulta = false;
+    if (fromConsulta) {
+      isFromConsulta = true;
+      this.layerFromConsulta.analyzedArea['table_title'] = this.titlesLayerBox.car_title_report;
+      this.layerFromConsulta.analyzedArea['table_headers'] = this.titlesLayerBox.car_table_headers;
+      carDialog = this.dialog.open(ReportCarComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados: this.layerFromConsulta.analyzedArea }
+      });
+    } else {
+      this.layerFromUpload.analyzedArea['table_title'] = this.titlesLayerBox.car_title_report;
+      this.layerFromUpload.analyzedArea['table_headers'] = this.titlesLayerBox.car_table_headers;
+      carDialog = this.dialog.open(ReportCarComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados: this.layerFromUpload.analyzedArea }
+      });
+    }
+
+    carDialog.componentInstance.print.subscribe(() => {
+      self.printAnalyzedAreaReport(isFromConsulta);
+    });
+  }
+  clearUpload(fromConsulta = false) {
+    if (fromConsulta) {
+      this.layerFromConsulta.analyzedArea = {}
+      this.map.removeLayer(this.layerFromConsulta.layer);
+      this.layerFromConsulta.visible = false;
+      this.layerFromConsulta.checked = false;
+      this.layerFromConsulta.token = '';
+    } else {
+      this.layerFromUpload.analyzedArea = {}
+      this.map.removeLayer(this.layerFromUpload.layer);
+      this.layerFromUpload.visible = false;
+      this.layerFromUpload.checked = false;
+    }
+    this.updateRegion(this.defaultRegion);
+  }
   ngOnInit() {
 
     let descriptorURL = '/service/map/descriptor' + this.getServiceParams();
@@ -2640,7 +2979,11 @@ export class MapComponent implements OnInit {
         }
       }
       if (self.router.url.includes('regions')) {
-        console.log(params);
+        self.selectedIndexConteudo = 3;
+        self.selectedIndexUpload = 1;
+        self.layerFromConsulta.token = params.get('token');
+        self.analyzeUploadShape(true);
+        self.handleDrawer();
       }
     });
   }
@@ -2718,9 +3061,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     this.svgLoading = "/assets/img/loading.svg";
     this.initGallery();
-
+    const timeout = 2000 * 60 * 30;
     this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', timeout: `${timeout}` })
     };
   }
 

@@ -1,6 +1,6 @@
 <div id="upload" class="upload-card">
     <div class="upload-input">
-        <button pTooltip="{{tooltip}}" class="mat-elevation-z8 btn-upload" mat-fab color="warn" [title]="tooltip" (click)="onClick()" type="button" *ngIf="ddarea" (drop)="dropHandler($event)" (dragover)="dragOverHandler($event)">
+        <button pTooltip="{{tooltip}}" class="mat-elevation-z8 btn-upload" mat-fab color="warn" (click)="onClick()" type="button" *ngIf="ddarea" (drop)="dropHandler($event)" (dragover)="dragOverHandler($event)">
             <mat-icon>cloud_upload</mat-icon>
         </button>
     </div>
