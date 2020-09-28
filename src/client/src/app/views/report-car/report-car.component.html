@@ -12,7 +12,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <p-table  [paginator]="true" [rows]="5" [responsive]="true" [value]="dados.car" selectionMode="single">
+                    <p-table [paginator]="true" [rows]="10" [responsive]="true" [value]="dados.car"
+                        selectionMode="single" [resizableColumns]="true" [autoLayout]="true">
                         <ng-template pTemplate="header">
                             <tr align="center">
                                 <th *ngFor="let header of dados.table_headers">
@@ -42,10 +43,11 @@
                 </div>
             </p-scrollPanel>
         </div>
-        <div class="container-buttons" >
+        <div class="container-buttons">
             <button color="primary" classs="btn-info " mat-icon-button (click)="print.emit()">
                 <mat-icon>print</mat-icon>
-                <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"></mat-spinner>
+                <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary"
+                    mode="indeterminate"></mat-spinner>
             </button>
             <button (click)="closeDialog()" color="primary" classs="btn-info " mat-icon-button>
                 <mat-icon>highlight_off</mat-icon>

@@ -32,11 +32,11 @@ module.exports = function (app) {
 			var params = Internal.parseParams(request, queriesOfController)
 			var methodQueries = queriesOfController[method](params)
 
-			if(typeof methodQueries == "string"){
-				methodQueries =[ {
+			if (typeof methodQueries == "string") {
+				methodQueries = [{
 					id: method,
 					sql: methodQueries
-				 }
+				}
 				]
 			}
 
@@ -49,11 +49,10 @@ module.exports = function (app) {
 				})
 			};
 
-		var onComplete = function (err) {
-				var keys =  Object.keys(result)
-				if(keys.length == 1)
-				{
-					result = result[keys[0]]					
+			var onComplete = function (err) {
+				var keys = Object.keys(result)
+				if (keys.length == 1) {
+					result = result[keys[0]]
 				}
 				request.queryResult = result
 
@@ -66,6 +65,7 @@ module.exports = function (app) {
 			async.each(methodQueries, onEach, onComplete)
 
 		} else {
+			client.release()
 			next()
 		}
 
