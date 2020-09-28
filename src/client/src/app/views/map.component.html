@@ -678,6 +678,31 @@
 					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
 						</strong></div>
 				</div>
+				<div *ngIf="infodataDeter" class="card-body">
+					<p class="card-text">{{ infodataDeter.origin_table }}-Cerrado</p>
+					<table>
+						<tbody>
+							<tr>
+								<th>{{minireportText.area}} </th>
+								<td>{{infodataDeter.area_desmat | number:'1.2-3' }} km²</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.city}} </th>
+								<td>{{infodataDeter.municipio }} - {{infodataDeter.uf }}</td>
+							</tr>
+							<tr>
+								<th>{{minireportText.detection_date}} </th>
+								<td>{{infodataDeter.dataFormatada}}</td>
+							</tr>
+							<tr *ngIf="infodataDeter.sucept_desmat != null">
+								<th>{{minireportText.susceptibility}} </th>
+								<td>{{infodataDeter.sucept_desmatFormatada}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
+						</strong></div>
+				</div>
 				<div *ngIf="infodataCampo" class="card-body">
 					<p class="card-text">{{ infodataCampo.origin_table }}-Cerrado</p>
 					<table>

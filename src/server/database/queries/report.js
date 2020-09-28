@@ -8,7 +8,7 @@ module.exports = function (app) {
 		let origin = params['origin']
 		let gid = params['gid']
 
-		console.log(origin, gid)
+		// console.log(origin, gid)
 
 		return [
 			{
