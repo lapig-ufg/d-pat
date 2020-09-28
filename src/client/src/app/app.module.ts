@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MapComponent } from './views/map.component';
 import { DialogOverviewExampleDialog } from './views/map.component';
+import { DialogMobileLaudo } from './views/map-mobile/map-mobile.component'
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -66,6 +67,7 @@ registerLocaleData(localePt);
     AppComponent,
     MapComponent,
     DialogOverviewExampleDialog,
+    DialogMobileLaudo,
     SpinnerImgComponent,
     FileUploadComponent,
     MetadataComponent,
@@ -112,7 +114,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent],
+  entryComponents:[DialogOverviewExampleDialog, DialogMobileLaudo, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

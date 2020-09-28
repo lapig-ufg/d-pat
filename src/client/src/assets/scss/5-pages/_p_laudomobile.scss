@@ -1,0 +1,107 @@
+#laudo-mobile {
+  .container-fluid {
+    padding-left: 0px !important;
+    padding-right: 0px;
+  }
+
+  .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
+    background-color: #0b4e26;
+    border: 1px solid #0b4e26;
+    color: #ffffff;
+  }
+
+  .title-logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .title-report{
+    font-family: "Conthrax Sb"!important;
+    text-align: center;
+    text-transform: uppercase;
+    color: #0b4e26 !important;
+    margin: 15px 0px;
+    position: absolute;
+    font-size: 1.4em !important;
+    // top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    @include fluid-type(16px, 28px);
+  }
+
+  .card-amostral{
+    height: 100%;
+  }
+
+  .ui-scrollpanel-content {
+    overflow: hidden !important;
+  }
+
+  .ui-scrollpanel:hover .ui-scrollpanel-bar, .ui-scrollpanel:active .ui-scrollpanel-bar {
+    display: none;
+  }
+
+  .row{
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .dados{
+    // margin: 5px;
+    width: 100%;
+  }
+  table{
+    font-size: 11px;
+  }
+
+  .tab{
+    margin: 0.5px;
+    max-width: calc(100% - 2vw);
+  }
+
+  .table-label{
+    width: 120px;
+    font-weight: bolder;
+  }
+
+  .table-value{
+    font-weight: normal;
+  }
+
+  .seal{
+    margin: 0 auto;
+  }
+
+  toh-spinner-img{
+    display: inline;
+    img{
+      width: 80%;
+    }
+  }
+  .card-checkbox-upload.mat-card-content > :last-child:not(.mat-card-footer), .mat-card > :last-child:not(.mat-card-footer) {
+    padding-top: 0px;
+    padding-left: 0px;
+  }
+
+  .mat-card-subtitle, .mat-card-content {
+    font-size: 12px;
+  }
+
+  .mat-card-header .mat-card-title {
+    font-size: 16px;
+  }
+
+  .mat-card-header-text {
+    margin: 0px;
+  }
+
+  .subtitles-report {
+    font-size: 14px;
+    margin-top: 1.5rem;
+  }
+
+  .ui-accordion .ui-accordion-content {
+    padding: 0.5em !important;
+  }
+
+}
