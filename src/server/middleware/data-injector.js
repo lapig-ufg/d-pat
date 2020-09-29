@@ -65,7 +65,6 @@ module.exports = function (app) {
 			async.each(methodQueries, onEach, onComplete)
 
 		} else {
-			client.release()
 			next()
 		}
 
