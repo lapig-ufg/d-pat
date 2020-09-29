@@ -236,8 +236,7 @@ export class MapComponent implements OnInit {
   showDrawer: boolean;
   controls: any;
   showStatistics: boolean;
-  loadingSHP: boolean;
-  loadingCSV: boolean;
+  loadingsDownload: boolean[];
 
   constructor(
     private http: HttpClient,
@@ -395,8 +394,7 @@ export class MapComponent implements OnInit {
     this.showStatistics = true;
     this.controls = {};
     this.updateControls();
-    this.loadingSHP = false;
-    this.loadingCSV = false;
+    this.loadingsDownload = [];
     this.loadingPrintReport = false;
 
     this.selectedIndexConteudo = 0;
@@ -577,8 +575,8 @@ export class MapComponent implements OnInit {
       this.setStylesLangButton();
       this.updateTexts();
       this.updateCharts();
-      this.updateDescriptor();
       this.updateControls();
+      this.updateDescriptor();
     }
   }
 
@@ -1972,7 +1970,6 @@ export class MapComponent implements OnInit {
     this.descriptor.type = this.descriptorText.type_of_information_label[this.language];
 
     for (let group of this.descriptor.groups) {
-
       group.label = this.descriptorText[group.id].label[this.language];
 
       for (let layer of group.layers) {
@@ -2198,6 +2195,7 @@ export class MapComponent implements OnInit {
 
     let metadata = [];
     let self = this;
+    let title = '';
 
     if (layer.hasOwnProperty('metadata')) {
       metadata = this.getMetadata(layer.metadata);
@@ -2210,9 +2208,11 @@ export class MapComponent implements OnInit {
       });
     }
 
+    title = this.controls.label_metadata;
+
     let dialogRef = this.dialog.open(MetadataComponent, {
       width: '130vh',
-      data: { metadata }
+      data: {'title': title, 'metadata': metadata}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -2221,11 +2221,12 @@ export class MapComponent implements OnInit {
   }
 
   hasDownload(type, typeData) {
+    this.loadingsDownload[typeData.value + '-' + type] = false;
     return typeData.download.includes(type);
   }
 
-  downloadCSV(layer) {
-
+  downloadCSV(layer, loading) {
+    this.loadingsDownload[loading] = true;
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
@@ -2236,11 +2237,15 @@ export class MapComponent implements OnInit {
       .toPromise()
       .then(blob => {
         saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + parameters.times + '.csv');
-        this.loadingCSV = false;
-      }).catch(err => this.loadingCSV = false);
+        this.loadingsDownload[loading] = false;
+      }).catch(err => this.loadingsDownload[loading] = false);
   }
 
-  downloadSHP(layer) {
+  downloadSHP(layer, loading) {
+    console.log('loadind',loading)
+    console.log('array-before',this.loadingsDownload[loading])
+    this.loadingsDownload[loading] = true;
+    console.log('array-afer',this.loadingsDownload[loading])
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
@@ -2251,17 +2256,16 @@ export class MapComponent implements OnInit {
       .toPromise()
       .then(blob => {
         saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + layer.selectedType.year + '.zip');
-        this.loadingSHP = false;
-      }).catch(err => this.loadingSHP = false);
+        this.loadingsDownload[loading] = false;
+      }).catch(err =>  this.loadingsDownload[loading] = false);
   }
 
-  buttonDownload(tipo, layer, e) {
-    if (tipo == 'csv') {
-      this.loadingCSV = true;
-      this.downloadCSV(layer);
+  buttonDownload(format, layer, type) {
+    let loading = type.value + '-' + format
+    if (format === 'csv') {
+      this.downloadCSV(layer, loading);
     } else {
-      this.loadingSHP = true;
-      this.downloadSHP(layer);
+      this.downloadSHP(layer, loading);
     }
   }
 

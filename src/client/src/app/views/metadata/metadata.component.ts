@@ -7,14 +7,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 
 export class MetadataComponent implements OnInit {
-  title:string;
-  metadata:any = [];
+  title: string;
+  metadata: any = [];
+  sectionTitle: string;
 
   constructor(
       public dialogRef: MatDialogRef<MetadataComponent>,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
+    this.sectionTitle = data.title;
     this.title = data.metadata[0].description;
     this.metadata = data.metadata;
   }

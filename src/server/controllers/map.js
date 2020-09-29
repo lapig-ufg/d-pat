@@ -676,7 +676,6 @@ module.exports = function (app) {
               }
             ]
           }
-
         ]
       },
       {
@@ -1006,6 +1005,7 @@ module.exports = function (app) {
         types: [{
           value: "limite_cerrado",
           Viewvalue: languageJson["descriptor"]["limits"]["types"]["limite_cerrado"][language],
+          metadata: languageJson["descriptor"]["limits"]["types"]["limite_cerrado"]['metadata'],
           visible: true,
           layer_limits: true,
           opacity: 1
@@ -1013,6 +1013,7 @@ module.exports = function (app) {
         {
           value: "estados",
           Viewvalue: languageJson["descriptor"]["limits"]["types"]["estados"][language],
+          metadata: languageJson["descriptor"]["limits"]["types"]["estados"]['metadata'],
           visible: false,
           layer_limits: true,
           opacity: 1
@@ -1020,6 +1021,7 @@ module.exports = function (app) {
         {
           value: "municipios_cerrado",
           Viewvalue: languageJson["descriptor"]["limits"]["types"]["municipios_cerrado"][language],
+          metadata: languageJson["descriptor"]["limits"]["types"]["municipios_cerrado"]['metadata'],
           visible: false,
           layer_limits: true,
           opacity: 1

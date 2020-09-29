@@ -80,13 +80,14 @@
 																</mat-option>
 															</mat-select>
 														</mat-form-field>
+
 														<section class="btn-actions">
 															<button class="color-buttons"
 																*ngIf="hasDownload('csv', type)"
-																(click)="buttonDownload('csv', layer, $event)"
+																(click)="buttonDownload('csv', layer, type)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;CSV
-																<mat-progress-bar *ngIf="loadingCSV"
+																<mat-progress-bar *ngIf="loadingsDownload[type.value + '-csv']"
 																	mode="indeterminate">
 																</mat-progress-bar>
 															</button>
@@ -95,20 +96,20 @@
 
 															<button class="color-buttons"
 																*ngIf="hasDownload('shp', type)"
-																(click)="buttonDownload('shp', layer, $event)"
+																(click)="buttonDownload('shp', layer, type)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;SHP
-																<mat-progress-bar *ngIf="loadingSHP"
+																<mat-progress-bar *ngIf="loadingsDownload[type.value + '-shp']"
 																	mode="indeterminate">
 																</mat-progress-bar>
 															</button>
 
 															<button class="color-buttons"
 																*ngIf="hasDownload('tiff', type)"
-																(click)="buttonDownload('tiff', layer, $event)"
+																(click)="buttonDownload('tiff', layer, type)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;TIFF
-																<mat-progress-bar *ngIf="loadingSHP"
+																<mat-progress-bar *ngIf="loadingsDownload[type.value + '-tiff']"
 																	mode="indeterminate">
 																</mat-progress-bar>
 															</button>
@@ -139,6 +140,10 @@
 									[(ngModel)]="name_limits.visible" class="slideEstados">
 									{{name_limits.Viewvalue}}
 								</mat-slide-toggle>
+								<button (click)="openDialogMetadata(name_limits)"
+										classs="btn-info" mat-icon-button>
+									<mat-icon>info</mat-icon>
+								</button>
 							</div>
 						</div>
 					</mat-tab>

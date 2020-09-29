@@ -362,8 +362,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Incrementos anuais de desmatamento por corte raso.",
-								"en-us": "Annual increases in clear-cut deforestation."
+								"pt-br": "Incrementos anuais de desmatamento por corte raso registrados pelo sistema PRODES-Cerrado.",
+								"en-us": "Annual increases in clear-cut deforestation recorded by the PRODES-Cerrado system."
 							}
 						},
 						{
@@ -402,8 +402,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -424,16 +424,6 @@
 							"description": {
 								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
 								"en-us": "National Institute for Space Research (INPE)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -514,8 +504,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Avisos de evidências de alteração da vegetação nativa.",
-								"en-us": "Warnings of evidence of alteration of native vegetation."
+								"pt-br": "Avisos de evidências de alteração da vegetação nativa registrados pelo sistema DETER-Cerrado.",
+								"en-us": "Warnings on evidence of alteration of native vegetation detected by DETER-Cerrado"
 							}
 						},
 						{
@@ -555,7 +545,7 @@
 							},
 							"description": {
 								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -576,16 +566,6 @@
 							"description": {
 								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
 								"en-us": "National Institute for Space Research (INPE)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -678,8 +658,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Área total convertida até determinado ano.",
-								"en-us": "Total area converted until a given year."
+								"pt-br": "Área antrópica total, mapeada no âmbito do PRODES-Cerrado, convertida até um determinado ano.",
+								"en-us": "Total area converted, mapped by PRODES-Cerrado, until a given year."
 							}
 						},
 						{
@@ -718,8 +698,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -740,16 +720,6 @@
 							"description": {
 								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
 								"en-us": "National Institute for Space Research (INPE)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -852,8 +822,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Áreas com alto e baixo potencial de serem convertidas de acordo com os padrões observados entre os anos de 2010 e 2015.",
-								"en-us": "Areas with high and low potential to be converted according to the standards observed between the years 2010 and 2015."
+								"pt-br": "Susceptibilidade, de acordo com os padrões observados entre os anos de 2010 e 2015, de uma área nativa ser antropizada por meio de corte raso.",
+								"en-us": "Susceptibility, according to the patterns observed between the years 2010 and 2015, of a native area being anthropized through clear-cut."
 							}
 						},
 						{
@@ -892,8 +862,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -914,16 +884,6 @@
 							"description": {
 								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
 								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -1117,8 +1077,8 @@
 									"en-us": "Description"
 								},
 								"description": {
-									"pt-br": "Mapeamento do uso e cobertura do solo do cerrado para o ano de 2013, a partir da compilação de dados  do TerraClass Cerrado.",
-									"en-us": "Mapping the use and coverage of the cerrado soil for the year 2013, based on the compilation of data from the TerraClass Cerrado."
+									"pt-br": "Mapeamento do uso e cobertura do solo do cerrado para o ano de 2013 realizado no âmbito do projeto TerraClass Cerrado.",
+									"en-us": "Land use and land cover map for Cerrado biome, based on the TerraClass Cerrado."
 								}
 							},
 							{
@@ -1157,8 +1117,8 @@
 									"en-us": "Cartographic Projection"
 								},
 								"description": {
-									"pt-br": "Universal de Mercator.",
-									"en-us": "Mercator Universal."
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
 								}
 							},
 							{
@@ -1179,16 +1139,6 @@
 								"description": {
 									"pt-br": "Ministério do Meio Ambiente (MMA)",
 									"en-us": "Ministry of the Environment (MMA)"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Contato",
-									"en-us": "Contact"
-								},
-								"description": {
-									"pt-br": "cerradodpat@gmail.com",
-									"en-us": "cerradodpat@gmail.com"
 								}
 							},
 							{
@@ -1261,8 +1211,8 @@
 									"en-us": "Cartographic Projection"
 								},
 								"description": {
-									"pt-br": "Universal de Mercator.",
-									"en-us": "Mercator Universal."
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
 								}
 							},
 							{
@@ -1287,16 +1237,6 @@
 							},
 							{
 								"title": {
-									"pt-br": "Contato",
-									"en-us": "Contact"
-								},
-								"description": {
-									"pt-br": "cerradodpat@gmail.com",
-									"en-us": "cerradodpat@gmail.com"
-								}
-							},
-							{
-								"title": {
 									"pt-br": "Detalhes",
 									"en-us": "Details"
 								},
@@ -1314,7 +1254,7 @@
 						"en-us": "Agriculture"
 					},
 					"agricultura_agrosatelite_fip": {
-					"metadata": [
+						"metadata": [
 						{
 							"title": {
 								"pt-br": "Dado",
@@ -1397,16 +1337,6 @@
 						},
 						{
 							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "",
-								"en-us": ""
-							}
-						},
-						{
-							"title": {
 								"pt-br": "Detalhes",
 								"en-us": "Details"
 							},
@@ -1416,7 +1346,7 @@
 							}
 						}
 					]
-				}
+					}
 				},
 				"floresta_plantada": {
 					"label": {
@@ -1440,8 +1370,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Recorte do mapeamento global de silvicultura para o bioma Cerrado.",
-								"en-us": "Outline of the global mapping of forestry for the Cerrado biome."
+								"pt-br": "Recorte do mapeamento global de silvicultura para o bioma Cerrado disponibilizado pelo portal Global Forest Watch.",
+								"en-us": "Global map of areas with forest crops in the Cerrado biome."
 							}
 						},
 						{
@@ -1480,8 +1410,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -1502,16 +1432,6 @@
 							"description": {
 								"pt-br": "Global Forest Watch (GFW)",
 								"en-us": "Global Forest Watch (GFW)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -1596,8 +1516,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -1618,16 +1538,6 @@
 							"description": {
 								"pt-br": "Open Street Maps (OSM)",
 								"en-us": "Open Street Maps (OSM)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -1704,8 +1614,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -1726,16 +1636,6 @@
 							"description": {
 								"pt-br": "Companhia Nacional de Abastecimento (CONAB) (Revisado pelo LAPIG-UFG)",
 								"en-us": "National Supply Company (CONAB) (Reviewed by LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -1812,8 +1712,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -1834,16 +1734,6 @@
 							"description": {
 								"pt-br": "Ministério da Agricultura, Pecuária e Abastecimento (MAPA) (Revisado por LAPIG-UFG)",
 								"en-us": "Ministry of Agriculture, Livestock and Supply (MAPA) (Revised by LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -1928,8 +1818,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -1950,16 +1840,6 @@
 							"description": {
 								"pt-br": "Shuttle Radar Topography Mission (SRTM)",
 								"en-us": "Shuttle Radar Topography Mission (SRTM)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -1996,8 +1876,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Ângulo de inclinação (zenital) da superfície do terreno em relação à horizontal. Expressa o quão ingreme é uma superfície.",
-								"en-us": "Inclination angle (zenith) of the land surface in relation to the horizontal. Expresses how steep a surface is."
+								"pt-br": "Métrica, expressa em porcentagem, adotada para representar a diferença de altura entre dois pontos e a distância horizontal entre estes dois pontos. Revela o quão ingreme é o relevo.",
+								"en-us": "Represent a difference in height between two points and the horizontal distance between these two points. Reveals the slope of the relief."
 							}
 						},
 						{
@@ -2036,8 +1916,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -2058,16 +1938,6 @@
 							"description": {
 								"pt-br": "Shuttle Radar Topography Mission (SRTM)",
 								"en-us": "Shuttle Radar Topography Mission (SRTM)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -2113,7 +1983,7 @@
 							},
 							"description": {
 								"pt-br": "Mapeamento de solos do Brasil, a partir de compilações (Embrapa, IBGE) e conversão para o meio digital de levantamentos de solos produzidos pelo Projeto RADAMBRASIL.",
-								"en-us": "Mapping of soils in Brazil, from compilations (Embrapa, IBGE) and conversion to digital media of soil surveys produced by the RADAMBRASIL Project."
+								"en-us": "Review and conversion to digital media of soil surveys produced by the RADAMBRASIL Project."
 							}
 						},
 						{
@@ -2152,8 +2022,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -2174,16 +2044,6 @@
 							"description": {
 								"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
 								"en-us": "Brazilian Institute of Geography and Statistics (IBGE)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -2220,8 +2080,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Mapeamento de solos do Brasil, a partir de compilações (Embrapa, IBGE) e conversão para o meio digital de levantamentos de solos produzidos pelo Projeto RADAMBRASIL.",
-								"en-us": "Average annual accumulated precipitation, between the years 2000 and 2014, obtained through the interpolation between TRMM data and INMET meteorological stations."
+								"pt-br": "Média de precipitação acumulada anual, entre os anos de 2000 e 2014, obtida por meio da interpolação entre dados TRMM e estações meteorológicas do INMET.",
+								"en-us": "Average annual accumulated precipitation, between 2000 and 2014, obtained through the interpolation between TRMM data and INMET meteorological stations."
 							}
 						},
 						{
@@ -2260,8 +2120,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -2282,16 +2142,6 @@
 							"description": {
 								"pt-br": "Tropical Rainfall Measuring Mission (TRMM) e Global Precipitation Measurement (GPM)",
 								"en-us": "Tropical Rainfall Measuring Mission (TRMM) e Global Precipitation Measurement (GPM)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -2331,8 +2181,8 @@
 									"en-us": "Data"
 								},
 								"description": {
-									"pt-br": "Landsat",
-									"en-us": "Landsat"
+									"pt-br": "Mosaico de images Landsat",
+									"en-us": "Landsat Image Mosaics"
 								}
 							},
 							{
@@ -2341,8 +2191,8 @@
 									"en-us": "Description"
 								},
 								"description": {
-									"pt-br": "Mosaico com as imagens de satélite inspecionadas pelo INPE para a construção do PRODES-Cerrado.",
-									"en-us": "Mosaic with satellite images inspected by INPE for the construction of PRODES-Cerrado."
+									"pt-br": "Imagens de satélite inspecionadas pelo INPE para a construção do PRODES-Cerrado.",
+									"en-us": "Mosaic of satellite images used by INPE during the construction of PRODES-Cerrado."
 								}
 							},
 							{
@@ -2381,8 +2231,8 @@
 									"en-us": "Cartographic Projection"
 								},
 								"description": {
-									"pt-br": "Universal de Mercator.",
-									"en-us": "Mercator Universal."
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
 								}
 							},
 							{
@@ -2407,16 +2257,6 @@
 							},
 							{
 								"title": {
-									"pt-br": "Contato",
-									"en-us": "Contact"
-								},
-								"description": {
-									"pt-br": "cerradodpat@gmail.com",
-									"en-us": "cerradodpat@gmail.com"
-								}
-							},
-							{
-								"title": {
 									"pt-br": "Detalhes",
 									"en-us": "Details"
 								},
@@ -2435,8 +2275,8 @@
 									"en-us": "Data"
 								},
 								"description": {
-									"pt-br": "Sentinel",
-									"en-us": "Sentinel"
+									"pt-br": "Mosaico de imagens Sentinel",
+									"en-us": "Sentinel Image Mosaics"
 								}
 							},
 							{
@@ -2445,8 +2285,8 @@
 									"en-us": "Description"
 								},
 								"description": {
-									"pt-br": "Mosaico de imagens de satélite com resulução espacial de 10 metros, com data diferente das imagens utilizadas para a produção do PRODES-Cerrado.",
-									"en-us": "Mosaic of satellite images with spatial resolution of 10 meters, with a different date from the images used for the production of PRODES-Cerrado."
+									"pt-br": "Imagens de satélite com resulução espacial de 10 metros, com data diferente das imagens utilizadas para a produção do PRODES-Cerrado.",
+									"en-us": "Mosaic of 10 meter spatial resolution satellite images. Different date from the images used for the deforestation detection in the PRODES-Cerrado."
 								}
 							},
 							{
@@ -2485,8 +2325,8 @@
 									"en-us": "Cartographic Projection"
 								},
 								"description": {
-									"pt-br": "Universal de Mercator.",
-									"en-us": "Mercator Universal."
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
 								}
 							},
 							{
@@ -2507,16 +2347,6 @@
 								"description": {
 									"pt-br": "European Space Agency (ESA)",
 									"en-us": "European Space Agency (ESA)"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Contato",
-									"en-us": "Contact"
-								},
-								"description": {
-									"pt-br": "cerradodpat@gmail.com",
-									"en-us": "cerradodpat@gmail.com"
 								}
 							},
 							{
@@ -2558,15 +2388,292 @@
 			"types": {
 				"limite_cerrado": {
 					"pt-br": "Cerrado",
-					"en-us": "Cerrado"
+					"en-us": "Cerrado",
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Cerrado",
+								"en-us": "Cerrado"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Mapa, resultado da parceria entre o IBGE e o Ministério do Meio Ambiente (MMA), que representa, na escala de 1:5.000.000, os seis biomas continentais brasileiros.",
+								"en-us": "Map, result of the partnership between IBGE and the Ministry of the Environment (MMA), which represents, on a scale of 1: 5,000,000, the six Brazilian continental biomes."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2004",
+								"en-us": "2004"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:5.000.000",
+								"en-us": "1:5.000.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE) e Ministério do Meio Ambiente (MMA)",
+								"en-us": "Brazilian Institute of Geography and Statistics (IBGE) and Ministry of Environment (MMA)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://www.ibge.gov.br/geociencias/informacoes-ambientais/estudos-ambientais/15842-biomas.html?edicao=16060&t=sobre'> https://www.ibge.gov.br/geociencias/informacoes-ambientais/estudos-ambientais/15842-biomas.html?edicao=16060&t=sobre </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://www.ibge.gov.br/geociencias/informacoes-ambientais/estudos-ambientais/15842-biomas.html?edicao=16060&t=sobre'> https://www.ibge.gov.br/geociencias/informacoes-ambientais/estudos-ambientais/15842-biomas.html?edicao=16060&t=sobre </a>"
+							}
+						}
+					]
 				},
 				"estados": {
 					"pt-br": "Estados",
-					"en-us": "States"
+					"en-us": "States",
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Estados",
+								"en-us": "States"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Limite político dos estados e Distrito Federal.",
+								"en-us": "Map, result of the partnership between IBGE and the Ministry of the Environment (MMA), which represents, on a scale of 1: 5,000,000, the six Brazilian continental biomes."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:100.000",
+								"en-us": "1:100.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+								"en-us": "Brazilian Institute of Geography and Statistics (IBGE)"
+							}
+						},
+
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://cidades.ibge.gov.br/'> https://cidades.ibge.gov.br/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://cidades.ibge.gov.br/'> https://cidades.ibge.gov.br/ </a>"
+							}
+						}
+					]
 				},
 				"municipios_cerrado": {
 					"pt-br": "Municípios",
-					"en-us": "Municipality"
+					"en-us": "Municipality",
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Municípios",
+								"en-us": "Municipalities"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Limite político dos municipios..",
+								"en-us": "Political limit of the municipalities."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2017",
+								"en-us": "2017"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:100.000",
+								"en-us": "1:100.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Reference and Coordinate System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+								"en-us": "Brazilian Institute of Geography and Statistics (IBGE)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://cidades.ibge.gov.br/'> https://cidades.ibge.gov.br/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://cidades.ibge.gov.br/'> https://cidades.ibge.gov.br/ </a>"
+							}
+						}
+					]
 				}
 			}
 		}
@@ -2608,21 +2715,9 @@
 			"pt-br": "Histórico de casos dos últimos [dias] dias",
 			"en-us": "Case history for the past [dias] days"
 		},
-		"label_name": {
-			"pt-br": "Nome: ",
-			"en-us": "Name: "
-		},
-		"label_institution": {
-			"pt-br": "Instituição: ",
-			"en-us": "Institution: "
-		},
-		"label_coronatransp": {
-			"pt-br": "Painel de Transparência - Coronatransp",
-			"en-us": "Transparency Panel - Coronatransp"
-		},
-		"label_contingency_plan": {
-			"pt-br": "Plano Estadual de Contingência",
-			"en-us": "State Contingency Plan"
+		"label_metadata": {
+			"pt-br": "Metadados",
+			"en-us": "Metadata"
 		}
 	},
 	"regionReportTexts": {
@@ -2818,8 +2913,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Propriedades com Cadastro Ambiental Rural (CAR).",
-								"en-us": "Properties with Rural Environmental Registry (CAR)."
+								"pt-br": "Propriedades inscritas no Cadastro Ambiental Rural (CAR) - Lei nº 12.651, de 25 de maio de 2012.",
+								"en-us": "Properties registered in the Rural Environmental Registry (CAR) - Law No. 12,651, of May 25, 2012."
 							}
 						},
 						{
@@ -2858,8 +2953,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -2880,16 +2975,6 @@
 							"description": {
 								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
 								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -2923,7 +3008,7 @@
 							},
 							"description": {
 								"pt-br": "Área da propriedade com a função de assegurar o uso econômico de modo sustentável dos recursos naturais do imóvel rural, auxiliar a conservação e a reabilitação dos processos ecológicos e promover a conservação da biodiversidade.",
-								"en-us": "Property area with the function of ensuring the sustainable economic use of the natural resources of the rural property, assisting the conservation and rehabilitation of ecological processes and promoting the conservation of biodiversity."
+								"en-us": "Property area intended for the sustainable economic use of the natural resources of the rural property, to assist the conservation and rehabilitation of ecological processes and to promote the conservation of biodiversity."
 							}
 						},
 						{
@@ -2962,8 +3047,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -2984,16 +3069,6 @@
 							"description": {
 								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
 								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3026,8 +3101,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Área da propriedade situada no entorno de cursos hídricos, coberta ou não por vegetação nativa, com a função ambiental de preservar os rios, a paisagem, a estabilidade geológica e a biodiversidade.",
-								"en-us": "Property area located around water courses, covered or not by native vegetation, with the environmental function of preserving rivers, the landscape, geological stability and biodiversity."
+								"pt-br": "Área protegida, coberta ou não por vegetação nativa, com a função ambiental de preservar os recursos hídricos, a paisagem, a estabilidade geológica e a biodiversidade, facilitar o fluxo gênico de fauna e flora, proteger o solo e assegurar o bem-estar das populações humana.",
+								"en-us": "Protected area, covered or not by native vegetation, with the environmental function of preserving water resources, the landscape, geological stability and biodiversity, facilitating the gene flow of fauna and flora, protecting the soil and ensuring the well-being of the human populations."
 							}
 						},
 						{
@@ -3066,8 +3141,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3092,16 +3167,6 @@
 						},
 						{
 							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
-							}
-						},
-						{
-							"title": {
 								"pt-br": "Detalhes",
 								"en-us": "Details"
 							},
@@ -3121,7 +3186,7 @@
 							},
 							"description": {
 								"pt-br": "Nascentes",
-								"en-us": "Source"
+								"en-us": "Springs"
 							}
 						},
 						{
@@ -3130,8 +3195,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Local onde se inicia um curso d'água.",
-								"en-us": "Place where a watercourse begins."
+								"pt-br": "Ponto correspondente ao afloramento natural do lençol freático que apresenta perenidade e dá início a um curso d’água.",
+								"en-us": "Point corresponding to the natural outcrop of the groundwater/water table that presents perenniality and starts a watercourse."
 							}
 						},
 						{
@@ -3170,8 +3235,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3192,16 +3257,6 @@
 							"description": {
 								"pt-br": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)",
 								"en-us": "Rural Environmental Registry (CAR) / Brazilian Forest Service (SFB)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3234,8 +3289,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Conjunto de pontos inspecionado em imagens de satélite para auxilio no processo de validação dos dados PRODES-Cerrado.",
-								"en-us": "Set of points inspected in satellite images to aid in the validation process of PRODES-Cerrado data."
+								"pt-br": "Conjunto de pontos de referência, inspecionados em imagens de satélite, para subsidiar o processo de validação dos dados PRODES-Cerrado.",
+								"en-us": "Set of points inspected in the satellite images for validation of PRODES-Cerrado data."
 							}
 						},
 						{
@@ -3274,8 +3329,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3296,16 +3351,6 @@
 							"description": {
 								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
 								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3338,8 +3383,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Conjunto de pontos coletados em campo para auxilio no processo de validação dos dados PRODES-Cerrado.",
-								"en-us": "Set of points collected in the field to assist in the validation process of PRODES-Cerrado data."
+								"pt-br": "Conjunto de pontos de referência,coletados em campo, para subsidiar o processo de validação dos dados PRODES-Cerrado.",
+								"en-us": "Set of points inspected in the field for validation of PRODES-Cerrado data."
 							}
 						},
 						{
@@ -3378,8 +3423,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3400,16 +3445,6 @@
 							"description": {
 								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
 								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3442,8 +3477,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Áreas de terras indígenas brasileiras.",
-								"en-us": "Areas of Brazilian indigenous lands."
+								"pt-br": "Limite das terras indígenas brasileiras.",
+								"en-us": "Indigenous lands boundaries."
 							}
 						},
 						{
@@ -3482,8 +3517,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3504,16 +3539,6 @@
 							"description": {
 								"pt-br": "Fundação Nacional do Índio (FUNAI)",
 								"en-us": "National Indian Foundation (FUNAI)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3547,7 +3572,7 @@
 							},
 							"description": {
 								"pt-br": "Localização das unidades de conservação de proteção integral.",
-								"en-us": "Location of full protection conservation units."
+								"en-us": "Location of strictly protected conservation units."
 							}
 						},
 						{
@@ -3586,8 +3611,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3608,16 +3633,6 @@
 							"description": {
 								"pt-br": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)",
 								"en-us": "Chico Mendes Institute for Biodiversity Conservation (ICMBio)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3651,7 +3666,7 @@
 							},
 							"description": {
 								"pt-br": "Localização das unidades de conservação de uso sustentável.",
-								"en-us": "Location of conservation units for sustainable use."
+								"en-us": "Location of sustainable use conservation units."
 							}
 						},
 						{
@@ -3690,8 +3705,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3712,16 +3727,6 @@
 							"description": {
 								"pt-br": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)",
 								"en-us": "Chico Mendes Institute for Biodiversity Conservation (ICMBio)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
@@ -3794,8 +3799,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "Universal de Mercator.",
-								"en-us": "Mercator Universal."
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -3816,16 +3821,6 @@
 							"description": {
 								"pt-br": "Ministério do Meio Ambiente (MMA)",
 								"en-us": "Ministry of the Environment (MMA)"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Contato",
-								"en-us": "Contact"
-							},
-							"description": {
-								"pt-br": "cerradodpat@gmail.com",
-								"en-us": "cerradodpat@gmail.com"
 							}
 						},
 						{
