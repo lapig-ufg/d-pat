@@ -711,14 +711,14 @@ module.exports = function (app) {
         },
         {
           id: "agricultura",
-          label: languageJson["descriptor"]["uso_da_terra"]["layers"]["agricultura_agrosatelite_fip"]["label"][language],
+          label: languageJson["descriptor"]["uso_da_terra"]["layers"]["agricultura"]["label"][language],
           visible: false,
-          metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]['agricultura_agrosatelite_fip']['metadata'],
+          metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["agricultura"]['agricultura_agrosatelite_fip']['metadata'],
           selectedType: "agricultura_agrosatelite_fip",
           types: [{
             value: "agricultura_agrosatelite_fip",
             Viewvalue: "Agrosatélite 2013/2014",
-            metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]['agricultura_agrosatelite_fip']['metadata'],
+            metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["agricultura"]['agricultura_agrosatelite_fip']['metadata'],
             regionFilter: true,
             opacity: 0.8,
             order: 3,
