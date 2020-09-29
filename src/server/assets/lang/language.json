@@ -1308,11 +1308,12 @@
 						]
 					}
 				},
-				"agricultura_agrosatelite_fip": {
+				"agricultura":{
 					"label": {
 						"pt-br": "Agricultura",
 						"en-us": "Agriculture"
 					},
+					"agricultura_agrosatelite_fip": {
 					"metadata": [
 						{
 							"title": {
@@ -1415,6 +1416,7 @@
 							}
 						}
 					]
+				}
 				},
 				"floresta_plantada": {
 					"label": {
