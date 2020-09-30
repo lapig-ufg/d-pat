@@ -5,7 +5,7 @@
 	},
 	"charts_box_title": {
 		"pt-br": "Estatísticas de Desmatamento sobre o PRODES-Cerrado",
-		"en-us": "Deforestation Statistics of PRODES-Cerrado"
+		"en-us": "PRODES-Cerrado Deforestation Statistics"
 	},
 	"charts_box_timeseries": {
 		"label": {
@@ -14,7 +14,7 @@
 		},
 		"name": {
 			"pt-br": "Área Desmatada",
-			"en-us": "Deforestation increases"
+			"en-us": "Deforestation area"
 		},
 		"text": {
 			"pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
@@ -56,7 +56,7 @@
 	"charts_box_app": {
 		"label": {
 			"pt-br": "Área de Preservação Permanente",
-			"en-us": "APP"
+			"en-us": "Permanent Preservation Area"
 		},
 		"description": {
 			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em APP declaradas: ",
@@ -66,11 +66,11 @@
 	"charts_box_rl": {
 		"label": {
 			"pt-br": "Reserva Legal",
-			"en-us": "Legal Reservation"
+			"en-us": "Legal Reserve"
 		},
 		"description": {
 			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em Reservas Legais declaradas: ",
-			"en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reservations:"
+			"en-us": "Ranking of Municipalities with largest Deforested areas in declared Legal Reserves:"
 		}
 	},
 	"charts_box_lulc": {
@@ -102,7 +102,7 @@
 		},
 		"field_number": {
 			"pt-br": "Nº do Campo:",
-			"en-us": "Field:"
+			"en-us": "Field Number:"
 		},
 		"not_computed_message": {
 			"pt-br": "Não Computada",
@@ -114,7 +114,7 @@
 		},
 		"click_more_text": {
 			"pt-br": "Clique para visualizar o relatório completo deste desmatamento",
-			"en-us": "Click to open the full deforestation report"
+			"en-us": "Click to open the deforestation report"
 		},
 		"click_more_municipio": {
 			"pt-br": "Clique para aproximar deste município",
@@ -126,11 +126,11 @@
 		},
 		"label_area_app": {
 			"pt-br": "Área Desmatada em APP:",
-			"en-us": "Deforested Area in Preservation Areas:"
+			"en-us": "Deforested Area in Permanent Preservation Areas:"
 		},
 		"label_area_rl": {
 			"pt-br": "Área Desmatada em Reserva Legal:",
-			"en-us": "Deforested Area in Legal Reservation:"
+			"en-us": "Deforested Area in Legal Reserve:"
 		},
 		"area_property": {
 			"pt-br": "Área da Propriedade Rural:",
@@ -138,7 +138,7 @@
 		},
 		"area_explorada": {
 			"pt-br": "Área Explorada:",
-			"en-us": "Area Explored:"
+			"en-us": "Explored Area:"
 		},
 		"producao": {
 			"pt-br": "Cadeia de Produção Declarada:",
@@ -168,7 +168,7 @@
 		},
 		"label_limits": {
 			"pt-br": "Limites",
-			"en-us": "Limits"
+			"en-us": "Bounderies"
 		},
 		"label_upload": {
 			"pt-br": "Upload",
@@ -196,7 +196,7 @@
 		},
 		"search_loading": {
 			"pt-br": "Procurando...",
-			"en-us": "Searching"
+			"en-us": "Searching..."
 		},
 		"search_failed": {
 			"pt-br": "Desculpe, região não encontrada.",
@@ -229,7 +229,7 @@
 				"Município"
 			],
 			"en-us": [
-				"County"
+				"Municipality"
 			]
 		},
 		"header_table_state": {
@@ -241,12 +241,12 @@
 			]
 		},
 		"table_prodes_title": {
-			"pt-br": "Dematamentos PRODES",
-			"en-us": "PRODES deforestation"
+			"pt-br": "Desmatamentos PRODES-Cerrado",
+			"en-us": "PRODES-Cerrado deforestation"
 		},
 		"table_deter_title": {
-			"pt-br": "Avisos DETER",
-			"en-us": "DETER notices"
+			"pt-br": "Avisos DETER-Cerrado",
+			"en-us": "DETER-Cerrado notices"
 		},
 		"table_city_title": {
 			"pt-br": "Municípios que cruzam com a área submetida",
@@ -265,12 +265,12 @@
 			"en-us": "Clear"
 		},
 		"msg_error": {
-			"pt-br": "Não foi possível analizar a área submetida, tente uma área menor",
-			"en-us": "Could not analyze the submitted area, try a smaller area"
+			"pt-br": "Não foi possível analizar a área submetida, por favor submeta uma área menor",
+			"en-us": "Could not analyze the submitted area, please try a smaller area"
 		},
 		"warning": {
 			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido a quantidade de cruzamentos espaciais sendo realizada.",
-			"en-us": "Area under analysis. This processing may take a while due to the amount of space crossings being performed."
+			"en-us": "Area under analysis. This may take a while due to the amount of space crossings being performed."
 		},
 		"car_title": {
 			"pt-br": "Visualizar a(s) [count] propriedade(s) inscrita(s) no CAR que cruzam com a área submetida.",
@@ -326,7 +326,7 @@
 		},
 		"upload_search": {
 			"pt-br": "Consultar Área",
-			"en-us": "Consult Area"
+			"en-us": "Load Area"
 		}
 	},
 	"descriptor": {
@@ -362,8 +362,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Incrementos anuais de desmatamento por corte raso registrados pelo sistema PRODES-Cerrado.",
-								"en-us": "Annual increases in clear-cut deforestation recorded by the PRODES-Cerrado system."
+								"pt-br": "Incrementos anuais de desmatamento por corte raso detectados pelo PRODES-Cerrado.",
+								"en-us": "Annual increases in clear-cut deforestation detected by PRODES-Cerrado."
 							}
 						},
 						{
@@ -389,7 +389,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -451,7 +451,7 @@
 						"bi_ce_prodes_desmatamento_pontos_campo_fip": {
 							"view_value": {
 								"pt-br": "Polígonos visitados em Campo",
-								"en-us": "Polygons visited in field"
+								"en-us": "Polygons validated in field"
 							}
 						},
 						"bi_ce_prodes_desmatamento_abc_fip": {
@@ -531,7 +531,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -590,9 +590,9 @@
 								"en-us": "Period"
 							},
 							"times": {
-								"view_date > (current_date - interval '90' day)": {
-									"pt-br": "Últimos 90 dias",
-									"en-us": "Last 90 days"
+								"view_date > '2020-01-01'": {
+									"pt-br": "À partir de 2020",
+									"en-us": "From 2020"
 								},
 								"view_date > '2019-01-01'": {
 									"pt-br": "À partir de 2019",
@@ -604,34 +604,10 @@
 								}
 							}
 						},
-						"bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip": {
-							"view_value_alta_susceptibilidade": {
-								"pt-br": "Polígonos com alta susceptibilidade",
-								"en-us": "High susceptibility polygons"
-							},
-							"timelabel_alta_susceptiblidade": {
-								"pt-br": "Período",
-								"en-us": "Period"
-							},
-							"times_deter_alta_susceptibilidade": {
-								"view_value_last_90_days": {
-									"pt-br": "Últimos 90 dias",
-									"en-us": "Last 90 days"
-								},
-								"view_value_apartir_2019": {
-									"pt-br": "À partir de 2019",
-									"en-us": "From 2019"
-								},
-								"view_value_apartir_2018": {
-									"pt-br": "À partir de 2018",
-									"en-us": "From 2018"
-								}
-							}
-						},
 						"bi_ce_deter_desmatamento_pontos_campo_fip": {
 							"view_value": {
 								"pt-br": "Polígonos visitados em Campo",
-								"en-us": "Polygons visited in field"
+								"en-us": "Polygons validated in field"
 							}
 						}
 					}
@@ -685,7 +661,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -823,7 +799,7 @@
 							},
 							"description": {
 								"pt-br": "Susceptibilidade, de acordo com os padrões observados entre os anos de 2010 e 2015, de uma área nativa ser antropizada por meio de corte raso.",
-								"en-us": "Susceptibility, according to the patterns observed between the years 2010 and 2015, of a native area being anthropized through clear-cut."
+								"en-us": "Susceptibility, according to the patterns observed between the years of 2010 and 2015, of a native area being anthropized through clear-cut."
 							}
 						},
 						{
@@ -849,7 +825,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -892,8 +868,8 @@
 								"en-us": "Details"
 							},
 							"description": {
-								"pt-br": "Texto LAPIG",
-								"en-us": "Text LAPIG"
+								"pt-br": "Text informado pelo LAPIG/UFG",
+								"en-us": "Text informed by LAPIG/UFG"
 							}
 						}
 					],
@@ -923,7 +899,7 @@
 				"car": {
 					"label": {
 						"pt-br": "Cadastro Ambiental Rural (CAR)",
-						"en-us": "Rural Environmental Registry (CAR)"
+						"en-us": "Rural Environmental Register (CAR)"
 					},
 					"types": {
 						"car_imoveis_cerrado_fip": {
@@ -937,7 +913,7 @@
 				"reserva_legal": {
 					"label": {
 						"pt-br": "Reserva Legal",
-						"en-us": "Legal Reservations"
+						"en-us": "Legal Reserve"
 					},
 					"types": {
 						"car_reserva_legal_cerrado_fip": {
@@ -965,7 +941,7 @@
 				"nascente": {
 					"label": {
 						"pt-br": "Nascentes de Rios",
-						"en-us": "Spring River"
+						"en-us": "Springs"
 					},
 					"types": {
 						"car_nascente_cerrado_fip": {
@@ -993,7 +969,7 @@
 						"terra_indigena_cerrado": {
 							"view_value": {
 								"pt-br": "Limites",
-								"en-us": "Limits"
+								"en-us": "Bounderies"
 							}
 						}
 					}
@@ -1015,7 +991,7 @@
 				"areas_prioritarias": {
 					"label": {
 						"pt-br": "Áreas Prioritárias",
-						"en-us": "Priority areas"
+						"en-us": "Priority Areas"
 					},
 					"types": {
 						"areas_prioritarias_cerrado": {
@@ -1057,7 +1033,7 @@
 				"terraclass": {
 					"label": {
 						"pt-br": "Uso e Cobertura da Terra",
-						"en-us": "Land Use and Cover"
+						"en-us": "Land Use and Land Cover"
 					},
 					"uso_solo_terraclass_fip": {
 						"metadata": [
@@ -1077,7 +1053,7 @@
 									"en-us": "Description"
 								},
 								"description": {
-									"pt-br": "Mapeamento do uso e cobertura do solo do cerrado para o ano de 2013 realizado no âmbito do projeto TerraClass Cerrado.",
+									"pt-br": "Mapeamento do uso e cobertura do solo do Cerrado para o ano de 2013 realizado no âmbito do projeto TerraClass Cerrado.",
 									"en-us": "Land use and land cover map for Cerrado biome, based on the TerraClass Cerrado."
 								}
 							},
@@ -1104,7 +1080,7 @@
 							{
 								"title": {
 									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Reference and Coordinate System"
+									"en-us": "Coordinate Reference System"
 								},
 								"description": {
 									"pt-br": "SIRGAS 2000",
@@ -1172,7 +1148,7 @@
 								},
 								"description": {
 									"pt-br": "Mapeamento dos Remanescentes e Ocupação Antrópica do Bioma Cerrado, com base no PROBIO - Projeto de Conservação e Utilização Sustentável da Diversidade Biológica Brasileira.",
-									"en-us": "Mapping the Remnants and Anthropic Occupation of the Cerrado Biome, based on PROBIO - Project for the Conservation and Sustainable Use of Brazilian Biological Diversity."
+									"en-us": "Mapping the remaining vegetation and the anthropic occupation in the Cerrado Biome, based on PROBIO - Project for the Conservation and Sustainable Use of Brazilian Biological Diversity."
 								}
 							},
 							{
@@ -1198,7 +1174,7 @@
 							{
 								"title": {
 									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Reference and Coordinate System"
+									"en-us": "Coordinate Reference System"
 								},
 								"description": {
 									"pt-br": "SIRGAS 2000",
@@ -1261,8 +1237,8 @@
 								"en-us": "Data"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "Agrosatélite",
+								"en-us": "Agrosatelite"
 							}
 						},
 						{
@@ -1271,8 +1247,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "Área cultivada por soja, milho e algodão durante a safra 2013/14.",
+								"en-us": "Area cultivated for soy, corn and cotton during the 2013/14 harvest."
 							}
 						},
 						{
@@ -1281,8 +1257,8 @@
 								"en-us": "Date"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "2013/14",
+								"en-us": "2013/14"
 							}
 						},
 						{
@@ -1291,18 +1267,18 @@
 								"en-us": "Scale"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "1:250.000",
+								"en-us": "1:250.000"
 							}
 						},
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
 							}
 						},
 						{
@@ -1311,8 +1287,8 @@
 								"en-us": "Cartographic Projection"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
 							}
 						},
 						{
@@ -1321,8 +1297,8 @@
 								"en-us": "Character encoding"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "UTF-8",
+								"en-us": "UTF-8"
 							}
 						},
 						{
@@ -1331,8 +1307,8 @@
 								"en-us": "Source"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
+								"pt-br": "Agrosatélite Geotecnologia Aplicada",
+								"en-us": "Agrosatellite Applied Geotechnology"
 							}
 						},
 						{
@@ -1341,9 +1317,9 @@
 								"en-us": "Details"
 							},
 							"description": {
-								"pt-br": "",
-								"en-us": ""
-							}
+									"pt-br": "<a target='_blank' class='link-details' href='https://agrosatelite.com.br/'> https://agrosatelite.com.br/</a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://agrosatelite.com.br/'> https://agrosatelite.com.br/</a>"
+								}
 						}
 					]
 					}
@@ -1397,7 +1373,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -1503,7 +1479,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -1601,7 +1577,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -1653,7 +1629,7 @@
 				"frigorificos": {
 					"label": {
 						"pt-br": "Matadouros e Frigoríficos",
-						"en-us": "Slaughterhouses & Freezers"
+						"en-us": "Slaughterhouses & Meatpacking Company"
 					},
 					"metadata": [
 						{
@@ -1663,7 +1639,7 @@
 							},
 							"description": {
 								"pt-br": "Matadouros e Frigoríficos",
-								"en-us": "Slaughterhouses & Freezers"
+								"en-us": "Slaughterhouses & Meatpacking Company"
 							}
 						},
 						{
@@ -1673,7 +1649,7 @@
 							},
 							"description": {
 								"pt-br": "Dado produzido a partir de informações de Matadouros e/ou Frigoríficos Bovinos do Brasil aptos a exportação (SIF-MAPA), com localização revisada pelo LAPIG.",
-								"en-us": "Data produced from information on slaughterhouses and / or Brazilian beef slaughterhouses suitable for export (SIF-MAPA), with location reviewed by LAPIG."
+								"en-us": "Data produced from information on slaughterhouses and/or Brazilian beef slaughterhouses suitable for export (SIF-MAPA), with location reviewed by LAPIG."
 							}
 						},
 						{
@@ -1699,7 +1675,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -1733,7 +1709,7 @@
 							},
 							"description": {
 								"pt-br": "Ministério da Agricultura, Pecuária e Abastecimento (MAPA) (Revisado por LAPIG-UFG)",
-								"en-us": "Ministry of Agriculture, Livestock and Supply (MAPA) (Revised by LAPIG-UFG)"
+								"en-us": "Ministry of Agriculture, Livestock and Supply (MAPA) (Reviewed by LAPIG-UFG)"
 							}
 						},
 						{
@@ -1805,7 +1781,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -1903,7 +1879,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -2009,7 +1985,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -2071,7 +2047,7 @@
 							},
 							"description": {
 								"pt-br": "Média da Precipitação Acumulada",
-								"en-us": "Average Accumulated Precipitation"
+								"en-us": "Accumulated Average Precipitation"
 							}
 						},
 						{
@@ -2107,7 +2083,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -2140,8 +2116,8 @@
 								"en-us": "Source"
 							},
 							"description": {
-								"pt-br": "Tropical Rainfall Measuring Mission (TRMM) e Global Precipitation Measurement (GPM)",
-								"en-us": "Tropical Rainfall Measuring Mission (TRMM) e Global Precipitation Measurement (GPM)"
+								"pt-br": "Média de precipitação acumulada anual, entre os anos de 2000 e 2014, obtida por meio da interpolação entre dados TRMM e estações meteorológicas do INMET.",
+								"en-us": "Average annual accumulated precipitation, between 2000 and 2014, obtained through the interpolation between TRMM data and INMET meteorological stations."
 							}
 						},
 						{
@@ -2161,7 +2137,7 @@
 		"imagens": {
 			"label": {
 				"pt-br": "Acervo de Imagens",
-				"en-us": "Satellite Image Collection"
+				"en-us": "Satellite Image Archive"
 			},
 			"layers": {
 				"satelite": {
@@ -2181,7 +2157,7 @@
 									"en-us": "Data"
 								},
 								"description": {
-									"pt-br": "Mosaico de images Landsat",
+									"pt-br": "Mosaico de imagens Landsat",
 									"en-us": "Landsat Image Mosaics"
 								}
 							},
@@ -2218,7 +2194,7 @@
 							{
 								"title": {
 									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Reference and Coordinate System"
+									"en-us": "Coordinate Reference System"
 								},
 								"description": {
 									"pt-br": "SIRGAS 2000",
@@ -2285,8 +2261,8 @@
 									"en-us": "Description"
 								},
 								"description": {
-									"pt-br": "Imagens de satélite com resulução espacial de 10 metros, com data diferente das imagens utilizadas para a produção do PRODES-Cerrado.",
-									"en-us": "Mosaic of 10 meter spatial resolution satellite images. Different date from the images used for the deforestation detection in the PRODES-Cerrado."
+									"pt-br": "Imagens de satélite com resulução espacial de 10 metros, com datas diferentes das imagens utilizadas para a produção do PRODES-Cerrado.",
+									"en-us": "Mosaic of 10 meter spatial resolution satellite images. Different dates from the images used for the deforestation detection by PRODES-Cerrado."
 								}
 							},
 							{
@@ -2312,7 +2288,7 @@
 							{
 								"title": {
 									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Reference and Coordinate System"
+									"en-us": "Coordinate Reference System"
 								},
 								"description": {
 									"pt-br": "SIRGAS 2000",
@@ -2367,20 +2343,20 @@
 		"basemaps": {
 			"types": {
 				"mapbox": {
-					"pt-br": "Geopolítico",
-					"en-us": "Geopolitical"
+					"pt-br": "Geopolítico (Mapbox)",
+					"en-us": "Geopolitical (Mapbox)"
 				},
 				"satelite": {
-					"pt-br": "Satélite",
-					"en-us": "Satellite"
+					"pt-br": "Satélite (Bing)",
+					"en-us": "Satellite (Bing)"
 				},
 				"estradas": {
-					"pt-br": "Estradas",
-					"en-us": "Roads"
+					"pt-br": "Estradas (Bing)",
+					"en-us": "Roads (Bing)"
 				},
 				"relevo": {
-					"pt-br": "Relevo",
-					"en-us": "Geographical Relief"
+					"pt-br": "Relevo (World Shaded Relief)",
+					"en-us": "Geographical Relief (World Shaded Relief)"
 				}
 			}
 		},
@@ -2406,8 +2382,8 @@
 								"en-us": "Description"
 							},
 							"description": {
-								"pt-br": "Mapa, resultado da parceria entre o IBGE e o Ministério do Meio Ambiente (MMA), que representa, na escala de 1:5.000.000, os seis biomas continentais brasileiros.",
-								"en-us": "Map, result of the partnership between IBGE and the Ministry of the Environment (MMA), which represents, on a scale of 1: 5,000,000, the six Brazilian continental biomes."
+								"pt-br": "Mapa resultado da parceria entre o IBGE e o Ministério do Meio Ambiente (MMA), que representa, na escala de 1:5.000.000, os seis biomas continentais brasileiros.",
+								"en-us": "Map result of the partnership between IBGE and the Ministry of the Environment (MMA), which represents, on a scale of 1: 5,000,000, the six Brazilian continental biomes."
 							}
 						},
 						{
@@ -2433,7 +2409,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -2467,7 +2443,7 @@
 							},
 							"description": {
 								"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE) e Ministério do Meio Ambiente (MMA)",
-								"en-us": "Brazilian Institute of Geography and Statistics (IBGE) and Ministry of Environment (MMA)"
+								"en-us": "Brazilian Institute of Geography and Statistics (IBGE) and Ministry of the Environment (MMA)"
 							}
 						},
 						{
@@ -2529,7 +2505,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -2626,7 +2602,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -2680,12 +2656,12 @@
 	},
 	"controls": {
 		"label_close_mun": {
-			"pt-br": "Sair do Seleção",
+			"pt-br": "Sair da Seleção",
 			"en-us": "Leave the Selection"
 		},
 		"label_layers": {
 			"pt-br": "Acessar camada de dados",
-			"en-us": "Access data layer"
+			"en-us": "Access layers"
 		},
 		"label_statistics": {
 			"pt-br": "Estatísticas",
@@ -2723,7 +2699,7 @@
 	"regionReportTexts": {
 		"label_title_county": {
 			"pt-br": "Relatório de desmatamento do município de [county]",
-			"en-us": "Report of deforestation in the municipality of [county]"
+			"en-us": "Deforestation Report in the municipality of [county]"
 		},
 		"label_title_state": {
 			"pt-br": "Relatório de Desmatamento do Estado - [state]",
@@ -2751,7 +2727,7 @@
 		},
 		"label_county": {
 			"pt-br": "Município",
-			"en-us": "County"
+			"en-us": "Municipality"
 		},
 		"label_state": {
 			"pt-br": "Estado",
@@ -2771,7 +2747,7 @@
 		},
 		"label_statistc_app": {
 			"pt-br": "Área total desmatada em APP",
-			"en-us": "Total deforested area in APP"
+			"en-us": "Total deforested area in PPA"
 		},
 		"label_statistc_area_prodes": {
 			"pt-br": "Área total desmatada - PRODES",
@@ -2783,15 +2759,15 @@
 		},
 		"label_statistc_area_rl": {
 			"pt-br": "Área total desmatada em Res. Legal",
-			"en-us": "Total area deforested in Res. Legal"
+			"en-us": "Total deforested area in Legal Reserve"
 		},
 		"label_images": {
 			"pt-br": "Histórico de Imagens Landsat",
-			"en-us": "Landsat Image History"
+			"en-us": "Landsat Images History"
 		},
 		"label_ranking": {
-			"pt-br": "Histórico de Imagens Landsat",
-			"en-us": "Landsat Image History"
+			"pt-br": "Ranking dos Municípios com maiores Desmatamentos:",
+			"en-us": "Ranking of Municipalities with largest Deforested areas:"
 		},
 		"label_municipalities": {
 			"pt-br": "Municípios",
@@ -2876,7 +2852,7 @@
 			},
 			"rl_car_label": {
 				"pt-br": "Área desmatada dentro da Reserva Legal: ? km² (? da área total da Reserva Legal)",
-				"en-us": "Deforested area within the Legal Reservation:? km² (?of the Legal Reservation total area)"
+				"en-us": "Deforested area within the Legal Reserve: ? km² (? of the Legal Reserve total area)"
 			},
 			"nascente_car_label": {
 				"pt-br": "Quantidade de Nascentes na Propriedade Rural:",
@@ -2884,7 +2860,7 @@
 			},
 			"app_car_label": {
 				"pt-br": "Área desmatada dentro de APP: ? km² (? da área total da APP)",
-				"en-us": "Deforested Area within the APP: ? km² (? of the APP total area)"
+				"en-us": "Deforested Area within the PPA: ? km² (? of the PPA total area)"
 			},
 			"deforestation_car_description": {
 				"pt-br": "Este desmatamento detectado pelo ? corresponde a ? da área total da propriedade rural.",
@@ -2940,7 +2916,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3034,7 +3010,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3092,7 +3068,7 @@
 							},
 							"description": {
 								"pt-br": "Área de Preservação Permanente (APP)",
-								"en-us": "Permanent Preservation Area (APP)"
+								"en-us": "Permanent Preservation Area (PPA)"
 							}
 						},
 						{
@@ -3128,7 +3104,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3222,7 +3198,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3290,7 +3266,7 @@
 							},
 							"description": {
 								"pt-br": "Conjunto de pontos de referência, inspecionados em imagens de satélite, para subsidiar o processo de validação dos dados PRODES-Cerrado.",
-								"en-us": "Set of points inspected in the satellite images for validation of PRODES-Cerrado data."
+								"en-us": "Set of points inspected in the satellite images for validation of PRODES-Cerrado."
 							}
 						},
 						{
@@ -3316,7 +3292,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3359,8 +3335,8 @@
 								"en-us": "Details"
 							},
 							"description": {
-								"pt-br": "Texto LAPIG",
-								"en-us": "Text LAPIG"
+								"pt-br": "Texto informado pelo LAPIG/UFG",
+								"en-us": "Text informed by LAPIG/UFG"
 							}
 						}
 					]
@@ -3384,7 +3360,7 @@
 							},
 							"description": {
 								"pt-br": "Conjunto de pontos de referência,coletados em campo, para subsidiar o processo de validação dos dados PRODES-Cerrado.",
-								"en-us": "Set of points inspected in the field for validation of PRODES-Cerrado data."
+								"en-us": "Set of points inspected in the field for validation of PRODES-Cerrado."
 							}
 						},
 						{
@@ -3410,7 +3386,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3453,8 +3429,8 @@
 								"en-us": "Details"
 							},
 							"description": {
-								"pt-br": "Texto LAPIG",
-								"en-us": "Text LAPIG"
+								"pt-br": "Text informado pelo LAPIG/UFG",
+								"en-us": "Text informed by LAPIG/UFG"
 							}
 						}
 					]
@@ -3504,7 +3480,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3598,7 +3574,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3692,7 +3668,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3786,7 +3762,7 @@
 						{
 							"title": {
 								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Reference and Coordinate System"
+								"en-us": "Coordinate Reference System"
 							},
 							"description": {
 								"pt-br": "SIRGAS 2000",
@@ -3898,7 +3874,7 @@
 			},
 			"amostral_class_water": {
 				"pt-br": "Água",
-				"en-us": "Waters"
+				"en-us": "Water"
 			},
 			"amostral_class_anthropic": {
 				"pt-br": "Antrópico",
@@ -3936,7 +3912,7 @@
 			},
 			"property_area_tec_label": {
 				"pt-br": "Área de aplicação da Tecnologia:",
-				"en-us": "Technology Used Area: "
+				"en-us": "Area for applying Technology: "
 			},
 			"property_applied_tec_label": {
 				"pt-br": "Tecnologia Aplicada: ",
@@ -3961,8 +3937,8 @@
 				"en-us": "Deforestation Susceptibility Surface"
 			},
 			"info_susceptibility_faixas": {
-				"pt-br": "*Faixas de probabilidade de desmatamento*",
-				"en-us": "*Deforestation probability ranges*"
+				"pt-br": "* Faixas de probabilidade de desmatamento *",
+				"en-us": "* Deforestation probability ranges *"
 			},
 			"info_susceptibility_description": {
 				"pt-br": "A susceptibilidade a desmatamentos ? a 0,5 km² neste polígono é de ",
@@ -3973,16 +3949,16 @@
 				"en-us": "BFAST-Monitor"
 			},
 			"info_bfast_faixas": {
-				"pt-br": "*Informações sobre quebras nos pixels MODIS*",
-				"en-us": "*Information on breaks in pixels MODIS*"
+				"pt-br": "* Informações sobre quebras nos pixels MODIS *",
+				"en-us": "* Information on breakpoints in MODIS pixels  *"
 			},
 			"info_bfast_description": {
 				"pt-br": "A taxa de pixels MODIS que sofreram quebras em suas séries temporais foi de:",
-				"en-us": "The rate of MODIS pixels that suffered breaks in their time series was:"
+				"en-us": "The rate of MODIS pixels that presented breakpoints in their time series was:"
 			},
 			"caption_bfast": {
 				"pt-br": " do polígono apresentou quebras em sua série temporal.",
-				"en-us": " of the polygon presented breaks in its time series."
+				"en-us": " of the polygon presented breakpoints in its time series."
 			},
 			"caption_suscept": {
 				"pt-br": "Susceptibilidade a Desmatamento: ",
@@ -4020,7 +3996,7 @@
 			},
 			"titleUCPI": {
 				"pt-br": "Unidades de Conservação para Proteção Integral",
-				"en-us": "Conservation Units for Integral Protection"
+				"en-us": "Full Protection Conservation Units"
 			},
 			"titleUCUS": {
 				"pt-br": "Unidades de Conservação para Uso Sustentável",
@@ -4050,7 +4026,7 @@
 			"en-us": "This is not a spatial file!"
 		},
 		"cant_extract": {
-			"pt-br": "Relatório do Desmatamento",
+			"pt-br": "Seu arquivo não pôde ser extraído!",
 			"en-us": "Your file cannot be extracted!"
 		},
 		"cant_parse_file": {
@@ -4073,11 +4049,11 @@
 		},
 		"hover_btn_access_platform": {
 			"pt-br": "Acessar a plataforma",
-			"en-us": "Access the platform"
+			"en-us": "Open the platform"
 		},
 		"hover_btn_results": {
 			"pt-br": "Acessar resultados",
-			"en-us": "Access results"
+			"en-us": "See results"
 		},
 		"about": [
 			{
@@ -4089,8 +4065,8 @@
 				"en-us": "For each deforested area, the user can view such a compilation of land use and land cover maps, geophysical data, special areas, edaphoclimatic data, properties, and infrastructure, as products resulting from the PRODES-Cerrado validation process."
 			},
 			{
-				"pt-br": "O pesquisador, gestor e a sociedade em geral também pode visualizar as áreas de vegetação naturais mais susceptíveis ao desmatamento, assim como verificar a presença e distância de desmatamentos em relação à Unidades de Conservação, Terras Indígenas, Quilombos e Áreas Prioritárias para Conservação da Biodiversidade.",
-				"en-us": "The user also can view the areas of natural vegetation most susceptible to deforestation, as well as check the deforestation presence and distance to Conservation Units, Indigenous Lands, Quilombos, and Priority Areas for Biodiversity Conservation."
+				"pt-br": "O pesquisador, gestor e a sociedade em geral também pode visualizar as áreas de vegetação naturais mais susceptíveis ao desmatamento, assim como verificar a presença e distância de desmatamentos em relação à Unidades de Conservação, Terras Indígenas e Quilombos para Conservação da Biodiversidade.",
+				"en-us": "The user can also view the areas of natural vegetation most susceptible to deforestation, as well as check the deforestation presence and distance to Conservation Units, Indigenous Lands and Quilombos for Biodiversity Conservation."
 			}
 		],
 		"about_title": {
@@ -4100,11 +4076,11 @@
 		"innovations": [
 			{
 				"pt-br": "O Cerrado DPAT inova porque além qualificar o desmatamento com dados geográficos de diversas fontes, também oferece a validação dos polígonos de desmatamento, contribuindo para a melhoria do processo de detecção da perda de vegetação nativa no Cerrado.",
-				"en-us": "At the state and municipal levels, a large statistic dataset is shown through graphs and maps (e.g., total deforested areas in APP areas and Legal Reserve). The Cerrado DPAT also innovates by offering the validation data of deforestation polygons, thus contributing to the improvement of the process of detecting the loss of native vegetation and the emission of greenhouse gases in the Cerrado."
+				"en-us": "The Cerrado DPAT also innovates by offering the validation data of deforestation polygons, thus contributing to the improvement of the process of detecting the loss of native vegetation and the emission of greenhouse gases in the Cerrado."
 			},
 			{
-				"pt-br": "Ao nível municipal, destaca-se também a apresentação de estatísticas, tais como o total da área desmatada, entre 2000 e 2019, em APP e Reserva Legal . De forma prática, os resultados são apresentados por meio de gráficos e mapas.",
-				"en-us": ""
+				"pt-br": "Nos níveis estadual e municipal, destaca-se também a apresentação de estatísticas, tais como o total da área desmatada, entre 2000 e 2019, em APP e Reserva Legal . De forma prática, os resultados são apresentados por meio de gráficos e mapas.",
+				"en-us": "At the state and municipal levels, a large statistic dataset is shown through graphs and maps (e.g., total deforested areas in APP areas and Legal Reserve)."
 			}
 		],
 		"innovations_title": {
@@ -4114,11 +4090,11 @@
 		"how_to_use": [
 			{
 				"pt-br": "As informações associadas ao polígono de desmatamento são acessadas pelo usuário de forma rápida e intuitiva. Ao clicar no polígono, um relatório com as informações disponíveis para a região é gerado, permitindo que usuários experientes e eventuais possam ter acesso à informação.",
-				"en-us": "The dataset of each deforestation polygon is accessed quickly and intuitively.  With a click on a polygon, a report is generated with the information available for the region, allowing easy access to information.\n"
+				"en-us": "The dataset of each deforestation polygon is accessed quickly and intuitively. With a click on a polygon, a report is generated with the information available for the region, allowing easy access to information.\n"
 			},
 			{
-				"pt-br": "A validação do desmatamento está fundamentada em três métodos: inspeção em campo, inspeção visual de imagens de satélite e análises automáticas. Cada polígono de desmatamento detectado pelo PRODES e DETER foi avaliado por, pelo menos, um destes métodos, o que permitiu gerar um gradiente de confiabilidade ao desmatamento detectado.",
-				"en-us": "The deforestation validation is based on three methods: field inspection, visual inspection of satellite images and automatic analysis. Deforestation polygons detected by PRODES-Cerrado and DETER-Cerrado was evaluated by at least one of these methods, which allowed generating a gradient of reliability to detected deforestation."
+				"pt-br": "A validação do desmatamento está fundamentada em três métodos: visitas em campo, inspeção visual de imagens de satélite e análises automáticas. Cada polígono de desmatamento detectado pelo PRODES e DETER foi avaliado por, pelo menos, um destes métodos, o que permitiu gerar um gradiente de confiabilidade ao desmatamento detectado.",
+				"en-us": "The deforestation validation is based on three methods: field visits, visual inspection of satellite images and automatic analysis. Deforestation polygons detected by PRODES-Cerrado and DETER-Cerrado was evaluated by at least one of these methods, which allowed generating a gradient of reliability to detected deforestation."
 			}
 		],
 		"how_to_use_title": {

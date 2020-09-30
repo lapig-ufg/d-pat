@@ -27,7 +27,8 @@ module.exports = function (app) {
 			"database": env.PG_DATABASE,
 			"password": env.PG_PASSWORD,
 			"port": env.PG_PORT,
-			"debug": env.PG_DEBUG
+			"debug": env.PG_DEBUG,
+			"idleTimeoutMillis": 300000
 		},
 		"port": env.PORT,
 		"ows_host": env.OWS_HOST,
@@ -49,7 +50,8 @@ module.exports = function (app) {
 		config["clientDir"] = appRoot + env.CLIENT_DIR;
 		config["ows_host"] = env.OWS_HOST;
 		config["fieldDataDir"] = appProducao + env.FIELD_DATA_DIR;
-		config["uploadDataDir"] = appProducao + env.UPLOAD_DATA_DIR
+		config["uploadDataDir"] = appProducao + env.UPLOAD_DATA_DIR;
+		config["downloadDataDir"] = appProducao + env.DOWNLOAD_DATA_DIR;
 
 	}
 

@@ -350,13 +350,13 @@ module.exports = function (app) {
             download: ['csv', 'shp'],
             regionFilter: true,
             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["timelabel"][language],
-            timeSelected: "view_date > '2019-01-01'",
+            timeSelected: "view_date > '2020-01-01'",
             timeHandler: "msfilter",
             times: [
-              // {
-              //   value: "view_date > (current_date - interval '90' day)",
-              //   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > (current_date - interval '90' day)"][language]
-              // },
+              {
+                value: "view_date > '2020-01-01'",
+                Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2020-01-01'"][language]
+              },
               {
                 value: "view_date > '2019-01-01'",
                 Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_100_fip"]["times"]["view_date > '2019-01-01'"][language]
@@ -367,29 +367,6 @@ module.exports = function (app) {
               }
             ]
           },
-          // {
-          //   value: "bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip",
-          //   Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["view_value_alta_susceptibilidade"][language],
-          //   opacity: 1,
-          //   order: 1,
-          //   regionFilter: true,
-          //   timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["timelabel_alta_susceptiblidade"][language],
-          //   timeSelected: "view_date > '2019-01-01'",
-          //   timeHandler: "msfilter",
-          //   times: [{
-          //       value: "view_date > (current_date - interval '90' day)",
-          //       Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_last_90_days"][language]
-          //     },
-          //     {
-          //       value: "view_date > '2019-01-01'",
-          //       Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_apartir_2019"][language]
-          //     },
-          //     {
-          //       value: "view_date > '2018-01-01'",
-          //       Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["deter_cerrado"]["types"]["bi_ce_deter_desmatamento_alta_suceptibilidade_100_fip"]["times_deter_alta_susceptibilidade"]["view_value_apartir_2018"][language]
-          //     }
-          //   ]
-          // },
           {
             value: "bi_ce_deter_desmatamento_pontos_campo_fip",
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value"][language],
