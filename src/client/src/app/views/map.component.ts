@@ -38,6 +38,7 @@ import * as jsPDF from 'jspdf';
 import logos from './logos';
 import * as moment from 'moment';
 import * as Chart from 'chart.js'
+import { TranslateService } from '@ngx-translate/core';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -223,7 +224,7 @@ export class MapComponent implements OnInit {
     loading: false,
     dragArea: true,
     error: false,
-    strokeColor: '#2224ba',
+    strokeColor: '#257a33',
     token: '',
     analyzedAreaLoading: false,
     analyzedArea: {},
@@ -236,7 +237,7 @@ export class MapComponent implements OnInit {
   showDrawer: boolean;
   controls: any;
   showStatistics: boolean;
-  loadingsDownload: boolean[];
+  loadingsDownload: boolean;
 
   constructor(
     private http: HttpClient,
@@ -247,8 +248,12 @@ export class MapComponent implements OnInit {
     public googleAnalyticsService: GoogleAnalyticsService,
     private router: Router,
     private route: ActivatedRoute,
-    private decimalPipe: DecimalPipe
+    private decimalPipe: DecimalPipe,
+    public translate: TranslateService
   ) {
+    translate.addLangs(['en', 'pt-br']);
+    translate.setDefaultLang('pt-br');
+
     this.projection = OlProj.get('EPSG:900913');
     this.currentZoom = 5.3;
     this.layers = [];
@@ -321,7 +326,11 @@ export class MapComponent implements OnInit {
       year: 2019
     };
     this.datePipe = new DatePipe('pt-BR');
-    this.language = 'pt-br';
+
+    let browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
+    browserLang = browserLang === 'en' ? 'en-us' : browserLang;
+    this.language = browserLang;
 
     this.mapForABC = new Map([
       ["RPD", {
@@ -394,12 +403,11 @@ export class MapComponent implements OnInit {
     this.showStatistics = true;
     this.controls = {};
     this.updateControls();
-    this.loadingsDownload = [];
+    this.loadingsDownload = false;
     this.loadingPrintReport = false;
 
     this.selectedIndexConteudo = 0;
     this.selectedIndexUpload = 0;
-
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -2221,31 +2229,29 @@ export class MapComponent implements OnInit {
   }
 
   hasDownload(type, typeData) {
-    this.loadingsDownload[typeData.value + '-' + type] = false;
     return typeData.download.includes(type);
   }
 
-  downloadCSV(layer, loading) {
-    this.loadingsDownload[loading] = true;
+  downloadCSV(layer) {
+    this.loadingsDownload = true;
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
-      "times": this.selectedTimeFromLayerType(layer.selectedType.value)
+      "times": this.selectedTimeFromLayerType(layer.selectedType)
     };
+
+    parameters.times = parameters.times.value;
 
     this.http.post("/service/download/csv", parameters, { responseType: 'blob' })
       .toPromise()
       .then(blob => {
         saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + parameters.times + '.csv');
-        this.loadingsDownload[loading] = false;
-      }).catch(err => this.loadingsDownload[loading] = false);
+        this.loadingsDownload = false;
+      }).catch(err => this.loadingsDownload = false);
   }
 
-  downloadSHP(layer, loading) {
-    console.log('loadind',loading)
-    console.log('array-before',this.loadingsDownload[loading])
-    this.loadingsDownload[loading] = true;
-    console.log('array-afer',this.loadingsDownload[loading])
+  downloadSHP(layer) {
+    this.loadingsDownload = true;
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
@@ -2256,16 +2262,15 @@ export class MapComponent implements OnInit {
       .toPromise()
       .then(blob => {
         saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + layer.selectedType.year + '.zip');
-        this.loadingsDownload[loading] = false;
-      }).catch(err =>  this.loadingsDownload[loading] = false);
+        this.loadingsDownload = false;
+      }).catch(err =>  this.loadingsDownload = false);
   }
 
   buttonDownload(format, layer, type) {
-    let loading = type.value + '-' + format
     if (format === 'csv') {
-      this.downloadCSV(layer, loading);
+      this.downloadCSV(layer);
     } else {
-      this.downloadSHP(layer, loading);
+      this.downloadSHP(layer);
     }
   }
 
@@ -4016,7 +4021,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     let fieldPhotosUrl = '/service/report/field/' + this.getServiceParams();
 
     this.http.get(fieldPhotosUrl).subscribe(

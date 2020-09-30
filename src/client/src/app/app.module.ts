@@ -3,7 +3,7 @@ import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule } from "@angular/material";
+import { MatDialogModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData, DecimalPipe } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -54,7 +56,7 @@ import { HotsiteComponent } from './views/hotsite/hotsite.component';
 import { GoogleAnalyticsService } from  './services/google-analytics.service'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-interceptor.interceptor';
-
+import { HttpClient} from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
@@ -63,6 +65,11 @@ import { RegionReportComponent } from './views/region-report/region-report.compo
 import { ReportCarComponent } from './views/report-car/report-car.component';
 
 registerLocaleData(localePt);
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -116,7 +123,14 @@ registerLocaleData(localePt);
     AppRoutingModule,
     FormsModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent, DialogMobileLaudo, ReportCarComponent],
   providers: [
@@ -128,7 +142,7 @@ registerLocaleData(localePt);
       provide: HTTP_INTERCEPTORS,
       useClass: NoCacheHeadersInterceptor,
       multi: true
-    },
+    }
   ],
   bootstrap: [AppComponent],
 

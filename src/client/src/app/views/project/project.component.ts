@@ -1,12 +1,19 @@
 import {Component, OnInit, Inject, HostListener, OnDestroy} from '@angular/core';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html'
 })
 
 export class ProjectComponent implements OnInit, OnDestroy {
-  constructor() { }
+  lang:string;
+  constructor(public translate: TranslateService) {
+    translate.addLangs(['en', 'pt-br']);
+    translate.setDefaultLang('en');
+    const browserLang = translate.getBrowserLang();
+    this.lang = browserLang;
+    translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
+  }
 
   ngOnInit() {
     document.body.style.overflow = 'auto';
@@ -14,6 +21,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     document.body.style.overflow = 'hidden';
+  }
+
+  setLang(lang) {
+    this.translate.use(lang);
+    this.lang = lang;
   }
 
   @HostListener("click", ["$event"])

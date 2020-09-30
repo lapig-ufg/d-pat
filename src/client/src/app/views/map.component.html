@@ -19,26 +19,27 @@
 				<mat-tab-group class="layersConteudo" [(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs
 					dynamicHeight>
 					<mat-tab label="{{titlesLayerBox.label_data}}">
+						<ng-template #rt let-r="result" let-t="term">
+							<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+						</ng-template>
+						<input id="typeahead-http" type="text" class="form-control searchRegion"
+							   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
+							   [ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
+							   (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+							   [inputFormatter]="formatter" [value]="currentData" />
+						<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
+							 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+						<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+						<div class="invalid-feedback" *ngIf="searchFailed">
+							{{titlesLayerBox.search_failed}}</div>
+						<mat-progress-bar
+								*ngIf="loadingsDownload"
+								mode="indeterminate">
+						</mat-progress-bar>
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
 							<mat-accordion>
 								<div id="layers_desmatamentos">
-
-									<ng-template #rt let-r="result" let-t="term">
-										<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
-									</ng-template>
-									<input id="typeahead-http" type="text" class="form-control searchRegion"
-										[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-										[ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
-										(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-										[inputFormatter]="formatter" [value]="currentData" />
-									<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-										(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-									<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-									<div class="invalid-feedback" *ngIf="searchFailed">
-										{{titlesLayerBox.search_failed}}</div>
-
 									<div *ngFor="let groups of descriptor.groups">
-
 										<mat-expansion-panel style="padding-top: 15px" [expanded]=groups.group_expanded>
 											<mat-expansion-panel-header [collapsedHeight]="'50px'"
 												[expandedHeight]="'50px'" class="expansion-header-layer">
@@ -87,31 +88,19 @@
 																(click)="buttonDownload('csv', layer, type)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;CSV
-																<mat-progress-bar *ngIf="loadingsDownload[type.value + '-csv']"
-																	mode="indeterminate">
-																</mat-progress-bar>
 															</button>
-
 															<div class="space"></div>
-
 															<button class="color-buttons"
 																*ngIf="hasDownload('shp', type)"
 																(click)="buttonDownload('shp', layer, type)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;SHP
-																<mat-progress-bar *ngIf="loadingsDownload[type.value + '-shp']"
-																	mode="indeterminate">
-																</mat-progress-bar>
 															</button>
-
 															<button class="color-buttons"
 																*ngIf="hasDownload('tiff', type)"
 																(click)="buttonDownload('tiff', layer, type)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;TIFF
-																<mat-progress-bar *ngIf="loadingsDownload[type.value + '-tiff']"
-																	mode="indeterminate">
-																</mat-progress-bar>
 															</button>
 
 														</section>
@@ -532,7 +521,7 @@
 								</div>
 								<!-- <p class="info_clique_mapa">*Clique em um ano do gráfico para atualizar o mapa e indicadores.</p> -->
 
-								<p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries">
+								<p-chart [type]="dataSeries.type" [responsive]="true"  [data]="dataSeries" [options]="optionsTimeSeries">
 								</p-chart>
 							</p-scrollPanel>
 						</mat-tab>
@@ -553,7 +542,7 @@
 									<b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
 
 								</h6>
-								<p-table [value]="chartResultCities.series" selectionMode="single"
+								<p-table [responsive]="true" [autoLayout]="true" [value]="chartResultCities.series" selectionMode="single"
 									(onRowSelect)="onCityRowSelect($event)">
 									<ng-template pTemplate="header">
 										<tr align="center">
@@ -600,7 +589,7 @@
 									<b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
 									<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 								</h6>
-								<p-table [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
+								<p-table [responsive]="true" [autoLayout]="true" [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
 									(onRowSelect)="onCityRowSelect($event)">
 									<ng-template pTemplate="header">
 										<tr align="center">
@@ -630,7 +619,7 @@
 									<b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
 									<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
 								</h6>
-								<p-table [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
+								<p-table [responsive]="true" [autoLayout]="true" [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
 									(onRowSelect)="onCityRowSelect($event)">
 									<ng-template pTemplate="header">
 										<tr align="center">
