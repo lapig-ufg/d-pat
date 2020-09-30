@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, HostListener, OnDestroy} from '@angular/core';
+import { Component, OnInit, Inject, HostListener, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-project',
@@ -6,11 +6,13 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 export class ProjectComponent implements OnInit, OnDestroy {
-  lang:string;
+  lang: string;
   constructor(public translate: TranslateService) {
     translate.addLangs(['en', 'pt-br']);
     translate.setDefaultLang('en');
-    const browserLang = translate.getBrowserLang();
+    let browserLang = translate.getBrowserLang();
+    // browserLang = browserLang === 'en' ? 'en-us' : browserLang;
+    // browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.lang = browserLang;
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
   }
@@ -29,9 +31,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   @HostListener("click", ["$event"])
-  goToSection(id){
+  goToSection(id) {
     try {
-      let el = document.querySelector('#' + id).scrollIntoView({ behavior: 'smooth', block: 'nearest'});
+      let el = document.querySelector('#' + id).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } catch (e) { }
   }
 

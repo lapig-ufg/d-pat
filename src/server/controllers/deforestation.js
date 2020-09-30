@@ -218,6 +218,7 @@ module.exports = function (app) {
 			}
 		}
 
+		console.log(language)
 		var text = languageJson["charts_box_timeseries"]["text"][language].split("?");
 
 		result = {

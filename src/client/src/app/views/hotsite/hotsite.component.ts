@@ -1,9 +1,9 @@
-import {Component, OnInit, ElementRef, OnDestroy, AfterViewInit, HostListener} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-declare  var $: any;
+declare var $: any;
 
 @Component({
     selector: 'app-hotsite',
@@ -36,6 +36,7 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
 
     onLangClick(lang) {
         lang = lang === 'en' ? 'en-us' : lang;
+        lang = lang === 'pt' ? 'pt-br' : lang;
         if (lang === 'pt-br') {
             this.pt_br = true;
         } else {

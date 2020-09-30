@@ -17,8 +17,8 @@
 			"en-us": "Deforestation area"
 		},
 		"text": {
-			"pt-br": "? possui uma Área Antrópica de ? km², o que representa ?% da sua área total.",
-			"en-us": "? presents an Anthropic area of ? km², which represents ?% of its total area."
+			"pt-br": "? possui uma Área Antrópica de ? km², o que representa ? % da sua área total.",
+			"en-us": "? presents an Anthropic area of ? km², which represents ? % of its total area."
 		}
 	},
 	"charts_box_states": {
@@ -1224,104 +1224,104 @@
 						]
 					}
 				},
-				"agricultura":{
+				"agricultura": {
 					"label": {
 						"pt-br": "Agricultura",
 						"en-us": "Agriculture"
 					},
 					"agricultura_agrosatelite_fip": {
 						"metadata": [
-						{
-							"title": {
-								"pt-br": "Dado",
-								"en-us": "Data"
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "Agrosatélite",
+									"en-us": "Agrosatelite"
+								}
 							},
-							"description": {
-								"pt-br": "Agrosatélite",
-								"en-us": "Agrosatelite"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Descrição",
-								"en-us": "Description"
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Área cultivada por soja, milho e algodão durante a safra 2013/14.",
+									"en-us": "Area cultivated for soy, corn and cotton during the 2013/14 harvest."
+								}
 							},
-							"description": {
-								"pt-br": "Área cultivada por soja, milho e algodão durante a safra 2013/14.",
-								"en-us": "Area cultivated for soy, corn and cotton during the 2013/14 harvest."
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Data",
-								"en-us": "Date"
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2013/14",
+									"en-us": "2013/14"
+								}
 							},
-							"description": {
-								"pt-br": "2013/14",
-								"en-us": "2013/14"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Escala",
-								"en-us": "Scale"
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "1:250.000",
+									"en-us": "1:250.000"
+								}
 							},
-							"description": {
-								"pt-br": "1:250.000",
-								"en-us": "1:250.000"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Sistema de Referência e Coordenadas",
-								"en-us": "Coordinate Reference System"
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Coordinate Reference System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
 							},
-							"description": {
-								"pt-br": "SIRGAS 2000",
-								"en-us": "SIRGAS 2000"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Projeção Cartográfica",
-								"en-us": "Cartographic Projection"
-							},
-							"description": {
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
 									"pt-br": "Universal Transversa de Mercator",
 									"en-us": "Universal Transverse Mercator coordinate system"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Codificação de caractere",
-								"en-us": "Character encoding"
+								}
 							},
-							"description": {
-								"pt-br": "UTF-8",
-								"en-us": "UTF-8"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Fonte",
-								"en-us": "Source"
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8",
+									"en-us": "UTF-8"
+								}
 							},
-							"description": {
-								"pt-br": "Agrosatélite Geotecnologia Aplicada",
-								"en-us": "Agrosatellite Applied Geotechnology"
-							}
-						},
-						{
-							"title": {
-								"pt-br": "Detalhes",
-								"en-us": "Details"
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "Agrosatélite Geotecnologia Aplicada",
+									"en-us": "Agrosatellite Applied Geotechnology"
+								}
 							},
-							"description": {
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
 									"pt-br": "<a target='_blank' class='link-details' href='https://agrosatelite.com.br/'> https://agrosatelite.com.br/</a>",
 									"en-us": "<a target='_blank' class='link-details' href='https://agrosatelite.com.br/'> https://agrosatelite.com.br/</a>"
 								}
-						}
-					]
+							}
+						]
 					}
 				},
 				"floresta_plantada": {
@@ -2542,7 +2542,6 @@
 								"en-us": "Brazilian Institute of Geography and Statistics (IBGE)"
 							}
 						},
-
 						{
 							"title": {
 								"pt-br": "Detalhes",

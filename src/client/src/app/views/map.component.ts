@@ -330,7 +330,10 @@ export class MapComponent implements OnInit {
     let browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
+    browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.language = browserLang;
+
+    console.log(this.language)
 
     this.mapForABC = new Map([
       ["RPD", {
@@ -2220,7 +2223,7 @@ export class MapComponent implements OnInit {
 
     let dialogRef = this.dialog.open(MetadataComponent, {
       width: '130vh',
-      data: {'title': title, 'metadata': metadata}
+      data: { 'title': title, 'metadata': metadata }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -2263,7 +2266,7 @@ export class MapComponent implements OnInit {
       .then(blob => {
         saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + layer.selectedType.year + '.zip');
         this.loadingsDownload = false;
-      }).catch(err =>  this.loadingsDownload = false);
+      }).catch(err => this.loadingsDownload = false);
   }
 
   buttonDownload(format, layer, type) {
