@@ -8,7 +8,7 @@ var right = -28.835908
 // var layername = process.argv[2]
 //var layername = "bi_ce_prodes_desmatamento_100_fip"
 
-var layers = ["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig", "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]
+var layers = ["bi_ce_srtm_altitude_30_2000_lapig", "bi_ce_srtm_declividade_30_2000_lapig"]
 
 var multipleRequests = 10
 /*var bbox = { bottom : -33.752081, left : -73.990450, top : 5.271841, right : -28.835908 } //Brazil*/
@@ -28,7 +28,7 @@ for (let layername of layers) {
 
     // for (var year = (years.length - 1); year >= 0; year--) {
     // console.log("Year: " + years[year])
-    for (var zoom = 0; zoom <= 13; zoom++) {
+    for (var zoom = 0; zoom <= 12; zoom++) {
         var tiles = t.tilesInBbox(bbox, zoom)
 
         tiles.forEach(function (tile) {

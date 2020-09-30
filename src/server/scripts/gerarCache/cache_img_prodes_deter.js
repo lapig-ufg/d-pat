@@ -7,7 +7,6 @@ var top = 5.271841
 var right = -28.835908
 // var layername = process.argv[2]
 //var layername = "bi_ce_prodes_desmatamento_100_fip"
-var layername = "bi_ce_info_utfgrid_fip"
 
 var multipleRequests = 10
 /*var bbox = { bottom : -33.752081, left : -73.990450, top : 5.271841, right : -28.835908 } //Brazil*/
@@ -17,34 +16,185 @@ var ufs = ['GO', 'SP', 'MA', 'RO', 'PA', 'MS', 'TO', 'MT', 'PR', 'PI', 'BA', 'DF
 
 var muns = getMunsCerrado();
 
+var layers = ["bi_ce_prodes_desmatamento_100_fip", "bi_ce_deter_desmatamento_100_fip"]
+
 var years = [2002, 2004, 2006, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
-//var years = [2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
+var deterYears = ["view_date > '2018-01-01'", "view_date > '2019-01-01'", "view_date > '2020-01-01'"]
 
 var urls = []
 
-for (var uf = 0; uf < ufs.length; uf++) {
+var types = ['none']
+// var types = ['state']
+// var types = ['city']
+// for (var uf = 0; uf < ufs.length; uf++) {
 
-	for (var year = (years.length - 1); year >= 0; year--) {
-		// console.log("Year: " + years[year])
-		for (var zoom = 0; zoom <= 12; zoom++) {
-			var tiles = t.tilesInBbox(bbox, zoom)
+for (let type of types) {
 
-			tiles.forEach(function (tile) {
-				var url = "http://127.0.0.1:3000/ows"
-					+ "?layers=" + layername
-					+ "&mode=tile"
-					+ "&tilemode=gmap"
-					//+ "&map.imagetype=png"
-					+ "&map.imagetype=utfgrid"
-					+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+	if (type == 'none') {
 
-				//url += "&MSFILTER=year=" + years[year] + " AND uf = '" + ufs[uf] + "'"
-				url += "&MSFILTER=(origin_table = 'prodes' AND year=" + years[year] + ") AND uf = '" + ufs[uf] + "'"
+		for (let layername of layers) {
 
-				// console.log(url)
-				urls.push(url)
-			})
+			if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+
+				for (var year = (years.length - 1); year >= 0; year--) {
+					// console.log("Year: " + years[year])
+					for (var zoom = 0; zoom <= 12; zoom++) {
+						var tiles = t.tilesInBbox(bbox, zoom)
+
+						tiles.forEach(function (tile) {
+							var url = "http://127.0.0.1:3000/ows"
+								+ "?layers=" + layername
+								+ "&mode=tile"
+								+ "&tilemode=gmap"
+								+ "&map.imagetype=png"
+								//+ "&map.imagetype=utfgrid"
+								+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+							url += "&MSFILTER=year=" + years[year]
+
+
+							// console.log(url)
+							urls.push(url)
+						})
+					}
+				}
+			}
+			else {
+				for (var year = (deterYears.length - 1); year >= 0; year--) {
+					// console.log("Year: " + years[year])
+					for (var zoom = 0; zoom <= 12; zoom++) {
+						var tiles = t.tilesInBbox(bbox, zoom)
+
+						tiles.forEach(function (tile) {
+							var url = "http://127.0.0.1:3000/ows"
+								+ "?layers=" + layername
+								+ "&mode=tile"
+								+ "&tilemode=gmap"
+								+ "&map.imagetype=png"
+								//+ "&map.imagetype=utfgrid"
+								+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+							url += "&MSFILTER=" + deterYears[year]
+
+							// console.log(url)
+							urls.push(url)
+						})
+					}
+				}
+			}
+		}
+	}
+	else if (type == 'city') {
+		for (let mun of muns) {
+
+			for (let layername of layers) {
+
+				if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+
+					for (var year = (years.length - 1); year >= 0; year--) {
+						// console.log("Year: " + years[year])
+						for (var zoom = 0; zoom <= 12; zoom++) {
+							var tiles = t.tilesInBbox(bbox, zoom)
+
+							tiles.forEach(function (tile) {
+								var url = "http://127.0.0.1:3000/ows"
+									+ "?layers=" + layername
+									+ "&mode=tile"
+									+ "&tilemode=gmap"
+									+ "&map.imagetype=png"
+									//+ "&map.imagetype=utfgrid"
+									+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+								url += "&MSFILTER=year=" + years[year] + " AND cd_geocmu = '" + mun + "'"
+
+
+								// console.log(url)
+								urls.push(url)
+							})
+						}
+					}
+				}
+				else {
+					for (var year = (deterYears.length - 1); year >= 0; year--) {
+						// console.log("Year: " + years[year])
+						for (var zoom = 0; zoom <= 12; zoom++) {
+							var tiles = t.tilesInBbox(bbox, zoom)
+
+							tiles.forEach(function (tile) {
+								var url = "http://127.0.0.1:3000/ows"
+									+ "?layers=" + layername
+									+ "&mode=tile"
+									+ "&tilemode=gmap"
+									+ "&map.imagetype=png"
+									//+ "&map.imagetype=utfgrid"
+									+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+								url += "&MSFILTER=" + deterYears[year] + " AND cd_geocmu = '" + mun + "'"
+
+								// console.log(url)
+								urls.push(url)
+							})
+						}
+					}
+				}
+			}
+
+		}
+	}
+	else if (type == 'state') {
+		for (let uf of ufs) {
+			for (let layername of layers) {
+
+				if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+
+					for (var year = (years.length - 1); year >= 0; year--) {
+						// console.log("Year: " + years[year])
+						for (var zoom = 0; zoom <= 11; zoom++) {
+							var tiles = t.tilesInBbox(bbox, zoom)
+
+							tiles.forEach(function (tile) {
+								var url = "http://127.0.0.1:3000/ows"
+									+ "?layers=" + layername
+									+ "&mode=tile"
+									+ "&tilemode=gmap"
+									+ "&map.imagetype=png"
+									//+ "&map.imagetype=utfgrid"
+									+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+								url += "&MSFILTER=year=" + years[year] + " AND uf = '" + uf + "'"
+
+
+								// console.log(url)
+								urls.push(url)
+							})
+						}
+					}
+				}
+				else {
+					for (var year = (deterYears.length - 1); year >= 0; year--) {
+						// console.log("Year: " + years[year])
+						for (var zoom = 0; zoom <= 11; zoom++) {
+							var tiles = t.tilesInBbox(bbox, zoom)
+
+							tiles.forEach(function (tile) {
+								var url = "http://127.0.0.1:3000/ows"
+									+ "?layers=" + layername
+									+ "&mode=tile"
+									+ "&tilemode=gmap"
+									+ "&map.imagetype=png"
+									//+ "&map.imagetype=utfgrid"
+									+ "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+								url += "&MSFILTER=" + deterYears[year] + " AND uf = '" + uf + "'"
+
+								// console.log(url)
+								urls.push(url)
+							})
+						}
+					}
+				}
+			}
 		}
 	}
 }

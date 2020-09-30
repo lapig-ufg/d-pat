@@ -6,9 +6,9 @@ var left = -73.990450
 var top = 5.271841
 var right = -28.835908
 // var layername = process.argv[2]
-//var layername = "bi_ce_prodes_desmatamento_100_fip"
+var layername = ""
 
-var layers = ["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig", "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]
+var layers = ["landsat", "sentinel"]
 
 var multipleRequests = 10
 /*var bbox = { bottom : -33.752081, left : -73.990450, top : 5.271841, right : -28.835908 } //Brazil*/
@@ -18,32 +18,51 @@ var ufs = ['GO', 'SP', 'MA', 'RO', 'PA', 'MS', 'TO', 'MT', 'PR', 'PI', 'BA', 'DF
 
 var muns = getMunsCerrado();
 
-var years = [2002, 2004, 2006, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
+var years = [2000, 2002, 2004, 2006, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
+
 
 //var years = [2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 var urls = []
 
-for (let layername of layers) {
+for (l of layers) {
 
-    // for (var year = (years.length - 1); year >= 0; year--) {
-    // console.log("Year: " + years[year])
-    for (var zoom = 0; zoom <= 13; zoom++) {
-        var tiles = t.tilesInBbox(bbox, zoom)
+    for (var year = (years.length - 1); year >= 0; year--) {
 
-        tiles.forEach(function (tile) {
-            var url = "http://127.0.0.1:3000/ows"
-                + "?layers=" + layername
-                + "&mode=tile"
-                + "&tilemode=gmap"
-                + "&map.imagetype=png"
-                // + "&map.imagetype=utfgrid"
-                + "&tile=" + [tile.x, tile.y, tile.z].join('+')
+        let faz = false
 
-            // console.log(url)
-            urls.push(url)
-        })
-        // }
+        if (l == "landsat") {
+            layername = "bi_ce_mosaico_landsat_completo_30_" + years[year] + "_fip";
+            faz = true;
+        }
+        else if (l == "sentinel" && years[year] >= 2016) {
+            layername = "bi_ce_mosaico_sentinel_10_" + years[year] + "_lapig";
+            faz = true
+        }
+
+
+        // for (var year = (years.length - 1); year >= 0; year--) {
+        // console.log("Year: " + years[year])
+
+        if (faz) {
+            for (var zoom = 0; zoom <= 13; zoom++) {
+                var tiles = t.tilesInBbox(bbox, zoom)
+
+                tiles.forEach(function (tile) {
+                    var url = "http://127.0.0.1:3000/ows"
+                        + "?layers=" + layername
+                        + "&mode=tile"
+                        + "&tilemode=gmap"
+                        + "&map.imagetype=png"
+                        // + "&map.imagetype=utfgrid"
+                        + "&tile=" + [tile.x, tile.y, tile.z].join('+')
+
+                    // console.log(url)
+                    urls.push(url)
+                })
+                // }
+            }
+        }
     }
 }
 
