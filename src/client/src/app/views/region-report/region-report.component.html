@@ -71,7 +71,6 @@
                                             <mat-card-header>
                                                 <mat-card-title>{{texts.label_year}}: {{item.year}}</mat-card-title>
                                             </mat-card-header>
-
                                             <toh-spinner-img
                                                     class="img-landsat-laudo"
                                                     [largura]="'100%'"
@@ -79,9 +78,7 @@
                                                     [spinnerSrc]="svgLoading"
                                                     (click)="openLightBoxImagesLandSat(item)">
                                             </toh-spinner-img>
-
                                             <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">
-
                                             <mat-card-content >
                                                 <table class="tb-imgs" style="width:100%">
 

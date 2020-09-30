@@ -1,7 +1,7 @@
 import {Component, OnInit, ElementRef, OnDestroy, AfterViewInit, HostListener} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
-import {loadConfigurationFromPath} from "tslint/lib/configuration";
+import { TranslateService } from '@ngx-translate/core';
 
 declare  var $: any;
 
@@ -19,22 +19,28 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(
         private http: HttpClient,
         private elementRef: ElementRef,
-        private router: Router
+        private router: Router,
+        public translate: TranslateService
     ) {
+        this.pt_br = false;
+        translate.addLangs(['en', 'pt-br']);
+        translate.setDefaultLang('en');
+        const browserLang = translate.getBrowserLang();
+
+        translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
+        this.onLangClick(browserLang);
+
         this.showInfo = false;
         clearInterval(this.interValMasks);
-        this.http.get('/service/hotsite/lang?lang=pt-br').subscribe(result => {
-            this.texts = result;
-        });
     }
 
     onLangClick(lang) {
-        if (lang == 'pt-br') {
+        lang = lang === 'en' ? 'en-us' : lang;
+        if (lang === 'pt-br') {
             this.pt_br = true;
         } else {
             this.pt_br = false;
         }
-
         this.http.get('/service/hotsite/lang?lang=' + lang).subscribe(result => {
             this.texts = result;
         });
@@ -105,7 +111,6 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngOnInit() {
-        this.pt_br = true;
         this.fullpage = $("#fullpage").fullpage({
             navigation: true,
             showActiveTooltip: true,

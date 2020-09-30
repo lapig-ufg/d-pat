@@ -74,6 +74,21 @@
     color: white !important;
     cursor: pointer !important;
   }
+  .navbar-toggler-icon{
+    color:white !important;
+  }
+
+  .lang{
+    color: white;
+    font-weight: 200;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  .lang-selected{
+    color: #0b4e26;
+    font-weight: bolder;
+  }
 
   .scroll-to-top {
     position: fixed;

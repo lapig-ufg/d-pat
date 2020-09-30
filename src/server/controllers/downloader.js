@@ -57,14 +57,8 @@ module.exports = function (app) {
         var filename = "dados_"+region+".csv";
         var csv  = convertArrayToCSV(data);
 
-        await fs.writeFile(config.downloadDataDir+filename, csv);
+        await fs.writeFileSync(config.downloadDataDir+filename, csv);
         response.download(config.downloadDataDir+filename);
-        console.log(config.downloadDataDir+filename);
-
-        // fsp.appendFile(config.downloadDataDir+filename, csv, function (err) {
-        //     if (err) throw err;
-        //
-        // });
     };
 
     Controller.downloadSHP = function(request, response) {
