@@ -2830,6 +2830,18 @@
 			"polygon_class": {
 				"pt-br": "Clique aqui para o detalhamento da metodologia de qualificação dos polígonos.",
 				"en-us": "Click here for details on the polygons qualification methodology."
+			},
+			"suscept_tooltip": {
+				"pt-br": "Ir para o detalhamento dos resultados para a Superfície de Susceptibilidade.",
+				"en-us": "Go to the details of the results for the susceptibility of surface."
+			},
+			"bfast_tooltip": {
+				"pt-br": "Ir para o detalhamento dos resultados do Bfast-Monitor.",
+				"en-us": "Go to the details of the results of Bfast-Monitor."
+			},
+			"abc_tooltip": {
+				"pt-br": "Ir para a página do Projeto FIP-ABC",
+				"en-us": "Go to the FIP-ABC Project page"
 			}
 		},
 		"car_tab": {

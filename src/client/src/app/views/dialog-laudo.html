@@ -424,7 +424,7 @@
                         <div class="p-col" style="text-align: center;">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}
                             </h5>
-                            <button [matTooltip]="textOnDialog.information_tab.polygon_class"
+                            <button [matTooltip]="textOnDialog.information_tab.suscept_tooltip"
                                 (click)="goToDoc('suscept')" classs="btn-info" mat-icon-button>
                                 <mat-icon>help</mat-icon>
                             </button>
@@ -458,7 +458,7 @@
                         <div class="p-col" style="text-align: left;"
                             *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
-                            <button [matTooltip]="textOnDialog.information_tab.polygon_class" (click)="goToDoc('bfast')"
+                            <button [matTooltip]="textOnDialog.information_tab.bfast_tooltip" (click)="goToDoc('bfast')"
                                 classs="btn-info" mat-icon-button>
                                 <mat-icon>help</mat-icon>
                             </button>
@@ -489,7 +489,12 @@
                 <p-accordionTab class="tab" header="{{textOnDialog.fip_abc_tab.title_tab}}" *ngIf="abcData.length > 0">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of abcData; let i=index">
                         <div class="p-col-6">
+                            <button [matTooltip]="textOnDialog.information_tab.abc_tooltip" (click)="goToDoc('abc')"
+                                classs="btn-info" mat-icon-button>
+                                <mat-icon>help</mat-icon>
+                            </button>
                             <h5 class="subtitles-report">{{textOnDialog.fip_abc_tab.title_info}}</h5>
+
                             <br>
                             <!-- <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
                                 </b>

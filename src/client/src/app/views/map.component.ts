@@ -3111,6 +3111,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     else if (type == 'suscept') {
       window.open('assets/documents/' + this.data.language + '_suscept.pdf', '_blank');
     }
+    else if (type == 'abc') {
+      window.open('https://www.cnabrasil.org.br/projetos-e-programas/abc-cerrado', '_blank');
+    }
   }
 
   private getServiceParams() {
