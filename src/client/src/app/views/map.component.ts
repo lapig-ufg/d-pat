@@ -110,6 +110,8 @@ export class MapComponent implements OnInit {
   periodSelected: any;
   desmatInfo: any;
 
+  activeIndexLateralAccordion: any
+
   optionsTimeSeries: any;
   optionsStates: any;
   optionsCities: any;
@@ -567,7 +569,7 @@ export class MapComponent implements OnInit {
     } else if (event.tab.textLabel == "Uso do Solo" || event.tab.textLabel == "Land Use and Land Cover") {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
-      this.changeSelectedLulcChart({ index: 0 });
+
     }
     // this.googleAnalyticsService.eventEmitter("changeTab", "charts", this.changeTabSelected);
   }
@@ -609,6 +611,7 @@ export class MapComponent implements OnInit {
 
       this.titlesLayerBox = titlesResults['layer_box'];
       this.titlesLayerBox.legendTitle = titlesResults['legendTitle'];
+      this.titlesLayerBox.region_tooltip = titlesResults['region_report_tooltip'];
       this.minireportText = titlesResults['utfgrid'];
       this.descriptorText = titlesResults['descriptor'];
 
@@ -833,31 +836,58 @@ export class MapComponent implements OnInit {
 
   }
 
+  onOpenLateralAccordionLULCTab(e) {
+
+    if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 2))) {
+      this.activeIndexLateralAccordion = true
+      this.changeSelectedLulcChart({ index: 0 });
+    }
+    else {
+      this.activeIndexLateralAccordion = false
+    }
+
+  }
+
+  onCloseLateralAccordionLULCTab(e) {
+
+    if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 2))) {
+      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+      uso_terra.visible = false;
+
+      let agricultura = this.layersNames.find(element => element.id === "agricultura");
+      agricultura.visible = false;
+
+      this.changeVisibility(uso_terra, undefined)
+      this.changeVisibility(agricultura, undefined)
+    }
+  }
+
   changeSelectedLulcChart(e) {
 
     let uso_terra = this.layersNames.find(element => element.id === "terraclass");
     let agricultura = this.layersNames.find(element => element.id === "agricultura");
 
-    if (this.desmatInfo.year >= 2013) {
-      if (e.index == 0) {
-        uso_terra.selectedType = "uso_solo_terraclass_fip"
+    if (this.activeIndexLateralAccordion) {
+
+      if (this.desmatInfo.year >= 2013) {
+        if (e.index == 0) {
+          uso_terra.selectedType = "uso_solo_terraclass_fip"
+          uso_terra.visible = true;
+          agricultura.visible = false;
+        }
+        else if (e.index == 1) {
+          uso_terra.selectedType = "agricultura_agrosatelite_fip"
+          uso_terra.visible = false
+          agricultura.visible = true;
+        }
+      }
+      else {
+        uso_terra.selectedType = "uso_solo_probio_fip"
         uso_terra.visible = true;
         agricultura.visible = false;
       }
-      else if (e.index == 1) {
-        uso_terra.selectedType = "agricultura_agrosatelite_fip"
-        uso_terra.visible = false
-        agricultura.visible = true;
-      }
-    }
-    else {
-      uso_terra.selectedType = "uso_solo_probio_fip"
-      uso_terra.visible
-      agricultura.visible = false;
-    }
 
-    uso_terra.visible = true;
-
+    }
     this.changeVisibility(uso_terra, undefined);
     this.changeVisibility(agricultura, undefined);
 

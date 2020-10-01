@@ -1018,6 +1018,7 @@ module.exports = function (app) {
 
     var result = {
       legendTitle: languageJson["legends_box_title"][language],
+      region_report_tooltip: languageJson["region_report_tooltip"][language],
       utfgrid: {
         area: languageJson["mini_report_utfgrid"]["area"][language],
         city: languageJson["mini_report_utfgrid"]["city"][language],

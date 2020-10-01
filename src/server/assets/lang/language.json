@@ -7,6 +7,10 @@
 		"pt-br": "Estatísticas de Desmatamento sobre o PRODES-Cerrado",
 		"en-us": "PRODES-Cerrado Deforestation Statistics"
 	},
+	"region_report_tooltip": {
+		"pt-br": "Clique aqui para abrir o Relatório desta Região",
+		"en-us": "Click here to open the Report for this Region"
+	},
 	"charts_box_timeseries": {
 		"label": {
 			"pt-br": "Série Temporal",
@@ -281,26 +285,6 @@
 			"en-us": "Properties registered in the CAR that intersect with the submitted area"
 		},
 		"car_table_headers": {
-			"pt-br": [
-				"Código CAR",
-				"Área da Propriedade",
-				"Área de APP",
-				"Área da Reserva Legal",
-				"Área desmatada em APP",
-				"Área desmatada por CAR",
-				"Área desmatada em Res. Legal"
-			],
-			"en-us": [
-				"CAR Code",
-				"Property Area",
-				"APP Area",
-				"Legal Reserve Area",
-				"Area deforested in APP",
-				"Area deforested by CAR",
-				"Area deforested in Legal Reserve"
-			]
-		},
-		"upload_submit": {
 			"pt-br": [
 				"Código CAR",
 				"Área da Propriedade",
@@ -868,8 +852,8 @@
 								"en-us": "Details"
 							},
 							"description": {
-								"pt-br": "Text informado pelo LAPIG/UFG",
-								"en-us": "Text informed by LAPIG/UFG"
+								"pt-br": "<a target='_blank' class='link-details' href='https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract'> https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract</a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract'> https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract</a>"
 							}
 						}
 					],
@@ -3444,7 +3428,7 @@
 								"en-us": "Details"
 							},
 							"description": {
-								"pt-br": "Text informado pelo LAPIG/UFG",
+								"pt-br": "Texto informado pelo LAPIG/UFG",
 								"en-us": "Text informed by LAPIG/UFG"
 							}
 						}
