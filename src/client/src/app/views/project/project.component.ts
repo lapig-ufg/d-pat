@@ -11,8 +11,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     translate.addLangs(['en', 'pt-br']);
     translate.setDefaultLang('en');
     let browserLang = translate.getBrowserLang();
-    // browserLang = browserLang === 'en' ? 'en-us' : browserLang;
-    // browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
+    browserLang = browserLang === 'en' ? 'en-us' : browserLang;
+    browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.lang = browserLang;
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
   }
