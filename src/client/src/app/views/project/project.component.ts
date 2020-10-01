@@ -8,13 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProjectComponent implements OnInit, OnDestroy {
   lang: string;
   constructor(public translate: TranslateService) {
-    translate.addLangs(['en', 'pt-br']);
+    translate.addLangs(['en', 'pt']);
     translate.setDefaultLang('en');
     let browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|pt/) ? browserLang : 'en');
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
     browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.lang = browserLang;
-    translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
   }
 
   ngOnInit() {
@@ -26,7 +26,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   setLang(lang) {
-    this.translate.use(lang);
+    let language = lang === 'en-us' ? 'en' : lang;
+    this.translate.use(language);
     this.lang = lang;
   }
 
