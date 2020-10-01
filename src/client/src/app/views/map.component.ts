@@ -328,6 +328,8 @@ export class MapComponent implements OnInit {
     this.datePipe = new DatePipe('pt-BR');
 
     let browserLang = translate.getBrowserLang();
+    console.log(browserLang)
+
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
     browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
