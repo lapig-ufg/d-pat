@@ -271,8 +271,7 @@
                         </div>
                         <div class="p-col">
                             <div class="p-grid">
-                                <div class="p-col"
-                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <div class="p-col" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
                                         [spinnerSrc]="svgLoading" (click)="openLightboxCAR(i)">
                                     </toh-spinner-img>
@@ -424,63 +423,54 @@
                         <div class="p-col" style="text-align: center;">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}
                             </h5>
-                            <button [matTooltip]="textOnDialog.information_tab.suscept_tooltip"
-                                (click)="goToDoc('suscept')" classs="btn-info" mat-icon-button>
-                                <mat-icon>help</mat-icon>
-                            </button>
-                            <div class="p-grid" style="margin-top: .3em">
-                                <div class="p-col-4" style="text-align: center;">
-                                    <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
-                                    <br>
-                                    <span style="font-size: 14px">
-                                        <strong>{{textOnDialog.analise_automatica.info_susceptibility_faixas}}</strong>
-                                    </span> <br>
-                                    <br>
-                                    <span style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
-                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
-                                        <b>{{dataSuscept.type}}</b>
-                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
-                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
+                            <div class="p-grid p-justify-center" style="margin-top: .3em">
+                                <button [matTooltip]="textOnDialog.information_tab.suscept_tooltip"
+                                        (click)="goToDoc('suscept')" classs="btn-info" mat-icon-button>
+                                    <mat-icon>help</mat-icon>
+                                </button>
+                                <div class="p-col p-justify-center" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
 
-                                    <!-- <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept == null">
-                                        A susceptibilidade a desmatamentos neste polígono
-                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span> -->
-                                </div>
-                                <div class="p-col-8"
-                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                      <p style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
+                                          {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
+                                          <strong>{{dataSuscept.type}}</strong>
+                                          {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
+                                          <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong>
+                                      </p>
+                                    <br>
                                     <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb" [spinnerSrc]="svgLoading"
                                         [largura]="'100%'" (click)="openLightboxSuscept()">
                                     </toh-spinner-img>
                                     <br>
+                                    <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
+                                    <p style="font-size: 14px;">
+                                        <strong>{{textOnDialog.analise_automatica.info_susceptibility_faixas}}</strong>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-col" style="text-align: left;"
+                        <div class="p-col"
                             *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
-                            <button [matTooltip]="textOnDialog.information_tab.bfast_tooltip" (click)="goToDoc('bfast')"
-                                classs="btn-info" mat-icon-button>
-                                <mat-icon>help</mat-icon>
-                            </button>
-                            <div class="p-grid" style="margin-top: .5em">
-                                <div class="p-col-4" style="text-align: center; ">
-                                    <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">
-                                    <br>
-                                    <span style="font-size: 14px;">
-                                        <strong>{{textOnDialog.analise_automatica.info_bfast_faixas}}</strong>
-                                    </span>
-                                    <br>
-                                    <br>
-                                    <span style="font-size: 14px;">
+                            <div class="p-grid p-justify-center" style="margin-top: .3em">
+                                <button [matTooltip]="textOnDialog.information_tab.bfast_tooltip" (click)="goToDoc('bfast')"
+                                        classs="btn-info" mat-icon-button>
+                                    <mat-icon>help</mat-icon>
+                                </button>
+                                <div class="p-col p-justify-center" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                    <p style="font-size: 14px;">
                                         {{textOnDialog.analise_automatica.info_bfast_description}}
-                                        <strong>{{dataBfast.prob_Formatada}}.</strong></span>
-                                </div>
-                                <div class="p-col-8"
-                                    style="text-align: left; min-width: 300px; max-width: 350px; width: 100%">
+                                        <strong>{{dataBfast.prob_Formatada}}.</strong>
+                                    </p>
+                                    <br>
                                     <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb" [spinnerSrc]="svgLoading"
                                         [largura]="'100%'" (click)="openLightboxBfast()">
                                     </toh-spinner-img>
-
+                                    <br>
+                                    <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">
+                                    <br>
+                                    <p style="font-size: 14px;">
+                                        <strong>{{textOnDialog.analise_automatica.info_bfast_faixas}}</strong>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -489,8 +479,8 @@
                 <p-accordionTab class="tab" header="{{textOnDialog.fip_abc_tab.title_tab}}" *ngIf="abcData.length > 0">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of abcData; let i=index">
                         <div class="p-col-6">
-                            <button [matTooltip]="textOnDialog.information_tab.abc_tooltip" (click)="goToDoc('abc')"
-                                classs="btn-info" mat-icon-button>
+                            <button style="float: right; margin-top: -10px;" [matTooltip]="textOnDialog.information_tab.abc_tooltip" (click)="goToDoc('abc')"
+                                    classs="btn-info" mat-icon-button>
                                 <mat-icon>help</mat-icon>
                             </button>
                             <h5 class="subtitles-report">{{textOnDialog.fip_abc_tab.title_info}}</h5>
@@ -520,7 +510,7 @@
 
                         </div>
 
-                        <div class="p-col-6 ">
+                        <div class="p-col-6">
                             <div class="p-grid">
 
                                 <div class="p-col-8"
@@ -534,9 +524,7 @@
                                     <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
                                     <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
                                     <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
-                                    <img *ngIf="item.imgsProp.legendDesmatamento"
-                                        [src]="item.imgsProp.legendDesmatamento">
-
+                                    <img *ngIf="item.imgsProp.legendDesmatamento" [src]="item.imgsProp.legendDesmatamento">
                                 </div>
 
                             </div>
