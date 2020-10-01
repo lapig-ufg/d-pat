@@ -2826,6 +2826,10 @@
 			"info_qrcode": {
 				"pt-br": "Leia o QR Code ou acesse o link para visualizar o relatório na plataforma.",
 				"en-us": "Read the QR Code or access the link to view the report on the platform."
+			},
+			"polygon_class": {
+				"pt-br": "Clique aqui para o detalhamento da metodologia de qualificação dos polígonos.",
+				"en-us": "Click here for details on the polygons qualification methodology."
 			}
 		},
 		"car_tab": {

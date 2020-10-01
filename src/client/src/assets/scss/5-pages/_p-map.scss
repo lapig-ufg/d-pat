@@ -72,8 +72,15 @@ hr {
     border-radius: 10px ;
   }
 
-  table tr th, table tr td{
+  table tr th{
     padding-left: 10px !important;
+    width: 8vw;
+    line-height: 15px;
+  }
+  table tr td{
+    padding-left: 10px !important;
+    width: 6vw;
+    line-height: 15px;
   }
 
   .card-body {
@@ -696,11 +703,14 @@ h5.expansion-layer  {
   text-align: right;
   padding-right: 14px;
 }
+.mat-expansion-panel{
+  border-radius: 0px !important;
+}
 
 .mat-expansion-panel-header.mat-expanded {
   background: #eeeeee;
   color: #4e4e4e;
-  border-radius: 0px;
+  border-radius: 0px !important;
   border-left: 5px solid #0e9909;
 }
 
@@ -750,15 +760,6 @@ mat-select {
   width: fit-content !important;
   min-width: 15ch;
   max-width: 25ch;
-}
-
-.chart-region {
-  width: 100%;
-  height: 100%;
-  display: table;
-  text-align: left;
-  vertical-align: right;
-  font-size: 36pt
 }
 
 .stylePercentual {
@@ -1412,22 +1413,114 @@ mat-slider {
   border-radius: 10px ;
 }
 
+#sideBar{
+
+  $sidebarWidth: calc(100% - 0.2rem);
+  $colorDpat: #104e14;
+  .row{
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .ui-accordion {
+    width: $sidebarWidth
+  }
+  .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
+    background-color: $colorDpat;
+    border: 1px solid $colorDpat;
+    color: #ffffff;
+  }
+
+  .ui-table .ui-table-tbody > tr.ui-state-highlight {
+    background-color: $colorDpat;
+    color: #ffffff;
+  }
+  .ui-scrollpanel-bar-y {
+    width: 3px;
+    right: -2px;
+  }
+  .ui-scrollpanel-bar-x {
+    height: 2px;
+    bottom: -2px;
+  }
+  .ui-scrollpanel-content {
+  }
+  .title-section{
+    width: $sidebarWidth;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+    background-color: $colorDpat;
+    color: white;
+    border-radius: 6px;
+  }
+  .ui-tabview {
+    width: $sidebarWidth;
+    a{
+      color: white;
+      background-color: $colorDpat;
+    }
+  }
+
+  .ui-sidebar-close {
+    float: left;
+  }
+  .pi-times:before {
+    content: "\e90b";
+    color: $colorDpat
+  }
+  .chart-region {
+    width: $sidebarWidth;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px;
+    text-align: center;
+    display: table;
+    border-radius: 6px;
+    vertical-align: right;
+    font-size: 30pt;
+    background-color: #f9b233;
+    color: #454444;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px !important;
+    cursor:pointer!important;
+  }
+
+}
+.container-btn-sidebar{
+  position: absolute;
+  right: 1%;
+  top: 2%;
+  z-index: 999;
+  padding: 20px;
+  border-radius: 100px;
+  background-color: #584e4f8c;
+  .btn-layers {
+    margin-bottom: 0;
+  }
+}
+
+.btn-sidebar{
+
+}
+
 @media screen and (max-width: 1050px) {
 
 }
 
 @media screen and (max-width: 1200px) {
 
-  #positionCharts{
-    bottom: 7% !important;
-  }
+#positionCharts{
+bottom: 7% !important;
+}
 
-  .controls  {
-    top: 24%;
-  }
+.controls  {
+top: 24%;
+}
 
-  #positionLegend {
-    width: 52vh;
-  }
+#positionLegend {
+width: 52vh;
+}
 }
 

@@ -1,0 +1,15 @@
+#charts-dialog{
+  h4{
+    text-align: center;
+  }
+  p{
+    text-align:center;
+    margin-bottom: 10px;
+  }
+  .container-buttons{
+    display: grid;
+    position: fixed;
+    right: calc(100% - 89vw);
+    top: 32px;
+  }
+}
