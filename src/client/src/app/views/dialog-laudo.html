@@ -58,8 +58,8 @@
                 <p-accordionTab class="tab" header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even">
                         <div class="p-col" *ngIf="infoDesmat.pathclassefip != '1' ">
-                            <button  [matTooltip]="textOnDialog.information_tab.polygon_class" (click)="goToDoc()"
-                                    classs="btn-info" mat-icon-button>
+                            <button [matTooltip]="textOnDialog.information_tab.polygon_class" (click)="goToDoc('class')"
+                                classs="btn-info" mat-icon-button>
                                 <mat-icon>help</mat-icon>
                             </button>
                             <toh-spinner-img class="seal" style="max-width: 62%" [largura]="'100%'"
@@ -424,6 +424,10 @@
                         <div class="p-col" style="text-align: center;">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}
                             </h5>
+                            <button [matTooltip]="textOnDialog.information_tab.polygon_class"
+                                (click)="goToDoc('suscept')" classs="btn-info" mat-icon-button>
+                                <mat-icon>help</mat-icon>
+                            </button>
                             <div class="p-grid" style="margin-top: .3em">
                                 <div class="p-col-4" style="text-align: center;">
                                     <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
@@ -454,6 +458,10 @@
                         <div class="p-col" style="text-align: left;"
                             *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
+                            <button [matTooltip]="textOnDialog.information_tab.polygon_class" (click)="goToDoc('bfast')"
+                                classs="btn-info" mat-icon-button>
+                                <mat-icon>help</mat-icon>
+                            </button>
                             <div class="p-grid" style="margin-top: .5em">
                                 <div class="p-col-4" style="text-align: center; ">
                                     <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">

@@ -44,7 +44,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { RegionReportComponent } from './region-report/region-report.component';
 import { ReportCarComponent } from './report-car/report-car.component';
-import {ChartsComponent} from "./charts/charts.component";
+import { ChartsComponent } from "./charts/charts.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -337,7 +337,6 @@ export class MapComponent implements OnInit {
     };
 
     let browserLang = translate.getBrowserLang();
-    console.log(browserLang)
 
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
@@ -3101,8 +3100,17 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  goToDoc(){
-    window.open('assets/documents/qualificacao_poligonos_'+this.data.language+'.pdf', '_blank');
+  goToDoc(type) {
+
+    if (type == 'class') {
+      window.open('assets/documents/qualificacao_poligonos_' + this.data.language + '.pdf', '_blank');
+    }
+    else if (type == 'bfast') {
+      window.open('assets/documents/' + this.data.language + '_bfast.pdf', '_blank');
+    }
+    else if (type == 'suscept') {
+      window.open('assets/documents/' + this.data.language + '_suscept.pdf', '_blank');
+    }
   }
 
   private getServiceParams() {
@@ -4161,7 +4169,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
             });
           }
-          console.log(this.vetEspecial)
 
           // if (this.dataEspecial.ap.show) {
           // this.vetEspecial.push({
