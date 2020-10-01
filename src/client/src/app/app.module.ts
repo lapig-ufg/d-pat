@@ -42,6 +42,7 @@ import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { FieldsetModule } from 'primeng/fieldset';
 import { PanelModule } from 'primeng/panel';
+import { SidebarModule } from 'primeng/sidebar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { TooltipModule } from 'primeng/tooltip';
 import { LightboxModule } from 'ngx-lightbox';
@@ -63,6 +64,7 @@ import { ProjectComponent } from './views/project/project.component';
 import { MapMobileComponent } from './views/map-mobile/map-mobile.component';
 import { RegionReportComponent } from './views/region-report/region-report.component';
 import { ReportCarComponent } from './views/report-car/report-car.component';
+import { ChartsComponent } from './views/charts/charts.component';
 
 registerLocaleData(localePt);
 
@@ -85,7 +87,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProjectComponent,
     MapMobileComponent,
     RegionReportComponent,
-    ReportCarComponent
+    ReportCarComponent,
+    ChartsComponent
   ],
   imports: [
     TabViewModule,
@@ -96,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardModule,
     LightboxModule,
     ScrollPanelModule,
+    SidebarModule,
     PanelModule,
     AccordionModule,
     TableModule,
@@ -132,7 +136,19 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent, DialogMobileLaudo, ReportCarComponent],
+  entryComponents: [
+      DialogOverviewExampleDialog,
+      MetadataComponent,
+      HotsiteComponent,
+      MapComponent,
+      ProjectComponent,
+      MobileComponent,
+      MapMobileComponent,
+      RegionReportComponent,
+      DialogMobileLaudo,
+      ReportCarComponent,
+      ChartsComponent
+  ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,

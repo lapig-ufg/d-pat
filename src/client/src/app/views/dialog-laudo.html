@@ -58,6 +58,10 @@
                 <p-accordionTab class="tab" header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                     <div class="p-grid p-justify-even">
                         <div class="p-col" *ngIf="infoDesmat.pathclassefip != '1' ">
+                            <button  [matTooltip]="textOnDialog.information_tab.polygon_class" (click)="goToDoc()"
+                                    classs="btn-info" mat-icon-button>
+                                <mat-icon>help</mat-icon>
+                            </button>
                             <toh-spinner-img class="seal" style="max-width: 62%" [largura]="'100%'"
                                 [imgSrc]="infoDesmat.pathclassefip" [spinnerSrc]="svgLoading">
                             </toh-spinner-img>

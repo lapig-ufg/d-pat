@@ -44,6 +44,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { RegionReportComponent } from './region-report/region-report.component';
 import { ReportCarComponent } from './report-car/report-car.component';
+import {ChartsComponent} from "./charts/charts.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -158,7 +159,7 @@ export class MapComponent implements OnInit {
 
   isFilteredByCity = false;
   isFilteredByState = false;
-  @ViewChild("matgroup", { static: false }) matgroup: MatTabGroup;
+  // @ViewChild("matgroup", { static: false }) matgroup: MatTabGroup;
   collapseLegends = false;
 
   infodata: any;
@@ -327,14 +328,20 @@ export class MapComponent implements OnInit {
     };
     this.datePipe = new DatePipe('pt-BR');
 
+    this.styleSelected = {
+      'background-color': '#fe8321'
+    };
+
+    this.styleDefault = {
+      'background-color': '#707070'
+    };
+
     let browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
     browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.language = browserLang;
-
-    console.log(this.language)
-
+    this.setStylesLangButton();
     this.mapForABC = new Map([
       ["RPD", {
         "pt-br": "Recuperação de Pastagens Degradada (RPD)",
@@ -384,17 +391,6 @@ export class MapComponent implements OnInit {
       }]
     ]);
 
-    this.styleSelected = {
-      'background-color': '#fe8321'
-    };
-
-    this.styleDefault = {
-      'background-color': '#707070'
-    };
-
-    this.bntStyleENG = this.styleDefault;
-    this.bntStylePOR = this.styleSelected;
-
     this.updateCharts();
     this.chartRegionScale = true;
     this.titlesLayerBox = {};
@@ -403,7 +399,7 @@ export class MapComponent implements OnInit {
     this.updateTexts();
 
     this.showDrawer = false;
-    this.showStatistics = true;
+    this.showStatistics = false;
     this.controls = {};
     this.updateControls();
     this.loadingsDownload = false;
@@ -840,28 +836,26 @@ export class MapComponent implements OnInit {
 
     let uso_terra = this.layersNames.find(element => element.id === "terraclass");
     let agricultura = this.layersNames.find(element => element.id === "agricultura");
-    if (this.changeTabSelected === "Uso do Solo" || this.changeTabSelected == "Land Use and Land Cover") {
 
-      if (this.desmatInfo.year >= 2013) {
-        if (e.index == 0) {
-          uso_terra.selectedType = "uso_solo_terraclass_fip"
-          uso_terra.visible = true;
-          agricultura.visible = false;
-        }
-        else if (e.index == 1) {
-          uso_terra.selectedType = "agricultura_agrosatelite_fip"
-          uso_terra.visible = false
-          agricultura.visible = true;
-        }
-      }
-      else {
-        uso_terra.selectedType = "uso_solo_probio_fip"
-        uso_terra.visible
+    if (this.desmatInfo.year >= 2013) {
+      if (e.index == 0) {
+        uso_terra.selectedType = "uso_solo_terraclass_fip"
+        uso_terra.visible = true;
         agricultura.visible = false;
       }
-
-      uso_terra.visible = true;
+      else if (e.index == 1) {
+        uso_terra.selectedType = "agricultura_agrosatelite_fip"
+        uso_terra.visible = false
+        agricultura.visible = true;
+      }
     }
+    else {
+      uso_terra.selectedType = "uso_solo_probio_fip"
+      uso_terra.visible
+      agricultura.visible = false;
+    }
+
+    uso_terra.visible = true;
 
     this.changeVisibility(uso_terra, undefined);
     this.changeVisibility(agricultura, undefined);
@@ -899,7 +893,7 @@ export class MapComponent implements OnInit {
 
     this.selectRegion = region;
 
-    this.matgroup.selectedIndex = 0
+    // this.matgroup.selectedIndex = 0
 
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
@@ -2906,6 +2900,20 @@ export class MapComponent implements OnInit {
     }
     this.updateRegion(this.defaultRegion);
   }
+  async openCharts(title, description, data, type, options) {
+    let ob = {
+      title: title,
+      description: description,
+      type: type,
+      data: data,
+      options: options,
+    }
+    this.dialog.open(ChartsComponent, {
+      width: 'calc(100% - 5vw)',
+      height: 'calc(100% - 5vh)',
+      data: { ob }
+    });
+  }
   ngOnInit() {
 
     let descriptorURL = '/service/map/descriptor' + this.getServiceParams();
@@ -3089,6 +3097,10 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   onNoClick(): void {
     this.cdRef.detach();
     this.dialogRef.close();
+  }
+
+  goToDoc(){
+    window.open('assets/documents/qualificacao_poligonos_'+this.data.language+'.pdf', '_blank');
   }
 
   private getServiceParams() {
