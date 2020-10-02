@@ -131,7 +131,6 @@ export class MapComponent implements OnInit {
   valueRegion: any;
   regionFilterDefault: any;
   urls: any;
-  dataExtent: any;
 
   searching = false;
   searchFailed = false;
