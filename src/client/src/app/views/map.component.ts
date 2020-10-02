@@ -43,6 +43,7 @@ import { TranslateService } from '@ngx-translate/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { RegionReportComponent } from './region-report/region-report.component';
+import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
 import { ReportCarComponent } from './report-car/report-car.component';
 import { ChartsComponent } from "./charts/charts.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -2482,11 +2483,20 @@ export class MapComponent implements OnInit {
       };
     }
 
-    this.dialog.open(RegionReportComponent, {
-      width: 'calc(100% - 5vw)',
-      height: 'calc(100% - 5vh)',
-      data: { dados }
-    });
+    if (window.innerWidth < 900) {
+      this.dialog.open(RegionReportMobileComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados }
+      });
+    } else {
+      this.dialog.open(RegionReportComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados }
+      });
+    }
+
   }
   async printRegionsIdentification(token) {
     let language = this.language;
