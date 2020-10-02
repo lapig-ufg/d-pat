@@ -240,21 +240,25 @@
         </div>
       </mat-drawer-container>
     </mat-tab>
-    <mat-tab label = "Estatísticas" *ngIf="showStatistics">
+    <mat-tab label = "Estatísticas">
       <p-scrollPanel [style]="{width: '100%', height: '75vh'}">
         <div id="positionCharts">
           <div *ngIf="true" id="tabGraficoLinhas">
             <h4 style="font-size: 30px;">{{dataSeries.label}} </h4>
             <div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <div class="chart-region">
                     <h5>
+                      <button *ngIf="selectRegion.type != 'biome'" color="primary"
+                        (click)="openRegionReport()" mat-icon-button>
+                        <mat-icon>text_snippet</mat-icon>
+                      </button>
                       <strong> {{ selectRegion.text }} </strong>
                     </h5>
                   </div>
                 </div>
-                <div class="col-md-8" style="text-align:justify">
+                <div class="col-md-12" style="text-align:justify">
                   {{ dataSeries.description }}
                 </div>
               </div>

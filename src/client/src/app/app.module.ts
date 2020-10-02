@@ -61,6 +61,7 @@ import { ProjectComponent } from './views/project/project.component';
 import { MapMobileComponent } from './views/map-mobile/map-mobile.component';
 import { RegionReportComponent } from './views/region-report/region-report.component';
 import { ReportCarComponent } from './views/report-car/report-car.component';
+import { RegionReportMobileComponent } from './views/region-report-mobile/region-report-mobile.component';
 
 registerLocaleData(localePt);
 
@@ -78,7 +79,8 @@ registerLocaleData(localePt);
     ProjectComponent,
     MapMobileComponent,
     RegionReportComponent,
-    ReportCarComponent
+    ReportCarComponent,
+    RegionReportMobileComponent
   ],
   imports: [
     TabViewModule,
@@ -118,7 +120,7 @@ registerLocaleData(localePt);
     RouterModule,
     NgbModule
   ],
-  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent, DialogMobileLaudo, ReportCarComponent],
+  entryComponents:[DialogOverviewExampleDialog, MetadataComponent, HotsiteComponent, MapComponent, ProjectComponent, MobileComponent, MapMobileComponent, RegionReportComponent, DialogMobileLaudo, ReportCarComponent, RegionReportMobileComponent],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,
