@@ -5,6 +5,8 @@ import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-ima
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Lightbox } from 'ngx-lightbox';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import OlView from 'ol/View';
+import * as OlProj from 'ol/proj';
 import logos from '../../views/logos';
 import * as moment from 'moment';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -20,6 +22,10 @@ declare let html2canvas: any;
   // styleUrls: ['./map-mobile.component.css']
 })
 export class MapMobileComponent extends MapComponent {
+    ngOnInit() {
+      super.ngOnInit();
+      this.currentZoom = 4.8;
+    }
 
   openDialog(): void {
     //  @todo REMOVE

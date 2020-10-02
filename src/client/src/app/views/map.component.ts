@@ -346,6 +346,7 @@ export class MapComponent implements OnInit {
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
     browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.language = browserLang;
+
     this.setStylesLangButton();
     this.mapForABC = new Map([
       ["RPD", {
@@ -3038,7 +3039,9 @@ export class MapComponent implements OnInit {
     );
 
     if (window.innerWidth < this.breakpointMobile) {
-      this.router.navigate(['/mobile']);
+      if (!this.router.url.includes('mobile')){
+        this.router.navigate(['/mobile']);
+      }
     }
 
     let self = this;
@@ -3056,13 +3059,13 @@ export class MapComponent implements OnInit {
 
         if (window.innerWidth < self.breakpointMobile) {
           self.router.navigate(['mobile-regions/' + params.get('token')]);
-        } else {
-          self.selectedIndexConteudo = 3;
-          self.selectedIndexUpload = 1;
-          self.layerFromConsulta.token = params.get('token');
-          self.analyzeUploadShape(true);
-          self.handleDrawer();
         }
+
+        self.selectedIndexConteudo = 3;
+        self.selectedIndexUpload = 1;
+        self.layerFromConsulta.token = params.get('token');
+        self.analyzeUploadShape(true);
+        self.handleDrawer();
       }
     });
   }
