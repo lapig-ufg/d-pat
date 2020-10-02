@@ -26,7 +26,7 @@ const routesMobile: Routes = [
   { path: 'projeto', component: ProjectComponent },
   { path: 'map-mobile', component: MapMobileComponent },
   { path: 'map-mobile/:token', component: MapMobileComponent },
-  { path: 'regions/:token', component: MapMobileComponent }
+  { path: 'mobile-regions/:token', component: MapMobileComponent }
 ]
 
 @NgModule({

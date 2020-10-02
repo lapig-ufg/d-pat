@@ -69,19 +69,11 @@
         <button style="display: none" class="c-hamburger c-hamburger--htla info-2" (click)="handleMenu($event)">
             <span>toggle menu</span>
         </button>
-        <div class="btn-navigate">
-            <button mat-icon-button color="primary" (click)="moveUp()" >
-                <mat-icon>arrow_upward</mat-icon>
-            </button>
-            <button mat-icon-button color="primary"  (click)="moveDown()">
-                <mat-icon>arrow_downward</mat-icon>
-            </button>
-        </div>
     </div>
 
     <div class="content-overlay">
 
-        <a routerLink="/map-mobile" class="join">Acessar Plataforma</a>
+        <a routerLink="/map-mobile" class="join">{{texts.hover_btn_access_platform}}</a>
 
         <div class="credit">
             <a href="https://www.lapig.iesa.ufg.br/lapig/" title="" target="_blank"> LAPIG - UFG </a>

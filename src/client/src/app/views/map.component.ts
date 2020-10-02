@@ -43,6 +43,7 @@ import { TranslateService } from '@ngx-translate/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { RegionReportComponent } from './region-report/region-report.component';
+import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
 import { ReportCarComponent } from './report-car/report-car.component';
 import { ChartsComponent } from "./charts/charts.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -240,6 +241,7 @@ export class MapComponent implements OnInit {
   controls: any;
   showStatistics: boolean;
   loadingsDownload: boolean;
+  breakpointMobile: number;
 
   constructor(
     private http: HttpClient,
@@ -343,6 +345,7 @@ export class MapComponent implements OnInit {
     browserLang = browserLang === 'en' ? 'en-us' : browserLang;
     browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
     this.language = browserLang;
+
     this.setStylesLangButton();
     this.mapForABC = new Map([
       ["RPD", {
@@ -409,6 +412,7 @@ export class MapComponent implements OnInit {
 
     this.selectedIndexConteudo = 0;
     this.selectedIndexUpload = 0;
+    this.breakpointMobile = 1024;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -2330,8 +2334,8 @@ export class MapComponent implements OnInit {
       this.currentZoom = 6;
     }
 
-    if (window.innerWidth < 900) {
-      //this.router.navigate(['/mobile']);
+    if (window.innerWidth < this.breakpointMobile) {
+      this.router.navigate(['/mobile']);
     }
   }
 
@@ -2481,11 +2485,20 @@ export class MapComponent implements OnInit {
       };
     }
 
-    this.dialog.open(RegionReportComponent, {
-      width: 'calc(100% - 5vw)',
-      height: 'calc(100% - 5vh)',
-      data: { dados }
-    });
+    if (window.innerWidth < 900) {
+      this.dialog.open(RegionReportMobileComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados }
+      });
+    } else {
+      this.dialog.open(RegionReportComponent, {
+        width: 'calc(100% - 5vw)',
+        height: 'calc(100% - 5vh)',
+        data: { dados }
+      });
+    }
+
   }
   async printRegionsIdentification(token) {
     let language = this.language;
@@ -3024,18 +3037,29 @@ export class MapComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
 
-    if (window.innerWidth < 900) {
-      //this.router.navigate(['/mobile']);
+    if (window.innerWidth < this.breakpointMobile) {
+      if (!this.router.url.includes('mobile')){
+        this.router.navigate(['/mobile']);
+      }
     }
 
     let self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
         if (params.keys.includes('token')) {
-          self.openReport(params);
+          if (window.innerWidth < self.breakpointMobile) {
+            self.router.navigate(['map-mobile/' + params.get('token')]);
+          } else {
+            self.openReport(params);
+          }
         }
       }
       if (self.router.url.includes('regions')) {
+
+        if (window.innerWidth < self.breakpointMobile) {
+          self.router.navigate(['mobile-regions/' + params.get('token')]);
+        }
+
         self.selectedIndexConteudo = 3;
         self.selectedIndexUpload = 1;
         self.layerFromConsulta.token = params.get('token');
