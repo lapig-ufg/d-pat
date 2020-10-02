@@ -4035,6 +4035,14 @@
 		"suported_files": {
 			"pt-br": "O upload de arquivo suporta apenas os seguintes tipos de arquivos (.kmz ou .zip).",
 			"en-us": "File upload only supports the following filetypes (.kmz or .zip)."
+		},
+		"invalid_geojson": {
+			"pt-br": "O GeoJson enviado é inválido.",
+			"en-us": "Invalid GeoJson."
+		},
+		"spatial_relation_error": {
+			"pt-br": "Houve um problema com os cruzamentos especiais.",
+			"en-us": "There was a problem with the special intersections."
 		}
 	},
 	"hotsite": {

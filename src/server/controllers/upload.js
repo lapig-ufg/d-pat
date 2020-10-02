@@ -4,12 +4,13 @@ const unzipper = require("unzipper"),
 	ogr2ogr = require("ogr2ogr");
 
 var configJS = require('../config.js')()
-
+const gjv = require("geojson-validation");
+var epsg = require('epsg');
+const repro = require("reproject")
 const moment = require("moment");
+
 const { Pool, Client } = require('pg')
 const pool = new Pool(configJS['pg'])
-
-
 
 module.exports = function (app) {
 	const config = app.config;
@@ -46,6 +47,7 @@ module.exports = function (app) {
 		"sbx",
 		"sbn",
 		"geojson",
+		"xml"
 	];
 	Internal.spatialFiles = ["shp", "kml", "geojson"];
 
@@ -161,11 +163,21 @@ module.exports = function (app) {
 					console.error("FILE: ", Internal.targetFilesName, " | ERROR: ", err);
 					return;
 				}
-				let ob = JSON.parse(data)
-				let token = Internal.saveToPostGis(ob);
-				ob.token = token;
-				Internal.response.status(200).send(JSON.stringify(ob));
-				fs.unlinkSync(Internal.tmpPath);
+				let geoJson = JSON.parse(data)
+
+				let token = Internal.saveToPostGis(geoJson);
+				geoJson.token = token;
+
+				if (gjv.valid(geoJson)) {
+					Internal.response.status(200).send(JSON.stringify(geoJson));
+					fs.unlinkSync(Internal.tmpPath);
+				}
+				else {
+					Internal.response.status(400).send(languageJson['upload_messages']['invalid_geojson'][Internal.language]);
+					fs.unlinkSync(Internal.tmpPath);
+					console.error("FILE: ", Internal.targetFilesName, " | ERROR: ");
+				}
+
 			});
 		} else {
 			callback(Internal.targetFilesName, Internal.clearCache);
@@ -175,11 +187,20 @@ module.exports = function (app) {
 	Internal.finish = function (finished, geoJson) {
 		if (finished) {
 
+			geoJson = repro.toWgs84(geoJson, undefined, epsg);
+
 			let token = Internal.saveToPostGis(geoJson);
 			geoJson.token = token;
 
-			Internal.response.status(200).send(JSON.stringify(geoJson));
-			fs.unlinkSync(Internal.tmpPath);
+			if (gjv.valid(geoJson)) {
+				Internal.response.status(200).send(JSON.stringify(geoJson));
+				fs.unlinkSync(Internal.tmpPath);
+			}
+			else {
+				Internal.response.status(400).send(languageJson['upload_messages']['invalid_geojson'][Internal.language]);
+				fs.unlinkSync(Internal.tmpPath);
+				console.error("ERROR: ");
+			}
 		}
 	};
 
@@ -199,15 +220,22 @@ module.exports = function (app) {
 	};
 
 	Internal.insertToPostgis = async function (token, geom, data_atualizacao) {
-		let INSERT_STATEMENT = 'INSERT INTO upload_shapes (token, geom, data_insercao) values ($1, ST_SetSRID(ST_GeomFromGeoJSON($2), 4674), $3) returning token;'
+
+		let INSERT_STATEMENT = 'INSERT INTO upload_shapes (token, geom, data_insercao) values ($1, ST_Transform(ST_SetSRID(ST_Force2D(ST_GeomFromGeoJSON($2)),$3), 4674), $4) returning token;'
+
+		let makeValid = 'select ST_MAKEVALID(geom) from upload_shapes where token= $1'
 
 		const client = await pool.connect()
 		try {
 			await client.query('BEGIN')
 			/* for initial population*/
-			var rowValues = [token, geom, data_atualizacao]
+			var rowValues = [token, geom, 4326, data_atualizacao]
 			const res = await client.query(INSERT_STATEMENT, rowValues)
 			console.log(token + ' inserted.')
+
+			var rowValuesValid = [token]
+			const resValid = await client.query(makeValid, rowValuesValid)
+			console.log(token, " validado!")
 
 			await client.query('COMMIT')
 		} catch (e) {
@@ -350,16 +378,25 @@ module.exports = function (app) {
 			.map(j => JSON.parse(j))
 
 
-		let res = {
-			regions_intersected: regionGroupedByType,
-			prodes: resultByYear,
-			deter: resultByYearDeter,
-			shape_upload: info_area,
-			car: car_final
+
+		if (regionGroupedByType == undefined || resultByYear == undefined || resultByYearDeter == undefined || info_area == undefined ||
+			car_final == undefined) {
+			response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+			response.end()
+		}
+		else {
+			let res = {
+				regions_intersected: regionGroupedByType,
+				prodes: resultByYear,
+				deter: resultByYearDeter,
+				shape_upload: info_area,
+				car: car_final
+			}
+
+			response.status(200).send(res);
+			response.end()
 		}
 
-		response.send(res)
-		response.end()
 
 	};
 

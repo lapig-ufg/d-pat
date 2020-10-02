@@ -1999,6 +1999,11 @@ export class MapComponent implements OnInit {
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
+
+    let layerTested = this.layersNames.find(element => element.id === layer.id);
+
+    this.googleAnalyticsService.eventEmitter("changeLayer", "VisibilityLayer", layer.label, layerTested.selectedType);
+
   }
 
   private updateDescriptor() {
@@ -2054,6 +2059,8 @@ export class MapComponent implements OnInit {
   public onFileComplete(data: any) {
 
     let map = this.map;
+
+    console.log(data)
 
     this.layerFromUpload.checked = false;
     this.layerFromUpload.error = false;

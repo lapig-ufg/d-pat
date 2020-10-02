@@ -22,12 +22,17 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
         private router: Router,
         public translate: TranslateService
     ) {
-        this.pt_br = false;
-        translate.addLangs(['en', 'pt-br']);
-        translate.setDefaultLang('en');
-        const browserLang = translate.getBrowserLang();
 
-        translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
+        this.pt_br = false;
+
+        translate.addLangs(['en', 'pt']);
+        translate.setDefaultLang('en');
+        let browserLang = translate.getBrowserLang();
+        browserLang = browserLang === 'en' ? 'en-us' : browserLang;
+        browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
+        translate.use(browserLang.match(/en|pt/) ? browserLang : 'en');
+
+
         this.onLangClick(browserLang);
 
         this.showInfo = false;
@@ -35,8 +40,8 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     onLangClick(lang) {
-        lang = lang === 'en' ? 'en-us' : lang;
-        lang = lang === 'pt' ? 'pt-br' : lang;
+        // lang = lang === 'en' ? 'en-us' : lang;
+        // lang = lang === 'pt' ? 'pt-br' : lang;
         if (lang === 'pt-br') {
             this.pt_br = true;
         } else {
