@@ -124,6 +124,137 @@
                     </div>
                   </div>
                 </mat-tab>
+                <mat-tab label="Consultar Área">
+                  <p-scrollPanel [style]="{width: '100%',  height: '85vh'}">
+                    <div style="padding-top: 15px;">
+                      <mat-progress-bar class="progress-analyse" color="accent"
+                        *ngIf="layerFromConsulta.analyzedAreaLoading" mode="indeterminate">
+                      </mat-progress-bar>
+                      <mat-form-field class="example-full-width" style="width: 100%;">
+                        <mat-label>{{titlesLayerBox.label_upload_token}}</mat-label>
+                        <input type="number" min="0" matInput [(ngModel)]="layerFromConsulta.token">
+                      </mat-form-field>
+                      <mat-card *ngIf="layerFromConsulta.visible"
+                        class="card-checkbox-upload mat-elevation-z8" color="primary">
+                        <div class="title-file-card">
+                          {{titlesLayerBox.label_upload_title_file.toUpperCase()}}</div>
+                      </mat-card>
+                      <div class="buttons-analyze">
+                        <button class="color-buttons" *ngIf="layerFromConsulta.token != ''"
+                          (click)="analyzeUploadShape(true)" mat-raised-button color="primary">
+                          <div *ngIf="titlesLayerBox.hasOwnProperty('btn_analyze')">
+                            {{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
+                        </button>
+                        <button class="color-buttons clear"
+                          *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
+                          (click)="clearUpload(true)" mat-raised-button color="warn">
+                          <div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
+                            {{titlesLayerBox.btn_clear.toUpperCase()}}</div>
+                        </button>
+                      </div>
+                      <div *ngIf="layerFromConsulta.analyzedAreaLoading" class="info-header"
+                        [innerHTML]="titlesLayerBox.warning"></div>
+                      <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
+                        class="card card-upload-analysed">
+                        <h5 class="title-file-card ">
+                          {{titlesLayerBox.label_analyzed_area_title.toUpperCase()}}</h5>
+                        <div class="card-upload-analysed-content">
+                          <div class="upload-token">
+                            <button (click)="printAnalyzedAreaReport(true)" color="primary"
+                              classs="btn-info " mat-icon-button>
+                              <mat-icon>print</mat-icon>
+                              <mat-spinner [strokeWidth]="2" [diameter]="18"
+                                *ngIf="loadingPrintReport" color="primary" mode="indeterminate"
+                                style="margin: 0 auto;"></mat-spinner>
+                            </button>
+                            {{titlesLayerBox.label_total_area}}
+                            <strong>
+                              {{layerFromConsulta.analyzedArea.shape_upload.area_upload | number:'1.2-2' }}
+                              km² </strong>
+                          </div>
+    
+                          <div *ngIf="layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('city')"
+                            class="card-upload-analysed-table">
+                            <h6 class="card-upload-analysed-table-title">
+                              {{titlesLayerBox.table_city_title}}
+                            </h6>
+                            <p>
+                              {{getCitiesAnalyzedArea(true)}}
+                            </p>
+                          </div>
+                          <div *ngIf="layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('state')"
+                            class="card-upload-analysed-table">
+                            <h6 class="card-upload-analysed-table-title">
+                              {{titlesLayerBox.table_state_title}}
+                            </h6>
+                            <p>
+                              {{getStatesAnalyzedArea(true)}}
+                            </p>
+                          </div>
+    
+                          <div *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
+                            class="card-upload-analysed-table">
+                            <h6 class="card-upload-analysed-table-title card"
+                              (click)="openCarReport(true)">
+                              {{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
+                            </h6>
+                          </div>
+                          <div *ngIf="layerFromConsulta.analyzedArea.deter.length > 0"
+                            class="card-upload-analysed-table">
+                            <h5 class="card-upload-analysed-table-title">
+                              {{titlesLayerBox.table_deter_title}}
+                            </h5>
+                            <p-table [value]="layerFromConsulta.analyzedArea.deter"
+                              selectionMode="single">
+                              <ng-template pTemplate="header">
+                                <tr align="center">
+                                  <th
+                                    *ngFor="let header of titlesLayerBox.header_table_deforested">
+                                    {{header}}
+                                  </th>
+                                </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-region>
+                                <tr [pSelectableRow]="region" tooltipPosition="bottom"
+                                  life="2000">
+                                  <td align="center">{{region.year}}</td>
+                                  <td align="center">{{region.area_desmat | number :'1.2-2' }}
+                                    km²</td>
+                                </tr>
+                              </ng-template>
+                            </p-table>
+                          </div>
+                          <div *ngIf="layerFromConsulta.analyzedArea.prodes.length > 0"
+                            class="card-upload-analysed-table">
+                            <h5 class="card-upload-analysed-table-title">
+                              {{titlesLayerBox.table_prodes_title}}
+                            </h5>
+                            <p-table [value]="layerFromConsulta.analyzedArea.prodes"
+                              selectionMode="single">
+                              <ng-template pTemplate="header">
+                                <tr align="center">
+                                  <th
+                                    *ngFor="let header of titlesLayerBox.header_table_deforested">
+                                    {{header}}
+                                  </th>
+                                </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-region>
+                                <tr [pSelectableRow]="region" tooltipPosition="bottom"
+                                  life="2000">
+                                  <td align="center">{{region.year}}</td>
+                                  <td align="center">{{region.area_desmat | number :'1.2-2' }}
+                                    km²</td>
+                                </tr>
+                              </ng-template>
+                            </p-table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                        <div style="height: 30vh"></div>
+                  </p-scrollPanel>
+                </mat-tab>
               </mat-tab-group>
             </div>
           </div>
