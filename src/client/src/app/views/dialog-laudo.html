@@ -77,7 +77,8 @@
                                 </tr>
                                 <tr>
                                     <th class="table-label">{{textOnDialog.information_tab.area_label}}</th>
-                                    <th>{{infoDesmat.area | number:'1.2-3' }}{{textOnDialog.information_tab.unit_measure}}
+                                    <th>{{infoDesmat.area | number:'1.2-3' }}
+                                        {{textOnDialog.information_tab.unit_measure}}
                                     </th>
                                 </tr>
                                 <tr>
@@ -271,7 +272,8 @@
                         </div>
                         <div class="p-col">
                             <div class="p-grid">
-                                <div class="p-col" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <div class="p-col"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
                                         [spinnerSrc]="svgLoading" (click)="openLightboxCAR(i)">
                                     </toh-spinner-img>
@@ -425,17 +427,18 @@
                             </h5>
                             <div class="p-grid p-justify-center" style="margin-top: .3em">
                                 <button [matTooltip]="textOnDialog.information_tab.suscept_tooltip"
-                                        (click)="goToDoc('suscept')" classs="btn-info" mat-icon-button>
+                                    (click)="goToDoc('suscept')" classs="btn-info" mat-icon-button>
                                     <mat-icon>help</mat-icon>
                                 </button>
-                                <div class="p-col p-justify-center" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <div class="p-col p-justify-center"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
 
-                                      <p style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
-                                          {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
-                                          <strong>{{dataSuscept.type}}</strong>
-                                          {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
-                                          <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong>
-                                      </p>
+                                    <p style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
+                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
+                                        <strong>{{dataSuscept.type}}</strong>
+                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
+                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong>
+                                    </p>
                                     <br>
                                     <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb" [spinnerSrc]="svgLoading"
                                         [largura]="'100%'" (click)="openLightboxSuscept()">
@@ -448,15 +451,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-col"
-                            *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
+                        <div class="p-col" *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
                             <div class="p-grid p-justify-center" style="margin-top: .3em">
-                                <button [matTooltip]="textOnDialog.information_tab.bfast_tooltip" (click)="goToDoc('bfast')"
-                                        classs="btn-info" mat-icon-button>
+                                <button [matTooltip]="textOnDialog.information_tab.bfast_tooltip"
+                                    (click)="goToDoc('bfast')" classs="btn-info" mat-icon-button>
                                     <mat-icon>help</mat-icon>
                                 </button>
-                                <div class="p-col p-justify-center" style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                <div class="p-col p-justify-center"
+                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
                                     <p style="font-size: 14px;">
                                         {{textOnDialog.analise_automatica.info_bfast_description}}
                                         <strong>{{dataBfast.prob_Formatada}}.</strong>
@@ -479,8 +482,9 @@
                 <p-accordionTab class="tab" header="{{textOnDialog.fip_abc_tab.title_tab}}" *ngIf="abcData.length > 0">
                     <div class="p-grid p-align-stretch vertical-container" *ngFor="let item of abcData; let i=index">
                         <div class="p-col-6">
-                            <button style="float: right; margin-top: -10px;" [matTooltip]="textOnDialog.information_tab.abc_tooltip" (click)="goToDoc('abc')"
-                                    classs="btn-info" mat-icon-button>
+                            <button style="float: right; margin-top: -10px;"
+                                [matTooltip]="textOnDialog.information_tab.abc_tooltip" (click)="goToDoc('abc')"
+                                classs="btn-info" mat-icon-button>
                                 <mat-icon>help</mat-icon>
                             </button>
                             <h5 class="subtitles-report">{{textOnDialog.fip_abc_tab.title_info}}</h5>
@@ -524,7 +528,8 @@
                                     <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
                                     <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
                                     <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
-                                    <img *ngIf="item.imgsProp.legendDesmatamento" [src]="item.imgsProp.legendDesmatamento">
+                                    <img *ngIf="item.imgsProp.legendDesmatamento"
+                                        [src]="item.imgsProp.legendDesmatamento">
                                 </div>
 
                             </div>

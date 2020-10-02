@@ -4096,7 +4096,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         if (this.infoDesmat.classefip == null) {
           this.infoDesmat.pathclassefip = '1';
         } else {
-          this.infoDesmat.pathclassefip = '/assets/metric/classe' + this.infoDesmat.classefip + '.png'
+          this.infoDesmat.pathclassefip = '/assets/metric/classe' + this.infoDesmat.classefip + '_' + this.data.language + '.png'
         }
 
         this.carData = result['car'];
