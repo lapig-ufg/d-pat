@@ -242,6 +242,7 @@ export class MapComponent implements OnInit {
   controls: any;
   showStatistics: boolean;
   loadingsDownload: boolean;
+  breakpointMobile: number;
 
   constructor(
     private http: HttpClient,
@@ -411,6 +412,7 @@ export class MapComponent implements OnInit {
 
     this.selectedIndexConteudo = 0;
     this.selectedIndexUpload = 0;
+    this.breakpointMobile = 1024;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -2332,8 +2334,8 @@ export class MapComponent implements OnInit {
       this.currentZoom = 6;
     }
 
-    if (window.innerWidth < 900) {
-      //this.router.navigate(['/mobile']);
+    if (window.innerWidth < this.breakpointMobile) {
+      this.router.navigate(['/mobile']);
     }
   }
 
@@ -3035,23 +3037,32 @@ export class MapComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
 
-    if (window.innerWidth < 900) {
-      //this.router.navigate(['/mobile']);
+    if (window.innerWidth < this.breakpointMobile) {
+      this.router.navigate(['/mobile']);
     }
 
     let self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
         if (params.keys.includes('token')) {
-          self.openReport(params);
+          if (window.innerWidth < self.breakpointMobile) {
+            self.router.navigate(['map-mobile/' + params.get('token')]);
+          } else {
+            self.openReport(params);
+          }
         }
       }
       if (self.router.url.includes('regions')) {
-        self.selectedIndexConteudo = 3;
-        self.selectedIndexUpload = 1;
-        self.layerFromConsulta.token = params.get('token');
-        self.analyzeUploadShape(true);
-        self.handleDrawer();
+
+        if (window.innerWidth < self.breakpointMobile) {
+          self.router.navigate(['mobile-regions/' + params.get('token')]);
+        } else {
+          self.selectedIndexConteudo = 3;
+          self.selectedIndexUpload = 1;
+          self.layerFromConsulta.token = params.get('token');
+          self.analyzeUploadShape(true);
+          self.handleDrawer();
+        }
       }
     });
   }

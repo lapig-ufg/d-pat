@@ -16,32 +16,30 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     fullpage: any = {};
     videoplay: any = {};
     showInfo: boolean;
+    breakpointMobile: number;
+    isMobile: boolean;
     constructor(
         private http: HttpClient,
         private elementRef: ElementRef,
         private router: Router,
         public translate: TranslateService
     ) {
-
+        this.isMobile = false;
         this.pt_br = false;
-
+        this.breakpointMobile = 1024;
         translate.addLangs(['en', 'pt']);
         translate.setDefaultLang('en');
         let browserLang = translate.getBrowserLang();
         browserLang = browserLang === 'en' ? 'en-us' : browserLang;
         browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
         translate.use(browserLang.match(/en|pt/) ? browserLang : 'en');
-
-
         this.onLangClick(browserLang);
-
         this.showInfo = false;
         clearInterval(this.interValMasks);
     }
 
     onLangClick(lang) {
-        // lang = lang === 'en' ? 'en-us' : lang;
-        // lang = lang === 'pt' ? 'pt-br' : lang;
+        console.log(lang)
         if (lang === 'pt-br') {
             this.pt_br = true;
         } else {
@@ -56,22 +54,24 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
 
         let firstMask = true;
 
-        this.interValMasks = setInterval(function () {
+        if( !this.isMobile ) {
+            this.interValMasks = setInterval(function () {
 
-            if (firstMask) {
-                $('#container').YTPPause();
-                $('#container').YTPAddMask('../assets/img/background_overlay_1.png');
-            } else {
-                $('#container').YTPPause();
-                $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
-            }
-            firstMask = !firstMask;
+                if (firstMask) {
+                    $('#container').YTPPause();
+                    $('#container').YTPAddMask('../assets/img/background_overlay_1.png');
+                } else {
+                    $('#container').YTPPause();
+                    $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
+                }
+                firstMask = !firstMask;
 
-        }, 5000);
+            }, 5000);
+            $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
+            $('#container').YTPMute();
+            $('#container').YTPPause();
+        }
 
-        $('#container').YTPAddMask('../assets/img/background_overlay_2.png');
-        $('#container').YTPMute();
-        $('#container').YTPPause();
         $('.btn-navigate').css('display', 'grid').fadeIn()
 
         $(".content-overlay, .bg-overlay").addClass("opened"),
@@ -124,35 +124,55 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
             // navigationTooltips: ["O QUE É?", "DIFERENCIAL", "COMO USAR?", "FIP MONITORAMENTO", "EQUIPE"],
         });
 
-        this.videoplay = $("#container").YTPlayer(
-            {
-                useOnMobile: true,
-                mobileFallbackImage: '../../../assets/img/background_1.svg',
-                videoURL: 'https://youtu.be/lXV5cSMoAuw',
-                quality: 'highres',
-                coverImage: '../../../assets/img/background_1.svg',
-                containment: '#hotsite, #body-mobile-hotsite',
-                autoPlay: true,
-                onReady: true,
-                optimizeDisplay: true,
-                showControls: false,
-                startAt: 0,
-                stopMovieOnBlur: false,
-                opacity: 1,
-                mute: true
-            }
-        );
-
-        $("#container").YTPlayer({
-            mask: {
-                5: '../../../assets/img/background_3.png',
-            }
-        });
-
         $(".section").removeClass("active");
 
-        if (window.innerWidth < 900) {
+        if (window.innerWidth < this.breakpointMobile) {
+            this.isMobile = true;
+            this.videoplay = $("#container").YTPlayer(
+                {
+                    useOnMobile: false,
+                    mobileFallbackImage: '../../../assets/img/background_overlay_1_mobile.png',
+                    videoURL: 'https://youtu.be/lXV5cSMoAuw',
+                    quality: 'highres',
+                    coverImage: '../../../assets/img/background_overlay_1_mobile.png',
+                    containment: '#hotsite, #body-mobile-hotsite',
+                    autoPlay: true,
+                    onReady: true,
+                    optimizeDisplay: true,
+                    showControls: false,
+                    startAt: 0,
+                    stopMovieOnBlur: false,
+                    opacity: 1,
+                    mute: true
+                }
+            );
+
+        } else {
             this.router.navigate(['/mobile']);
+            this.videoplay = $("#container").YTPlayer(
+                {
+                    useOnMobile: false,
+                    mobileFallbackImage: '../../../assets/img/background_1.svg',
+                    videoURL: 'https://youtu.be/lXV5cSMoAuw',
+                    quality: 'highres',
+                    coverImage: '../../../assets/img/background_1.svg',
+                    containment: '#hotsite, #body-mobile-hotsite',
+                    autoPlay: true,
+                    onReady: true,
+                    optimizeDisplay: true,
+                    showControls: false,
+                    startAt: 0,
+                    stopMovieOnBlur: false,
+                    opacity: 1,
+                    mute: true
+                }
+            );
+
+            $("#container").YTPlayer({
+                mask: {
+                    5: '../../../assets/img/background_3.png',
+                }
+            });
         }
     }
 
