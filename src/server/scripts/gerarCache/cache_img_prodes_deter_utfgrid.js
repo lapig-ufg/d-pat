@@ -35,7 +35,7 @@ for (let type of types) {
 
 		for (let layername of layers) {
 
-			if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+			if (layername == "bi_ce_prodes_desmatamento_100_fip_utfgrid") {
 
 				for (var year = (years.length - 1); year >= 0; year--) {
 					// console.log("Year: " + years[year])
@@ -90,7 +90,7 @@ for (let type of types) {
 
 			for (let layername of layers) {
 
-				if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+				if (layername == "bi_ce_prodes_desmatamento_100_fip_utfgrid") {
 
 					for (var year = (years.length - 1); year >= 0; year--) {
 						// console.log("Year: " + years[year])
@@ -146,7 +146,7 @@ for (let type of types) {
 		for (let uf of ufs) {
 			for (let layername of layers) {
 
-				if (layername == "bi_ce_prodes_desmatamento_100_fip") {
+				if (layername == "bi_ce_prodes_desmatamento_100_fip_utfgrid") {
 
 					for (var year = (years.length - 1); year >= 0; year--) {
 						// console.log("Year: " + years[year])
