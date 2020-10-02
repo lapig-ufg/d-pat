@@ -28,7 +28,7 @@ for (let layername of layers) {
 
     // for (var year = (years.length - 1); year >= 0; year--) {
     // console.log("Year: " + years[year])
-    for (var zoom = 0; zoom <= 13; zoom++) {
+    for (var zoom = 0; zoom <= 11; zoom++) {
         var tiles = t.tilesInBbox(bbox, zoom)
 
         tiles.forEach(function (tile) {

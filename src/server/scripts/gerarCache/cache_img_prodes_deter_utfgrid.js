@@ -39,7 +39,7 @@ for (let type of types) {
 
 				for (var year = (years.length - 1); year >= 0; year--) {
 					// console.log("Year: " + years[year])
-					for (var zoom = 0; zoom <= 12; zoom++) {
+					for (var zoom = 0; zoom <= 11; zoom++) {
 						var tiles = t.tilesInBbox(bbox, zoom)
 
 						tiles.forEach(function (tile) {
@@ -63,7 +63,7 @@ for (let type of types) {
 			else {
 				for (var year = (deterYears.length - 1); year >= 0; year--) {
 					// console.log("Year: " + years[year])
-					for (var zoom = 0; zoom <= 12; zoom++) {
+					for (var zoom = 0; zoom <= 11; zoom++) {
 						var tiles = t.tilesInBbox(bbox, zoom)
 
 						tiles.forEach(function (tile) {
@@ -94,7 +94,7 @@ for (let type of types) {
 
 					for (var year = (years.length - 1); year >= 0; year--) {
 						// console.log("Year: " + years[year])
-						for (var zoom = 0; zoom <= 12; zoom++) {
+						for (var zoom = 0; zoom <= 11; zoom++) {
 							var tiles = t.tilesInBbox(bbox, zoom)
 
 							tiles.forEach(function (tile) {
@@ -118,7 +118,7 @@ for (let type of types) {
 				else {
 					for (var year = (deterYears.length - 1); year >= 0; year--) {
 						// console.log("Year: " + years[year])
-						for (var zoom = 0; zoom <= 12; zoom++) {
+						for (var zoom = 0; zoom <= 11; zoom++) {
 							var tiles = t.tilesInBbox(bbox, zoom)
 
 							tiles.forEach(function (tile) {

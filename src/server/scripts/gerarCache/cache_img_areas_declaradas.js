@@ -23,8 +23,8 @@ var layers = ["car_imoveis_cerrado_fip", "car_reserva_legal_cerrado_fip", "car_a
 
 var urls = []
 
-// var types = ['none']
-var types = ['state']
+var types = ['none']
+// var types = ['state']
 // var types = ['city']
 
 for (let layername of layers) {
