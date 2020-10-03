@@ -1627,9 +1627,9 @@ export class MapComponent implements OnInit {
 
     text = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value;
 
-    if (this.selectRegion.type == 'city') {
+    if (this.selectRegion.type === 'city') {
       text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    } else if (this.selectRegion.type == 'state') {
+    } else if (this.selectRegion.type === 'state') {
       text += ' AND uf = \'' + this.selectRegion.value + '\'';
     }
 
@@ -1648,9 +1648,9 @@ export class MapComponent implements OnInit {
 
     text = this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value;
 
-    if (this.selectRegion.type == 'city') {
+    if (this.selectRegion.type === 'city') {
       text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    } else if (this.selectRegion.type == 'state') {
+    } else if (this.selectRegion.type === 'state') {
       text += ' AND uf = \'' + this.selectRegion.value + '\'';
     }
 
@@ -1879,82 +1879,85 @@ export class MapComponent implements OnInit {
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
 
-    if (prodes.visible) {
-      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
-        if (this.utfgridsource) {
-          let tileJSON = this.getTileJSON();
+    if (prodes.visible || deter.visible) {
+      if (prodes.visible) {
+        if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
+          if (this.utfgridsource) {
+            let tileJSON = this.getTileJSON();
 
-          this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
-          this.utfgridsource.tileJSON = tileJSON;
-          this.utfgridsource.refresh();
+            this.utfgridsource.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsource.tileGrid);
+            this.utfgridsource.tileJSON = tileJSON;
+            this.utfgridsource.refresh();
 
-          this.utfgridlayer.setVisible(true);
+            this.utfgridlayer.setVisible(true);
+          }
         }
-      }
-      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
-        if (this.utfgridCampo) {
-          let tileJSONCampo = this.getTileJSONCampo();
+        if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
+          if (this.utfgridCampo) {
+            let tileJSONCampo = this.getTileJSONCampo();
 
-          this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
-          this.utfgridCampo.tileJSON = tileJSONCampo;
-          this.utfgridCampo.refresh();
+            this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
+            this.utfgridCampo.tileJSON = tileJSONCampo;
+            this.utfgridCampo.refresh();
 
-          this.utfgridlayerCampo.setVisible(true);
+            this.utfgridlayerCampo.setVisible(true);
+          }
         }
-      }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
-        if (this.utfgridmunicipio) {
-          let tileJSONMunicipio = this.getTileJSONMunicipio();
+        if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+          if (this.utfgridmunicipio) {
+            let tileJSONMunicipio = this.getTileJSONMunicipio();
 
-          this.utfgridmunicipio.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONMunicipio.grids, this.utfgridmunicipio.tileGrid);
-          this.utfgridmunicipio.tileJSON = tileJSONMunicipio;
-          this.utfgridmunicipio.refresh();
+            this.utfgridmunicipio.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONMunicipio.grids, this.utfgridmunicipio.tileGrid);
+            this.utfgridmunicipio.tileJSON = tileJSONMunicipio;
+            this.utfgridmunicipio.refresh();
 
-          this.utfgridlayerMunicipio.setVisible(true);
+            this.utfgridlayerMunicipio.setVisible(true);
+          }
         }
-      }
 
-      if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
-        if (this.utfgridabc) {
-          let tileJSONabc = this.getTileJSONABC();
+        if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
+          if (this.utfgridabc) {
+            let tileJSONabc = this.getTileJSONABC();
 
-          this.utfgridabc.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONabc.grids, this.utfgridabc.tileGrid);
-          this.utfgridabc.tileJSON = tileJSONabc;
-          this.utfgridabc.refresh();
+            this.utfgridabc.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONabc.grids, this.utfgridabc.tileGrid);
+            this.utfgridabc.tileJSON = tileJSONabc;
+            this.utfgridabc.refresh();
 
-          this.utfgridlayerabc.setVisible(true);
+            this.utfgridlayerabc.setVisible(true);
+          }
         }
+
       }
 
+      if (deter.visible) {
+
+        if ((deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
+          if (this.utfgridsourceDeter) {
+            let tileJSON = this.getTileJSONDeter();
+
+            this.utfgridsourceDeter.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsourceDeter.tileGrid);
+            this.utfgridsourceDeter.tileJSON = tileJSON;
+            this.utfgridsourceDeter.refresh();
+
+            this.utfgridlayerDeter.setVisible(true);
+          }
+        }
+        if ((deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
+          if (this.utfgridCampo) {
+            let tileJSONCampo = this.getTileJSONCampo();
+
+            this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
+            this.utfgridCampo.tileJSON = tileJSONCampo;
+            this.utfgridCampo.refresh();
+
+            this.utfgridlayerCampo.setVisible(true);
+          }
+        }
+
+      }
     }
-    else if (deter.visible) {
-
-      if ((deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
-        if (this.utfgridsourceDeter) {
-          let tileJSON = this.getTileJSONDeter();
-
-          this.utfgridsourceDeter.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSON.grids, this.utfgridsourceDeter.tileGrid);
-          this.utfgridsourceDeter.tileJSON = tileJSON;
-          this.utfgridsourceDeter.refresh();
-
-          this.utfgridlayerDeter.setVisible(true);
-        }
-      }
-      if ((deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
-        if (this.utfgridCampo) {
-          let tileJSONCampo = this.getTileJSONCampo();
-
-          this.utfgridCampo.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONCampo.grids, this.utfgridCampo.tileGrid);
-          this.utfgridCampo.tileJSON = tileJSONCampo;
-          this.utfgridCampo.refresh();
-
-          this.utfgridlayerCampo.setVisible(true);
-        }
-      }
-
-    }
-    else {
+    else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc && this.utfgridsourceDeter) {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerCampo.setVisible(false);
       this.utfgridlayerMunicipio.setVisible(false);
