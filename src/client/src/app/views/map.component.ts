@@ -3060,11 +3060,11 @@ export class MapComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
 
-    if (window.innerWidth < this.breakpointMobile) {
-      if (!this.router.url.includes('mobile')) {
-        this.router.navigate(['/mobile']);
-      }
-    }
+    // if (window.innerWidth < this.breakpointMobile) {
+    //   if (!this.router.url.includes('mobile')) {
+    //     this.router.navigate(['/mobile']);
+    //   }
+    // }
 
     let self = this;
     self.route.paramMap.subscribe(function (params) {

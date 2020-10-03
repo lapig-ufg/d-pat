@@ -14,7 +14,7 @@
         [ngStyle]="bntStyleENG">&nbsp;ENG</button>
     </div>
   </nav>
-  <mat-tab-group [(selectedIndex)]="indexOpenConsulta" id="tab-mobile" #matgroup>
+  <mat-tab-group mat-stretch-tabs [(selectedIndex)]="indexOpenConsulta" id="tab-mobile" #matgroup>
     <mat-tab label="{{titlesLayerBox.map}}">
       <mat-drawer-container class="container-layer-sidenav" autosize>
         <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over"
@@ -25,7 +25,7 @@
               <mat-icon>highlight_off</mat-icon>
             </button>
             <div class="collapseLayer">
-              <mat-tab-group class="layersConteudo" dynamicHeight>
+              <mat-tab-group mat-stretch-tabs class="layersConteudo" dynamicHeight>
                 <mat-tab label="{{titlesLayerBox.label_data}}">
                   <p-scrollPanel [style]="{width: '100%',  height: '80vh'}">
                     <mat-accordion>
