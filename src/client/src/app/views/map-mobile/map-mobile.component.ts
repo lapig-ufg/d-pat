@@ -11,7 +11,7 @@ import logos from '../../views/logos';
 import * as moment from 'moment';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -24,13 +24,25 @@ declare let html2canvas: any;
 })
 export class MapMobileComponent extends MapComponent {
 
+  indexOpenConsulta: any
+
   ngOnInit() {
     super.ngOnInit();
     this.currentZoom = 4.8;
 
-    if (this.router.url.includes('mobile-regions')) {
-      this.selectedIndexUpload = 0;
+    if (this.router.url.includes('regions')) {
+      this.indexOpenConsulta = 2
     }
+
+
+    let self = this;
+    self.route.paramMap.subscribe(function (params) {
+      if (params.keys.includes('token')) {
+        self.openReport(params);
+      }
+    });
+
+
   }
 
   openDialog(): void {

@@ -21,12 +21,12 @@ const routes: Routes = [
 ]
 
 const routesMobile: Routes = [
-  { path: '', component: MobileComponent},
-  { path: 'mobile', component: MobileComponent},
+  { path: '', component: MobileComponent },
+  { path: 'mobile', component: MobileComponent },
   { path: 'projeto', component: ProjectComponent },
   { path: 'map-mobile', component: MapMobileComponent },
-  { path: 'map-mobile/:token', component: MapMobileComponent },
-  { path: 'mobile-regions/:token', component: MapMobileComponent }
+  { path: 'plataforma/:token', component: MapMobileComponent },
+  { path: 'regions/:token', component: MapMobileComponent }
 ]
 
 @NgModule({
@@ -35,21 +35,21 @@ const routesMobile: Routes = [
 })
 export class AppRoutingModule {
 
-  constructor(public router: Router){
+  constructor(public router: Router) {
 
     if (window.innerWidth < 1024) {
       router.resetConfig(routesMobile);
     }
 
     this.router.events.subscribe(event => {
-          if(event instanceof NavigationEnd){
-            gtag('config', 'UA-168214071-1',
-                {
-                  'page_path': event.urlAfterRedirects
-                }
-            );
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'UA-168214071-1',
+          {
+            'page_path': event.urlAfterRedirects
           }
-        }
+        );
+      }
+    }
     )
   }
 
