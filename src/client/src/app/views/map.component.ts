@@ -1651,12 +1651,13 @@ export class MapComponent implements OnInit {
 
     text = this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value;
 
-
     if (this.selectRegion.type === 'city') {
       text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
     } else if (this.selectRegion.type === 'state') {
       text += ' AND uf = \'' + this.selectRegion.value + '\'';
     }
+
+    // console.log(this.selectRegion, text)
 
     return {
       version: '2.2.0',
