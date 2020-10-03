@@ -420,9 +420,9 @@
 
                 </p-accordionTab>
                 <p-accordionTab class="tab" header="{{textOnDialog.analise_automatica.title_tab}}"
-                    *ngIf="data.year > 2015 && data.year <= 2019">
+                    *ngIf="dataSuscept.prob_suscept != null || (dataBfast.pct_bfast != null && dataBfast.pct_bfast)">
                     <div class="p-grid" style="margin-top: .5em">
-                        <div class="p-col" style="text-align: center;">
+                        <div class="p-col" *ngIf="dataSuscept.prob_suscept != null" style="text-align: center;">
                             <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}
                             </h5>
                             <div class="p-grid p-justify-center" style="margin-top: .3em">
@@ -433,7 +433,7 @@
                                 <div class="p-col p-justify-center"
                                     style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
 
-                                    <p style="font-size: 14px" *ngIf="dataSuscept.prob_suscept != null">
+                                    <p style="font-size: 14px">
                                         {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
                                         <strong>{{dataSuscept.type}}</strong>
                                         {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}

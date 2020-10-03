@@ -4313,6 +4313,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           thumb: this.dataSuscept.urlSuscept.thumb
         };
         this.vetSuscept.push(dsuscept);
+
+        // console.log(this.dataSuscept, this.dataBfast)
       },
       err => {
         console.log('Error: ', err);
