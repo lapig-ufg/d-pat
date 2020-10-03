@@ -14,7 +14,7 @@
               [ngStyle]="bntStyleENG">&nbsp;ENG</button>
     </div>
   </nav>
-  <mat-tab-group id="tab-mobile" #matgroup>
+  <mat-tab-group id="tab-mobile" #matgroup mat-stretch-tabs>
     <mat-tab label = "{{titlesLayerBox.map}}">
       <mat-drawer-container class="container-layer-sidenav" autosize>
         <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"

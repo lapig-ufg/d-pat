@@ -2355,9 +2355,9 @@ export class MapComponent implements OnInit {
       this.currentZoom = 6;
     }
 
-    if (window.innerWidth < this.breakpointMobile) {
-      this.router.navigate(['/mobile']);
-    }
+    // if (window.innerWidth < this.breakpointMobile) {
+    //   this.router.navigate(['/mobile']);
+    // }
   }
 
   handleDrawer() {
@@ -3060,18 +3060,18 @@ export class MapComponent implements OnInit {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
     );
 
-    if (window.innerWidth < this.breakpointMobile) {
-      if (!this.router.url.includes('mobile')) {
-        this.router.navigate(['/mobile']);
-      }
-    }
+    // if (window.innerWidth < this.breakpointMobile) {
+    //   if (!this.router.url.includes('mobile')) {
+    //     this.router.navigate(['/mobile']);
+    //   }
+    // }
 
     let self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
         if (params.keys.includes('token')) {
           if (window.innerWidth < self.breakpointMobile) {
-            self.router.navigate(['map-mobile/' + params.get('token')]);
+            self.router.navigate(['plataforma/' + params.get('token')]);
           } else {
             self.openReport(params);
           }
@@ -3080,7 +3080,7 @@ export class MapComponent implements OnInit {
       if (self.router.url.includes('regions')) {
 
         if (window.innerWidth < self.breakpointMobile) {
-          self.router.navigate(['mobile-regions/' + params.get('token')]);
+          self.router.navigate(['regions/' + params.get('token')]);
         }
 
         self.selectedIndexConteudo = 1;
