@@ -250,7 +250,7 @@ export class MapComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
-    private router: Router,
+    public router: Router,
     private route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
     public translate: TranslateService
@@ -2506,10 +2506,12 @@ export class MapComponent implements OnInit {
       };
     }
 
-    if (window.innerWidth < 900) {
+    if (window.innerWidth < this.breakpointMobile) {
       this.dialog.open(RegionReportMobileComponent, {
-        width: 'calc(100% - 5vw)',
+        width: '98%',
+        minWidth: '95%',
         height: 'calc(100% - 5vh)',
+        panelClass: 'full-width-dialog',
         data: { dados }
       });
     } else {

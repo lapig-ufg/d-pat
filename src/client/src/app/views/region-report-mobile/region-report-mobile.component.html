@@ -1,6 +1,14 @@
 <div id="regionMobileReport">
   <div class="container-fluid">
-    <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+      <div class="container-buttons" >
+          <button color="primary" classs="btn-info " style="margin: 0px 10px" mat-icon-button (click)="printReportCounty()">
+              <mat-icon>print</mat-icon>
+              <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"></mat-spinner>
+          </button>
+          <button (click)="dialogRef.close()" color="primary" style="margin: 0px 10px" classs="btn-info " mat-icon-button>
+              <mat-icon>highlight_off</mat-icon>
+          </button>
+      </div>
         <div class="title-logo">
           <div>
               <a href="https://cerradodpat.org" target="_blank">
@@ -136,21 +144,11 @@
             </p-accordion>
         </div>
         <div class="row">
-            <div class="p-grid p-dir-rev mt-5">
+            <div class="p-grid p-dir-rev mt-2">
                 <div class="p-col-12">
-                    <img class="report-partners" src="assets/img/assinatura.png" />
+                    <img class="report-partners" src="assets/img/assinatura-02.png" />
                 </div>
             </div>
         </div>
-    </p-scrollPanel>
-    <div class="container-buttons" >
-        <button color="primary" classs="btn-info " style="margin: 0px 10px" mat-icon-button (click)="printReportCounty()">
-            <mat-icon>print</mat-icon>
-            <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"></mat-spinner>
-        </button>
-        <button (click)="dialogRef.close()" color="primary" style="margin: 0px 10px" classs="btn-info " mat-icon-button>
-            <mat-icon>highlight_off</mat-icon>
-        </button>
-    </div>
   </div>
 </div>

@@ -7,10 +7,8 @@
   }
 
   .container-buttons{
-    display: grid;
-    position: fixed;
-    right: calc(100% - 92.5vw);
-    top: 32px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .p-grid{
@@ -154,4 +152,10 @@
   .ui-accordion .ui-accordion-content {
     padding: 0.5em !important;
   }
+
+  .full-width-dialog .mat-dialog-container {
+    max-width: 100% !important;
+    padding: 7px;
+  }
+
 }

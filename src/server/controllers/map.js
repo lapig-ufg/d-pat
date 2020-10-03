@@ -1044,6 +1044,8 @@ module.exports = function (app) {
         label_mapabase: languageJson["layer_box"]["label_mapabase"][language],
         label_limits: languageJson["layer_box"]["label_limits"][language],
         label_upload: languageJson["layer_box"]["label_upload"][language],
+        map: languageJson["layer_box"]["map"][language],
+        statistics: languageJson["layer_box"]["statistics"][language],
         label_upload_msg: languageJson["layer_box"]["label_upload_msg"][language],
         label_upload_title_file: languageJson["layer_box"]["label_upload_title_file"][language],
         label_upload_max_size_msg: languageJson["layer_box"]["label_upload_max_size_msg"][language],

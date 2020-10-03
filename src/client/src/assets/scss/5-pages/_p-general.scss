@@ -122,6 +122,11 @@ body {
   overflow-x: hidden!important;
 }
 
+.full-width-dialog .mat-dialog-container {
+  max-width: 100% !important;
+  padding: 7px;
+}
+
   /* Chrome, Safari, Edge, Opera */
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {

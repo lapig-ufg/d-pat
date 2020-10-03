@@ -11,6 +11,7 @@ import logos from '../../views/logos';
 import * as moment from 'moment';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {Router} from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -22,9 +23,14 @@ declare let html2canvas: any;
   // styleUrls: ['./map-mobile.component.css']
 })
 export class MapMobileComponent extends MapComponent {
+
   ngOnInit() {
     super.ngOnInit();
     this.currentZoom = 4.8;
+
+    if (this.router.url.includes('mobile-regions')) {
+      this.selectedIndexUpload = 0;
+    }
   }
 
   openDialog(): void {
@@ -35,7 +41,9 @@ export class MapMobileComponent extends MapComponent {
     this.dataForDialog.textosDaDialog = this.textOnDialog;
 
     let dialogRef = this.dialog.open(DialogMobileLaudo, {
-      width: window.innerWidth - 30 + 'px',
+      width: '98%',
+      minWidth: '95%',
+      panelClass: 'full-width-dialog',
       height: window.innerHeight - 30 + 'px',
       data: this.dataForDialog,
     });

@@ -1,40 +1,34 @@
 <div id="body-mobile">
   <nav class="barra-titulo" >
-    <div class="row" style="margin-left: 0.8%; margin-right: 0.8%">
-      <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: left; align-self: center; padding-left: 0px;">
-        <div class="dpat-logo">
-          <a >
-            <div class="container-logos">
-              <img routerLink="/" src="../../assets/logo/logo-dpat.png" alt="DPAT" />
-            </div>
-          </a>
-  
+    <div class="dpat-logo">
+      <a >
+        <div class="container-logos">
+          <img routerLink="/" src="../../assets/logo/logo-dpat.png" alt="DPAT" />
         </div>
-      </div>
-      <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: right">
-        <div class="btn-languages">
-          <button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
-            [ngStyle]="bntStylePOR">&nbsp;POR</button>
-          <button (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn"
-            [ngStyle]="bntStyleENG">&nbsp;ENG</button>
-        </div>
-      </div>
+      </a>
+    </div>
+    <div class="btn-languages-mobile">
+      <button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
+              [ngStyle]="bntStylePOR">&nbsp;POR</button>
+      <button (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn"
+              [ngStyle]="bntStyleENG">&nbsp;ENG</button>
     </div>
   </nav>
-  <mat-tab-group id="tab-mobile" style="height: 89%" #matgroup>
-    <mat-tab label = "Mapa">
+  <mat-tab-group id="tab-mobile" #matgroup>
+    <mat-tab label = "{{titlesLayerBox.map}}">
       <mat-drawer-container class="container-layer-sidenav" autosize>
-        
         <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
         [opened]="showDrawer">
           <div class="container-drawer">
+            <button (click)="handleDrawer()" style="position: absolute; right: calc(100% - 19.5rem);top: 10px;" mat-icon-button>
+              <mat-icon>highlight_off</mat-icon>
+            </button>
             <div class="collapseLayer">
               <mat-tab-group class="layersConteudo" dynamicHeight>
                 <mat-tab label="{{titlesLayerBox.label_data}}">
                   <p-scrollPanel [style]="{width: '100%',  height: '80vh'}">
                     <mat-accordion>
                       <div id="layers_desmatamentos">
-      
                         <ng-template #rt let-r="result" let-t="term">
                           <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
                         </ng-template>
@@ -70,7 +64,7 @@
                                 </button>
                               </div>
                               <div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 2%">
-                                <mat-form-field style="width: 130px">
+                                <mat-form-field >
                                   <mat-label>{{descriptor.type}}</mat-label>
                                   <mat-select (selectionChange)="changeVisibility(layer)"
                                     [(value)]="layer.selectedType">
@@ -240,147 +234,146 @@
         </div>
       </mat-drawer-container>
     </mat-tab>
-    <mat-tab label = "Estatísticas">
-      <p-scrollPanel [style]="{width: '100%', height: '75vh'}">
-        <div id="positionCharts">
-          <div *ngIf="true" id="tabGraficoLinhas">
-            <h4 style="font-size: 30px;">{{dataSeries.label}} </h4>
-            <div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="chart-region">
-                    <h5>
-                      <button *ngIf="selectRegion.type != 'biome'" color="primary"
-                        (click)="openRegionReport()" mat-icon-button>
-                        <mat-icon>text_snippet</mat-icon>
-                      </button>
-                      <strong> {{ selectRegion.text }} </strong>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-md-12" style="text-align:justify">
-                  {{ dataSeries.description }}
+    <mat-tab label = "{{titlesLayerBox.statistics}}">
+      <p-scrollPanel [style]="{width: '100%', height: '90vh'}">
+        <div *ngIf="true" id="tabGraficoLinhas">
+          <h4 style="font-size: 30px;">{{dataSeries.label}} </h4>
+          <div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="chart-region">
+                  <h5>
+                    <button *ngIf="selectRegion.type != 'biome'" color="primary"
+                      (click)="openRegionReport()" mat-icon-button>
+                      <mat-icon>text_snippet</mat-icon>
+                    </button>
+                    <strong> {{ selectRegion.text }} </strong>
+                  </h5>
                 </div>
               </div>
-              <p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries">
-              </p-chart>
+              <div class="col-md-12" style="text-align:justify">
+                {{ dataSeries.description }}
+              </div>
             </div>
-          </div>
-          <div *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'" id="tabGraficoLinhas">
-            <h4 style="font-size: 30px;">{{dataStates.label}}</h4>
-            <div>
-              <h6>
-                <b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
-              </h6>
-              <p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
-            </div>
-          </div>
-          <div *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
-            <h4 style="font-size: 30px;">{{chartResultCities.label}}</h4>
-            <div>
-              <h6>
-                <b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
-
-              </h6>
-              <p-table [value]="chartResultCities.series" selectionMode="single"
-                (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
-                <ng-template pTemplate="header">
-                  <tr align="center">
-                    <th *ngFor="let header of chartResultCities.split">
-                      {{header}}
-                    </th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-city>
-                  <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                    tooltipPosition="bottom" life="2000">
-                    <td align="center">{{city.index}}</td>
-                    <td align="center">{{city.name}}</td>
-                    <td align="center">{{city.uf}}</td>
-                    <td align="center">{{city.value | number }} km²</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
-          </div>
-          <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
-            <h4 style="font-size: 30px;">{{chartResultCitiesIllegalAPP.label}}</h4>
-            <div>
-              <h6>
-                <b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
-              </h6>
-              <p-table [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
-                (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
-                <ng-template pTemplate="header">
-                  <tr align="center">
-                    <th *ngFor="let header of chartResultCities.split">
-                      {{header}}
-                    </th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-city>
-                  <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                    tooltipPosition="bottom" life="2000">
-                    <td align="center">{{city.index}}</td>
-                    <td align="center">{{city.name}}</td>
-                    <td align="center">{{city.uf}}</td>
-                    <td align="center">{{city.value | number }} km²</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
-
-          </div>
-          <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
-            <h4 style="font-size: 30px;">{{chartResultCitiesIllegalRL.label}}</h4>
-            <div>
-              <h6>
-                <b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
-              </h6>
-              <p-table [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
-                (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
-                <ng-template pTemplate="header">
-                  <tr align="center">
-                    <th *ngFor="let header of chartResultCities.split">
-                      {{header}}
-                    </th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-city>
-                  <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                    tooltipPosition="bottom" life="2000">
-                    <td align="center">{{city.index}}</td>
-                    <td align="center">{{city.name}}</td>
-                    <td align="center">{{city.uf}}</td>
-                    <td align="center">{{city.value | number }} km²</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
-          </div>
-          <div *ngIf="isFilteredByCity">
-            <h4 style="font-size: 30px;">{{chartUsoSolo[0]?.label}}</h4>
-            <div>
-              <p-tabView (onChange)="changeSelectedLulcChart($event)">
-                <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
-                  [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
-                  <div>
-                    <p style="font-weight: bold">{{ selectRegion.text }}</p>
-                    <div>{{uso.text}}</div>
-                    <p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
-                      [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
-                      height="20vh"></p-chart>
-                  </div>
-                </p-tabPanel>
-              </p-tabView>
-            </div>
+            <p-chart [type]="dataSeries.type" [data]="dataSeries" [options]="optionsTimeSeries">
+            </p-chart>
           </div>
         </div>
+        <div *ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'" id="tabGraficoLinhas">
+          <h4 style="font-size: 30px;">{{dataStates.label}}</h4>
+          <div>
+            <h6>
+              <b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
+            </h6>
+            <p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"></p-chart>
+          </div>
+        </div>
+        <div *ngIf="selectRegion.type != 'city'" id="tabGraficoLinhas">
+          <h4 style="font-size: 30px;">{{chartResultCities.label}}</h4>
+          <div>
+            <h6>
+              <b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
+
+            </h6>
+            <p-table [value]="chartResultCities.series" selectionMode="single"
+              (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+              <ng-template pTemplate="header">
+                <tr align="center">
+                  <th *ngFor="let header of chartResultCities.split">
+                    {{header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-city>
+                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+                  tooltipPosition="bottom" life="2000">
+                  <td align="center">{{city.index}}</td>
+                  <td align="center">{{city.name}}</td>
+                  <td align="center">{{city.uf}}</td>
+                  <td align="center">{{city.value | number }} km²</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+        <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
+          <h4 style="font-size: 30px;">{{chartResultCitiesIllegalAPP.label}}</h4>
+          <div>
+            <h6>
+              <b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
+            </h6>
+            <p-table [value]="chartResultCitiesIllegalAPP.series" selectionMode="single"
+              (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+              <ng-template pTemplate="header">
+                <tr align="center">
+                  <th *ngFor="let header of chartResultCities.split">
+                    {{header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-city>
+                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+                  tooltipPosition="bottom" life="2000">
+                  <td align="center">{{city.index}}</td>
+                  <td align="center">{{city.name}}</td>
+                  <td align="center">{{city.uf}}</td>
+                  <td align="center">{{city.value | number }} km²</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+        </div>
+        <div *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013" id="tabGraficoLinhas">
+          <h4 style="font-size: 30px;">{{chartResultCitiesIllegalRL.label}}</h4>
+          <div>
+            <h6>
+              <b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
+            </h6>
+            <p-table [value]="chartResultCitiesIllegalRL.series" selectionMode="single"
+              (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+              <ng-template pTemplate="header">
+                <tr align="center">
+                  <th *ngFor="let header of chartResultCities.split">
+                    {{header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-city>
+                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
+                  tooltipPosition="bottom" life="2000">
+                  <td align="center">{{city.index}}</td>
+                  <td align="center">{{city.name}}</td>
+                  <td align="center">{{city.uf}}</td>
+                  <td align="center">{{city.value | number }} km²</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+        <div *ngIf="isFilteredByCity">
+          <h4 style="font-size: 30px;">{{chartUsoSolo[0]?.label}}</h4>
+          <div>
+            <p-tabView (onChange)="changeSelectedLulcChart($event)">
+              <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
+                [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
+                <div>
+                  <p style="font-weight: bold">{{ selectRegion.text }}</p>
+                  <div>{{uso.text}}</div>
+                  <p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
+                    [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
+                    height="20vh"></p-chart>
+                </div>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
+        </div>
+        <div style="height: 20vh"></div>
       </p-scrollPanel>
     </mat-tab>
-    <mat-tab label="Consultar">
-        <p-scrollPanel [style]="{width: '100%',  height: '85vh'}">
-          <div style="padding-top: 15px;">
+    <mat-tab label = "{{titlesLayerBox.upload_search}}">
+        <div id="tab-search" style="padding-top: 15px;">
+          <p-scrollPanel [style]="{height: '80%'}">
             <mat-progress-bar class="progress-analyse" color="accent"
                               *ngIf="layerFromConsulta.analyzedAreaLoading" mode="indeterminate">
             </mat-progress-bar>
@@ -408,6 +401,10 @@
             </div>
             <div *ngIf="layerFromConsulta.analyzedAreaLoading" class="info-header"
                  [innerHTML]="titlesLayerBox.warning"></div>
+
+            <div *ngIf="layerFromConsulta.error" class="info-error"
+                 [innerHTML]="titlesLayerBox.not_found"></div>
+
             <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
                  class="card card-upload-analysed">
               <h5 class="title-file-card ">
@@ -505,9 +502,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div style="height: 30vh"></div>
-        </p-scrollPanel>
+          </p-scrollPanel>
+        </div>
     </mat-tab>
   </mat-tab-group>
 </div>

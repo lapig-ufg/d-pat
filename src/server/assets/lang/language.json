@@ -166,6 +166,14 @@
 			"pt-br": "Desmatamento",
 			"en-us": "Deforestation"
 		},
+		"map": {
+			"pt-br": "Mapa",
+			"en-us": "Map"
+		},
+		"statistics": {
+			"pt-br": "Estatísticas",
+			"en-us": "Statistics"
+		},
 		"label_mapabase": {
 			"pt-br": "Mapa Base",
 			"en-us": "BaseMap"
@@ -250,7 +258,7 @@
 		},
 		"table_deter_title": {
 			"pt-br": "Avisos DETER-Cerrado",
-			"en-us": "DETER-Cerrado notices"
+			"en-us": "DETER-Cerrado warnings"
 		},
 		"table_city_title": {
 			"pt-br": "Municípios que cruzam com a área submetida",
