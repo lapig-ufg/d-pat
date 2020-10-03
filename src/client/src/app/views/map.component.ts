@@ -2228,7 +2228,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  changeTextUpload() {
+  changeTextUpload($e) {
 
     if (this.layerFromConsulta.error) {
       this.layerFromConsulta = {
