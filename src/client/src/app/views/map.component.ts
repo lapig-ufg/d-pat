@@ -895,6 +895,7 @@ export class MapComponent implements OnInit {
     this.changeVisibility(agricultura, undefined);
 
 
+
   }
 
   updateRegion(region) {
@@ -1827,7 +1828,9 @@ export class MapComponent implements OnInit {
 
     this.handleInteraction();
 
-    this.changeSelectedLulcChart({ index: 0 });
+    if (this.selectRegion.type == 'city' || this.selectRegion.type == 'state') {
+      this.changeSelectedLulcChart({ index: 0 });
+    }
 
     let source_layers = this.LayersTMS[layer.value].getSource();
     source_layers.setUrls(this.parseUrls(layer));
@@ -1953,7 +1956,7 @@ export class MapComponent implements OnInit {
       }
 
     }
-    else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc && this.utfgridsourceDeter) {
+    else {
       this.utfgridlayer.setVisible(false);
       this.utfgridlayerCampo.setVisible(false);
       this.utfgridlayerMunicipio.setVisible(false);
@@ -2031,12 +2034,9 @@ export class MapComponent implements OnInit {
               layerType.timeLabel = this.descriptorText[group.id].layers[layer.id].types[layerType.value].timelabel[this.language];
             }
 
-            if (layerType.times) {
+            if (layerType.times && this.descriptorText[group.id].layers[layer.id].types[layerType.value].times) {
               for (let time of layerType.times) {
-
-                if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty('times[time.value]')) {
-                  time.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].times[time.value][this.language]
-                }
+                time.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].times[time.value][this.language]
               }
             }
           }
@@ -2056,6 +2056,7 @@ export class MapComponent implements OnInit {
         types.Viewvalue = this.descriptorText.limits.types[types.value][this.language];
       }
     }
+
 
   }
 
@@ -2209,6 +2210,7 @@ export class MapComponent implements OnInit {
           self.layerFromConsulta.analyzedAreaLoading = false;
           self.layerFromConsulta.error = true;
         });
+
     } else {
       this.layerFromUpload.analyzedAreaLoading = true;
       params.push('token=' + this.layerFromUpload.token)
@@ -2224,6 +2226,25 @@ export class MapComponent implements OnInit {
         });
     }
 
+  }
+
+  changeTextUpload() {
+
+    if (this.layerFromConsulta.error) {
+      this.layerFromConsulta = {
+        label: null,
+        layer: null,
+        checked: false,
+        visible: null,
+        loading: false,
+        dragArea: true,
+        error: false,
+        strokeColor: '#257a33',
+        token: '',
+        analyzedAreaLoading: false,
+        analyzedArea: {},
+      };
+    }
   }
 
   private getMetadata(metadata) {
@@ -3038,7 +3059,7 @@ export class MapComponent implements OnInit {
     );
 
     if (window.innerWidth < this.breakpointMobile) {
-      if (!this.router.url.includes('mobile')){
+      if (!this.router.url.includes('mobile')) {
         this.router.navigate(['/mobile']);
       }
     }
@@ -3060,7 +3081,7 @@ export class MapComponent implements OnInit {
           self.router.navigate(['mobile-regions/' + params.get('token')]);
         }
 
-        self.selectedIndexConteudo = 3;
+        self.selectedIndexConteudo = 1;
         self.selectedIndexUpload = 1;
         self.layerFromConsulta.token = params.get('token');
         self.analyzeUploadShape(true);

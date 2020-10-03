@@ -22,10 +22,10 @@ declare let html2canvas: any;
   // styleUrls: ['./map-mobile.component.css']
 })
 export class MapMobileComponent extends MapComponent {
-    ngOnInit() {
-      super.ngOnInit();
-      this.currentZoom = 4.8;
-    }
+  ngOnInit() {
+    super.ngOnInit();
+    this.currentZoom = 4.8;
+  }
 
   openDialog(): void {
     //  @todo REMOVE
@@ -1077,7 +1077,7 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
         if (this.infoDesmat.classefip == null) {
           this.infoDesmat.pathclassefip = '1';
         } else {
-          this.infoDesmat.pathclassefip = '/assets/metric/classe' + this.infoDesmat.classefip + '.png'
+          this.infoDesmat.pathclassefip = '/assets/metric/classe' + this.infoDesmat.classefip + '_' + this.data.language + '.png'
         }
 
         this.carData = result['car'];

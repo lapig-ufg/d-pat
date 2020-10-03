@@ -294,97 +294,90 @@ module.exports = function (app) {
 
 	Uploader.desmatperyear = function (request, response) {
 
-		var queryResult = request.queryResult['desmat_per_year_prodes']
+		try {
+			var queryResult = request.queryResult['desmat_per_year_prodes']
 
-		var resultByYear = []
-		queryResult.forEach(function (row) {
+			var resultByYear = []
+			queryResult.forEach(function (row) {
 
-			var year = Number(row['year'])
-			var area = Number(row['area_desmat'])
+				var year = Number(row['year'])
+				var area = Number(row['area_desmat'])
 
-			resultByYear.push({
-				'area_desmat': area,
-				'year': year
-			})
-		});
+				resultByYear.push({
+					'area_desmat': area,
+					'year': year
+				})
+			});
 
-		queryResult = request.queryResult['area_upload']
-		let info_area = {
-			area_upload: queryResult[0]['area_upload']
-		}
+			queryResult = request.queryResult['area_upload']
+			let info_area = {
+				area_upload: queryResult[0]['area_upload']
+			}
 
-		queryResult = request.queryResult['geojson_upload']
-		info_area.geojson = queryResult[0]['geojson']
+			queryResult = request.queryResult['geojson_upload']
+			info_area.geojson = queryResult[0]['geojson']
 
-		queryResult = request.queryResult['desmat_per_year_deter']
-		var resultByYearDeter = []
+			queryResult = request.queryResult['desmat_per_year_deter']
+			var resultByYearDeter = []
 
-		queryResult.forEach(function (row) {
+			queryResult.forEach(function (row) {
 
-			var year = Number(row['year'])
-			var area = Number(row['area_desmat'])
+				var year = Number(row['year'])
+				var area = Number(row['area_desmat'])
 
-			resultByYearDeter.push({
-				'area_desmat': area,
-				'year': year
-			})
-		});
+				resultByYearDeter.push({
+					'area_desmat': area,
+					'year': year
+				})
+			});
 
-		queryResult = request.queryResult['regions_pershape']
-		var regions = []
+			queryResult = request.queryResult['regions_pershape']
+			var regions = []
 
-		queryResult.forEach(function (row) {
+			queryResult.forEach(function (row) {
 
-			regions.push({
-				'type': row['type'],
-				'name': row['value']
-			})
-		});
+				regions.push({
+					'type': row['type'],
+					'name': row['value']
+				})
+			});
 
-		// Accepts the array and key
-		const groupBy = (array, key) => {
-			// Return the end result
-			return array.reduce((result, currentValue) => {
-				// If an array already present for key, push it to the array. Else create an array and push the object
-				(result[currentValue[key]] = result[currentValue[key]] || []).push(
-					currentValue
-				);
-				// Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-				return result;
-			}, {}); // empty object is the initial value for result object
-		};
+			// Accepts the array and key
+			const groupBy = (array, key) => {
+				// Return the end result
+				return array.reduce((result, currentValue) => {
+					// If an array already present for key, push it to the array. Else create an array and push the object
+					(result[currentValue[key]] = result[currentValue[key]] || []).push(
+						currentValue
+					);
+					// Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+					return result;
+				}, {}); // empty object is the initial value for result object
+			};
 
-		// Group by color as key to the person array
-		const regionGroupedByType = groupBy(regions, 'type');
+			// Group by color as key to the person array
+			const regionGroupedByType = groupBy(regions, 'type');
 
-		queryResult = request.queryResult['car']
-		var car = []
+			queryResult = request.queryResult['car']
+			var car = []
 
-		queryResult.forEach(function (row) {
+			queryResult.forEach(function (row) {
 
-			car.push({
-				cod_car: row['codcar'],
-				area_car: Number(row['areacar']),
-				area_desmat_per_car: Number(row['area_desmatada_per_car']),
-				area_rl: Number(row['area_reserva_legal_total_per_car']),
-				area_desmat_rl: Number(row['area_desmat_rl_per_car']),
-				area_app: Number(row['area_app_total_per_car']),
-				area_desmat_app: Number(row['area_desmat_app_per_car'])
-			})
-		});
+				car.push({
+					cod_car: row['codcar'],
+					area_car: Number(row['areacar']),
+					area_desmat_per_car: Number(row['area_desmatada_per_car']),
+					area_rl: Number(row['area_reserva_legal_total_per_car']),
+					area_desmat_rl: Number(row['area_desmat_rl_per_car']),
+					area_app: Number(row['area_app_total_per_car']),
+					area_desmat_app: Number(row['area_desmat_app_per_car'])
+				})
+			});
 
-		let stringified = car.map(i => JSON.stringify(i));
-		var car_final = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
-			.map(j => JSON.parse(j))
+			let stringified = car.map(i => JSON.stringify(i));
+			var car_final = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
+				.map(j => JSON.parse(j))
 
-
-
-		if (regionGroupedByType == undefined || resultByYear == undefined || resultByYearDeter == undefined || info_area == undefined ||
-			car_final == undefined) {
-			response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
-			response.end()
-		}
-		else {
 			let res = {
 				regions_intersected: regionGroupedByType,
 				prodes: resultByYear,
@@ -395,7 +388,13 @@ module.exports = function (app) {
 
 			response.status(200).send(res);
 			response.end()
+
 		}
+		catch (err) {
+			response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+			response.end()
+		}
+
 
 
 	};

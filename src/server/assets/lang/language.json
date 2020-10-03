@@ -276,6 +276,10 @@
 			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido a quantidade de cruzamentos espaciais sendo realizada.",
 			"en-us": "Area under analysis. This may take a while due to the amount of space crossings being performed."
 		},
+		"not_found": {
+			"pt-br": "Token não encontrado. Por favor informe um token válido.",
+			"en-us": "Token not found. Please inform a valid token."
+		},
 		"car_title": {
 			"pt-br": "Visualizar a(s) [count] propriedade(s) inscrita(s) no CAR que cruzam com a área submetida.",
 			"en-us": "View the [count] properties registered in the CAR that intersect with the submitted area."
@@ -717,7 +721,7 @@
 									"en-us": "Until 2006"
 								},
 								"year < 2008": {
-									"pt-br": "Até 2009",
+									"pt-br": "Até 2008",
 									"en-us": "Until 2008"
 								},
 								"year < 2010": {

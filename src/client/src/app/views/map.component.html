@@ -111,27 +111,6 @@
 							<div style="height: 30vh"></div>
 						</p-scrollPanel>
 					</mat-tab>
-					<mat-tab label="{{titlesLayerBox.label_mapabase}}">
-						<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
-							<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
-								[(ngModel)]="basemap.visible">
-								{{basemap.viewValue}}
-							</mat-slide-toggle>
-						</div>
-					</mat-tab>
-					<mat-tab label="{{titlesLayerBox.label_limits}}">
-						<div *ngFor="let limits of descriptor.limits">
-							<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
-								<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
-									[(ngModel)]="name_limits.visible" class="slideEstados">
-									{{name_limits.Viewvalue}}
-								</mat-slide-toggle>
-								<button (click)="openDialogMetadata(name_limits)" classs="btn-info" mat-icon-button>
-									<mat-icon>info</mat-icon>
-								</button>
-							</div>
-						</div>
-					</mat-tab>
 					<mat-tab label="{{titlesLayerBox.label_upload}}">
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
 							<mat-tab-group [(selectedIndex)]="selectedIndexUpload" class="layersConteudo"
@@ -283,7 +262,8 @@
 									</mat-progress-bar>
 									<mat-form-field class="example-full-width">
 										<mat-label>{{titlesLayerBox.label_upload_token}}</mat-label>
-										<input type="number" min="0" matInput [(ngModel)]="layerFromConsulta.token">
+										<input type="number" min="0" matInput [(ngModel)]="layerFromConsulta.token"
+											(input)="changeTextUpload($event)">
 									</mat-form-field>
 									<mat-card *ngIf="layerFromConsulta.visible"
 										class="card-checkbox-upload mat-elevation-z8" color="primary">
@@ -305,6 +285,10 @@
 									</div>
 									<div *ngIf="layerFromConsulta.analyzedAreaLoading" class="info-header"
 										[innerHTML]="titlesLayerBox.warning"></div>
+
+									<div *ngIf="layerFromConsulta.error" class="info-header"
+										[innerHTML]="titlesLayerBox.not_found"></div>
+
 									<div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
 										class="card card-upload-analysed">
 										<h5 class="title-file-card ">
@@ -408,6 +392,28 @@
 
 						</p-scrollPanel>
 					</mat-tab>
+					<mat-tab label="{{titlesLayerBox.label_mapabase}}">
+						<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
+							<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
+								[(ngModel)]="basemap.visible">
+								{{basemap.viewValue}}
+							</mat-slide-toggle>
+						</div>
+					</mat-tab>
+					<mat-tab label="{{titlesLayerBox.label_limits}}">
+						<div *ngFor="let limits of descriptor.limits">
+							<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
+								<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
+									[(ngModel)]="name_limits.visible" class="slideEstados">
+									{{name_limits.Viewvalue}}
+								</mat-slide-toggle>
+								<button (click)="openDialogMetadata(name_limits)" classs="btn-info" mat-icon-button>
+									<mat-icon>info</mat-icon>
+								</button>
+							</div>
+						</div>
+					</mat-tab>
+
 				</mat-tab-group>
 			</div>
 

@@ -261,13 +261,13 @@
                                 *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0.1 ">
                                 <b>{{textOnDialog.car_tab.display_rl_message[0]}}</b>
                                 {{item.metaData.area_desmat_rl | number:'1.2-3' }}
-                                {{textOnDialog.car_tab.display_rl_message[1]}} {{item.metaData.percentRL}}
+                                {{textOnDialog.car_tab.display_rl_message[1]}}{{item.metaData.percentRL}}
                                 {{textOnDialog.car_tab.display_rl_message[2]}} </p>
                             <p style="font-size: 14px; text-align: left;"
                                 *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0.1">
                                 <b>{{textOnDialog.car_tab.display_app_message[0]}}</b>
                                 {{item.metaData.area_desmat_app | number:'1.2-3' }}
-                                {{textOnDialog.car_tab.display_app_message[1]}} {{item.metaData.percentAPP}}
+                                {{textOnDialog.car_tab.display_app_message[1]}}{{item.metaData.percentAPP}}
                                 {{textOnDialog.car_tab.display_app_message[2]}}</p>
                         </div>
                         <div class="p-col">
