@@ -1,7 +1,7 @@
 <div id="body-mobile">
-  <nav class="barra-titulo" >
+  <nav class="barra-titulo">
     <div class="dpat-logo">
-      <a >
+      <a>
         <div class="container-logos">
           <img routerLink="/" src="../../assets/logo/logo-dpat.png" alt="DPAT" />
         </div>
@@ -9,22 +9,23 @@
     </div>
     <div class="btn-languages-mobile">
       <button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
-              [ngStyle]="bntStylePOR">&nbsp;POR</button>
+        [ngStyle]="bntStylePOR">&nbsp;POR</button>
       <button (click)="changeLanguage('en-us')" class="color-buttons" mat-raised-button color="warn"
-              [ngStyle]="bntStyleENG">&nbsp;ENG</button>
+        [ngStyle]="bntStyleENG">&nbsp;ENG</button>
     </div>
   </nav>
-  <mat-tab-group id="tab-mobile" #matgroup mat-stretch-tabs>
-    <mat-tab label = "{{titlesLayerBox.map}}">
+  <mat-tab-group mat-stretch-tabs [(selectedIndex)]="indexOpenConsulta" id="tab-mobile" #matgroup>
+    <mat-tab label="{{titlesLayerBox.map}}">
       <mat-drawer-container class="container-layer-sidenav" autosize>
-        <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over" [autoFocus]="false"
-        [opened]="showDrawer">
+        <mat-drawer #drawer [style.z-index]="showDrawer? '4' : '-1'" class="layer-sidenav" mode="over"
+          [autoFocus]="false" [opened]="showDrawer">
           <div class="container-drawer">
-            <button (click)="handleDrawer()" style="position: absolute; right: calc(100% - 19.5rem);top: 10px;" mat-icon-button>
+            <button (click)="handleDrawer()" style="position: absolute; right: calc(100% - 19.5rem);top: 10px;"
+              mat-icon-button>
               <mat-icon>highlight_off</mat-icon>
             </button>
             <div class="collapseLayer">
-              <mat-tab-group class="layersConteudo" dynamicHeight>
+              <mat-tab-group mat-stretch-tabs class="layersConteudo" dynamicHeight>
                 <mat-tab label="{{titlesLayerBox.label_data}}">
                   <p-scrollPanel [style]="{width: '100%',  height: '80vh'}">
                     <mat-accordion>
@@ -33,43 +34,40 @@
                           <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
                         </ng-template>
                         <input id="typeahead-http" type="text" class="form-control searchRegion"
-                          [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion"
-                          [ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}"
-                          (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-                          [inputFormatter]="formatter" [value]="currentData" />
+                          [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search"
+                          placeholder="{{titlesLayerBox.search_placeholder}}" (selectItem)="updateRegion($event.item)"
+                          [resultTemplate]="rt" [inputFormatter]="formatter" [value]="currentData" />
                         <img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
                           (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
                         <span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
                         <div class="invalid-feedback" *ngIf="searchFailed">
                           {{titlesLayerBox.search_failed}}</div>
-      
+
                         <div *ngFor="let groups of descriptor.groups">
-      
+
                           <mat-expansion-panel style="padding-top: 15px" [expanded]=groups.group_expanded>
-                            <mat-expansion-panel-header [collapsedHeight]="'50px'"
-                              [expandedHeight]="'50px'" class="expansion-header-layer">
+                            <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
+                              class="expansion-header-layer">
                               <h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
                             </mat-expansion-panel-header>
                             <div class="layersContent" *ngFor="let layer of groups.layers">
                               <div style="display: flex">
-                                <mat-checkbox class="example-margin"
-                                  (change)="changeVisibility(layer, $event)"
+                                <mat-checkbox class="example-margin" (change)="changeVisibility(layer, $event)"
                                   [checked]=layer.visible>
                                   {{layer.label}}
                                 </mat-checkbox>
                                 <div class="space"></div>
-                                <button *ngIf="layer.visible" (click)="openDialogMetadata(layer)"
-                                  classs="btn-info" mat-icon-button>
+                                <button *ngIf="layer.visible" (click)="openDialogMetadata(layer)" classs="btn-info"
+                                  mat-icon-button>
                                   <mat-icon>info</mat-icon>
                                 </button>
                               </div>
                               <div *ngIf="layer.visible" style="padding-left: 8%; padding-right: 2%">
-                                <mat-form-field >
+                                <mat-form-field>
                                   <mat-label>{{descriptor.type}}</mat-label>
                                   <mat-select (selectionChange)="changeVisibility(layer)"
                                     [(value)]="layer.selectedType">
-                                    <mat-option *ngFor="let type of layer.types"
-                                      [value]="type.value">
+                                    <mat-option *ngFor="let type of layer.types" [value]="type.value">
                                       {{type.Viewvalue}}
                                     </mat-option>
                                   </mat-select>
@@ -80,16 +78,14 @@
                                     <mat-label>{{type.timeLabel}}</mat-label>
                                     <mat-select (selectionChange)="updateSourceLayer(type)"
                                       [(value)]="type.timeSelected">
-                                      <mat-option *ngFor="let times of type.times"
-                                        [value]="times.value">
+                                      <mat-option *ngFor="let times of type.times" [value]="times.value">
                                         {{times.Viewvalue}}
                                       </mat-option>
                                     </mat-select>
                                   </mat-form-field>
                                 </span>
                                 <div *ngFor="let type of layer.types">
-                                  <img *ngIf="layer.selectedType === type.value"
-                                    [src]="type.urlLegend">
+                                  <img *ngIf="layer.selectedType === type.value" [src]="type.urlLegend">
                                 </div>
                               </div>
                             </div>
@@ -102,8 +98,7 @@
                 </mat-tab>
                 <mat-tab label="{{titlesLayerBox.label_mapabase}}">
                   <div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
-                    <mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
-                      [(ngModel)]="basemap.visible">
+                    <mat-slide-toggle (change)="baseLayerChecked(basemap, $event)" [(ngModel)]="basemap.visible">
                       {{basemap.viewValue}}
                     </mat-slide-toggle>
                   </div>
@@ -129,12 +124,12 @@
             <img width="40" height="40" src="../../assets/img/close-button.svg"
               [alt]="controls.label_close_mun">
           </div> -->
-          <div [matTooltip]="controls.label_layers"
-            [class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleDrawer()">
+          <div [matTooltip]="controls.label_layers" [class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'"
+            (click)="handleDrawer()">
             <img width="40" height="40" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
           </div>
         </div>
-      
+
         <div class="layer-sidenav-content">
           <div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'">
             <div class="buttonszoom">
@@ -145,7 +140,7 @@
                 <img width="25" height="25" src="../../assets/img/menos.svg" [alt]="controls.label_zoomout">
               </div>
             </div>
-            
+
             <!-- UTFGRID -->
             <!-- <div id="map-info" class="card" [ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden'))}">
               <div *ngIf="infodata" class="card-body">
@@ -234,7 +229,7 @@
         </div>
       </mat-drawer-container>
     </mat-tab>
-    <mat-tab label = "{{titlesLayerBox.statistics}}">
+    <mat-tab label="{{titlesLayerBox.statistics}}">
       <p-scrollPanel [style]="{width: '100%', height: '90vh'}">
         <div *ngIf="true" id="tabGraficoLinhas">
           <h4 style="font-size: 30px;">{{dataSeries.label}} </h4>
@@ -243,8 +238,8 @@
               <div class="col-md-12">
                 <div class="chart-region">
                   <h5>
-                    <button *ngIf="selectRegion.type != 'biome'" color="primary"
-                      (click)="openRegionReport()" mat-icon-button>
+                    <button *ngIf="selectRegion.type != 'biome'" color="primary" (click)="openRegionReport()"
+                      mat-icon-button>
                       <mat-icon>text_snippet</mat-icon>
                     </button>
                     <strong> {{ selectRegion.text }} </strong>
@@ -275,8 +270,8 @@
               <b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b>
 
             </h6>
-            <p-table [value]="chartResultCities.series" selectionMode="single"
-              (onRowSelect)="onCityRowSelect($event)" autoLayout=true>
+            <p-table [value]="chartResultCities.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)"
+              autoLayout=true>
               <ng-template pTemplate="header">
                 <tr align="center">
                   <th *ngFor="let header of chartResultCities.split">
@@ -285,8 +280,8 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-city>
-                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                  tooltipPosition="bottom" life="2000">
+                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}" tooltipPosition="bottom"
+                  life="2000">
                   <td align="center">{{city.index}}</td>
                   <td align="center">{{city.name}}</td>
                   <td align="center">{{city.uf}}</td>
@@ -312,8 +307,8 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-city>
-                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                  tooltipPosition="bottom" life="2000">
+                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}" tooltipPosition="bottom"
+                  life="2000">
                   <td align="center">{{city.index}}</td>
                   <td align="center">{{city.name}}</td>
                   <td align="center">{{city.uf}}</td>
@@ -340,8 +335,8 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-city>
-                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}"
-                  tooltipPosition="bottom" life="2000">
+                <tr [pSelectableRow]="city" pTooltip="{{chartResultCities.tooltip}}" tooltipPosition="bottom"
+                  life="2000">
                   <td align="center">{{city.index}}</td>
                   <td align="center">{{city.name}}</td>
                   <td align="center">{{city.uf}}</td>
@@ -355,14 +350,13 @@
           <h4 style="font-size: 30px;">{{chartUsoSolo[0]?.label}}</h4>
           <div>
             <p-tabView (onChange)="changeSelectedLulcChart($event)">
-              <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index"
-                [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
+              <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0"
+                [disabled]="!uso.show" [cache]="true">
                 <div>
                   <p style="font-weight: bold">{{ selectRegion.text }}</p>
                   <div>{{uso.text}}</div>
-                  <p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type"
-                    [type]="uso.type" [data]="uso.data" [options]="uso.options" width="30vw"
-                    height="20vh"></p-chart>
+                  <p-chart [ngStyle]="{'overflow-x': hidden}" id="chartUso" *ngIf="uso.type" [type]="uso.type"
+                    [data]="uso.data" [options]="uso.options" width="30vw" height="20vh"></p-chart>
                 </div>
               </p-tabPanel>
             </p-tabView>
@@ -371,139 +365,123 @@
         <div style="height: 20vh"></div>
       </p-scrollPanel>
     </mat-tab>
-    <mat-tab label = "{{titlesLayerBox.upload_search}}">
-        <div id="tab-search" style="padding-top: 15px;">
-          <p-scrollPanel [style]="{height: '80%'}">
-            <mat-progress-bar class="progress-analyse" color="accent"
-                              *ngIf="layerFromConsulta.analyzedAreaLoading" mode="indeterminate">
-            </mat-progress-bar>
-            <mat-form-field class="example-full-width" style="width: 100%;">
-              <mat-label>{{titlesLayerBox.label_upload_token}}</mat-label>
-              <input type="number" min="0" matInput [(ngModel)]="layerFromConsulta.token">
-            </mat-form-field>
-            <mat-card *ngIf="layerFromConsulta.visible"
-                      class="card-checkbox-upload mat-elevation-z8" color="primary">
-              <div class="title-file-card">
-                {{titlesLayerBox.label_upload_title_file.toUpperCase()}}</div>
-            </mat-card>
-            <div class="buttons-analyze">
-              <button class="color-buttons" *ngIf="layerFromConsulta.token != ''"
-                      (click)="analyzeUploadShape(true)" mat-raised-button color="primary">
-                <div *ngIf="titlesLayerBox.hasOwnProperty('btn_analyze')">
-                  {{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
-              </button>
-              <button class="color-buttons clear"
-                      *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
-                      (click)="clearUpload(true)" mat-raised-button color="warn">
-                <div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
-                  {{titlesLayerBox.btn_clear.toUpperCase()}}</div>
-              </button>
-            </div>
-            <div *ngIf="layerFromConsulta.analyzedAreaLoading" class="info-header"
-                 [innerHTML]="titlesLayerBox.warning"></div>
+    <mat-tab label="{{titlesLayerBox.upload_search}}">
+      <div id="tab-search" style="padding-top: 15px;">
+        <p-scrollPanel [style]="{height: '80%'}">
+          <mat-progress-bar class="progress-analyse" color="accent" *ngIf="layerFromConsulta.analyzedAreaLoading"
+            mode="indeterminate">
+          </mat-progress-bar>
+          <mat-form-field class="example-full-width" style="width: 100%;">
+            <mat-label>{{titlesLayerBox.label_upload_token}}</mat-label>
+            <input type="number" min="0" matInput [(ngModel)]="layerFromConsulta.token">
+          </mat-form-field>
+          <mat-card *ngIf="layerFromConsulta.visible" class="card-checkbox-upload mat-elevation-z8" color="primary">
+            <div class="title-file-card">
+              {{titlesLayerBox.label_upload_title_file.toUpperCase()}}</div>
+          </mat-card>
+          <div class="buttons-analyze">
+            <button class="color-buttons" *ngIf="layerFromConsulta.token != ''" (click)="analyzeUploadShape(true)"
+              mat-raised-button color="primary">
+              <div *ngIf="titlesLayerBox.hasOwnProperty('btn_analyze')">
+                {{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
+            </button>
+            <button class="color-buttons clear" *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
+              (click)="clearUpload(true)" mat-raised-button color="warn">
+              <div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
+                {{titlesLayerBox.btn_clear.toUpperCase()}}</div>
+            </button>
+          </div>
+          <div *ngIf="layerFromConsulta.analyzedAreaLoading" class="info-header" [innerHTML]="titlesLayerBox.warning">
+          </div>
 
-            <div *ngIf="layerFromConsulta.error" class="info-error"
-                 [innerHTML]="titlesLayerBox.not_found"></div>
+          <div *ngIf="layerFromConsulta.error" class="info-error" [innerHTML]="titlesLayerBox.not_found"></div>
 
-            <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
-                 class="card card-upload-analysed">
-              <h5 class="title-file-card ">
-                {{titlesLayerBox.label_analyzed_area_title.toUpperCase()}}</h5>
-              <div class="card-upload-analysed-content">
-                <div class="upload-token">
-                  <button (click)="printAnalyzedAreaReport(true)" color="primary"
-                          classs="btn-info " mat-icon-button>
-                    <mat-icon>print</mat-icon>
-                    <mat-spinner [strokeWidth]="2" [diameter]="18"
-                                 *ngIf="loadingPrintReport" color="primary" mode="indeterminate"
-                                 style="margin: 0 auto;"></mat-spinner>
-                  </button>
-                  {{titlesLayerBox.label_total_area}}
-                  <strong>
-                    {{layerFromConsulta.analyzedArea.shape_upload.area_upload | number:'1.2-2' }}
-                    km² </strong>
-                </div>
+          <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')" class="card card-upload-analysed">
+            <h5 class="title-file-card ">
+              {{titlesLayerBox.label_analyzed_area_title.toUpperCase()}}</h5>
+            <div class="card-upload-analysed-content">
+              <div class="upload-token">
+                <button (click)="printAnalyzedAreaReport(true)" color="primary" classs="btn-info " mat-icon-button>
+                  <mat-icon>print</mat-icon>
+                  <mat-spinner [strokeWidth]="2" [diameter]="18" *ngIf="loadingPrintReport" color="primary"
+                    mode="indeterminate" style="margin: 0 auto;"></mat-spinner>
+                </button>
+                {{titlesLayerBox.label_total_area}}
+                <strong>
+                  {{layerFromConsulta.analyzedArea.shape_upload.area_upload | number:'1.2-2' }}
+                  km² </strong>
+              </div>
 
-                <div *ngIf="layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('city')"
-                     class="card-upload-analysed-table">
-                  <h6 class="card-upload-analysed-table-title">
-                    {{titlesLayerBox.table_city_title}}
-                  </h6>
-                  <p>
-                    {{getCitiesAnalyzedArea(true)}}
-                  </p>
-                </div>
-                <div *ngIf="layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('state')"
-                     class="card-upload-analysed-table">
-                  <h6 class="card-upload-analysed-table-title">
-                    {{titlesLayerBox.table_state_title}}
-                  </h6>
-                  <p>
-                    {{getStatesAnalyzedArea(true)}}
-                  </p>
-                </div>
+              <div *ngIf="layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('city')"
+                class="card-upload-analysed-table">
+                <h6 class="card-upload-analysed-table-title">
+                  {{titlesLayerBox.table_city_title}}
+                </h6>
+                <p>
+                  {{getCitiesAnalyzedArea(true)}}
+                </p>
+              </div>
+              <div *ngIf="layerFromConsulta.analyzedArea.regions_intersected.hasOwnProperty('state')"
+                class="card-upload-analysed-table">
+                <h6 class="card-upload-analysed-table-title">
+                  {{titlesLayerBox.table_state_title}}
+                </h6>
+                <p>
+                  {{getStatesAnalyzedArea(true)}}
+                </p>
+              </div>
 
-                <div *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
-                     class="card-upload-analysed-table">
-                  <h6 class="card-upload-analysed-table-title card"
-                      (click)="printAnalyzedAreaReport(true)">
-                    {{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
-                  </h6>
-                </div>
-                <div *ngIf="layerFromConsulta.analyzedArea.deter.length > 0"
-                     class="card-upload-analysed-table">
-                  <h5 class="card-upload-analysed-table-title">
-                    {{titlesLayerBox.table_deter_title}}
-                  </h5>
-                  <p-table [value]="layerFromConsulta.analyzedArea.deter"
-                           selectionMode="single">
-                    <ng-template pTemplate="header">
-                      <tr align="center">
-                        <th
-                                *ngFor="let header of titlesLayerBox.header_table_deforested">
-                          {{header}}
-                        </th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-region>
-                      <tr [pSelectableRow]="region" tooltipPosition="bottom"
-                          life="2000">
-                        <td align="center">{{region.year}}</td>
-                        <td align="center">{{region.area_desmat | number :'1.2-2' }}
-                          km²</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
-                <div *ngIf="layerFromConsulta.analyzedArea.prodes.length > 0"
-                     class="card-upload-analysed-table">
-                  <h5 class="card-upload-analysed-table-title">
-                    {{titlesLayerBox.table_prodes_title}}
-                  </h5>
-                  <p-table [value]="layerFromConsulta.analyzedArea.prodes"
-                           selectionMode="single">
-                    <ng-template pTemplate="header">
-                      <tr align="center">
-                        <th
-                                *ngFor="let header of titlesLayerBox.header_table_deforested">
-                          {{header}}
-                        </th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-region>
-                      <tr [pSelectableRow]="region" tooltipPosition="bottom"
-                          life="2000">
-                        <td align="center">{{region.year}}</td>
-                        <td align="center">{{region.area_desmat | number :'1.2-2' }}
-                          km²</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
+              <div *ngIf="layerFromConsulta.analyzedArea.car.length > 0" class="card-upload-analysed-table">
+                <h6 class="card-upload-analysed-table-title card" (click)="printAnalyzedAreaReport(true)">
+                  {{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
+                </h6>
+              </div>
+              <div *ngIf="layerFromConsulta.analyzedArea.deter.length > 0" class="card-upload-analysed-table">
+                <h5 class="card-upload-analysed-table-title">
+                  {{titlesLayerBox.table_deter_title}}
+                </h5>
+                <p-table [value]="layerFromConsulta.analyzedArea.deter" selectionMode="single">
+                  <ng-template pTemplate="header">
+                    <tr align="center">
+                      <th *ngFor="let header of titlesLayerBox.header_table_deforested">
+                        {{header}}
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-region>
+                    <tr [pSelectableRow]="region" tooltipPosition="bottom" life="2000">
+                      <td align="center">{{region.year}}</td>
+                      <td align="center">{{region.area_desmat | number :'1.2-2' }}
+                        km²</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+              <div *ngIf="layerFromConsulta.analyzedArea.prodes.length > 0" class="card-upload-analysed-table">
+                <h5 class="card-upload-analysed-table-title">
+                  {{titlesLayerBox.table_prodes_title}}
+                </h5>
+                <p-table [value]="layerFromConsulta.analyzedArea.prodes" selectionMode="single">
+                  <ng-template pTemplate="header">
+                    <tr align="center">
+                      <th *ngFor="let header of titlesLayerBox.header_table_deforested">
+                        {{header}}
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-region>
+                    <tr [pSelectableRow]="region" tooltipPosition="bottom" life="2000">
+                      <td align="center">{{region.year}}</td>
+                      <td align="center">{{region.area_desmat | number :'1.2-2' }}
+                        km²</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
               </div>
             </div>
-          </p-scrollPanel>
-        </div>
+          </div>
+        </p-scrollPanel>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>

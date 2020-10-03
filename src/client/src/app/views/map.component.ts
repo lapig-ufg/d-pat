@@ -251,7 +251,7 @@ export class MapComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     public googleAnalyticsService: GoogleAnalyticsService,
     public router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
     public translate: TranslateService
   ) {
@@ -1371,7 +1371,6 @@ export class MapComponent implements OnInit {
 
             if (data) {
               // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
-
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
                 this.dataForDialog = data;
                 this.dataForDialog.origin_table = 'PRODES';
@@ -1399,7 +1398,7 @@ export class MapComponent implements OnInit {
           this.utfgridCampo.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
 
             if (data) {
-
+              data.origin_table = data.origin_table.toUpperCase();
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
 
                 isOficial = false;
@@ -1435,7 +1434,7 @@ export class MapComponent implements OnInit {
         if (this.utfgridsource) {
           this.utfgridsource.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
-
+              data.origin_table = data.origin_table.toUpperCase();
               if (prodes.visible && (prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
                 this.dataForDialog = data;
                 this.dataForDialog.coordinate = coordinate;
@@ -1458,7 +1457,7 @@ export class MapComponent implements OnInit {
           if (this.utfgridsourceDeter) {
             this.utfgridsourceDeter.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
               if (data) {
-
+                data.origin_table = data.origin_table.toUpperCase();
                 if (deter.visible && (deter.selectedType == 'bi_ce_deter_desmatamento_100_fip')) {
                   this.dataForDialog = data;
                   this.dataForDialog.coordinate = coordinate;
@@ -3069,6 +3068,7 @@ export class MapComponent implements OnInit {
     let self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
+        console.log(self.router.url)
         if (params.keys.includes('token')) {
           if (window.innerWidth < self.breakpointMobile) {
             self.router.navigate(['plataforma/' + params.get('token')]);
@@ -3077,8 +3077,8 @@ export class MapComponent implements OnInit {
           }
         }
       }
-      if (self.router.url.includes('regions')) {
 
+      if (self.router.url.includes('regions')) {
         if (window.innerWidth < self.breakpointMobile) {
           self.router.navigate(['regions/' + params.get('token')]);
         }
