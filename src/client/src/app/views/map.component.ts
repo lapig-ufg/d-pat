@@ -1627,10 +1627,9 @@ export class MapComponent implements OnInit {
 
     text = this.selectedTimeFromLayerType('bi_ce_prodes_desmatamento_100_fip').value;
 
-
-    if (this.selectRegion.type === 'city') {
+    if (this.selectRegion.type == 'city') {
       text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    } else if (this.selectRegion.type === 'state') {
+    } else if (this.selectRegion.type == 'state') {
       text += ' AND uf = \'' + this.selectRegion.value + '\'';
     }
 
@@ -1647,15 +1646,14 @@ export class MapComponent implements OnInit {
 
     let text = '';
 
-    let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
-
     text = this.selectedTimeFromLayerType('bi_ce_deter_desmatamento_100_fip').value;
 
-    if (this.selectRegion.type === 'city') {
+    if (this.selectRegion.type == 'city') {
       text += ' AND cd_geocmu = \'' + this.selectRegion.cd_geocmu + '\'';
-    } else if (this.selectRegion.type === 'state') {
+    } else if (this.selectRegion.type == 'state') {
       text += ' AND uf = \'' + this.selectRegion.value + '\'';
     }
+
 
     // console.log(this.selectRegion, text)
 
