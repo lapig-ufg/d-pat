@@ -3902,7 +3902,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
     }
 
-    if (this.data.year > 2015 && this.data.year <= 2019) {
+    if (this.dataSuscept.prob_suscept != null || (this.dataBfast.pct_bfast != null && this.dataBfast.pct_bfast)) {
       let columns = [];
       // @ts-ignore
       dd.content.push({ text: this.textOnDialog.analise_automatica.title_tab, style: 'subheader', pageBreak: this.albumLandsat.length > 0 ? "before" : false })
