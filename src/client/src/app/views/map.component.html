@@ -4,7 +4,7 @@
 		[opened]="showDrawer">
 		<div class="container-drawer">
 
-			<div class="titleWindows">
+			<div [style.visibility]="showDrawer? 'visible' : 'hidden'"  class="titleWindows">
 				<div>{{titlesLayerBox.title}}</div>
 				<div class="space"></div>
 				<div class="btn-languages">
@@ -15,34 +15,34 @@
 				</div>
 			</div>
 
-			<div class="collapseLayer">
-				<mat-tab-group class="layersConteudo" [(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs
+			<div [style.visibility]="showDrawer? 'visible' : 'hidden'"  class="collapseLayer">
+				<mat-tab-group [style.z-index]="showDrawer? '4' : '-1'" class="layersConteudo" [(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs
 					dynamicHeight>
-					<mat-tab label="{{titlesLayerBox.label_data}}">
-						<ng-template #rt let-r="result" let-t="term">
-							<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
-						</ng-template>
-						<input id="typeahead-http" type="text" class="form-control searchRegion"
-							[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search"
-							placeholder="{{titlesLayerBox.search_placeholder}}" (selectItem)="updateRegion($event.item)"
-							[resultTemplate]="rt" [inputFormatter]="formatter" [value]="currentData" />
-						<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-							(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-						<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-						<div class="invalid-feedback" *ngIf="searchFailed">
-							{{titlesLayerBox.search_failed}}</div>
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_data}}">
 						<mat-progress-bar *ngIf="loadingsDownload" mode="indeterminate">
 						</mat-progress-bar>
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
+							<ng-template #rt let-r="result" let-t="term">
+								<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+							</ng-template>
+							<input id="typeahead-http" type="text" class="form-control searchRegion"
+								   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search"
+								   placeholder="{{titlesLayerBox.search_placeholder}}" (selectItem)="updateRegion($event.item)"
+								   [resultTemplate]="rt" [inputFormatter]="formatter" [value]="currentData" />
+							<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
+								 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+							<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+							<div class="invalid-feedback" *ngIf="searchFailed">
+								{{titlesLayerBox.search_failed}}</div>
 							<mat-accordion>
-								<div id="layers_desmatamentos">
+								<div [style.visibility]="showDrawer? 'visible' : 'hidden'" id="layers_desmatamentos">
 									<div *ngFor="let groups of descriptor.groups">
-										<mat-expansion-panel style="padding-top: 15px" [expanded]=groups.group_expanded>
+										<mat-expansion-panel [expanded]=groups.group_expanded>
 											<mat-expansion-panel-header [collapsedHeight]="'50px'"
 												[expandedHeight]="'50px'" class="expansion-header-layer">
 												<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
 											</mat-expansion-panel-header>
-											<div class="layersContent" *ngFor="let layer of groups.layers">
+											<div [style.visibility]="showDrawer? 'visible' : 'hidden'" class="layersContent" *ngFor="let layer of groups.layers">
 												<div style="display: flex">
 													<mat-checkbox color="primary" class="example-margin"
 														(change)="changeVisibility(layer, $event)"
@@ -111,7 +111,7 @@
 							<div style="height: 30vh"></div>
 						</p-scrollPanel>
 					</mat-tab>
-					<mat-tab label="{{titlesLayerBox.label_upload}}">
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_upload}}">
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
 							<mat-tab-group [(selectedIndex)]="selectedIndexUpload" class="layersConteudo"
 								mat-stretch-tabs dynamicHeight>
@@ -392,28 +392,31 @@
 
 						</p-scrollPanel>
 					</mat-tab>
-					<mat-tab label="{{titlesLayerBox.label_mapabase}}">
-						<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
-							<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
-								[(ngModel)]="basemap.visible">
-								{{basemap.viewValue}}
-							</mat-slide-toggle>
-						</div>
-					</mat-tab>
-					<mat-tab label="{{titlesLayerBox.label_limits}}">
-						<div *ngFor="let limits of descriptor.limits">
-							<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
-								<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
-									[(ngModel)]="name_limits.visible" class="slideEstados">
-									{{name_limits.Viewvalue}}
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_mapabase}}">
+						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
+							<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
+								<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
+									[(ngModel)]="basemap.visible">
+									{{basemap.viewValue}}
 								</mat-slide-toggle>
-								<button (click)="openDialogMetadata(name_limits)" classs="btn-info" mat-icon-button>
-									<mat-icon>info</mat-icon>
-								</button>
 							</div>
-						</div>
+						</p-scrollPanel>
 					</mat-tab>
-
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_limits}}">
+						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
+							<div *ngFor="let limits of descriptor.limits">
+								<div class="form-group baseMap" *ngFor="let name_limits of limits.types">
+									<mat-slide-toggle (change)="limitsLayersChecked(name_limits, $event)"
+										[(ngModel)]="name_limits.visible" class="slideEstados">
+										{{name_limits.Viewvalue}}
+									</mat-slide-toggle>
+									<button (click)="openDialogMetadata(name_limits)" classs="btn-info" mat-icon-button>
+										<mat-icon>info</mat-icon>
+									</button>
+								</div>
+							</div>
+						</p-scrollPanel>
+					</mat-tab>
 				</mat-tab-group>
 			</div>
 

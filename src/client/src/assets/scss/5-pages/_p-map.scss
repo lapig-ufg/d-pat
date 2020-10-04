@@ -1033,7 +1033,6 @@ mat-select {
 
 .btn-languages{
   border-radius: 10px;
-  z-index: 1000;
 }
 .btn-languages button{
   margin-left: 15px;
@@ -1516,6 +1515,17 @@ mat-slider {
 
 }
 
+.hideDrawer{
+  z-index: -1;
+  visibility: hidden;
+  box-shadow: none;
+
+  .mat-drawer > *{
+    z-index: -1;
+    visibility: hidden;
+    box-shadow: none;
+  }
+}
 
 @media screen and (max-width: 1200px) {
   #positionCharts{

@@ -37,6 +37,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData, DecimalPipe } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -161,6 +162,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: NoCacheHeadersInterceptor,
       multi: true
+    },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: HammerGestureConfig
     }
   ],
   bootstrap: [AppComponent],

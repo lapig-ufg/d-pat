@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'plataforma', component: MapComponent },
   { path: 'projeto', component: ProjectComponent },
   { path: 'plataforma/:token', component: MapComponent },
-  { path: 'regions/:token', component: MapComponent }
+  { path: 'regions/:token', component: MapComponent },
+  { path: '**', redirectTo: '/'}
 ]
 
 const routesMobile: Routes = [
@@ -26,7 +27,8 @@ const routesMobile: Routes = [
   { path: 'projeto', component: ProjectComponent },
   { path: 'map-mobile', component: MapMobileComponent },
   { path: 'plataforma/:token', component: MapMobileComponent },
-  { path: 'regions/:token', component: MapMobileComponent }
+  { path: 'regions/:token', component: MapMobileComponent },
+  { path: '**', redirectTo: '/'}
 ]
 
 @NgModule({
@@ -37,7 +39,7 @@ export class AppRoutingModule {
 
   constructor(public router: Router) {
 
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 1025) {
       router.resetConfig(routesMobile);
     }
 

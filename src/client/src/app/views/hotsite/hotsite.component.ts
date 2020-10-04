@@ -18,6 +18,7 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     showInfo: boolean;
     breakpointMobile: number;
     isMobile: boolean;
+    languages: any = {};
     constructor(
         private http: HttpClient,
         private elementRef: ElementRef,
@@ -26,20 +27,25 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
     ) {
         this.isMobile = false;
         this.pt_br = false;
-        this.breakpointMobile = 1024;
+        this.breakpointMobile = 1025;
+
+        this.languages['pt'] = 'pt-br';
+        this.languages['en'] = 'en-us';
+        this.languages['pt-br'] = 'pt';
+        this.languages['en-us'] = 'en';
+
         translate.addLangs(['en', 'pt']);
         translate.setDefaultLang('en');
-        let browserLang = translate.getBrowserLang();
-        browserLang = browserLang === 'en' ? 'en-us' : browserLang;
-        browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
+        const browserLang = translate.getBrowserLang();
+        // browserLang = browserLang === 'en' ? 'en-us' : browserLang;
+        // browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
         translate.use(browserLang.match(/en|pt/) ? browserLang : 'en');
-        this.onLangClick(browserLang);
+        this.onLangClick(this.languages[browserLang]);
         this.showInfo = false;
         clearInterval(this.interValMasks);
     }
 
     onLangClick(lang) {
-        console.log(lang)
         if (lang === 'pt-br') {
             this.pt_br = true;
         } else {
