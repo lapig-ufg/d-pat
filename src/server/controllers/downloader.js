@@ -68,31 +68,43 @@ module.exports = function (app) {
         let layer = request.body.layer;
         let region = request.body.selectedRegion;
         let time = request.body.times;
+        let typeShape = request.body.typeshape;
 
-        let owsRequest = new Ows();
-
+        let owsRequest = new Ows(typeShape);
         owsRequest.setTypeName(layer.selectedType);
-        owsRequest.addFilter('1', '1');
 
-        if (region.type == 'city') {
-            owsRequest.addFilter('cd_geocmu', region.cd_geocmu);
+        let diretorio = '';
+        let fileParam = '';
+        let pathFile = '';
+
+        console.log(request.body)
+
+        if (typeShape == 'shp') {
+            owsRequest.addFilter('1', '1');
+
+            if (region.type == 'city') {
+                owsRequest.addFilter('cd_geocmu', region.cd_geocmu);
+            }
+            else if (region.type == 'state') {
+                owsRequest.addFilter('uf', region.value);
+            }
+
+            if (time != undefined) {
+                owsRequest.addFilterDirect(time.value);
+            }
+
+            fileParam = layer.selectedType + '_' + time;
+
+            // diretorio = config.downloadDataDir + layer.selectedType + '/';
+            // var nameFile = layer.selectedType + '_' + region.type + '_' + fileParam;
         }
-        else if (region.type == 'state') {
-            owsRequest.addFilter('uf', region.value);
+        else if (typeShape == 'tiff') {
+            diretorio = config.downloadDataDir + layer.selectedType
         }
 
-        if (time != undefined) {
-            owsRequest.addFilterDirect(time.value);
-        }
-
-        let fileParam = layer.selectedType + '_' + time;
-
-        let diretorio = config.downloadDataDir + layer.selectedType + '/';
-        // let diretorio = config.downloadDataDir+layer.selectedType+'/'+region.type+'/'+region.value+'/';
-
-        let pathFile = diretorio + fileParam;
-
-        var nameFile = layer.selectedType + '_' + region.type + '_' + fileParam;
+        diretorio = config.downloadDataDir + layer.selectedType + '/' + region.type + '/' + region.value + '/' + typeShape + '/';
+        fileParam = layer.selectedType;
+        pathFile = diretorio + fileParam;
 
         var zipFile = archiver('zip');
 

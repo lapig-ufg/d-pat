@@ -2310,12 +2310,13 @@ export class MapComponent implements OnInit {
       }).catch(err => this.loadingsDownload = false);
   }
 
-  downloadSHP(layer) {
+  downloadSHP(layer, type) {
     this.loadingsDownload = true;
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
-      "times": this.selectedTimeFromLayerType(layer.selectedType)
+      "times": this.selectedTimeFromLayerType(layer.selectedType),
+      "typeshape": type
     };
 
     this.http.post("/service/download/shp", parameters, { responseType: 'blob' })
@@ -2330,7 +2331,7 @@ export class MapComponent implements OnInit {
     if (format === 'csv') {
       this.downloadCSV(layer);
     } else {
-      this.downloadSHP(layer);
+      this.downloadSHP(layer, type);
     }
   }
 
@@ -4400,27 +4401,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         this.dataTimeseriesModis = {
           labels: this.tmpModis.map(element => element.date),
           datasets: [
-            // {
-            //   label: 'NDVI',
-            //   data: this.tmpModis.map(element => element.ndvi_original.toFixed(4)),
-            //   fill: false,
-            //   borderColor: '#ff0003',
-            //   backgroundColor: '#ff0003',
-            //   pointRadius: 1,
-            //   pointStyle: 'rect',
-            //   pointHoverRadius: 3
-            // },
-            // {
-            //   label: 'NDVI-Wiener',
-            //   data: this.tmpModis.map(element => element.ndvi_wiener.toFixed(4)),
-            //   fill: false,
-            //   borderColor: '#208f0a',
-            //   backgroundColor: '#208f0a',
-            //   hidden: true,
-            //   pointRadius: 1,
-            //   pointStyle: 'rect',
-            //   pointHoverRadius: 3
-            // },
             {
               label: 'NDVI',
               data: this.tmpModis.map(element => element.ndvi_golay.toFixed(4)),

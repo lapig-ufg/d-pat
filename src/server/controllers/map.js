@@ -482,14 +482,14 @@ module.exports = function (app) {
             value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig"]["view_value"][language],
             order: 5,
-            download: [],
+            download: ['tiff'],
             opacity: 1
           },
           {
             value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]["view_value"][language],
             order: 5,
-            download: [],
+            download: ['tiff'],
             opacity: 1
           }
           ]
@@ -835,7 +835,7 @@ module.exports = function (app) {
             value: "bi_ce_precipitacao_historica_30_lapig",
             Viewvalue: "TRMM/GPM",
             opacity: 0.8,
-            download: [],
+            download: ['tiff'],
             order: 3
           }]
         }

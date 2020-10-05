@@ -82,20 +82,20 @@
 														<section class="btn-actions">
 															<button class="color-buttons"
 																*ngIf="hasDownload('csv', type)"
-																(click)="buttonDownload('csv', layer, type)"
+																(click)="buttonDownload('csv', layer, 'csv')"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;CSV
 															</button>
 															<div class="space"></div>
 															<button class="color-buttons"
 																*ngIf="hasDownload('shp', type)"
-																(click)="buttonDownload('shp', layer, type)"
+																(click)="buttonDownload('shp', layer, 'shp')"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;SHP
 															</button>
 															<button class="color-buttons"
 																*ngIf="hasDownload('tiff', type)"
-																(click)="buttonDownload('tiff', layer, type)"
+																(click)="buttonDownload('tiff', layer, 'tiff')"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;TIFF
 															</button>
