@@ -10,10 +10,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-lg-auto ml-sm-auto mr-4">
                 <div (click)="setLang('pt-br')"
-                    [className]="lang === 'pt-br' ? 'nav-item nav-link lang-selected ' : 'nav-item nav-link lang'"
+                    [className]="lang === 'pt-br' || lang === 'pt' ? 'nav-item nav-link lang-selected ' : 'nav-item nav-link lang'"
                     class=""><strong>POR</strong></div>
                 <div (click)="setLang('en-us')"
-                    [className]="lang === 'en-us' ? 'nav-item nav-link lang lang-selected' : 'nav-item nav-link lang'">
+                    [className]="lang === 'en-us' || lang === 'en' ? 'nav-item nav-link lang lang-selected' : 'nav-item nav-link lang'">
                     <strong>ENG</strong></div>
             </div>
         </div>

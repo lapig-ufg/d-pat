@@ -31,7 +31,7 @@ import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute, Routes} from '@angular/router';
 import { saveAs } from 'file-saver';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import * as jsPDF from 'jspdf';
@@ -46,6 +46,9 @@ import { RegionReportComponent } from './region-report/region-report.component';
 import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
 import { ReportCarComponent } from './report-car/report-car.component';
 import { ChartsComponent } from "./charts/charts.component";
+import {MobileComponent} from "./mobile/mobile.component";
+import {ProjectComponent} from "./project/project.component";
+import {MapMobileComponent} from "./map-mobile/map-mobile.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -242,7 +245,7 @@ export class MapComponent implements OnInit {
   showStatistics: boolean;
   loadingsDownload: boolean;
   breakpointMobile: number;
-
+  languages: any = {};
   constructor(
     private http: HttpClient,
     private _service: SearchService,
@@ -339,12 +342,16 @@ export class MapComponent implements OnInit {
       'background-color': '#707070'
     };
 
+    this.languages['pt'] = 'pt-br';
+    this.languages['en'] = 'en-us';
+    this.languages['pt-br'] = 'pt';
+    this.languages['en-us'] = 'en';
+
     let browserLang = translate.getBrowserLang();
 
     translate.use(browserLang.match(/en|pt-br/) ? browserLang : 'en');
-    browserLang = browserLang === 'en' ? 'en-us' : browserLang;
-    browserLang = browserLang === 'pt' ? 'pt-br' : browserLang;
-    this.language = browserLang;
+
+    this.language = this.languages[browserLang];
 
     this.setStylesLangButton();
     this.mapForABC = new Map([
@@ -2346,7 +2353,7 @@ export class MapComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerHeigth = window.innerHeight;
-    if (window.innerWidth < 1600) {
+    if (window.innerWidth < this.breakpointMobile) {
       this.collapseLegends = false;
       this.collapseLayer = true;
       this.collapseCharts = true;
@@ -2357,9 +2364,6 @@ export class MapComponent implements OnInit {
       this.currentZoom = 6;
     }
 
-    // if (window.innerWidth < this.breakpointMobile) {
-    //   this.router.navigate(['/mobile']);
-    // }
   }
 
   handleDrawer() {
@@ -3071,7 +3075,6 @@ export class MapComponent implements OnInit {
     let self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
-        console.log(self.router.url)
         if (params.keys.includes('token')) {
           if (window.innerWidth < self.breakpointMobile) {
             self.router.navigate(['plataforma/' + params.get('token')]);

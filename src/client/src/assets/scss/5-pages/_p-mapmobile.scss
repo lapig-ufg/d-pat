@@ -420,8 +420,11 @@
   }
 
   .btn-languages-mobile{
-    margin-right: 10px;
-    margin-top: 20px;
+    display: flex;
+    height: 50%;
+    max-height: 35px;
+    margin-right: 2%;
+    align-self: center;
   }
 
   .btn-languages-mobile button{
@@ -918,13 +921,14 @@
   }
 
   .container-logos {
-    display: inline;
+    display: flex;
+    justify-content: flex-start;
   }
 
   .container-logos img {
     vertical-align: middle !important;
-    padding: 5px;
-    max-width: 70%;
+    width: 9rem;
+    height: 4.5rem;
   }
 
   .btn-languages {
@@ -1038,7 +1042,7 @@
     margin-left: 0px;
     transition: 0.3s;
     overflow: hidden;
-    top: -2%;
+    top: -17px;
     margin-top: 10px;
     width: 22vh;
     min-width: 362px;
@@ -1407,10 +1411,10 @@
   .barra-titulo {
     padding-bottom: 0px;
     background-color: white !important;
-    height: 14vh;
+    height: 5rem;
     border-bottom: 1px solid !important;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   .ui-scrollpanel-bar-y {
@@ -1430,13 +1434,17 @@
   .ui-scrollpanel-wrapper {
     padding-right: 8px;
   }
+
   .mat-expansion-panel-body {
     padding: 0!important;
   }
 
-  .mat-tab-body-content {
-    height: 30rem;
+  #mat-tab-content-0-2{
+    .mat-tab-body-content{
+      height: calc(100% + 80rem);
+    }
   }
+
 }
 
 #laudo-mobile {

@@ -1,11 +1,7 @@
 <div id="body-mobile">
   <nav class="barra-titulo">
-    <div class="dpat-logo">
-      <a>
-        <div class="container-logos">
-          <img routerLink="/" src="../../assets/logo/logo-dpat.png" alt="DPAT" />
-        </div>
-      </a>
+    <div class="container-logos">
+      <img routerLink="/" src="../../assets/logo/logo-dpat.png" alt="DPAT" />
     </div>
     <div class="btn-languages-mobile">
       <button (click)="changeLanguage('pt-br')" class="color-buttons" mat-raised-button color="accent"
@@ -365,9 +361,9 @@
         <div style="height: 20vh"></div>
       </p-scrollPanel>
     </mat-tab>
-    <mat-tab label="{{titlesLayerBox.upload_search}}">
-      <div id="tab-search" style="padding-top: 15px;">
-        <p-scrollPanel [style]="{height: '80%'}">
+    <mat-tab [id]="'tab-search-upload'" label="{{titlesLayerBox.upload_search}}">
+      <div style="padding-top: 15px;">
+        <p-scrollPanel [style]="{height: '100%'}">
           <mat-progress-bar class="progress-analyse" color="accent" *ngIf="layerFromConsulta.analyzedAreaLoading"
             mode="indeterminate">
           </mat-progress-bar>

@@ -101,7 +101,7 @@
     #logo {
       font-family: 'Roboto', sans-serif;
       right: 14px;
-      top: calc(100% - 62vh);
+      top: calc(100% - 60vh);
       position: absolute;
       position: fixed;
       z-index: 1;
@@ -1046,10 +1046,10 @@
       position: absolute;
       left: 5%;
       opacity: 0.7;
-      top: 9vh;
+      top: 3rem;
       padding-left: 50px;
       width: 150px;
-      height: 150px;
+      height: 111px;
       box-sizing: border-box;
       font-size: 20px;
       text-align: left;
@@ -1151,7 +1151,16 @@
     }
   }
 
-    // #fullpage {
-    //   max-height: 75%;
-    // }
+  @include mobile(){
+    .credit{
+      bottom: 5px;
+      left: 15px;
+    }
+    .content-overlay a.join {
+      bottom: 5px;
+      top: unset;
+      right: 15px;
+    }
+  }
+
 }

@@ -1,17 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject, HostListener} from '@angular/core';
 import { SearchService, MapComponent } from '../map.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTabGroup } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Lightbox } from 'ngx-lightbox';
 import { DatePipe, DecimalPipe } from '@angular/common';
-import OlView from 'ol/View';
-import * as OlProj from 'ol/proj';
 import logos from '../../views/logos';
 import * as moment from 'moment';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Router } from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -22,9 +19,13 @@ declare let html2canvas: any;
   providers: [SearchService],
   // styleUrls: ['./map-mobile.component.css']
 })
-export class MapMobileComponent extends MapComponent {
+export class MapMobileComponent extends MapComponent{
 
   indexOpenConsulta: any
+
+  tabNum = 0;
+  selected = 0;
+  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
 
   ngOnInit() {
     super.ngOnInit();
@@ -42,7 +43,7 @@ export class MapMobileComponent extends MapComponent {
       }
     });
 
-
+    this.tabNum = 2;
   }
 
   openDialog(): void {
@@ -60,6 +61,23 @@ export class MapMobileComponent extends MapComponent {
       data: this.dataForDialog,
     });
   }
+
+  // @HostListener('swipeleft', ['$event'])
+  // swipeLeft( eType ) {
+  //   console.log(eType)
+  //   if (this.indexOpenConsulta < this.tabNum) {
+  //     this.indexOpenConsulta++;
+  //   }
+  //   console.log(this.indexOpenConsulta);
+  // }
+  //
+  // @HostListener('swiperight', ['$event'])
+  // swipeRight( eType ) {
+  //   console.log(eType)
+  //   if (this.indexOpenConsulta > 0) {
+  //     this.indexOpenConsulta--;
+  //   }
+  // }
 
 }
 
