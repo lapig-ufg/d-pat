@@ -258,7 +258,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     private decimalPipe: DecimalPipe,
     public translate: TranslateService,
     protected changeDetector: ChangeDetectorRef
-) {
+  ) {
     translate.addLangs(['en', 'pt-br']);
     translate.setDefaultLang('pt-br');
 
@@ -953,6 +953,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     this.updateExtent();
     this.updateSourceAllLayer();
+
+    let register_event = this.selectRegion.type + "_" + this.selectRegion.text
+
+    this.googleAnalyticsService.eventEmitter("changeRegion", "Select-Region", register_event, 7);
+
   }
 
   private getResolutions(projection) {
@@ -1853,8 +1858,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
         register_event += "_" + time_selected
       }
 
-      console.log(layerTested, time_selected, register_event)
-
       this.googleAnalyticsService.eventEmitter("changeSourceLayer", "UpdateSourceLayer", register_event, 2);
     }
 
@@ -2032,19 +2035,24 @@ export class MapComponent implements OnInit, AfterViewChecked {
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
 
-
     if (layer.visible) {
-      let layerTested = this.layersNames.find(element => element.id === layer.id);
-      let time_selected = this.selectedTimeFromLayerType(layerTested.selectedType)
+      let register_event = ''
 
-      let register_event = layerTested.selectedType
-      if (time_selected != undefined) {
-        register_event += "_" + time_selected.value
+      if (layer.id != 'satelite') {
+        let layerTested = this.layersNames.find(element => element.id === layer.id);
+        let time_selected = this.selectedTimeFromLayerType(layerTested.selectedType)
+        register_event = layerTested.selectedType
+        if (time_selected != undefined) {
+          register_event += "_" + time_selected.value
+        }
+      }
+      else {
+        register_event = layer.selectedType + "_" + (layer.selectedType === 'landsat' ? layer.types[0].timeSelected : layer.types[1].timeSelected)
       }
 
       // console.log(layerTested.selectedType, time_selected, register_event)
-
       this.googleAnalyticsService.eventEmitter("changeLayer", "VisibilityLayer", register_event, 1);
+
     }
 
   }
@@ -2166,6 +2174,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
       ]
     });
 
+
+    this.googleAnalyticsService.eventEmitter("uploadLayer", "Upload", "uploadLayer", 4);
+
   }
 
   onChangeCheckUpload(event) {
@@ -2276,6 +2287,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       this.layerFromConsulta.analyzedArea.car = resultCar
 
+
+      this.googleAnalyticsService.eventEmitter("analyzeConsultaUploadLayer", "Analyze-Consulta-Upload", this.layerFromConsulta.token, 5);
+
     } else {
       this.layerFromUpload.analyzedAreaLoading = true;
       params.push('token=' + this.layerFromUpload.token)
@@ -2305,6 +2319,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
       urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
       let resultCar = await this.http.get(urlParamsCar).toPromise();
       this.layerFromUpload.analyzedArea.car = resultCar
+
+      this.googleAnalyticsService.eventEmitter("analyzeUploadLayer", "Analyze-Upload", this.layerFromUpload.token, 6);
     }
 
   }
@@ -2429,6 +2445,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
     } else {
       this.downloadSHP(layer, format);
     }
+
+    let register_event = format + "_" + layer.selectedType
+
+    this.googleAnalyticsService.eventEmitter("downloadLayer", "Download", register_event, 3);
+
   }
 
   zoomIn(level = 0.7) {
@@ -2618,6 +2639,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   }
   async printRegionsIdentification(token) {
+
+
     let language = this.language;
     let self = this;
 
@@ -2698,6 +2721,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     pdfMake.createPdf(dd).download(filename);
   }
   async printAnalyzedAreaReport(fromConsulta = false) {
+
+    this.googleAnalyticsService.eventEmitter("printAnalyzedAreaReport", "Print_Report", this.layerFromConsulta.token, 10);
+
     let language = this.language;
     let self = this;
     let layer = null;
@@ -3098,9 +3124,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
             }
             this.layersNames.push(layer);
           }
-          else {
-            this.layersNames.push(layer);
-          }
+          // else {
+          //   this.layersNames.push(layer);
+          // }
 
           for (let layerType of layer.types) {
             layerType.visible = false;
@@ -3188,7 +3214,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.changeDetector.detectChanges();
   }
 
@@ -3247,7 +3273,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     private http: HttpClient,
     private cdRef: ChangeDetectorRef,
     private _lightbox: Lightbox,
-    private decimalPipe: DecimalPipe
+    private decimalPipe: DecimalPipe,
+    public googleAnalyticsService: GoogleAnalyticsService
   ) {
     this.defaultImg = '';
     this.dataSuscept = {};
@@ -3261,6 +3288,8 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.textOnDialog = data.textosDaDialog;
     this.tmpModis = [];
     this.loading = false;
+
+    console.log(data)
 
     this.dataEspecial = null;
 
@@ -3341,6 +3370,11 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
   }
 
   async printReport() {
+
+    let register_event = this.data.origin_table + "_" + this.data.gid
+
+    this.googleAnalyticsService.eventEmitter("printPolygonReport", "Print_Report", register_event, 8);
+
     let language = this.data.language;
     let self = this;
     this.loading = true;
@@ -4571,6 +4605,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
       }
     );
+
+    let register_event = this.data.origin_table + "_" + this.data.gid
+    this.googleAnalyticsService.eventEmitter("polygonReport", "Deforestation_Report", register_event, 9);
   }
 
   ngOnDestroy() {
