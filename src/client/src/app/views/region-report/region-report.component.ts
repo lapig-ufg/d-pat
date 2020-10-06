@@ -41,6 +41,9 @@ export class RegionReportComponent implements OnInit {
   ngOnInit() {
     this.getTexts();
 
+    let register_event = this.dados.region.metadata[0].type + "_" + this.dados.region.metadata[0].region_display
+    this.googleAnalyticsService.eventEmitter("openRegionsReport", "Region_Report", register_event, 12);
+
   }
 
   async getTexts() {
