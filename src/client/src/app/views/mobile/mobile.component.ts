@@ -10,5 +10,9 @@ declare  var $: any;
   // styleUrls: ['./mobile.component.css']
 })
 export class MobileComponent extends HotsiteComponent {
-
+  height: number;
+  ngOnInit() {
+    super.ngOnInit();
+    this.height = window.innerHeight;
+  }
 }

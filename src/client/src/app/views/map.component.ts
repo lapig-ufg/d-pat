@@ -2370,7 +2370,6 @@ export class MapComponent implements OnInit {
   }
 
   async openReport(params) {
-
     let coordinate = null;
     let layers = null;
     let paramsReport = null;
@@ -3086,13 +3085,13 @@ export class MapComponent implements OnInit {
       if (self.router.url.includes('regions')) {
         if (window.innerWidth < self.breakpointMobile) {
           self.router.navigate(['regions/' + params.get('token')]);
+        }else{
+          self.selectedIndexConteudo = 1;
+          self.selectedIndexUpload = 1;
+          self.layerFromConsulta.token = params.get('token');
+          self.analyzeUploadShape(true);
+          self.handleDrawer();
         }
-
-        self.selectedIndexConteudo = 1;
-        self.selectedIndexUpload = 1;
-        self.layerFromConsulta.token = params.get('token');
-        self.analyzeUploadShape(true);
-        self.handleDrawer();
       }
     });
   }

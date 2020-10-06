@@ -729,7 +729,7 @@
   /* .mat-expansion-panel-header:focus,  */
 
   .mat-expansion-panel-header {
-    background: #5a4320;
+    background: #585555;
     color: #eeeeee;
     /* border: solid #eeeeee 3px; */
     justify-content: space-between;
@@ -1411,7 +1411,7 @@
   .barra-titulo {
     padding-bottom: 0px;
     background-color: white !important;
-    height: 5rem;
+    height: 4rem;
     border-bottom: 1px solid !important;
     display: flex;
     justify-content: space-between;
@@ -1443,6 +1443,15 @@
     .mat-tab-body-content{
       height: calc(100% + 80rem);
     }
+  }
+
+  @include mobile(){
+    .barra-titulo{
+      padding-top: unset;
+    }
+  }
+  .mat-tab-body-active {
+    height: 100vh;
   }
 
 }

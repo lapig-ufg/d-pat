@@ -25,21 +25,27 @@ export class MapMobileComponent extends MapComponent{
 
   tabNum = 0;
   selected = 0;
-  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
+  height: number;
 
   ngOnInit() {
     super.ngOnInit();
     this.currentZoom = 4.8;
-
-    if (this.router.url.includes('regions')) {
-      this.indexOpenConsulta = 2
-    }
-
-
-    let self = this;
+    this.height = window.innerHeight;
+    const self = this;
     self.route.paramMap.subscribe(function (params) {
-      if (params.keys.includes('token')) {
-        self.openReport(params);
+      if (self.router.url.includes('regions')) {
+        if (params.keys.includes('token')) {
+          self.indexOpenConsulta = 2;
+          self.layerFromConsulta.token = params.get('token');
+          self.analyzeUploadShape(true);
+        }
+      }
+    });
+    self.route.paramMap.subscribe(function (params) {
+      if (self.router.url.includes('plataforma')) {
+        if (params.keys.includes('token')) {
+          self.openReport(params);
+        }
       }
     });
 

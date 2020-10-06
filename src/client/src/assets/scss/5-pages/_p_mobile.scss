@@ -28,7 +28,6 @@
       background-color: #257a33;
       transition: 0.3s;
       z-index: 10000;
-  
     }
   
     .btn-dpat:hover {
@@ -1160,6 +1159,19 @@
       bottom: 5px;
       top: unset;
       right: 15px;
+    }
+    .team img{
+      width: 80%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #section4{
+      .text-container{
+        h2{
+          text-align: center;
+        }
+      }
     }
   }
 

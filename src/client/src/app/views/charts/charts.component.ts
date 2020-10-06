@@ -16,7 +16,6 @@ export class ChartsComponent implements OnInit {
       public dialogRef: MatDialogRef<ChartsComponent>,
       @Optional() @Inject(MAT_DIALOG_DATA) public params: any
   ) {
-    console.log(params);
     this.innerHeigth = window.innerHeight  - 180;
     this.title = params.ob.title;
     this.description = params.ob.description;
