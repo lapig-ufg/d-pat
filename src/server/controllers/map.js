@@ -482,14 +482,14 @@ module.exports = function (app) {
             value: "bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig",
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_menores_100_na_lapig"]["view_value"][language],
             order: 5,
-            download: ['tiff'],
+            download: ['tif'],
             opacity: 1
           },
           {
             value: "bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig",
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["susceptibilidade"]["types"]["bi_ce_susceptibilidade_desmatamento_maiores_100_na_lapig"]["view_value"][language],
             order: 5,
-            download: ['tiff'],
+            download: ['tif'],
             opacity: 1
           }
           ]
@@ -786,7 +786,7 @@ module.exports = function (app) {
             Viewvalue: "SRTM",
             opacity: 0.8,
             order: 3,
-            download: ['tiff']
+            download: ['tif']
           }]
         },
         {
@@ -800,7 +800,7 @@ module.exports = function (app) {
             Viewvalue: "SRTM",
             opacity: 0.8,
             order: 3,
-            download: ['tiff']
+            download: ['tif']
           }]
         }
         ]
@@ -835,7 +835,7 @@ module.exports = function (app) {
             value: "bi_ce_precipitacao_historica_30_lapig",
             Viewvalue: "TRMM/GPM",
             opacity: 0.8,
-            download: ['tiff'],
+            download: ['tif'],
             order: 3
           }]
         }
@@ -1068,6 +1068,7 @@ module.exports = function (app) {
         not_found: languageJson["layer_box"]["not_found"][language],
         label_upload_tooltip: languageJson["layer_box"]["label_upload_tooltip"][language],
         car_title: languageJson["layer_box"]["car_title"][language],
+        car_title_searching: languageJson["layer_box"]["car_title_searching"][language],
         car_table_headers: languageJson["layer_box"]["car_table_headers"][language],
         car_title_report: languageJson["layer_box"]["car_title_report"][language],
         upload_submit: languageJson["layer_box"]["upload_submit"][language],

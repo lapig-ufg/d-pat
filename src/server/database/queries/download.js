@@ -10,9 +10,9 @@ module.exports = function (app) {
         let time = params.times;
 
         let mapper = {
-            "bi_ce_prodes_desmatamento_100_fip": "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, areamunkm from prodes_cerrado where " + time,
-            "bi_ce_deter_desmatamento_100_fip": "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, date_part('year', deter_cerrado.view_date) AS year, classefip, areamunkm from deter_cerrado where " + time,
-            "bi_ce_prodes_antropico_100_fip": "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, areamunkm from prodes_cerrado where " + time
+            "bi_ce_prodes_desmatamento_100_fip": "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, areamunkm from prodes_cerrado where " + time.value,
+            "bi_ce_deter_desmatamento_100_fip": "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, date_part('year', deter_cerrado.view_date) AS year, classefip, areamunkm from deter_cerrado where " + time.value,
+            "bi_ce_prodes_antropico_100_fip": "select gid,view_date, cd_geocmu, uf, sucept_desmat, bfm_pct, year, classefip, areamunkm from prodes_cerrado where " + time.value
         }
 
         let sqlQuery = mapper[layer.selectedType];

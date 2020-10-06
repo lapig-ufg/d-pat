@@ -31,7 +31,7 @@ import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { MetadataComponent } from './metadata/metadata.component';
-import {Router, ActivatedRoute, Routes} from '@angular/router';
+import { Router, ActivatedRoute, Routes } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import * as jsPDF from 'jspdf';
@@ -46,9 +46,9 @@ import { RegionReportComponent } from './region-report/region-report.component';
 import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
 import { ReportCarComponent } from './report-car/report-car.component';
 import { ChartsComponent } from "./charts/charts.component";
-import {MobileComponent} from "./mobile/mobile.component";
-import {ProjectComponent} from "./project/project.component";
-import {MapMobileComponent} from "./map-mobile/map-mobile.component";
+import { MobileComponent } from "./mobile/mobile.component";
+import { ProjectComponent } from "./project/project.component";
+import { MapMobileComponent } from "./map-mobile/map-mobile.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -1815,11 +1815,11 @@ export class MapComponent implements OnInit {
 
   private updateSourceAllLayer() {
     for (let layer of this.layersTypes) {
-      this.updateSourceLayer(layer);
+      this.updateSourceLayer(layer, false);
     }
   }
 
-  private updateSourceLayer(layer) {
+  private updateSourceLayer(layer, fromUser) {
     if (layer['times']) {
       this.periodSelected = layer['times'].find(
         element => element.value === layer.timeSelected
@@ -1840,6 +1840,23 @@ export class MapComponent implements OnInit {
     let source_layers = this.LayersTMS[layer.value].getSource();
     source_layers.setUrls(this.parseUrls(layer));
     source_layers.refresh();
+
+    // console.log(layer)
+
+    if (layer.visible) {
+      let layerTested = layer.value;
+      let time_selected = layer.timeSelected
+
+      let register_event = layerTested
+      if (time_selected != undefined) {
+        register_event += "_" + time_selected
+      }
+
+      console.log(layerTested, time_selected, register_event)
+
+      this.googleAnalyticsService.eventEmitter("changeSourceLayer", "UpdateSourceLayer", register_event, 2);
+    }
+
   }
 
   baseLayerChecked(base, e) {
@@ -2014,9 +2031,20 @@ export class MapComponent implements OnInit {
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
 
-    let layerTested = this.layersNames.find(element => element.id === layer.id);
 
-    this.googleAnalyticsService.eventEmitter("changeLayer", "VisibilityLayer", layer.label, layerTested.selectedType);
+    if (layer.visible) {
+      let layerTested = this.layersNames.find(element => element.id === layer.id);
+      let time_selected = this.selectedTimeFromLayerType(layerTested.selectedType)
+
+      let register_event = layerTested.selectedType
+      if (time_selected != undefined) {
+        register_event += "_" + time_selected.value
+      }
+
+      // console.log(layerTested.selectedType, time_selected, register_event)
+
+      this.googleAnalyticsService.eventEmitter("changeLayer", "VisibilityLayer", register_event, 1);
+    }
 
   }
 
@@ -2071,8 +2099,6 @@ export class MapComponent implements OnInit {
   public onFileComplete(data: any) {
 
     let map = this.map;
-
-    console.log(data)
 
     this.layerFromUpload.checked = false;
     this.layerFromUpload.error = false;
@@ -2199,39 +2225,85 @@ export class MapComponent implements OnInit {
     this.infodataMunicipio = null;
   }
 
-  analyzeUploadShape(fromConsulta = false) {
+  async analyzeUploadShape(fromConsulta = false) {
     let params = [];
     let self = this;
     let urlParams = '';
+
+    let paramsCar = []
+    let urlParamsCar = '';
 
     if (fromConsulta) {
       this.layerFromConsulta.analyzedAreaLoading = true;
       params.push('token=' + this.layerFromConsulta.token)
       this.layerFromConsulta.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
-      this.http.get(urlParams, this.httpOptions).subscribe(result => {
+      // this.http.get(urlParams, this.httpOptions).subscribe(result => {
+      //   this.layerFromConsulta.analyzedArea = result;
+      //   this.layerFromConsulta.analyzedAreaLoading = false;
+      //   this.loadLayerFromConsultaToMap();
+
+      //   console.log("Analyze-#1", this.layerFromConsulta)
+      // },
+      //   error => {
+      //     self.layerFromConsulta.analyzedAreaLoading = false;
+      //     self.layerFromConsulta.error = true;
+      //   });
+
+      try {
+        let result = await this.http.get(urlParams, this.httpOptions).toPromise()
+
         this.layerFromConsulta.analyzedArea = result;
         this.layerFromConsulta.analyzedAreaLoading = false;
+
         this.loadLayerFromConsultaToMap();
-      },
-        error => {
-          self.layerFromConsulta.analyzedAreaLoading = false;
-          self.layerFromConsulta.error = true;
-        });
+
+
+      } catch (err) {
+        self.layerFromConsulta.analyzedAreaLoading = false;
+        self.layerFromConsulta.error = true;
+      }
+
+      // urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
+      // this.http.get(urlParamsCar, this.httpOptions).subscribe(result => {
+      //   this.layerFromConsulta.analyzedArea.car = result
+      //   console.log("#1", this.layerFromConsulta)
+      // });
+
+      urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
+      let resultCar = await this.http.get(urlParamsCar).toPromise();
+
+      this.layerFromConsulta.analyzedArea.car = resultCar
 
     } else {
       this.layerFromUpload.analyzedAreaLoading = true;
       params.push('token=' + this.layerFromUpload.token)
       this.layerFromUpload.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
-      this.http.get(urlParams, this.httpOptions).subscribe(result => {
+      // this.http.get(urlParams, this.httpOptions).subscribe(result => {
+      //   this.layerFromUpload.analyzedArea = result;
+      //   this.layerFromUpload.analyzedAreaLoading = false;
+
+      //   console.log("Analyze-#2", this.layerFromUpload.analyzedArea)
+      // },
+      //   error => {
+      //     self.layerFromUpload.analyzedAreaLoading = false;
+      //     self.layerFromUpload.error = true;
+      //   });
+
+      try {
+        let result = await this.http.get(urlParams, this.httpOptions).toPromise()
+
         this.layerFromUpload.analyzedArea = result;
         this.layerFromUpload.analyzedAreaLoading = false;
-      },
-        error => {
-          self.layerFromUpload.analyzedAreaLoading = false;
-          self.layerFromUpload.error = true;
-        });
+      } catch (err) {
+        self.layerFromUpload.analyzedAreaLoading = false;
+        self.layerFromUpload.error = true;
+      }
+
+      urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
+      let resultCar = await this.http.get(urlParamsCar).toPromise();
+      this.layerFromUpload.analyzedArea.car = resultCar
     }
 
   }
@@ -2304,41 +2376,57 @@ export class MapComponent implements OnInit {
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
-      "times": this.selectedTimeFromLayerType(layer.selectedType)
+      "times": this.selectedTimeFromLayerType(layer.selectedType),
+      "typeshape": 'csv'
     };
 
-    parameters.times = parameters.times.value;
+    let name = ""
+    if (parameters.times.value != undefined) {
+      name = parameters.layer.selectedType + "_" + parameters.times.value
+    }
+    else {
+      name = parameters.layer.selectedType
+    }
+
 
     this.http.post("/service/download/csv", parameters, { responseType: 'blob' })
       .toPromise()
       .then(blob => {
-        saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + parameters.times + '.csv');
+        saveAs(blob, name + '.csv');
         this.loadingsDownload = false;
       }).catch(err => this.loadingsDownload = false);
   }
 
-  downloadSHP(layer, type) {
+  downloadSHP(layer, format) {
     this.loadingsDownload = true;
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
       "times": this.selectedTimeFromLayerType(layer.selectedType),
-      "typeshape": type
+      "typeshape": format
     };
+
+    let name = ""
+    if (parameters.times != undefined) {
+      name = parameters.layer.selectedType + "_" + parameters.times.value
+    }
+    else {
+      name = parameters.layer.selectedType
+    }
 
     this.http.post("/service/download/shp", parameters, { responseType: 'blob' })
       .toPromise()
       .then(blob => {
-        saveAs(blob, parameters.layer.selectedType + '_' + parameters.selectedRegion.type + '_' + layer.selectedType.year + '.zip');
+        saveAs(blob, name + '.zip');
         this.loadingsDownload = false;
       }).catch(err => this.loadingsDownload = false);
   }
 
-  buttonDownload(format, layer, type) {
+  buttonDownload(format, layer) {
     if (format === 'csv') {
       this.downloadCSV(layer);
     } else {
-      this.downloadSHP(layer, type);
+      this.downloadSHP(layer, format);
     }
   }
 
@@ -3008,6 +3096,9 @@ export class MapComponent implements OnInit {
             for (let type of layer.types) {
               type.urlLegend = this.urls[0] + '?TRANSPARENT=TRUE&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetLegendGraphic&layer=' + type.value + '&format=image/png';
             }
+            this.layersNames.push(layer);
+          }
+          else {
             this.layersNames.push(layer);
           }
 

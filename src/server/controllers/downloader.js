@@ -47,6 +47,7 @@ module.exports = function (app) {
         let layer = request.body.layer;
         let region = request.body.selectedRegion;
         let time = request.body.times;
+        let typeShape = request.body.typeshape;
 
         let data = request.queryResult['csv'];
 
@@ -54,13 +55,28 @@ module.exports = function (app) {
             data[index].view_date = moment(item.view_date).format('DD/MM/YYYY')
         });
 
-        console.log(region)
+        let fileParam = "";
 
-        var filename = "dados_" + region.text + ".csv";
+        let diretorio = config.downloadDataDir + region.type + '/' + region.value + '/' + typeShape + '/' + layer.selectedType + '/';
+
+        if (time != undefined) {
+            fileParam = layer.selectedType + "_" + time.value;
+        }
+        else {
+            fileParam = layer.selectedType;
+        }
+
+        let pathFile = diretorio + fileParam + ".csv";
+
         var csv = convertArrayToCSV(data);
 
-        await fs.writeFileSync(config.downloadDataDir + filename, csv);
-        response.download(config.downloadDataDir + filename);
+        if (!fs.existsSync(diretorio)) {
+            fs.mkdirSync(diretorio, { recursive: true });
+        }
+
+        await fs.writeFileSync(pathFile, csv);
+        console.log("sssss- ", pathFile)
+        response.download(pathFile);
     };
 
     Controller.downloadSHP = function (request, response) {
@@ -77,7 +93,7 @@ module.exports = function (app) {
         let fileParam = '';
         let pathFile = '';
 
-        console.log(request.body)
+        console.log(time)
 
         if (typeShape == 'shp') {
             owsRequest.addFilter('1', '1');
@@ -91,22 +107,24 @@ module.exports = function (app) {
 
             if (time != undefined) {
                 owsRequest.addFilterDirect(time.value);
+                fileParam = layer.selectedType + "_" + time.value;
+            }
+            else {
+                fileParam = layer.selectedType;
             }
 
-            fileParam = layer.selectedType + '_' + time;
+            diretorio = config.downloadDataDir + region.type + '/' + region.value + '/' + typeShape + '/' + layer.selectedType + '/';
 
-            // diretorio = config.downloadDataDir + layer.selectedType + '/';
-            // var nameFile = layer.selectedType + '_' + region.type + '_' + fileParam;
         }
-        else if (typeShape == 'tiff') {
-            diretorio = config.downloadDataDir + layer.selectedType
+        else {
+            diretorio = config.downloadDataDir + '/' + typeShape + '/' + layer.selectedType + '/';
+            fileParam = layer.selectedType;
         }
 
-        diretorio = config.downloadDataDir + layer.selectedType + '/' + region.type + '/' + region.value + '/' + typeShape + '/';
-        fileParam = layer.selectedType;
         pathFile = diretorio + fileParam;
 
-        var zipFile = archiver('zip');
+        console.log("SHP - ", pathFile)
+
 
         if (!fs.existsSync(diretorio)) {
             fs.mkdirSync(diretorio, { recursive: true });

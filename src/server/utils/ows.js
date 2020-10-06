@@ -12,18 +12,20 @@ module.exports = class Ows {
             this._version = "1.0.0";
             this._outPutFormat = "shape-zip";
             this.typeNameLabel = "TYPENAME";
+            this.typeOutputFormat = "OUTPUTFORMAT"
             this._typeName = null;
             this._msFilter = [];
             this._width = 1;
             this._height = 1;
             this._typeShape = typeShape;
         }
-        else if (typeShape == 'tiff') {
+        else if (typeShape == 'tif') {
             this._request = "GetCoverage";
             this._service = "wcs";
             this._version = "2.0.0";
-            this._outPutFormat = "IMAGE/TIFF";
+            this._outPutFormat = "TIFF-ZIP";
             this.typeNameLabel = "COVERAGEID";
+            this.typeOutputFormat = "FORMAT"
             this._typeName = null;
             this._msFilter = [];
             this._width = 1;
@@ -138,7 +140,7 @@ module.exports = class Ows {
         url += (this._service != null || this._service != undefined) ? "&SERVICE=" + this._service : "";
         url += (this._version != null || this._version != undefined) ? "&VERSION=" + this._version : "";
         url += (this._typeName != null || this._typeName != undefined) ? "&" + this.typeNameLabel + "=" + this._typeName : "";
-        url += (this._outPutFormat != null || this._outPutFormat != undefined) ? "&OUTPUTFORMAT=" + this._outPutFormat : "";
+        url += (this._outPutFormat != null || this._outPutFormat != undefined) ? "&" + this.typeOutputFormat + "=" + this._outPutFormat : "";
 
         if (this._typeShape == 'shp') {
             if (this._msFilter.length > 0) {
@@ -163,12 +165,12 @@ module.exports = class Ows {
                     }
                 });
             }
-            url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
-            url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";
+            // url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
+            // url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";
         }
 
 
-        console.log(url)
+        console.log("URL - ", url)
         return url;
     }
 
