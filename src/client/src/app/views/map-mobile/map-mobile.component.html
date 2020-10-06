@@ -427,11 +427,23 @@
                 </p>
               </div>
 
-              <div *ngIf="layerFromConsulta.analyzedArea.car.length > 0" class="card-upload-analysed-table">
-                <h6 class="card-upload-analysed-table-title card" (click)="printAnalyzedAreaReport(true)">
+              <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('car')"
+                   class="card-upload-analysed-table">
+                <h6 *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
+                    class="card-upload-analysed-table-title card"
+                    (click)="printAnalyzedAreaReport(true)">
                   {{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
                 </h6>
+                <h6 *ngIf="layerFromConsulta.analyzedArea.car.length == 0"
+                    class="card-upload-analysed-table-title card">
+                  <mat-progress-bar class="progress-analyse" color="accent"
+                                    *ngIf="layerFromConsulta.analyzedArea.car.length == 0"
+                                    mode="indeterminate">
+                  </mat-progress-bar>
+                  <i>{{titlesLayerBox.car_title_searching}}</i>
+                </h6>
               </div>
+
               <div *ngIf="layerFromConsulta.analyzedArea.deter.length > 0" class="card-upload-analysed-table">
                 <h5 class="card-upload-analysed-table-title">
                   {{titlesLayerBox.table_deter_title}}
