@@ -47,6 +47,7 @@ module.exports = function (app) {
         let layer = request.body.layer;
         let region = request.body.selectedRegion;
         let time = request.body.times;
+        let typeShape = request.body.typeshape;
 
         let data = request.queryResult['csv'];
 
@@ -54,13 +55,28 @@ module.exports = function (app) {
             data[index].view_date = moment(item.view_date).format('DD/MM/YYYY')
         });
 
-        console.log(region)
+        let fileParam = "";
 
-        var filename = "dados_" + region.text + ".csv";
+        let diretorio = config.downloadDataDir + region.type + '/' + region.value + '/' + typeShape + '/' + layer.selectedType + '/';
+
+        if (time != undefined) {
+            fileParam = layer.selectedType + "_" + time.value;
+        }
+        else {
+            fileParam = layer.selectedType;
+        }
+
+        let pathFile = diretorio + fileParam + ".csv";
+
         var csv = convertArrayToCSV(data);
 
-        await fs.writeFileSync(config.downloadDataDir + filename, csv);
-        response.download(config.downloadDataDir + filename);
+        if (!fs.existsSync(diretorio)) {
+            fs.mkdirSync(diretorio, { recursive: true });
+        }
+
+        await fs.writeFileSync(pathFile, csv);
+        console.log("sssss- ", pathFile)
+        response.download(pathFile);
     };
 
     Controller.downloadSHP = function (request, response) {
@@ -68,33 +84,47 @@ module.exports = function (app) {
         let layer = request.body.layer;
         let region = request.body.selectedRegion;
         let time = request.body.times;
+        let typeShape = request.body.typeshape;
 
-        let owsRequest = new Ows();
-
+        let owsRequest = new Ows(typeShape);
         owsRequest.setTypeName(layer.selectedType);
-        owsRequest.addFilter('1', '1');
 
-        if (region.type == 'city') {
-            owsRequest.addFilter('cd_geocmu', region.cd_geocmu);
+        let diretorio = '';
+        let fileParam = '';
+        let pathFile = '';
+
+        console.log(time)
+
+        if (typeShape == 'shp') {
+            owsRequest.addFilter('1', '1');
+
+            if (region.type == 'city') {
+                owsRequest.addFilter('cd_geocmu', region.cd_geocmu);
+            }
+            else if (region.type == 'state') {
+                owsRequest.addFilter('uf', region.value);
+            }
+
+            if (time != undefined) {
+                owsRequest.addFilterDirect(time.value);
+                fileParam = layer.selectedType + "_" + time.value;
+            }
+            else {
+                fileParam = layer.selectedType;
+            }
+
+            diretorio = config.downloadDataDir + region.type + '/' + region.value + '/' + typeShape + '/' + layer.selectedType + '/';
+
         }
-        else if (region.type == 'state') {
-            owsRequest.addFilter('uf', region.value);
+        else {
+            diretorio = config.downloadDataDir + '/' + typeShape + '/' + layer.selectedType + '/';
+            fileParam = layer.selectedType;
         }
 
-        if (time != undefined) {
-            owsRequest.addFilterDirect(time.value);
-        }
+        pathFile = diretorio + fileParam;
 
-        let fileParam = layer.selectedType + '_' + time;
+        console.log("SHP - ", pathFile)
 
-        let diretorio = config.downloadDataDir + layer.selectedType + '/';
-        // let diretorio = config.downloadDataDir+layer.selectedType+'/'+region.type+'/'+region.value+'/';
-
-        let pathFile = diretorio + fileParam;
-
-        var nameFile = layer.selectedType + '_' + region.type + '_' + fileParam;
-
-        var zipFile = archiver('zip');
 
         if (!fs.existsSync(diretorio)) {
             fs.mkdirSync(diretorio, { recursive: true });

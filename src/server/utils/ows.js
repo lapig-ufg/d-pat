@@ -1,20 +1,37 @@
 module.exports = class Ows {
 
+
     constructor(
-        url = "https://ows.lapig.iesa.ufg.br/ows",
-        request = "GetFeature",
-        service = "wfs",
-        version = "1.0.0",
-        outPutFormat = "shape-zip") {
-        this._url = url;
-        this._request = request;
-        this._service = service;
-        this._version = version;
-        this._outPutFormat = outPutFormat;
-        this._typeName = null;
-        this._msFilter = [];
-        this._width = 1;
-        this._height = 1;
+        typeShape
+    ) {
+        this._url = "https://ows.lapig.iesa.ufg.br/ows";
+
+        if (typeShape == 'shp') {
+            this._request = "GetFeature";
+            this._service = "wfs";
+            this._version = "1.0.0";
+            this._outPutFormat = "shape-zip";
+            this.typeNameLabel = "TYPENAME";
+            this.typeOutputFormat = "OUTPUTFORMAT"
+            this._typeName = null;
+            this._msFilter = [];
+            this._width = 1;
+            this._height = 1;
+            this._typeShape = typeShape;
+        }
+        else if (typeShape == 'tif') {
+            this._request = "GetCoverage";
+            this._service = "wcs";
+            this._version = "2.0.0";
+            this._outPutFormat = "TIFF-ZIP";
+            this.typeNameLabel = "COVERAGEID";
+            this.typeOutputFormat = "FORMAT"
+            this._typeName = null;
+            this._msFilter = [];
+            this._width = 1;
+            this._height = 1;
+            this._typeShape = typeShape;
+        }
 
     }
 
@@ -122,36 +139,38 @@ module.exports = class Ows {
         url += (this._request != null || this._request != undefined) ? "REQUEST=" + this._request : "";
         url += (this._service != null || this._service != undefined) ? "&SERVICE=" + this._service : "";
         url += (this._version != null || this._version != undefined) ? "&VERSION=" + this._version : "";
-        url += (this._typeName != null || this._typeName != undefined) ? "&TYPENAME=" + this._typeName : "";
-        url += (this._outPutFormat != null || this._outPutFormat != undefined) ? "&OUTPUTFORMAT=" + this._outPutFormat : "";
+        url += (this._typeName != null || this._typeName != undefined) ? "&" + this.typeNameLabel + "=" + this._typeName : "";
+        url += (this._outPutFormat != null || this._outPutFormat != undefined) ? "&" + this.typeOutputFormat + "=" + this._outPutFormat : "";
 
-        if (this._msFilter.length > 0) {
+        if (this._typeShape == 'shp') {
+            if (this._msFilter.length > 0) {
 
-            url += "&MSFILTER=";
+                url += "&MSFILTER=";
 
-            let length = this._msFilter.length - 1;
+                let length = this._msFilter.length - 1;
 
-            this._msFilter.forEach(function (item, index) {
-                if (index < length) {
-                    if (item._attr == "default") {
-                        url += item._value + "%20AND%20";
+                this._msFilter.forEach(function (item, index) {
+                    if (index < length) {
+                        if (item._attr == "default") {
+                            url += item._value + "%20AND%20";
+                        } else {
+                            url += item._attr + "=" + item._value + "%20AND%20";
+                        }
                     } else {
-                        url += item._attr + "=" + item._value + "%20AND%20";
+                        if (item._attr == "default") {
+                            url += item._value
+                        } else {
+                            url += item._attr + "=" + item._value;
+                        }
                     }
-                } else {
-                    if (item._attr == "default") {
-                        url += item._value
-                    } else {
-                        url += item._attr + "=" + item._value;
-                    }
-                }
-            });
+                });
+            }
+            // url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
+            // url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";
         }
 
 
-        url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
-        url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";
-
+        console.log("URL - ", url)
         return url;
     }
 

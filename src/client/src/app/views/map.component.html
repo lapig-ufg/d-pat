@@ -4,7 +4,7 @@
 		[opened]="showDrawer">
 		<div class="container-drawer">
 
-			<div [style.visibility]="showDrawer? 'visible' : 'hidden'"  class="titleWindows">
+			<div [style.visibility]="showDrawer? 'visible' : 'hidden'" class="titleWindows">
 				<div>{{titlesLayerBox.title}}</div>
 				<div class="space"></div>
 				<div class="btn-languages">
@@ -15,10 +15,11 @@
 				</div>
 			</div>
 
-			<div [style.visibility]="showDrawer? 'visible' : 'hidden'"  class="collapseLayer">
-				<mat-tab-group [style.z-index]="showDrawer? '4' : '-1'" class="layersConteudo" [(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs
-					dynamicHeight>
-					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_data}}">
+			<div [style.visibility]="showDrawer? 'visible' : 'hidden'" class="collapseLayer">
+				<mat-tab-group [style.z-index]="showDrawer? '4' : '-1'" class="layersConteudo"
+					[(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs dynamicHeight>
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'"
+						label="{{titlesLayerBox.label_data}}">
 						<mat-progress-bar *ngIf="loadingsDownload" mode="indeterminate">
 						</mat-progress-bar>
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
@@ -26,11 +27,12 @@
 								<ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
 							</ng-template>
 							<input id="typeahead-http" type="text" class="form-control searchRegion"
-								   [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search"
-								   placeholder="{{titlesLayerBox.search_placeholder}}" (selectItem)="updateRegion($event.item)"
-								   [resultTemplate]="rt" [inputFormatter]="formatter" [value]="currentData" />
+								[class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search"
+								placeholder="{{titlesLayerBox.search_placeholder}}"
+								(selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+								[inputFormatter]="formatter" [value]="currentData" />
 							<img [hidden]="selectRegion == defaultRegion" class="clear-region-btn"
-								 (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+								(click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
 							<span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
 							<div class="invalid-feedback" *ngIf="searchFailed">
 								{{titlesLayerBox.search_failed}}</div>
@@ -42,7 +44,8 @@
 												[expandedHeight]="'50px'" class="expansion-header-layer">
 												<h5 class="expansion-layer"><b>{{groups.label}}</b></h5>
 											</mat-expansion-panel-header>
-											<div [style.visibility]="showDrawer? 'visible' : 'hidden'" class="layersContent" *ngFor="let layer of groups.layers">
+											<div [style.visibility]="showDrawer? 'visible' : 'hidden'"
+												class="layersContent" *ngFor="let layer of groups.layers">
 												<div style="display: flex">
 													<mat-checkbox color="primary" class="example-margin"
 														(change)="changeVisibility(layer, $event)"
@@ -70,7 +73,8 @@
 														[hidden]="type.value != layer.selectedType">
 														<mat-form-field *ngIf="type.times">
 															<mat-label>{{type.timeLabel}}</mat-label>
-															<mat-select (selectionChange)="updateSourceLayer(type)"
+															<mat-select
+																(selectionChange)="updateSourceLayer(type, true)"
 																[(value)]="type.timeSelected">
 																<mat-option *ngFor="let times of type.times"
 																	[value]="times.value">
@@ -82,22 +86,22 @@
 														<section class="btn-actions">
 															<button class="color-buttons"
 																*ngIf="hasDownload('csv', type)"
-																(click)="buttonDownload('csv', layer, type)"
+																(click)="buttonDownload('csv', layer)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;CSV
 															</button>
 															<div class="space"></div>
 															<button class="color-buttons"
 																*ngIf="hasDownload('shp', type)"
-																(click)="buttonDownload('shp', layer, type)"
+																(click)="buttonDownload('shp', layer)"
 																mat-raised-button>
 																<mat-icon>cloud_download</mat-icon>&nbsp;SHP
 															</button>
 															<button class="color-buttons"
-																*ngIf="hasDownload('tiff', type)"
-																(click)="buttonDownload('tiff', layer, type)"
+																*ngIf="hasDownload('tif', type)"
+																(click)="buttonDownload('tif', layer)"
 																mat-raised-button>
-																<mat-icon>cloud_download</mat-icon>&nbsp;TIFF
+																<mat-icon>cloud_download</mat-icon>&nbsp;TIF
 															</button>
 
 														</section>
@@ -111,7 +115,8 @@
 							<div style="height: 30vh"></div>
 						</p-scrollPanel>
 					</mat-tab>
-					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_upload}}">
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'"
+						label="{{titlesLayerBox.label_upload}}">
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
 							<mat-tab-group [(selectedIndex)]="selectedIndexUpload" class="layersConteudo"
 								mat-stretch-tabs dynamicHeight>
@@ -194,11 +199,20 @@
 												</p>
 											</div>
 
-											<div *ngIf="layerFromUpload.analyzedArea.car.length > 0"
+											<div *ngIf="layerFromUpload.analyzedArea.hasOwnProperty('car')"
 												class="card-upload-analysed-table">
-												<h6 class="card-upload-analysed-table-title card"
+												<h6 *ngIf="layerFromUpload.analyzedArea.car.length > 0"
+													class="card-upload-analysed-table-title card"
 													(click)="openCarReport()">
 													{{titlesLayerBox.car_title.replace('[count]', layerFromUpload.analyzedArea.car.length)}}
+												</h6>
+												<h6 *ngIf="layerFromUpload.analyzedArea.car.length == 0"
+													class="card-upload-analysed-table-title card">
+													<mat-progress-bar class="progress-analyse" color="accent"
+														*ngIf="layerFromUpload.analyzedArea.car.length == 0"
+														mode="indeterminate">
+													</mat-progress-bar>
+													<i>{{titlesLayerBox.car_title_searching}}</i>
 												</h6>
 											</div>
 											<div *ngIf="layerFromUpload.analyzedArea.deter.length > 0"
@@ -327,13 +341,23 @@
 												</p>
 											</div>
 
-											<div *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
+											<div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('car')"
 												class="card-upload-analysed-table">
-												<h6 class="card-upload-analysed-table-title card"
-													(click)="openCarReport(true)">
+												<h6 *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
+													class="card-upload-analysed-table-title card"
+													(click)="openCarReport()">
 													{{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
 												</h6>
+												<h6 *ngIf="layerFromConsulta.analyzedArea.car.length == 0"
+													class="card-upload-analysed-table-title card">
+													<mat-progress-bar class="progress-analyse" color="accent"
+														*ngIf="layerFromConsulta.analyzedArea.car.length == 0"
+														mode="indeterminate">
+													</mat-progress-bar>
+													<i>{{titlesLayerBox.car_title_searching}}</i>
+												</h6>
 											</div>
+
 											<div *ngIf="layerFromConsulta.analyzedArea.deter.length > 0"
 												class="card-upload-analysed-table">
 												<h5 class="card-upload-analysed-table-title">
@@ -392,7 +416,8 @@
 
 						</p-scrollPanel>
 					</mat-tab>
-					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_mapabase}}">
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'"
+						label="{{titlesLayerBox.label_mapabase}}">
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
 							<div class="form-group baseMap" *ngFor="let basemap of basemapsNames">
 								<mat-slide-toggle (change)="baseLayerChecked(basemap, $event)"
@@ -402,7 +427,8 @@
 							</div>
 						</p-scrollPanel>
 					</mat-tab>
-					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'" label="{{titlesLayerBox.label_limits}}">
+					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'"
+						label="{{titlesLayerBox.label_limits}}">
 						<p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
 							<div *ngFor="let limits of descriptor.limits">
 								<div class="form-group baseMap" *ngFor="let name_limits of limits.types">

@@ -358,7 +358,31 @@ module.exports = function (app) {
 			// Group by color as key to the person array
 			const regionGroupedByType = groupBy(regions, 'type');
 
-			queryResult = request.queryResult['car']
+			let res = {
+				regions_intersected: regionGroupedByType,
+				prodes: resultByYear,
+				deter: resultByYearDeter,
+				shape_upload: info_area,
+				car: []
+			}
+
+			response.status(200).send(res);
+			response.end()
+
+		}
+		catch (err) {
+			response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+			response.end()
+		}
+
+
+
+	};
+
+	Uploader.carspertoken = function (request, response) {
+		try {
+
+			var queryResult = request.queryResult['car']
 			var car = []
 
 			queryResult.forEach(function (row) {
@@ -378,15 +402,7 @@ module.exports = function (app) {
 			var car_final = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
 				.map(j => JSON.parse(j))
 
-			let res = {
-				regions_intersected: regionGroupedByType,
-				prodes: resultByYear,
-				deter: resultByYearDeter,
-				shape_upload: info_area,
-				car: car_final
-			}
-
-			response.status(200).send(res);
+			response.status(200).send(car_final);
 			response.end()
 
 		}
@@ -394,8 +410,6 @@ module.exports = function (app) {
 			response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
 			response.end()
 		}
-
-
 
 	};
 

@@ -281,7 +281,7 @@
 			"en-us": "Could not analyze the submitted area, please try a smaller area"
 		},
 		"warning": {
-			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido a quantidade de cruzamentos espaciais sendo realizada.",
+			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido a quantidade de intersecções espaciais sendo realizada.",
 			"en-us": "Area under analysis. This may take a while due to the amount of space crossings being performed."
 		},
 		"not_found": {
@@ -289,11 +289,15 @@
 			"en-us": "Token not found. Please inform a valid token."
 		},
 		"car_title": {
-			"pt-br": "Visualizar a(s) [count] propriedade(s) inscrita(s) no CAR que cruzam com a área submetida.",
+			"pt-br": "Visualizar a(s) [count] propriedade(s) inscrita(s) no CAR que intersectam com a área submetida.",
 			"en-us": "View the [count] properties registered in the CAR that intersect with the submitted area."
 		},
+		"car_title_searching": {
+			"pt-br": "Buscando as propriedades do CAR que intersectam com esta área. Por favor aguarde.",
+			"en-us": "Searching for the CAR properties that intersect with this area. Please wait."
+		},
 		"car_title_report": {
-			"pt-br": "Propriedade(s) inscrita(s) no CAR que cruzam com a área submetida",
+			"pt-br": "Propriedade(s) inscrita(s) no CAR que intersectam com a área submetida",
 			"en-us": "Properties registered in the CAR that intersect with the submitted area"
 		},
 		"car_table_headers": {
