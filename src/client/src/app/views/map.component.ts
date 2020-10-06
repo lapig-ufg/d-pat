@@ -3289,8 +3289,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
     this.tmpModis = [];
     this.loading = false;
 
-    console.log(data)
-
     this.dataEspecial = null;
 
     this.svgLoading = "/assets/img/loading.svg";
