@@ -3098,9 +3098,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
             }
             this.layersNames.push(layer);
           }
-          else {
-            this.layersNames.push(layer);
-          }
+          // else {
+          //   this.layersNames.push(layer);
+          // }
 
           for (let layerType of layer.types) {
             layerType.visible = false;
