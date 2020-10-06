@@ -25,11 +25,11 @@
                             <tr [pSelectableRow]="car" tooltipPosition="bottom" life="2000">
                                 <td align="left">{{car.cod_car}}</td>
                                 <td align="center">{{car.area_car | number :'1.2-2' }}km²</td>
-                                <td align="center">{{car.area_app | number :'1.2-2' }}km²</td>
-                                <td align="center">{{car.area_rl | number :'1.2-2' }}km²</td>
-                                <td align="center">{{car.area_desmat_app | number :'1.2-2' }}km²</td>
                                 <td align="center">{{car.area_desmat_per_car | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_rl | number :'1.2-2' }}km²</td>
                                 <td align="center">{{car.area_desmat_rl | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_app | number :'1.2-2' }}km²</td>
+                                <td align="center">{{car.area_desmat_app | number :'1.2-2' }}km²</td>
                             </tr>
                         </ng-template>
                     </p-table>

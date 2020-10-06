@@ -300,20 +300,20 @@
 			"pt-br": [
 				"Código CAR",
 				"Área da Propriedade",
-				"Área de APP",
-				"Área da Reserva Legal",
-				"Área desmatada em APP",
 				"Área desmatada por CAR",
-				"Área desmatada em Res. Legal"
+				"Área da Reserva Legal",
+				"Área desmatada em Res. Legal",
+				"Área de APP",
+				"Área desmatada em APP"
 			],
 			"en-us": [
 				"CAR Code",
 				"Property Area",
-				"APP Area",
-				"Legal Reserve Area",
-				"Area deforested in APP",
 				"Area deforested by CAR",
-				"Area deforested in Legal Reserve"
+				"Legal Reserve Area",
+				"Area deforested in Legal Reserve",
+				"APP Area",
+				"Area deforested in APP"
 			]
 		},
 		"upload_submit": {

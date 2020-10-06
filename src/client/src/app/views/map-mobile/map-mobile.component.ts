@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject, HostListener} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject,  AfterViewInit, HostListener} from '@angular/core';
 import { SearchService, MapComponent } from '../map.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
@@ -19,9 +19,9 @@ declare let html2canvas: any;
   providers: [SearchService],
   // styleUrls: ['./map-mobile.component.css']
 })
-export class MapMobileComponent extends MapComponent{
+export class MapMobileComponent extends MapComponent implements  AfterViewInit{
 
-  indexOpenConsulta: any
+  indexOpenConsulta: any = 0;
 
   tabNum = 0;
   selected = 0;
@@ -32,15 +32,16 @@ export class MapMobileComponent extends MapComponent{
     this.currentZoom = 4.8;
     this.height = window.innerHeight;
     const self = this;
+
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('regions')) {
         if (params.keys.includes('token')) {
-          self.indexOpenConsulta = 2;
           self.layerFromConsulta.token = params.get('token');
           self.analyzeUploadShape(true);
         }
       }
     });
+
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
         if (params.keys.includes('token')) {
@@ -50,6 +51,16 @@ export class MapMobileComponent extends MapComponent{
     });
 
     this.tabNum = 2;
+  }
+  ngAfterViewInit(): void {
+    const self = this;
+    self.route.paramMap.subscribe(function (params) {
+      if (self.router.url.includes('regions')) {
+        if (params.keys.includes('token')) {
+          self.indexOpenConsulta = 2;
+        }
+      }
+    });
   }
 
   openDialog(): void {

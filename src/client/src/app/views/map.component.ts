@@ -1,6 +1,6 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatTabGroup } from "@angular/material";
 import { MatIconRegistry } from '@angular/material/icon';
@@ -97,7 +97,7 @@ export class SearchRegionService {
   providers: [SearchService],
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewChecked {
   map: OlMap;
   layers: Array<TileWMS>;
   tileGrid: TileGrid;
@@ -256,8 +256,9 @@ export class MapComponent implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
-    public translate: TranslateService
-  ) {
+    public translate: TranslateService,
+    protected changeDetector: ChangeDetectorRef
+) {
     translate.addLangs(['en', 'pt-br']);
     translate.setDefaultLang('pt-br');
 
@@ -978,7 +979,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private createMap() {
+  protected createMap() {
     this.createBaseLayers();
     this.createLayers();
 
@@ -2072,8 +2073,6 @@ export class MapComponent implements OnInit {
 
     let map = this.map;
 
-    console.log(data)
-
     this.layerFromUpload.checked = false;
     this.layerFromUpload.error = false;
 
@@ -2163,7 +2162,7 @@ export class MapComponent implements OnInit {
   }
 
   loadLayerFromConsultaToMap() {
-    const map = this.map;
+    const currentMap = this.map;
     const vectorSource = new VectorSource({
       features: (new GeoJSON()).readFeatures(this.layerFromConsulta.analyzedArea.shape_upload.geojson, {
         dataProjection: 'EPSG:4326',
@@ -2189,9 +2188,9 @@ export class MapComponent implements OnInit {
         })
       ]
     });
-    map.addLayer(this.layerFromConsulta.layer);
+    currentMap.addLayer(this.layerFromConsulta.layer);
     const extent = this.layerFromConsulta.layer.getSource().getExtent();
-    map.getView().fit(extent, { duration: 1800 });
+    currentMap.getView().fit(extent, { duration: 1800 });
 
     const prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
@@ -2745,11 +2744,11 @@ export class MapComponent implements OnInit {
         tableCar.table.body.push([
           { text: car.cod_car, alignment: 'left', style: 'bold' },
           { text: self.decimalPipe.transform(car.area_car, '1.2-2') + ' km²', alignment: 'center' },
-          { text: self.decimalPipe.transform(car.area_app, '1.2-2') + ' km²', alignment: 'center' },
-          { text: self.decimalPipe.transform(car.area_rl, '1.2-2') + ' km²', alignment: 'center' },
-          { text: self.decimalPipe.transform(car.area_desmat_app, '1.2-2') + ' km²', alignment: 'center' },
           { text: self.decimalPipe.transform(car.area_desmat_per_car, '1.2-2') + ' km²', alignment: 'center', style: 'bold' },
-          { text: self.decimalPipe.transform(car.area_desmat_rl, '1.2-2') + ' km²', alignment: 'center' }
+          { text: self.decimalPipe.transform(car.area_rl, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_desmat_rl, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_app, '1.2-2') + ' km²', alignment: 'center' },
+          { text: self.decimalPipe.transform(car.area_desmat_app, '1.2-2') + ' km²', alignment: 'center' }
         ]);
       }
       dd.content.push(tableCar);
@@ -3070,7 +3069,7 @@ export class MapComponent implements OnInit {
     //   }
     // }
 
-    let self = this;
+    const self = this;
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('plataforma')) {
         if (params.keys.includes('token')) {
@@ -3085,7 +3084,7 @@ export class MapComponent implements OnInit {
       if (self.router.url.includes('regions')) {
         if (window.innerWidth < self.breakpointMobile) {
           self.router.navigate(['regions/' + params.get('token')]);
-        }else{
+        } else {
           self.selectedIndexConteudo = 1;
           self.selectedIndexUpload = 1;
           self.layerFromConsulta.token = params.get('token');
@@ -3095,6 +3094,10 @@ export class MapComponent implements OnInit {
       }
     });
   }
+  ngAfterViewChecked(){
+    this.changeDetector.detectChanges();
+  }
+
 }
 
 @Component({

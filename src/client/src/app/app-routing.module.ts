@@ -4,7 +4,7 @@ import { MapComponent } from './views/map.component';
 import { MapMobileComponent } from './views/map-mobile/map-mobile.component'
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 import { MobileComponent } from './views/mobile/mobile.component';
-import { ProjectComponent } from "./views/project/project.component";
+import { ProjectComponent } from './views/project/project.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
@@ -27,7 +27,7 @@ const routesMobile: Routes = [
   { path: 'projeto', component: ProjectComponent },
   { path: 'map-mobile', component: MapMobileComponent },
   { path: 'plataforma/:token', component: MapMobileComponent },
-  { path: 'regions/:token', component: MapMobileComponent },
+  { path: 'regions/:token', component: MapMobileComponent},
   { path: '**', redirectTo: '/'}
 ]
 
