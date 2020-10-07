@@ -1066,7 +1066,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
 
+
+
     if (prodes.visible || deter.visible) {
+
+      console.log(this.infodataMunicipio)
 
       let coordinate = this.map.getEventCoordinate(evt.originalEvent);
       let viewResolution = this.map.getView().getResolution();
@@ -1834,6 +1838,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'prodes_por_region_city_fip_img' || layer['value'] === 'prodes_por_region_state_fip_img') {
       this.desmatInfo = this.periodSelected;
+      this.handleInteraction()
       this.updateCharts();
     }
 
@@ -1920,6 +1925,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
             this.utfgridlayer.setVisible(true);
           }
         }
+        else {
+          this.infodata = null;
+        }
         if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
           if (this.utfgridCampo) {
             let tileJSONCampo = this.getTileJSONCampo();
@@ -1930,6 +1938,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
             this.utfgridlayerCampo.setVisible(true);
           }
+        }
+        else {
+          this.infodataCampo = null;
         }
 
         if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
@@ -1943,6 +1954,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
             this.utfgridlayerMunicipio.setVisible(true);
           }
         }
+        else {
+          this.infodataMunicipio = null;
+        }
 
         if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
           if (this.utfgridabc) {
@@ -1954,6 +1968,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
             this.utfgridlayerabc.setVisible(true);
           }
+        }
+        else {
+          this.infodataABC = null;
         }
 
       }
@@ -1971,6 +1988,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
             this.utfgridlayerDeter.setVisible(true);
           }
         }
+        else {
+          this.infodataDeter = null;
+        }
         if ((deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
           if (this.utfgridCampo) {
             let tileJSONCampo = this.getTileJSONCampo();
@@ -1981,6 +2001,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
             this.utfgridlayerCampo.setVisible(true);
           }
+        }
+        else {
+          this.infodataCampo = null;
         }
 
       }

@@ -342,8 +342,8 @@
 			"layers": {
 				"desmatamento_prodes": {
 					"label": {
-						"pt-br": "Desmatamentos - PRODES-Cerrado",
-						"en-us": "Deforestation - PRODES-Cerrado"
+						"pt-br": "Desmatamentos -  PRODES - Cerrado",
+						"en-us": "Deforestation - PRODES - Cerrado"
 					},
 					"metadata": [
 						{
@@ -484,8 +484,8 @@
 				},
 				"desmatamento_deter": {
 					"label": {
-						"pt-br": "Avisos - DETER-Cerrado",
-						"en-us": "Warnings - DETER-Cerrado"
+						"pt-br": "Avisos - DETER - Cerrado",
+						"en-us": "Warnings - DETER - Cerrado"
 					},
 					"metadata": [
 						{
@@ -614,8 +614,8 @@
 				},
 				"antropico": {
 					"label": {
-						"pt-br": "Antrópico - PRODES-Cerrado",
-						"en-us": "Anthropic - PRODES-Cerrado"
+						"pt-br": "Antrópico - PRODES - Cerrado",
+						"en-us": "Anthropic - PRODES - Cerrado"
 					},
 					"metadata": [
 						{
@@ -624,8 +624,8 @@
 								"en-us": "Data"
 							},
 							"description": {
-								"pt-br": "Antrópico - PRODES-Cerrado",
-								"en-us": "Anthropic - PRODES-Cerrado"
+								"pt-br": "Antrópico - PRODES - Cerrado",
+								"en-us": "Anthropic - PRODES - Cerrado"
 							}
 						},
 						{
