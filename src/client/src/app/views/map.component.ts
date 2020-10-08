@@ -2008,13 +2008,13 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       }
     }
-    else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc && this.utfgridsourceDeter) {
-      this.utfgridlayer.setVisible(false);
-      this.utfgridlayerCampo.setVisible(false);
-      this.utfgridlayerMunicipio.setVisible(false);
-      this.utfgridlayerabc.setVisible(false);
-      this.utfgridlayerDeter.setVisible(false);
-    }
+    // else if (this.utfgridsource && this.utfgridCampo && this.utfgridmunicipio && this.utfgridabc && this.utfgridsourceDeter) {
+    //   this.utfgridlayer.setVisible(false);
+    //   this.utfgridlayerCampo.setVisible(false);
+    //   this.utfgridlayerMunicipio.setVisible(false);
+    //   this.utfgridlayerabc.setVisible(false);
+    //   this.utfgridlayerDeter.setVisible(false);
+    // }
   }
 
   showDialogUTFGrid() {

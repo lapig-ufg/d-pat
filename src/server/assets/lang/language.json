@@ -1129,6 +1129,104 @@
 							}
 						]
 					},
+					"vegetacao_cerrado_fip": {
+						"view_value": {
+								"pt-br": "Vegetação Pretérita",
+								"en-us": "Past vegetation"
+						},
+						"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "TerraClass Cerrado",
+									"en-us": "TerraClass Cerrado"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Mapeamento do uso e cobertura do solo do Cerrado para o ano de 2013 realizado no âmbito do projeto TerraClass Cerrado.",
+									"en-us": "Land use and land cover map for Cerrado biome, based on the TerraClass Cerrado."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2013",
+									"en-us": "2013"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "1:250.000",
+									"en-us": "1:250.000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Coordinate Reference System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "Ministério do Meio Ambiente (MMA)",
+									"en-us": "Ministry of the Environment (MMA)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado'> https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado</a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado'> https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado</a>"
+								}
+							}
+						]
+					},
 					"uso_solo_probio_fip": {
 						"metadata": [
 							{
