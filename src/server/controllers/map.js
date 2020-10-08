@@ -970,6 +970,11 @@ module.exports = function (app) {
           visible: true
         },
         {
+          value: "googlemaps",
+          viewValue: languageJson["descriptor"]["basemaps"]["types"]["googlemaps"][language],
+          visible: false
+        },
+        {
           value: "satelite",
           viewValue: languageJson["descriptor"]["basemaps"]["types"]["satelite"][language],
           visible: false

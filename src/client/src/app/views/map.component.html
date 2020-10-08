@@ -593,7 +593,7 @@
 								<div style="height: 20vh"></div>
 							</p-accordionTab>
 							<p-accordionTab class="tabs" header="{{chartResultCitiesIllegalAPP.label}}"
-								*ngIf="selectRegion.type != 'state' && selectRegion.type != 'city'">
+								*ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013">
 								<h6>
 									<b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
 									<!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->

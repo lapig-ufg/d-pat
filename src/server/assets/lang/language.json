@@ -2448,6 +2448,10 @@
 					"pt-br": "Satélite (Bing)",
 					"en-us": "Satellite (Bing)"
 				},
+				"googlemaps": {
+					"pt-br": "Google Maps",
+					"en-us": "Google Maps"
+				},
 				"estradas": {
 					"pt-br": "Estradas (Bing)",
 					"en-us": "Roads (Bing)"

@@ -9,6 +9,7 @@ import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-ima
 import { Lightbox } from 'ngx-lightbox';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
+import { defaults as defaultControls, Control, Attribution } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
@@ -115,7 +116,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   desmatInfo: any;
 
   activeIndexLateralAccordion: any
-
+  googlemaps: any
   optionsTimeSeries: any;
   optionsStates: any;
   optionsCities: any;
@@ -1514,6 +1515,22 @@ export class MapComponent implements OnInit, AfterViewChecked {
           key:
             'VmCqTus7G3OxlDECYJ7O~G3Wj1uu3KG6y-zycuPHKrg~AhbMxjZ7yyYZ78AjwOVIV-5dcP5ou20yZSEVeXxqR2fTED91m_g4zpCobegW4NPY',
           imagerySet: 'Aerial'
+        }),
+        visible: false
+      })
+    };
+
+    this.googlemaps = {
+      visible: false,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+            'https://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+          attributions: [
+            new Attribution({ html: '© Google' }),
+            new Attribution({ html: '<a href="https://developers.google.com/maps/terms">Terms of Use.</a>' })
+          ]
+
         }),
         visible: false
       })
