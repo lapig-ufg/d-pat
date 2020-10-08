@@ -1071,8 +1071,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     if (prodes.visible || deter.visible) {
 
-      console.log(this.infodataMunicipio)
-
       let coordinate = this.map.getEventCoordinate(evt.originalEvent);
       let viewResolution = this.map.getView().getResolution();
 
@@ -2110,6 +2108,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
         for (let layerType of layer.types) {
 
           if (this.descriptorText[group.id].layers[layer.id].hasOwnProperty('types')) {
+
+            console.log(this.descriptorText[group.id].layers[layer.id].types[layerType.value])
 
             if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty('view_value')) {
 

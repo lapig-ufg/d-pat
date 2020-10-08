@@ -1141,8 +1141,8 @@
 									"en-us": "Data"
 								},
 								"description": {
-									"pt-br": "TerraClass Cerrado",
-									"en-us": "TerraClass Cerrado"
+									"pt-br": "Vegetação Pretérita",
+									"en-us": "Past Vegetation"
 								}
 							},
 							{
@@ -1151,8 +1151,8 @@
 									"en-us": "Description"
 								},
 								"description": {
-									"pt-br": "Mapeamento do uso e cobertura do solo do Cerrado para o ano de 2013 realizado no âmbito do projeto TerraClass Cerrado.",
-									"en-us": "Land use and land cover map for Cerrado biome, based on the TerraClass Cerrado."
+									"pt-br": "Vegetação teoricamente existente antes da área ser antropizada.",
+									"en-us": "Existing vegetation prior to the area being anthropic."
 								}
 							},
 							{
@@ -1161,8 +1161,8 @@
 									"en-us": "Date"
 								},
 								"description": {
-									"pt-br": "2013",
-									"en-us": "2013"
+									"pt-br": "2019",
+									"en-us": "2019"
 								}
 							},
 							{
@@ -1211,8 +1211,8 @@
 									"en-us": "Source"
 								},
 								"description": {
-									"pt-br": "Ministério do Meio Ambiente (MMA)",
-									"en-us": "Ministry of the Environment (MMA)"
+									"pt-br": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+									"en-us": "Brazilian Institute of Geography and Statistics (IBGE)"
 								}
 							},
 							{
@@ -1221,8 +1221,8 @@
 									"en-us": "Details"
 								},
 								"description": {
-									"pt-br": "<a target='_blank' class='link-details' href='https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado'> https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado</a>",
-									"en-us": "<a target='_blank' class='link-details' href='https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado'> https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado</a>"
+									"pt-br": "<a target='_blank' class='link-details' href='https://www.ibge.gov.br/geociencias/informacoes-ambientais/vegetacao.html'> https://www.ibge.gov.br/geociencias/informacoes-ambientais/vegetacao.html</a>",
+									"en-us": "<a target='_blank' class='link-details' href='https://www.ibge.gov.br/geociencias/informacoes-ambientais/vegetacao.html'> https://www.ibge.gov.br/geociencias/informacoes-ambientais/vegetacao.html</a>"
 								}
 							}
 						]

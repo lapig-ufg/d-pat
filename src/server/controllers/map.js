@@ -685,8 +685,8 @@ module.exports = function (app) {
             },
             {
               value: "vegetacao_cerrado_fip",
-              Viewvalue: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["vegetacao_cerrado_fip"]["view_value"][language],
-              // metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["vegetacao"]['vegetacao_cerrado_fip']['metadata'],
+              Viewvalue: "Past Vegetation (IBGE) - 2019",
+              metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['vegetacao_cerrado_fip']['metadata'],
               regionFilter: true,
               opacity: 0.8,
               order: 3,
