@@ -137,90 +137,6 @@
               </div>
             </div>
 
-            <!-- UTFGRID -->
-            <!-- <div id="map-info" class="card" [ngStyle]="{'visibility': infodata  ? 'visible' : (infodataCampo ? 'visible' : (infodataMunicipio ? 'visible' : 'hidden'))}">
-              <div *ngIf="infodata" class="card-body">
-                <p class="card-text">{{ infodata.origin_table }}-Cerrado</p>
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>{{minireportText.area}} </th>
-                      <td>{{infodata.area_desmat | number:'1.2-3' }} km²</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.city}} </th>
-                      <td>{{infodata.municipio }} - {{infodata.uf }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.detection_date}} </th>
-                      <td>{{infodata.dataFormatada}}</td>
-                    </tr>
-                    <tr *ngIf="infodata.year >= 2015">
-                      <th>{{minireportText.susceptibility}} </th>
-                      <td>{{infodata.sucept_desmatFormatada}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
-                  </strong></div>
-              </div>
-              <div *ngIf="infodataCampo" class="card-body">
-                <p class="card-text">{{ infodataCampo.origin_table }}-Cerrado</p>
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>{{minireportText.field_number}} </th>
-                      <td>{{infodataCampo.campo}}</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.area}} </th>
-                      <td>{{infodataCampo.area_desmat | number:'1.2-3' }} km²</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.city}} </th>
-                      <td>{{infodataCampo.municipio }} - {{infodataCampo.uf }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.detection_date}} </th>
-                      <td>{{infodataCampo.dataFormatada}}</td>
-                    </tr>
-                    <tr *ngIf="infodataCampo.year > 2015">
-                      <th>{{minireportText.susceptibility}} </th>
-                      <td>{{infodataCampo.sucept_desmatFormatada}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_text}}
-                  </strong></div>
-              </div>
-              <div *ngIf="infodataMunicipio" class="card-body">
-                <p class="card-text">{{ infodataMunicipio.region_display }}</p>
-                <table>
-                  <tbody>
-      
-                    <tr>
-                      <th>{{minireportText.area}} </th>
-                      <td>{{infodataMunicipio.area_prodes | number:'1.2-3' }} km²</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.label_year}} </th>
-                      <td>{{infodataMunicipio.year}}</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.label_area_app}} </th>
-                      <td>{{infodataMunicipio.area_app_show}}</td>
-                    </tr>
-                    <tr>
-                      <th>{{minireportText.label_area_rl}} </th>
-                      <td>{{infodataMunicipio.area_rl_show}}</td>
-                    </tr>
-      
-                  </tbody>
-                </table>
-                <div style="text-align:center;color:green"> <br> <strong>{{minireportText.click_more_municipio}}
-                  </strong></div>
-              </div>
-            </div> -->
           </div>
         </div>
       </mat-drawer-container>
@@ -427,18 +343,15 @@
                 </p>
               </div>
 
-              <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('car')"
-                   class="card-upload-analysed-table">
-                <h6 *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
-                    class="card-upload-analysed-table-title card"
-                    (click)="printAnalyzedAreaReport(true)">
+              <div *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('car')" class="card-upload-analysed-table">
+                <h6 *ngIf="layerFromConsulta.analyzedArea.car.length > 0" class="card-upload-analysed-table-title card"
+                  (click)="printAnalyzedAreaReport(true)">
                   {{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
                 </h6>
                 <h6 *ngIf="layerFromConsulta.analyzedArea.car.length == 0"
-                    class="card-upload-analysed-table-title card">
+                  class="card-upload-analysed-table-title card">
                   <mat-progress-bar class="progress-analyse" color="accent"
-                                    *ngIf="layerFromConsulta.analyzedArea.car.length == 0"
-                                    mode="indeterminate">
+                    *ngIf="layerFromConsulta.analyzedArea.car.length == 0" mode="indeterminate">
                   </mat-progress-bar>
                   <i>{{titlesLayerBox.car_title_searching}}</i>
                 </h6>

@@ -98,9 +98,9 @@ module.exports = function (app) {
 
 				if (fileName.includes('MACOS')) continue;
 
-				if(extension === 'shp') countShps++;
+				if (extension === 'shp') countShps++;
 
-				if(countShps > 1){
+				if (countShps > 1) {
 					Internal.response.status(400).send(languageJson['upload_messages']['only_one_shp'][Internal.language]);
 					console.error("FILE: ", Internal.targetFilesName, "Only one .shp file permitted");
 					return;
@@ -386,9 +386,28 @@ module.exports = function (app) {
 			response.end()
 		}
 
-
-
 	};
+
+	Uploader.findGeoJsonByToken = function (request, response) {
+		try {
+			var queryResult = request.queryResult['geojson_upload']
+			let geojson = queryResult[0]['geojson']
+
+			var queryResult2 = request.queryResult['area_upload']
+			let token = queryResult2[0]['token']
+
+			response.status(200).send({
+				token: token,
+				geojson: geojson
+			});
+			response.end()
+
+		}
+		catch (err) {
+			response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+			response.end()
+		}
+	}
 
 	Uploader.carspertoken = function (request, response) {
 		try {

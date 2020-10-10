@@ -7,4 +7,5 @@ module.exports = function (app) {
 	app.post('/service/upload/spatial-file', filesAccepted, uploader.getGeoJson);
 	app.get('/service/upload/desmatperyear', dataInjector, uploader.desmatperyear);
 	app.get('/service/upload/carspertoken', dataInjector, uploader.carspertoken);
+	app.get('/service/upload/findgeojsonbytoken', dataInjector, uploader.findGeoJsonByToken);
 }

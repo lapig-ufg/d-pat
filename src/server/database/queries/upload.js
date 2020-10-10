@@ -53,6 +53,22 @@ module.exports = function (app) {
         ]
     }
 
+    Query.findgeojsonbytoken = function (params) {
+        return [
+            {
+                id: 'area_upload',
+                sql: "select token, SUM(ST_AREA(geom::GEOGRAPHY) / 1000000.0) as area_upload from upload_shapes where token= ${token} group by 1"
+            },
+            {
+                id: 'geojson_upload',
+                sql: "select ST_ASGEOJSON(ST_Transform(ST_Multi(ST_Union(geom)), 4674)) as geojson from upload_shapes where token= ${token}"
+            },
+            {
+                id: 'next',
+                sql: 'select true'
+            }
+        ]
+    }
 
 
     return Query;
