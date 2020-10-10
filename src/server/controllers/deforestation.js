@@ -398,6 +398,7 @@ module.exports = function (app) {
 		let returnObject = [];
 
 		let q = config["lapig-maps"] + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
+
 		req(
 			q, {
 			json: true
@@ -414,6 +415,7 @@ module.exports = function (app) {
 					ndvi_golay: body.values[index][3]
 				})
 			}
+
 			response.send(returnObject)
 			response.end();
 		});
