@@ -400,22 +400,25 @@ module.exports = function (app) {
 
 		let url = config["lapig-maps"] + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
 
+		try {
+			let responseReq = await rp({ url: url });
 
-		let responseReq = await rp({ url: url });
+			let bd = JSON.parse(responseReq);
 
-		let bd = JSON.parse(responseReq);
+			for (let index = 0; index < bd.values.length; index++) {
+				returnObject.push({
+					date: bd.values[index][0],
+					ndvi_original: bd.values[index][1],
+					ndvi_wiener: bd.values[index][2],
+					ndvi_golay: bd.values[index][3]
+				})
+			}
 
-		for (let index = 0; index < bd.values.length; index++) {
-			returnObject.push({
-				date: bd.values[index][0],
-				ndvi_original: bd.values[index][1],
-				ndvi_wiener: bd.values[index][2],
-				ndvi_golay: bd.values[index][3]
-			})
+			response.send(returnObject)
+			response.end();
+		} catch (e) {
+			console.log(e)
 		}
-
-		response.send(returnObject)
-		response.end();
 	}
 
 
