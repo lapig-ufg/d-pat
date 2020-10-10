@@ -85,6 +85,7 @@ module.exports = function (app) {
 	};
 
 	Internal.extractFiles = async function (zip, callback) {
+		let countShps = 0;
 		try {
 			for await (const entry of zip) {
 				const arrayName = entry.path.split(".");
@@ -94,6 +95,16 @@ module.exports = function (app) {
 				const extension = arrayName.pop();
 
 				if (type == "Directory") continue;
+
+				if (fileName.includes('MACOS')) continue;
+
+				if(extension === 'shp') countShps++;
+
+				if(countShps > 1){
+					Internal.response.status(400).send(languageJson['upload_messages']['only_one_shp'][Internal.language]);
+					console.error("FILE: ", Internal.targetFilesName, "Only one .shp file permitted");
+					return;
+				}
 
 				Internal.dirTarget =
 					Internal.dirUpload +

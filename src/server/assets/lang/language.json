@@ -4154,6 +4154,10 @@
 			"pt-br": "O upload de arquivo suporta apenas os seguintes tipos de arquivos (.kmz ou .zip).",
 			"en-us": "File upload only supports the following filetypes (.kmz or .zip)."
 		},
+		"only_one_shp": {
+			"pt-br": "Detectamos mais de 1 arquivo shape em seu arquivo. Por favor submeta um arquivo com apenas 1 geometria.",
+			"en-us": "We detected more than 1 shapefile in the submitted file. Please submit a file with only 1 geometry."
+		},
 		"invalid_geojson": {
 			"pt-br": "O GeoJson enviado é inválido.",
 			"en-us": "Invalid GeoJson."
