@@ -281,8 +281,8 @@
 			"en-us": "Could not analyze the submitted area, please try a smaller area"
 		},
 		"warning": {
-			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido a quantidade de intersecções espaciais sendo realizada.",
-			"en-us": "Area under analysis. This may take a while due to the amount of space crossings being performed."
+			"pt-br": "Área sob análise. Este processamento pode demorar um pouco devido ao tamanho da área submetida e a quantidade de intersecções espaciais sendo realizada.",
+			"en-us": "Area under analysis. This process may take a while due to the geometry area and the amount of space crossings being performed."
 		},
 		"not_found": {
 			"pt-br": "Token não encontrado. Por favor informe um token válido.",
