@@ -16,8 +16,11 @@
 			</div>
 
 			<div [style.visibility]="showDrawer? 'visible' : 'hidden'" class="collapseLayer">
-				<mat-tab-group [style.z-index]="showDrawer? '4' : '-1'" class="layersConteudo"
-					[(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs dynamicHeight>
+				<mat-tab-group
+						[style.z-index]="showDrawer? '4' : '-1'"
+						class="layersConteudo"
+						[(selectedIndex)]="selectedIndexConteudo"
+						mat-stretch-tabs dynamicHeight>
 					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'"
 						label="{{titlesLayerBox.label_data}}">
 						<mat-progress-bar *ngIf="loadingsDownload" mode="indeterminate">
@@ -150,12 +153,12 @@
 									</mat-card>
 									<div class="buttons-analyze">
 										<button class="color-buttons" *ngIf="layerFromUpload.checked"
-											(click)="analyzeUploadShape()" mat-raised-button color="primary">
+											(click)="analyzeUploadShape()" mat-raised-button>
 											<div>{{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
 										</button>
 										<button class="color-buttons"
 											*ngIf="layerFromUpload.analyzedArea.hasOwnProperty('shape_upload')"
-											(click)="clearUpload()" mat-raised-button color="warn">
+											(click)="clearUpload()" mat-raised-button >
 											<div>{{titlesLayerBox.btn_clear.toUpperCase()}}</div>
 										</button>
 									</div>
