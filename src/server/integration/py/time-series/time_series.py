@@ -97,4 +97,4 @@ elif argv[1] == 'BFAST':
     result = trend(argv[2], utils.num(argv[3]), utils.num(
         argv[4]), argv[5], argv[6], utils.num(argv[7]), argv[8], argv[9])
 
-# print(result)
+print(result)
