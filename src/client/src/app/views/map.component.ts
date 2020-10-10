@@ -2308,6 +2308,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
         this.layerFromConsulta.analyzedArea = result;
         this.layerFromConsulta.analyzedAreaLoading = false;
 
+        // console.log(this.layerFromConsulta)
+
         this.loadLayerFromConsultaToMap();
 
 
@@ -2329,7 +2331,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
 
       this.googleAnalyticsService.eventEmitter("analyzeConsultaUploadLayer", "Analyze-Consulta-Upload", this.layerFromConsulta.token, 5);
-
+      console.log(this.layerFromConsulta)
     } else {
       this.layerFromUpload.analyzedAreaLoading = true;
       params.push('token=' + this.layerFromUpload.token)
@@ -3104,6 +3106,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
         height: 'calc(100% - 5vh)',
         data: { dados: this.layerFromConsulta.analyzedArea }
       });
+
+      console.log(carDialog)
     } else {
       this.layerFromUpload.analyzedArea['table_title'] = this.titlesLayerBox.car_title_report;
       this.layerFromUpload.analyzedArea['table_headers'] = this.titlesLayerBox.car_table_headers;

@@ -345,7 +345,7 @@
 												class="card-upload-analysed-table">
 												<h6 *ngIf="layerFromConsulta.analyzedArea.car.length > 0"
 													class="card-upload-analysed-table-title card"
-													(click)="openCarReport()">
+													(click)="openCarReport(true)">
 													{{titlesLayerBox.car_title.replace('[count]', layerFromConsulta.analyzedArea.car.length)}}
 												</h6>
 												<h6 *ngIf="layerFromConsulta.analyzedArea.car.length == 0"
