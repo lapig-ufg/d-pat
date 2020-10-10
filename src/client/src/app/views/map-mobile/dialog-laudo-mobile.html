@@ -1,182 +1,188 @@
 <div id="laudo-mobile">
-  <div #report class="container-fluid">
-    <div style="position: relative">
-        <div style="display: flex; justify-content: space-between;">
-            <button  (click)="printReport()" color="primary" classs="btn-info " mat-icon-button>
-                <mat-icon>print</mat-icon>
-                <mat-spinner [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"
-                    style="margin: 0 auto;"></mat-spinner>
-            </button>
-            <button  (click)="dialogRef.close()" color="primary" classs="btn-info " mat-icon-button>
-                <mat-icon>highlight_off</mat-icon>
-            </button>
+    <div #report class="container-fluid">
+        <div style="position: relative">
+            <div style="display: flex; justify-content: space-between;">
+                <button (click)="printReport()" color="primary" classs="btn-info " mat-icon-button>
+                    <mat-icon>print</mat-icon>
+                    <mat-spinner [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"
+                        style="margin: 0 auto;"></mat-spinner>
+                </button>
+                <button (click)="dialogRef.close()" color="primary" classs="btn-info " mat-icon-button>
+                    <mat-icon>highlight_off</mat-icon>
+                </button>
+            </div>
         </div>
-    </div>
-  
-    <p-scrollPanel [style]="{width: '98%', height: '100%'}">
-        <div class="title-logo">
-          <div>
-            <a href="https://cerradodpat.org" target="_blank">
-                <img class="logo-report" width="50%" src="assets/logo/cerrado-dpat-logo.svg" /></a>
-          </div>
-          <div>
-              <h4 class="title-report">{{textOnDialog.title}}</h4>
-          </div>
-        </div>
-        <div class="row">
-            <!--            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>-->
-            <p-accordion class="dados" [multiple]="true">
-                <p-accordionTab class="tab" header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
-                    <div>
-                        <div style="text-align: center;" *ngIf="infoDesmat.pathclassefip != '1' ">
-                            <toh-spinner-img class="seal" style="max-width: 50%" [largura]="'50%'"
-                                [imgSrc]="infoDesmat.pathclassefip" [spinnerSrc]="svgLoading">
-                            </toh-spinner-img>
-                        </div>
+
+        <p-scrollPanel [style]="{width: '98%', height: '100%'}">
+            <div class="title-logo">
+                <div>
+                    <a href="https://cerradodpat.org" target="_blank">
+                        <img class="logo-report" width="50%" src="assets/logo/cerrado-dpat-logo.svg" /></a>
+                </div>
+                <div>
+                    <h4 class="title-report">{{textOnDialog.title}}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <!--            <mat-progress-bar *ngIf="loading" color="primary" mode="indeterminate"></mat-progress-bar>-->
+                <p-accordion class="dados" [multiple]="true">
+                    <p-accordionTab class="tab" header="{{textOnDialog.information_tab.title_tab}}" [selected]="true">
                         <div>
-                            <h5 class="subtitles-report">
-                                <strong>{{textOnDialog.information_tab.metadados_label}}</strong>
-                            </h5>
-                            <table style="width:100%">
-                                <tr>
-                                    <th class="table-label">{{textOnDialog.information_tab.polygon_label}}</th>
-                                    <th>{{data.origin_table}}-CERRADO</th>
-                                </tr>
-                                <tr>
-                                    <th class="table-label">{{textOnDialog.information_tab.area_label}}</th>
-                                    <th>{{infoDesmat.area | number:'1.2-3' }}{{textOnDialog.information_tab.unit_measure}}
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">{{textOnDialog.information_tab.municipio_label}}</td>
-                                    <td>{{data.municipio }} - {{data.uf }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">{{textOnDialog.information_tab.detection_date_label}}</td>
-                                    <td> {{data.dataFormatada}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">{{textOnDialog.information_tab.latitude_label}}</td>
-                                    <td>{{infoDesmat.latitude | number:'1.3-6' }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">{{textOnDialog.information_tab.longitude_label}}</td>
-                                    <td>{{infoDesmat.longitude | number:'1.3-6' }}</td>
-                                </tr>
-                            </table>
+                            <div style="text-align: center;" *ngIf="infoDesmat.pathclassefip != '1' ">
+                                <toh-spinner-img class="seal" style="max-width: 50%" [largura]="'50%'"
+                                    [imgSrc]="infoDesmat.pathclassefip" [spinnerSrc]="svgLoading">
+                                </toh-spinner-img>
+                            </div>
+                            <div>
+                                <h5 class="subtitles-report">
+                                    <strong>{{textOnDialog.information_tab.metadados_label}}</strong>
+                                </h5>
+                                <table style="width:100%">
+                                    <tr>
+                                        <th class="table-label">{{textOnDialog.information_tab.polygon_label}}</th>
+                                        <th>{{data.origin_table}}-CERRADO</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-label">{{textOnDialog.information_tab.area_label}}</th>
+                                        <th>{{infoDesmat.area | number:'1.2-3' }}{{textOnDialog.information_tab.unit_measure}}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-label">{{textOnDialog.information_tab.municipio_label}}</td>
+                                        <td>{{data.municipio }} - {{data.uf }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-label">{{textOnDialog.information_tab.detection_date_label}}
+                                        </td>
+                                        <td> {{data.dataFormatada}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-label">{{textOnDialog.information_tab.latitude_label}}</td>
+                                        <td>{{infoDesmat.latitude | number:'1.3-6' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-label">{{textOnDialog.information_tab.longitude_label}}</td>
+                                        <td>{{infoDesmat.longitude | number:'1.3-6' }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="text-align: center; width: 100%">
+                                <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="urlSentinel[0]?.thumb"
+                                    [spinnerSrc]="svgLoading" (click)="openLightboxSentinel()">
+                                </toh-spinner-img>
+                                <br>
+                                {{textOnDialog.information_tab.landsat_image_description}} {{data.origin_table}}-Cerrado
+                            </div>
                         </div>
-                        <div style="text-align: center; width: 100%">
-                            <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="urlSentinel[0]?.thumb"
-                                [spinnerSrc]="svgLoading" (click)="openLightboxSentinel()">
-                            </toh-spinner-img>
-                            <br>
-                            {{textOnDialog.information_tab.landsat_image_description}} {{data.origin_table}}-Cerrado
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <p-accordionTab class="tab" *ngIf="dataEspecial" header="{{textOnDialog.especial_area.title_tab}}">
-                    <div>
-                        <div *ngIf="dataEspecial.ti" style="width: 100%; padding-bottom: 10px;">
-                            <mat-card fxFlexAlign="stretch" class="card-amostral">
-                                <mat-card-header>
-                                    <mat-card-title><strong>{{textOnDialog.especial_area.titleTI}}</strong>
-                                    </mat-card-title>
-                                    <mat-card-subtitle>
-                                        <b style="text-align: center;"><i>{{dataEspecial.ti.ti_nom}}</i></b>
-                                        <br>
-                                        <b>{{textOnDialog.especial_area.distancia}}</b> {{dataEspecial.ti.ti_dist}} km
-                                    </mat-card-subtitle>
-                                </mat-card-header>
-  
-                                <mat-card-content *ngIf="dataEspecial.ti.show">
-                                    <toh-spinner-img *ngIf="dataEspecial.ti.thumb" [imgSrc]="dataEspecial.ti.thumb"
-                                        [largura]="'100%'" [spinnerSrc]="svgLoading"
-                                        (click)="openLightboxEspecial('ti')" class="img-landsat-laudo">
-                                    </toh-spinner-img>
-                                    <br><br>
-                                    <img *ngIf="dataEspecial.ti.legendDesmatamento"
-                                        [src]="dataEspecial.ti.legendDesmatamento">
-                                    <img *ngIf="dataEspecial.ti.legendEspecial" [src]="dataEspecial.ti.legendEspecial">
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-  
-                        <div style="width: 100%; padding-bottom: 10px;">
-                            <mat-card fxFlexAlign="stretch" class="card-amostral">
-                                <mat-card-header>
-                                    <mat-card-title><strong>{{textOnDialog.especial_area.titleUCUS}}</strong>
-                                    </mat-card-title>
-                                    <mat-card-subtitle>
-                                        <b style="text-align: center;"><i>{{dataEspecial.ucus.ucus_nom}}</i></b>
-                                        <br>
-                                        <b>{{textOnDialog.especial_area.distancia}}</b> {{dataEspecial.ucus.ucus_dist}}
-                                        km
-                                    </mat-card-subtitle>
-                                </mat-card-header>
-  
-                                <mat-card-content *ngIf="dataEspecial.ucus.show">
-                                    <toh-spinner-img [imgSrc]="dataEspecial.ucus.thumb" [largura]="'100%'"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('ucus')"
-                                        class="img-landsat-laudo"></toh-spinner-img>
-                                    <br><br>
-                                    <img *ngIf="dataEspecial.ucus.legendDesmatamento"
-                                        [src]="dataEspecial.ucus.legendDesmatamento">
-                                    <img *ngIf="dataEspecial.ucus.legendEspecial"
-                                        [src]="dataEspecial.ucus.legendEspecial">
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-  
-                        <div style="width: 100%; padding-bottom: 10px;">
-                            <mat-card fxFlexAlign="stretch" class="card-amostral">
-                                <mat-card-header>
-                                    <mat-card-title><strong>{{textOnDialog.especial_area.titleUCPI}}</strong>
-                                    </mat-card-title>
-                                    <mat-card-subtitle>
-                                        <b style="text-align: center;"><i>{{dataEspecial.ucpi.ucpi_nom}}</i></b>
-                                        <br>
-                                        <b>{{textOnDialog.especial_area.distancia}}</b> {{dataEspecial.ucpi.ucpi_dist}}
-                                        km
-                                    </mat-card-subtitle>
-                                </mat-card-header>
-  
-                                <mat-card-content *ngIf="dataEspecial.ucpi.show">
-                                    <toh-spinner-img [imgSrc]="dataEspecial.ucpi.thumb" [largura]="'100%'"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('ucpi')"
-                                        class="img-landsat-laudo"></toh-spinner-img>
-                                    <br><br>
-                                    <img *ngIf="dataEspecial.ucpi.legendDesmatamento"
-                                        [src]="dataEspecial.ucpi.legendDesmatamento">
-                                    <img *ngIf="dataEspecial.ucpi.legendEspecial"
-                                        [src]="dataEspecial.ucpi.legendEspecial">
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-  
-                        <div *ngIf="dataEspecial.q" style="width: 100%; padding-bottom: 10px;">
-                            <mat-card fxFlexAlign="stretch" class="card-amostral">
-                                <mat-card-header>
-                                    <mat-card-title><strong>{{textOnDialog.especial_area.titleQ}}</strong>
-                                    </mat-card-title>
-                                    <mat-card-subtitle>
-                                        <b style="text-align: center;"><i>{{dataEspecial.q.q_nom}}</i></b>
-                                        <br>
-                                        <b>{{textOnDialog.especial_area.distancia}}</b> {{dataEspecial.q.q_dist}} km
-                                    </mat-card-subtitle>
-                                </mat-card-header>
-  
-                                <mat-card-content *ngIf="dataEspecial.q.show">
-                                    <toh-spinner-img [imgSrc]="dataEspecial.q.thumb" [largura]="'100%'"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('q')"
-                                        class="img-landsat-laudo"></toh-spinner-img>
-                                    <br><br>
-                                    <img *ngIf="dataEspecial.q.legendDesmatamento"
-                                        [src]="dataEspecial.q.legendDesmatamento">
-                                    <img *ngIf="dataEspecial.q.legendEspecial" [src]="dataEspecial.q.legendEspecial">
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-                        <!-- <div class="p-col-4">
+                    </p-accordionTab>
+                    <p-accordionTab class="tab" *ngIf="dataEspecial" header="{{textOnDialog.especial_area.title_tab}}">
+                        <div>
+                            <div *ngIf="dataEspecial.ti" style="width: 100%; padding-bottom: 10px;">
+                                <mat-card fxFlexAlign="stretch" class="card-amostral">
+                                    <mat-card-header>
+                                        <mat-card-title><strong>{{textOnDialog.especial_area.titleTI}}</strong>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <b style="text-align: center;"><i>{{dataEspecial.ti.ti_nom}}</i></b>
+                                            <br>
+                                            <b>{{textOnDialog.especial_area.distancia}}</b> {{dataEspecial.ti.ti_dist}}
+                                            km
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+
+                                    <mat-card-content *ngIf="dataEspecial.ti.show">
+                                        <toh-spinner-img *ngIf="dataEspecial.ti.thumb" [imgSrc]="dataEspecial.ti.thumb"
+                                            [largura]="'100%'" [spinnerSrc]="svgLoading"
+                                            (click)="openLightboxEspecial('ti')" class="img-landsat-laudo">
+                                        </toh-spinner-img>
+                                        <br><br>
+                                        <img *ngIf="dataEspecial.ti.legendDesmatamento"
+                                            [src]="dataEspecial.ti.legendDesmatamento">
+                                        <img *ngIf="dataEspecial.ti.legendEspecial"
+                                            [src]="dataEspecial.ti.legendEspecial">
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+
+                            <div style="width: 100%; padding-bottom: 10px;">
+                                <mat-card fxFlexAlign="stretch" class="card-amostral">
+                                    <mat-card-header>
+                                        <mat-card-title><strong>{{textOnDialog.especial_area.titleUCUS}}</strong>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <b style="text-align: center;"><i>{{dataEspecial.ucus.ucus_nom}}</i></b>
+                                            <br>
+                                            <b>{{textOnDialog.especial_area.distancia}}</b>
+                                            {{dataEspecial.ucus.ucus_dist}}
+                                            km
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+
+                                    <mat-card-content *ngIf="dataEspecial.ucus.show">
+                                        <toh-spinner-img [imgSrc]="dataEspecial.ucus.thumb" [largura]="'100%'"
+                                            [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('ucus')"
+                                            class="img-landsat-laudo"></toh-spinner-img>
+                                        <br><br>
+                                        <img *ngIf="dataEspecial.ucus.legendDesmatamento"
+                                            [src]="dataEspecial.ucus.legendDesmatamento">
+                                        <img *ngIf="dataEspecial.ucus.legendEspecial"
+                                            [src]="dataEspecial.ucus.legendEspecial">
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+
+                            <div style="width: 100%; padding-bottom: 10px;">
+                                <mat-card fxFlexAlign="stretch" class="card-amostral">
+                                    <mat-card-header>
+                                        <mat-card-title><strong>{{textOnDialog.especial_area.titleUCPI}}</strong>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <b style="text-align: center;"><i>{{dataEspecial.ucpi.ucpi_nom}}</i></b>
+                                            <br>
+                                            <b>{{textOnDialog.especial_area.distancia}}</b>
+                                            {{dataEspecial.ucpi.ucpi_dist}}
+                                            km
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+
+                                    <mat-card-content *ngIf="dataEspecial.ucpi.show">
+                                        <toh-spinner-img [imgSrc]="dataEspecial.ucpi.thumb" [largura]="'100%'"
+                                            [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('ucpi')"
+                                            class="img-landsat-laudo"></toh-spinner-img>
+                                        <br><br>
+                                        <img *ngIf="dataEspecial.ucpi.legendDesmatamento"
+                                            [src]="dataEspecial.ucpi.legendDesmatamento">
+                                        <img *ngIf="dataEspecial.ucpi.legendEspecial"
+                                            [src]="dataEspecial.ucpi.legendEspecial">
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+
+                            <div *ngIf="dataEspecial.q" style="width: 100%; padding-bottom: 10px;">
+                                <mat-card fxFlexAlign="stretch" class="card-amostral">
+                                    <mat-card-header>
+                                        <mat-card-title><strong>{{textOnDialog.especial_area.titleQ}}</strong>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <b style="text-align: center;"><i>{{dataEspecial.q.q_nom}}</i></b>
+                                            <br>
+                                            <b>{{textOnDialog.especial_area.distancia}}</b> {{dataEspecial.q.q_dist}} km
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+
+                                    <mat-card-content *ngIf="dataEspecial.q.show">
+                                        <toh-spinner-img [imgSrc]="dataEspecial.q.thumb" [largura]="'100%'"
+                                            [spinnerSrc]="svgLoading" (click)="openLightboxEspecial('q')"
+                                            class="img-landsat-laudo"></toh-spinner-img>
+                                        <br><br>
+                                        <img *ngIf="dataEspecial.q.legendDesmatamento"
+                                            [src]="dataEspecial.q.legendDesmatamento">
+                                        <img *ngIf="dataEspecial.q.legendEspecial"
+                                            [src]="dataEspecial.q.legendEspecial">
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                            <!-- <div class="p-col-4">
                             <mat-card class="card-amostral">
                                 <mat-card-header>
                                     <mat-card-title><strong>{{textOnDialog.especial_area.titleAP}}</strong>
@@ -199,309 +205,311 @@
                                 </mat-card-content>
                             </mat-card>
                         </div> -->
-                    </div>
-  
-  
-                </p-accordionTab>
-                <p-accordionTab style="padding: 5px;" class="tab" header="{{textOnDialog.car_tab.title_tab}}"
-                    *ngIf="carData.length > 0 && data.year >= 2013">
-                    <div class="vertical-container" *ngFor="let item of carData; let i=index">
-                        <div>
-                            <h5 class="subtitles-report">{{textOnDialog.car_tab.title_info}}
-                            </h5>
-                            <p style="font-size: 11px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
-                                </b>
-                                {{item.metaData.cod_car}} </p>
-                            <p style="font-size: 11px; text-align: left;">
-                                <b>{{textOnDialog.car_tab.area_car_label}}</b>
-                                {{item.metaData.area_car | number:'1.2-3' }} km²</p>
-                            <p style="font-size: 11px; text-align: left;">
-                                <b>{{textOnDialog.car_tab.reference_date_car_label}}</b>
-                                {{item.metaData.dataRefFormatada}} </p>
-                            <p style="font-size: 11px; text-align: left;"
-                                *ngIf="item.metaData.qnt_nascente || item.metaData.qnt_nascente > 0">
-                                <b>{{textOnDialog.car_tab.nascente_car_label}}</b>
-                                {{item.metaData.qnt_nascente}} </p>
-                            <p style="font-size: 11px; text-align: left;"
-                                *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0.1 ">
-                                <b>{{textOnDialog.car_tab.display_rl_message[0]}}</b>
-                                {{item.metaData.area_desmat_rl | number:'1.2-3' }}
-                                {{textOnDialog.car_tab.display_rl_message[1]}} {{item.metaData.percentRL}}
-                                {{textOnDialog.car_tab.display_rl_message[2]}} </p>
-                            <p style="font-size: 11px; text-align: left;"
-                                *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0.1">
-                                <b>{{textOnDialog.car_tab.display_app_message[0]}}</b>
-                                {{item.metaData.area_desmat_app | number:'1.2-3' }}
-                                {{textOnDialog.car_tab.display_app_message[1]}} {{item.metaData.percentAPP}}
-                                {{textOnDialog.car_tab.display_app_message[2]}}</p>
                         </div>
-												<div>
-														<div style="text-align: center; padding: 10px 0px;">
-																<toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
-																		[spinnerSrc]="svgLoading" (click)="openLightboxCAR()">
-																</toh-spinner-img>
-														</div>
 
-														<div>
-																<img *ngIf="item.imgsCar.legendDesmatamento"
-																		[src]="item.imgsCar.legendDesmatamento">
-																<img *ngIf="item.imgsCar.legendCar" [src]="item.imgsCar.legendCar">
-																<img *ngIf="item.imgsCar.legendAPP" [src]="item.imgsCar.legendAPP">
-																<img *ngIf="item.imgsCar.legendRL" [src]="item.imgsCar.legendRL">
-																<img *ngIf="item.imgsCar.legendNascente" [src]="item.imgsCar.legendNascente">
 
-																<br><br>
-																<div *ngIf="item.metaData.percentDesmat !== ''"
-																		style="font-size: 11px; text-align: justify">
-																		<span>
-																				{{this.textOnDialog.car_tab.display_car_description_message[0]}}
-																				<b>{{data.origin_table}}-CERRADO</b>
-																				{{this.textOnDialog.car_tab.display_car_description_message[1]}}
-																				<strong>{{item.metaData.percentDesmat}}</strong>
-																				{{this.textOnDialog.car_tab.display_car_description_message[2]}}</span>
-																</div>
-														</div>
-
-												</div>
-                    </div>
-  
-                </p-accordionTab>
-                <p-accordionTab class="tab" header="{{textOnDialog.campo_tab.title_tab}}" *ngIf="dataCampo.length > 0">
-  
-                    <div>
-                        <div>
-                            <p-tabView>
-                                <p-tabPanel header="{{textOnDialog.campo_tab.title_camera_tab}}" leftIcon="pi pi-camera"
-                                    [selected]="true" *ngIf="galleryCamera.length > 0">
-                                    <ngx-gallery [options]="galleryOptions" [images]="galleryCamera"></ngx-gallery>
-                                </p-tabPanel>
-                                <p-tabPanel header="{{textOnDialog.campo_tab.title_drone_photo_tab}}"
-                                    leftIcon="pi pi-images" *ngIf="galleryDrones.length > 0">
-                                    <ngx-gallery [options]="galleryOptions" [images]="galleryDrones"></ngx-gallery>
-                                </p-tabPanel>
-                                <p-tabPanel header="{{textOnDialog.campo_tab.title_drone_video_tab}}"
-                                    leftIcon="pi pi-video" *ngIf="galleryVideos.length > 0">
-                                    <ngx-gallery [options]="galleryOptions" [images]="galleryVideos"></ngx-gallery>
-                                </p-tabPanel>
-                            </p-tabView>
-                        </div>
-  
-                        <div>
-                            <div style="font-size: 16px; text-align: left; padding-top: 4px">
-                                <div>
-                                    <h5 class="subtitles-report">
-                                        {{textOnDialog.campo_tab.field_data_label}}
-                                    </h5>
-                                </div>
-                                <div style="font-weight: bold">
-                                    {{textOnDialog.campo_tab.field_number_label}} </div>
-                                <div>{{infoVisita.campo}}</div>
-                                <div style="font-weight: bold">
-                                    {{textOnDialog.campo_tab.field_visit_date_label}} </div>
-                                <div>{{infoVisita.dataFormatada}}</div>
-                                <div style="font-weight: bold">
-                                    {{textOnDialog.information_tab.latitude_label}} </div>
-                                <div>{{infoVisita.latitude}}</div>
-                                <div style="font-weight: bold">
-                                    {{textOnDialog.information_tab.longitude_label}} </div>
-                                <div>{{infoVisita.longitude}}</div>
-                                <div *ngIf="infoVisita.usocobertura != ' '" style="font-weight: bold">
-                                    {{textOnDialog.campo_tab.field_uso_do_solo_label}} </div>
-                                <div *ngIf="infoVisita.usocobertura != ' '">{{infoVisita.usocobertura}}
-                                </div>
-                                <div *ngIf="infoVisita.obs != ' '" style="font-weight: bold">
-                                    {{textOnDialog.campo_tab.field_observation_label}} </div>
-                                <div *ngIf="infoVisita.obs != ' '">{{infoVisita.obs}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <p-accordionTab class="tab" header="{{textOnDialog.historico_amostral_landsat.title_tab}}">
-  
-                    <div>
-  
-                        <div>
-                            <div *ngIf="dadosValidacao_Amostral.exist"
-                                style="font-size: 16px; text-align: center; padding-top: 4px">
-                                <div style="text-align: center">
-                                    <h5 class="subtitles-report">
-                                        {{textOnDialog.historico_amostral_landsat.amostral_title}}
-                                    </h5>
-                                </div>
-                                <div style="text-align: center">
-                                    <strong> {{textOnDialog.historico_amostral_landsat.class_lapig_label}} </strong>
-                                </div>
-                                <div>{{dadosValidacao_Amostral.finalClass}}</div>
-                            </div>
-                        </div>
-  
-                        <div>
-                            <div *ngIf="dadosValidacao_Amostral.exist" style="text-align: center">
-                                <h5 class="subtitles-report">
-                                    {{textOnDialog.historico_amostral_landsat.amostral_classes_legend_label}}
+                    </p-accordionTab>
+                    <p-accordionTab style="padding: 5px;" class="tab" header="{{textOnDialog.car_tab.title_tab}}"
+                        *ngIf="carData.length > 0 && data.year >= 2013">
+                        <div class="vertical-container" *ngFor="let item of carData; let i=index">
+                            <div>
+                                <h5 class="subtitles-report">{{textOnDialog.car_tab.title_info}}
                                 </h5>
-                                <img [src]="urlsLandSat.legend">
+                                <p style="font-size: 11px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
+                                    </b>
+                                    {{item.metaData.cod_car}} </p>
+                                <p style="font-size: 11px; text-align: left;">
+                                    <b>{{textOnDialog.car_tab.area_car_label}}</b>
+                                    {{item.metaData.area_car | number:'1.2-3' }} km²</p>
+                                <p style="font-size: 11px; text-align: left;">
+                                    <b>{{textOnDialog.car_tab.reference_date_car_label}}</b>
+                                    {{item.metaData.dataRefFormatada}} </p>
+                                <p style="font-size: 11px; text-align: left;"
+                                    *ngIf="item.metaData.qnt_nascente || item.metaData.qnt_nascente > 0">
+                                    <b>{{textOnDialog.car_tab.nascente_car_label}}</b>
+                                    {{item.metaData.qnt_nascente}} </p>
+                                <p style="font-size: 11px; text-align: left;"
+                                    *ngIf="item.metaData.area_rl || item.metaData.area_desmat_rl > 0 ">
+                                    <b>{{textOnDialog.car_tab.display_rl_message[0]}}</b>
+                                    {{item.metaData.area_desmat_rl | number:'1.2-3' }}
+                                    {{textOnDialog.car_tab.display_rl_message[1]}} {{item.metaData.percentRL}}
+                                    {{textOnDialog.car_tab.display_rl_message[2]}} </p>
+                                <p style="font-size: 11px; text-align: left;"
+                                    *ngIf="item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0">
+                                    <b>{{textOnDialog.car_tab.display_app_message[0]}}</b>
+                                    {{item.metaData.area_desmat_app | number:'1.2-3' }}
+                                    {{textOnDialog.car_tab.display_app_message[1]}} {{item.metaData.percentAPP}}
+                                    {{textOnDialog.car_tab.display_app_message[2]}}</p>
                             </div>
-                        </div>
-  
-  
-  
-                    </div>
-  
-                    <div style="margin-top: .2em ; text-align: center; padding: 2px;">
-  
-                        <div style="width: 100%; padding-bottom: 10px;"
-                            *ngFor="let landsat of albumLandsat; let i=index">
-  
-                            <mat-card class="card-amostral">
-                                <mat-card-header>
-                                    <mat-card-title><strong>{{landsat.caption}}</strong></mat-card-title>
-                                    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
-                                </mat-card-header>
-                                <toh-spinner-img [imgSrc]="landsat.thumb" [largura]="'100%'" [spinnerSrc]="svgLoading"
-                                    (click)="openImage(i)" id="img-landsat" class="img-landsat-laudo"></toh-spinner-img>
-                                <mat-card-content>
-  
-  
-                                </mat-card-content>
-                            </mat-card>
-  
-                        </div>
-                    </div>
-  
-                    <div style="text-align: center; ">
-                        <h5 class="subtitles-report">{{textOnDialog.historico_amostral_landsat.series_modis_title}}</h5>
-                        <img style="height: 50px" *ngIf="!dataTimeseriesModis.type" src="/assets/gif/loadchart.gif">
-                        <div id="reportChart" #reportChart>
-                            <p-chart *ngIf="dataTimeseriesModis.type" [type]="dataTimeseriesModis.type"
-                                [data]="dataTimeseriesModis" [options]="optionsTimeSeries">
-                            </p-chart>
-                        </div>
-  
-                    </div>
-  
-                </p-accordionTab>
-                <p-accordionTab class="tab" header="{{textOnDialog.analise_automatica.title_tab}}"
-                    *ngIf="data.year > 2015 && data.year <= 2019">
-                    <div style="margin-top: .5em">
-                        <div style="text-align: center;">
-                            <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_susceptibility}}
-                            </h5>
-                            <div style="margin-top: .3em">
-                                <div style="text-align: center;">
-                                    <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
-                                    <br>
-                                    <span style="font-size: 12px">
-                                        <strong>{{textOnDialog.analise_automatica.info_susceptibility_faixas}}</strong>
-                                    </span> <br>
-                                    <br>
-                                    <span style="font-size: 12px" *ngIf="dataSuscept.prob_suscept != null">
-                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
-                                        <b>{{dataSuscept.type}}</b>
-                                        {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
-                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
-  
-                                    <!-- <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept == null">
-                                        A susceptibilidade a desmatamentos neste polígono
-                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span> -->
-                                </div>
-                                <div
-                                    style="text-align: center; width: 100%">
-                                    <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb" [spinnerSrc]="svgLoading"
-                                        [largura]="'100%'" (click)="openLightboxSuscept()">
+                            <div>
+                                <div style="text-align: center; padding: 10px 0px;">
+                                    <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetCar[i]?.thumb"
+                                        [spinnerSrc]="svgLoading" (click)="openLightboxCAR()">
                                     </toh-spinner-img>
-                                    <br>
                                 </div>
+
+                                <div>
+                                    <img *ngIf="item.imgsCar.legendDesmatamento"
+                                        [src]="item.imgsCar.legendDesmatamento">
+                                    <img *ngIf="item.imgsCar.legendCar" [src]="item.imgsCar.legendCar">
+                                    <img *ngIf="item.imgsCar.legendAPP" [src]="item.imgsCar.legendAPP">
+                                    <img *ngIf="item.imgsCar.legendRL" [src]="item.imgsCar.legendRL">
+                                    <img *ngIf="item.imgsCar.legendNascente" [src]="item.imgsCar.legendNascente">
+
+                                    <br><br>
+                                    <div *ngIf="item.metaData.percentDesmat !== ''"
+                                        style="font-size: 11px; text-align: justify">
+                                        <span>
+                                            {{this.textOnDialog.car_tab.display_car_description_message[0]}}
+                                            <b>{{data.origin_table}}-CERRADO</b>
+                                            {{this.textOnDialog.car_tab.display_car_description_message[1]}}
+                                            <strong>{{item.metaData.percentDesmat}}</strong>
+                                            {{this.textOnDialog.car_tab.display_car_description_message[2]}}</span>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div style="text-align: center;"
-                            *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
-                            <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
-                            <div style="margin-top: .5em">
-                                <div style="text-align: center; ">
-                                    <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">
-                                    <br>
-                                    <span style="font-size: 12px;">
-                                        <strong>{{textOnDialog.analise_automatica.info_bfast_faixas}}</strong>
-                                    </span>
-                                    <br>
-                                    <br>
-                                    <span style="font-size: 12px;">
-                                        {{textOnDialog.analise_automatica.info_bfast_description}}
-                                        <strong>{{dataBfast.prob_Formatada}}.</strong></span>
-                                </div>
-                                <div
-                                    style="text-align: center; width: 100%">
-                                    <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb" [spinnerSrc]="svgLoading"
-                                        [largura]="'100%'" (click)="openLightboxBfast()">
-                                    </toh-spinner-img>
-  
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </p-accordionTab>
-                <p-accordionTab class="tab" header="{{textOnDialog.fip_abc_tab.title_tab}}" *ngIf="abcData.length > 0">
-                    <div class="vertical-container" *ngFor="let item of abcData; let i=index">
-                        <div>
-                            <h5 class="subtitles-report">{{textOnDialog.fip_abc_tab.title_info}}</h5>
-                            <br>
-                            <!-- <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
-                                </b>
-                                {{item.metaData.cod_car}} </p> -->
-                            <p style="font-size: 14px; text-align: left;">
-                                <b>{{textOnDialog.fip_abc_tab.property_area_label}}</b>
-                                {{item.metaData.area_propriedade | number:'1.2-3' }} km²</p>
-                            <p style="font-size: 14px; text-align: left;">
-                                <b>{{textOnDialog.fip_abc_tab.property_area_explored_label}}</b>
-                                {{item.metaData.area_explorada | number:'1.2-3' }} km²</p>
-                            <p style="font-size: 14px; text-align: left;" *ngIf="item.metaData.producao != null">
-                                <b>{{textOnDialog.fip_abc_tab.producao_label}}</b>
-                                {{item.metaData.producao}} </p>
-                            <p style="font-size: 14px; text-align: left;" *ngIf="item.metaData.area_tecnologia > 0">
-                                <b>{{textOnDialog.fip_abc_tab.property_area_tec_label}}</b>
-                                {{item.metaData.area_tecnologia | number:'1.2-3' }} km² </p>
-                            <p style="font-size: 14px; text-align: left;" *ngIf="item.metaData.tec_impl != null">
-                                <b>{{textOnDialog.fip_abc_tab.property_applied_tec_label}}</b>
-                                {{item.metaData.tec_impl}} </p>
-                            <p style="font-size: 14px; text-align: left;">
-                                <b>{{textOnDialog.fip_abc_tab.property_area_deforested_label}}</b>
-                                {{item.metaData.area_desmatada | number:'1.2-3' }} km² </p>
-  
-                        </div>
-  
+
+                    </p-accordionTab>
+                    <p-accordionTab class="tab" header="{{textOnDialog.campo_tab.title_tab}}"
+                        *ngIf="dataCampo.length > 0">
+
                         <div>
                             <div>
-  
-                                <div
-                                    style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
-                                    <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetABC[i]?.thumb"
-                                        [spinnerSrc]="svgLoading" (click)="openLightboxABC()">
-                                    </toh-spinner-img>
+                                <p-tabView>
+                                    <p-tabPanel header="{{textOnDialog.campo_tab.title_camera_tab}}"
+                                        leftIcon="pi pi-camera" [selected]="true" *ngIf="galleryCamera.length > 0">
+                                        <ngx-gallery [options]="galleryOptions" [images]="galleryCamera"></ngx-gallery>
+                                    </p-tabPanel>
+                                    <p-tabPanel header="{{textOnDialog.campo_tab.title_drone_photo_tab}}"
+                                        leftIcon="pi pi-images" *ngIf="galleryDrones.length > 0">
+                                        <ngx-gallery [options]="galleryOptions" [images]="galleryDrones"></ngx-gallery>
+                                    </p-tabPanel>
+                                    <p-tabPanel header="{{textOnDialog.campo_tab.title_drone_video_tab}}"
+                                        leftIcon="pi pi-video" *ngIf="galleryVideos.length > 0">
+                                        <ngx-gallery [options]="galleryOptions" [images]="galleryVideos"></ngx-gallery>
+                                    </p-tabPanel>
+                                </p-tabView>
+                            </div>
+
+                            <div>
+                                <div style="font-size: 16px; text-align: left; padding-top: 4px">
+                                    <div>
+                                        <h5 class="subtitles-report">
+                                            {{textOnDialog.campo_tab.field_data_label}}
+                                        </h5>
+                                    </div>
+                                    <div style="font-weight: bold">
+                                        {{textOnDialog.campo_tab.field_number_label}} </div>
+                                    <div>{{infoVisita.campo}}</div>
+                                    <div style="font-weight: bold">
+                                        {{textOnDialog.campo_tab.field_visit_date_label}} </div>
+                                    <div>{{infoVisita.dataFormatada}}</div>
+                                    <div style="font-weight: bold">
+                                        {{textOnDialog.information_tab.latitude_label}} </div>
+                                    <div>{{infoVisita.latitude}}</div>
+                                    <div style="font-weight: bold">
+                                        {{textOnDialog.information_tab.longitude_label}} </div>
+                                    <div>{{infoVisita.longitude}}</div>
+                                    <div *ngIf="infoVisita.usocobertura != ' '" style="font-weight: bold">
+                                        {{textOnDialog.campo_tab.field_uso_do_solo_label}} </div>
+                                    <div *ngIf="infoVisita.usocobertura != ' '">{{infoVisita.usocobertura}}
+                                    </div>
+                                    <div *ngIf="infoVisita.obs != ' '" style="font-weight: bold">
+                                        {{textOnDialog.campo_tab.field_observation_label}} </div>
+                                    <div *ngIf="infoVisita.obs != ' '">{{infoVisita.obs}}</div>
                                 </div>
-  
-                                <div>
-                                    <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
-                                    <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
-                                    <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
-                                    <img *ngIf="item.imgsProp.legendDesmatamento"
-                                        [src]="item.imgsProp.legendDesmatamento">
-  
-                                </div>
-  
                             </div>
                         </div>
+                    </p-accordionTab>
+                    <p-accordionTab class="tab" header="{{textOnDialog.historico_amostral_landsat.title_tab}}">
+
+                        <div>
+
+                            <div>
+                                <div *ngIf="dadosValidacao_Amostral.exist"
+                                    style="font-size: 16px; text-align: center; padding-top: 4px">
+                                    <div style="text-align: center">
+                                        <h5 class="subtitles-report">
+                                            {{textOnDialog.historico_amostral_landsat.amostral_title}}
+                                        </h5>
+                                    </div>
+                                    <div style="text-align: center">
+                                        <strong> {{textOnDialog.historico_amostral_landsat.class_lapig_label}} </strong>
+                                    </div>
+                                    <div>{{dadosValidacao_Amostral.finalClass}}</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div *ngIf="dadosValidacao_Amostral.exist" style="text-align: center">
+                                    <h5 class="subtitles-report">
+                                        {{textOnDialog.historico_amostral_landsat.amostral_classes_legend_label}}
+                                    </h5>
+                                    <img [src]="urlsLandSat.legend">
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div style="margin-top: .2em ; text-align: center; padding: 2px;">
+
+                            <div style="width: 100%; padding-bottom: 10px;"
+                                *ngFor="let landsat of albumLandsat; let i=index">
+
+                                <mat-card class="card-amostral">
+                                    <mat-card-header>
+                                        <mat-card-title><strong>{{landsat.caption}}</strong></mat-card-title>
+                                        <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+                                    </mat-card-header>
+                                    <toh-spinner-img [imgSrc]="landsat.thumb" [largura]="'100%'"
+                                        [spinnerSrc]="svgLoading" (click)="openImage(i)" id="img-landsat"
+                                        class="img-landsat-laudo"></toh-spinner-img>
+                                    <mat-card-content>
+
+
+                                    </mat-card-content>
+                                </mat-card>
+
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; ">
+                            <h5 class="subtitles-report">{{textOnDialog.historico_amostral_landsat.series_modis_title}}
+                            </h5>
+                            <img style="height: 50px" *ngIf="!dataTimeseriesModis.type" src="/assets/gif/loadchart.gif">
+                            <div id="reportChart" #reportChart>
+                                <p-chart *ngIf="dataTimeseriesModis.type" [type]="dataTimeseriesModis.type"
+                                    [data]="dataTimeseriesModis" [options]="optionsTimeSeries">
+                                </p-chart>
+                            </div>
+
+                        </div>
+
+                    </p-accordionTab>
+                    <p-accordionTab class="tab" header="{{textOnDialog.analise_automatica.title_tab}}"
+                        *ngIf="data.year > 2015 && data.year <= 2019">
+                        <div style="margin-top: .5em">
+                            <div style="text-align: center;">
+                                <h5 class="subtitles-report">
+                                    {{textOnDialog.analise_automatica.title_info_susceptibility}}
+                                </h5>
+                                <div style="margin-top: .3em">
+                                    <div style="text-align: center;">
+                                        <img *ngIf="dataSuscept.legend" [src]="dataSuscept.legend">
+                                        <br>
+                                        <span style="font-size: 12px">
+                                            <strong>{{textOnDialog.analise_automatica.info_susceptibility_faixas}}</strong>
+                                        </span> <br>
+                                        <br>
+                                        <span style="font-size: 12px" *ngIf="dataSuscept.prob_suscept != null">
+                                            {{textOnDialog.analise_automatica.info_susceptibility_description_split[0]}}
+                                            <b>{{dataSuscept.type}}</b>
+                                            {{textOnDialog.analise_automatica.info_susceptibility_description_split[1]}}
+                                            <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span>
+
+                                        <!-- <span style="font-size: medium" *ngIf="dataSuscept.prob_suscept == null">
+                                        A susceptibilidade a desmatamentos neste polígono
+                                        <strong>{{dataSuscept.sucept_desmatFormatada}}.</strong></span> -->
+                                    </div>
+                                    <div style="text-align: center; width: 100%">
+                                        <toh-spinner-img [imgSrc]="vetSuscept[0]?.thumb" [spinnerSrc]="svgLoading"
+                                            [largura]="'100%'" (click)="openLightboxSuscept()">
+                                        </toh-spinner-img>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;"
+                                *ngIf="dataBfast.pct_bfast != null && dataBfast.pct_bfast > 0">
+                                <h5 class="subtitles-report">{{textOnDialog.analise_automatica.title_info_bfast}}</h5>
+                                <div style="margin-top: .5em">
+                                    <div style="text-align: center; ">
+                                        <img *ngIf="dataBfast.legend" [src]="dataBfast.legend">
+                                        <br>
+                                        <span style="font-size: 12px;">
+                                            <strong>{{textOnDialog.analise_automatica.info_bfast_faixas}}</strong>
+                                        </span>
+                                        <br>
+                                        <br>
+                                        <span style="font-size: 12px;">
+                                            {{textOnDialog.analise_automatica.info_bfast_description}}
+                                            <strong>{{dataBfast.prob_Formatada}}.</strong></span>
+                                    </div>
+                                    <div style="text-align: center; width: 100%">
+                                        <toh-spinner-img [imgSrc]="vetBfast[0]?.thumb" [spinnerSrc]="svgLoading"
+                                            [largura]="'100%'" (click)="openLightboxBfast()">
+                                        </toh-spinner-img>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab class="tab" header="{{textOnDialog.fip_abc_tab.title_tab}}"
+                        *ngIf="abcData.length > 0">
+                        <div class="vertical-container" *ngFor="let item of abcData; let i=index">
+                            <div>
+                                <h5 class="subtitles-report">{{textOnDialog.fip_abc_tab.title_info}}</h5>
+                                <br>
+                                <!-- <p style="font-size: 16px; text-align: left;"> <b>{{textOnDialog.car_tab.cod_car_label}}
+                                </b>
+                                {{item.metaData.cod_car}} </p> -->
+                                <p style="font-size: 14px; text-align: left;">
+                                    <b>{{textOnDialog.fip_abc_tab.property_area_label}}</b>
+                                    {{item.metaData.area_propriedade | number:'1.2-3' }} km²</p>
+                                <p style="font-size: 14px; text-align: left;">
+                                    <b>{{textOnDialog.fip_abc_tab.property_area_explored_label}}</b>
+                                    {{item.metaData.area_explorada | number:'1.2-3' }} km²</p>
+                                <p style="font-size: 14px; text-align: left;" *ngIf="item.metaData.producao != null">
+                                    <b>{{textOnDialog.fip_abc_tab.producao_label}}</b>
+                                    {{item.metaData.producao}} </p>
+                                <p style="font-size: 14px; text-align: left;" *ngIf="item.metaData.area_tecnologia > 0">
+                                    <b>{{textOnDialog.fip_abc_tab.property_area_tec_label}}</b>
+                                    {{item.metaData.area_tecnologia | number:'1.2-3' }} km² </p>
+                                <p style="font-size: 14px; text-align: left;" *ngIf="item.metaData.tec_impl != null">
+                                    <b>{{textOnDialog.fip_abc_tab.property_applied_tec_label}}</b>
+                                    {{item.metaData.tec_impl}} </p>
+                                <p style="font-size: 14px; text-align: left;">
+                                    <b>{{textOnDialog.fip_abc_tab.property_area_deforested_label}}</b>
+                                    {{item.metaData.area_desmatada | number:'1.2-3' }} km² </p>
+
+                            </div>
+
+                            <div>
+                                <div>
+
+                                    <div style="text-align: center; min-width: 300px; max-width: 350px; width: 100%">
+                                        <toh-spinner-img [largura]="'100%'" [altura]="'80%'" [imgSrc]="vetABC[i]?.thumb"
+                                            [spinnerSrc]="svgLoading" (click)="openLightboxABC()">
+                                        </toh-spinner-img>
+                                    </div>
+
+                                    <div>
+                                        <img *ngIf="item.imgsProp.legendProp" [src]="item.imgsProp.legendProp">
+                                        <img *ngIf="item.imgsProp.legendExp" [src]="item.imgsProp.legendExp">
+                                        <img *ngIf="item.imgsProp.legendTec" [src]="item.imgsProp.legendTec">
+                                        <img *ngIf="item.imgsProp.legendDesmatamento"
+                                            [src]="item.imgsProp.legendDesmatamento">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+            <div class="row">
+                <div class="p-grid p-dir-rev mt-5">
+                    <div class="p-col-12">
+                        <img class="report-partners" src="assets/img/assinatura-02.png" />
                     </div>
-                </p-accordionTab>
-            </p-accordion>
-        </div>
-        <div class="row">
-            <div class="p-grid p-dir-rev mt-5">
-                <div class="p-col-12">
-                    <img class="report-partners" src="assets/img/assinatura-02.png" />
                 </div>
             </div>
-        </div>
-    </p-scrollPanel>
-  </div>
+        </p-scrollPanel>
+    </div>
 </div>

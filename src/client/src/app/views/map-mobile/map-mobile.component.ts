@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject,  AfterViewInit, HostListener} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject, AfterViewInit, HostListener } from '@angular/core';
 import { SearchService, MapComponent } from '../map.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Lightbox } from 'ngx-lightbox';
@@ -19,7 +19,7 @@ declare let html2canvas: any;
   providers: [SearchService],
   // styleUrls: ['./map-mobile.component.css']
 })
-export class MapMobileComponent extends MapComponent implements  AfterViewInit{
+export class MapMobileComponent extends MapComponent implements AfterViewInit {
 
   indexOpenConsulta: any = 0;
 
@@ -586,7 +586,7 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
         } else {
           nascente.push({}, {});
         }
-        if (item.metaData.area_rl || item.metaData.area_desmat_rl > 0.1) {
+        if (item.metaData.area_rl || item.metaData.area_desmat_rl > 0) {
           area_rl.push(self.textOnDialog.car_tab.display_rl_message[0]);
           area_rl.push({
             text: self.decimalPipe.transform(item.metaData.area_desm, '1.2-3') +
@@ -599,7 +599,7 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
         } else {
           area_rl.push({}, {});
         }
-        if (item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0.1) {
+        if (item.metaData.area_desmat_app && item.metaData.area_desmat_app > 0) {
           area_desmat_app.push(this.textOnDialog.car_tab.display_app_message[0]);
           area_desmat_app.push({
             text: this.decimalPipe.transform(item.metaData.area_desmat_app, '1.2-3') + ' ' +
