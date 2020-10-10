@@ -37,6 +37,7 @@
     "reproject": "^1.2.6",
     "request": "^2.88.0",
     "request-param": "^0.2.0",
+    "request-promise": "^4.2.6",
     "response-time": "^2.3.0",
     "session-memory-store": "^1.0.0",
     "ssh2-sftp-client": "^4.1.0",

@@ -1,5 +1,6 @@
 var fs = require('fs');
 const req = require('request');
+const rp = require("request-promise");
 var languageJson = require('../assets/lang/language.json');
 
 var ChildProcess = require('child_process')
@@ -386,7 +387,7 @@ module.exports = function (app) {
 
 	}
 
-	Controller.ndvi_timeseries = function (request, response) {
+	Controller.ndvi_timeseries = async function (request, response) {
 
 		var queryResultT = request.queryResult;
 		let long, lat
@@ -397,28 +398,24 @@ module.exports = function (app) {
 
 		let returnObject = [];
 
-		let q = config["lapig-maps"] + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
+		let url = config["lapig-maps"] + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
 
-		req(
-			q, {
-			json: true
-		}, (err, res, body) => {
-			if (err) {
-				return console.log(err);
-			}
 
-			for (let index = 0; index < body.values.length; index++) {
-				returnObject.push({
-					date: body.values[index][0],
-					ndvi_original: body.values[index][1],
-					ndvi_wiener: body.values[index][2],
-					ndvi_golay: body.values[index][3]
-				})
-			}
+		let responseReq = await rp({ url: url });
 
-			response.send(returnObject)
-			response.end();
-		});
+		let bd = JSON.parse(responseReq);
+
+		for (let index = 0; index < bd.values.length; index++) {
+			returnObject.push({
+				date: bd.values[index][0],
+				ndvi_original: bd.values[index][1],
+				ndvi_wiener: bd.values[index][2],
+				ndvi_golay: bd.values[index][3]
+			})
+		}
+
+		response.send(returnObject)
+		response.end();
 	}
 
 
