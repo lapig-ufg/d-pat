@@ -2243,7 +2243,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   loadLayerFromConsultaToMap() {
     const currentMap = this.map;
     const vectorSource = new VectorSource({
-      features: (new GeoJSON()).readFeatures(this.layerFromConsulta.analyzedArea.shape_upload.geojson, {
+      features: (new GeoJSON()).readFeatures(this.layerFromConsulta.analyzedArea.geojson, {
         dataProjection: 'EPSG:4326',
         featureProjection: 'EPSG:3857'
       })
@@ -2277,6 +2277,31 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.infodataMunicipio = null;
   }
 
+  async searchUploadShape() {
+    let params = [];
+    let self = this;
+    let urlParams = '';
+
+
+    this.layerFromConsulta.analyzedAreaLoading = true;
+    params.push('token=' + this.layerFromConsulta.token)
+    this.layerFromConsulta.error = false;
+    urlParams = '/service/upload/findgeojsonbytoken?' + params.join('&');
+
+    try {
+      let result = await this.http.get(urlParams, this.httpOptions).toPromise()
+
+      this.layerFromConsulta.analyzedArea = result;
+      this.layerFromConsulta.analyzedAreaLoading = false;
+      this.loadLayerFromConsultaToMap();
+
+    } catch (err) {
+      self.layerFromConsulta.analyzedAreaLoading = false;
+      self.layerFromConsulta.error = true;
+    }
+
+  }
+
   async analyzeUploadShape(fromConsulta = false) {
     let params = [];
     let self = this;
@@ -2290,17 +2315,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
       params.push('token=' + this.layerFromConsulta.token)
       this.layerFromConsulta.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
-      // this.http.get(urlParams, this.httpOptions).subscribe(result => {
-      //   this.layerFromConsulta.analyzedArea = result;
-      //   this.layerFromConsulta.analyzedAreaLoading = false;
-      //   this.loadLayerFromConsultaToMap();
-
-      //   console.log("Analyze-#1", this.layerFromConsulta)
-      // },
-      //   error => {
-      //     self.layerFromConsulta.analyzedAreaLoading = false;
-      //     self.layerFromConsulta.error = true;
-      //   });
 
       try {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
@@ -2308,21 +2322,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
         this.layerFromConsulta.analyzedArea = result;
         this.layerFromConsulta.analyzedAreaLoading = false;
 
-        // console.log(this.layerFromConsulta)
-
-        this.loadLayerFromConsultaToMap();
-
-
       } catch (err) {
         self.layerFromConsulta.analyzedAreaLoading = false;
         self.layerFromConsulta.error = true;
       }
-
-      // urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
-      // this.http.get(urlParamsCar, this.httpOptions).subscribe(result => {
-      //   this.layerFromConsulta.analyzedArea.car = result
-      //   console.log("#1", this.layerFromConsulta)
-      // });
 
       urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
       let resultCar = await this.http.get(urlParamsCar).toPromise();
@@ -2331,22 +2334,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
 
       this.googleAnalyticsService.eventEmitter("analyzeConsultaUploadLayer", "Analyze-Consulta-Upload", this.layerFromConsulta.token, 5);
-      console.log(this.layerFromConsulta)
     } else {
       this.layerFromUpload.analyzedAreaLoading = true;
       params.push('token=' + this.layerFromUpload.token)
       this.layerFromUpload.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
-      // this.http.get(urlParams, this.httpOptions).subscribe(result => {
-      //   this.layerFromUpload.analyzedArea = result;
-      //   this.layerFromUpload.analyzedAreaLoading = false;
-
-      //   console.log("Analyze-#2", this.layerFromUpload.analyzedArea)
-      // },
-      //   error => {
-      //     self.layerFromUpload.analyzedAreaLoading = false;
-      //     self.layerFromUpload.error = true;
-      //   });
 
       try {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
@@ -2521,7 +2513,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
   handleDrawer() {
     this.showDrawer = !this.showDrawer;
   }
-
   async openReport(params) {
     let coordinate = null;
     let layers = null;
@@ -2635,7 +2626,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     }
   }
-
   async openRegionReport() {
     let dados = {};
     let url = '/service/deforestation/regionreport?';

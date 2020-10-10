@@ -1077,6 +1077,7 @@ module.exports = function (app) {
         table_city_title: languageJson["layer_box"]["table_city_title"][language],
         table_state_title: languageJson["layer_box"]["table_state_title"][language],
         btn_analyze: languageJson["layer_box"]["btn_analyze"][language],
+        btn_search: languageJson["layer_box"]["btn_search"][language],
         btn_clear: languageJson["layer_box"]["btn_clear"][language],
         warning: languageJson["layer_box"]["warning"][language],
         not_found: languageJson["layer_box"]["not_found"][language],
