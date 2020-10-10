@@ -94,6 +94,8 @@ module.exports = function (app) {
 				const size = entry.vars.uncompressedSize; // There is also compressedSize;
 				const extension = arrayName.pop();
 
+				console.log(fileName);
+
 				if (type == "Directory") continue;
 
 				if (fileName.includes('MACOS')) continue;
@@ -102,7 +104,7 @@ module.exports = function (app) {
 
 				if (countShps > 1) {
 					Internal.response.status(400).send(languageJson['upload_messages']['only_one_shp'][Internal.language]);
-					console.error("FILE: ", Internal.targetFilesName, "Only one .shp file permitted");
+					console.error("FILE: ", Internal.targetFilesName, languageJson['upload_messages']['only_one_shp'][Internal.language]);
 					return;
 				}
 

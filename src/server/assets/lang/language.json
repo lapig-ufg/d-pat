@@ -272,6 +272,10 @@
 			"pt-br": "Analisar",
 			"en-us": "Analyze"
 		},
+		"btn_search": {
+			"pt-br": "Consultar",
+			"en-us": "Search"
+		},
 		"btn_clear": {
 			"pt-br": "Limpar",
 			"en-us": "Clear"
