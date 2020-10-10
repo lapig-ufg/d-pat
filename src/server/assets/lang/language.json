@@ -64,7 +64,7 @@
 		},
 		"description": {
 			"pt-br": "Ranking dos Municípios com maiores Desmatamentos em APP declaradas: ",
-			"en-us": "Ranking of Municipalities with largest Deforested areas in declared PPA:"
+			"en-us": "Ranking of Municipalities with largest Deforested areas in declared APP:"
 		}
 	},
 	"charts_box_rl": {
@@ -317,11 +317,11 @@
 			"en-us": [
 				"CAR Code",
 				"Property Area",
-				"Area deforested by CAR",
+				"Deforested Area by CAR",
 				"Legal Reserve Area",
-				"Area deforested in Legal Reserve",
+				"Deforested Area in Legal Reserve",
 				"APP Area",
-				"Area deforested in APP"
+				"Deforested Area in APP"
 			]
 		},
 		"upload_submit": {
@@ -974,7 +974,99 @@
 							"view_value": {
 								"pt-br": "Limites",
 								"en-us": "Bounderies"
+							},
+							"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "Terras Indígenas (TI)",
+									"en-us": "Indigenous Land (TI)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Limite das terras indígenas brasileiras.",
+									"en-us": "Indigenous lands boundaries."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2017",
+									"en-us": "2017"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "ND",
+									"en-us": "ND"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Coordinate Reference System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "Fundação Nacional do Índio (FUNAI)",
+									"en-us": "National Indian Foundation (FUNAI)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>",
+									"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>"
+								}
 							}
+						]
 						}
 					}
 				},
@@ -988,7 +1080,99 @@
 							"view_value": {
 								"pt-br": "Comunidades",
 								"en-us": "Communities"
+							},
+							"metadata": [
+							{
+								"title": {
+									"pt-br": "Dado",
+									"en-us": "Data"
+								},
+								"description": {
+									"pt-br": "Terras Indígenas (TI)",
+									"en-us": "Indigenous Land (TI)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Descrição",
+									"en-us": "Description"
+								},
+								"description": {
+									"pt-br": "Limite das terras indígenas brasileiras.",
+									"en-us": "Indigenous lands boundaries."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Data",
+									"en-us": "Date"
+								},
+								"description": {
+									"pt-br": "2017",
+									"en-us": "2017"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Escala",
+									"en-us": "Scale"
+								},
+								"description": {
+									"pt-br": "ND",
+									"en-us": "ND"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Sistema de Referência e Coordenadas",
+									"en-us": "Coordinate Reference System"
+								},
+								"description": {
+									"pt-br": "SIRGAS 2000",
+									"en-us": "SIRGAS 2000"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Projeção Cartográfica",
+									"en-us": "Cartographic Projection"
+								},
+								"description": {
+									"pt-br": "Universal Transversa de Mercator",
+									"en-us": "Universal Transverse Mercator coordinate system"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Codificação de caractere",
+									"en-us": "Character encoding"
+								},
+								"description": {
+									"pt-br": "UTF-8.",
+									"en-us": "UTF-8."
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Fonte",
+									"en-us": "Source"
+								},
+								"description": {
+									"pt-br": "Fundação Nacional do Índio (FUNAI)",
+									"en-us": "National Indian Foundation (FUNAI)"
+								}
+							},
+							{
+								"title": {
+									"pt-br": "Detalhes",
+									"en-us": "Details"
+								},
+								"description": {
+									"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>",
+									"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>"
+								}
 							}
+						]
 						}
 					}
 				},
@@ -2852,7 +3036,7 @@
 		},
 		"label_statistc_app": {
 			"pt-br": "Área total desmatada em APP",
-			"en-us": "Total deforested area in PPA"
+			"en-us": "Total deforested area in APP"
 		},
 		"label_statistc_area_prodes": {
 			"pt-br": "Área total desmatada - PRODES",
@@ -2981,7 +3165,7 @@
 			},
 			"app_car_label": {
 				"pt-br": "Área desmatada dentro de APP: ? km² (? da área total da APP)",
-				"en-us": "Deforested Area within the PPA: ? km² (? of the PPA total area)"
+				"en-us": "Deforested Area within the APP: ? km² (? of the APP total area)"
 			},
 			"deforestation_car_description": {
 				"pt-br": "Este desmatamento detectado pelo ? corresponde a ? da área total da propriedade rural.",
@@ -3189,7 +3373,7 @@
 							},
 							"description": {
 								"pt-br": "Área de Preservação Permanente (APP)",
-								"en-us": "Permanent Preservation Area (PPA)"
+								"en-us": "Permanent Preservation Area (APP)"
 							}
 						},
 						{
@@ -4174,7 +4358,7 @@
 	"hotsite": {
 		"abstract": {
 			"pt-br": "O Cerrado DPAT é uma ferramenta online e gratuita para que gestores, pesquisadores e toda a sociedade adquiram informações sobre o bioma, especialmente sobre as características do desmatamento e as áreas naturais mais susceptíveis ao desmatamento.",
-			"en-us": "Cerrado DPAT platform is an online and free tool to provide Cerrado biome information to researchers, public and private managers, and the whole society, specifically about deforested areas detected by the PRODES-Cerrado and DETER-Cerrado monitoring systems."
+			"en-us": "Cerrado DPAT platform is an online and free tool to provide information on the Cerrado biome to researchers, public and private managers, as well as to the whole society, specifically regarding deforested areas detected by the PRODES-Cerrado and DETER-Cerrado monitoring systems."
 		},
 		"hover_btn_info": {
 			"pt-br": "Exibir informações do Cerrado DPAT",

@@ -510,7 +510,7 @@ module.exports = function (app) {
               {
                 value: "terra_indigena_cerrado",
                 Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["terra_indigena"]["types"]["terra_indigena_cerrado"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_especiais"]["layers"]["terra_indigena"]["types"]['terra_indigena_cerrado']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,

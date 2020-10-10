@@ -27,8 +27,7 @@ module.exports = function (app) {
 			"database": env.PG_DATABASE,
 			"password": env.PG_PASSWORD,
 			"port": env.PG_PORT,
-			"debug": env.PG_DEBUG,
-			"idleTimeoutMillis": 300000
+			"debug": env.PG_DEBUG
 		},
 		"port": env.PORT,
 		"ows_host": env.OWS_HOST,
