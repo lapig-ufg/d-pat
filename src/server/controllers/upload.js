@@ -94,8 +94,6 @@ module.exports = function (app) {
 				const size = entry.vars.uncompressedSize; // There is also compressedSize;
 				const extension = arrayName.pop();
 
-				console.log(fileName);
-
 				if (type == "Directory") continue;
 
 				if (fileName.includes('MACOS')) continue;
