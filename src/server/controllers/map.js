@@ -298,7 +298,7 @@ module.exports = function (app) {
               Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value"][language],
               opacity: 1,
               order: 1,
-              download: ['shp'],
+              download: [],
               regionFilter: true,
               /*timeLabel: "Campo",
               timeSelected: "1=1",
@@ -330,7 +330,7 @@ module.exports = function (app) {
               Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_abc_fip"]["view_value"][language],
               opacity: 1,
               order: 1,
-              download: ['shp'],
+              download: [],
               regionFilter: true,
             }
           ]
@@ -372,7 +372,7 @@ module.exports = function (app) {
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value"][language],
             opacity: 1,
             order: 1,
-            download: ['shp'],
+            download: [],
             regionFilter: true,
             /*timeLabel: "Campo",
             timeSelected: "1=1",
