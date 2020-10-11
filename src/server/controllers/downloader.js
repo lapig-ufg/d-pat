@@ -75,7 +75,6 @@ module.exports = function (app) {
         }
 
         await fs.writeFileSync(pathFile, csv);
-        console.log("sssss- ", pathFile)
         response.download(pathFile);
     };
 
@@ -99,10 +98,10 @@ module.exports = function (app) {
             owsRequest.addFilter('1', '1');
 
             if (region.type == 'city') {
-                owsRequest.addFilter('cd_geocmu', region.cd_geocmu);
+                owsRequest.addFilter('cd_geocmu', "'" + region.cd_geocmu + "'");
             }
             else if (region.type == 'state') {
-                owsRequest.addFilter('uf', region.value);
+                owsRequest.addFilter('uf', "'" + region.value + "'");
             }
 
             if (time != undefined) {
