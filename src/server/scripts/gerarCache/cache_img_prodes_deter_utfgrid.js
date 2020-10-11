@@ -16,7 +16,7 @@ var ufs = ['GO', 'SP', 'MA', 'RO', 'PA', 'MS', 'TO', 'MT', 'PR', 'PI', 'BA', 'DF
 
 var muns = getMunsCerrado();
 
-var layers = ["bi_ce_prodes_desmatamento_100_fip_utfgrid", "bi_ce_deter_desmatamento_100_fip_utfgrid"]
+var layers = ["bi_ce_deter_desmatamento_100_fip_utfgrid"]
 
 var years = [2002, 2004, 2006, 2008, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
@@ -24,8 +24,8 @@ var deterYears = ["view_date > '2018-01-01'", "view_date > '2019-01-01'", "view_
 
 var urls = []
 
-var types = ['none']
-// var types = ['state']
+// var types = ['none']
+var types = ['state']
 // var types = ['city']
 // for (var uf = 0; uf < ufs.length; uf++) {
 

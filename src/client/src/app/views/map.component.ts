@@ -1942,6 +1942,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
         else {
           this.infodata = null;
+          window.document.body.style.cursor = 'auto';
         }
         if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_pontos_campo_fip')) {
           if (this.utfgridCampo) {
@@ -1956,6 +1957,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
         else {
           this.infodataCampo = null;
+          window.document.body.style.cursor = 'auto';
         }
 
         if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
@@ -1971,6 +1973,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
         else {
           this.infodataMunicipio = null;
+          window.document.body.style.cursor = 'auto';
         }
 
         if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_abc_fip')) {
@@ -1986,6 +1989,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
         else {
           this.infodataABC = null;
+          window.document.body.style.cursor = 'auto';
         }
 
       }
@@ -2005,6 +2009,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
         else {
           this.infodataDeter = null;
+          window.document.body.style.cursor = 'auto';
         }
         if ((deter.selectedType == 'bi_ce_deter_desmatamento_pontos_campo_fip')) {
           if (this.utfgridCampo) {
@@ -2016,9 +2021,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
             this.utfgridlayerCampo.setVisible(true);
           }
-        }
-        else {
-          this.infodataCampo = null;
         }
 
       }

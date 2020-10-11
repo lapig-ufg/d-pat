@@ -298,39 +298,15 @@ module.exports = function (app) {
               Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_pontos_campo_fip"]["view_value"][language],
               opacity: 1,
               order: 1,
-              download: [],
+              download: ['csv', 'shp'],
               regionFilter: true,
-              /*timeLabel: "Campo",
-              timeSelected: "1=1",
-              timeHandler: "msfilter",
-              times: [{
-                  value: "1=1",
-                  Viewvalue: "Todos"
-                },
-                {
-                  value: "pc.campo like 'Campo_01'",
-                  Viewvalue: "Campo 01"
-                },
-                {
-                  value: "pc.campo like 'Campo_02'",
-                  Viewvalue: "Campo 02"
-                },
-                {
-                  value: "pc.campo like 'Campo_03'",
-                  Viewvalue: "Campo 03"
-                },
-                {
-                  value: "pc.campo like 'Campo_04'",
-                  Viewvalue: "Campo 04"
-                }
-              ]*/
             },
             {
               value: "bi_ce_prodes_desmatamento_abc_fip",
               Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_abc_fip"]["view_value"][language],
               opacity: 1,
               order: 1,
-              download: [],
+              download: ['csv', 'shp'],
               regionFilter: true,
             }
           ]
@@ -372,32 +348,8 @@ module.exports = function (app) {
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value"][language],
             opacity: 1,
             order: 1,
-            download: [],
+            download: ['shp'],
             regionFilter: true,
-            /*timeLabel: "Campo",
-            timeSelected: "1=1",
-            timeHandler: "msfilter",
-            times: [{
-                value: "1=1",
-                Viewvalue: "Todos"
-              },
-              {
-                value: "pc.campo like 'Campo_01'",
-                Viewvalue: "Campo 01"
-              },
-              {
-                value: "pc.campo like 'Campo_02'",
-                Viewvalue: "Campo 02"
-              },
-              {
-                value: "pc.campo like 'Campo_03'",
-                Viewvalue: "Campo 03"
-              },
-              {
-                value: "pc.campo like 'Campo_04'",
-                Viewvalue: "Campo 04"
-              }
-            ]*/
           }
           ]
         },
@@ -742,7 +694,7 @@ module.exports = function (app) {
             Viewvalue: "Open Street Map",
             regionFilter: true,
             opacity: 0.8,
-            download: [],
+            download: ['shp'],
             order: 3
           }]
         },
@@ -757,7 +709,7 @@ module.exports = function (app) {
             Viewvalue: "LAPIG",
             regionFilter: true,
             opacity: 0.8,
-            download: [],
+            download: ['shp'],
             order: 3
           }]
         },
@@ -773,7 +725,7 @@ module.exports = function (app) {
             Viewvalue: "LAPIG",
             regionFilter: true,
             opacity: 0.8,
-            download: [],
+            download: ['shp'],
             order: 3
           }]
         }
