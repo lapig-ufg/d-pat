@@ -121,6 +121,11 @@
   .mat-icon {
     color: white;
   }
+  .img-fluid{
+    @include desktop(){
+      width: 64%;
+    }
+  }
 }
 
 

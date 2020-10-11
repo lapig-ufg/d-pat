@@ -2109,8 +2109,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
           if (this.descriptorText[group.id].layers[layer.id].hasOwnProperty('types')) {
 
-            console.log(this.descriptorText[group.id].layers[layer.id].types[layerType.value])
-
             if (this.descriptorText[group.id].layers[layer.id].types[layerType.value].hasOwnProperty('view_value')) {
 
               layerType.Viewvalue = this.descriptorText[group.id].layers[layer.id].types[layerType.value].view_value[this.language];
@@ -2318,7 +2316,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       try {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
-
         this.layerFromConsulta.analyzedArea = result;
         this.layerFromConsulta.analyzedAreaLoading = false;
 
@@ -2342,7 +2339,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       try {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
-
         this.layerFromUpload.analyzedArea = result;
         this.layerFromUpload.analyzedAreaLoading = false;
       } catch (err) {
@@ -2405,13 +2401,25 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
       });
     }
+    let dialogRef = null;
 
     title = this.controls.label_metadata;
 
-    let dialogRef = this.dialog.open(MetadataComponent, {
-      width: '130vh',
-      data: { 'title': title, 'metadata': metadata }
-    });
+    if (window.innerWidth < this.breakpointMobile) {
+      dialogRef = this.dialog.open(MetadataComponent, {
+        width: '98%',
+        minWidth: '95%',
+        height: 'calc(100% - 5vh)',
+        panelClass: 'full-width-dialog',
+        data: { title: title, metadata: metadata }
+      });
+    } else {
+      dialogRef = this.dialog.open(MetadataComponent, {
+        width: 'calc(100% - 30vw)',
+        height: 'calc(100% - 5vh)',
+        data: { title: title, metadata: metadata }
+      });
+    }
 
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
@@ -3097,7 +3105,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
         data: { dados: this.layerFromConsulta.analyzedArea }
       });
 
-      console.log(carDialog)
     } else {
       this.layerFromUpload.analyzedArea['table_title'] = this.titlesLayerBox.car_title_report;
       this.layerFromUpload.analyzedArea['table_headers'] = this.titlesLayerBox.car_table_headers;
@@ -3112,6 +3119,24 @@ export class MapComponent implements OnInit, AfterViewChecked {
       self.printAnalyzedAreaReport(isFromConsulta);
     });
   }
+
+  clearArea(fromConsulta = false){
+    if (fromConsulta) {
+      this.map.removeLayer(this.layerFromConsulta.layer);
+      this.layerFromConsulta.visible = false;
+      this.layerFromConsulta.checked = false;
+      this.layerFromConsulta.token = '';
+      this.layerFromConsulta.analyzedArea = {}
+      this.updateRegion(this.defaultRegion);
+    } else {
+      this.layerFromUpload.visible = false;
+      this.layerFromUpload.checked = false;
+      this.map.removeLayer(this.layerFromUpload.layer);
+      this.layerFromUpload.analyzedArea = {}
+      this.updateRegion(this.defaultRegion);
+    }
+  }
+
   clearUpload(fromConsulta = false) {
     if (fromConsulta) {
       this.layerFromConsulta.analyzedArea = {}

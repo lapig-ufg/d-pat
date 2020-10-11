@@ -16,6 +16,7 @@
 }
 
 .content-row {
+  word-break: break-word;
   padding: 10px;
   font-size: 0.9rem;
   background-color: rgba(183, 183, 183, 0.46);
@@ -43,6 +44,25 @@ table tr{
 .metadata-container{
   position: relative;
   padding: 24px;
+
+  @include mobile(){
+    .mat-dialog-content{
+      padding:unset;
+      max-height: unset;
+    }
+
+    .title-metadados{
+      font-size: 23px;
+    }
+  }
+
+  @include desktop(){
+    .report-partners{
+      width: 60%;
+      display: block;
+      margin: 0 auto;
+    }
+  }
 }
 
 .metadata-title{
@@ -58,4 +78,10 @@ table tr{
   border-radius: 5px;
   border-top-left-radius: 4px;
   background-color:#7cb359;
+}
+
+
+element.style {
+  display: block;
+  margin: 0 auto;
 }

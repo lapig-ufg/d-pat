@@ -52,6 +52,13 @@ export class MapMobileComponent extends MapComponent implements AfterViewInit {
 
     this.tabNum = 2;
   }
+
+  async searchUploadShape(): Promise<void> {
+    super.searchUploadShape();
+    this.indexOpenConsulta = 0;
+    this.analyzeUploadShape(true)
+  }
+
   ngAfterViewInit(): void {
     const self = this;
     self.route.paramMap.subscribe(function (params) {

@@ -302,6 +302,12 @@
               <div *ngIf="titlesLayerBox.hasOwnProperty('btn_search')">
                 {{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
             </button>
+            <button class="color-buttons clear"
+                    *ngIf="layerFromConsulta.token != '' && !layerFromConsulta.analyzedArea.hasOwnProperty('regions_intersected')"
+                    (click)="clearUpload(true)" mat-raised-button color="warn">
+              <div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
+                {{titlesLayerBox.btn_clear.toUpperCase()}}</div>
+            </button>
             <button class="color-buttons clear" *ngIf="layerFromConsulta.analyzedArea.hasOwnProperty('shape_upload')"
               (click)="clearUpload(true)" mat-raised-button color="warn">
               <div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">

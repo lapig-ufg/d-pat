@@ -527,7 +527,7 @@ module.exports = function (app) {
               {
                 value: "areas_quilombola_cerrado",
                 Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["quilombola"]["types"]["areas_quilombola_cerrado"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_especiais"]["layers"]["quilombola"]["types"]['areas_quilombola_cerrado']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,
@@ -544,7 +544,7 @@ module.exports = function (app) {
               {
                 value: "ucs_uso_sustentavel_cerrado",
                 Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["types"]["ucs_uso_sustentavel_cerrado"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["types"]['ucs_uso_sustentavel_cerrado']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,
@@ -553,7 +553,7 @@ module.exports = function (app) {
               {
                 value: "ucs_protecao_integral_cerrado",
                 Viewvalue: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["types"]["ucs_protecao_integral_cerrado"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_especiais"]["layers"]["ucs"]["types"]['ucs_protecao_integral_cerrado']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,
@@ -594,7 +594,7 @@ module.exports = function (app) {
               {
                 value: "car_imoveis_cerrado_fip",
                 Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["car"]["types"]["car_imoveis_cerrado_fip"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_car"]["layers"]["car"]["types"]['car_imoveis_cerrado_fip']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,
@@ -611,7 +611,7 @@ module.exports = function (app) {
               {
                 value: "car_reserva_legal_cerrado_fip",
                 Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["reserva_legal"]["types"]["car_reserva_legal_cerrado_fip"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_car"]["layers"]["reserva_legal"]["types"]['car_reserva_legal_cerrado_fip']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,
@@ -628,7 +628,7 @@ module.exports = function (app) {
               {
                 value: "car_app_cerrado_fip",
                 Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["app"]["types"]["car_app_cerrado_fip"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_car"]["layers"]["app"]["types"]['car_app_cerrado_fip']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,
@@ -645,7 +645,7 @@ module.exports = function (app) {
               {
                 value: "car_nascente_cerrado_fip",
                 Viewvalue: languageJson["descriptor"]["areas_car"]["layers"]["nascente"]["types"]["car_nascente_cerrado_fip"]["view_value"][language],
-                //metadata:languageJson["descriptor"]["areas_car"]["layers"]["car"]['car_imoveis_cerrado_fip']['metadata'],
+                metadata: languageJson["descriptor"]["areas_car"]["layers"]["nascente"]["types"]['car_nascente_cerrado_fip']['metadata'],
                 regionFilter: true,
                 opacity: 0.8,
                 order: 3,

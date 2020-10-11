@@ -51,10 +51,19 @@ body {
 }
 
 .button-close-metadados {
-  background-color: #959595;
-  left: 85%
+  display: block !important;
+  margin: 0 auto !important;
+  width: 44%;
+  top: 20px;
+  color:white ;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #2e7d32;
+  &:hover{
+    background-color: rgba(46, 125, 50, 0.3);
+    color:#2e7d32;
+  }
 }
-
 .ngx-charts .tooltip-anchor {
   display: none !important;
 }

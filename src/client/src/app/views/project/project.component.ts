@@ -9,8 +9,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   lang: string;
   languages: any = {};
   constructor(public translate: TranslateService) {
-
-
     this.languages['pt'] = 'pt-br';
     this.languages['en'] = 'en';
     this.languages['pt-br'] = 'pt-br';
