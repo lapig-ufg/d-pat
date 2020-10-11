@@ -42,7 +42,7 @@ module.exports = function (app) {
 
 		query = Internal.prepareQuery(sqlQuery, params)
 
-		return Internal['client'].query(query, (err, result) => {
+		return Internal['pool'].query(query, (err, result) => {
 
 			if (err !== null)
 				console.error(err)
