@@ -129,6 +129,11 @@
         <div class="layer-sidenav-content">
           <div id="map" class="dpat-ol-map" [style.height]="innerHeigth + 'px'">
             <div class="buttonszoom">
+              <div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
+                   [class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
+                <img width="25" height="25" src="../../assets/img/close-button.svg"
+                     [alt]="controls.label_close_mun">
+              </div>
               <div [matTooltip]="controls.label_zoomin" [class]="'btn-zoom'" (click)="zoomIn()">
                 <img width="25" height="25" src="../../assets/img/mais.svg" [alt]="controls.label_zoomin">
               </div>

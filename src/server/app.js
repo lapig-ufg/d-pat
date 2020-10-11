@@ -42,9 +42,9 @@ app.database.client.init(function() {
 	}));
 
 	app.use(responseTime());
-	app.use(bodyParser.json());
+	app.use(bodyParser.json({limit: '1gb'}));
+	app.use(bodyParser({limit: '1gb'}));
 	app.use(bodyParser.urlencoded({ extended: true }));
-	// app.use(multer());
 
 	app.use(function(error, request, response, next) {
 		console.log('ServerError: ', error.stack);
