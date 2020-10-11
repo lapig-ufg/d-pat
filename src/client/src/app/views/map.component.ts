@@ -3233,12 +3233,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
       `info`,
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/info.svg')
     );
-
     this.matIconRegistry.addSvgIcon(
       `shp`,
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/shp.svg')
     );
-
     this.matIconRegistry.addSvgIcon(
       `csv`,
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/img/csv.svg')
@@ -3269,6 +3267,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
           self.selectedIndexConteudo = 1;
           self.selectedIndexUpload = 1;
           self.layerFromConsulta.token = params.get('token');
+          self.searchUploadShape();
           self.analyzeUploadShape(true);
           self.handleDrawer();
         }
