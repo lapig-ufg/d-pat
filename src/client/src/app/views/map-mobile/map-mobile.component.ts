@@ -37,7 +37,7 @@ export class MapMobileComponent extends MapComponent implements AfterViewInit {
       if (self.router.url.includes('regions')) {
         if (params.keys.includes('token')) {
           self.layerFromConsulta.token = params.get('token');
-          self.analyzeUploadShape(true);
+          self.searchUploadShape();
         }
       }
     });
@@ -53,10 +53,9 @@ export class MapMobileComponent extends MapComponent implements AfterViewInit {
     this.tabNum = 2;
   }
 
-  async searchUploadShape(): Promise<void> {
+  async searchUploadShape(init= false): Promise<void> {
     super.searchUploadShape();
-    this.indexOpenConsulta = 0;
-    this.analyzeUploadShape(true)
+    this.analyzeUploadShape(true);
   }
 
   ngAfterViewInit(): void {
@@ -64,7 +63,7 @@ export class MapMobileComponent extends MapComponent implements AfterViewInit {
     self.route.paramMap.subscribe(function (params) {
       if (self.router.url.includes('regions')) {
         if (params.keys.includes('token')) {
-          self.indexOpenConsulta = 2;
+          // self.indexOpenConsulta = 2;
         }
       }
     });
