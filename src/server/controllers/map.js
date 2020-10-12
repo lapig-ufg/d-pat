@@ -348,7 +348,7 @@ module.exports = function (app) {
             Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_deter"]["types"]["bi_ce_deter_desmatamento_pontos_campo_fip"]["view_value"][language],
             opacity: 1,
             order: 1,
-            download: ['shp'],
+            download: ['csv', 'shp'],
             regionFilter: true,
           }
           ]
