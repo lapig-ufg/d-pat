@@ -92,7 +92,9 @@ module.exports = function (app) {
         let fileParam = '';
         let pathFile = '';
 
-        console.log(time)
+        console.log(layer)
+
+        let layersSkipFilters = ['terra_indigena', 'quilombola', 'ucs']
 
         if (typeShape == 'shp') {
             owsRequest.addFilter('1', '1');

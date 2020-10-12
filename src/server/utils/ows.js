@@ -165,8 +165,8 @@ module.exports = class Ows {
                     }
                 });
             }
-            // url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
-            // url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";
+            url += (this._width != null || this._width != undefined) ? "&WIDTH=" + this._width : "";
+            url += (this._height != null || this._height != undefined) ? "&HEIGHT=" + this._height : "";
         }
 
 

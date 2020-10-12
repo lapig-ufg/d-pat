@@ -81,7 +81,7 @@ export class RegionReportComponent implements OnInit {
     const ob = {
       src: image.imgLarge,
       caption: this.texts.label_year + ' ' + image.year + ' | ' + image.region_display,
-      thumb: image.imgSmall
+      thumb: image.imgLarge
     };
     this.urlImagesLandSat.push(ob);
     this.lightBox.open(this.urlImagesLandSat);

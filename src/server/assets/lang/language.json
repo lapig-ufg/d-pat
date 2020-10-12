@@ -595,15 +595,15 @@
 							},
 							"times": {
 								"view_date > '2020-01-01'": {
-									"pt-br": "À partir de 2020",
+									"pt-br": "A partir de 2020",
 									"en-us": "From 2020"
 								},
 								"view_date > '2019-01-01'": {
-									"pt-br": "À partir de 2019",
+									"pt-br": "A partir de 2019",
 									"en-us": "From 2019"
 								},
 								"view_date > '2018-01-01'": {
-									"pt-br": "À partir de 2018",
+									"pt-br": "A partir de 2018",
 									"en-us": "From 2018"
 								}
 							}
@@ -1441,7 +1441,7 @@
 				"quilombola": {
 					"label": {
 						"pt-br": "Comunidades Quilombolas",
-						"en-us": "Quilombola Communities"
+						"en-us": "Quilombolas Communities"
 					},
 					"types": {
 						"areas_quilombola_cerrado": {
@@ -1457,7 +1457,7 @@
 								},
 								"description": {
 									"pt-br": "Comunidades Quilombolas",
-									"en-us": "Quilombola Communities"
+									"en-us": "Quilombolas Communities"
 								}
 							},
 							{
@@ -1467,7 +1467,7 @@
 								},
 								"description": {
 									"pt-br": "Limite das terras de Comunidades Quilombolas",
-									"en-us": "Boundaries of Quilombola Communities lands ."
+									"en-us": "Boundaries of Quilombolas Communities lands ."
 								}
 							},
 							{
@@ -4844,8 +4844,8 @@
 				"en-us": "Indigenous Land"
 			},
 			"titleQ": {
-				"pt-br": "Áreas Quilombola",
-				"en-us": "Quilombola Lands"
+				"pt-br": "Áreas Quilombolas",
+				"en-us": "Quilombolas Lands"
 			},
 			"titleAP": {
 				"pt-br": "Áreas Prioritárias",
@@ -4944,7 +4944,7 @@
 		},
 		"innovations": [
 			{
-				"pt-br": "O Cerrado DPAT inova porque além qualificar o desmatamento com dados geográficos de diversas fontes, também oferece a validação dos polígonos de desmatamento, contribuindo para a melhoria do processo de detecção da perda de vegetação nativa no Cerrado.",
+				"pt-br": "O Cerrado DPAT inova porque, além de qualificar o desmatamento com dados geográficos de diversas fontes, também oferece a validação dos polígonos de desmatamento, contribuindo para a melhoria do processo de detecção da perda de vegetação nativa no Cerrado.",
 				"en-us": "The Cerrado DPAT also innovates by offering the validation data of deforestation polygons, thus contributing to the improvement of the process of detecting the loss of native vegetation and the emission of greenhouse gases in the Cerrado."
 			},
 			{
@@ -4976,11 +4976,11 @@
 				"en-us": "In 2016, the Forest Investment Program (FIP) was implemented in Brazil under the Brazilian Investment Plan, managed by the International Bank for Reconstruction and Development (IBRD / World Bank) and financed by the Strategic Climate Fund, whose objective is to develop systems prevention of forest fires and monitor the vegetation cover in the biome."
 			},
 			{
-				"pt-br": "Sob a liderança do Ministério da Ciência, Tecnologia, Inovações e Comunicações (MCTI), o Instituto Nacional de Pesquisas Espaciais (INPE) desenvolveu no contexto do FIP Cerrado dois sistemas: PRODES - Programa de Monitoramento do Desmatamento, que fornece as taxas anuais e incrementos de desmatamento e o DETER - Detecção do Desmatamento em Tempo Real, que envia avisos de evidências de alteração da vegetação nativa.",
-				"en-us": "Under the leadership of the Ministry of Science, Technology, Innovations and Communications (MCTI), the National Institute for Space Research (INPE) developed in the context of FIP Cerrado two systems: PRODES - Deforestation Monitoring Program, which provides annual rates and increments deforestation and DETER - Deforestation Detection in Real-Time, which sends notices of evidence of alteration of native vegetation."
+				"pt-br": "Sob a liderança do Ministério da Ciência, Tecnologia e Inovações (MCTI), o Instituto Nacional de Pesquisas Espaciais (INPE) desenvolveu no contexto do FIP Cerrado dois sistemas: PRODES - Programa de Monitoramento do Desmatamento, que fornece as taxas anuais e incrementos de desmatamento, e o DETER - Detecção do Desmatamento em Tempo Real, que envia avisos de evidências de alteração da vegetação nativa.",
+				"en-us": "Under the leadership of the Ministry of Science, Technology and Innovations (MCTI), the National Institute for Space Research (INPE) developed in the context of FIP Cerrado two systems: PRODES - Deforestation Monitoring Program, which provides annual rates and increments deforestation and DETER - Deforestation Detection in Real-Time, which sends notices of evidence of alteration of native vegetation."
 			},
 			{
-				"pt-br": "A Universidade Federal de Goiás (UFG), por meio do Laboratório de Processamento de Imagem e Geoprocessamento (Lapig), desenvolveu a plataforma Cerrado DPAT, com vistas a avaliação qualitativa dos dados PRODES-Cerrado e DETER-Cerrado, bem como ser uma ferramenta de gestão do território em apoio às ações de prevenção do avanço do desmatamento.",
+				"pt-br": "A Universidade Federal de Goiás (UFG), por meio do Laboratório de Processamento de Imagem e Geoprocessamento (Lapig), desenvolveu a plataforma Cerrado DPAT, com vistas à avaliação qualitativa dos dados PRODES-Cerrado e DETER-Cerrado, bem como ser uma ferramenta de gestão do território em apoio às ações de prevenção do avanço do desmatamento.",
 				"en-us": "Federal University of Goiás (UFG), through the Image Processing and Geoprocessing Laboratory (Lapig), developed the Cerrado DPAT platform, with a view to the qualitative assessment of the PRODES-Cerrado and DETER-Cerrado, as well as being a territorial management tool in support of actions to prevent the advance of deforestation."
 			}
 		],

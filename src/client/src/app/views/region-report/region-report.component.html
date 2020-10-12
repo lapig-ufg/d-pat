@@ -11,141 +11,145 @@
                             <img class="logo-report" src="assets/logo/cerrado-dpat-logo.svg" /></a>
                     </div>
                 </div>
-                    <div class="row">
-                        <p-accordion class="dados" [multiple]="true">
-                            <p-accordionTab class="tabs" header="{{texts.label_info}}" [selected]="true">
-                                <div class="p-grid p-justify-even">
-                                    <div class="p-col">
-                                        <toh-spinner-img
-                                                [largura]="'100%'"
-                                                [altura]="'100%'"
-                                                [imgSrc]="dados.region.terraclass.imgSmall"
-                                                [spinnerSrc]="svgLoading"
-                                                (click)="openLightBoxTerraClass()">
-                                        </toh-spinner-img>
-                                        <p class="title-info">{{texts.label_img_mun}}</p>
-                                    </div>
-                                    <div class="p-col">
-                                        <h5 class="subtitles-report">
-                                            <strong>{{texts.label_metadata}}</strong>
-                                        </h5>
-                                        <table class="tb-metadata" style="width:100%">
-                                            <tr>
-                                                <th class="table-label">{{texts.label_region}}</th>
-                                                <th class="table-value">{{dados.region.metadata[0]?.region_display}}</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="table-label">{{texts.label_area}}</th>
-                                                <th class="table-value">{{dados.region.metadata[0]?.area_region | number:'1.2-2' }} km²</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="table-label">{{texts.label_area_antropica}}</th>
-                                                <th class="table-value">{{dados.region.metadata[0]?.area_antropica | number:'1.2-2'}} km²</th>
-                                            </tr>
-                                        </table>
-                                        <br><br>
-                                        <h5 class="subtitles-report">
-                                            <strong>{{texts.label_legend}}</strong>
-                                        </h5>
-                                        <div class="legend">
-<!--                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">-->
-                                            <img *ngIf="dados.region.legendas.legendRegion" [src]="dados.region.legendas.legendRegion">
-                                            <img *ngIf="dados.region.legendas.legendTerraclass" [src]="dados.region.legendas.legendTerraclass">
-                                        </div>
-                                    </div>
+                <div class="row">
+                    <p-accordion class="dados" [multiple]="true">
+                        <p-accordionTab class="tabs" header="{{texts.label_info}}" [selected]="true">
+                            <div class="p-grid p-justify-even">
+                                <div class="p-col">
+                                    <toh-spinner-img [largura]="'100%'" [altura]="'100%'"
+                                        [imgSrc]="dados.region.terraclass.imgSmall" [spinnerSrc]="svgLoading"
+                                        (click)="openLightBoxTerraClass()">
+                                    </toh-spinner-img>
+                                    <p class="title-info">{{texts.label_img_mun}}</p>
                                 </div>
-                            </p-accordionTab>
-                            <p-accordionTab class="tabs" header="{{texts.label_timeseries}}">
-                                <div id="reportChart" class="p-grid " *ngIf="dados.graphic">
-                                    <div class="p-col" style="width: 98%;">
-                                        <p class="resume">{{dados.graphic.data.description}}</p><br>
-                                        <p-chart [type]="dados.graphic.type" [data]="dados.graphic.data" [options]="dados.graphic.options">
-                                        </p-chart>
+                                <div class="p-col">
+                                    <h5 class="subtitles-report">
+                                        <strong>{{texts.label_metadata}}</strong>
+                                    </h5>
+                                    <table class="tb-metadata" style="width:100%">
+                                        <tr>
+                                            <th class="table-label">{{texts.label_region}}</th>
+                                            <th class="table-value">{{dados.region.metadata[0]?.region_display}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-label">{{texts.label_area}}</th>
+                                            <th class="table-value">
+                                                {{dados.region.metadata[0]?.area_region | number:'1.2-2' }} km²</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-label">{{texts.label_area_antropica}}</th>
+                                            <th class="table-value">
+                                                {{dados.region.metadata[0]?.area_antropica | number:'1.2-2'}} km²</th>
+                                        </tr>
+                                    </table>
+                                    <br><br>
+                                    <h5 class="subtitles-report">
+                                        <strong>{{texts.label_legend}}</strong>
+                                    </h5>
+                                    <div class="legend">
+                                        <!--                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">-->
+                                        <img *ngIf="dados.region.legendas.legendRegion"
+                                            [src]="dados.region.legendas.legendRegion">
+                                        <img *ngIf="dados.region.legendas.legendTerraclass"
+                                            [src]="dados.region.legendas.legendTerraclass">
                                     </div>
-                                </div>
-                            </p-accordionTab>
-                            <p-accordionTab class="tabs" header="{{texts.label_images}}">
-                                <div class="p-grid p-justify-even" *ngIf="dados.region.anual_statistic" >
-                                    <div class="p-col" style="min-width: 300px; max-width: 390px; width: 100%;" *ngFor="let item of dados.region.anual_statistic; let i=index">
-                                        <mat-card  class="card-amostral">
-                                            <mat-card-header>
-                                                <mat-card-title>{{texts.label_year}}: {{item.year}}</mat-card-title>
-                                            </mat-card-header>
-                                            <toh-spinner-img
-                                                    class="img-landsat-laudo"
-                                                    [largura]="'100%'"
-                                                    [imgSrc]="item.imgSmall"
-                                                    [spinnerSrc]="svgLoading"
-                                                    (click)="openLightBoxImagesLandSat(item)">
-                                            </toh-spinner-img>
-                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">
-                                            <mat-card-content >
-                                                <table class="tb-imgs" style="width:100%">
-
-                                                    <tr>
-                                                        <th class="table-label">{{texts.label_statistc_area}}</th>
-                                                        <th class="table-value">{{item.area_region | number:'1.2-2' }} km²</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="table-label">{{texts.label_statistc_area_prodes}}</th>
-                                                        <th class="table-value">{{item.area_prodes | number:'1.2-2'}} km²</th>
-                                                    </tr>
-                                                    <tr *ngIf="item.area_app" >
-                                                        <th class="table-label">{{texts.label_statistc_app}}</th>
-                                                        <th class="table-value">{{item.area_app | number:'1.2-2'}} km²</th>
-                                                    </tr>
-                                                    <tr *ngIf="item.area_rl">
-                                                        <th class="table-label">{{texts.label_statistc_area_rl}}</th>
-                                                        <th class="table-value">{{item.area_rl | number:'1.2-2' }} km²</th>
-                                                    </tr>
-                                                </table>
-                                            </mat-card-content>
-                                        </mat-card>
-                                    </div>
-                                </div>
-                            </p-accordionTab>
-                            <p-accordionTab class="tabs"*ngIf="dados.ranking" header="{{texts.label_municipalities}}">
-                                <div class="p-grid p-justify-even"  >
-                                    <div class="p-col">
-                                        <h6>
-                                            <b>{{dados.ranking.table.description}} {{ dados.ranking.desmatInfo.Viewvalue }}</b>
-                                        </h6>
-                                        <p-table [value]="dados.ranking.table.series" selectionMode="single">
-                                            <ng-template pTemplate="header">
-                                                <tr align="center">
-                                                    <th *ngFor="let header of dados.ranking.table.split">
-                                                        {{header}}
-                                                    </th>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-city>
-                                                <tr [pSelectableRow]="city"
-                                                    tooltipPosition="bottom" life="2000">
-                                                    <td align="center">{{city.index}}</td>
-                                                    <td align="center">{{city.name}}</td>
-                                                    <td align="center">{{city.uf}}</td>
-                                                    <td align="center">{{city.value | number }} km²</td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                                    </div>
-                                </div>
-                            </p-accordionTab>
-                        </p-accordion>
-                    </div>
-                        <div class="row">
-                            <div class="p-grid p-dir-rev mt-5">
-                                <div class="p-col-12">
-                                    <img class="report-partners" src="assets/img/assinatura.png" />
                                 </div>
                             </div>
+                        </p-accordionTab>
+                        <p-accordionTab class="tabs" header="{{texts.label_timeseries}}">
+                            <div id="reportChart" class="p-grid " *ngIf="dados.graphic">
+                                <div class="p-col" style="width: 98%;">
+                                    <p class="resume">{{dados.graphic.data.description}}</p><br>
+                                    <p-chart [type]="dados.graphic.type" [data]="dados.graphic.data"
+                                        [options]="dados.graphic.options">
+                                    </p-chart>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab class="tabs" header="{{texts.label_images}}">
+                            <div class="p-grid p-justify-even" *ngIf="dados.region.anual_statistic">
+                                <div class="p-col" style="min-width: 300px; max-width: 390px; width: 100%;"
+                                    *ngFor="let item of dados.region.anual_statistic; let i=index">
+                                    <mat-card class="card-amostral">
+                                        <mat-card-header>
+                                            <mat-card-title>{{texts.label_year}}: {{item.year}}</mat-card-title>
+                                        </mat-card-header>
+                                        <toh-spinner-img class="img-landsat-laudo" [largura]="'100%'"
+                                            [imgSrc]="item.imgLarge" [spinnerSrc]="svgLoading"
+                                            (click)="openLightBoxImagesLandSat(item)">
+                                        </toh-spinner-img>
+                                        <img *ngIf="dados.region.legendas.legendDesmatamento"
+                                            [src]="dados.region.legendas.legendDesmatamento">
+                                        <mat-card-content>
+                                            <table class="tb-imgs" style="width:100%">
+
+                                                <tr>
+                                                    <th class="table-label">{{texts.label_statistc_area}}</th>
+                                                    <th class="table-value">{{item.area_region | number:'1.2-2' }} km²
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="table-label">{{texts.label_statistc_area_prodes}}</th>
+                                                    <th class="table-value">{{item.area_prodes | number:'1.2-2'}} km²
+                                                    </th>
+                                                </tr>
+                                                <tr *ngIf="item.area_app">
+                                                    <th class="table-label">{{texts.label_statistc_app}}</th>
+                                                    <th class="table-value">{{item.area_app | number:'1.2-2'}} km²</th>
+                                                </tr>
+                                                <tr *ngIf="item.area_rl">
+                                                    <th class="table-label">{{texts.label_statistc_area_rl}}</th>
+                                                    <th class="table-value">{{item.area_rl | number:'1.2-2' }} km²</th>
+                                                </tr>
+                                            </table>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab class="tabs" *ngIf="dados.ranking" header="{{texts.label_municipalities}}">
+                            <div class="p-grid p-justify-even">
+                                <div class="p-col">
+                                    <h6>
+                                        <b>{{dados.ranking.table.description}}
+                                            {{ dados.ranking.desmatInfo.Viewvalue }}</b>
+                                    </h6>
+                                    <p-table [value]="dados.ranking.table.series" selectionMode="single">
+                                        <ng-template pTemplate="header">
+                                            <tr align="center">
+                                                <th *ngFor="let header of dados.ranking.table.split">
+                                                    {{header}}
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-city>
+                                            <tr [pSelectableRow]="city" tooltipPosition="bottom" life="2000">
+                                                <td align="center">{{city.index}}</td>
+                                                <td align="center">{{city.name}}</td>
+                                                <td align="center">{{city.uf}}</td>
+                                                <td align="center">{{city.value | number }} km²</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                </div>
+                <div class="row">
+                    <div class="p-grid p-dir-rev mt-5">
+                        <div class="p-col-12">
+                            <img class="report-partners" src="assets/img/assinatura.png" />
                         </div>
+                    </div>
+                </div>
             </p-scrollPanel>
         </div>
-        <div class="container-buttons" >
+        <div class="container-buttons">
             <button color="primary" classs="btn-info " mat-icon-button (click)="printReportCounty()">
                 <mat-icon>print</mat-icon>
-                <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"></mat-spinner>
+                <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary"
+                    mode="indeterminate"></mat-spinner>
             </button>
             <button (click)="dialogRef.close()" color="primary" classs="btn-info " mat-icon-button>
                 <mat-icon>highlight_off</mat-icon>

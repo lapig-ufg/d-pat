@@ -760,7 +760,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
             position: 'bottom',
             labels: {
               usePointStyle: true,
-              fontSize: 16
+              fontSize: 12
             },
             onHover(event) {
               event.target.style.cursor = 'pointer';
@@ -3122,7 +3122,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  clearArea(fromConsulta = false){
+  clearArea(fromConsulta = false) {
     if (fromConsulta) {
       this.map.removeLayer(this.layerFromConsulta.layer);
       this.layerFromConsulta.visible = false;
@@ -4463,7 +4463,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
         let sent = {
           src: result['images'].urlSentinel.src,
-          caption: 'LandSat ' + this.data.year,
+          caption: 'Landsat ' + this.data.year,
           thumb: result['images'].urlSentinel.thumb
         };
         this.urlSentinel.push(sent);
@@ -4647,7 +4647,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           legend: {
             labels: {
               usePointStyle: true,
-              fontSize: 16
+              fontSize: 14
             },
             onHover(event) {
               event.target.style.cursor = 'pointer';

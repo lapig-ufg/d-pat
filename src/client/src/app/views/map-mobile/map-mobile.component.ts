@@ -53,7 +53,7 @@ export class MapMobileComponent extends MapComponent implements AfterViewInit {
     this.tabNum = 2;
   }
 
-  async searchUploadShape(init= false): Promise<void> {
+  async searchUploadShape(init = false): Promise<void> {
     super.searchUploadShape();
     this.analyzeUploadShape(true);
   }
@@ -1251,7 +1251,6 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
               caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
             });
           }
-          console.log(this.vetEspecial)
 
           // if (this.dataEspecial.ap.show) {
           // this.vetEspecial.push({
