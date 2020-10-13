@@ -1,15 +1,18 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { AfterViewChecked, ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MatTabGroup } from "@angular/material";
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { saveAs } from 'file-saver';
+import * as moment from 'moment';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
 import { Lightbox } from 'ngx-lightbox';
+import { Attribution } from 'ol/control';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
-import { defaults as defaultControls, Control, Attribution } from 'ol/control';
 import { defaults as defaultInteractions } from 'ol/interaction';
 import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
@@ -28,28 +31,19 @@ import Style from 'ol/style/Style';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 import OlView from 'ol/View';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
-import { MetadataComponent } from './metadata/metadata.component';
-import { Router, ActivatedRoute, Routes } from '@angular/router';
-import { saveAs } from 'file-saver';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import * as jsPDF from 'jspdf';
-import logos from './logos';
-import * as moment from 'moment';
-import * as Chart from 'chart.js'
-import { TranslateService } from '@ngx-translate/core';
-
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { RegionReportComponent } from './region-report/region-report.component';
-import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
-import { ReportCarComponent } from './report-car/report-car.component';
 import { ChartsComponent } from "./charts/charts.component";
-import { MobileComponent } from "./mobile/mobile.component";
-import { ProjectComponent } from "./project/project.component";
-import { MapMobileComponent } from "./map-mobile/map-mobile.component";
+import logos from './logos';
+import { MetadataComponent } from './metadata/metadata.component';
+import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
+import { RegionReportComponent } from './region-report/region-report.component';
+import { ReportCarComponent } from './report-car/report-car.component';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -915,7 +909,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       this.currentData = '';
       this.desmatInfo = this.defaultPeriod
 
-      prodes.selectedType = 'prodes_por_region_city_fip_img';
+      prodes.selectedType = 'cp_prodes_por_region_city_fip_img';
 
       let uso_terra = this.layersNames.find(element => element.id === "terraclass");
       uso_terra.visible = false;
@@ -1094,7 +1088,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
@@ -1107,7 +1101,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
           this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
+              if (prodes.visible && ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
                 // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = 'pointer';
                 this.infodataMunicipio = data;
@@ -1339,7 +1333,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
@@ -1354,7 +1348,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
             if (data) {
               // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
+              if (prodes.visible && ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
 
                 this.http.get(SEARCH_REGION, { params: PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
                   let ob = { text: '' };
@@ -1725,9 +1719,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let time = { value: '' }
     let layerutf = ''
 
-    if (prodes.selectedType == 'prodes_por_region_city_fip_img') {
-      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
-      layerutf = 'prodes_por_region_city_fip_utfgrid'
+    if (prodes.selectedType == 'cp_prodes_por_region_city_fip_img') {
+      time = this.selectedTimeFromLayerType('cp_prodes_por_region_city_fip_img');
+      layerutf = 'cp_prodes_por_region_city_fip_utfgrid'
     }
     else if (prodes.selectedType == 'prodes_por_region_state_fip_img') {
       time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
@@ -1736,9 +1730,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
 
     if (this.selectRegion.type === 'city') {
-      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
+      time = this.selectedTimeFromLayerType('cp_prodes_por_region_city_fip_img');
       text += ' AND region_type = \'' + this.selectRegion.type + '\'';
-      layerutf = 'prodes_por_region_city_fip_utfgrid'
+      layerutf = 'cp_prodes_por_region_city_fip_utfgrid'
     }
     else if (this.selectRegion.type === 'state') {
       time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
@@ -1851,7 +1845,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       );
     }
 
-    if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'prodes_por_region_city_fip_img' || layer['value'] === 'prodes_por_region_state_fip_img') {
+    if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'cp_prodes_por_region_city_fip_img' || layer['value'] === 'prodes_por_region_state_fip_img') {
       this.desmatInfo = this.periodSelected;
       this.handleInteraction()
       this.updateCharts();
@@ -1960,7 +1954,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
           window.document.body.style.cursor = 'auto';
         }
 
-        if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+        if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
           if (this.utfgridmunicipio) {
             let tileJSONMunicipio = this.getTileJSONMunicipio();
 
@@ -2572,7 +2566,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
