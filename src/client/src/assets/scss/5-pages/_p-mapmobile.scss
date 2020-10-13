@@ -1455,6 +1455,31 @@
     height: 150vh;
   }
 
+  .ui-table .ui-table-tbody > tr.ui-state-highlight {
+    background-color:#0b4e26;
+    color: #ffffff;
+  }
+
+  li.ui-state-active:hover{
+    background: #0b4e26 !important
+  }
+
+  li.ui-state-active{
+    background: #0b4e26 !important
+  }
+
+  .chartUso{
+    div{
+      width: 88vw!important;
+      height: 49vh!important;
+      margin-top: 16px;
+      canvas{
+        height: calc(100% - 1rem) !important;
+        width: 100% !important;
+      }
+    }
+  }
+
 }
 
 #laudo-mobile {
