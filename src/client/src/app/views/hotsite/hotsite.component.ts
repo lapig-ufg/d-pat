@@ -158,10 +158,10 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
             this.videoplay = $("#container").YTPlayer(
                 {
                     useOnMobile: false,
-                    mobileFallbackImage: '../../../assets/img/background_1.svg',
+                    mobileFallbackImage: '../../../assets/img/background_overlay_1.png',
                     videoURL: 'https://youtu.be/lXV5cSMoAuw',
                     quality: 'highres',
-                    coverImage: '../../../assets/img/background_1.svg',
+                    coverImage: '../../../assets/img/background_overlay_1.png',
                     containment: '#hotsite, #body-mobile-hotsite',
                     autoPlay: true,
                     onReady: true,
@@ -174,11 +174,13 @@ export class HotsiteComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
             );
 
-            $("#container").YTPlayer({
-                mask: {
-                    5: '../../../assets/img/background_3.png',
-                }
-            });
+            $('#container').YTPAddMask('../../../assets/img/background_3.png');
+
+            // $("#container").YTPlayer({
+            //     mask: {
+            //         5: '../../../assets/img/background_3.png',
+            //     }
+            // });
         }
     }
 

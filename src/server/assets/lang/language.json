@@ -3535,6 +3535,10 @@
 		"label_metadata": {
 			"pt-br": "Metadados",
 			"en-us": "Metadata"
+		},
+		"contact": {
+			"pt-br": "Para dúvidas, comentários ou sugestões, favor entrar em contato pelo e-mail",
+			"en-us": "For questions, comments or suggestions, please contact us by e-mail"
 		}
 	},
 	"regionReportTexts": {

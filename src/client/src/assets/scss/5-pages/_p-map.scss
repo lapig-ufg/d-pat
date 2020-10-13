@@ -1434,10 +1434,19 @@ mat-slider {
   .ui-accordion {
     width: $sidebarWidth
   }
+
   .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
     background-color: $colorDpat;
     border: 1px solid $colorDpat;
     color: #ffffff;
+  }
+
+  li.ui-state-active:hover{
+    background: $colorDpat;
+  }
+
+  li.ui-state-active{
+    background: $colorDpat;
   }
 
   .ui-table .ui-table-tbody > tr.ui-state-highlight {
@@ -1452,8 +1461,10 @@ mat-slider {
     height: 2px;
     bottom: -2px;
   }
+
   .ui-scrollpanel-content {
   }
+
   .title-section{
     width: $sidebarWidth;
     font-weight: 600;
@@ -1462,13 +1473,6 @@ mat-slider {
     background-color: $colorDpat;
     color: white;
     border-radius: 6px;
-  }
-  .ui-tabview {
-    width: $sidebarWidth;
-    a{
-      color: white;
-      background-color: $colorDpat;
-    }
   }
 
   .ui-sidebar-close {

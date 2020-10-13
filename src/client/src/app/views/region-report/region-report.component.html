@@ -114,7 +114,7 @@
                                         <b>{{dados.ranking.table.description}}
                                             {{ dados.ranking.desmatInfo.Viewvalue }}</b>
                                     </h6>
-                                    <p-table [value]="dados.ranking.table.series" selectionMode="single">
+                                    <p-table [autoLayout]="true" [value]="dados.ranking.table.series" selectionMode="single">
                                         <ng-template pTemplate="header">
                                             <tr align="center">
                                                 <th *ngFor="let header of dados.ranking.table.split">
