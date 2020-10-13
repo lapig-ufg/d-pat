@@ -926,7 +926,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       this.changeVisibility(uso_terra, undefined)
       this.changeVisibility(agricultura, undefined)
-
+      this.activeIndexLateralAccordion = false
 
     } else {
       prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
@@ -2059,6 +2059,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
     return dialog;
   }
 
+  disableUTFGrid() {
+    this.infodataMunicipio = null
+    this.infodata = null
+    this.infodataABC = null
+    this.infodataCampo = null
+    this.infodataDeter = null
+    window.document.body.style.cursor = 'auto';
+  }
+
   changeVisibility(layer, e) {
     for (let layerType of layer.types) {
       this.LayersTMS[layerType.value].setVisible(false);
@@ -2071,6 +2080,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     if (layer.id == "desmatamento_prodes" || layer.id == "desmatamento_deter") {
       if (layer.visible) {
         this.handleInteraction();
+      }
+      else {
+        this.disableUTFGrid();
       }
     }
     this.LayersTMS[layer.selectedType].setVisible(layer.visible);
@@ -2433,11 +2445,12 @@ export class MapComponent implements OnInit, AfterViewChecked {
   }
 
   downloadCSV(layer) {
+
     this.loadingsDownload = true;
     let parameters = {
       "layer": layer,
       "selectedRegion": this.selectRegion,
-      "times": this.selectedTimeFromLayerType(layer.selectedType),
+      "times": this.selectedTimeFromLayerType(layer.selectedType) == undefined ? "1=1" : this.selectedTimeFromLayerType(layer.selectedType),
       "typeshape": 'csv'
     };
 

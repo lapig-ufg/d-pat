@@ -16,11 +16,8 @@
 			</div>
 
 			<div [style.visibility]="showDrawer? 'visible' : 'hidden'" class="collapseLayer">
-				<mat-tab-group
-						[style.z-index]="showDrawer? '4' : '-1'"
-						class="layersConteudo"
-						[(selectedIndex)]="selectedIndexConteudo"
-						mat-stretch-tabs dynamicHeight>
+				<mat-tab-group [style.z-index]="showDrawer? '4' : '-1'" class="layersConteudo"
+					[(selectedIndex)]="selectedIndexConteudo" mat-stretch-tabs dynamicHeight>
 					<mat-tab [style.visibility]="showDrawer? 'visible' : 'hidden'"
 						label="{{titlesLayerBox.label_data}}">
 						<mat-progress-bar *ngIf="loadingsDownload" mode="indeterminate">
@@ -157,14 +154,14 @@
 											<div>{{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
 										</button>
 										<button class="color-buttons clear"
-												*ngIf="layerFromUpload.token != '' && layerFromUpload.visible && !layerFromUpload.analyzedArea.hasOwnProperty('regions_intersected')"
-												(click)="clearUpload()" mat-raised-button color="warn">
+											*ngIf="layerFromUpload.token != '' && layerFromUpload.visible && !layerFromUpload.analyzedArea.hasOwnProperty('regions_intersected')"
+											(click)="clearUpload()" mat-raised-button color="warn">
 											<div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
 												{{titlesLayerBox.btn_clear.toUpperCase()}}</div>
 										</button>
 										<button class="color-buttons"
 											*ngIf="layerFromUpload.analyzedArea.hasOwnProperty('shape_upload')"
-											(click)="clearUpload()" mat-raised-button >
+											(click)="clearUpload()" mat-raised-button>
 											<div>{{titlesLayerBox.btn_clear.toUpperCase()}}</div>
 										</button>
 									</div>
@@ -294,19 +291,21 @@
 											{{titlesLayerBox.label_upload_title_file.toUpperCase()}}</div>
 									</mat-card>
 									<div class="buttons-analyze">
-										<button class="color-buttons" *ngIf="layerFromConsulta.token != ''  && !layerFromConsulta.analyzedArea.hasOwnProperty('geojson')"
-												(click)="searchUploadShape()" mat-raised-button color="primary">
+										<button class="color-buttons"
+											*ngIf="layerFromConsulta.token != ''  && !layerFromConsulta.analyzedArea.hasOwnProperty('geojson')"
+											(click)="searchUploadShape()" mat-raised-button color="primary">
 											<div *ngIf="titlesLayerBox.hasOwnProperty('btn_analyze')">
 												{{titlesLayerBox.btn_search.toUpperCase()}}</div>
 										</button>
-										<button class="color-buttons" *ngIf="layerFromConsulta.token != '' && layerFromConsulta.analyzedArea.hasOwnProperty('geojson')"
+										<button class="color-buttons"
+											*ngIf="layerFromConsulta.token != '' && layerFromConsulta.analyzedArea.hasOwnProperty('geojson')"
 											(click)="analyzeUploadShape(true)" mat-raised-button color="primary">
 											<div *ngIf="titlesLayerBox.hasOwnProperty('btn_search')">
 												{{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
 										</button>
 										<button class="color-buttons clear"
-												*ngIf="layerFromConsulta.token != '' && !layerFromConsulta.analyzedArea.hasOwnProperty('regions_intersected')"
-												(click)="clearUpload(true)" mat-raised-button color="warn">
+											*ngIf="layerFromConsulta.token != '' && !layerFromConsulta.analyzedArea.hasOwnProperty('regions_intersected')"
+											(click)="clearUpload(true)" mat-raised-button color="warn">
 											<div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
 												{{titlesLayerBox.btn_clear.toUpperCase()}}</div>
 										</button>
@@ -562,8 +561,8 @@
 									</button>
 									<b>{{dataStates.description}} {{ desmatInfo.Viewvalue }}</b>
 								</h6>
-								<p-chart type="horizontalBar" [data]="dataStates" [options]="optionsStates"
-									(onDataSelect)="onStateSelect($event)">
+								<p-chart type="horizontalBar" [height]="400" [responsive]="true" [data]="dataStates"
+									[options]="optionsStates" (onDataSelect)="onStateSelect($event)">
 								</p-chart>
 							</p-accordionTab>
 							<p-accordionTab class="tabs" header="{{chartResultCities.label}}"
