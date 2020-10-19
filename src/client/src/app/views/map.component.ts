@@ -3183,6 +3183,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       this.descriptor = result;
       this.regionFilterDefault = this.descriptor.regionFilterDefault;
 
+
       for (let group of this.descriptor.groups) {
         for (let layer of group.layers) {
           if (layer.id != 'satelite') {
@@ -3220,10 +3221,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
           this.limitsNames.push(types);
         }
       }
-
       this.createMap();
     });
-
     // keep height of window
     this.innerHeigth = window.innerHeight;
 

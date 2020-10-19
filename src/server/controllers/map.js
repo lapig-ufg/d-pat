@@ -64,12 +64,12 @@ module.exports = function (app) {
           types: [
             {
               value: "cp_prodes_por_region_city_fip_img",
-              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["view_value"][language],
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["cp_prodes_por_region_city_fip_img"]["view_value"][language],
               opacity: 1,
               order: 1,
               download: [],
               regionFilter: true,
-              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["timelabel"][language],
+              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["cp_prodes_por_region_city_fip_img"]["timelabel"][language],
               timeSelected: "year=2019",
               timeHandler: "msfilter",
               times: [{

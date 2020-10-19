@@ -464,7 +464,7 @@
 								"en-us": "Polygons on FIP-ABC Properties"
 							}
 						},
-						"prodes_por_region_city_fip_img": {
+						"cp_prodes_por_region_city_fip_img": {
 							"view_value": {
 								"pt-br": "Municípios",
 								"en-us": "Municipalities"
@@ -1344,97 +1344,97 @@
 								"en-us": "Bounderies"
 							},
 							"metadata": [
-							{
-								"title": {
-									"pt-br": "Dado",
-									"en-us": "Data"
+								{
+									"title": {
+										"pt-br": "Dado",
+										"en-us": "Data"
+									},
+									"description": {
+										"pt-br": "Terras Indígenas (TI)",
+										"en-us": "Indigenous Land (TI)"
+									}
 								},
-								"description": {
-									"pt-br": "Terras Indígenas (TI)",
-									"en-us": "Indigenous Land (TI)"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Descrição",
-									"en-us": "Description"
+								{
+									"title": {
+										"pt-br": "Descrição",
+										"en-us": "Description"
+									},
+									"description": {
+										"pt-br": "Limite das terras indígenas brasileiras.",
+										"en-us": "Indigenous lands boundaries."
+									}
 								},
-								"description": {
-									"pt-br": "Limite das terras indígenas brasileiras.",
-									"en-us": "Indigenous lands boundaries."
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Data",
-									"en-us": "Date"
+								{
+									"title": {
+										"pt-br": "Data",
+										"en-us": "Date"
+									},
+									"description": {
+										"pt-br": "2017",
+										"en-us": "2017"
+									}
 								},
-								"description": {
-									"pt-br": "2017",
-									"en-us": "2017"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Escala",
-									"en-us": "Scale"
+								{
+									"title": {
+										"pt-br": "Escala",
+										"en-us": "Scale"
+									},
+									"description": {
+										"pt-br": "ND",
+										"en-us": "ND"
+									}
 								},
-								"description": {
-									"pt-br": "ND",
-									"en-us": "ND"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Coordinate Reference System"
+								{
+									"title": {
+										"pt-br": "Sistema de Referência e Coordenadas",
+										"en-us": "Coordinate Reference System"
+									},
+									"description": {
+										"pt-br": "SIRGAS 2000",
+										"en-us": "SIRGAS 2000"
+									}
 								},
-								"description": {
-									"pt-br": "SIRGAS 2000",
-									"en-us": "SIRGAS 2000"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Projeção Cartográfica",
-									"en-us": "Cartographic Projection"
+								{
+									"title": {
+										"pt-br": "Projeção Cartográfica",
+										"en-us": "Cartographic Projection"
+									},
+									"description": {
+										"pt-br": "Universal Transversa de Mercator",
+										"en-us": "Universal Transverse Mercator coordinate system"
+									}
 								},
-								"description": {
-									"pt-br": "Universal Transversa de Mercator",
-									"en-us": "Universal Transverse Mercator coordinate system"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Codificação de caractere",
-									"en-us": "Character encoding"
+								{
+									"title": {
+										"pt-br": "Codificação de caractere",
+										"en-us": "Character encoding"
+									},
+									"description": {
+										"pt-br": "UTF-8.",
+										"en-us": "UTF-8."
+									}
 								},
-								"description": {
-									"pt-br": "UTF-8.",
-									"en-us": "UTF-8."
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Fonte",
-									"en-us": "Source"
+								{
+									"title": {
+										"pt-br": "Fonte",
+										"en-us": "Source"
+									},
+									"description": {
+										"pt-br": "Fundação Nacional do Índio (FUNAI)",
+										"en-us": "National Indian Foundation (FUNAI)"
+									}
 								},
-								"description": {
-									"pt-br": "Fundação Nacional do Índio (FUNAI)",
-									"en-us": "National Indian Foundation (FUNAI)"
+								{
+									"title": {
+										"pt-br": "Detalhes",
+										"en-us": "Details"
+									},
+									"description": {
+										"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>",
+										"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>"
+									}
 								}
-							},
-							{
-								"title": {
-									"pt-br": "Detalhes",
-									"en-us": "Details"
-								},
-								"description": {
-									"pt-br": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>",
-									"en-us": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>"
-								}
-							}
-						]
+							]
 						}
 					}
 				},
@@ -1450,97 +1450,97 @@
 								"en-us": "Communities"
 							},
 							"metadata": [
-							{
-								"title": {
-									"pt-br": "Dado",
-									"en-us": "Data"
+								{
+									"title": {
+										"pt-br": "Dado",
+										"en-us": "Data"
+									},
+									"description": {
+										"pt-br": "Comunidades Quilombolas",
+										"en-us": "Quilombolas Communities"
+									}
 								},
-								"description": {
-									"pt-br": "Comunidades Quilombolas",
-									"en-us": "Quilombolas Communities"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Descrição",
-									"en-us": "Description"
+								{
+									"title": {
+										"pt-br": "Descrição",
+										"en-us": "Description"
+									},
+									"description": {
+										"pt-br": "Limite das terras de Comunidades Quilombolas",
+										"en-us": "Boundaries of Quilombolas Communities lands ."
+									}
 								},
-								"description": {
-									"pt-br": "Limite das terras de Comunidades Quilombolas",
-									"en-us": "Boundaries of Quilombolas Communities lands ."
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Data",
-									"en-us": "Date"
+								{
+									"title": {
+										"pt-br": "Data",
+										"en-us": "Date"
+									},
+									"description": {
+										"pt-br": "2017",
+										"en-us": "2017"
+									}
 								},
-								"description": {
-									"pt-br": "2017",
-									"en-us": "2017"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Escala",
-									"en-us": "Scale"
+								{
+									"title": {
+										"pt-br": "Escala",
+										"en-us": "Scale"
+									},
+									"description": {
+										"pt-br": "ND",
+										"en-us": "ND"
+									}
 								},
-								"description": {
-									"pt-br": "ND",
-									"en-us": "ND"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Sistema de Referência e Coordenadas",
-									"en-us": "Coordinate Reference System"
+								{
+									"title": {
+										"pt-br": "Sistema de Referência e Coordenadas",
+										"en-us": "Coordinate Reference System"
+									},
+									"description": {
+										"pt-br": "SIRGAS 2000",
+										"en-us": "SIRGAS 2000"
+									}
 								},
-								"description": {
-									"pt-br": "SIRGAS 2000",
-									"en-us": "SIRGAS 2000"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Projeção Cartográfica",
-									"en-us": "Cartographic Projection"
+								{
+									"title": {
+										"pt-br": "Projeção Cartográfica",
+										"en-us": "Cartographic Projection"
+									},
+									"description": {
+										"pt-br": "Universal Transversa de Mercator",
+										"en-us": "Universal Transverse Mercator coordinate system"
+									}
 								},
-								"description": {
-									"pt-br": "Universal Transversa de Mercator",
-									"en-us": "Universal Transverse Mercator coordinate system"
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Codificação de caractere",
-									"en-us": "Character encoding"
+								{
+									"title": {
+										"pt-br": "Codificação de caractere",
+										"en-us": "Character encoding"
+									},
+									"description": {
+										"pt-br": "UTF-8.",
+										"en-us": "UTF-8."
+									}
 								},
-								"description": {
-									"pt-br": "UTF-8.",
-									"en-us": "UTF-8."
-								}
-							},
-							{
-								"title": {
-									"pt-br": "Fonte",
-									"en-us": "Source"
+								{
+									"title": {
+										"pt-br": "Fonte",
+										"en-us": "Source"
+									},
+									"description": {
+										"pt-br": "Fundação Nacional do Índio (FUNAI)",
+										"en-us": "National Indian Foundation (FUNAI)"
+									}
 								},
-								"description": {
-									"pt-br": "Fundação Nacional do Índio (FUNAI)",
-									"en-us": "National Indian Foundation (FUNAI)"
+								{
+									"title": {
+										"pt-br": "Detalhes",
+										"en-us": "Details"
+									},
+									"description": {
+										"pt-br": "",
+										"en-us": ""
+									}
 								}
-							},
-							{
-								"title": {
-									"pt-br": "Detalhes",
-									"en-us": "Details"
-								},
-								"description": {
-									"pt-br": "",
-									"en-us": ""
-								}
-							}
-						]
+							]
 						}
 					}
 				},
@@ -1871,8 +1871,8 @@
 					},
 					"vegetacao_cerrado_fip": {
 						"view_value": {
-								"pt-br": "Vegetação Pretérita",
-								"en-us": "Past vegetation"
+							"pt-br": "Vegetação Pretérita",
+							"en-us": "Past vegetation"
 						},
 						"metadata": [
 							{
