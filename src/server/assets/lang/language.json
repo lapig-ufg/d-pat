@@ -464,7 +464,7 @@
 								"en-us": "Polygons on FIP-ABC Properties"
 							}
 						},
-						"cp_prodes_por_region_city_fip_img": {
+						"prodes_por_region_city_fip_img": {
 							"view_value": {
 								"pt-br": "Municípios",
 								"en-us": "Municipalities"

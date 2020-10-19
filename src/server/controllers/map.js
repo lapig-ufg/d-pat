@@ -59,17 +59,17 @@ module.exports = function (app) {
           id: "desmatamento_prodes",
           label: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["label"][language],
           visible: true,
-          selectedType: "cp_prodes_por_region_city_fip_img",
+          selectedType: "prodes_por_region_city_fip_img",
           metadata: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]['metadata'],
           types: [
             {
-              value: "cp_prodes_por_region_city_fip_img",
-              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["cp_prodes_por_region_city_fip_img"]["view_value"][language],
+              value: "prodes_por_region_city_fip_img",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["view_value"][language],
               opacity: 1,
               order: 1,
               download: [],
               regionFilter: true,
-              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["cp_prodes_por_region_city_fip_img"]["timelabel"][language],
+              timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["timelabel"][language],
               timeSelected: "year=2019",
               timeHandler: "msfilter",
               times: [{

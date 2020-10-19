@@ -6,7 +6,7 @@ var left = -73.990450
 var top = 5.271841
 var right = -28.835908
 // var layername = process.argv[2]
-var layername = "cp_prodes_por_region_city_fip_img"
+var layername = "prodes_por_region_city_fip_img"
 //var layername = "prodes_por_region_fip_utfgrid"
 //var otherParams = "startyear=2000&endyear=2015"
 // var otherParams = process.argv[3]

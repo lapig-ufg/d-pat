@@ -914,7 +914,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       this.currentData = '';
       this.desmatInfo = this.defaultPeriod
 
-      prodes.selectedType = 'cp_prodes_por_region_city_fip_img';
+      prodes.selectedType = 'prodes_por_region_city_fip_img';
 
       let uso_terra = this.layersNames.find(element => element.id === "terraclass");
       uso_terra.visible = false;
@@ -1093,7 +1093,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
@@ -1106,7 +1106,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
           this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              if (prodes.visible && ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
+              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
                 // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = 'pointer';
                 this.infodataMunicipio = data;
@@ -1338,7 +1338,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
@@ -1353,7 +1353,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
             if (data) {
               // console.log(OlProj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-              if (prodes.visible && ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
+              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
 
                 this.http.get(SEARCH_REGION, { params: PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
                   let ob = { text: '' };
@@ -1724,9 +1724,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let time = { value: '' }
     let layerutf = ''
 
-    if (prodes.selectedType == 'cp_prodes_por_region_city_fip_img') {
-      time = this.selectedTimeFromLayerType('cp_prodes_por_region_city_fip_img');
-      layerutf = 'cp_prodes_por_region_city_fip_utfgrid'
+    if (prodes.selectedType == 'prodes_por_region_city_fip_img') {
+      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
+      layerutf = 'prodes_por_region_city_fip_utfgrid'
     }
     else if (prodes.selectedType == 'prodes_por_region_state_fip_img') {
       time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
@@ -1735,9 +1735,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
 
     if (this.selectRegion.type === 'city') {
-      time = this.selectedTimeFromLayerType('cp_prodes_por_region_city_fip_img');
+      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
       text += ' AND region_type = \'' + this.selectRegion.type + '\'';
-      layerutf = 'cp_prodes_por_region_city_fip_utfgrid'
+      layerutf = 'prodes_por_region_city_fip_utfgrid'
     }
     else if (this.selectRegion.type === 'state') {
       time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
@@ -1850,7 +1850,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       );
     }
 
-    if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'cp_prodes_por_region_city_fip_img' || layer['value'] === 'prodes_por_region_state_fip_img') {
+    if (layer['value'] === 'bi_ce_prodes_desmatamento_100_fip' || layer['value'] === 'prodes_por_region_city_fip_img' || layer['value'] === 'prodes_por_region_state_fip_img') {
       this.desmatInfo = this.periodSelected;
       this.handleInteraction()
       this.updateCharts();
@@ -1959,7 +1959,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
           window.document.body.style.cursor = 'auto';
         }
 
-        if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+        if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
           if (this.utfgridmunicipio) {
             let tileJSONMunicipio = this.getTileJSONMunicipio();
 
@@ -2585,7 +2585,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'cp_prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
         isMunicipio = true;
       }
 
