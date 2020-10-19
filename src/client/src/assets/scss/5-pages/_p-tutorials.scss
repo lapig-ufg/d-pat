@@ -1,0 +1,17 @@
+#tutorials{
+  .signature{
+    img{
+      @include desktop(){
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+  button{
+    display: grid;
+    position: fixed;
+    right: calc(100% - 89.5vw);
+    top: 32px;
+  }
+}

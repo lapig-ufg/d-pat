@@ -3539,6 +3539,18 @@
 		"contact": {
 			"pt-br": "Para dúvidas, comentários ou sugestões, favor entrar em contato pelo e-mail",
 			"en-us": "For questions, comments or suggestions, please contact us by e-mail"
+		},
+		"release": {
+			"pt-br": "Lançamento da Plataforma Cerrado DPAT",
+			"en-us": "Launch of the Cerrado DPAT Platform"
+		},
+		"training": {
+			"pt-br": "Capacitação",
+			"en-us": "Training"
+		},
+		"folder": {
+			"pt-br": "Folder",
+			"en-us": "Folder"
 		}
 	},
 	"regionReportTexts": {
