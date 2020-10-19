@@ -43,7 +43,10 @@ import { MetadataComponent } from './metadata/metadata.component';
 import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
 import { RegionReportComponent } from './region-report/region-report.component';
 import { ReportCarComponent } from './report-car/report-car.component';
-
+import { MobileComponent } from "./mobile/mobile.component";
+import { ProjectComponent } from "./project/project.component";
+import { MapMobileComponent } from "./map-mobile/map-mobile.component";
+import { TutorialsComponent } from "./tutorials/tutorials.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -237,6 +240,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   innerHeigth: any;
   showDrawer: boolean;
   controls: any;
+  showTips: boolean;
   showStatistics: boolean;
   loadingsDownload: boolean;
   breakpointMobile: number;
@@ -416,6 +420,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.selectedIndexConteudo = 0;
     this.selectedIndexUpload = 0;
     this.breakpointMobile = 1024;
+    this.showTips = false;
   }
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -2529,6 +2534,20 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   handleDrawer() {
     this.showDrawer = !this.showDrawer;
+  }
+
+  openTips() {
+    this.showTips = !this.showTips;
+
+    let dialog = this.dialog.open(TutorialsComponent, {
+      width: 'calc(100% - 5vw)',
+      height: 'calc(100% - 5vh)',
+      data: { controls: this.controls }
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      this.showTips = !this.showTips;
+    });
   }
   async openReport(params) {
     let coordinate = null;

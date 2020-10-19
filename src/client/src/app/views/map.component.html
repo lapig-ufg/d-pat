@@ -483,12 +483,15 @@
 			<div class="controls">
 				<div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion"
 					[class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
-					<img width="25" height="25" src="../../assets/img/close-button.svg"
-						[alt]="controls.label_close_mun">
+					<img width="25" height="25" src="../../assets/img/close-button.svg" [alt]="controls.label_close_mun">
 				</div>
 				<div [matTooltip]="controls.label_layers"
 					[class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleDrawer()">
 					<img width="25" height="25" src="../../assets/img/btn_layers.svg" [alt]="controls.label_layers">
+				</div>
+				<div [matTooltip]="controls.training"
+					 [class]="showTips ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="openTips()">
+					<img width="25" height="25" src="../../assets/img/tips.svg" [alt]="controls.training">
 				</div>
 				<div [matTooltip]="controls.label_zoomin" [class]="'btn-layers'" (click)="zoomIn()">
 					<img width="25" height="25" src="../../assets/img/mais.svg" [alt]="controls.label_zoomin">

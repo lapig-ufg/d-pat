@@ -67,6 +67,7 @@ import { RegionReportComponent } from './views/region-report/region-report.compo
 import { ReportCarComponent } from './views/report-car/report-car.component';
 import { ChartsComponent } from './views/charts/charts.component';
 import { RegionReportMobileComponent } from './views/region-report-mobile/region-report-mobile.component';
+import { TutorialsComponent } from './views/tutorials/tutorials.component';
 
 registerLocaleData(localePt);
 
@@ -91,7 +92,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegionReportComponent,
     ReportCarComponent,
     ChartsComponent,
-    RegionReportMobileComponent
+    RegionReportMobileComponent,
+    TutorialsComponent
   ],
   imports: [
     TabViewModule,
@@ -151,7 +153,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       DialogMobileLaudo,
       ReportCarComponent,
       ChartsComponent,
-      RegionReportMobileComponent
+      RegionReportMobileComponent,
+      TutorialsComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
