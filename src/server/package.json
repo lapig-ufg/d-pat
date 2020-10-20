@@ -4,6 +4,7 @@
   "description": "Deforestation Polygon Assessment Tool",
   "main": "app.js",
   "dependencies": {
+    "always": "^2.2.0",
     "app-root-path": "^1.0.0",
     "archiver": "^4.0.1",
     "async": "~0.2.10",
