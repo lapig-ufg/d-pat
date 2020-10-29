@@ -4,8 +4,13 @@ site_author: Luiz Pascoal e Sérgio Nogueira
 theme: 'readthedocs'
 
 nav:
-  - 'Home': 'index.md'
-  - 'Guia do usuário': '01-guia_do_usuario.md'
+  - 'HOME': 'index.md'
+  - 'Guia do usuário':
+    - 'Dados Geográficos': '01-guia_dados_geograficos.md'
+    - 'Métricas de Qualidade': '01-guia_metricas_de_qualidade.md'
+    - 'Funcionalidades': '01-guia_funcionalidades.md'
+    - 'Relatórios': '01-guia_relatorios.md'
+
   - 'Arquitetura':
     - 'Visão geral': '02-arq_geral.md'
     - 'Servidor de mapas': '02-arq_servidor_de_mapas.md'
