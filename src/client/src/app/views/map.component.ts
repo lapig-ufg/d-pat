@@ -2706,9 +2706,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
     }
 
   }
+
   async printRegionsIdentification(token) {
-
-
     let language = this.language;
     let self = this;
 

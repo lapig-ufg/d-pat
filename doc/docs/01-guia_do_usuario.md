@@ -5,7 +5,25 @@
 ## Dados Geográficos
 TODO
 
+### PRODES-Cerrado
+TODO
+
+### DETER-Cerrado
+TODO
+
 ## Métricas qualidade
+TODO
+
+### Validação em campo
+TODO
+
+### Validação amostral
+TODO
+
+### Contextualização geográfica
+TODO
+
+### Contextualização espectro temporal
 TODO
 
 ## Funcionalidades
