@@ -1,0 +1,16 @@
+site_name: Documentação - Cerrado DPAT
+site_author: Luiz Pascoal e Sérgio Nogueira
+
+theme: 'readthedocs'
+
+nav:
+  - 'Home': 'index.md'
+  - 'Guia do usuário': '01-guia_do_usuario.md'
+  - 'Arquitetura':
+    - 'Visão geral': '02-arq_geral.md'
+    - 'Servidor de mapas': '02-arq_servidor_de_mapas.md'
+    - 'Servidor de aplicação': '02-arq_servidor_de_aplicacao.md'
+  - 'Dados':
+    - 'Vetoriais': '03-dad_vetoriais.md'
+    - 'Rasters': '03-dad_rasters.md'
+  - 'Métricas de Avaliação': '04-metricas_de_avaliacao.md'

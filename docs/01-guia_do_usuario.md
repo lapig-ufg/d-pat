@@ -5,6 +5,12 @@
 ## Dados Geográficos
 TODO
 
+### PRODES-Cerrado
+TODO
+
+### DETER-Cerrado
+TODO
+
 ## Métricas qualidade
 TODO
 
