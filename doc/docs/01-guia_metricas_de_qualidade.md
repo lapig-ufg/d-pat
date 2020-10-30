@@ -1,7 +1,5 @@
 # Métricas de qualidade
 
-![Tela inicial](imgs/01/tela-inicial.png)
-
 ## Dados de campo
 TODO
 

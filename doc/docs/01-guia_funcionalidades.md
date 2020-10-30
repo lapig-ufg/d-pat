@@ -1,6 +1,6 @@
 # Funcionalidades
 
-![Tela inicial](imgs/01/tela-inicial.png)
+
 
 ## Mapa interativo
 TODO
