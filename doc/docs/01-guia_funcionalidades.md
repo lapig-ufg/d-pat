@@ -38,7 +38,7 @@ Legenda correspondente às camadas de dados habilitadas para visualização.
 <p style='text-align: justify;'>Essa seção tem por objetivo espacializar o total desmatado, detectado em cada ano, pelos sistemas PRODES-Cerrado e DETER-Cerrado. Estes dados podem ser ativados para dois níveis: município e polígono.</p>
 
 
-<img src="/imgs/01/camdados_desmatamento.jpg" width="268" height="446" align="left" >
+<img src="/imgs/01/camdados_desmatamento.png" width="268" height="446" align="left" >
 
 
 <p style='text-align: justify;'>Destaca-se também a possibilidade de ativar os polígonos interseccionados com propriedades participantes do projeto FIP ABC, assim como todas as áreas desmatadas visitadas em campo, com os respectivos dados coletados em cada área. Uma outra forma de visualização do dado PRODES-Cerrado é por total acumulado anual. Ou seja, a área antrópica total do bioma Cerrado para cada ano.</p>
