@@ -33,7 +33,7 @@ Legenda correspondente às camadas de dados habilitadas para visualização.
 ![Estatísticas gerais para municípios, estados e todo o bioma Cerrado.](imgs/01/estatisticas_desmatamento.jpg)
 <p style='text-align: center;'><i>Estatísticas gerais para municípios, estados e todo o bioma Cerrado.</i></p>
 
-## Camada de dados - desmatamento
+## Visualização das áreas desmatadas
 
 <p style='text-align: justify;'>Essa seção tem por objetivo espacializar o total desmatado, detectado em cada ano, pelos sistemas PRODES-Cerrado e DETER-Cerrado. Estes dados podem ser ativados para dois níveis: município e polígono.</p>
 
@@ -49,15 +49,6 @@ Legenda correspondente às camadas de dados habilitadas para visualização.
 <br>
 <br>
 <br>
-
-
-
-## Visualização em nivel municipal
-
-<p style='text-align: justify;'>O Cerrado DPAT permite a visualização de estatísticas e camadas para cada um dos estados e 1.386 municípios do bioma Cerrado. Estes municípios podem ser selecionados por meio de uma busca rápida localizada na “Camada de Dados”. Assim, um zoom é aplicado para a área de interesse, junto com estatísticas referentes à série histórica dos dados PRODES-Cerrado, uso e cobertura do solo no ano de 2013 (dados Terraclass Cerrado), e área agrícola mapeada durante a safra 2013/14 (dados Agrosatélite). Além dos dados previamente carregados, destaca-se também a possibilidade da ativação de todas as camadas de dados (e.g., declividade, solos, susceptibilidade ao desmatamento, precipitação, unidades de conservação, terras indígenas, terras quilombolas, dados do CAR, florestas plantadas, silos e armazéns, rodovias e frigoríficos pertencentes ao sistema de inspeção federal).</p>
-
-![ Visualização de dados em nível municipal.](imgs/01/nivelmunicipal.jpg)
-<p style='text-align: center;'><i>Visualização em nível municipal.</i></p>
 
 ## Upload de dados geográficos  
 
