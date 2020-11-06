@@ -11,7 +11,7 @@ nav:
     - 'Funcionalidades': '01-guia_funcionalidades.md'
     - 'Relatórios': '01-guia_relatorios.md'
 
-  - 'Arquitetura':
+  - 'Arquitetura de Software':
     - 'Visão geral': '02-arq_geral.md'
     - 'Servidor de mapas': '02-arq_servidor_de_mapas.md'
     - 'Servidor de aplicação': '02-arq_servidor_de_aplicacao.md'
