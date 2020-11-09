@@ -194,7 +194,7 @@ Recorte do mapeamento global de silvicultura para o bioma Cerrado disponibilizad
 | Data      | 2013-2014 |
 | Escala    | 1:250.000 |
 | Fonte     | [Transparent World/Global Forest Watch (GFW)](http://terrabrasilis.dpi.inpe.br/) |
-| Detalhes | [Mapping Tree Plantations with Multispectral Imagery: Preliminary Results for Seven Tropical Countries](https://www.wri.org/publication/mapping-tree-plantations?utm_campaign=plantations&utm_source=blog&utm_medium=learnmore&utm_term=technicalnote_plantations&utm_content=hyperlink)
+| Detalhes | [Mapping Tree Plantations with Multispectral Imagery: Preliminary Results for Seven Tropical Countries](https://www.wri.org/publication/mapping-tree-plantations?utm_campaign=plantations&utm_source=blog&utm_medium=learnmore&utm_term=technicalnote_plantations&utm_content=hyperlink) |
 
 <br>
 
