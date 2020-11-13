@@ -12,7 +12,7 @@ Portanto, a imagem abaixo apresenta estrutura de pastas e arquivos referente as 
 
 ![Estrutura de pastas.](imgs/04/campo_tree_folders.png)
 
-Após organização dos arquivos em pastas, uma planilha para controle e organização das imagens. Um exemplo de arquivo .csv que realiza a organização para o Campo_01, trecho '1A' pode ser encontrado neste [link](INSERIR). Conforme, pode ser observado no exemplo, é importante que o arquivo csv apresente o seguinte cabeçalho:
+Após organização dos arquivos em pastas, uma planilha para controle e organização das imagens. Um exemplo de arquivo .csv que realiza a organização para o Campo_01, trecho '1A' pode ser encontrado neste [link](https://github.com/lapig-ufg/d-pat/blob/master/src/server/scripts/campo/exemplo_org_campo.csv). Conforme, pode ser observado no exemplo, é importante que o arquivo csv apresente o seguinte cabeçalho:
 
 ``` csv
 id,Campo,Trecho,Localizado,Sobrevôo,Data,Latitude,Longitude,Classe,Obs,Cobertura
@@ -286,7 +286,7 @@ where g.gid_total = prodes_2019.gid
 
 Após atualização dos dados PRODES-Cerrado e/ou DETER-Cerrado, é necessária a atualização das colunas `sucept_desmat_peq` e `sucept_desmat_grd` que representam a susceptibilidade a desmatamentos grandes e pequenos dos polígonos PRODES-Cerrado. Para tal, é necessário obter os arquivos .TIF com as superfícies geradadas no [link](https://drive.google.com/drive/folders/1JYhWBHPOZAPKHjJxp-gzA1bGABwctAWk). O arquivo `FIP_CERRADO.tar.gz` possui todos dados Raster presentes no DPAT, para tal descompacte a pasta FIP para obter ambas as superfícies.
 
-Primeiramente, deve-se instalar as dependências do python e as bibliotecas para execução do script `run_zonal_susceptibilidade.py`. Portanto, execute o script [install_dependences.sh](inserir): 
+Primeiramente, deve-se instalar as dependências do python e as bibliotecas para execução do script `run_zonal_susceptibilidade.py`. Portanto, execute o script [install_dependences.sh](https://github.com/lapig-ufg/d-pat/blob/master/src/server/scripts/susceptibilidade/install_dependences.sh): 
 
 ``` sh
 ./install_dependences.sh
