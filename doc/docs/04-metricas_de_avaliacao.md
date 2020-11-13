@@ -17,8 +17,6 @@ Após organização dos arquivos em pastas, uma planilha para controle e organiz
 ``` csv
 id,Campo,Trecho,Localizado,Sobrevôo,Data,Latitude,Longitude,Classe,Obs,Cobertura
 ```
-*** Talvez o Sérgio possa comentar aqui como efetivamente gerar essa planilha (scripts?organizacao manual?) ***
-
 
 Uma vez que o arquivo .csv esteja preenchido com a informação de todos os campos. Deve-se realizar a inserção do mesmo no banco de dados, o que pode ser alcançado pela execução do seguinte comando:
 
