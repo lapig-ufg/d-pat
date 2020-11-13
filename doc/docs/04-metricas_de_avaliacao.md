@@ -5,7 +5,7 @@ TODO
 TODO
 
 ### Processo de atualização
-TODO
+TODO  
 
 ## Dados de validação amostral 
 TODO
