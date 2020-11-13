@@ -1,0 +1,8 @@
+id,Campo,Trecho,Localizado,Sobrevôo,Data,Latitude,Longitude,Classe,Obs,Cobertura
+1,Campo_01,1A,Placemark 8,1,28/08/2018,-9.085296,-48.512851,,Pasto com capim B. brizantha / Área sem cerca,Pastagem
+2,Campo_01,1A,Placemark 6,,28/08/2018,-9.541872,-48.539412,,Futura usina fotovoltaica,Área urbana
+3,Campo_01,1A,Placemark 2,,28/08/2018,-10.083226,-48.314988,,Área sem cerca,Regeneração
+4,Campo_01,1A,Placemark 3,,28/08/2018,-10.031667,-48.304928,, ,Pastagem
+5,Campo_01,1A,Placemark 4,,28/08/2018,-9.567699,-48.425169,, ,Pastagem
+6,Campo_01,1A,Placemark 5,,28/08/2018,-9.554976,-48.527988,,Pasto com capim Andropogon alto,Pastagem
+7,Campo_01,1A,Placemark 7,,28/08/2018,-9.53302,-48.557786,,Pasto com capim Área queimada,Desmatamento

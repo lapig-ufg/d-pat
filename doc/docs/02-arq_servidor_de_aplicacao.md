@@ -98,6 +98,8 @@ Por fim, este por se tratar de uma requisição HTTP do tipo `GET`, a mesma pode
 http://localhost:3000/service/examplequery/largest?year=2019&amount=15
 ```
 
+A visualização do JSON resultado da requisição acima pode ser observado no [link](https://cerradodpat.org/service/deforestation/largest?year=2019&amount=15).
+
 Além de requisitar pelo navegador, o serviço também poderá ser requisitado pelo *WebMap Client* a fim de disponibilizar este dado na plataforma Cerrado DPAT. Para tal, o mesmo poderá ser feito via biblioteca [HttpClient](https://angular.io/api/common/http/HttpClient) do Angular e assim obter o arquivo JSON com os dados processados. Considerando que a variável `http` foi devidadmente injetada no construtor da classe do Angular, o método `getLargest()` abaixo deverá realizar a requisição e armazenar seu resultado na variável `dados_largest`:
 
 

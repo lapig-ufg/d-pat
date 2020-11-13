@@ -4,6 +4,7 @@
 
 INPUT_DIR_VIDEO='dados/videos_drone/'
 INPUT_DIR_FOTO='dados/fotos_drone/'
+#INPUT_DIR_FOTO_CAMERA='dados/fotos_camera/'
 
 # COMPRESS VIDEOS .MP4
  for file in $(find $INPUT_DIR_VIDEO -name '*.MP4'); do
@@ -37,3 +38,10 @@ for file in $(find $INPUT_DIR_FOTO -name '*.JPG'); do
 	mkdir -p $output_dir
 	jpegoptim --stdout --size=1024k $file > $output_file
 done
+
+#for file in $(find $INPUT_DIR_FOTO_CAMERA -name '*.JPG'); do
+#	output_dir=$(echo $(dirname $file) | sed 's/fotos_camera/fotos_camera_c/')
+#	output_file="$output_dir"/$(basename $file)
+#	mkdir -p $output_dir
+#	jpegoptim --stdout --size=1024k $file > $output_file
+#done
