@@ -14,7 +14,7 @@ Essencialmente, pode-se dividir o Cerrado DPAT em três partes:
     - Componentes *front-end*: [Bootstrap 4](https://getbootstrap.com/), [Material](https://material.angular.io/) e [PrimeNG](https://www.primefaces.org/primeng/).
 + *Server:* Disponibiliza os serviços que compõem a aplicação:
     - *Application Server:* Disponibiliza o acesso aos dados do Data Source, análises e configurações.
-    - *OWS Server*: Disponibiliza o acesso ao [MapServer](https://mapserver.org/), responsável pelo processamento dos dados geográficos e apresentação visual dos mesmos.
+    - *OWS Server*: Disponibiliza o acesso ao [MapServer](https://mapserver.org/), responsável pelo processamento dos dados geográficos, apresentação visual dos mesmos e gerenciamento de cache das imagens geradas.
 + *Data Source*: Responsável por armazenar os dados vetoriais e matriciais.
 
 Resumidamente, todos os dados usados pelo Cerrado DPAT estão organizados em um banco de dados PostgreSQL e em sistemas de arquivos *(Data Repository)*. O PostgreSQL utiliza a extensão PostGIS que permite processar consultas espaciais via *Structured Query Language* (SQL). Já os dados que não necessitam de cruzamentos espaciais são armazenados em arquivos nos formatos Shapefile e/ou GeoTIFF.

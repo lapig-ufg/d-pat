@@ -1,22 +1,27 @@
 import sys
-import gdal, ogr, osr, numpy
+import gdal
+import ogr
+import osr
+import numpy
 from scipy import stats
+
 
 def zonal_mean(input_value_raster, feature, srs):
 
     driver = ogr.GetDriverByName("Memory")
-    
+
     raster = gdal.Open(input_value_raster)
-    
+
     geometry = feature.GetGeometryRef()
 
     data_source = driver.CreateDataSource("tempDS")
 
-    layer = data_source.CreateLayer("tempLayer", srs, geometry.GetGeometryType())
-        
-    Nfeature = ogr.Feature(layer.GetLayerDefn());
-    Nfeature.SetGeometry(geometry);
-    layer.CreateFeature(Nfeature);
+    layer = data_source.CreateLayer(
+        "tempLayer", srs, geometry.GetGeometryType())
+
+    Nfeature = ogr.Feature(layer.GetLayerDefn())
+    Nfeature.SetGeometry(geometry)
+    layer.CreateFeature(Nfeature)
 
     # Get raster georeference info
     transform = raster.GetGeoTransform()
@@ -27,24 +32,26 @@ def zonal_mean(input_value_raster, feature, srs):
 
     if (geometry.GetGeometryName() == 'MULTIPOLYGON'):
         count = 0
-        pointsX = []; pointsY = []
+        pointsX = []
+        pointsY = []
         for polygon in geometry:
             geomInner = geometry.GetGeometryRef(count)
             ring = geomInner.GetGeometryRef(0)
             numpoints = ring.GetPointCount()
             for p in range(numpoints):
-                    lon, lat, z = ring.GetPoint(p)
-                    pointsX.append(lon)
-                    pointsY.append(lat)
+                lon, lat, z = ring.GetPoint(p)
+                pointsX.append(lon)
+                pointsY.append(lat)
             count += 1
     elif (geometry.GetGeometryName() == 'POLYGON'):
         ring = geometry.GetGeometryRef(0)
         numpoints = ring.GetPointCount()
-        pointsX = []; pointsY = []
+        pointsX = []
+        pointsY = []
         for p in range(numpoints):
-                lon, lat, z = ring.GetPoint(p)
-                pointsX.append(lon)
-                pointsY.append(lat)
+            lon, lat, z = ring.GetPoint(p)
+            pointsX.append(lon)
+            pointsY.append(lat)
 
     else:
         sys.exit("ERROR: Geometry needs to be either Polygon or Multipolygon")
@@ -63,7 +70,8 @@ def zonal_mean(input_value_raster, feature, srs):
     if xcount > 0 and ycount > 0:
 
         # Create memory target raster
-        target_ds = gdal.GetDriverByName('MEM').Create('', xcount, ycount, gdal.GDT_Byte)
+        target_ds = gdal.GetDriverByName('MEM').Create(
+            '', xcount, ycount, gdal.GDT_Byte)
         target_ds.SetGeoTransform((
             xmin, pixelWidth, 0,
             ymax, 0, pixelHeight,
@@ -75,16 +83,20 @@ def zonal_mean(input_value_raster, feature, srs):
         target_ds.SetProjection(raster_srs.ExportToWkt())
 
         # Rasterize zone polygon to raster
-        gdal.RasterizeLayer(target_ds, [1], layer, burn_values=[1], options = ["ALL_TOUCHED=TRUE"]) #, options = ["ALL_TOUCHED=TRUE", "BURN_VALUE_FROM"]);
+        gdal.RasterizeLayer(target_ds, [1], layer, burn_values=[1], options=[
+                            "ALL_TOUCHED=TRUE"])  # , options = ["ALL_TOUCHED=TRUE", "BURN_VALUE_FROM"]);
 
         # Read raster as arrays
         banddataraster = raster.GetRasterBand(1)
-        dataraster = banddataraster.ReadAsArray(xoff, yoff, xcount, ycount).astype(numpy.int16)
+        dataraster = banddataraster.ReadAsArray(
+            xoff, yoff, xcount, ycount).astype(numpy.int16)
 
         bandmask = target_ds.GetRasterBand(1)
-        datamask = bandmask.ReadAsArray(0, 0, xcount, ycount).astype(numpy.int16)
+        datamask = bandmask.ReadAsArray(
+            0, 0, xcount, ycount).astype(numpy.int16)
 
-        zoneraster = dataraster[numpy.logical_and(datamask==1, dataraster>0)]
+        zoneraster = dataraster[numpy.logical_and(
+            datamask == 1, dataraster > 0)]
 
         return numpy.mean(zoneraster/10000.0)
 
@@ -97,38 +109,57 @@ def zonal_mean(input_value_raster, feature, srs):
         yoff = int((yOrigin - y)/pixelWidth)
 
         banddataraster = raster.GetRasterBand(1)
-        dataraster = banddataraster.ReadAsArray(xoff, yoff, 1, 1).astype(numpy.int16)
+        dataraster = banddataraster.ReadAsArray(
+            xoff, yoff, 1, 1).astype(numpy.int16)
 
         return numpy.mean(dataraster/10000.0)
 
+
 connPostgis = "PG: host=%s port=%s dbname=%s user=%s password=%s" \
-        % ('localhost', '5432', 'fip_cerrado', 'postgres',\
-            'postgres')
+    % ('10.0.0.12', '5432', 'fip_cerrado', 'fip_cerrado',
+       'fip_cerrado123')
 
 print(connPostgis)
 postgis = ogr.Open(connPostgis)
 
-table_name = 'prodes_cerrado'
+table_name = 'prodes_2019'
 layer = postgis.GetLayer(table_name)
 
 imageSmall = 'INPUT/deforestation_probability_small_pol_nodata.tif'
 imageBig = 'INPUT/deforestation_probability_big_pol_nodata.tif'
 
 for feature in layer:
+    print feature
     id = feature.GetField("gid")
+    print id
 
     meanSmall = zonal_mean(imageSmall, feature, layer.GetSpatialRef())
     if not numpy.isnan(meanSmall):
-        sql = 'UPDATE ' + table_name + ' SET sucept_desmat_peq = %s WHERE gid = %s;' % (meanSmall, id)
+        sql = 'UPDATE ' + table_name + \
+            ' SET sucept_desmat_peq = %s WHERE gid = %s;' % (meanSmall, id)
         postgis.ExecuteSQL(sql)
-        print('Alert %s => sucept_desmat_peq %s' % (id, meanSmall) )
+        print('Alert %s => sucept_desmat_peq %s' % (id, meanSmall))
 
     meanBig = zonal_mean(imageBig, feature, layer.GetSpatialRef())
     if not numpy.isnan(meanBig):
-        sql = 'UPDATE ' + table_name + ' SET sucept_desmat_grd = %s WHERE gid = %s;' % (meanBig, id)
+        sql = 'UPDATE ' + table_name + \
+            ' SET sucept_desmat_grd = %s WHERE gid = %s;' % (meanBig, id)
         postgis.ExecuteSQL(sql)
-        print('Alert %s => sucept_desmat_grd %s' % (id, meanBig) )
+        print('Alert %s => sucept_desmat_grd %s' % (id, meanBig))
 
 
-# UPDATE prodes_cerrado_2000_2018_full SET sucept_desmat = GREATEST(sucept_desmat_peq, sucept_desmat_grd) 
+# lyrDefn = layer.GetLayerDefn()
+# for i in range( lyrDefn.GetFieldCount() ):
+#     fieldName =  lyrDefn.GetFieldDefn(i).GetName()
+#     fieldTypeCode = lyrDefn.GetFieldDefn(i).GetType()
+#     fieldType = lyrDefn.GetFieldDefn(i).GetFieldTypeName(fieldTypeCode)
+#     fieldWidth = lyrDefn.GetFieldDefn(i).GetWidth()
+#     GetPrecision = lyrDefn.GetFieldDefn(i).GetPrecision()
+
+#     print fieldName + " - " + fieldType+ " " + str(fieldWidth) + " " + str(GetPrecision)
+
+postgis.Destroy()
+
+
+# UPDATE prodes_cerrado_2000_2018_full SET sucept_desmat = GREATEST(sucept_desmat_peq, sucept_desmat_grd)
 # WHERE sucept_desmat_peq IS NOT NULL OR sucept_desmat_grd IS NOT NULL;
