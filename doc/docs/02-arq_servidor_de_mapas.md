@@ -96,5 +96,8 @@ Um segundo tipo de camada de dados presente no Cerrado DPAT é oriundo de dados 
 
 Por fim, o Mapfile utilizado para disponibilizar todas as camadas presentes no Cerrado DPAT está na pasta compartilhada do projeto no [link](https://drive.google.com/file/d/1gO9dMdxy15wIK5gIIdlkBKlgy-D7JNHH/view?usp=sharing).
 
+## Disponibilização da camada no Application Server
+TODO
+
 ## Deploy
 TODO (execução em Docker)
