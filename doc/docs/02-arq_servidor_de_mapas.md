@@ -21,7 +21,9 @@ OgcServer.ows = function(request, response) {
 		}
 }
 ```
-Esta customização pode ser encontrada no código NodeJS no repositório específico para o código NodeJS no [Github](https://github.com/lapig-ufg/lapig-maps/tree/master/src/ows).
+Esta customização pode ser encontrada no código NodeJS no repositório específico para o código NodeJS no [Github](https://github.com/lapig-ufg/lapig-maps/tree/master/src/ows). A configuração da pasta onde serão gerados os caches é feita no arquivo [config.js](https://github.com/lapig-ufg/lapig-maps/blob/master/src/ows/config.js) na linha 41 através da variável `cacheDir`.
+
+
 
 ## Serviço de interoperabilidade 
 A interoperabilidade é uma tecnologia que possibilita o compartilhamento de dados entre sistemas, independente do local físico de armazenamento e da tecnologia utilizada em cada servidor de dados.
@@ -55,7 +57,10 @@ Por fim, a tabela abaixo apresenta os tipos de serviços fornecidos pelo Cerrado
 
 
 ## Processo de atualização
-Um dado geográfico é disponbilizado pelo Mapserver como uma camada. Para tal, o Mapserver utiliza um arquivo de configuração para renderização de dados geoespaciais chamado de Mapfile. O principal objetivo do Mapfile é definir as camadas que podem ser "desenhadas" pelo Mapserver, como ler estes dados (uma vez que eles podem ser vetores ou matrizes) e como renderizá-los, definindo cores, símbolos, rótulos, legendas e etc. Desta forma, o Mapfile inclui informações sobre:
+
+Um dado geográfico é disponbilizado pelo Mapserver como uma camada. Assim como abordado na página XX os dados devem estar armazenados em uma pasta de catálogo dos dados configurável no arquivo [config.js](https://github.com/lapig-ufg/lapig-maps/blob/master/src/ows/config.js) através da variável `cacheDir`.
+
+O Mapserver utiliza um arquivo de configuração para renderização de dados geoespaciais chamado de Mapfile. O principal objetivo do Mapfile é definir as camadas que podem ser "desenhadas" pelo Mapserver, como ler estes dados (uma vez que eles podem ser vetores ou matrizes) e como renderizá-los, definindo cores, símbolos, rótulos, legendas e etc. Desta forma, o Mapfile inclui informações sobre:
 
 + Quais camadas devem ser renderizadas;
 + Onde está o foco geográfico do mapa;
