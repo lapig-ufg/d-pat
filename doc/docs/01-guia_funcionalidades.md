@@ -12,7 +12,7 @@ Permite o controle do nível de zoom do mapa, além de ocultar e ativar a visual
 
 **2 - Camada de Dados**
 
-Agrega todos os dados que podem ser exibidos no mapa, agrupados nas seguintes seções: Desmatamento; Áreas Especiais; Áreas Declaradas; Uso da Terra; Infraestrutura; Geofísico; Edafoclimáticos; Acervo de Imagens. Também permite ao usuário, com opções agrupadas em abas, o controle do mapa base (Mapbox, Google Maps e Bing), dos limites que são mostrados no mapa, e o upload de uma área de interesse que pode ser enviada nos formatos shapefile, geojson e kml.
+Agrega todos os [dados](/01-guia_dados_geograficos/) que podem ser exibidos no mapa, agrupados nas seguintes seções: Desmatamento; Áreas Especiais; Áreas Declaradas; Uso da Terra; Infraestrutura; Geofísico; Edafoclimáticos; Acervo de Imagens. Também permite ao usuário, com opções agrupadas em abas, o controle do mapa base (Mapbox, Google Maps e Bing), dos limites que são mostrados no mapa, e o upload de uma área de interesse que pode ser enviada nos formatos shapefile, geojson e kml.
 
 ![Camadas de dados que podem ser ativadas e visualizadas no mapa.](imgs/01/camadadedados.jpg "Camadas de dados que podem ser ativadas e visualizadas no mapa.")
 
@@ -41,7 +41,7 @@ Essa seção tem por objetivo espacializar o total desmatado, detectado em cada 
 
 Destaca-se também a possibilidade de ativar os polígonos interseccionados com propriedades participantes do projeto FIP ABC, assim como todas as áreas desmatadas visitadas em campo, com os respectivos dados coletados em cada área. Uma outra forma de visualização do dado PRODES-Cerrado é por total acumulado anual. Ou seja, a área antrópica total do bioma Cerrado para cada ano.
 
-Para verificar a suscetibilidade ao desmatamento dos polígonos detectados a partir de 2016, foram criadas duas superfícies. Estas camadas, com resolução de 100m, foram concebidas a partir dos padrões observados nos desmatamentos pequenos (< 0,5 km²) e grandes (> 0,5 km²) ocorridos entre os anos de 2010 e 2015.
+Para verificar a [suscetibilidade ao desmatamento](/01-guia_metricas_de_qualidade/#superficie-de-susceptibilidade-ao-desmatamento) dos polígonos detectados a partir de 2016, foram criadas duas superfícies. Estas camadas, com resolução de 100m, foram concebidas a partir dos padrões observados nos desmatamentos pequenos (< 0,5 km²) e grandes (> 0,5 km²) ocorridos entre os anos de 2010 e 2015.
 
 
 ## Upload de dados geográficos  
