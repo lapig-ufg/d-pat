@@ -4,7 +4,7 @@
 
 ### Campo
 
-Foram realizados [4 atividas de campo](/04-metricas_de_avaliacao/#dados-de-campos) durante a vigência do projeto FIP Monitoramento. Essas atividades foram conduzidas com o propósito de coletar dados que pudesse subsidiar tanto o processo de validação dos produto PRODES-Cerrado e DETER-Cerrado, quanto a calibração dos critérios utilizados durante o processo de inspeção visual realizado no âmbito da validação amostral.
+Foram realizados [4 atividades de campo](/04-metricas_de_avaliacao/#dados-de-campos) durante a vigência do projeto FIP Monitoramento. Essas atividades foram conduzidas com o propósito de coletar dados que pudesse subsidiar tanto o processo de validação dos produto PRODES-Cerrado e DETER-Cerrado, quanto a calibração dos critérios utilizados durante o processo de inspeção visual realizado no âmbito da validação amostral.
 
 ### Validação amostral
 Uma [validação amostral](/04-metricas_de_avaliacao/#dados-de-validacao-amostral) foi realizada, a partir da interpretação visual em imagens de satélite, para o mapa PRODES-Cerrado com as classes referentes ao desmatamentos realizados até o ano de 2019. A análise do resultado deste processo proporcionou a publicação do artigo "*Quality assessment of the PRODES Cerrado deforestation data*" na revista acadêmica [Remote Sensing Applications: Society and Environment](https://www.journals.elsevier.com/remote-sensing-applications-society-and-environment). 

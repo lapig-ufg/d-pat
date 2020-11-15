@@ -314,7 +314,7 @@ where g.gid_total = prodes_2019.gid
 
 TABELA COM OS DADOS UTILIZADOS E DE ONDE FORAM BAIXADOS
 
-O método de Pesos de Evidência, adaptado para análises espaciais pelo software [Dinamica EGO](https://csr.ufmg.br/dinamica/) (SOARES-FILHO et al., 2009), foi utilizado para verificar a influência de cada métrica nos desmatamentos grandes e pequenos ocorridos entre os anos de 2010 e 2015. Este intervalo foi escolhido para que as duas superfícies geradas fossem aos desmatamentos detectados após 2016 (início do projeto FIP Monitoramento). A interação entre os pesos de cada métrica resultou em dois arquivos raster com valores numérico entre 0 e 1, indicando, respectivamente, áreas com baixa e alta susceptibilidade ao desmatamento.
+O método de Pesos de Evidência, adaptado para análises espaciais pelo software [Dinamica EGO](https://csr.ufmg.br/dinamica/), foi utilizado para verificar a influência de cada métrica nos desmatamentos grandes e pequenos ocorridos entre os anos de 2010 e 2015. Este intervalo foi escolhido para que as duas superfícies geradas fossem aos desmatamentos detectados após 2016 (início do projeto FIP Monitoramento). A interação entre os pesos de cada métrica resultou em dois arquivos raster com valores numérico entre 0 e 1, indicando, respectivamente, áreas com baixa e alta susceptibilidade ao desmatamento.
 
 ![Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.](imgs/01/fluxograma.jpg "Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.")
 
