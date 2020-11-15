@@ -4,32 +4,56 @@
 
 ### Realização das atividades de campo
 
-No âmbito do projeto FIP Monitoramento, foram realizadas quatro atividades de campo com o propósito de avaliar os desmatamentos detectados pelo PRODES-Cerrado em 2016, 2017 e 2018. Foram utilizados formulários eletrônicos, GPS, drones e câmeras fotográficas. Destaca-se que foram selecionadas regiões com diferentes fitofisionomias, relevos, solos, condições climáticas e elementos socioeconômicos, com o propósito de buscar uma maior variabilidade de condições,. Posteriormente, houve uma inspeção visual em imagens históricas (2000-2017) das áreas visitadas para checagem se as mesmas já estavam antropizadas ano de detecção.
+No âmbito do projeto FIP Monitoramento foram realizadas quatro atividades de campo com o objetivo de avaliar os desmatamentos detectados pelos sistemas PRODES-Cerrado e DETER-Cerrado. O planejamento de cada campo priorizou visitas às regiões com maior quantidade de detecções. A elaboração do trajeto também contemplou desmatamentos em diferentes fitofisionomias, tipos de solo, clima, relevo, arranjos socioeconômicos e produtivos. Buscou-se também por uma logistica que contemplasse a otimização tempo e com o pernoite em cidades com infraestrutura adequada para a situação (hotéis, restaurantes e sinal de internet). Destaca-se também que, apesar do fator limitante relativo a distribuição de rodovias, buscou-se pelo equilibrio do percurso em estradas "principais" (rodovias estaduais e federais) e vicinais (estradas municipais e acessos a fazendas).
 
-![Roteiro dos campos realizados no âmbito do projeto FIP Monitoramento](imgs/01/roteiros.jpg "Roteiro dos campos realizados no âmbito do projeto FIP Monitoramento")
+![Roteiro dos campos realizados no âmbito do projeto FIP Monitoramento](imgs/04/campos_realizados.png "Roteiro dos campos realizados no âmbito do projeto FIP Monitoramento")
 
+A definição do trecho a ser percorrido em cada dia se baseou em uma distância média percorrida de ~400 km durante um período de 10 horas (8h às 18h). A quantidade de áreas visitadas levou em consideração o tempo médio gasto em cada parada, sendo ~10 minutos em áreas sem sobrevôo de drone e ~20min em áreas com sobrevôo de drone. 
 
-No primeiro campo, que ocorreu entre 27/08 à 02/09 de 2018, foram visitados os estados do Piauí, Maranhão, Tocantins e Bahia. A equipe percorreu um total de 2.077 km, avaliando um 72 polígonos, sendo 26 com sobrevoos de drone. Foi constatado que 97% dos pontos visitados estavam antropizados. Observa-se na figura abaixo um talhão agrícola situado sobre um Latossolo Vermelho-Amarelo e cercada por remanescentes de Cerrado Denso no município de Corrente-PI. 
+A escolha das áreas com sobrevôo de drone se baseou na análise de mapas e imagens de satélite. Foi escolhido um número mínimo de 4 sobrevôos de drone em cada trecho. Essa seleção considerou critérios como: dificuldade de detecção (áreas campestres, áreas com elevada quantidade de pastos em estágio de degradação agronômica, áreas com queimadas recorrentes e áreas com alta resposta espectral aos efeitos da sazonalidade climática), tamanhos (áreas muitos grandes) e restrições de acesso (considerando a autonomia e o raio de sobrevôo do drone). Para essas áreas, de acordo com as [orientações da Agência Nacional de Aviação Civil (ANAC)](https://www.anac.gov.br/assuntos/paginas-tematicas/drones/orientacoes_para_usuarios.pdf), foram realizadas requisições de autorização de sobrevôo junto ao [DECEA](https://www.anac.gov.br/assuntos/setor-regulado/profissionais-da-aviacao-civil/meteorologia-aeronautica/decea) por meio do [SARPAS](https://servicos.decea.gov.br/sarpas/).
 
-![Desmatamento detectado pelo PRODES-Cerrado no ano de 2017, visitado no 1º campo realizado.](imgs/01/campo_1.png "Desmatamento detectado pelo PRODES-Cerrado no ano de 2017, visitado no 1º campo realizado.")
+Após a definição de cada trecho, mapas georreferenciados em formato PDF foram preparados para posterior inserção no aplicativo de celular Avenza Maps. Estes mapas contemplavam os seguintes dados:
 
-No segundo campo, que ocorreu entre 18/03 a 22/03 de 2019, foram visitados os estados de Goiás, Tocantins e Bahia. A equipe percorreu um total de 1951 km, avaliando 99 polígonos, com 32 com sobrevoos de drone realizados. Todos os pontos estavam antropizados. A figura abaixo revela um desmatamento de 8 km² no município de Dianópolis-TO. Apesar de ter sido detectado e realizado em 2017, conforme inspeção em imagens de satélite, foram observados tratores e madeiras sendo queimadas, indicando a ocorrência de um processo de supressão da vegetação secundária nesta área.
+ *  Imagem de satélite (Sentinel 2 com composição R4 G3 B2).
+ *  Trajeto previamente definido, com eventuais acessos às áreas desmatadas.
+ *  Áreas detectadas pelo PRODES-Cerrado (a partir de 2016).
+ *  Áreas detectadas pelo DETER-Cerrado (a partir de 2017).
+ *  Localização das cidades de pernoite.
+ *  Áreas previamente selecionadas para paradas sem sobrevôo de drone.
+ *  Áreas previamente selecionadas para paradas com sobrevôo de drone.
 
+![Exemplo de um mapa exportado para o formato PDF georreferenciado e um dos respectivos detalhes.](imgs/04/ex_trecho.png "Exemplo de um mapa exportado para o formato PDF georreferenciado e um dos respectivos detalhes.")
 
-![Desmatamento detectado pelo PRODES-Cerrado no ano de 2017 e visitado durante o 2º campo realizado.](imgs/01/campo_2.png "Desmatamento detectado pelo PRODES-Cerrado no ano de 2017 e visitado durante o 2º campo realizado.")
+Os arquivos no formato PDF georreferenciado foram incoporados ao aplicativo de celular [Avenza Maps](https://play.google.com/store/apps/details?id=com.Avenza). Devido a restrição para importações para arquivos de até 500 mb, cada trecho foi subdividido em subtrechos. Assim, cada mapa importado não excedeu este limite. Destaca-se também que a importação de mapas no formato PDF georreferenciado dispensou a necessidade de conexão de internet para a coleta dos dados.
 
+![Listas de arquivos georreferenciados no formato PDF para o 2º campo realizado](imgs/04/lista_arquivos_pdf.png "Listas de arquivos georreferenciados no formato PDF para o 3º campo realizado")
 
-No terceiro campo, que ocorreu em 13/07 a 19/07 de 2019, foram visitados os estados do Maranhão e Piauí. A percorreu um total de 2181 km, avaliando 144 polígonos e registrando 38 sobrevoos de drone. Neste campo, 98% das áreas estavam antropizadas. Observa-se na Figura 40 uma área localizada entre Alexandre Costa-MA e São João do Soter-MA, situada em uma região de ecótono conhecida como Mata de Cocais, e com uma alta incidência de pequenos desmatamentos pequenos (i.e., inferiores à 0,5 km²). Durante o campo realizado constatou-se nesta área uma alta quantidade de fragmentos de vegetação nativa compostos por formações florestais e com predomínio de palmeirais. Apesar do processo de antropização nesta região ser conduzido por pequenos desmatamentos, para extração de lenha e formação de pequenos pastos, também foram visitadas áreas desmatadas com detecções iguais ou superiores à 1 km, com pastagens formadas por B. brizantha e capim Mombaça. Em alguns pastos também foi observada uma grande quantidade de plantas invasoras, como ervas daninhas, além de áreas abandonadas com indícios de regeneração da vegetação nativa.
+Para cada mapa importado pelo aplicativo Avenza Maps foi criado um formulário com os seguintes campos:
 
-![Área com grande concentração de desmatamentos no estado do Maranhão.](imgs/01/campo_3.png "Área com grande concentração de desmatamentos no estado do Maranhão.")
+* Classe (PRODES 16, 17, 18 ou DETER 18 ou 19)
+* Cobertura (uso/cobertura observado no campo)
+* Observação (observação adicional sobre a área visitada)
+* ID do sobrevôo (caso ocorresse o sobrevôo no poligono visitado)
 
-No quarto campo, realizado entre os dias 08 e 15 de novembro de 2019, nos Estados do Tocantins e de Goiás, foram visitadas 126 áreas detectadas pelos PRODES (anos de 2016 e 2017) e DETER (ano de 2019). A equipe percorreu um total de 1810 km, avaliando 126 polígonos, com 38 sobrevoos de drone. Neste campo, apenas uma área não se encontrava antropizada.
+Durante a realização do campo a pessoa responsável pela coleta registrava um marcador sobre a área desmatada. Destaca-se que o aplicativo Avenza Maps permite que essa marcação seja feita sem a necessidade de estar exatamente no local, o que favoreceu o registro de pontos com sobrevôo de drone (um exemplo dessa situação é ilustrado com a letra "B" na figura abaixo).
+  
+![Avenza Maps](imgs/04/ex_avenzamaps.png "Avenza Maps")
 
-![Desmatamento detectado pelo PRODES-Cerrado, no ano de 2018, no município de Lagoa da Confusão (TO). Área destinada ao cultivo de arroz e circundada por vegetação nativa constituída de campos de murundus.](imgs/01/campo_4.jpg "Desmatamento detectado pelo PRODES-Cerrado, no ano de 2018, no município de Lagoa da Confusão (TO). Área destinada ao cultivo de arroz e circundada por vegetação nativa constituída de campos de murundus.")
+No final de cada dia as fotos e os registros dos questionários eram exportados, respectivamente, nos formatos .jpg e .csv. A planilha exportada continha as seguintes colunas:
 
-De um total de 367‬ áreas visitadas em campo, 361‬ (98,3%) estavam antropizadas. O total de acertos por campo está registrado na figura abaixo. Além da validação realizada, os principais aspectos identificados e campo foram: detecções DETER-Cerrado verdadeiras; áreas desmatadas, porém sem uso consolidado e com presença de vegetação secundária; áreas agrícolas abandonadas após o desmatamento; presença de tratores em algumas áreas desmatadas.
+* ID
+* Campo
+* Trecho
+* Localizador
+* Sobrevôo
+* Data
+* Latitude
+* Longitude
+* Classe
+* Observação
+* Cobertura
 
-![Desmatamentos validados em campo corretamente mapeados pelo PRODES-Cerrado e DETER-Cerrado como áreas antropizadas.](imgs/01/concordancia_campos.jpg "Desmatamentos validados em campo corretamente mapeados pelo PRODES-Cerrado e DETER-Cerrado como áreas antropizadas.")
+O nome das imagens correspondente a cada área visitada era formado pelo prefixo "Placemark/Localizador" e o respectivo id. Caso houvesse mais de uma foto, esse id era acrescido de um sufixo indicando o sub-id de cada foto.
 
 ### Processo de atualização
 
@@ -312,11 +336,24 @@ where g.gid_total = prodes_2019.gid
 
  As superfícies de susceptibilidades foram construídas a partir da sintese dos principais fatores vinculados a estes fenômenos. Uma compilação de métricas espacialmente explícitas relacionadas a esses fatores, foi realizada a partir de um processo de revisão da literatura, disponibilidade de dados e verificação, por meio estatístico, da significância e das correlações entre dados compilados. O conjunto final foi constituído por 11 métricas: distância de áreas antrópicas; distância de rodovias; distância de silos e armazéns; categoria fundiária; tamanho da propriedade; textura e tipo de solo; geomorfologia, declividade, altitude e média anual da precipitação acumulada entre os anos de 200 e-2015.
 
-TABELA COM OS DADOS UTILIZADOS E DE ONDE FORAM BAIXADOS
+|Dado|Fonte|
+|:--:|:--:|
+|Distância de áreas antrópicas|Calculada a partir da área antrópica acumulada do [PRODES-Cerrado](http://terrabrasilis.dpi.inpe.br/downloads/)|
+|Distância de rodovias|[Open Street Maps](http://download.geofabrik.de/south-america.html)|
+|Densidade de silos e armazens|[CONAB (revisado pelo LAPIG-UFG)](/01-guia_dados_geograficos/#infraestrutura)|
+|Altitude|[SRTM](/01-guia_dados_geograficos/#geofisico)|
+|Delividade|[SRTM](/01-guia_dados_geograficos/#geofisico)|
+|Precipitação|[TRMM/INMET (interpolação realizada pelo LAPIG-UFG)](/01-guia_dados_geograficos/#edafoclimaticos)|
+|Tamanho da propriedade|[SICAR](https://www.car.gov.br/publico/municipios/downloads)|
+|Categoria fundiária|[Propriedades (SICAR)](https://www.car.gov.br/publico/municipios/downloads) <br> [Unidades de Conservação (MMA)](http://mapas.mma.gov.br/i3geo/datadownload.htm) <br> [Terras Indigenas (Funai)](http://www.funai.gov.br/index.php/shape) <br> [Assentamentos (INCRA)](http://acervofundiario.incra.gov.br/acervo/acv.php) <br> [Comunidades Quilombolas (INCRA)](http://acervofundiario.incra.gov.br/acervo/acv.php)|
+|Geomorfologia|[BDIA-IBGE](https://bdiaweb.ibge.gov.br/#/consulta/geomorfologia)|
+|Solo (tipologia)|[BDiA-IBGE](https://bdiaweb.ibge.gov.br/#/consulta/pedologia)|
+|Solo (textura)|[BDiA-IBGE](https://bdiaweb.ibge.gov.br/#/consulta/pedologia)|
+
 
 O método de Pesos de Evidência, adaptado para análises espaciais pelo software [Dinamica EGO](https://csr.ufmg.br/dinamica/), foi utilizado para verificar a influência de cada métrica nos desmatamentos grandes e pequenos ocorridos entre os anos de 2010 e 2015. Este intervalo foi escolhido para que as duas superfícies geradas fossem aos desmatamentos detectados após 2016 (início do projeto FIP Monitoramento). A interação entre os pesos de cada métrica resultou em dois arquivos raster com valores numérico entre 0 e 1, indicando, respectivamente, áreas com baixa e alta susceptibilidade ao desmatamento.
 
-![Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.](imgs/01/fluxograma.jpg "Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.")
+![Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.](imgs/01/fluxograma.png "Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.")
 
 Os procedimentos que ocorreram dentro do software [Dinamica EGO](https://csr.ufmg.br/dinamica/) estão detalhados nas figuras abaixo.  
 
