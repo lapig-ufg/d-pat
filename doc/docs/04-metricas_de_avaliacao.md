@@ -129,10 +129,30 @@ FIELD_DATA_DIR=/media/campo/dados_padronizados
 TODO
 
 ### Sorteio de novos pontos
-TODO
+
+![Quantidade de pontos a serem sorteados](imgs/04/tab_val.png "Quantidade de pontos a serem sorteados")
+
+
+![Quantidade de pontos a serem sorteados](imgs/04/ptos_val0019.png "Quantidade de pontos a serem sorteados")
 
 ### Inspeção no TVI
-TODO
+
+Em função da extensão da área e do período a ser avaliado, o processo de aquisição de dados pontuais referentes ao uso e cobertura da terra por meio de inspeção visual em imagens de sensoriamento remoto despende tempo e resulta em um grande volume de dados a serem armazenados. Tendo em vista esta situação, o Laboratório de Processamento de Imagens e Geoprocessamento da Universidade Federal de Goiás (LAPIG - UFG) desenvolveu uma ferramenta online e de código aberto com o propósito de otimizar a inspeção de pontos em imagens de satélite.
+
+A ferramenta TVI (Temporal Visual Inspection) utiliza uma arquitetura web, baseada em softwares livres, com banco de dados MongoDB e servidor de aplicação NodeJs. O banco de dados é responsável por armazenar todas as informações referente aos pontos (ex: classes atribuídas por um intérpretes, coordenadas geográficas, etc), sendo que sua alimentação ocorre por meio de um módulo de importação que recebe como entrada um arquivo GeoJSON com as coordenadas dos pontos a serem interpretados. Após este processo, a ferramenta busca as imagens que serão inspecionadas.
+
+![Interface da ferramenta TVI](imgs/04/ex_tvi.png "Interface da ferramenta TVI")
+
+As imagens são disponibilizadas conjuntamente a dados auxiliares. Ao intérprete são fornecidos gráficos de séries temporais de imagens MODIS NDVI (normalized difference vegetation index) e precipitação (TRMM, Tropical Rainfal Measurement Mission, e GPM, Global Precipitation Mission), além do acesso às imagens disponibilizadas pelo software Google Earth por meio de um arquivo KML correspondente ao ponto inspecionado. Assim, cabe ao usuário interpretar e associar à determinado ponto as respectivas de cobertura do solo (antrópico, natural e não observado) observadas em cada ano da série histórica. Essa associação, realizada com base nos [critérios adotados pelo INPE](http://cerrado.obt.inpe.br/wp-content/uploads/2019/08/report_funcate_metodologia_mapeamento_bioma_cerrado.pdf), é realizada por meio da seleção do intervalo em que a classe pode ser observada na imagem.
+
+Destaca-se também que, além dos critérios adotados pelo INPE, a realização das [atividades de campo](/04-metricas_de_avaliacao/#dados-de-campos) reuniu um rico material que subsidiou reuniões e treinamentos com o propósito de esclarecer comportamentos e caracteristicas presentes no bioma e respectiva representação em imagens Landsat. Algumas situações discutidas durante estes momentos foram dúvidas acerca do padrão espectral de áreas queimadas e de áreas desmatadas que após determinado tempo começam a ter a vegetação nativa em processo inicial de regeneração. Um exemplo dessa última situação é mostrado na figura abaixo.
+
+![Contribuição das atividades de campo no processo de interpretação das imagens Landsat](imgs/04/campo_2.png "Contribuição das atividades de campo no processo de interpretação das imagens Landsat")
+
+Também foi desenvolvida uma interface voltada ao acompanhamento do processo de inspeção. Assim, um usuário com status de supervisor tem a possibilidade de monitorar o desempenho de cada um dos intérpretes, de forma a identificar eventuais inconsistências e a necessidade de adequações aos critérios estabelecido. Nesta interface o supervisor tem acesso a todas as inspeções efetuadas, havendo a
+possibilidade de filtragem por classes e intérpretes. Também são disponibilizados algumas informações com o objetivo de contribuir com possíveis orientações e discussões com a equipe envolvida. São elas:
+números de pontos inspecionados (por intérprete), média de tempo por ponto inspecionado ( intérprete), média de “votos” (inspeções) por cobertura (em porcentagem) e número de pontos com concordância. Ressalta-se a importância de tal interface durante os treinamentos e reuniões, onde os interpretes puderam ser acompanhados e orientados por especialistas nos biomas acerca das suas respectivas dificuldades.
+
 
 ### Processo de atualização
 
