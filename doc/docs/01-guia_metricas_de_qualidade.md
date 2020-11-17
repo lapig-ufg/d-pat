@@ -40,8 +40,9 @@ A figura acima apresenta um exemplo de polígono de desmatamento detectado pelo 
 Por fim, é importante ressaltar que do total de 21.869 km² de áreas desmatadas entre 2016 e 2018 no bioma Cerrado, o Bfast-Monitor foi capaz de identificar 15.550 km² de polígonos que apresentaram pelo menos 50% de quebras em suas séries temporais, o que representa ~71% do total. Nas demais áreas também foram identificados pixels com quebras, porém em menor proporção, o que indica a presença de desmatamento de tamanho inferior a 0,25 km², o que devido a resolução do pixel MODIS se torna mais difícil de ser identificado. De forma geral, foi possível observar uma convergência entre os resultados gerados pelo Bfast-Monitor e os dados divulgados pelo PRODES-Cerrado.  
 
 Publicações:  
- * [Assessing land-cover changes in the Brazilian Cerrado biome based on the time-series analysis of MODIS and Landsat datasets](/pdfs/AGU_Parente_et_al.pdf)  
- * [Deforestation Polygon Assessment Tool: Providing comprehensive information on deforestation in the Brazilian Cerrado biome](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-3-W12-2020/213/2020/isprs-archives-XLII-3-W12-2020-213-2020.pdf)  
+
++ [Assessing land-cover changes in the Brazilian Cerrado biome based on the time-series analysis of MODIS and Landsat datasets](/pdfs/AGU_Parente_et_al.pdf)  
++ [Deforestation Polygon Assessment Tool: Providing comprehensive information on deforestation in the Brazilian Cerrado biome](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-3-W12-2020/213/2020/isprs-archives-XLII-3-W12-2020-213-2020.pdf)  
 
 
 

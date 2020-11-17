@@ -955,7 +955,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.updateSourceAllLayer();
 
     let register_event = this.selectRegion.type + "_" + this.selectRegion.text
-
     this.googleAnalyticsService.eventEmitter("changeRegion", "Select-Region", register_event, 7);
 
   }
