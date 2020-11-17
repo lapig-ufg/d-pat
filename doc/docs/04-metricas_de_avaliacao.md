@@ -126,12 +126,27 @@ FIELD_DATA_DIR=/media/campo/dados_padronizados
 
 
 ## Dados de validação amostral 
-TODO
 
-### Sorteio de novos pontos
+Nossa abordagem de validação utilizou uma amostragem aleatória estratificada (LOHR, 2009), que considerou como estrato todas as classes mapeadas pelo PRODES Cerrado até 2019, agrupando-as nas seguintes categorias: "Antrópico (até 2015)", "Desmatamento (2015/2016)", "Desmatamento (2016/2017)", "Desmatamento (2017/2018)", "Desmatamento (2018/2019)" e "Natural". A categoria “Antrópico (até 2015)” agrupou os anos produzidos por iniciativas anteriores à implantação do PRODES Cerrado, enquanto as demais categorias organizaram os dados efetivamente produzidos pelo MCTIC no âmbito da iniciativa FIP Cerrado. Para aumentar as chances de amostragem de áreas de supressão de vegetação classificadas como "naturais" (i.e., erros de omissão) essas áreas foram estratificadas usando uma abordagem de análise automática de séries temporais. 
+
+Para tanto, executamos o BFast01 (método que detecta a maior quebra de magnitude na série temporal) e o BFastClassify (método que utiliza a quebra detectada pelo BFast01 e os componentes de tendência para classificar as séries temporais em oito classes ([DE JONG et al., 2013](https://www.mdpi.com/2072-4292/5/3/1117)), com base no Índice de Vegetação por Diferença Normalizada (NDVI) do produto MOD13Q1, gerado com imagens obtidas entre 2000 e 2017 ([PENG et al., 2019](https://doi.org/10.1016/j.isprsjprs.2017.09.002)). O resultado dessa análise, reamostrado para 30m e integrado ao PRODES Cerrado, foi utilizado para estratificar as áreas naturais do bioma nas seguintes classes: "Monotonic increase", "Monotonic decrease", "Monotonic increase (positive break)", "Monotonic decrease (negative break)", "Interruption (increase with a negative break)", "Interruption (decrease with a positive break)", "Reversal (increase to decrease)", " Reversal (decrease to increase)".
+
+O tamanho da amostra para cada categoria foi definido pela equação 1 (LOHR, 2009), considerando um intervalo de confiança de 95%, um erro padrão de 3% e uma variância de 50%. Especificamente para as categorias com mais de um estrato, definimos um número mínimo de 97 amostras por estrato. Recomenda-se que, para o calculo do tamanho amostral de um novo ano, o mesmo procedimento também seja feito para a classe "Natural".
 
 ![Quantidade de pontos a serem sorteados](imgs/04/tab_val.png "Quantidade de pontos a serem sorteados")
 
+### Sorteio de novos pontos
+
+ O sorteio aleatório dos pontos, baseado no tamanho amostral definido para cada estrato, foi realizado pelo [software QGIS](https://www.qgis.org/pt_BR/site/forusers/download.html). Para este sorteio foram seguidas as seguintes etapas:
+
+ *  Sorteio dos pontos dentro dos estratos presentes na máscara antrópica do PRODES-Cerrado.
+    *  Execução da ferramenta "dissolve" (opção presente na maior parte dos softwares e bibliotecas SIG).
+    *  Sorteio dos pontos por meio da ferramenta "Seleção aleatório dentro de subconjuntos".
+ *  Sorteio dos pontos dentro dos estratos fora da máscara antrópica (8 "flags" criadas pelo BFastClassify)
+    *  Conversão raster --> vetor
+    *  Execução da ferramenta "dissolve" (opção presente na maior parte dos softwares e bibliotecas SIG)
+    *  Sorteio dos pontos por meio da ferramenta "Seleção aleatório dentro de subconjuntos".
+  * Execução da ferramenta "Mesclar camadas vetoriais" para juntar os pontos dentro dos estratos antrópicas e naturais.
 
 ![Quantidade de pontos a serem sorteados](imgs/04/ptos_val0019.png "Quantidade de pontos a serem sorteados")
 
@@ -145,6 +160,8 @@ A ferramenta TVI (Temporal Visual Inspection) utiliza uma arquitetura web, basea
 
 As imagens são disponibilizadas conjuntamente a dados auxiliares. Ao intérprete são fornecidos gráficos de séries temporais de imagens MODIS NDVI (normalized difference vegetation index) e precipitação (TRMM, Tropical Rainfal Measurement Mission, e GPM, Global Precipitation Mission), além do acesso às imagens disponibilizadas pelo software Google Earth por meio de um arquivo KML correspondente ao ponto inspecionado. Assim, cabe ao usuário interpretar e associar à determinado ponto as respectivas de cobertura do solo (antrópico, natural e não observado) observadas em cada ano da série histórica. Essa associação, realizada com base nos [critérios adotados pelo INPE](http://cerrado.obt.inpe.br/wp-content/uploads/2019/08/report_funcate_metodologia_mapeamento_bioma_cerrado.pdf), é realizada por meio da seleção do intervalo em que a classe pode ser observada na imagem.
 
+Cada um dos pontos sorteados foi inspecionado por 2 interpretes. Em caso de discordância entre ambos, para um determinado ano, um terceiro interprete foi encarregado de definir a classe final. Essa classe final recebeu o nome de "classe consolidada".
+
 Destaca-se também que, além dos critérios adotados pelo INPE, a realização das [atividades de campo](/04-metricas_de_avaliacao/#dados-de-campos) reuniu um rico material que subsidiou reuniões e treinamentos com o propósito de esclarecer comportamentos e caracteristicas presentes no bioma e respectiva representação em imagens Landsat. Algumas situações discutidas durante estes momentos foram dúvidas acerca do padrão espectral de áreas queimadas e de áreas desmatadas que após determinado tempo começam a ter a vegetação nativa em processo inicial de regeneração. Um exemplo dessa última situação é mostrado na figura abaixo.
 
 ![Contribuição das atividades de campo no processo de interpretação das imagens Landsat](imgs/04/campo_2.png "Contribuição das atividades de campo no processo de interpretação das imagens Landsat")
@@ -152,6 +169,10 @@ Destaca-se também que, além dos critérios adotados pelo INPE, a realização 
 Também foi desenvolvida uma interface voltada ao acompanhamento do processo de inspeção. Assim, um usuário com status de supervisor tem a possibilidade de monitorar o desempenho de cada um dos intérpretes, de forma a identificar eventuais inconsistências e a necessidade de adequações aos critérios estabelecido. Nesta interface o supervisor tem acesso a todas as inspeções efetuadas, havendo a
 possibilidade de filtragem por classes e intérpretes. Também são disponibilizados algumas informações com o objetivo de contribuir com possíveis orientações e discussões com a equipe envolvida. São elas:
 números de pontos inspecionados (por intérprete), média de tempo por ponto inspecionado ( intérprete), média de “votos” (inspeções) por cobertura (em porcentagem) e número de pontos com concordância. Ressalta-se a importância de tal interface durante os treinamentos e reuniões, onde os interpretes puderam ser acompanhados e orientados por especialistas nos biomas acerca das suas respectivas dificuldades.
+
+Por fim, uma tabela final foi disponibilizada com as classes inspecionadas e a detecção do ano onde houve a transição de "Antropico" para "Natural",
+
+![Tabela resultante do processo de inspeção visual](imgs/04/ex_tabelafinal.png "Tabela resultante do processo de inspeção visual")
 
 
 ### Processo de atualização
