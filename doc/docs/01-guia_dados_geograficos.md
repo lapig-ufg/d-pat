@@ -1,6 +1,6 @@
 # Dados Geográficos
 
-Com o propósito de contextualizar as áreas detectadas pelos sistemas PRODES-Cerrados e DETER-Cerrado, foi disponibilizado ao usuário um conjunto de dados disponibilizados por diferentes instituições. Alguns destes dados passaram por um processo de revisão ou edição. Essas interferências foram necessárias para que dados não georreferenciados por meio de coordenadas (ex: lista com endereços de armazens e frigoríficos) pudessem ser incorporados ao banco de dados. 
+Um conjunto de dados, disponibilizados por diferentes instituições, foi incorporado ao Cerrado DPAT com o objetivo de contextualizar os desmatamentos detectados pelos sistemas PRODES-Cerrado e DETER-Cerrado. Alguns destes dados passaram por um processo de revisão ou edição. Essas interferências foram necessárias para que dados não georreferenciados por meio de coordenadas (ex: lista com endereços de armazens e frigoríficos) pudessem ser incorporados ao banco de dados. 
 
 ## Desmatamento 
 
@@ -17,9 +17,9 @@ Com o propósito de contextualizar as áreas detectadas pelos sistemas PRODES-Ce
 
 | Dado | Descrição | Data | Escala | Fonte | Detalhes | Baixar dado |
 | :-------: | :-------: | :-------: | :-------: |  :-------: |  :-------: |   :-------: |  
-| Terras indigenas | Limite das terras indígenas brasileiras. | 2017 | ND | [Funai](https://www.gov.br/funai/pt-br) | [Lei nº 6.001, de 19 de dezembro de 1973](http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm) | Download |
+| Terras indigenas | Limite das terras indígenas brasileiras. | 2017 | ND | [Funai](https://www.gov.br/funai/pt-br) | [Lei nº 6.001, de 19 de dezembro de 1973](http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm) | [Download](http://www.funai.gov.br/index.php/shape) |
 | Comunidades quilombolas | Limite dos territórios quilombolas no Cerrado. | 2020 | ND | [Incra](https://www.incra.gov.br/pt/) | | [Download](http://acervofundiario.incra.gov.br/acervo/acv.php) 
-| Unidades de conservação | Limites das unidades de conservação de proteção integral e uso sustentável (federais e estaduais). | 2017 | ND | [MMA](https://www.mma.gov.br/) | [Lei nº 9.985, de 18 de julho de 2000](http://www.planalto.gov.br/ccivil_03/leis/L9985.htm) | Download |
+| Unidades de conservação | Limites das unidades de conservação de proteção integral e uso sustentável (federais e estaduais). | 2017 | ND | [MMA](https://www.mma.gov.br/) | [Lei nº 9.985, de 18 de julho de 2000](http://www.planalto.gov.br/ccivil_03/leis/L9985.htm) | [Download](http://mapas.mma.gov.br/i3geo/datadownload.htm) |
 
 
 <br>

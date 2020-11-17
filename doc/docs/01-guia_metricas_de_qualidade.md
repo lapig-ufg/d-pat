@@ -4,7 +4,9 @@
 
 ### Campo
 
-Foram realizados [4 atividas de campo](/04-metricas_de_avaliacao/#dados-de-campos) durante a vigência do projeto FIP Monitoramento. Essas atividades foram conduzidas com o propósito de coletar dados que pudesse subsidiar tanto o processo de validação dos produto PRODES-Cerrado e DETER-Cerrado, quanto a calibração dos critérios utilizados durante o processo de inspeção visual realizado no âmbito da validação amostral.
+Durante a vigência do projeto FIP Monitoramento foram realizadas [quatro atividades de campo](/04-metricas_de_avaliacao/#dados-de-campos). Essas atividades foram conduzidas com o propósito de coletar dados que pudesse subsidiar tanto o processo de validação dos produto PRODES-Cerrado e DETER-Cerrado, quanto a calibração dos critérios utilizados durante o processo de inspeção visual realizado no âmbito da validação amostral.
+
+![Desmatamento detectado pelo PRODES-Cerrado no ano de 2017 e visitado durante o 1º campo realizado.](imgs/01/campo_1.png "Desmatamento detectado pelo PRODES-Cerrado no ano de 2017 e visitado durante o 1º campo realizado.")
 
 ### Validação amostral
 Uma [validação amostral](/04-metricas_de_avaliacao/#dados-de-validacao-amostral) foi realizada, a partir da interpretação visual em imagens de satélite, para o mapa PRODES-Cerrado com as classes referentes ao desmatamentos realizados até o ano de 2019. A análise do resultado deste processo proporcionou a publicação do artigo "*Quality assessment of the PRODES Cerrado deforestation data*" na revista acadêmica [Remote Sensing Applications: Society and Environment](https://www.journals.elsevier.com/remote-sensing-applications-society-and-environment). 
@@ -23,6 +25,7 @@ O exemplo abaixo apresenta a superfície de susceptibilidade aos desmatamentos g
 ![Superfície de Susceptibilidade a Desmatamentos superiores a 0,5 km² para o Oeste Baiano.](imgs/01/suscep_oeste_baiano.png "Superfície de Susceptibilidade a Desmatamentos superiores a 0,5 km² para o Oeste Baiano.")  
 
 Publicações:  
+
  * [A deforestation probability surface in support of the vegetation monitoring in the Brazilian Cerrado biome](/pdfs/AGU_Nogueira_et_al.pdf)    
  * [Deforestation Polygon Assessment Tool: Providing comprehensive information on deforestation in the brazilian Cerrado biome](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-3-W12-2020/213/2020/isprs-archives-XLII-3-W12-2020-213-2020.pdf)  
 
@@ -41,8 +44,8 @@ Por fim, é importante ressaltar que do total de 21.869 km² de áreas desmatada
 
 Publicações:  
 
-+ [Assessing land-cover changes in the Brazilian Cerrado biome based on the time-series analysis of MODIS and Landsat datasets](/pdfs/AGU_Parente_et_al.pdf)  
-+ [Deforestation Polygon Assessment Tool: Providing comprehensive information on deforestation in the Brazilian Cerrado biome](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-3-W12-2020/213/2020/isprs-archives-XLII-3-W12-2020-213-2020.pdf)  
+ * [Assessing land-cover changes in the Brazilian Cerrado biome based on the time-series analysis of MODIS and Landsat datasets](/pdfs/AGU_Parente_et_al.pdf)  
+ * [Deforestation Polygon Assessment Tool: Providing comprehensive information on deforestation in the Brazilian Cerrado biome](https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLII-3-W12-2020/213/2020/isprs-archives-XLII-3-W12-2020-213-2020.pdf)  
 
 
 
