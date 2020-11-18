@@ -12,9 +12,85 @@ TODO
 Diversos dados presentes na plataforma Cerrado DPAT são periodicamente atualizados pelas instituições competentes. Desta forma, a medida que os mesmos são atualizados e disponibilizados pelas instituições também é necessário realizar a atualização no banco de dados do Cerrado DPAT.
 
 ### PRODES Cerrado
-TODO
 
-Devido a divulgação anual do PRODES-Cerrado
+Devido a divulgação anual do PRODES-Cerrado é necessário realizar a sua atualização sempre que um novo produto é lançado. Desta forma, deve-se visitar o site do [Terrabrasilis](http://terrabrasilis.dpi.inpe.br/downloads/) para verificar se um novo PRODES-Cerrado foi lançado e realizar o seu download em Shapefile. 
+
+A fim de demonstrar todos os procedimentos necessários após uma nova atualização do PRODES-Cerrado, iremos utilizar o mesmo processo realizado na atualização do PRODES-Cerrado 2019 executada em Janeiro de 2020. Na ocasião o INPE disponibilizou um Shapefile único para o PRODES-Cerrado 2019 com uma estrutura própria detalhada a seguir. Atualmente, pode-se encontrar todos os desmatamentos PRODES-Cerrado em um Shapefile único no [link](http://terrabrasilis.dpi.inpe.br/download/dataset/cerrado-prodes/vector/yearly_deforestation_2002_2019_cerrado_biome.zip). Porém é importante ressaltar que o padrão das colunas disponibilizados pelo INPE pode ser alterada em atualizações futuras.
+
+Após download do shapefile único contendo os desmatamentos PRODES-Cerrado 2019, primeiramente é necessário importar os dados para o banco de dados, alterando corretamente os parâmetros <host_address> <db_user> <db_name> abaixo:
+
+``` sh
+shp2pgsql -s 4674 -W "UTF-8" ProdesCerrado_2019_incremento.shp public.prodes2019 | psql -h <host_address> -U <db_user> -d <db_name>
+```
+
+O comando acima importa os dados do Shapefile em uma tabela nomeada `prodes2019`. Na ocasião, o PRODES-Cerrado 2019 foi disponibilizado sem o campo de identificação em qual município aquele desmatamento ocorreu e com a coluna `state` que identificava os estados pelo nome por extenso. Portanto, inicialmente deve-se alterar o padrão dos estados para utilizar o campo *uf* com apenas 2 caracteres.
+
+``` sql
+ALTER TABLE prodes2019 
+ADD COLUMN uf character varying(2);
+```
+
+Em seguida, preencha o campo `uf` com o seguinte comando:
+
+``` sql
+update prodes2019 
+set uf = CASE
+	when state = 'PARÁ' THEN 'PA'
+	when state = 'MATO GROSSO' THEN 'MT'
+	WHEN state = 'PIAUÍ' THEN 'PI'
+	WHEN state = 'BAHIA' THEN 'BA'
+	WHEN state = 'MARANHÃO' THEN 'MA'
+	WHEN state = 'TOCANTINS' THEN 'TO'
+	WHEN state = 'MATO GROSSO DO SUL' THEN 'MS'
+	WHEN state = 'MINAS GERAIS' THEN 'MG'
+	WHEN state = 'PARANÁ' THEN 'PR'
+	WHEN state = 'RONDÔNIA' THEN 'RO'
+	WHEN state = 'SÃO PAULO' THEN 'SP'
+	WHEN state = 'DISTRITO FEDERAL' THEN 'DF'
+	WHEN state = 'GOIÁS' THEN 'GO'
+	ELSE '00'
+END
+```
+
+Além dos estados, caso as novas atualizações não possuam a identificação do município, deve-se verificar se o mesmo polígono de desmatamento se encontra em mais de um município ao mesmo tempo, o que pode ser alcançado com a query abaixo:
+
+``` sql
+SELECT prodes.gid, count(city.*)
+FROM prodes2019 prodes
+inner join municipios_cerrado city on ST_INTERSECTS(city.geom, prodes.geom)
+GROUP BY prodes.gid HAVING COUNT(city.*) > 1
+```
+
+Em seguida, deve-se copiar os polígonos PRODES-Cerrado 2019 para uma tabela alternativa `prodes2019_alt` (que possui o campo de município) dividindo o polígono nas porções que pertencem a cada município. Esta operação irá aumentar a quantidade de polígonos no banco, porém não irá impactar na área desmatada. 
+
+
+``` sql
+ALTER TABLE prodes2019 
+ADD COLUMN county character varying(60);
+```
+
+
+``` sql
+insert into prodes2019_alt (id, state, path_row, class_name, image_date, year, area_km2, uf, county, geom)
+select prodes.id, prodes.state, prodes.path_row, prodes.class_name, prodes.image_date, prodes.year, prodes.area_m2, prodes.uf, city.nm_municip, ST_Multi(ST_INTERSECTION(prodes.geom, city.geom)) from prodes2019 prodes 
+inner join municipios_cerrado city on ST_INTERSECTS(prodes.geom, city.geom)
+```
+
+Além de criar o campo `county`, deve-se também já armazenar o valor da área do desmatamento de cada polígono na tabela `prodes2019_alt` já convertendo para km².
+
+``` sql
+update prodes2019_alt
+set area_km2 = ST_AREA(geom::GEOGRAPHY) / 1000000.0
+where year = 2019
+```
+
+Por fim, deve-se inserir os polígonos PRODES-Cerrado 2019 na tabela oficial onde estão todos os polígonos, incluindo a longitude e latitude do Centróide do polígono.
+
+``` sql
+insert into prodes_cerrado (uid, pathrow, view_date, source, areamunkm, uf, geom, year, classname, lat, long)
+select id, path_row, image_date, 'inpe cerrado' , area_m2, uf, geom, year, class_name, st_y(ST_PointOnSurface(geom)), st_x(ST_PointOnSurface(geom)) from prodes2019_alt
+```
+
 
 ### DETER Cerrado
 
@@ -38,9 +114,19 @@ insert into deter_cerrado (classname, path_row, view_date, sensor, satellite, ar
 select classname, path_row, view_date, sensor, satellite, areamunkm, municipali, uf, uc, geom from deter_public
 ```
 
+Por fim, deve-se também atualizar a latitude e longitude do centróide do polígono DETER-Cerrado:
+
+``` sql
+update deter_cerrado
+set lat = st_y(ST_PointOnSurface(geom)),
+	long = st_x(ST_PointOnSurface(geom))
+where lat is null and long is null;
+```
+
 
 ### Cadastro Ambiental Rural (CAR)
 
+Após a criação dos quatro shapefiles com os principais componentes do CAR (Propriedades Rurais, Reserva Legal, Área de Preservação Permanence e Nascentes) deve-se inserir corretamente estes dados no banco de dados.
 
 ``` sh
 shp2pgsql -s 4674 -W "UTF-8" car.shp public.car_cerrado_temp | psql -h <host_address> -U <db_user> -d <db_name>
