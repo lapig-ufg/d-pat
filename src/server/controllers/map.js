@@ -1071,9 +1071,9 @@ module.exports = function (app) {
 
     var baseUrls = config.ows_domains.split(",");
 
-    baseUrls.forEach(function (entry) {
-      entry += '/ows'
-    });
+    for (let i = 0; i < baseUrls.length; i++) {
+      baseUrls[i] += "/ows"
+    }
 
     response.send(baseUrls);
     response.end();
