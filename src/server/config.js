@@ -35,8 +35,8 @@ module.exports = function (app) {
 		},
 		"port": env.PORT,
 		"ows_host": env.OWS_HOST,
-		"ows": env.OWS,
-		"lapig-maps": env.LAPIG_MAPS
+		"ows_domains": env.OWS_DOMAINS,
+		"ndvi_domain": env.NDVI_DOMAIN
 
 	};
 
@@ -58,6 +58,8 @@ module.exports = function (app) {
 		config["fieldDataDir"] = appProducao + env.FIELD_DATA_DIR;
 		config["uploadDataDir"] = appProducao + env.UPLOAD_DATA_DIR;
 		config["downloadDataDir"] = appProducao + env.DOWNLOAD_DATA_DIR;
+		config["ows_domains"] = env.OWS_DOMAINS;
+		config["ndvi_domain"] = env.NDVI_DOMAIN;
 
 	}
 

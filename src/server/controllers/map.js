@@ -6,6 +6,8 @@ module.exports = function (app) {
   var Controller = {};
   var Internal = {};
 
+  const config = app.config;
+
   var client = app.database.client;
   var queries = app.database.queries.map;
 
@@ -1064,6 +1066,18 @@ module.exports = function (app) {
     response.end();
 
   };
+
+  Controller.host = function (request, response) {
+
+    var baseUrls = config.ows_domains.split(",");
+
+    for (let i = 0; i < baseUrls.length; i++) {
+      baseUrls[i] += "/ows"
+    }
+
+    response.send(baseUrls);
+    response.end();
+  }
 
 
   return Controller;

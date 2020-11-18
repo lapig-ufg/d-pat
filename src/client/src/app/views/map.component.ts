@@ -47,6 +47,8 @@ import { MobileComponent } from "./mobile/mobile.component";
 import { ProjectComponent } from "./project/project.component";
 import { MapMobileComponent } from "./map-mobile/map-mobile.component";
 import { TutorialsComponent } from "./tutorials/tutorials.component";
+import { AppConfig } from '../app.config';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
@@ -256,7 +258,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
     public route: ActivatedRoute,
     private decimalPipe: DecimalPipe,
     public translate: TranslateService,
-    protected changeDetector: ChangeDetectorRef
+    protected changeDetector: ChangeDetectorRef,
+    private config: AppConfig
   ) {
     translate.addLangs(['en', 'pt-br']);
     translate.setDefaultLang('pt-br');
@@ -296,14 +299,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     };
 
     this.changeTabSelected = "";
-
-    this.urls = [
-      'https://o1.lapig.iesa.ufg.br/ows',
-      'https://o2.lapig.iesa.ufg.br/ows',
-      'https://o3.lapig.iesa.ufg.br/ows',
-      'https://o4.lapig.iesa.ufg.br/ows'
-      // "http://localhost:5501/ows"
-    ];
 
     this.tileGrid = new TileGrid({
       extent: this.projection.getExtent(),
@@ -487,6 +482,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     });
   }
+
 
   private selectedTimeFromLayerType(layerName) {
     for (let layer of this.layersTypes) {
@@ -955,7 +951,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.updateSourceAllLayer();
 
     let register_event = this.selectRegion.type + "_" + this.selectRegion.text
-
     this.googleAnalyticsService.eventEmitter("changeRegion", "Select-Region", register_event, 7);
 
   }
@@ -3194,6 +3189,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
     });
   }
   ngOnInit() {
+
+    this.urls = this.config.urls;
 
     let descriptorURL = '/service/map/descriptor' + this.getServiceParams();
 

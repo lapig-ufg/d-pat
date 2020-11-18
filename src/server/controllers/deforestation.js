@@ -398,7 +398,7 @@ module.exports = function (app) {
 
 		let returnObject = [];
 
-		let url = config["lapig-maps"] + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
+		let url = config["ndvi_domain"] + "/service/deforestation/modist?id=MOD13Q1_NDVI" + "&longitude=" + long + "&latitude=" + lat + "&mode=series";
 
 		try {
 			let responseReq = await rp({ url: url });
