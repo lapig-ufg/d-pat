@@ -15,6 +15,7 @@ nav:
     - 'Visão geral': '02-arq_geral.md'
     - 'Servidor de mapas': '02-arq_servidor_de_mapas.md'
     - 'Servidor de aplicação': '02-arq_servidor_de_aplicacao.md'
+    - 'Execução do Cerrado DPAT em Produção': '02-arq_execucao_dpat.md'
   - 'Dados':
     - 'Vetoriais': '03-dad_vetoriais.md'
     - 'Rasters': '03-dad_rasters.md'

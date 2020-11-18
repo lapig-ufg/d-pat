@@ -220,14 +220,13 @@ SET aux_desmat = 1
 WHERE aux_desmat is null AND classe != 'AGUA' AND classe != 'NATURAL' AND classe != 'NAO_OBSERVADO'
 ```
 
-Após a atribuição do valor 1 aos polígonos que foram detectados em áreas desmatadas, sobraram apenas pontos que foram anotados com a classe 'AGUA', 'NATURAL' ou 'NAO_OBSERVADO' de modo que estes pontos estão com valor `null` para o campo `aux_desmat`, portanto: 
+Após a atribuição do valor 1 aos polígonos que foram detectados em áreas desmatadas, sobraram apenas pontos que foram anotados com a classe 'AGUA', 'NATURAL' ou 'NAO_OBSERVADO' de modo que estes pontos estão com valor `null` para o campo `aux_desmat`, portanto:
 
 ``` sql
 UPDATE validacao_amostral
 SET aux_desmat = 0
 WHERE aux_desmat is null
 ```
-
 
 ### Cálculo de acurácia
 
@@ -245,7 +244,7 @@ Considerando os outros anos mapeados, observa-se uma proximidade entre as estima
 
 ## Análise automática
 
-### Execucação do BFast-Monitor
+### Execução do BFast-Monitor
 
 Para atualização do Bfast-Monitor, é necessário três coisas:
 
@@ -255,6 +254,7 @@ Para atualização do Bfast-Monitor, é necessário três coisas:
 
 
 #### Criação do Shapefile com os Pixels MODIS
+
 Primeiramente, é importante informar que utilizamos a tabela `pixel_modis` no banco de dados que contém todos os pixels MODIS para a extensão do Cerrado, sendo assim necessária a filtragem para apenas os pixels MODIS que se encontram dentro das áreas desmatadas de interesse. 
 
 Este filtro pode ser alcançado através da construção de uma View no banco de dados com os polígonos PRODES-Cerrado de interesse. Para exemplificar, criamos uma View que filtram os polígonos PRODES-Cerrado detectados em 2019 com o comando SQL abaixo:
@@ -290,12 +290,12 @@ Após a criação da View `prodes_2019`, é necessária a criação de um Shapef
 ``` sh
 $ pgsql2shp -f <filename.shp> -h <hostname> -u <db_user> -P <db_password> <db_name> "select ST_X(pixel.geom) as lon, ST_Y(pixel.geom) as lat, p.gid as seq_id, pixel.geom as geom from pixel_modis pixel inner join prodes_2019 p on ST_INTERSECTS(p.geom, pixel.geom)"
 ```
-O comando acima deverá criar um arquivo `filename.shp` com os pixels MODIS para os desmatamentos PRODES-Cerrado 2019 no local onde foi executado. 
+
+O comando acima deverá criar um arquivo `filename.shp` com os pixels MODIS para os desmatamentos PRODES-Cerrado 2019 no local onde foi executado.
 
 #### Execução do MDC e criação da série MODIS
 
 Inicialmente é necessário realizar o download do projeto [MDC](https://github.com/lapig-ufg/mdc). Em seguida, deve-se instalar todas as dependências listadas no projeto. Em seguida, extraia o arquivo `MRT.zip` e altere o parâmetro `path_mrt` no arquivo `mdc/src/conf/datasources.conf` para a localização da pasta extraída. 
-
 
 Para iniciar o processamento da série temporal, execute os passos definidos no Readme.md do projeto MDC, e por fim, execute o comando abaixo que deverá criar toda a série temporal para o Brasil do período de 01 de Janeiro de 2000 até 01 de Janeiro de 2020. Portanto, para datas futuras, deve-se alterar os parâmetros `-s` e `-e`.
 
