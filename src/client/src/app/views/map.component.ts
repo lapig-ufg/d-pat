@@ -300,14 +300,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     this.changeTabSelected = "";
 
-    // this.urls = [
-    //   'https://o1.lapig.iesa.ufg.br/ows',
-    //   'https://o2.lapig.iesa.ufg.br/ows',
-    //   'https://o3.lapig.iesa.ufg.br/ows',
-    //   'https://o4.lapig.iesa.ufg.br/ows'
-    //   // "http://localhost:5501/ows"
-    // ];
-
     this.tileGrid = new TileGrid({
       extent: this.projection.getExtent(),
       resolutions: this.getResolutions(this.projection),

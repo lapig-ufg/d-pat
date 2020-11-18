@@ -1071,6 +1071,10 @@ module.exports = function (app) {
 
     var baseUrls = config.ows_domains.split(",");
 
+    baseUrls.forEach(function (entry) {
+      entry += '/ows'
+    });
+
     response.send(baseUrls);
     response.end();
   }
