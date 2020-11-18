@@ -127,11 +127,14 @@ FIELD_DATA_DIR=/media/campo/dados_padronizados
 
 ## Dados de validação amostral 
 
-Nossa abordagem de validação utilizou uma amostragem aleatória estratificada (LOHR, 2009), que considerou como estrato todas as classes mapeadas pelo PRODES Cerrado até 2019, agrupando-as nas seguintes categorias: "Antrópico (até 2015)", "Desmatamento (2015/2016)", "Desmatamento (2016/2017)", "Desmatamento (2017/2018)", "Desmatamento (2018/2019)" e "Natural". A categoria “Antrópico (até 2015)” agrupou os anos produzidos por iniciativas anteriores à implantação do PRODES Cerrado, enquanto as demais categorias organizaram os dados efetivamente produzidos pelo MCTIC no âmbito da iniciativa FIP Cerrado. Para aumentar as chances de amostragem de áreas de supressão de vegetação classificadas como "naturais" (i.e., erros de omissão) essas áreas foram estratificadas usando uma abordagem de análise automática de séries temporais. 
+O processo de validação se baseou em uma amostragem aleatória estratificada (LOHR, 2009), que considerou como estrato todas as classes mapeadas pelo PRODES Cerrado até 2019, agrupando-as nas seguintes categorias: "Antrópico (até 2015)", "Desmatamento (2015/2016)", "Desmatamento (2016/2017)", "Desmatamento (2017/2018)", "Desmatamento (2018/2019)" e "Natural". A categoria “Antrópico (até 2015)” agrupou os anos produzidos por iniciativas anteriores à implantação do PRODES Cerrado, enquanto as demais categorias organizaram os dados efetivamente produzidos pelo INPE no âmbito da iniciativa FIP Cerrado. Para aumentar as chances de amostragem de áreas de supressão de vegetação classificadas como "naturais" (i.e., erros de omissão) essas áreas foram estratificadas usando uma abordagem de análise automática de séries temporais. 
 
 Para tanto, executamos o BFast01 (método que detecta a maior quebra de magnitude na série temporal) e o BFastClassify (método que utiliza a quebra detectada pelo BFast01 e os componentes de tendência para classificar as séries temporais em oito classes ([DE JONG et al., 2013](https://www.mdpi.com/2072-4292/5/3/1117)), com base no Índice de Vegetação por Diferença Normalizada (NDVI) do produto MOD13Q1, gerado com imagens obtidas entre 2000 e 2017 ([PENG et al., 2019](https://doi.org/10.1016/j.isprsjprs.2017.09.002)). O resultado dessa análise, reamostrado para 30m e integrado ao PRODES Cerrado, foi utilizado para estratificar as áreas naturais do bioma nas seguintes classes: "Monotonic increase", "Monotonic decrease", "Monotonic increase (positive break)", "Monotonic decrease (negative break)", "Interruption (increase with a negative break)", "Interruption (decrease with a positive break)", "Reversal (increase to decrease)", " Reversal (decrease to increase)".
 
-O tamanho da amostra para cada categoria foi definido pela equação 1 (LOHR, 2009), considerando um intervalo de confiança de 95%, um erro padrão de 3% e uma variância de 50%. Especificamente para as categorias com mais de um estrato, definimos um número mínimo de 97 amostras por estrato. Recomenda-se que, para o calculo do tamanho amostral de um novo ano, o mesmo procedimento também seja feito para a classe "Natural".
+O tamanho da amostra para cada categoria foi definido pela abaixo, considerando um intervalo de confiança de 95%, um erro padrão de 3% e uma variância de 50%. Especificamente para as categorias com mais de um estrato, definimos um número mínimo de 97 amostras por estrato. Recomenda-se que, para o calculo do tamanho amostral de um novo ano, o mesmo procedimento também seja feito para a classe "Natural".
+
+![Tamanho da amostral](imgs/04/formula_tam_amostra.png "Tamanho da amostral")
+
 
 ![Quantidade de pontos a serem sorteados](imgs/04/tab_val.png "Quantidade de pontos a serem sorteados")
 
@@ -154,13 +157,13 @@ O tamanho da amostra para cada categoria foi definido pela equação 1 (LOHR, 20
 
 Em função da extensão da área e do período a ser avaliado, o processo de aquisição de dados pontuais referentes ao uso e cobertura da terra por meio de inspeção visual em imagens de sensoriamento remoto despende tempo e resulta em um grande volume de dados a serem armazenados. Tendo em vista esta situação, o Laboratório de Processamento de Imagens e Geoprocessamento da Universidade Federal de Goiás (LAPIG - UFG) desenvolveu uma ferramenta online e de código aberto com o propósito de otimizar a inspeção de pontos em imagens de satélite.
 
-A ferramenta TVI (Temporal Visual Inspection) utiliza uma arquitetura web, baseada em softwares livres, com banco de dados MongoDB e servidor de aplicação NodeJs. O banco de dados é responsável por armazenar todas as informações referente aos pontos (ex: classes atribuídas por um intérpretes, coordenadas geográficas, etc), sendo que sua alimentação ocorre por meio de um módulo de importação que recebe como entrada um arquivo GeoJSON com as coordenadas dos pontos a serem interpretados. Após este processo, a ferramenta busca as imagens que serão inspecionadas.
+A ferramenta [TVI (Temporal Visual Inspection)](https://github.com/lapig-ufg/tvi) utiliza uma arquitetura web, baseada em softwares livres, com banco de dados MongoDB e servidor de aplicação NodeJs. O banco de dados é responsável por armazenar todas as informações referente aos pontos (ex: classes atribuídas por um intérpretes, coordenadas geográficas, etc), sendo que sua alimentação ocorre por meio de um módulo de importação que recebe como entrada um arquivo GeoJSON com as coordenadas dos pontos a serem interpretados. Após este processo, a ferramenta busca as imagens que serão inspecionadas.
 
 ![Interface da ferramenta TVI](imgs/04/ex_tvi.png "Interface da ferramenta TVI")
 
 As imagens são disponibilizadas conjuntamente a dados auxiliares. Ao intérprete são fornecidos gráficos de séries temporais de imagens MODIS NDVI (normalized difference vegetation index) e precipitação (TRMM, Tropical Rainfal Measurement Mission, e GPM, Global Precipitation Mission), além do acesso às imagens disponibilizadas pelo software Google Earth por meio de um arquivo KML correspondente ao ponto inspecionado. Assim, cabe ao usuário interpretar e associar à determinado ponto as respectivas de cobertura do solo (antrópico, natural e não observado) observadas em cada ano da série histórica. Essa associação, realizada com base nos [critérios adotados pelo INPE](http://cerrado.obt.inpe.br/wp-content/uploads/2019/08/report_funcate_metodologia_mapeamento_bioma_cerrado.pdf), é realizada por meio da seleção do intervalo em que a classe pode ser observada na imagem.
 
-Cada um dos pontos sorteados foi inspecionado por 2 interpretes. Em caso de discordância entre ambos, para um determinado ano, um terceiro interprete foi encarregado de definir a classe final. Essa classe final recebeu o nome de "classe consolidada".
+Cada um dos pontos sorteados foi inspecionado por 2 interpretes. Para um determinado ano, caso houvesse discordância entre eles, um terceiro interprete (mais experiente e com maior conhecimento acerca do bioma) foi encarregado de definir uma classe editada com a cobertura por ele observada. A classe final, com o voto majoritário ou editado de todos os pontos, recebeu o nome de "classe consolidada".
 
 Destaca-se também que, além dos critérios adotados pelo INPE, a realização das [atividades de campo](/04-metricas_de_avaliacao/#dados-de-campos) reuniu um rico material que subsidiou reuniões e treinamentos com o propósito de esclarecer comportamentos e caracteristicas presentes no bioma e respectiva representação em imagens Landsat. Algumas situações discutidas durante estes momentos foram dúvidas acerca do padrão espectral de áreas queimadas e de áreas desmatadas que após determinado tempo começam a ter a vegetação nativa em processo inicial de regeneração. Um exemplo dessa última situação é mostrado na figura abaixo.
 
@@ -170,7 +173,7 @@ Também foi desenvolvida uma interface voltada ao acompanhamento do processo de 
 possibilidade de filtragem por classes e intérpretes. Também são disponibilizados algumas informações com o objetivo de contribuir com possíveis orientações e discussões com a equipe envolvida. São elas:
 números de pontos inspecionados (por intérprete), média de tempo por ponto inspecionado ( intérprete), média de “votos” (inspeções) por cobertura (em porcentagem) e número de pontos com concordância. Ressalta-se a importância de tal interface durante os treinamentos e reuniões, onde os interpretes puderam ser acompanhados e orientados por especialistas nos biomas acerca das suas respectivas dificuldades.
 
-Por fim, uma tabela final foi disponibilizada com as classes inspecionadas e a detecção do ano onde houve a transição de "Antropico" para "Natural",
+Por fim, uma tabela final foi disponibilizada com as classes consolidadas e o ano onde houve a transição de "Antropico" para "Natural".
 
 ![Tabela resultante do processo de inspeção visual](imgs/04/ex_tabelafinal.png "Tabela resultante do processo de inspeção visual")
 
@@ -226,11 +229,21 @@ WHERE aux_desmat is null
 ```
 
 
-### Cálculo de acurácia (tabela)
-TODO
+### Cálculo de acurácia
+
+As acurácias do produtor, do usuário e geral, foi calculada a partir da multiplicação de cada acerto (1) pela probabilidade amostral correspondente a cada estrato.
+
+![Acurácia](imgs/04/tab_acc.png "Acurácia")
+
+Para a construção da matriz de confusão foram consideradas as classes "Antrópico" e "Natural" no ano de 2019. O resultado pode ser observado na tabela abaixo.
+
+![Acurácia](imgs/04/prodes19_acc.png "Acurácia")
+
+Considerando os outros anos mapeados, observa-se uma proximidade entre as estimativas da acurácia.
+
+![Acurácia](imgs/04/grafico_acuracia.png "Acurácia")
 
 ## Análise automática
-TODO
 
 ### Execucação do BFast-Monitor
 
