@@ -319,7 +319,7 @@ Para inserir a série temporal gerada no Cerrado DPAT, é necessário mover os a
 
 #### Execução dos scripts de atualização do Bfast
 
-Após a criação da série MODIS para o Brasil, é necessária a execução do algoritmo Bfast-Monitor para os pixels filtrados. Primeiramente é necessário alterar o arquivo `bfast.R` na linha 38 (descrita abaixo), indicando corretamente a localização do arquivo com a série MODIS processada.
+Após a criação da série MODIS para o Brasil, é necessária a execução do algoritmo Bfast-Monitor para os pixels filtrados. Primeiramente é necessário alterar o arquivo `bfast.R` na linha 38 (descrita abaixo), indicando corretamente a localização do arquivo BigTIF com a série MODIS processada.
 
 ``` R
 ndvi <- brick("<localização_arquivo_serie_MODIS.tif>")
@@ -422,7 +422,7 @@ Da mesma forma, para os polígonos do DETER-Cerrado foi observado que apenas 14%
 
 #### Cruzamento com suceptibilidade
 
-Após atualização dos dados PRODES-Cerrado e/ou DETER-Cerrado, é necessária a atualização das colunas `sucept_desmat_peq` e `sucept_desmat_grd` que representam a susceptibilidade a desmatamentos grandes e pequenos dos polígonos PRODES-Cerrado. Para tal, é necessário obter os arquivos .TIF com as superfícies geradadas no [link](https://drive.google.com/drive/folders/1JYhWBHPOZAPKHjJxp-gzA1bGABwctAWk). O arquivo `FIP_CERRADO.tar.gz` possui todos dados Raster presentes no DPAT, para tal descompacte a pasta FIP para obter ambas as superfícies.
+Após atualização dos dados PRODES-Cerrado e/ou DETER-Cerrado, é necessária a atualização das colunas `sucept_desmat_peq` e `sucept_desmat_grd` que representam a susceptibilidade a desmatamentos grandes e pequenos dos polígonos PRODES-Cerrado. Para tal, é necessário obter os arquivos .TIF com as superfícies geradadas no [link](https://drive.google.com/file/d/1L2pW2PudSsmwGQMhPGXbZd5sJvBmEcSW/view?usp=sharing). O arquivo `DADOS_RASTER_CATALOG_FIP_CERRADO.tar.gz` possui todos dados Raster presentes no DPAT, para tal descompacte a pasta FIP para obter ambas as superfícies.
 
 Primeiramente, deve-se instalar as dependências do python e as bibliotecas para execução do script `run_zonal_susceptibilidade.py`. Portanto, execute o script [install_dependences.sh](https://github.com/lapig-ufg/d-pat/blob/master/src/server/scripts/susceptibilidade/install_dependences.sh): 
 

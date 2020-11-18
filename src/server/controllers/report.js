@@ -24,8 +24,6 @@ module.exports = function (app) {
     var fotosDrone = app.config.fieldDataDir + "/fotos_drone/" + id;
     var videosDrone = app.config.fieldDataDir + "/videos_drone/" + id;
 
-    // console.log(fotosCamera)
-
     return {
       videos_drone: Internal.getFiles(videosDrone),
       fotos_drone: Internal.getFiles(fotosDrone),
@@ -79,8 +77,6 @@ module.exports = function (app) {
 
     var resultCampo = [];
     var queryResultCampo = request.queryResult["pontos_campo"];
-    // console.log(queryResultCampo)
-    console.log("#1")
 
     queryResultCampo.forEach(function (row) {
       var campoId = row["campo_id"];
@@ -103,8 +99,6 @@ module.exports = function (app) {
     });
 
     var queryResultDesmat = request.queryResult["desmatamento"];
-
-    console.log("#2")
 
     let box, area, prob_suscept, prob_suscept_small, prob_suscept_large, prob_bfast, lat, long, classefip;
     queryResultDesmat.forEach(function (row) {
@@ -167,8 +161,6 @@ module.exports = function (app) {
       perPoint: amostralPerPoint,
       finalClass: classeFinalAmostral
     }
-
-    console.log("#3")
 
     let sizeSrc = 768;
     let sizeThumb = 400;
@@ -286,8 +278,6 @@ module.exports = function (app) {
       }
     };
 
-    console.log("#4")
-
     var infoDesmat = {
       descricao: "Laudo-" + origin_table.toUpperCase(),
       area: area,
@@ -296,7 +286,6 @@ module.exports = function (app) {
       classefip: classefip
     };
 
-    console.log("#5")
     var qc = request.queryResult["car"];
 
     let stringified = qc.map(i => JSON.stringify(i));
@@ -375,8 +364,6 @@ module.exports = function (app) {
 
     var qabc = request.queryResult["abc"];
 
-    console.log("#5")
-
     stringified = qabc.map(i => JSON.stringify(i));
     var queryABC = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
       .map(j => JSON.parse(j))
@@ -451,7 +438,6 @@ module.exports = function (app) {
 
     var queryEspeciais = request.queryResult['areas_especiais'];
     var vetEspeciais = []
-    console.log("#6")
     queryEspeciais.forEach(function (row) {
 
       let dataEspeciais = row;
@@ -590,8 +576,6 @@ module.exports = function (app) {
       vetEspeciais.push(resultEspecial);
 
     });
-
-    console.log("FINAL")
 
     response.send({
       info: infoDesmat,
