@@ -9,6 +9,7 @@ module.exports = function (app) {
 	app.get('/service/map/extent', dataInjector, map.extent);
 	app.get('/service/map/titles', map.titles);
 	app.get('/service/map/controls', map.controls);
+	app.get('/service/map/getowsdomain', map.host);
 
 
 }

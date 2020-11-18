@@ -14,6 +14,8 @@ Diversos dados presentes na plataforma Cerrado DPAT são periodicamente atualiza
 ### PRODES Cerrado
 TODO
 
+Devido a divulgação anual do PRODES-Cerrado
+
 ### DETER Cerrado
 
 Devido a constante revisão do DETER-Cerrado, onde polígonos de desmatamento são reanalisados e validados antes de sua consolidação no PRODES-Cerrado, ao atualizar este produto é necessário excluir todos os dados anteriores sobre ele e inserir o novo por completo. Para tal, o primeiro passo é excluir os registros na tabela `deter_cerrado`.

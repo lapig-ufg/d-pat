@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,7 +14,7 @@ import { DialogMobileLaudo } from './views/map-mobile/map-mobile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
-import { MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,13 +26,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData, DecimalPipe } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -55,10 +55,10 @@ import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
 import { MetadataComponent } from './views/metadata/metadata.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
-import { GoogleAnalyticsService } from  './services/google-analytics.service'
+import { GoogleAnalyticsService } from './services/google-analytics.service'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NoCacheHeadersInterceptor } from './interceptors/no-cache-headers-interceptor.interceptor';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
@@ -68,12 +68,17 @@ import { ReportCarComponent } from './views/report-car/report-car.component';
 import { ChartsComponent } from './views/charts/charts.component';
 import { RegionReportMobileComponent } from './views/region-report-mobile/region-report-mobile.component';
 import { TutorialsComponent } from './views/tutorials/tutorials.component';
+import { AppConfig } from './app.config';
 
 registerLocaleData(localePt);
 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
+}
+
+export function initApp(config: AppConfig) {
+  return () => config.load();
 }
 
 @NgModule({
@@ -142,25 +147,26 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   entryComponents: [
-      DialogOverviewExampleDialog,
-      MetadataComponent,
-      HotsiteComponent,
-      MapComponent,
-      ProjectComponent,
-      MobileComponent,
-      MapMobileComponent,
-      RegionReportComponent,
-      DialogMobileLaudo,
-      ReportCarComponent,
-      ChartsComponent,
-      RegionReportMobileComponent,
-      TutorialsComponent
+    DialogOverviewExampleDialog,
+    MetadataComponent,
+    HotsiteComponent,
+    MapComponent,
+    ProjectComponent,
+    MobileComponent,
+    MapMobileComponent,
+    RegionReportComponent,
+    DialogMobileLaudo,
+    ReportCarComponent,
+    ChartsComponent,
+    RegionReportMobileComponent,
+    TutorialsComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     DatePipe,
     DecimalPipe,
     GoogleAnalyticsService,
+    AppConfig,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NoCacheHeadersInterceptor,
@@ -169,6 +175,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: HammerGestureConfig
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      multi: true,
+      deps: [AppConfig]
     }
   ],
   bootstrap: [AppComponent],
