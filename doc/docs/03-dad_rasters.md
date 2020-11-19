@@ -87,13 +87,6 @@ gdalwarp -r lanczos -tap -tr $PIXEL_SIZE $PIXEL_SIZE -ot Int16 -srcnodata -1 -ds
 		$INPUT_RASTER $OUTPUT_RASTER
 ```
 
-
-
-
-
-
-
-
 ### Mosaicos Sentinel-2
 
 As imagens Sentinel-2 foram baixadas por meio da plataforma [Google Earth Engine](https://earthengine.google.com/). Devido a caracteristica sazonal do biona Cerrado, um mesmo alvo pode apresentar diferentes respostas espectrais durante os diferentes meses do ano. Assim, para que o mosaico apresentasse um padrão mais homogêneo entre as cenas, buscou-se por imagens dentro de um curto periodo de tempo. Foram priorizadas imagens para o periodo de um mês. No caso da indisponibilidade de imagens sem nuvens, o periodo foi estendido até que o intervalo entre maio e outubro fosse alcançado. Destaca-se também que diferentes padrões climáticos podem ser encontrado no bioma, dificultando assim a identificação de imagens sem nuvens. Dessa forma, diferentes geometrias foram criadas para a seleção de imagens em regiões específicas (ex: norte do bioma, próximo ao litoral maranhense). O código para o download do mosaico Sentinel-2 [encontra-se disponivel para acesso](https://code.earthengine.google.com/.8b492413a68c9f050930bf4c01da8e0c).
@@ -117,7 +110,6 @@ gdaladdo --config USE_RRD=YES -ro <nome_arquivo.tif> 2 4 8
 ```
 
 Ao finalizar o processamento, é importante definir o valor das bandas para a coloração do mosaico, o que pode ser alcançado com o apoio do QGIS, ao clicar com o botão direito sobre a camada -> propriedades -> simbologia na opção.A imagem abaixo apresenta um exemplo de definição do valor das bandas aplicadas ao mosaico Sentinel de 2018.
-
 
  ![Exemplo de bandas.](imgs/03/exemplo_bandas.png)
 

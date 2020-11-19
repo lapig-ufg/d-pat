@@ -328,7 +328,9 @@ Por fim, exeute o comando abaixo para criação de um arquivo único TIF, també
 $ nohup gdal_translate -co TILED=YES -co COMPRESS=lzw -co BIGTIFF=YES -co INTERLEAVE=PIXEL ../<nome_arquivo_VRT>.vrt ../<nome_arquivo_TIF>.tif > saida.out &
 ```
 
-Para inserir a série temporal gerada no Cerrado DPAT, é necessário mover os arquivos `<nome_arquivo_TIF>.tif` e `<nome_arquivo_VRT>.vrt` para dentro da pasta `catalog/time_series_db` na localização da pasta `catalog` configurada no [OWS Server](/04-metricas_de_avaliacao/#Deploy). Em seguida, altere a propriedade `file` na chave `[MOD13Q1_NDVI]` no arquivo de configuração [`layers.ini`](https://github.com/lapig-ufg/d-pat/blob/master/src/server/integration/py/time-series/conf/layers.ini) (que disponibiliza a série temporal via serviço no Cerrado DPAT) para `<nome_arquivo_TIF>.tif`. 
+Para inserir a série temporal gerada no Cerrado DPAT, é necessário mover os arquivos `<nome_arquivo_TIF>.tif` e `<nome_arquivo_VRT>.vrt` para dentro da pasta `catalog/time_series_db` na localização da pasta `catalog` configurada no [OWS Server](/02-arq_execucao_dpat/#execucao-do-ows-server). Em seguida, altere a propriedade `file` na chave `[MOD13Q1_NDVI]` no arquivo de configuração [`layers.ini`](https://github.com/lapig-ufg/d-pat/blob/master/src/server/integration/py/time-series/conf/layers.ini) (que disponibiliza a série temporal via serviço no Cerrado DPAT) para `<nome_arquivo_TIF>.tif`. 
+
+Vale ressaltar que a série temporal MODIS criada de Janeiro de 2000 até Agosto de 2020 está atualizada no arquivo [`DADOS_RASTER_CATALOG_FIP_CERRADO.tar.gz`](https://drive.google.com/file/d/1L2pW2PudSsmwGQMhPGXbZd5sJvBmEcSW/view?usp=sharing) com nome `pa_br_mod13q1_ndvi_250_2000_2020.tif` dentro da subpasta `time_series_db`. 
 
 #### Execução dos scripts de atualização do Bfast
 
