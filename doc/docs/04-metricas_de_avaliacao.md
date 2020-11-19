@@ -223,14 +223,13 @@ SET aux_desmat = 1
 WHERE aux_desmat is null AND classe != 'AGUA' AND classe != 'NATURAL' AND classe != 'NAO_OBSERVADO'
 ```
 
-Após a atribuição do valor 1 aos polígonos que foram detectados em áreas desmatadas, sobraram apenas pontos que foram anotados com a classe 'AGUA', 'NATURAL' ou 'NAO_OBSERVADO' de modo que estes pontos estão com valor `null` para o campo `aux_desmat`, portanto: 
+Após a atribuição do valor 1 aos polígonos que foram detectados em áreas desmatadas, sobraram apenas pontos que foram anotados com a classe 'AGUA', 'NATURAL' ou 'NAO_OBSERVADO' de modo que estes pontos estão com valor `null` para o campo `aux_desmat`, portanto:
 
 ``` sql
 UPDATE validacao_amostral
 SET aux_desmat = 0
 WHERE aux_desmat is null
 ```
-
 
 ### Cálculo de acurácia
 
@@ -250,7 +249,7 @@ O arquivo com todas as amostras utilizadas no cálculo da acurácia de 2019 est�
 
 ## Análise automática
 
-### Execucação do BFast-Monitor
+### Execução do BFast-Monitor
 
 Para atualização do Bfast-Monitor, é necessário três coisas:
 
@@ -260,6 +259,7 @@ Para atualização do Bfast-Monitor, é necessário três coisas:
 
 
 #### Criação do Shapefile com os Pixels MODIS
+
 Primeiramente, é importante informar que utilizamos a tabela `pixel_modis` no banco de dados que contém todos os pixels MODIS para a extensão do Cerrado, sendo assim necessária a filtragem para apenas os pixels MODIS que se encontram dentro das áreas desmatadas de interesse. 
 
 Este filtro pode ser alcançado através da construção de uma View no banco de dados com os polígonos PRODES-Cerrado de interesse. Para exemplificar, criamos uma View que filtram os polígonos PRODES-Cerrado detectados em 2019 com o comando SQL abaixo:
@@ -295,12 +295,12 @@ Após a criação da View `prodes_2019`, é necessária a criação de um Shapef
 ``` sh
 $ pgsql2shp -f <filename.shp> -h <hostname> -u <db_user> -P <db_password> <db_name> "select ST_X(pixel.geom) as lon, ST_Y(pixel.geom) as lat, p.gid as seq_id, pixel.geom as geom from pixel_modis pixel inner join prodes_2019 p on ST_INTERSECTS(p.geom, pixel.geom)"
 ```
-O comando acima deverá criar um arquivo `filename.shp` com os pixels MODIS para os desmatamentos PRODES-Cerrado 2019 no local onde foi executado. 
+
+O comando acima deverá criar um arquivo `filename.shp` com os pixels MODIS para os desmatamentos PRODES-Cerrado 2019 no local onde foi executado.
 
 #### Execução do MDC e criação da série MODIS
 
 Inicialmente é necessário realizar o download do projeto [MDC](https://github.com/lapig-ufg/mdc). Em seguida, deve-se instalar todas as dependências listadas no projeto. Em seguida, extraia o arquivo `MRT.zip` e altere o parâmetro `path_mrt` no arquivo `mdc/src/conf/datasources.conf` para a localização da pasta extraída. 
-
 
 Para iniciar o processamento da série temporal, execute os passos definidos no Readme.md do projeto MDC, e por fim, execute o comando abaixo que deverá criar toda a série temporal para o Brasil do período de 01 de Janeiro de 2000 até 01 de Janeiro de 2020. Portanto, para datas futuras, deve-se alterar os parâmetros `-s` e `-e`.
 
@@ -333,11 +333,13 @@ Por fim, exeute o comando abaixo para criação de um arquivo único TIF, també
 $ nohup gdal_translate -co TILED=YES -co COMPRESS=lzw -co BIGTIFF=YES -co INTERLEAVE=PIXEL ../<nome_arquivo_VRT>.vrt ../<nome_arquivo_TIF>.tif > saida.out &
 ```
 
-Para inserir a série temporal gerada no Cerrado DPAT, é necessário mover os arquivos `<nome_arquivo_TIF>.tif` e `<nome_arquivo_VRT>.vrt` para dentro da pasta `catalog/time_series_db` na localização da pasta `catalog` configurada no [OWS Server](/04-metricas_de_avaliacao/#Deploy). Em seguida, altere a propriedade `file` na chave `[MOD13Q1_NDVI]` no arquivo de configuração [`layers.ini`](https://github.com/lapig-ufg/d-pat/blob/master/src/server/integration/py/time-series/conf/layers.ini) (que disponibiliza a série temporal via serviço no Cerrado DPAT) para `<nome_arquivo_TIF>.tif`. 
+Para inserir a série temporal gerada no Cerrado DPAT, é necessário mover os arquivos `<nome_arquivo_TIF>.tif` e `<nome_arquivo_VRT>.vrt` para dentro da pasta `catalog/time_series_db` na localização da pasta `catalog` configurada no [OWS Server](/02-arq_execucao_dpat/#execucao-do-ows-server). Em seguida, altere a propriedade `file` na chave `[MOD13Q1_NDVI]` no arquivo de configuração [`layers.ini`](https://github.com/lapig-ufg/d-pat/blob/master/src/server/integration/py/time-series/conf/layers.ini) (que disponibiliza a série temporal via serviço no Cerrado DPAT) para `<nome_arquivo_TIF>.tif`. 
+
+Vale ressaltar que a série temporal MODIS criada de Janeiro de 2000 até Agosto de 2020 está atualizada no arquivo [`DADOS_RASTER_CATALOG_FIP_CERRADO.tar.gz`](https://drive.google.com/file/d/1L2pW2PudSsmwGQMhPGXbZd5sJvBmEcSW/view?usp=sharing) com nome `pa_br_mod13q1_ndvi_250_2000_2020.tif` dentro da subpasta `time_series_db`. 
 
 #### Execução dos scripts de atualização do Bfast
 
-Após a criação da série MODIS para o Brasil, é necessária a execução do algoritmo Bfast-Monitor para os pixels filtrados. Primeiramente é necessário alterar o arquivo `bfast.R` na linha 38 (descrita abaixo), indicando corretamente a localização do arquivo com a série MODIS processada.
+Após a criação da série MODIS para o Brasil, é necessária a execução do algoritmo Bfast-Monitor para os pixels filtrados. Primeiramente é necessário alterar o arquivo `bfast.R` na linha 38 (descrita abaixo), indicando corretamente a localização do arquivo BigTIF com a série MODIS processada.
 
 ``` R
 ndvi <- brick("<localização_arquivo_serie_MODIS.tif>")
@@ -440,7 +442,7 @@ Da mesma forma, para os polígonos do DETER-Cerrado foi observado que apenas 14%
 
 #### Cruzamento com suceptibilidade
 
-Após atualização dos dados PRODES-Cerrado e/ou DETER-Cerrado, é necessária a atualização das colunas `sucept_desmat_peq` e `sucept_desmat_grd` que representam a susceptibilidade a desmatamentos grandes e pequenos dos polígonos PRODES-Cerrado. Para tal, é necessário obter os arquivos .TIF com as superfícies geradadas no [link](https://drive.google.com/drive/folders/1JYhWBHPOZAPKHjJxp-gzA1bGABwctAWk). O arquivo `FIP_CERRADO.tar.gz` possui todos dados Raster presentes no DPAT, para tal descompacte a pasta FIP para obter ambas as superfícies.
+Após atualização dos dados PRODES-Cerrado e/ou DETER-Cerrado, é necessária a atualização das colunas `sucept_desmat_peq` e `sucept_desmat_grd` que representam a susceptibilidade a desmatamentos grandes e pequenos dos polígonos PRODES-Cerrado. Para tal, é necessário obter os arquivos .TIF com as superfícies geradadas no [link](https://drive.google.com/file/d/1L2pW2PudSsmwGQMhPGXbZd5sJvBmEcSW/view?usp=sharing). O arquivo `DADOS_RASTER_CATALOG_FIP_CERRADO.tar.gz` possui todos dados Raster presentes no DPAT, para tal descompacte a pasta FIP para obter ambas as superfícies.
 
 Primeiramente, deve-se instalar as dependências do python e as bibliotecas para execução do script `run_zonal_susceptibilidade.py`. Portanto, execute o script [install_dependences.sh](https://github.com/lapig-ufg/d-pat/blob/master/src/server/scripts/susceptibilidade/install_dependences.sh): 
 
