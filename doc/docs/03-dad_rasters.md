@@ -24,72 +24,21 @@ Após a descompactação do arquivo `DADOS_RASTER_CATALOG_FIP_CERRADO.tar.gz` os
 ### Mosaicos Landsat
 Os mosaicos Landsat disponibilizados para visualização no Cerrado DPAT são os mesmos utilizados pelo INPE para inspeção visual e detecção das áreas desmatadas pelo sistema PRODES-Cerrado. Tais imagens podem ser [baixadas pelo portal Earth Explorer](https://earthexplorer.usgs.gov/) de acordo com a data e a órbita-ponto presentes no arqivo shapefile [disponibilizado pelo INPE no portal Terrabrasilis](http://terrabrasilis.dpi.inpe.br/download/dataset/cerrado-prodes/vector/yearly_deforestation_2002_2019_cerrado_biome.zip). Após o download do arquivo compactado correspondente a cada imagem, devem ser criadas composições multibandas com as bandas do vermelho, infravermelho, e infravermelho de ondas curtas. Uma outra forma mais simples para a obtenção destas imagens é o contato direto com a equipe do LAPIG através do e-mail cerradodpat.lapig@ufg.br.
 
-Com as imagens devidamente armazenadas, dois scripts correspondentes ao recorte do limite util da cena e a criação do mosaico de cada ano, são executados simultaneamente por meio da execução do arquivo ``run.sh`` (primeiro script abaixo) que irá chamar o arquivos ``clip_landsat.sh`` (segundo script abaixo).
+Com as imagens devidamente armazenadas, dois scripts correspondentes ao recorte do limite util da cena e a criação do mosaico das imagens de cada ano são executados simultaneamente por meio da execução do arquivo [run.sh](sh/run.sh) , que irá chamar o arquivo [clip_landsat.sh](sh/clip_landsat.sh). Uma edição no arquivo run.shp é necessária antes da sua respectiva execução.
+
+``INPUT_DIR=""`` Diretório "raiz" para as cenas isoladas de cada ano (linha 3).  
+``OUTPUT_DIR=""`` Diretório de saída com ox mosaicox de cada ano (linha 4).  
+``DIRS=""`` Diretórios com os anos a serem mosaicados. (linha 5)  
+
+Em seguida, executar o comando para rodar o script:
 
 ```
-#run.sh
-
-#!/bin/bash
-
-INPUT_DIR="/Imagens/original"
-OUTPUT_DIR="/Imagens/clipped"
-DIRS="2000 2002 2004 2006 2008 2010 2012 2013 2014 2015 2016 2017 2018 2019"
-
-cd $INPUT_DIR
-for year in $DIRS; do
-	for file in $(find $year -name '*.tif'); do
-		wrs=$(echo "$file" | cut -d_ -f3)
-		../SHP/clip_landsat.sh $wrs $INPUT_DIR/$file $OUTPUT_DIR/$file 0
-	done
-done
-
-for year in $DIRS; do
-	gdal_merge.py -ot Int16 -co BIGTIFF=YES -co COMPRESS=LZW -co TILED=True -n -1 -init -1000 -a_nodata -1000 -o $OUTPUT_DIR/$year-tmp.tif $OUTPUT_DIR/$year/*
-done
-
-for year in $DIRS; do
-	gdal_translate -co BIGTIFF=YES -co COMPRESS=LZW -co TILED=True -ot Byte -scale 0 255 1 255 $OUTPUT_DIR/$year-tmp.tif $OUTPUT_DIR/$year.tif
-done
-
-for year in $DIRS; do
-	rm -v $OUTPUT_DIR/$year-tmp.tif
-done
-
-for year in $DIRS; do
-	gdaladdo -ro $OUTPUT_DIR/$year.tif 2 4 8
-done
-```
-
-```
-#clip_landsat.sh
-
-#!/bin/bash
-
-INPUT_WRS=$1
-INPUT_RASTER=$2
-OUTPUT_RASTER=$3
-NODATA=$4
-
-PIXEL_SIZE="0.000273679007020"
-
-INPUT_GRID='/SHP/cerrado_limite_util_utmzone.shp'
-
-ogr2ogr -overwrite -f 'ESRI Shapefile' -where "wrs_img ='$INPUT_WRS'" $INPUT_WRS.shp $INPUT_GRID
-
-BASE=`basename $INPUT_WRS.shp .shp`
-EXTENT=`ogrinfo -so $INPUT_WRS.shp $BASE | grep Extent \
-| sed 's/Extent: //g' | sed 's/(//g' | sed 's/)//g' \
-| sed 's/ - /, /g'`
-EXTENT=`echo $EXTENT | awk -F ',' '{print $1 " " $4 " " $3 " " $2}'`
-
-gdalwarp -r lanczos -tap -tr $PIXEL_SIZE $PIXEL_SIZE -ot Int16 -srcnodata -1 -dstnodata -1  \
-		-overwrite -co INTERLEAVE=BAND -co COMPRESS=LZW -co TILED=TRUE -t_srs 'EPSG:4674' -cblend 2 -cutline $INPUT_WRS.shp \
-		$INPUT_RASTER $OUTPUT_RASTER
+sh run.sh
 ```
 
 ### Mosaicos Sentinel-2
 
-As imagens Sentinel-2 foram baixadas por meio da plataforma [Google Earth Engine](https://earthengine.google.com/). Devido a caracteristica sazonal do biona Cerrado, um mesmo alvo pode apresentar diferentes respostas espectrais durante os diferentes meses do ano. Assim, para que o mosaico apresentasse um padrão mais homogêneo entre as cenas, buscou-se por imagens dentro de um curto periodo de tempo. Foram priorizadas imagens para o periodo de um mês. No caso da indisponibilidade de imagens sem nuvens, o periodo foi estendido até que o intervalo entre maio e outubro fosse alcançado. Destaca-se também que diferentes padrões climáticos podem ser encontrado no bioma, dificultando assim a identificação de imagens sem nuvens. Dessa forma, diferentes geometrias foram criadas para a seleção de imagens em regiões específicas (ex: norte do bioma, próximo ao litoral maranhense). O código para o download do mosaico Sentinel-2 [encontra-se disponivel para acesso](https://code.earthengine.google.com/.8b492413a68c9f050930bf4c01da8e0c).
+As imagens Sentinel-2 foram baixadas por meio da plataforma [Google Earth Engine](https://earthengine.google.com/). Devido a caracteristica sazonal do biona Cerrado, um mesmo alvo pode apresentar diferentes respostas espectrais durante os diferentes meses do ano. Assim, para que o mosaico apresentasse um padrão mais homogêneo entre as cenas, buscou-se por imagens dentro de um curto periodo de tempo. Foram priorizadas imagens para o periodo de um mês. No caso da indisponibilidade de imagens sem nuvens, o periodo foi estendido até que o intervalo entre maio e outubro fosse alcançado. Destaca-se também que diferentes padrões climáticos podem ser encontrado no bioma, dificultando assim a identificação de imagens sem nuvens. Dessa forma, diferentes geometrias foram criadas para a seleção de imagens em regiões específicas (ex: norte do bioma, próximo ao litoral maranhense). O código para o download do mosaico Sentinel-2 [encontra-se disponivel para acesso](https://code.earthengine.google.com/e45dab08c30a7e688558032a30382792).
 
 Devido ao limite de tamanho, o mosaico baixado é dividido em tiles. A junção dos tiles em um único arquivo é feita a partir dos comandos gdalbuildvrt e gdal_translate presentes no pacote GDAL.
 

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<script>
+    <property key="dff.charset" value="windows-1252" />
+    <property key="dff.date" value="2020-Sep-16 18:14:01" />
+    <property key="dff.version" value="5.1.0.20200628" />
+    <property key="metadata.author" value="Sérgio Nogueira" />
+    <property key="metadata.organization" value="Laboratório de Processamento de Imagens e Geoprocessamento da Universidade Federal de Goiás (LAPIG-UFG)" />
+    <containerfunctor name="Group">
+        <property key="dff.container.collapsed" value="yes" />
+        <property key="dff.functor.alias" value="MÃ©tricas" />
+        <property key="dff.functor.extendedcomment" value="Usar Load Categorical Map para mÃ©tricas categÃ³rica, e Load Map para mÃ©tricas continuas." />
+        <inputport name="sequenceInput">.none</inputport>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap779" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/altitude.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v1" />
+        </functor>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap781" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/property_size.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v2" />
+        </functor>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap783" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/dens_silos.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v3" />
+        </functor>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap782" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/precipitation.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v4" />
+        </functor>
+        <functor name="LoadCategoricalMap">
+            <property key="dff.functor.alias" value="loadCategoricalMap778" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/geomorphology.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v5" />
+        </functor>
+        <functor name="LoadCategoricalMap">
+            <property key="dff.functor.alias" value="loadCategoricalMap777" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/property_cat.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v6" />
+        </functor>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap785" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/dist_roads.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v7" />
+        </functor>
+        <functor name="LoadCategoricalMap">
+            <property key="dff.functor.alias" value="loadCategoricalMap775" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/soil_texture.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v8" />
+        </functor>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap784" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/dist_anthropic.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v9" />
+        </functor>
+        <functor name="LoadCategoricalMap">
+            <property key="dff.functor.alias" value="loadCategoricalMap776" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/soil_class.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v10" />
+        </functor>
+        <functor name="LoadMap">
+            <property key="dff.functor.alias" value="loadMap780" />
+            <inputport name="filename">&quot;../dataset/raster/250m/metrics/slope.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v11" />
+        </functor>
+    </containerfunctor>
+    <containerfunctor name="Group">
+        <property key="dff.container.collapsed" value="yes" />
+        <property key="dff.functor.alias" value="Paisagens" />
+        <inputport name="sequenceInput">.none</inputport>
+        <functor name="LoadCategoricalMap">
+            <property key="dff.functor.alias" value="Paisagem Inicial" />
+            <inputport name="filename">&quot;../dataset/raster/250m/landscapes/landscape_t1_2012.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v12" />
+        </functor>
+        <functor name="LoadCategoricalMap">
+            <property key="dff.functor.alias" value="Paisagem Final" />
+            <inputport name="filename">&quot;../dataset/raster/250m/landscapes/landscape_t2_2017.tif&quot;</inputport>
+            <inputport name="nullValue">.none</inputport>
+            <inputport name="storageMode">.default</inputport>
+            <inputport name="suffixDigits">0</inputport>
+            <inputport name="step">.none</inputport>
+            <inputport name="workdir">.none</inputport>
+            <outputport name="map" id="v13" />
+        </functor>
+    </containerfunctor>
+    <functor name="SaveTable">
+        <property key="dff.functor.alias" value="saveTable938" />
+        <inputport name="table" peerid="v16" />
+        <inputport name="filename">&quot;../outputs/tables/weights_report.csv&quot;</inputport>
+        <inputport name="suffixDigits">2</inputport>
+        <inputport name="step">.none</inputport>
+        <inputport name="workdir">.none</inputport>
+    </functor>
+    <functor name="SaveWeights">
+        <property key="dff.functor.alias" value="saveWeights939" />
+        <inputport name="weights" peerid="v15" />
+        <inputport name="filename">&quot;../outputs/tables/weights.dcf&quot;</inputport>
+        <inputport name="suffixDigits">2</inputport>
+        <inputport name="step">.none</inputport>
+        <inputport name="workdir">.none</inputport>
+    </functor>
+    <functor name="LoadTable">
+        <property key="dff.functor.alias" value="loadTable940" />
+        <inputport name="filename">&quot;../outputs/tables/ranges.csv&quot;</inputport>
+        <inputport name="uniqueIdKeyColumnCreation">.ifNecessary</inputport>
+        <inputport name="suffixDigits">0</inputport>
+        <inputport name="step">.none</inputport>
+        <inputport name="workdir">.none</inputport>
+        <outputport name="table" id="v14" />
+    </functor>
+    <containerfunctor name="DetermineWeightsOfEvidenceCoefficients">
+        <property key="dff.container.collapsed" value="yes" />
+        <property key="dff.functor.alias" value="determineWeightsOfEvidenceCoefficients941" />
+        <property key="viewer.report" value="yes" />
+        <inputport name="initialLandscape" peerid="v12" />
+        <inputport name="finalLandscape" peerid="v13" />
+        <inputport name="ranges" peerid="v14" />
+        <inputport name="fixAbnormalWeights">.no</inputport>
+        <outputport name="weights" id="v15" />
+        <outputport name="report" id="v16" />
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap981" />
+            <inputport name="map" peerid="v5" />
+            <inputport name="mapName">&quot;geomorphology&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap982" />
+            <inputport name="map" peerid="v2" />
+            <inputport name="mapName">&quot;property_size&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap983" />
+            <inputport name="map" peerid="v3" />
+            <inputport name="mapName">&quot;dens_silos&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap984" />
+            <inputport name="map" peerid="v4" />
+            <inputport name="mapName">&quot;precipitation&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap985" />
+            <inputport name="map" peerid="v1" />
+            <inputport name="mapName">&quot;altitude&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap986" />
+            <inputport name="map" peerid="v6" />
+            <inputport name="mapName">&quot;property_cat&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap987" />
+            <inputport name="map" peerid="v7" />
+            <inputport name="mapName">&quot;dist_roads&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap988" />
+            <inputport name="map" peerid="v8" />
+            <inputport name="mapName">&quot;soil_texture&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap989" />
+            <inputport name="map" peerid="v9" />
+            <inputport name="mapName">&quot;dist_anthropic&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap990" />
+            <inputport name="map" peerid="v10" />
+            <inputport name="mapName">&quot;soil_class&quot;</inputport>
+        </functor>
+        <functor name="NameMap">
+            <property key="dff.functor.alias" value="nameMap991" />
+            <inputport name="map" peerid="v11" />
+            <inputport name="mapName">&quot;slope&quot;</inputport>
+        </functor>
+    </containerfunctor>
+</script>
