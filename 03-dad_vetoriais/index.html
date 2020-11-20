@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Luiz Pascoal e Sérgio Nogueira">
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Vetoriais - Documentação - Cerrado DPAT</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Vetoriais";
+    var mkdocs_page_input_path = "03-dad_vetoriais.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Documentação - Cerrado DPAT</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">HOME</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Guia do usuário</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_dados_geograficos/">Dados Geográficos</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_metricas_de_qualidade/">Métricas de Qualidade</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_funcionalidades/">Funcionalidades</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_relatorios/">Relatórios</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Arquitetura de Software</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_geral/">Visão geral</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_servidor_de_aplicacao/">Servidor de aplicação</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Dados</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Vetoriais</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#banco-de-dados-e-mer">Banco de dados e MER</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#principais-entidades">Principais entidades</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#processo-de-atualizacao">Processo de atualização</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#prodes-cerrado">PRODES Cerrado</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deter-cerrado">DETER Cerrado</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cadastro-ambiental-rural-car">Cadastro Ambiental Rural (CAR)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cruzamentos-espaciais-entre-os-dados">Cruzamentos espaciais entre os dados</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#prodes-e-deter-cerrado-com-o-car">PRODES e DETER-Cerrado com o CAR</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#prodes-cerrado-com-os-pontos-da-validacao-de-campo">PRODES-Cerrado com os pontos da Validação de Campo</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#prodes-cerrado-com-os-pontos-da-validacao-amostral">PRODES-Cerrado com os pontos da Validação Amostral</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#prodes-cerrado-com-todas-regioes-municipios-e-estados-em-relacao-ao-uso-do-solo">PRODES-Cerrado com todas regiões (Municípios e Estados) em relação ao uso do solo.</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-dad_rasters/">Rasters</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-metricas_de_avaliacao/">Métricas de Avaliação</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Documentação - Cerrado DPAT</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Dados &raquo;</li>
+        
+      
+    
+    <li>Vetoriais</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="dados-vetoriais">Dados Vetoriais</h1>
+<p>TODO</p>
+<h2 id="banco-de-dados-e-mer">Banco de dados e MER</h2>
+<p>TODO</p>
+<h3 id="principais-entidades">Principais entidades</h3>
+<p>TODO</p>
+<h2 id="processo-de-atualizacao">Processo de atualização</h2>
+<p>Diversos dados presentes na plataforma Cerrado DPAT são periodicamente atualizados pelas instituições competentes. Desta forma, a medida que os mesmos são atualizados e disponibilizados pelas instituições também é necessário realizar a atualização no banco de dados do Cerrado DPAT.</p>
+<h3 id="prodes-cerrado">PRODES Cerrado</h3>
+<p>TODO</p>
+<h3 id="deter-cerrado">DETER Cerrado</h3>
+<p>Devido a constante revisão do DETER-Cerrado, onde polígonos de desmatamento são reanalisados e validados antes de sua consolidação no PRODES-Cerrado, ao atualizar este produto é necessário excluir todos os dados anteriores sobre ele e inserir o novo por completo. Para tal, o primeiro passo é excluir os registros na tabela <code>deter_cerrado</code>.</p>
+<pre><code class="language-sql">TRUNCATE TABLE deter_cerrado RESTART IDENTITY;
+</code></pre>
+<p>Em seguida, deve-se realizar o download do <a href="http://terrabrasilis.dpi.inpe.br/geonetwork/srv/eng/catalog.search#/metadata/e6e15388-4ca9-49b9-aec9-03891339a35e">Shapefile</a> com todos os Avisos Deter-Cerrado e em seguida pode-se inserir o shape em uma tabela temporária no banco de dados, nomeada <code>deter_public</code>, através do comando:</p>
+<pre><code class="language-sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; deter_public.shp public.deter_public | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
+</code></pre>
+<p>Com o shape carregado na tabela <code>deter_public</code> no banco de dados, basta popular a tabela <code>deter_cerrado</code> com o seguinte comando em SQL:</p>
+<pre><code class="language-sql">insert into deter_cerrado (classname, path_row, view_date, sensor, satellite, areamunkm, county, uf, uc, geom)
+select classname, path_row, view_date, sensor, satellite, areamunkm, municipali, uf, uc, geom from deter_public
+</code></pre>
+<h3 id="cadastro-ambiental-rural-car">Cadastro Ambiental Rural (CAR)</h3>
+<pre><code class="language-sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; car.shp public.car_cerrado_temp | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
+</code></pre>
+<h3 id="cruzamentos-espaciais-entre-os-dados">Cruzamentos espaciais entre os dados</h3>
+<h4 id="prodes-e-deter-cerrado-com-o-car">PRODES e DETER-Cerrado com o CAR</h4>
+<p>Após realizar a atualização dos dados PRODES-Cerrado, DETER-Cerrado e do CAR é necessário realizar os cruzamentos espaciais entre estes dados. Portanto, primeiramente é importante apagar os registros anteriores. Inicialmente iremos apagar a tabela de relacionamento entre os dados do CAR e os polígonos PRODES e DETER-Cerrado.</p>
+<pre><code class="language-sql">TRUNCATE TABLE car_desmat RESTART IDENTITY;
+</code></pre>
+<p>Em seguida, inicialmente deve-se inserir (em relação de 1:1) o cruzamento entre as propriedades do CAR e os polígonos PRODES-Cerrado na tabela <code>car_desmat</code>:</p>
+<pre><code class="language-sql">insert into car_desmat (car_cerrado_id, idt_imovel, prodes_id)
+select car.gid, car.idt_imovel, prodes.gid from car_cerrado car 
+inner join prodes_cerrado prodes on ST_INTERSECTS(car.geom, prodes.geom) where prodes.year &gt;= 2013
+</code></pre>
+<p>Após o PRODES-Cerrado, insere-se os cruzamentos com o DETER-Cerrado:</p>
+<pre><code class="language-sql">insert into car_desmat (car_cerrado_id, idt_imovel, deter_id)
+select car.gid, car.idt_imovel, prodes.gid from car_cerrado car 
+inner join deter_cerrado prodes on ST_INTERSECTS(car.geom, prodes.geom)
+</code></pre>
+<p>Com as relações criadas, atualiza-se a tabela <code>car_desmat</code> com a quantidade de nascentes e cada desmatamento detectado dentro de uma propriedade rural:</p>
+<pre><code class="language-sql">update car_desmat
+set qnt_nascente = sub.qnt 
+from 
+    (
+      select c.car_cerrado_id as internocar, c.prodes_id as internoprodes, count(rl.gid) as qnt
+      from geo_car_nascente_cerrado rl
+      inner join car_desmat c on c.idt_imovel = rl.idt_imovel 
+      group by 1,2
+     ) as sub 
+where sub.internocar = car_desmat.car_cerrado_id and sub.internoprodes = car_desmat.prodes_id
+</code></pre>
+<h4 id="prodes-cerrado-com-os-pontos-da-validacao-de-campo">PRODES-Cerrado com os pontos da Validação de Campo</h4>
+<p>Após atualização dos dado PRODES-Cerrado, é necessária a atualização da referência ao polígono PRODES-Cerrado em relação aos pontos visitados durante a validação de campo. Para tal, executasse a seguinte query:</p>
+<pre><code class="language-sql">UPDATE pontos_campo
+set prodes_id = p.gid
+from prodes_cerrado p
+where pontos_campo.prodes_id is null and ST_INTERSECTS(p.geom, pontos_campo.geom)
+</code></pre>
+<p>Em seguida, realiza-se o mesmo processo em relação aos polígonos DETER-Cerrado:</p>
+<pre><code class="language-sql">UPDATE pontos_campo
+set deter_id = d.gid
+from deter_cerrado d
+where pontos_campo.deter_id is null and ST_INTERSECTS(d.geom, pontos_campo.geom)
+</code></pre>
+<h4 id="prodes-cerrado-com-os-pontos-da-validacao-amostral">PRODES-Cerrado com os pontos da Validação Amostral</h4>
+<p>Após atualização dos dado PRODES-Cerrado, é necessária a atualização da referência ao polígono PRODES-Cerrado em relação aos pontos inspecionados durante a validação amostral. Para tal, executasse a seguinte query:</p>
+<pre><code class="language-sql">UPDATE validacao_amostral
+set prodes_id = p.gid
+from prodes_cerrado p
+where validacao_amostral.prodes_id is null and ST_INTERSECTS(p.geom, validacao_amostral.geom)
+</code></pre>
+<h4 id="prodes-cerrado-com-todas-regioes-municipios-e-estados-em-relacao-ao-uso-do-solo">PRODES-Cerrado com todas regiões (Municípios e Estados) em relação ao uso do solo.</h4>
+<p>Após atualização do PRODES-Cerrado, também é necessário o cálculo da proporção de desmatamento em cada tipo de uso do solo para os polígonos recém inseridos no banco de dados. Desta forma, para calcular e inserir no banco esta informação para estados e municípios respectivamente deve-se executar as seguintes queries:</p>
+<pre><code>Terraclass
+</code></pre>
+<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+select r.gid, p.year, 'state', lc.classe, g.color,
+    sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'terraclass'
+from regions r
+inner join uso_solo_terraclass lc on r.value = lc.uf
+inner join prodes_cerrado p on r.value = p.uf
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
+    where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt;= 2013 group by 1,2,3,4,5;
+</code></pre>
+<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+select r.gid, p.year, 'city', lc.classe, g.color,
+    sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'terraclass'
+from regions r
+inner join uso_solo_probio lc on r.cd_geocmu = lc.cd_geocmu
+inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
+    where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2012 group by 1,2,3,4,5;
+</code></pre>
+<pre><code>PROBIO
+</code></pre>
+<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+select r.gid, p.year, 'state', lc.classe, g.color,
+    sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'probio'
+from regions r
+inner join uso_solo_probio lc on r.value = lc.uf
+inner join prodes_cerrado p on r.value = p.uf
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_probio'
+where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2013 group by 1,2,3,4,5;
+</code></pre>
+<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+select r.gid, p.year, 'city', lc.classe, g.color,
+    sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'probio'
+from regions r
+inner join uso_solo_probio lc on r.cd_geocmu = lc.cd_geocmu
+inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_probio'
+    where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2012 group by 1,2,3,4,5;
+</code></pre>
+<pre><code>Agrosatélite
+</code></pre>
+<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+select r.gid, p.year, 'state', lc.classe, g.color,
+    sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'agrosatelite'
+from regions r
+inner join uso_solo_terraclass lc on r.value = lc.uf
+inner join prodes_cerrado p on r.value = p.uf
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
+    where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt;= 2013 group by 1,2,3,4,5;
+</code></pre>
+<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+select r.gid, p.year, 'city', lc.classe, g.color,
+    sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'agrosatelite'
+from regions r
+inner join uso_solo_probio lc on r.cd_geocmu = lc.cd_geocmu
+inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'agricultura_agrosatelite'
+    where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2012 group by 1,2,3,4,5;
+</code></pre>
+<p>Por fim, é necessário ajustar algumas colunas da tabela <code>prodes_regions_lulc</code>, tais como a <code>total_area_classe_lulc</code> que representa o total da área de cada classe de uso solo dos mapas. Para facilitar, os comandos foram reunidos neste <a href="">arquivo</a> sql. Portanto, basta fazer download do script e executá-lo em um terminal SQL.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../03-dad_rasters/" class="btn btn-neutral float-right" title="Rasters">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../02-arq_servidor_de_aplicacao/" class="btn btn-neutral" title="Servidor de aplicação"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../02-arq_servidor_de_aplicacao/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../03-dad_rasters/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
