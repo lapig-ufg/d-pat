@@ -1,6 +1,6 @@
-# Deployment do Cerrado DPAT
+# Introdução
 
-Para execução do Cerrado DPAT são necessárias 3 estruturas criadas e funcionais na máquina do usuário:
+Conforme detalhado na seção [Arquitetura de Software](/02-arq_geral), para execução do Cerrado DPAT são necessárias 3 estruturas criadas e funcionais na máquina do usuário:
 
 1. O Banco de Dados `fip_cerrado` restaurado no serviço do PostgreSQL devidamente instalado com a extensão PostGis.
 
@@ -49,14 +49,14 @@ Agora de fato pode-se restaurar o banco de dados baixado e extraído para a data
 $ pg_restore -U fip_cerrado -h <host_address> -v -j 24 --format=d -C -d fip_cerrado fip_cerrado.sql/
 ```
 
-Por fim, com o banco restaurado, deve-se criar/executar algumas funções auxiliares SQL para criação das [Materialized Views](https://www.postgresqltutorial.com/postgresql-materialized-views/) e algumas funções SQL customizadas para o Cerrado DPAT. Para tal, deve-se acessar o [arquivo .sql]() e executá-lo da seguinte forma:
+Por fim, com o banco restaurado, deve-se criar/executar algumas funções auxiliares SQL para criação das [Materialized Views](https://www.postgresqltutorial.com/postgresql-materialized-views/) e algumas funções SQL customizadas para o Cerrado DPAT. Para tal, deve-se acessar o [arquivo .sql](https://github.com/lapig-ufg/d-pat/blob/master/src/server/scripts/bd_funcoes/ImportantFunctions.sql) e executá-lo da seguinte forma:
 
 ``` sh
 $ psql -h <host_address> -U <db_user> -d fip_cerrado -a -f <ImportantFunctions.sql>
 ```
 
 
-## Execução do OWS Server
+## Deployment do OWS Server
 
 A fim facilitar/automatizar todo o processo de execução do OWS Server foi criado um script que executa todos os passos necessários. Este script deverá executar as seguintes tarefas:
 
@@ -123,7 +123,7 @@ $ cd /APP/lapig-maps/src/ows/log
 $ tail -f ows-mapserv.log
 ```
 
-## Execução da aplicação Cerrado DPAT
+## Deployment da aplicação Cerrado DPAT
 
 Para execução do Cerrado DPAT é importante ressaltar que o Banco de Dados deve estar restaurado e acessível conforme abordado na [seção](/02-arq_execucao_dpat/#restaurando-e-disponibilizando-o-banco-de-dados-fip-cerrado) e também deve-se ter o [OWS Server](/02-arq_execucao_dpat/#execucao-do-ows-server) funcionando corretamente.
 
@@ -156,7 +156,7 @@ NDVI_DOMAIN='127.0.0.1:4200'
 
 ### Ambiente de Desenvolvimento
 
-Assim como abordado na [seção], o Cerrado DPAT foi construído com NodeJS como *Application Server* e Angular como cliente (*WebMap Client*). Portanto, primeiramente é necessária a instalação destes componentes na máquina do desenvolvedor. Para tal, pode-se seguir o passo-a-passo elaborado neste [link](https://www.tecmint.com/install-angular-cli-on-linux/)
+Assim como abordado na [seção](/02-arq_geral/#arquitetura-de-software), o Cerrado DPAT foi construído com NodeJS como *Application Server* e Angular como cliente (*WebMap Client*). Portanto, primeiramente é necessária a instalação destes componentes na máquina do desenvolvedor. Para tal, pode-se seguir o passo-a-passo elaborado neste [link](https://www.tecmint.com/install-angular-cli-on-linux/)
 
 Para execução do Cerrado DPAT em ambiente de desenvolvimento, primeiramente é necessário realizar um [`fork`](https://github.com/UNIVALI-LITE/Portugol-Studio/wiki/Fazendo-um-Fork-do-reposit%C3%B3rio) do projeto para a sua conta pessoal do Github e em seguida executar um [`git clone`](https://docs.github.com/pt/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/cloning-a-repository) do [repositório do projeto](https://github.com/lapig-ufg/d-pat).
 
@@ -186,8 +186,30 @@ http://localhost:4200
 
 ### Ambiente de Produção
 
+Em seguida, uma segunda maneira de disponibilizar o Cerrado DPAT é em ambiente de produção. É importante ressaltar que o *OWS Server* deve estar executando para que o Cerrado DPAT faça as requisições de imagens das diferentes camadas utilizadas pelo sistema.
 
+Para facilitar o processo de *deployment* em produção, foi criado um [script](https://drive.google.com/file/d/1JFpmJtAHU37jYrBeAJ8BEjmiEeuSn7XQ/view?usp=sharing) que realiza todos os passos necessários para execução do Cerrado DPAT em produção. Para executar o script basta executar em um Terminal:
+
+``` sh
+$ ./start-dpat.sh
+```
+
+Assim como detalhado na seção de [Deployment do OWS Server](/02-arq_execucao_dpat/#execucao-do-ows-server), este script irá pedir ao usuário que informe os parâmetros **endereço, nome, porta, usuário e senha** do Banco de Dados, de forma a alterar corretamente o arquivo de configuração do ambiente, `.env` corretamente.
+
+Em seguida, após pedir as informações do Banco de Dados, o script irá pedir ao usário que informe o local onde a estrutura de pastas do Cerrado DPAT deverá ser criada e também qual o endereço de IP da máquina de produção onde será realizado o *deployment* assim como informado nas imagens abaixo.
+
+![Senha do BD](imgs/02/ows-standalone/dpat-1.png)
+
+![Senha do BD](imgs/02/ows-standalone/dpat-2.png)
+
+Basicamente o script deverá criar e ajustar automaticamente as variáveis de ambiente do Cerrado DPAT, realizar o download e importação do [contâiner docker](https://drive.google.com/file/d/1QKiBeo9II2auQik1jJdBACnHp4qrfc0f/view?usp=sharing) onde todas as dependências do projeto já estão devidamente ajustadas e executar os passos necessários para compilar e disponibilizar a aplicação no endereço de IP informado na execução do script na **porta 3000**, assim como apresentado na imagem abaixo.
 
 ## Script completo com execução completa para Produção
 
+Por fim, também foi criado um [script](https://drive.google.com/file/d/1V6jRqeOUpqApvpaARRRB_iiN7D3GlFAV/view?usp=sharing) que realiza todos os passos abordados nas seções [Deployment do OWS Server](/02-arq_execucao_dpat/#execucao-do-ows-server) e [Deployment do Cerrado DPAT](/02-arq_execucao_dpat/#execucao-da-aplicacao-cerrado-dpat). Para tal, basta executar em Terminal.
 
+``` sh
+$ ./start-dpat+ows.sh
+```
+
+Após execução dos scripts o OWS Server estará executando na máquina do usuário na porta **5000** e o Cerrado DPAT também na máquina do usuário na porta **3000**.

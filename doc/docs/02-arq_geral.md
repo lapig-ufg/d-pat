@@ -1,5 +1,5 @@
 # Arquitetura de software
-O Cerrado DPAT foi desenvolvido de acordo com os padrões de interoperabilidade definidos pela *Open Geospatial Consortium* ([OGC](https://www.ogc.org/)) e a arquitetura de *webservices* com o padrão [REST](https://pt.wikipedia.org/wiki/REST)
+O Cerrado DPAT foi desenvolvido de acordo com os padrões de interoperabilidade definidos pela *Open Geospatial Consortium* ([OGC](https://www.ogc.org/)) e a arquitetura de *webservices* com o padrão [REST](https://pt.wikipedia.org/wiki/REST).
 
 
 ## Componentes de software

@@ -52,7 +52,7 @@ set uf = CASE
 END
 ```
 
-Além dos estados, caso as novas atualizações não possuam a identificação do município, deve-se verificar se o mesmo polígono de desmatamento se encontra em mais de um município ao mesmo tempo, o que pode ser alcançado com a query abaixo:
+Além dos estados, caso as novas atualizações não possuam a identificação do município, deve-se verificar se o mesmo polígono de desmatamento se encontra em mais de um município ao mesmo tempo, o que pode ser alcançado com a query abaixo. **Vale ressaltar que os passos descritos abaixo só devem ser executados caso o INPE não identifique o município onde ocorreu o desmatamento.**
 
 ``` sql
 SELECT prodes.gid, count(city.*)
