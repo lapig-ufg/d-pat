@@ -24,9 +24,9 @@
 
 > gdal > latest version LTS
 
-> numpy
+> numpy > latest version LTS
 
-> dateutila
+> dateutila > latest version LTS
 
-> scipy
+> scipy > latest version LTS
 
