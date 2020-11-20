@@ -1,6 +1,6 @@
 # Deforestation Polygon Assessment Tool
 
-## Prerequisites and necessary dependencies!:
+# Prerequisites and necessary dependencies!:
 
 Node.js > latest version LTS
 
