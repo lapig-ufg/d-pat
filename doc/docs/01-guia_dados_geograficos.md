@@ -1,6 +1,6 @@
 # Dados Geográficos
 
-Um conjunto de dados, disponibilizados por diferentes instituições, foi incorporado ao Cerrado DPAT com o objetivo de contextualizar os desmatamentos detectados pelos sistemas PRODES-Cerrado e DETER-Cerrado. Alguns destes dados passaram por um processo de revisão ou edição. Essas interferências foram necessárias para que dados não georreferenciados por meio de coordenadas (ex: lista com endereços de armazens e frigoríficos) pudessem ser incorporados ao banco de dados. 
+Com o objetivo de contextualizar os desmatamentos detectados pelos sistemas PRODES-Cerrado e DETER-Cerrado, um conjunto de dados disponibilizados por diferentes instituições foi incorporado ao Cerrado DPAT. Alguns destes dados passaram por um processo de revisão ou edição. Essas interferências foram necessárias para que dados não georreferenciados por meio de coordenadas (ex: lista com endereços de armazens e frigoríficos) pudessem ser incorporados ao banco de dados. 
 
 ## Desmatamento 
 
@@ -39,11 +39,11 @@ Um conjunto de dados, disponibilizados por diferentes instituições, foi incorp
 
 | Dado | Descrição | Data | Escala | Fonte | Detalhes | Baixar dado |
 | :-------: | :-------: | :-------: | :-------: |  :-------: |  :-------: |   :-------: |  
-| PROBIO Cerrado | Mapa de uso e cobertura da Terra. | 2002 | 1:250.000 | [Ministério do Meio Ambiente (MMA)](https://www.mma.gov.br/) | [Mapeamento semidetalhado do uso da terra do bioma Cerrado](http://dx.doi.org/10.1590/S0100-204X2008000100020) | Download |
-| TerraClass Cerrado | Mapa de uso e cobertura da Terra. | 2013 | 1:250.000 | [Ministério do Meio Ambiente (MMA)](https://www.mma.gov.br/) | [Projeto Terraclass Cerrado](https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado) | Download | 
+| PROBIO Cerrado | Mapa de uso e cobertura da Terra. | 2002 | 1:250.000 | [Ministério do Meio Ambiente (MMA)](https://www.mma.gov.br/) | [Mapeamento semidetalhado do uso da terra do bioma Cerrado](http://dx.doi.org/10.1590/S0100-204X2008000100020) | [Download](http://mapas.mma.gov.br/i3geo/datadownload.htm) |
+| TerraClass Cerrado | Mapa de uso e cobertura da Terra. | 2013 | 1:250.000 | [Ministério do Meio Ambiente (MMA)](https://www.mma.gov.br/) | [Projeto Terraclass Cerrado](https://www.mma.gov.br/publicacoes/biomas/category/62-cerrado?download=1139:mapeamento-do-uso-e-cobertura-da-terra-do-cerrado) | [Download](http://www.dpi.inpe.br/tccerrado/dados/2013/) | 
 | Vegetação pretérita | Mapa com as fisionomias existentes antes da conversão em área antríópica. | 2019 | 1:250.000 | [IBGE](https://www.ibge.gov.br/) | [Manual Técnico da Vegetação Brasileira](https://biblioteca.ibge.gov.br/index.php/biblioteca-catalogo?view=detalhes&id=263011) | [Download](https://geoftp.ibge.gov.br/informacoes_ambientais/vegetacao/vetores/escala_250_mil/versao_2019/)
-| Agricultura | Áreas cultivadas por soja, milho e algodão durante a safra 2013/14. | Safra 2013/14 | 1:250.000 | [Agrosatélite](https://agrosatelite.com.br/) | [Análise geoespacial da dinâmica das culturas anuais no bioma Cerrado](https://agrosatelite.com.br/wp-content/uploads/2019/03/Analise_geoespacial_da_dinamica_das_culturas_anuais_no_bioma_Cerrado_2000a2014.pdf) | Download |
-| Floresta Plantada | Recorte do mapeamento global de silvicultura para o bioma Cerrado disponibilizado pelo portal Global Forest Watch. | 2013-2014 | 1:250.000 | [Transparent World/Global Forest Watch (GFW)](http://terrabrasilis.dpi.inpe.br/) | [Mapping Tree Plantations with Multispectral Imagery: Preliminary Results for Seven Tropical Countries](https://www.wri.org/publication/mapping-tree-plantations?utm_campaign=plantations&utm_source=blog&utm_medium=learnmore&utm_term=technicalnote_plantations&utm_content=hyperlink) | Download |
+| Agricultura | Áreas cultivadas por soja, milho e algodão durante a safra 2013/14. | Safra 2013/14 | 1:250.000 | [Agrosatélite](https://agrosatelite.com.br/) | [Análise geoespacial da dinâmica das culturas anuais no bioma Cerrado](https://agrosatelite.com.br/wp-content/uploads/2019/03/Analise_geoespacial_da_dinamica_das_culturas_anuais_no_bioma_Cerrado_2000a2014.pdf) | - |
+| Floresta Plantada | Recorte do mapeamento global de silvicultura para o bioma Cerrado disponibilizado pelo portal Global Forest Watch. | 2013-2014 | 1:250.000 | [Transparent World/Global Forest Watch (GFW)](http://terrabrasilis.dpi.inpe.br/) | [Mapping Tree Plantations with Multispectral Imagery: Preliminary Results for Seven Tropical Countries](https://www.wri.org/publication/mapping-tree-plantations?utm_campaign=plantations&utm_source=blog&utm_medium=learnmore&utm_term=technicalnote_plantations&utm_content=hyperlink) | [Download](https://data.globalforestwatch.org/datasets/baae47df61ed4a73a6f54f00cb4207e0_5) |
 
 
 <br>
@@ -82,7 +82,7 @@ Um conjunto de dados, disponibilizados por diferentes instituições, foi incorp
 
 | Dado | Descrição | Data | Escala | Fonte | Detalhes | Baixar dado |
 | :-------: | :-------: | :-------: | :-------: |  :-------: |  :-------: |   :-------: |  
-| Mosaico Landsat | Imagens de satélite inspecionadas pelo INPE para a construção do PRODES-Cerrado. | 2000-2019 | 1:150.000 (resolução espacial de 30m) | NASA/USGS/INPE | [Landsat Missions](https://www.usgs.gov/core-science-systems/nli/landsat) | Download|
-| Mosaico Sentinel | Imagens de satélite com resulução espacial de 10 metros, com data diferente das imagens utilizadas para a produção do PRODES-Cerrado. | 2018-2019 | 1:50.000 (resolução espacial de 10m) | [ESA](https://www.esa.int/) | [Sentinel Missions](https://sentinel.esa.int/web/sentinel/home) | Download |
+| Mosaico Landsat | Imagens de satélite inspecionadas pelo INPE para a construção do PRODES-Cerrado. | 2000-2019 | 1:150.000 (resolução espacial de 30m) | NASA/USGS/INPE | [Landsat Missions](https://www.usgs.gov/core-science-systems/nli/landsat) | [Download](/03-dad_rasters/#processo-de-atualizacao)|
+| Mosaico Sentinel | Imagens de satélite com resulução espacial de 10 metros, com data diferente das imagens utilizadas para a produção do PRODES-Cerrado. | 2018-2019 | 1:50.000 (resolução espacial de 10m) | [ESA](https://www.esa.int/) | [Sentinel Missions](https://sentinel.esa.int/web/sentinel/home) | [Download](/03-dad_rasters/#processo-de-atualizacao) |
 
 

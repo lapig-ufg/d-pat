@@ -4,7 +4,7 @@
 
 ### Realização das atividades de campo
 
-No âmbito do projeto FIP Monitoramento foram realizadas quatro atividades de campo com o objetivo de avaliar os desmatamentos detectados pelos sistemas PRODES-Cerrado e DETER-Cerrado. O planejamento de cada campo priorizou visitas às regiões com maior quantidade de detecções. A elaboração do trajeto também contemplou desmatamentos em diferentes fitofisionomias, tipos de solo, clima, relevo, arranjos socioeconômicos e produtivos. Buscou-se também por uma logistica que contemplasse a otimização tempo e com o pernoite em cidades com infraestrutura adequada para a situação (hotéis, restaurantes e sinal de internet). Destaca-se também que, apesar do fator limitante relativo a distribuição de rodovias, buscou-se pelo equilibrio do percurso em estradas "principais" (rodovias estaduais e federais) e vicinais (estradas municipais e acessos a fazendas).
+Com o objetivo de avaliar os desmatamentos detectados pelos sistemas PRODES-Cerrado e DETER-Cerrado foram realizadas quatro atividades de campo, priorizando visitas às regiões com maior quantidade de detecções. A elaboração dos trajetos também contemplou a ocorrência de desmatamentos em diferentes fitofisionomias, tipos de solo, clima, relevo, arranjos socioeconômicos e produtivos. Buscou-se também por uma logistica que contemplasse a otimização tempo e com o pernoite em cidades com infraestrutura adequada para a situação (hotéis, restaurantes e sinal de internet). Destaca-se também que, apesar do fator limitante relativo a distribuição de rodovias, buscou-se pelo equilibrio do percurso em estradas "principais" (rodovias estaduais e federais) e vicinais (estradas municipais e acessos a fazendas).
 
 ![Roteiro dos campos realizados no âmbito do projeto FIP Monitoramento](imgs/04/campos_realizados.png "Roteiro dos campos realizados no âmbito do projeto FIP Monitoramento")
 
@@ -12,7 +12,7 @@ A definição do trecho a ser percorrido em cada dia se baseou em uma distância
 
 A escolha das áreas com sobrevôo de drone se baseou na análise de mapas e imagens de satélite. Foi escolhido um número mínimo de 4 sobrevôos de drone em cada trecho. Essa seleção considerou critérios como: dificuldade de detecção (áreas campestres, áreas com elevada quantidade de pastos em estágio de degradação agronômica, áreas com queimadas recorrentes e áreas com alta resposta espectral aos efeitos da sazonalidade climática), tamanhos (áreas muitos grandes) e restrições de acesso (considerando a autonomia e o raio de sobrevôo do drone). Para essas áreas, de acordo com as [orientações da Agência Nacional de Aviação Civil (ANAC)](https://www.anac.gov.br/assuntos/paginas-tematicas/drones/orientacoes_para_usuarios.pdf), foram realizadas requisições de autorização de sobrevôo junto ao [DECEA](https://www.anac.gov.br/assuntos/setor-regulado/profissionais-da-aviacao-civil/meteorologia-aeronautica/decea) por meio do [SARPAS](https://servicos.decea.gov.br/sarpas/).
 
-Após a definição de cada trecho, mapas georreferenciados em formato PDF foram preparados para posterior inserção no aplicativo de celular Avenza Maps. Estes mapas contemplavam os seguintes dados:
+Após a definição de cada trecho, foram preparados [mapas georreferenciados em formato GeoPDF](https://www.instrutorgis.com.br/qgis310-exportar-mapa-para-geopdf/) para posterior inserção no aplicativo de celular [Avenza Maps](https://play.google.com/store/apps/details?id=com.Avenza). Estes mapas contemplavam os seguintes dados:
 
  *  Imagem de satélite (Sentinel 2 com composição R4 G3 B2).
  *  Trajeto previamente definido, com eventuais acessos às áreas desmatadas.
@@ -22,9 +22,9 @@ Após a definição de cada trecho, mapas georreferenciados em formato PDF foram
  *  Áreas previamente selecionadas para paradas sem sobrevôo de drone.
  *  Áreas previamente selecionadas para paradas com sobrevôo de drone.
 
-![Exemplo de um mapa exportado para o formato PDF georreferenciado e um dos respectivos detalhes.](imgs/04/ex_trecho.png "Exemplo de um mapa exportado para o formato PDF georreferenciado e um dos respectivos detalhes.")
+![Exemplo de um mapa exportado para o formato GeoPDF.](imgs/04/ex_trecho.png "Exemplo de um mapa exportado para o formato GeoPDF.")
 
-Os arquivos no formato PDF georreferenciado foram incoporados ao aplicativo de celular [Avenza Maps](https://play.google.com/store/apps/details?id=com.Avenza). Devido a restrição para importações para arquivos de até 500 mb, cada trecho foi subdividido em subtrechos. Assim, cada mapa importado não excedeu este limite. Destaca-se também que a importação de mapas no formato PDF georreferenciado dispensou a necessidade de conexão de internet para a coleta dos dados.
+Devido a restrição para importações de arquivos com até 500 mb, cada trecho foi subdividido em subtrechos. Destaca-se também que a importação de mapas no formato GeoPDF dispensou a necessidade de conexão de internet para a coleta dos dados.
 
 ![Listas de arquivos georreferenciados no formato PDF para o 2º campo realizado](imgs/04/lista_arquivos_pdf.png "Listas de arquivos georreferenciados no formato PDF para o 3º campo realizado")
 
@@ -35,9 +35,9 @@ Para cada mapa importado pelo aplicativo Avenza Maps foi criado um formulário c
 * Observação (observação adicional sobre a área visitada)
 * ID do sobrevôo (caso ocorresse o sobrevôo no poligono visitado)
 
-Durante a realização do campo a pessoa responsável pela coleta registrava um marcador sobre a área desmatada. Destaca-se que o aplicativo Avenza Maps permite que essa marcação seja feita sem a necessidade de estar exatamente no local, o que favoreceu o registro de pontos com sobrevôo de drone (um exemplo dessa situação é ilustrado com a letra "B" na figura abaixo).
+Durante a realização de cada campo, a pessoa responsável pela coleta registrava um marcador sobre a área desmatada. Essa marcação podia ser feita sem a necessidade de estar exatamente no local, o que favoreceu o registro de pontos com sobrevôo de drone (um exemplo dessa situação é ilustrado com a letra "B" na figura abaixo).
   
-![Avenza Maps](imgs/04/ex_avenzamaps.png "Avenza Maps")
+![Interface do app Avenza Maps](imgs/04/ex_avenzamaps.png "Interface do app Avenza Maps")
 
 No final de cada dia as fotos e os registros dos questionários eram exportados, respectivamente, nos formatos .jpg e .csv. A planilha exportada continha as seguintes colunas:
 
@@ -53,7 +53,7 @@ No final de cada dia as fotos e os registros dos questionários eram exportados,
 * Observação
 * Cobertura
 
-O nome das imagens correspondente a cada área visitada era formado pelo prefixo "Placemark/Localizador" e o respectivo id. Caso houvesse mais de uma foto, esse id era acrescido de um sufixo indicando o sub-id de cada foto.
+O nome das imagens correspondente a cada área visitada era formado pelo prefixo "Placemark/Localizador" e o respectivo ID. Caso houvesse mais de uma foto, esse id era acrescido de um sufixo indicando o sub-id de cada foto.
 
 ### Processo de atualização
 
@@ -127,29 +127,30 @@ FIELD_DATA_DIR=/media/campo/dados_padronizados
 
 ## Dados de validação amostral 
 
-O processo de validação do PRODES-Cerrado se baseou em uma amostragem aleatória estratificada a partir de estratos definidos dentro e fora das áreas mapeadas pelo PRODES-Cerrado (antrópico 2000 e incrementos 2002-2019). Considerando um intervalo de confiança de 95%, erro padrão de 3% e uma variância de 50%O, o tamanho da amostra em cada estrato foi definido por meio da equação abaixo. O detalhamento do desenho amostral é relatado no artigo ["Quality assessment of the PRODES Cerrado deforestation data"](https://doi.org/10.1016/j.rsase.2020.100444).
+O processo de validação do PRODES-Cerrado se baseou em uma amostragem aleatória estratificada a partir de estratos definidos dentro e fora das [áreas mapeadas pelo PRODES-Cerrado](/01-guia_dados_geograficos/#desmatamento) (antrópico 2000 e incrementos 2002-2019), considerando um intervalo de confiança de 95%, erro padrão de 3% e uma variância de 50%. O detalhamento do desenho amostral é relatado no artigo ["Quality assessment of the PRODES Cerrado deforestation data"](https://doi.org/10.1016/j.rsase.2020.100444).
 
-![Tamanho da amostral](imgs/04/formula_tam_amostra.png "Tamanho da amostral")
+![Equação empregada para o cálculo do tamanho da amostral de cada estrato](imgs/04/formula_tam_amostra.png "Equação empregada para o cálculo do tamanho da amostral de cada estrato")
 
 O tamanho amostral para cada estrato (assim como a respectiva população em pixels) é mostrado na figura abaixo.
 
+![Quantidade de pontos sorteados](imgs/04/tab_val.png "Quantidade de pontos sorteados")
 
-![Quantidade de pontos a serem sorteados](imgs/04/tab_val.png "Quantidade de pontos a serem sorteados")
+![Distribuição espacial das amostras usadas no processo de validação do PRODES-Cerrado 2019](imgs/04/ptos_val0019.png "Distribuição espacial das amostras usadas no processo de validação do PRODES-Cerrado 2019")
 
 ### Sorteio de novos pontos
 
-Para a validação amostral de um novo ano (e.g., 2020), um novo sorteio de pontos deve ser realizado dentro dos novos incrementos de desmatamento (e.g. 2020) e da área que ainda não foi mapeada pelo PRODES-Cerrado (i.e., vegetação nativa).  Esse novo sorteio, baseado no tamanho amostral definido para cada estrato, foi realizado por meio do [software QGIS](https://www.qgis.org/pt_BR/site/forusers/download.html) de acordo com as seguintes etapas:
+Para a validação amostral de um novo ano, um novo sorteio de pontos deve ser realizado dentro dos novos incrementos de desmatamento e da área que ainda não foi mapeada pelo PRODES-Cerrado (i.e., vegetação nativa). Esse novo sorteio, baseado no tamanho amostral definido para cada estrato, pode ser realizado por meio do [software QGIS](https://www.qgis.org/pt_BR/site/forusers/download.html) de acordo com as seguintes etapas:
 
  *  Sorteio dos pontos dentro dos novos incrementos de desmatamento.
     *  Execução da ferramenta "dissolve" (opção presente na maior parte dos softwares e bibliotecas SIG).
     *  Sorteio dos pontos por meio da ferramenta "Pontos aleatórios no interior de poligonos".
  *  Sorteio dos pontos dentro dos estratos fora da máscara antrópica (8 "flags" criadas pelo BFastClassify)
-    *  Conversão raster --> vetor 
+    *  Conversão raster --> vetor (o download do raster utilizado na validação amostral do PRODES-Cerrado 2019 [está disponibilizado para download](https://drive.google.com/file/d/1rUFuL2eNZNB00zQz--avxu0Vd5jK0r4T/view?usp=sharing))
     *  Execução da ferramenta "dissolve" (opção presente na maior parte dos softwares e bibliotecas SIG)
     *  Sorteio dos pontos por meio da ferramenta "Pontos aleatórios no interior de poligonos".
   * Execução da ferramenta "Mesclar camadas vetoriais" para juntar os pontos dentro dos estratos antrópicas e naturais.
 
-![Quantidade de pontos a serem sorteados](imgs/04/ptos_val0019.png "Quantidade de pontos a serem sorteados")
+
 
 ### Inspeção no TVI
 
@@ -172,9 +173,7 @@ Abaixo é mostrado um outro exemplo que também reflete as dificuldades relatada
 ![Contribuição das atividades de campo no processo de interpretação das imagens Landsat](imgs/04/ex_dificuldade.png "Área de queimada sucedida por desmatamento.")
 
 
-Dentro do TVI também foi desenvolvida uma interface voltada ao acompanhamento do processo de inspeção. Assim, um usuário com status de supervisor tem a possibilidade de monitorar o desempenho de cada um dos intérpretes, de forma a identificar eventuais inconsistências e a necessidade de adequações aos critérios estabelecido. Nesta interface o supervisor tem acesso a todas as inspeções efetuadas, havendo a
-possibilidade de filtragem por classes e intérpretes. Também são disponibilizados algumas informações com o objetivo de contribuir com possíveis orientações e discussões com a equipe envolvida. São elas:
-números de pontos inspecionados (por intérprete), média de tempo por ponto inspecionado ( intérprete), média de “votos” (inspeções) por cobertura (em porcentagem) e número de pontos com concordância. Ressalta-se a importância de tal interface durante os treinamentos e reuniões, onde os interpretes puderam ser acompanhados e orientados por especialistas nos biomas acerca das suas respectivas dificuldades.
+Dentro do TVI também foi desenvolvida uma interface voltada ao acompanhamento do processo de inspeção. Assim, um usuário com status de supervisor tem a possibilidade de monitorar o desempenho de cada um dos intérpretes, de forma a identificar eventuais inconsistências e a necessidade de adequações aos critérios estabelecido. Nesta interface o supervisor tem acesso a todas as inspeções efetuadas, havendo a possibilidade de filtragem por classes e intérpretes. Também são disponibilizados algumas informações com o objetivo de contribuir com possíveis orientações e discussões com a equipe envolvida. São elas: números de pontos inspecionados (por intérprete), média de tempo por ponto inspecionado ( intérprete), média de “votos” (inspeções) por cobertura (em porcentagem) e número de pontos com concordância. Ressalta-se a importância de tal interface durante os treinamentos e reuniões, onde os interpretes puderam ser acompanhados e orientados por especialistas nos biomas acerca das suas respectivas dificuldades.
 
 Após o processo de inspeção visual, uma planilha com os registros consolidados e de cada interprete é gerada pelo TVI. Por fim, uma [tabela final é disponibilizada](tabs/validacao_classes_prodes_2000-2019.csv) com as classes consolidadas e com o ano da transição "Antropico" para "Natural". Considerando que a classe antrópica não é revertida para natural, o ano de detecção pode ser definido de diferentes formas (e.g., scripts, filtros em planilhas). 
 
@@ -413,7 +412,7 @@ where g.gid_total = prodes_2019.gid
 |        Solo (textura)         |                                                                                                                                                                             [BDiA-IBGE](https://bdiaweb.ibge.gov.br/#/consulta/pedologia)                                                                                                                                                                             |
 
 
-O método de Pesos de Evidência, adaptado para análises espaciais pelo software [Dinamica EGO](https://csr.ufmg.br/dinamica/), foi utilizado para verificar a influência de cada métrica nos desmatamentos grandes e pequenos ocorridos entre os anos de 2010 e 2015. Este intervalo foi escolhido para que as duas superfícies geradas fossem aos desmatamentos detectados após 2016 (início do projeto FIP Monitoramento). A interação entre os pesos de cada métrica resultou em dois arquivos raster com valores numérico entre 0 e 1, indicando, respectivamente, áreas com baixa e alta susceptibilidade ao desmatamento.
+O método de Pesos de Evidência, adaptado para análises espaciais pelo software [Dinamica EGO](https://csr.ufmg.br/dinamica/), foi utilizado para verificar a influência de cada métrica nos desmatamentos grandes e pequenos ocorridos entre os anos de 2010 e 2015. Este intervalo foi escolhido para que as duas superfícies geradas fossem aos desmatamentos detectados após 2016 (início do projeto FIP Monitoramento). A interação entre os pesos de cada métrica resultou em dois arquivos raster com valores numérico entre 0 e 1, indicando, respectivamente, áreas com baixa e alta susceptibilidade ao desmatamento. Os arquivos de entrada do modelo (métricas e paisagens) [estão disponibilizados aqui](https://drive.google.com/drive/folders/14HxKoSTxih-zjfpO_bFlTC_1VV306dBq?usp=sharing).
 
 ![Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.](imgs/01/fluxograma.png "Procedimentos para a elaboração das superfícies de susceptibilidade ao desmatamento.")
 
@@ -434,7 +433,6 @@ Etapa 3: Cálculo da susceptibilidade ao desmatamento  ([download do modelo em f
 Ao final, as superfícies geradas foram avaliadas a partir dos seus respectivos cruzamentos com os polígonos detectados no ano de 2016.
 
 ![Distribuição das áreas detectadas pelo PRODES-Cerrado, em 2016, em relação aos valores de susceptibilidade presentes na superfície gerada.](imgs/01/suscep_x_d2016.jpg "Distribuição das áreas detectadas pelo PRODES-Cerrado, em 2016, em relação aos valores de susceptibilidade presentes na superfície gerada.")
-
 
 Após a execução do modelo para todo o Cerrado, foi realizado o cruzamento das superfícies geradas com os polígonos do PRODES e DETER-Cerrado para os anos de 2016, 2017 e 2018. Para os polígonos do PRODES-Cerrado, foi observado que cerca de 51% dos polígonos estão em áreas com alta susceptibilidade a desmatamentos grandes o que representa uma área total de 3.496 km², de modo que 75% dessa área apresenta susceptibilidade superior a 50%. O mesmo ocorre também para os polígonos de desmatamento pequenos, que representam uma área total de 4.902 km² e 78% da área desses polígonos está inserida regiões com alta susceptibilidade a desmatamentos pequenos.
 
