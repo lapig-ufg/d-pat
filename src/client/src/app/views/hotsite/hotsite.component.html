@@ -88,7 +88,7 @@
                 <span class="hamburger hamburger-3"></span>
             </label>
 
-            <a class="menu-item info" (click)="handleMenu($event)" [title]="texts.hover_btn_info">
+            <a class="menu-item info" (click)="handleMenu($event)" pTooltip="{{texts.hover_btn_info}}">
                 <svg style="margin-top: 13px" width="50" height="50" aria-hidden="true" focusable="false"
                     data-prefix="fas" data-icon="info" class="svg-inline--fa fa-info fa-w-6" role="img"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
@@ -97,7 +97,7 @@
                     </path>
                 </svg>
             </a>
-            <a routerLink="/projeto" class="menu-item" [title]="texts.hover_btn_results">
+            <a routerLink="/projeto" class="menu-item" pTooltip="{{texts.hover_btn_results}}" >
                 <div style="margin-top: 15px; margin-left: 2px">
                     <svg width="50" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000"
@@ -117,7 +117,36 @@
                     </svg>
                 </div>
             </a>
-            <a routerLink="/plataforma" class="menu-item" [title]="texts.hover_btn_access_platform">
+            <a href="https://cerradodpat.org/docs" target="_blank" class="menu-item" pTooltip="{{texts.hover_btn_documentation}}">
+                <div style="margin-top: 15px; margin-left: 2px">
+                    <svg version="1.1" id="Layer_1"  width="50" height="50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 296.999 296.999" style="enable-background:new 0 0 296.999 296.999;" xml:space="preserve">
+                        <g>
+                            <g>
+                                <g>
+                                    <path fill="currentColor" d="M169.197,43.09H18.808c-7.176,0-13.014,5.838-13.014,13.014v227.444c0,7.176,5.838,13.014,13.014,13.014h150.389
+                                        c7.176,0,13.014-5.838,13.014-13.014V56.105C182.211,48.928,176.373,43.09,169.197,43.09z M151.794,274.258H36.21
+                                        c-4.479,0-8.111-3.632-8.111-8.111s3.632-8.111,8.111-8.111h115.584c4.479,0,8.111,3.632,8.111,8.111
+                                        S156.273,274.258,151.794,274.258z M151.794,235.73H36.21c-4.479,0-8.111-3.632-8.111-8.111s3.632-8.111,8.111-8.111h115.584
+                                        c4.479,0,8.111,3.632,8.111,8.111C159.905,232.098,156.273,235.73,151.794,235.73z M151.794,197.202H36.21
+                                        c-4.479,0-8.111-3.632-8.111-8.111s3.632-8.111,8.111-8.111h115.584c4.479,0,8.111,3.632,8.111,8.111
+                                        S156.273,197.202,151.794,197.202z M151.794,158.674H36.21c-4.479,0-8.111-3.632-8.111-8.111s3.632-8.111,8.111-8.111h115.584
+                                        c4.479,0,8.111,3.632,8.111,8.111S156.273,158.674,151.794,158.674z M151.794,120.146H36.21c-4.479,0-8.111-3.632-8.111-8.111
+                                        s3.632-8.111,8.111-8.111h115.584c4.479,0,8.111,3.632,8.111,8.111S156.273,120.146,151.794,120.146z M151.794,81.618H36.21
+                                        c-4.479,0-8.111-3.632-8.111-8.111c0-4.479,3.632-8.111,8.111-8.111h115.584c4.479,0,8.111,3.632,8.111,8.111
+                                        C159.905,77.986,156.273,81.618,151.794,81.618z"/>
+                                    <path fill="currentColor" d="M213.642,0H57.336c-7.177,0-13.014,5.838-13.014,13.014v13.854h124.875c16.121,0,29.237,13.115,29.237,29.237v201.931
+                                        h15.208c7.176,0,13.014-5.838,13.014-13.014V13.014C226.656,5.838,220.818,0,213.642,0z"/>
+                                    <path fill="currentColor" d="M291.205,23.324C291.204,10.464,281.88,0,270.42,0c-11.461,0-20.785,10.464-20.785,23.324v13.584h41.57V23.324z"/>
+                                    <path fill="currentColor" d="M249.635,53.13v214.537h0c0,1.2,0.342,2.373,0.983,3.371l14.921,23.249c1.087,1.694,2.919,2.712,4.881,2.712
+                                        c1.961,0,3.794-1.018,4.881-2.712l14.921-23.249c0.641-0.998,0.983-2.171,0.983-3.371V53.13H249.635z"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </a>
+            <a routerLink="/plataforma" class="menu-item" pTooltip="{{texts.hover_btn_access_platform}}">
 
                 <svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                     <defs>

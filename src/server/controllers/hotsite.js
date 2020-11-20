@@ -12,6 +12,7 @@ module.exports = function (app) {
         txt.hover_btn_info            = languageJson['hotsite']['hover_btn_info'][lang];
         txt.hover_btn_access_platform = languageJson['hotsite']['hover_btn_access_platform'][lang];
         txt.hover_btn_results         = languageJson['hotsite']['hover_btn_results'][lang];
+        txt.hover_btn_documentation   = languageJson['hotsite']['hover_btn_documentation'][lang];
         txt.about                     = languageJson['hotsite']['about'].map( function( elem ) {return elem[lang]});
         txt.about_title               = languageJson['hotsite']['about_title'][lang];
         txt.innovations               = languageJson['hotsite']['innovations'].map( function( elem ) {return elem[lang]});
