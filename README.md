@@ -1,6 +1,6 @@
 # Deforestation Polygon Assessment Tool
 
-# Prerequisites and necessary dependencies!:
+## Prerequisites and necessary dependencies!:
 
 Node.js > latest version LTS
 
@@ -12,7 +12,7 @@ nvm > latest version LTS
 
 > Python 3.7.2 > or latest version LTS
 
-# Python Dependencies:
+## Python Dependencies:
 
 > earthengine-api > latest version LTS
  
