@@ -2,11 +2,11 @@
 
 ## Prerequisites and necessary dependencies!:
 
-Node.js > latest version LTS
+> Node.js > latest version LTS
 
-npm > latest version LTS
+> npm > latest version LTS
 
-nvm > latest version LTS
+> nvm > latest version LTS
 
 > Angular 8/cli > specific version
 
