@@ -78,25 +78,6 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Arquitetura de Software</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../02-arq_geral/">Visão geral</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_servidor_de_aplicacao/">Servidor de aplicação</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
     <span class="caption-text">Dados</span>
     <ul class="subnav">
                 <li class=" current">
@@ -120,6 +101,29 @@
                 <li class="">
                     
     <a class="" href="../03-dad_rasters/">Rasters</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Arquitetura de Software</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../02-arq_geral/">Visão geral</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-arq_servidor_de_aplicacao/">Servidor de aplicação</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-arq_execucao_dpat/">Deployment da arquitetura do Cerrado DPAT</a>
                 </li>
     </ul>
 	    </li>
@@ -166,7 +170,7 @@
             <div class="section">
               
                 <h1 id="dados-vetoriais">Dados Vetoriais</h1>
-<p>TODO</p>
+<p>No Cerrado DPAT todos os dados vetoriais estão armazenados em um banco de dados PostgreSQL. O último backup deste banco pode ser encontrado no <a href="https://drive.google.com/file/d/19nVhry3bvHpV_oY861saBV9prXpfnFtd/view?usp=sharing">link</a> no arquivo <code>BKP_BANCO_DADOS_FIP_CERRADO.tar.gz</code>. </p>
 <h2 id="banco-de-dados-e-mer">Banco de dados e MER</h2>
 <p>TODO</p>
 <h3 id="principais-entidades">Principais entidades</h3>
@@ -174,38 +178,111 @@
 <h2 id="processo-de-atualizacao">Processo de atualização</h2>
 <p>Diversos dados presentes na plataforma Cerrado DPAT são periodicamente atualizados pelas instituições competentes. Desta forma, a medida que os mesmos são atualizados e disponibilizados pelas instituições também é necessário realizar a atualização no banco de dados do Cerrado DPAT.</p>
 <h3 id="prodes-cerrado">PRODES Cerrado</h3>
-<p>TODO</p>
+<p>Devido a divulgação anual do PRODES-Cerrado é necessário realizar a sua atualização sempre que um novo produto é lançado. Desta forma, deve-se visitar o site do <a href="http://terrabrasilis.dpi.inpe.br/downloads/">Terrabrasilis</a> para verificar se um novo PRODES-Cerrado foi lançado e realizar o seu download em Shapefile. </p>
+<p>A fim de demonstrar todos os procedimentos necessários após uma nova atualização do PRODES-Cerrado, iremos utilizar o mesmo processo realizado na atualização do PRODES-Cerrado 2019 executada em Janeiro de 2020. Na ocasião o INPE disponibilizou um Shapefile único para o PRODES-Cerrado 2019 com uma estrutura própria detalhada a seguir. Atualmente, pode-se encontrar todos os desmatamentos PRODES-Cerrado em um Shapefile único no <a href="http://terrabrasilis.dpi.inpe.br/download/dataset/cerrado-prodes/vector/yearly_deforestation_2002_2019_cerrado_biome.zip">link</a>. Porém é importante ressaltar que o padrão das colunas disponibilizados pelo INPE pode ser alterada em atualizações futuras.</p>
+<p>Após download do shapefile único contendo os desmatamentos PRODES-Cerrado 2019, primeiramente é necessário importar os dados para o banco de dados, alterando corretamente os parâmetros <host_address> <db_user> <db_name> abaixo:</p>
+<pre><code class="sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; ProdesCerrado_2019_incremento.shp public.prodes2019 | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
+</code></pre>
+
+<p>O comando acima importa os dados do Shapefile em uma tabela nomeada <code>prodes2019</code>. Na ocasião, o PRODES-Cerrado 2019 foi disponibilizado sem o campo de identificação em qual município aquele desmatamento ocorreu e com a coluna <code>state</code> que identificava os estados pelo nome por extenso. Portanto, inicialmente deve-se alterar o padrão dos estados para utilizar o campo <em>uf</em> com apenas 2 caracteres.</p>
+<pre><code class="sql">ALTER TABLE prodes2019 
+ADD COLUMN uf character varying(2);
+</code></pre>
+
+<p>Em seguida, preencha o campo <code>uf</code> com o seguinte comando:</p>
+<pre><code class="sql">update prodes2019 
+set uf = CASE
+    when state = 'PARÁ' THEN 'PA'
+    when state = 'MATO GROSSO' THEN 'MT'
+    WHEN state = 'PIAUÍ' THEN 'PI'
+    WHEN state = 'BAHIA' THEN 'BA'
+    WHEN state = 'MARANHÃO' THEN 'MA'
+    WHEN state = 'TOCANTINS' THEN 'TO'
+    WHEN state = 'MATO GROSSO DO SUL' THEN 'MS'
+    WHEN state = 'MINAS GERAIS' THEN 'MG'
+    WHEN state = 'PARANÁ' THEN 'PR'
+    WHEN state = 'RONDÔNIA' THEN 'RO'
+    WHEN state = 'SÃO PAULO' THEN 'SP'
+    WHEN state = 'DISTRITO FEDERAL' THEN 'DF'
+    WHEN state = 'GOIÁS' THEN 'GO'
+    ELSE '00'
+END
+</code></pre>
+
+<p>Além dos estados, caso as novas atualizações não possuam a identificação do município, deve-se verificar se o mesmo polígono de desmatamento se encontra em mais de um município ao mesmo tempo, o que pode ser alcançado com a query abaixo. <strong>Vale ressaltar que os passos descritos abaixo só devem ser executados caso o INPE não identifique o município onde ocorreu o desmatamento.</strong></p>
+<pre><code class="sql">SELECT prodes.gid, count(city.*)
+FROM prodes2019 prodes
+inner join municipios_cerrado city on ST_INTERSECTS(city.geom, prodes.geom)
+GROUP BY prodes.gid HAVING COUNT(city.*) &gt; 1
+</code></pre>
+
+<p>Em seguida, deve-se copiar os polígonos PRODES-Cerrado 2019 para uma tabela alternativa <code>prodes2019_alt</code> (que possui o campo de município) dividindo o polígono nas porções que pertencem a cada município. Esta operação irá aumentar a quantidade de polígonos no banco, porém não irá impactar na área desmatada. </p>
+<pre><code class="sql">ALTER TABLE prodes2019 
+ADD COLUMN county character varying(60);
+</code></pre>
+
+<pre><code class="sql">insert into prodes2019_alt (id, state, path_row, class_name, image_date, year, area_km2, uf, county, geom)
+select prodes.id, prodes.state, prodes.path_row, prodes.class_name, prodes.image_date, prodes.year, prodes.area_m2, prodes.uf, city.nm_municip, ST_Multi(ST_INTERSECTION(prodes.geom, city.geom)) from prodes2019 prodes 
+inner join municipios_cerrado city on ST_INTERSECTS(prodes.geom, city.geom)
+</code></pre>
+
+<p>Além de criar o campo <code>county</code>, deve-se também já armazenar o valor da área do desmatamento de cada polígono na tabela <code>prodes2019_alt</code> já convertendo para km².</p>
+<pre><code class="sql">update prodes2019_alt
+set area_km2 = ST_AREA(geom::GEOGRAPHY) / 1000000.0
+where year = 2019
+</code></pre>
+
+<p>Por fim, deve-se inserir os polígonos PRODES-Cerrado 2019 na tabela oficial onde estão todos os polígonos, incluindo a longitude e latitude do Centróide do polígono.</p>
+<pre><code class="sql">insert into prodes_cerrado (uid, pathrow, view_date, source, areamunkm, uf, geom, year, classname, lat, long)
+select id, path_row, image_date, 'inpe cerrado' , area_m2, uf, geom, year, class_name, st_y(ST_PointOnSurface(geom)), st_x(ST_PointOnSurface(geom)) from prodes2019_alt
+</code></pre>
+
 <h3 id="deter-cerrado">DETER Cerrado</h3>
 <p>Devido a constante revisão do DETER-Cerrado, onde polígonos de desmatamento são reanalisados e validados antes de sua consolidação no PRODES-Cerrado, ao atualizar este produto é necessário excluir todos os dados anteriores sobre ele e inserir o novo por completo. Para tal, o primeiro passo é excluir os registros na tabela <code>deter_cerrado</code>.</p>
-<pre><code class="language-sql">TRUNCATE TABLE deter_cerrado RESTART IDENTITY;
+<pre><code class="sql">TRUNCATE TABLE deter_cerrado RESTART IDENTITY;
 </code></pre>
+
 <p>Em seguida, deve-se realizar o download do <a href="http://terrabrasilis.dpi.inpe.br/geonetwork/srv/eng/catalog.search#/metadata/e6e15388-4ca9-49b9-aec9-03891339a35e">Shapefile</a> com todos os Avisos Deter-Cerrado e em seguida pode-se inserir o shape em uma tabela temporária no banco de dados, nomeada <code>deter_public</code>, através do comando:</p>
-<pre><code class="language-sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; deter_public.shp public.deter_public | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
+<pre><code class="sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; deter_public.shp public.deter_public | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
 </code></pre>
+
 <p>Com o shape carregado na tabela <code>deter_public</code> no banco de dados, basta popular a tabela <code>deter_cerrado</code> com o seguinte comando em SQL:</p>
-<pre><code class="language-sql">insert into deter_cerrado (classname, path_row, view_date, sensor, satellite, areamunkm, county, uf, uc, geom)
+<pre><code class="sql">insert into deter_cerrado (classname, path_row, view_date, sensor, satellite, areamunkm, county, uf, uc, geom)
 select classname, path_row, view_date, sensor, satellite, areamunkm, municipali, uf, uc, geom from deter_public
 </code></pre>
-<h3 id="cadastro-ambiental-rural-car">Cadastro Ambiental Rural (CAR)</h3>
-<pre><code class="language-sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; car.shp public.car_cerrado_temp | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
+
+<p>Por fim, deve-se também atualizar a latitude e longitude do centróide do polígono DETER-Cerrado:</p>
+<pre><code class="sql">update deter_cerrado
+set lat = st_y(ST_PointOnSurface(geom)),
+    long = st_x(ST_PointOnSurface(geom))
+where lat is null and long is null;
 </code></pre>
+
+<h3 id="cadastro-ambiental-rural-car">Cadastro Ambiental Rural (CAR)</h3>
+<p>Após a criação dos quatro shapefiles com os principais componentes do CAR (Propriedades Rurais, Reserva Legal, Área de Preservação Permanence e Nascentes) deve-se inserir corretamente estes dados no banco de dados.</p>
+<pre><code class="sh">shp2pgsql -s 4674 -W &quot;UTF-8&quot; car.shp public.car_cerrado_temp | psql -h &lt;host_address&gt; -U &lt;db_user&gt; -d &lt;db_name&gt;
+</code></pre>
+
 <h3 id="cruzamentos-espaciais-entre-os-dados">Cruzamentos espaciais entre os dados</h3>
 <h4 id="prodes-e-deter-cerrado-com-o-car">PRODES e DETER-Cerrado com o CAR</h4>
 <p>Após realizar a atualização dos dados PRODES-Cerrado, DETER-Cerrado e do CAR é necessário realizar os cruzamentos espaciais entre estes dados. Portanto, primeiramente é importante apagar os registros anteriores. Inicialmente iremos apagar a tabela de relacionamento entre os dados do CAR e os polígonos PRODES e DETER-Cerrado.</p>
-<pre><code class="language-sql">TRUNCATE TABLE car_desmat RESTART IDENTITY;
+<pre><code class="sql">TRUNCATE TABLE car_desmat RESTART IDENTITY;
 </code></pre>
+
 <p>Em seguida, inicialmente deve-se inserir (em relação de 1:1) o cruzamento entre as propriedades do CAR e os polígonos PRODES-Cerrado na tabela <code>car_desmat</code>:</p>
-<pre><code class="language-sql">insert into car_desmat (car_cerrado_id, idt_imovel, prodes_id)
+<pre><code class="sql">insert into car_desmat (car_cerrado_id, idt_imovel, prodes_id)
 select car.gid, car.idt_imovel, prodes.gid from car_cerrado car 
 inner join prodes_cerrado prodes on ST_INTERSECTS(car.geom, prodes.geom) where prodes.year &gt;= 2013
 </code></pre>
+
 <p>Após o PRODES-Cerrado, insere-se os cruzamentos com o DETER-Cerrado:</p>
-<pre><code class="language-sql">insert into car_desmat (car_cerrado_id, idt_imovel, deter_id)
+<pre><code class="sql">insert into car_desmat (car_cerrado_id, idt_imovel, deter_id)
 select car.gid, car.idt_imovel, prodes.gid from car_cerrado car 
 inner join deter_cerrado prodes on ST_INTERSECTS(car.geom, prodes.geom)
 </code></pre>
+
 <p>Com as relações criadas, atualiza-se a tabela <code>car_desmat</code> com a quantidade de nascentes e cada desmatamento detectado dentro de uma propriedade rural:</p>
-<pre><code class="language-sql">update car_desmat
+<pre><code class="sql">update car_desmat
 set qnt_nascente = sub.qnt 
 from 
     (
@@ -216,31 +293,35 @@ from
      ) as sub 
 where sub.internocar = car_desmat.car_cerrado_id and sub.internoprodes = car_desmat.prodes_id
 </code></pre>
+
 <h4 id="prodes-cerrado-com-os-pontos-da-validacao-de-campo">PRODES-Cerrado com os pontos da Validação de Campo</h4>
 <p>Após atualização dos dado PRODES-Cerrado, é necessária a atualização da referência ao polígono PRODES-Cerrado em relação aos pontos visitados durante a validação de campo. Para tal, executasse a seguinte query:</p>
-<pre><code class="language-sql">UPDATE pontos_campo
+<pre><code class="sql">UPDATE pontos_campo
 set prodes_id = p.gid
 from prodes_cerrado p
 where pontos_campo.prodes_id is null and ST_INTERSECTS(p.geom, pontos_campo.geom)
 </code></pre>
+
 <p>Em seguida, realiza-se o mesmo processo em relação aos polígonos DETER-Cerrado:</p>
-<pre><code class="language-sql">UPDATE pontos_campo
+<pre><code class="sql">UPDATE pontos_campo
 set deter_id = d.gid
 from deter_cerrado d
 where pontos_campo.deter_id is null and ST_INTERSECTS(d.geom, pontos_campo.geom)
 </code></pre>
+
 <h4 id="prodes-cerrado-com-os-pontos-da-validacao-amostral">PRODES-Cerrado com os pontos da Validação Amostral</h4>
 <p>Após atualização dos dado PRODES-Cerrado, é necessária a atualização da referência ao polígono PRODES-Cerrado em relação aos pontos inspecionados durante a validação amostral. Para tal, executasse a seguinte query:</p>
-<pre><code class="language-sql">UPDATE validacao_amostral
+<pre><code class="sql">UPDATE validacao_amostral
 set prodes_id = p.gid
 from prodes_cerrado p
 where validacao_amostral.prodes_id is null and ST_INTERSECTS(p.geom, validacao_amostral.geom)
 </code></pre>
+
 <h4 id="prodes-cerrado-com-todas-regioes-municipios-e-estados-em-relacao-ao-uso-do-solo">PRODES-Cerrado com todas regiões (Municípios e Estados) em relação ao uso do solo.</h4>
 <p>Após atualização do PRODES-Cerrado, também é necessário o cálculo da proporção de desmatamento em cada tipo de uso do solo para os polígonos recém inseridos no banco de dados. Desta forma, para calcular e inserir no banco esta informação para estados e municípios respectivamente deve-se executar as seguintes queries:</p>
 <pre><code>Terraclass
 </code></pre>
-<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+<pre><code class="sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
 select r.gid, p.year, 'state', lc.classe, g.color,
     sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'terraclass'
 from regions r
@@ -249,7 +330,8 @@ inner join prodes_cerrado p on r.value = p.uf
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
     where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt;= 2013 group by 1,2,3,4,5;
 </code></pre>
-<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+
+<pre><code class="sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
 select r.gid, p.year, 'city', lc.classe, g.color,
     sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'terraclass'
 from regions r
@@ -258,9 +340,10 @@ inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
     where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2012 group by 1,2,3,4,5;
 </code></pre>
+
 <pre><code>PROBIO
 </code></pre>
-<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+<pre><code class="sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
 select r.gid, p.year, 'state', lc.classe, g.color,
     sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'probio'
 from regions r
@@ -269,7 +352,8 @@ inner join prodes_cerrado p on r.value = p.uf
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_probio'
 where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2013 group by 1,2,3,4,5;
 </code></pre>
-<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+
+<pre><code class="sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
 select r.gid, p.year, 'city', lc.classe, g.color,
     sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'probio'
 from regions r
@@ -278,9 +362,10 @@ inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_probio'
     where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2012 group by 1,2,3,4,5;
 </code></pre>
+
 <pre><code>Agrosatélite
 </code></pre>
-<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+<pre><code class="sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
 select r.gid, p.year, 'state', lc.classe, g.color,
     sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'agrosatelite'
 from regions r
@@ -289,7 +374,8 @@ inner join prodes_cerrado p on r.value = p.uf
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
     where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt;= 2013 group by 1,2,3,4,5;
 </code></pre>
-<pre><code class="language-sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
+
+<pre><code class="sql">insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desmat_area_classe_lulc, fonte)
 select r.gid, p.year, 'city', lc.classe, g.color,
     sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'agrosatelite'
 from regions r
@@ -298,6 +384,7 @@ inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'agricultura_agrosatelite'
     where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year &gt; 2000 and p.year &lt; 2012 group by 1,2,3,4,5;
 </code></pre>
+
 <p>Por fim, é necessário ajustar algumas colunas da tabela <code>prodes_regions_lulc</code>, tais como a <code>total_area_classe_lulc</code> que representa o total da área de cada classe de uso solo dos mapas. Para facilitar, os comandos foram reunidos neste <a href="">arquivo</a> sql. Portanto, basta fazer download do script e executá-lo em um terminal SQL.</p>
               
             </div>
@@ -309,7 +396,7 @@ INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.
         <a href="../03-dad_rasters/" class="btn btn-neutral float-right" title="Rasters">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../02-arq_servidor_de_aplicacao/" class="btn btn-neutral" title="Servidor de aplicação"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../01-guia_relatorios/" class="btn btn-neutral" title="Relatórios"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -335,7 +422,7 @@ INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../02-arq_servidor_de_aplicacao/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../01-guia_relatorios/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../03-dad_rasters/" style="color: #fcfcfc">Next &raquo;</a></span>
