@@ -1,11 +1,31 @@
 # Dados Vetoriais
+
 No Cerrado DPAT todos os dados vetoriais estão armazenados em um banco de dados PostgreSQL. O último backup deste banco pode ser encontrado no [link](https://drive.google.com/file/d/19nVhry3bvHpV_oY861saBV9prXpfnFtd/view?usp=sharing) no arquivo `BKP_BANCO_DADOS_FIP_CERRADO.tar.gz`. 
 
 ## Banco de dados e MER
-TODO
+
+No modelo de entidade relacionamento (MER) do banco de dados, apresentado a seguir, as tabelas foram agrupadas em duas categorias:
+
+* **Entidades Principais (cinza)**: estrutura responsável por armazenar os dados consolidados utilizados no Cerado DPAT, conforme foram disponibilizados pela sua instituição. O Cerrado DPAT conta com mais de 20 entidades, porém, em sua maioria são utilizados apenas como camadas de dados, sem realização de cruzamentos, portanto, as entidades utilizadas neste MER foram as utilizadas em diversos cruzamentos espaciais para análise.
+
+* **Tabelas com cruzamentos espaciais**: estrutura responsável por armazenar resultados de cruzamentos espaciais entre diferentes entidades do Cerrado DPAT. Em sua maioria, os cruzamentos espaciais resultam em referências entre chaves únicas, além do resultado de algum tipo de processamento, como por exemplo, *area_desmat*, que representa a área desmatada (detectada pelo PRODES-Cerrado) em uma propriedade rural, que é armazenada pela tabela *car_desmat*.
+
+ ![MER.](imgs/03/mer.png)
+
 
 ### Principais entidades
-TODO
+
+#### prodes_cerrado e deter_cerrado
+
+Entidades (tabelas) responsáveis por armazenar os polígonos PRODES-Cerrado e DETER-Cerrado consolidados que são apresentados no Cerrado DPAT. O identificador único **(gid)** destas tabelas são usadas em entidades auxiliares, tais como, **pontos_campo**, **validacao_amostral**, **car_desmat** e outras para identificar seu cruzamento com as mesmas, portanto, não se deve alterá-lo.
+
+#### regions
+
+Entidade responsável por armazenar todas as regiões (municípios e estados) do Cerrado. A coluna `value` apresenta o valor de identificação da região e `type` diferencia municípios (anotado como **city**) dos estados (anotado como **state**).
+
+#### car_cerrado
+
+Entidade responsável por armazenar os dados de cada propriedade rural presente no Cerrado. Cada propriedade possui um identificador único anotado pela variável `idt_imovel`. Este valor é utilizado para associar cada propriedade rural com a reserva legal (tabela `geo_car_reserva_legal_cerrado`), com áreas de preservação permanente (tabela `geo_car_app_cerrado`) e nascentes (tabela `geo_car_nascente_cerrado`).
 
 ## Processo de atualização
 
