@@ -172,9 +172,23 @@
                 <h1 id="dados-vetoriais">Dados Vetoriais</h1>
 <p>No Cerrado DPAT todos os dados vetoriais estão armazenados em um banco de dados PostgreSQL. O último backup deste banco pode ser encontrado no <a href="https://drive.google.com/file/d/19nVhry3bvHpV_oY861saBV9prXpfnFtd/view?usp=sharing">link</a> no arquivo <code>BKP_BANCO_DADOS_FIP_CERRADO.tar.gz</code>. </p>
 <h2 id="banco-de-dados-e-mer">Banco de dados e MER</h2>
-<p>TODO</p>
+<p>No modelo de entidade relacionamento (MER) do banco de dados, apresentado a seguir, as tabelas foram agrupadas em duas categorias:</p>
+<ul>
+<li>
+<p><strong>Entidades Principais (cinza)</strong>: estrutura responsável por armazenar os dados consolidados utilizados no Cerado DPAT, conforme foram disponibilizados pela sua instituição. O Cerrado DPAT conta com mais de 20 entidades, porém, em sua maioria são utilizados apenas como camadas de dados, sem realização de cruzamentos, portanto, as entidades utilizadas neste MER foram as utilizadas em diversos cruzamentos espaciais para análise.</p>
+</li>
+<li>
+<p><strong>Tabelas com cruzamentos espaciais</strong>: estrutura responsável por armazenar resultados de cruzamentos espaciais entre diferentes entidades do Cerrado DPAT. Em sua maioria, os cruzamentos espaciais resultam em referências entre chaves únicas, além do resultado de algum tipo de processamento, como por exemplo, <em>area_desmat</em>, que representa a área desmatada (detectada pelo PRODES-Cerrado) em uma propriedade rural, que é armazenada pela tabela <em>car_desmat</em>.</p>
+</li>
+</ul>
+<p><img alt="MER." src="../imgs/03/mer.png" /></p>
 <h3 id="principais-entidades">Principais entidades</h3>
-<p>TODO</p>
+<h4 id="prodes_cerrado-e-deter_cerrado">prodes_cerrado e deter_cerrado</h4>
+<p>Entidades (tabelas) responsáveis por armazenar os polígonos PRODES-Cerrado e DETER-Cerrado consolidados que são apresentados no Cerrado DPAT. O identificador único <strong>(gid)</strong> destas tabelas são usadas em entidades auxiliares, tais como, <strong>pontos_campo</strong>, <strong>validacao_amostral</strong>, <strong>car_desmat</strong> e outras para identificar seu cruzamento com as mesmas, portanto, não se deve alterá-lo.</p>
+<h4 id="regions">regions</h4>
+<p>Entidade responsável por armazenar todas as regiões (municípios e estados) do Cerrado. A coluna <code>value</code> apresenta o valor de identificação da região e <code>type</code> diferencia municípios (anotado como <strong>city</strong>) dos estados (anotado como <strong>state</strong>).</p>
+<h4 id="car_cerrado">car_cerrado</h4>
+<p>Entidade responsável por armazenar os dados de cada propriedade rural presente no Cerrado. Cada propriedade possui um identificador único anotado pela variável <code>idt_imovel</code>. Este valor é utilizado para associar cada propriedade rural com a reserva legal (tabela <code>geo_car_reserva_legal_cerrado</code>), com áreas de preservação permanente (tabela <code>geo_car_app_cerrado</code>) e nascentes (tabela <code>geo_car_nascente_cerrado</code>).</p>
 <h2 id="processo-de-atualizacao">Processo de atualização</h2>
 <p>Diversos dados presentes na plataforma Cerrado DPAT são periodicamente atualizados pelas instituições competentes. Desta forma, a medida que os mesmos são atualizados e disponibilizados pelas instituições também é necessário realizar a atualização no banco de dados do Cerrado DPAT.</p>
 <h3 id="prodes-cerrado">PRODES Cerrado</h3>
