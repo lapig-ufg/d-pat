@@ -16,3 +16,5 @@ src/server/uploads
 src/server/media
 src/server/.env
 src/server/download-dpat
+src/client/package-lock.json
+src/server/package-lock.json

@@ -4360,31 +4360,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           this.infoDesmat.pathclassefip = '/assets/metric/classe' + this.infoDesmat.classefip + '_' + this.data.language + '.png'
         }
 
-        this.carData = result['car'];
-        this.carData.show = result['car'].show;
-
-        this.carData.forEach(element => {
-
-          element.metaData.dataRefFormatada = element.metaData.dataRef == '' ? this.textOnDialog.car_tab.undisclosed_message_car : this.data.datePipe.transform(new Date(element.metaData.dataRef), 'dd/MM/yyyy');
-          // element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
-          element.metaData.percentDesmat = '' + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + '%').replace('.', ',');
-          element.metaData.percentRL = '' + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + '%').replace('.', ',');
-          element.metaData.percentAPP = '' + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + '%').replace('.', ',');
-
-          this.textOnDialog.car_tab.display_rl_message = this.textOnDialog.car_tab.rl_car_label.split('?');
-          this.textOnDialog.car_tab.display_app_message = this.textOnDialog.car_tab.app_car_label.split('?');
-          this.textOnDialog.car_tab.display_car_description_message = this.textOnDialog.car_tab.deforestation_car_description.split('?');
-          // this.textOnDialog.car_tab.display_rl_message = temp[0] + element.metaData.area_desmat_rl + temp[1] + element.metaData.percentRL + temp[2]
-
-          let dcar = {
-            src: element.imgsCar.src,
-            caption: 'CAR: ' + element.metaData.cod_car,
-            thumb: element.imgsCar.thumb
-          };
-          this.vetCar.push(dcar);
-
-        });
-
 
         this.abcData = result['ABC'];
 
@@ -4426,62 +4401,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
           }
 
         });
-
-        this.dataEspecial = result['especial'];
-
-        if (this.dataEspecial == null || this.dataEspecial == undefined) {
-          this.dataEspecial = null
-        } else {
-          let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
-
-          if (this.dataEspecial.ti.show) {
-            this.vetEspecial.push({
-              id: 'ti',
-              src: this.dataEspecial.ti.src,
-              thumb: this.dataEspecial.ti.thumb,
-              caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
-            });
-          }
-
-          if (this.dataEspecial.ucus.show) {
-
-            this.vetEspecial.push({
-              id: 'ucus',
-              src: this.dataEspecial.ucus.src,
-              thumb: this.dataEspecial.ucus.thumb,
-              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
-            });
-          }
-
-          if (this.dataEspecial.ucpi.show) {
-            this.vetEspecial.push({
-              id: 'ucpi',
-              src: this.dataEspecial.ucpi.src,
-              thumb: this.dataEspecial.ucpi.thumb,
-              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
-            });
-          }
-
-          if (this.dataEspecial.q.show) {
-            this.vetEspecial.push({
-              id: 'q',
-              src: this.dataEspecial.q.src,
-              thumb: this.dataEspecial.q.thumb,
-              caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
-            });
-          }
-
-          // if (this.dataEspecial.ap.show) {
-          // this.vetEspecial.push({
-          //   src: this.dataEspecial.ap.src,
-          //   thumb: this.dataEspecial.ap.thumb,
-          //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
-          // });
-          // }
-
-
-        }
-
 
         let sent = {
           src: result['images'].urlSentinel.src,
@@ -4578,7 +4497,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
             });
           }
 
-
           for (let foto = 0; foto < element.fotos_drone.length; foto++) {
             this.galleryDrones.push({
               small: '/service/report/field/fotos_drone/' + element.campo_id + '/' + element.fotos_drone[foto],
@@ -4597,6 +4515,93 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         }
       }
     );
+
+
+    this.http.get('/service/report/car/' + this.getServiceParams()).subscribe(
+      result => {
+        this.carData = result['car'];
+        this.carData.show = result['car'].show;
+
+        this.carData.forEach(element => {
+
+          element.metaData.dataRefFormatada = element.metaData.dataRef == '' ? this.textOnDialog.car_tab.undisclosed_message_car : this.data.datePipe.transform(new Date(element.metaData.dataRef), 'dd/MM/yyyy');
+          // element.metaData.area_car = element.metaData.area_car / 100.0  //converte HA to Km2
+          element.metaData.percentDesmat = '' + (((element.metaData.area_desmatada / element.metaData.area_car) * 100).toFixed(2) + '%').replace('.', ',');
+          element.metaData.percentRL = '' + (((element.metaData.area_desmat_rl / element.metaData.area_reserva_legal_total) * 100).toFixed(2) + '%').replace('.', ',');
+          element.metaData.percentAPP = '' + (((element.metaData.area_desmat_app / element.metaData.area_app_total) * 100).toFixed(2) + '%').replace('.', ',');
+
+          this.textOnDialog.car_tab.display_rl_message = this.textOnDialog.car_tab.rl_car_label.split('?');
+          this.textOnDialog.car_tab.display_app_message = this.textOnDialog.car_tab.app_car_label.split('?');
+          this.textOnDialog.car_tab.display_car_description_message = this.textOnDialog.car_tab.deforestation_car_description.split('?');
+          // this.textOnDialog.car_tab.display_rl_message = temp[0] + element.metaData.area_desmat_rl + temp[1] + element.metaData.percentRL + temp[2]
+
+          let dcar = {
+            src: element.imgsCar.src,
+            caption: 'CAR: ' + element.metaData.cod_car,
+            thumb: element.imgsCar.thumb
+          };
+          this.vetCar.push(dcar);
+
+        });
+      });
+
+    this.http.get('/service/report/especial/' + this.getServiceParams()).subscribe(
+      result => {
+        this.dataEspecial = result['especial'];
+
+        if (this.dataEspecial == null || this.dataEspecial == undefined) {
+          this.dataEspecial = null
+        } else {
+          let msg = this.textOnDialog.especial_area.meiodistancia.split("?")
+
+          if (this.dataEspecial.ti.show) {
+            this.vetEspecial.push({
+              id: 'ti',
+              src: this.dataEspecial.ti.src,
+              thumb: this.dataEspecial.ti.thumb,
+              caption: this.dataEspecial.ti.ti_nom + ", " + msg[0] + " " + this.dataEspecial.ti.ti_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.ucus.show) {
+
+            this.vetEspecial.push({
+              id: 'ucus',
+              src: this.dataEspecial.ucus.src,
+              thumb: this.dataEspecial.ucus.thumb,
+              caption: this.dataEspecial.ucus.ucus_nom + ", " + msg[0] + " " + this.dataEspecial.ucus.ucus_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.ucpi.show) {
+            this.vetEspecial.push({
+              id: 'ucpi',
+              src: this.dataEspecial.ucpi.src,
+              thumb: this.dataEspecial.ucpi.thumb,
+              caption: this.dataEspecial.ucpi.ucpi_nom + ", " + msg[0] + " " + this.dataEspecial.ucpi.ucpi_dist + msg[1]
+            });
+          }
+
+          if (this.dataEspecial.q.show) {
+            this.vetEspecial.push({
+              id: 'q',
+              src: this.dataEspecial.q.src,
+              thumb: this.dataEspecial.q.thumb,
+              caption: this.dataEspecial.q.q_nom + ", " + msg[0] + " " + this.dataEspecial.q.q_dist + msg[1]
+            });
+          }
+
+          // if (this.dataEspecial.ap.show) {
+          // this.vetEspecial.push({
+          //   src: this.dataEspecial.ap.src,
+          //   thumb: this.dataEspecial.ap.thumb,
+          //   caption: this.dataEspecial.ap.ap_nom + ", " + msg[0] + " " + this.dataEspecial.ap.ap_dist + msg[1]
+          // });
+          // }
+
+
+        }
+      });
 
 
     //  @todo REMOVE

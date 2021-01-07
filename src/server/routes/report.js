@@ -8,4 +8,6 @@ module.exports = function (app) {
     app.get('/service/report/textreport', report.textreport);
     app.post('/service/report/store', dataInjector, report.store);
     app.get('/service/report/reportByToken/:token', dataInjector, report.reportByToken);
+    app.get('/service/report/car/', dataInjector, report.car);
+    app.get('/service/report/especial/', dataInjector, report.especial);
 }
