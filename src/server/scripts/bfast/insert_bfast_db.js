@@ -2,16 +2,15 @@ const { Pool, Client } = require('pg')
 const csv = require('csv-parser');
 const fs = require('fs');
 
-var config = require('../../config.js')()
+var config = require('../../configScript.js')
 var pool = new Pool(config['pg'])
 
 var csvRows = []
 var csvFilepath = 'result.csv'
-
 const insertRow = 'INSERT INTO bfast_points(lon,lat,breakpoint,th) VALUES($1,$2,$3,$4) RETURNING gid'
 
 fs.createReadStream(csvFilepath)
-    .pipe(csv())
+    .pipe(csv({ delimiter: ';' }))
     .on('data', (row) => {
         csvRows.push(row)
     })
@@ -20,19 +19,19 @@ fs.createReadStream(csvFilepath)
         (async () => {
 
             const client = await pool.connect()
+            console.log("conect")
             try {
                 await client.query('BEGIN')
                 // await client.query('SET datestyle = dmy')
 
                 for (i in csvRows) {
                     var row = csvRows[i]
-                    var rowDate = new Date(row.data)
 
                     /* for initial population*/
-                    var rowValues = [parseFloat(row.lon), parseFloat(row.lat), row.breakpoint, row.th]
+                    var rowValues = [parseFloat(row.lon), parseFloat(row.lat), row.monitor_breakpoint, row.monitor_magnitude]
                     const res = await client.query(insertRow, rowValues)
 
-                    console.log(row.lon + ' inserted.')
+                    console.log(row.lon + ' - ' + row.lat + ' inserted.')
                     // } else  {
                     // 	console.log('Duplicated register ignored.')
                     // }

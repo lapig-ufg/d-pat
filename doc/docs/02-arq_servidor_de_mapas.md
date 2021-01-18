@@ -52,7 +52,7 @@ Por fim, a tabela abaixo apresenta os tipos de serviços fornecidos pelo Cerrado
 
 ## Processo de atualização
 
-Um dado geográfico é disponbilizado pelo Mapserver como uma camada. Assim como abordado na página XX os dados devem estar armazenados em uma pasta de catálogo dos dados configurável no arquivo [config.js](https://github.com/lapig-ufg/lapig-maps/blob/master/src/ows/config.js) através da variável `cacheDir`.
+Um dado geográfico é disponbilizado pelo Mapserver como uma camada. Assim como abordado na seção de [serviços de interoperabilidade](/02-arq_servidor_de_mapas/#servico-de-interoperabilidade) os dados devem estar armazenados em uma pasta de catálogo dos dados (pasta catalog) configurável no arquivo [config.js](https://github.com/lapig-ufg/lapig-maps/blob/master/src/ows/config.js) através da variável `cacheDir`.
 
 O Mapserver utiliza um arquivo de configuração para renderização de dados geoespaciais chamado de Mapfile. O principal objetivo do Mapfile é definir as camadas que podem ser "desenhadas" pelo Mapserver, como ler estes dados (uma vez que eles podem ser vetores ou matrizes) e como renderizá-los, definindo cores, símbolos, rótulos, legendas e etc. Desta forma, o Mapfile inclui informações sobre:
 
@@ -72,8 +72,8 @@ A figura abaixo apresenta o Mapfile da camada dos desmatamentos PRODES-Cerrado p
 
 3. Apresenta os metadados da camada;
 
-4. Cria uma variável para validação e filtragem dos dados por meio do [runtime substitution](https://mapserver.gis.umn.edu/pl/cgi/runsub.html) 
-
+4. Cria uma variável para validação e filtragem dos dados por meio do [runtime substitution](https://mapserver.gis.umn.edu/pl/cgi/runsub.html);
+   
 5. Define a projeção do dado apresentado;
 
 6. Define o tipo do dado apresentado;
@@ -81,7 +81,6 @@ A figura abaixo apresenta o Mapfile da camada dos desmatamentos PRODES-Cerrado p
 7. Define a estrutura dos dados que são enviados via UTFGrid. Para tal é importante definir um identificador único (UTFITEM) e os dados a serem enviados através da tupla {"chave_acesso" : "coluna_banco_dados"} em UTFDATA que irão compor o JSON gerado.
 
 8. Define uma classificação para os dados a fim de customizar a coloração de acordo com um critério. A classificação estabelecida também irá compor a legenda.
-
 
 Um segundo tipo de camada de dados presente no Cerrado DPAT é oriundo de dados matriciais, ou seja, imagens TIF. Portanto, para criação de um Mapfile para um TIF é necessário alterar as sessões (1) - onde deve-se apresentar a localização do arquivo TIF no sistema de arquivos através da diretiva 'DATA'; (6) - alterar para o tipo de dados Raster e (8), onde o critério para classificação se dá de acordo com o valor do pixel em um ponto. Portanto, o Mapfile para arquivos matriciais se dá conforme imagem abaixo.
 
@@ -224,7 +223,7 @@ Controller.descriptor = function (request, response) {
 };
 ```
 
-Os diversos parâmetros setados na variável `result` são interpretados pela aplicação Front-end em Angular, de modo a criar a interface apresentada na imagem abaixo. Dentre estes parâmetros, destaca-se o `layers` que irão indicar quais camadas estarão no card **Desmatamento PRODES-Cerradp**. No exemplo acima, está selecionada a camada `bi_ce_prodes_desmatamento_100_fip` através da variável *selectedType*, e logo abaixo apresenta-se o vetor `types` que apresenta os tipos de camadas PRODES-Cerrado estão disponíveis. Por fim, destaca-se o vetor do parâmetro `times`, que apresenta diversos filtros que podem ser aplicados em um tipo de layer específico. No exemplo acima, ele é utilizado para filtrar os polígonos por ano, aplicando a query apresentada em `value` (de cada filtro) como parâmetro **MSFILTER** na camada descrita no Mapserver.
+Os diversos parâmetros setados na variável `result` são interpretados pela aplicação Front-end em Angular, de modo a criar a interface apresentada na imagem abaixo. Dentre estes parâmetros, destaca-se o `layers` que irão indicar quais camadas estarão no card **Desmatamento PRODES-Cerrado**. No exemplo acima, está selecionada a camada `bi_ce_prodes_desmatamento_100_fip` através da variável *selectedType*, e logo abaixo apresenta-se o vetor `types` que apresenta os tipos de camadas PRODES-Cerrado estão disponíveis. Por fim, destaca-se o vetor do parâmetro `times`, que apresenta diversos filtros que podem ser aplicados em um tipo de layer específico. No exemplo acima, ele é utilizado para filtrar os polígonos por ano, aplicando a query apresentada em `value` (de cada filtro) como parâmetro **MSFILTER** na camada descrita no Mapserver.
 
 ![Exemplo descriptor para PRODES-Cerrado.](imgs/02/telaCamada.png)
 

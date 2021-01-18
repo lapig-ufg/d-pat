@@ -31,6 +31,12 @@ Entidade responsável por armazenar os dados de cada propriedade rural presente 
 
 Diversos dados presentes na plataforma Cerrado DPAT são periodicamente atualizados pelas instituições competentes. Desta forma, a medida que os mesmos são atualizados e disponibilizados pelas instituições também é necessário realizar a atualização no banco de dados do Cerrado DPAT.
 
+Os comandos a seguir foram todos desenvolvidos na linguagem `sql`, portanto podem ser executados em qualquer ambiente que realize a conexão com PostgreSQL, tais como o [pgAdmin](https://www.pgadmin.org/) ou o próprio ambiente nativo conhecido como `psql`. A fim de facilitar, pode-se criar um arquivo de extensão `.sql` e executá-lo da seguinte forma:
+
+```
+psql "dbname='<db_name>' user='<db_user>' password='<db_pwd>' host='<db_host'" -f <path_to_>/yourFileName.sql
+```
+
 ### PRODES Cerrado
 
 Devido a divulgação anual do PRODES-Cerrado é necessário realizar a sua atualização sempre que um novo produto é lançado. Desta forma, deve-se visitar o site do [Terrabrasilis](http://terrabrasilis.dpi.inpe.br/downloads/) para verificar se um novo PRODES-Cerrado foi lançado e realizar o seu download em Shapefile. 
@@ -117,7 +123,37 @@ select id, path_row, image_date, 'inpe cerrado' , area_m2, uf, geom, year, class
 Devido a constante revisão do DETER-Cerrado, onde polígonos de desmatamento são reanalisados e validados antes de sua consolidação no PRODES-Cerrado, ao atualizar este produto é necessário excluir todos os dados anteriores sobre ele e inserir o novo por completo. Para tal, o primeiro passo é excluir os registros na tabela `deter_cerrado`.
 
 ``` sql
+ALTER TABLE "public"."pontos_campo" DROP CONSTRAINT "pontos_campo_deter_id_fkey";
 TRUNCATE TABLE deter_cerrado RESTART IDENTITY;
+ALTER TABLE "public"."pontos_campo" ADD CONSTRAINT "pontos_campo_deter_id_fkey" FOREIGN KEY (deter_id) REFERENCES deter_cerrado(gid);
+```
+
+Obs. Caso seja necessário desativar e reativar mais restrições (CONSTRAINTS), utilize a query abaixo para encontrar todas as restrições presentes no banco e em seguida a query seguinte para descobrir todas as queries de reconstrução das constraints.
+
+``` sql
+/*
+DROP CONSTRAINTS SCRIPT
+*/
+
+ SELECT 'ALTER TABLE "'||nspname||'"."'||relname||'" DROP CONSTRAINT "'||conname||'";'
+ FROM pg_constraint 
+ INNER JOIN pg_class ON conrelid=pg_class.oid 
+ INNER JOIN pg_namespace ON pg_namespace.oid=pg_class.relnamespace 
+ ORDER BY CASE WHEN contype='f' THEN 0 ELSE 1 END,contype,nspname,relname,conname
+
+
+/*
+RECREATE CONSTRAINTS SCRIPT:
+*/
+
+SELECT 'ALTER TABLE "'||nspname||'"."'||relname||'" ADD CONSTRAINT "'||conname||'" '||
+   pg_get_constraintdef(pg_constraint.oid)||';'
+ FROM pg_constraint
+ INNER JOIN pg_class ON conrelid=pg_class.oid
+ INNER JOIN pg_namespace ON pg_namespace.oid=pg_class.relnamespace
+ ORDER BY CASE WHEN contype='f' THEN 0 ELSE 1 END DESC,contype DESC,nspname DESC,relname DESC,conname DESC;
+
+
 ```
 
 Em seguida, deve-se realizar o download do [Shapefile](http://terrabrasilis.dpi.inpe.br/geonetwork/srv/eng/catalog.search#/metadata/e6e15388-4ca9-49b9-aec9-03891339a35e) com todos os Avisos Deter-Cerrado e em seguida pode-se inserir o shape em uma tabela temporária no banco de dados, nomeada `deter_public`, através do comando:
@@ -141,6 +177,14 @@ update deter_cerrado
 set lat = st_y(ST_PointOnSurface(geom)),
 	long = st_x(ST_PointOnSurface(geom))
 where lat is null and long is null;
+```
+
+Após a inserção dos pontos, deve-se excluir os polígonos que já foram antropizados e reconhecido pelo PRODES-Cerrado, utilizando a query abaixo:
+
+``` sql
+DELETE FROM deter_cerrado d
+USING prodes_cerrado p 
+WHERE ST_EQUALS(p.geom, d.geom);
 ```
 
 
@@ -175,7 +219,7 @@ Após o PRODES-Cerrado, insere-se os cruzamentos com o DETER-Cerrado:
 ``` sql
 insert into car_desmat (car_cerrado_id, idt_imovel, deter_id)
 select car.gid, car.idt_imovel, prodes.gid from car_cerrado car 
-inner join deter_cerrado prodes on ST_INTERSECTS(car.geom, prodes.geom)
+inner join deter_cerrado deter on ST_INTERSECTS(car.geom, deter.geom)
 ```
 
 Com as relações criadas, atualiza-se a tabela `car_desmat` com a quantidade de nascentes e cada desmatamento detectado dentro de uma propriedade rural:
@@ -225,9 +269,73 @@ from prodes_cerrado p
 where validacao_amostral.prodes_id is null and ST_INTERSECTS(p.geom, validacao_amostral.geom)
 ```
 
-#### PRODES-Cerrado com todas regiões (Municípios e Estados) em relação ao uso do solo.
+#### PRODES-Cerrado acumulado em todas regiões (Municípios e Estados)
 
-Após atualização do PRODES-Cerrado, também é necessário o cálculo da proporção de desmatamento em cada tipo de uso do solo para os polígonos recém inseridos no banco de dados. Desta forma, para calcular e inserir no banco esta informação para estados e municípios respectivamente deve-se executar as seguintes queries:
+Após a atualização do PRODES-Cerrado, também é necessário o cálculo do desmatamento acumulado por município e também por estado. Para tal, deve-se inicialmente popular a tabela `prodes_regions` que irá armazenar o `id` da região (município ou estado) e a sua área desmatada. Note que deve-se atualizar a referêcia `where p.year = 2019` para o ano do desmatamento inserido no banco. Portanto, pode-se utilizar a seguinte query:
+
+``` sql
+/* Inserir desmatamento acumulado por estado */
+insert into prodes_regions (region_id, sum_area_prodes, year)
+select r.gid, sum(p.areamunkm), p.year from regions r inner join prodes_cerrado p on p.uf = r.value where p.year = 2019 and r.type = 'state' group by 1, 3
+
+/* Inserir desmatamento acumulado por município */
+insert into prodes_regions (region_id, sum_area_prodes, year)
+select r.gid, sum(p.areamunkm), p.year from regions r inner join prodes_cerrado p on p.cd_geocmu = r.cd_geocmu where p.year = 2019 and r.type = 'city' group by 1, 3
+```
+
+Em seguida, deve-se atualizar os elementos recém inseridos na tabela `prodes_regions` com a área desmatada dentro de APPs e Reservas Legais:
+
+``` sql
+/* Atualização para desmatameto acumulado em APP e RL por estado */
+
+/* APP */
+update prodes_regions
+set area_app = internal.area_desmat
+from 
+(SELECT sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision) as area_desmat, r.gid as internoregion, p.year as internoyear
+from prodes_cerrado p 
+inner join geo_car_app_cerrado lc on lc.uf = p.uf
+inner join regions r on r.value = lc.uf where ST_INTERSECTS(p.geom, lc.geom) and r.type = 'state' and p.year = 2019 group by 2,3)  as internal
+where prodes_regions.region_id = internal.internoregion AND prodes_regions.year = internal.internoyear and internal.internoyear = 2019
+
+/* RL */
+update prodes_regions
+set area_rl = internal.area_desmat
+from 
+(SELECT sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision) as area_desmat, r.gid as internoregion, p.year as internoyear
+from prodes_cerrado p 
+inner join geo_car_reserva_legal_cerrado lc on lc.uf = p.uf
+inner join regions r on r.value = lc.uf where ST_INTERSECTS(p.geom, lc.geom) and r.type = 'state' and p.year = 2019 group by 2,3)  as internal
+where prodes_regions.region_id = internal.internoregion AND prodes_regions.year = internal.internoyear and internal.internoyear = 2019
+
+/* Atualização para desmatameto acumulado em APP e RL por município */
+
+/* APP */
+update prodes_regions
+set area_app = internal.area_desmat
+from 
+(SELECT sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision) as area_desmat, r.gid as internoregion, p.year as internoyear
+from prodes_cerrado p 
+inner join geo_car_app_cerrado lc on lc.cd_geocmu = p.cd_geocmu
+inner join regions r on r.cd_geocmu = lc.cd_geocmu where ST_INTERSECTS(p.geom, lc.geom) and r.type = 'city' and p.year = 2019 group by 2,3)  as internal
+where prodes_regions.region_id = internal.internoregion AND prodes_regions.year = internal.internoyear and internal.internoyear = 2019
+
+/* RL */
+update prodes_regions
+set area_rl = internal.area_desmat
+from 
+(SELECT sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision) as area_desmat, r.gid as internoregion, p.year as internoyear
+from prodes_cerrado p 
+inner join geo_car_reserva_legal_cerrado lc on lc.cd_geocmu = p.cd_geocmu
+inner join regions r on r.cd_geocmu = lc.cd_geocmu where ST_INTERSECTS(p.geom, lc.geom) and r.type = 'city' and p.year = 2019 group by 2,3)  as internal
+where prodes_regions.region_id = internal.internoregion AND prodes_regions.year = internal.internoyear and internal.internoyear = 2019
+
+```
+
+
+#### PRODES-Cerrado com todas regiões (Municípios e Estados) em relação ao uso do solo
+
+Após atualização do PRODES-Cerrado, também é necessário o cálculo da proporção de desmatamento em cada tipo de uso do solo para os polígonos recém inseridos no banco de dados. Desta forma, para calcular e inserir no banco esta informação para estados e municípios respectivamente deve-se executar as seguintes queries. Após as queries de inserção dos dados, é necessário ajustar a coluna `total_area_classe_lulc` da tabela `prodes_regions_lulc`, que representa o total da área de cada classe de uso solo dos mapas.
 
     Terraclass
 
@@ -239,7 +347,7 @@ from regions r
 inner join uso_solo_terraclass lc on r.value = lc.uf
 inner join prodes_cerrado p on r.value = p.uf
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
-	where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year >= 2013 group by 1,2,3,4,5;
+	where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year = 2019 group by 1,2,3,4,5;
 ```
 
 ``` sql
@@ -251,6 +359,26 @@ inner join uso_solo_probio lc on r.cd_geocmu = lc.cd_geocmu
 inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
 	where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year > 2000 and p.year < 2012 group by 1,2,3,4,5;
+```
+
+``` sql
+/* Atualização do campo `total_area_classe_lulc` */
+
+/* Por Município */
+update prodes_regions_lulc
+set total_area_classe_lulc = internal.total_area_lulc
+from
+(select r.gid as id, lc.cd_geocmu as code, lc.classe as classeInt,  sum(st_area(lc.geom,true)/1000000.0::double precision) as total_area_lulc from uso_solo_terraclass lc
+inner join regions r on lc.cd_geocmu = r.cd_geocmu where lc.bioma='CERRADO' group by 1,2,3) as internal
+where prodes_regions_lulc = 'city' and prodes_regions_lulc.region_id = internal.id and prodes_regions_lulc.classe_lulc = internal.classeInt
+
+/* Por Estado */
+update prodes_regions_lulc
+set total_area_classe_lulc = internal.total_area_lulc
+from
+(select r.gid as id, r.value as code, lc.classe as classeInt,  sum(st_area(lc.geom,true)/1000000.0::double precision) as total_area_lulc from uso_solo_terraclass lc
+inner join regions r on lc.uf = r.value where r.type = 'state' AND lc.bioma='CERRADO' group by 1,2,3) as internal
+where prodes_regions_lulc = 'state' and prodes_regions_lulc.region_id = internal.id and prodes_regions_lulc.classe_lulc = internal.classeInt
 ```
 
     PROBIO
@@ -277,6 +405,26 @@ INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.
 	where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year > 2000 and p.year < 2012 group by 1,2,3,4,5;
 ```
 
+``` sql
+/* Atualização do campo `total_area_classe_lulc` */
+
+/* Por Município */
+update prodes_regions_lulc
+set total_area_classe_lulc = internal.total_area_lulc
+from
+(select r.gid as id, lc.cd_geocmu as code, lc.classe as classeInt,  sum(st_area(lc.geom,true)/1000000.0::double precision) as total_area_lulc from uso_solo_probio lc
+inner join regions r on lc.cd_geocmu = r.cd_geocmu where lc.bioma='CERRADO' group by 1,2,3) as internal
+where prodes_regions_lulc = 'city' and prodes_regions_lulc.region_id = internal.id and prodes_regions_lulc.classe_lulc = internal.classeInt
+
+/* Por Estado */
+update prodes_regions_lulc
+set total_area_classe_lulc = internal.total_area_lulc
+from
+(select r.gid as id, r.value as code, lc.classe as classeInt,  sum(st_area(lc.geom,true)/1000000.0::double precision) as total_area_lulc from uso_solo_probio lc
+inner join regions r on lc.uf = r.value where r.type = 'state' AND lc.bioma='CERRADO' group by 1,2,3) as internal
+where prodes_regions_lulc = 'state' and prodes_regions_lulc.region_id = internal.id and prodes_regions_lulc.classe_lulc = internal.classeInt
+```
+
     Agrosatélite
 
 ``` sql
@@ -284,10 +432,10 @@ insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desm
 select r.gid, p.year, 'state', lc.classe, g.color,
 	sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'agrosatelite'
 from regions r
-inner join uso_solo_terraclass lc on r.value = lc.uf
+inner join agricultura_agrosatelite lc on r.value = lc.uf
 inner join prodes_cerrado p on r.value = p.uf
-INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'uso_solo_terraclass'
-	where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year >= 2013 group by 1,2,3,4,5;
+INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'agricultura_agrosatelite'
+	where r.type = 'state' and ST_INTERSECTS(p.geom, lc.geom) and p.year = 2019 group by 1,2,3,4,5;
 ```
 
 ``` sql
@@ -295,10 +443,29 @@ insert into prodes_regions_lulc (region_id, year, type, classe_lulc, color, desm
 select r.gid, p.year, 'city', lc.classe, g.color,
 	sum(st_area(safe_intersection(p.geom, lc.geom)::geography) / 1000000.0::double precision), 'agrosatelite'
 from regions r
-inner join uso_solo_probio lc on r.cd_geocmu = lc.cd_geocmu
+inner join agricultura_agrosatelite lc on r.cd_geocmu = lc.cd_geocmu
 inner join prodes_cerrado p on r.cd_geocmu = p.cd_geocmu
 INNER JOIN graphic_colors g on unaccent(g.name) ilike unaccent(lc.classe) AND g.table_rel = 'agricultura_agrosatelite'
-	where r.type = 'city' and ST_INTERSECTS(p.geom, lc.geom) and p.year > 2000 and p.year < 2012 group by 1,2,3,4,5;
+	where r.type = 'city'  and ST_INTERSECTS(p.geom, lc.geom) and p.year = 2019 group by 1,2,3,4,5;
 ```
 
-Por fim, é necessário ajustar algumas colunas da tabela `prodes_regions_lulc`, tais como a `total_area_classe_lulc` que representa o total da área de cada classe de uso solo dos mapas. Para facilitar, os comandos foram reunidos neste [arquivo]() sql. Portanto, basta fazer download do script e executá-lo em um terminal SQL.
+``` sql
+/* Atualização do campo `total_area_classe_lulc` */
+
+/* Por Município */
+update prodes_regions_lulc
+set total_area_classe_lulc = internal.total_area_lulc
+from
+(select r.gid as id, lc.cd_geocmu as code, lc.classe as classeInt,  sum(st_area(lc.geom,true)/1000000.0::double precision) as total_area_lulc from agricultura_agrosatelite lc
+inner join regions r on lc.cd_geocmu = r.cd_geocmu where lc.bioma='CERRADO' group by 1,2,3) as internal
+where prodes_regions_lulc = 'city' and prodes_regions_lulc.region_id = internal.id and prodes_regions_lulc.classe_lulc = internal.classeInt
+
+/* Por Estado */
+update prodes_regions_lulc
+set total_area_classe_lulc = internal.total_area_lulc
+from
+(select r.gid as id, r.value as code, lc.classe as classeInt,  sum(st_area(lc.geom,true)/1000000.0::double precision) as total_area_lulc from agricultura_agrosatelite lc
+inner join regions r on lc.uf = r.value where r.type = 'state' AND lc.bioma='CERRADO' group by 1,2,3) as internal
+where prodes_regions_lulc = 'state' and prodes_regions_lulc.region_id = internal.id and prodes_regions_lulc.classe_lulc = internal.classeInt
+```
+
