@@ -138,6 +138,11 @@ module.exports = function (app) {
                 value: "year=2019",
                 Viewvalue: "2018/2019",
                 year: 2019
+              },
+              {
+                value: "year=2020",
+                Viewvalue: "2019/2020",
+                year: 2020
               }
               ]
             },

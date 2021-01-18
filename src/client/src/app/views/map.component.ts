@@ -311,21 +311,21 @@ export class MapComponent implements OnInit, AfterViewChecked {
     };
 
     this.periodSelected = {
-      value: 'year=2019',
-      Viewvalue: '2018/2019',
-      year: 2019
+      value: 'year=2020',
+      Viewvalue: '2019/2020',
+      year: 2020
     };
 
     this.defaultPeriod = {
-      value: 'year=2019',
-      Viewvalue: '2018/2019',
-      year: 2019
+      value: 'year=2020',
+      Viewvalue: '2019/2020',
+      year: 2020
     };
 
     this.desmatInfo = {
-      value: 'year=2019',
-      Viewvalue: '2018/2019',
-      year: 2019
+      value: 'year=2020',
+      Viewvalue: '2019/2020',
+      year: 2020
     };
     this.datePipe = new DatePipe('pt-BR');
 
