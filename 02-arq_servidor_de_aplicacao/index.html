@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Luiz Pascoal e Sérgio Nogueira">
+  
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Servidor de aplicação - Documentação - Cerrado DPAT</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,7 +25,7 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
@@ -35,6 +36,7 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Documentação - Cerrado DPAT</a>
         <div role="search">
@@ -45,97 +47,51 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">HOME</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Guia do usuário</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../01-guia_dados_geograficos/">Dados Geográficos</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../01-guia_metricas_de_qualidade/">Métricas de Qualidade</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../01-guia_funcionalidades/">Funcionalidades</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../01-guia_relatorios/">Relatórios</a>
-                </li>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">HOME</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Guia do usuário</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_dados_geograficos/">Dados Geográficos</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_metricas_de_qualidade/">Métricas de Qualidade</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_funcionalidades/">Funcionalidades</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_relatorios/">Relatórios</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Dados</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-dad_vetoriais/">Vetoriais</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-dad_rasters/">Rasters</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Arquitetura de Software</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_geral/">Visão geral</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Servidor de aplicação</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#middleware-para-manipulacao-do-banco-de-dados">Middleware para manipulação do banco de dados</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#como-criar-um-novo-servico">Como criar um novo serviço</a>
+    </li>
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Dados</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../03-dad_vetoriais/">Vetoriais</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-dad_rasters/">Rasters</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Arquitetura de Software</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../02-arq_geral/">Visão geral</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Servidor de aplicação</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#servidor-de-aplicacao">Servidor de Aplicação</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#middleware-para-manipulacao-do-banco-de-dados">Middleware para manipulação do banco de dados</a></li>
-        
-            <li><a class="toctree-l4" href="#como-criar-um-novo-servico">Como criar um novo serviço</a></li>
-        
-        </ul>
-    
-
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_execucao_dpat/">Deployment da arquitetura do Cerrado DPAT</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../04-metricas_de_avaliacao/">Métricas de Avaliação</a>
-	    </li>
-          
-        </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_execucao_dpat/">Deployment da arquitetura do Cerrado DPAT</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-metricas_de_avaliacao/">Métricas de Avaliação</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -164,6 +120,7 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
@@ -174,27 +131,22 @@
 <p>Dentro do repositório do projeto, o código-fonte do <em>Application Server</em> está em <a href="https://github.com/lapig-ufg/d-pat/tree/master/src/server">src/server</a>. Por ser construído em NodeJS, ao clonar o projeto o usuário deverá navegar até a pasta server e instalar as dependências gerenciadas pelo <a href="https://www.npmjs.com/">Node Package Manager (NPM)</a> através do comando:</p>
 <pre><code>npm install
 </code></pre>
-
 <p>Em seguida, deve-se copiar o arquivo .env.exemple renomeando-o para .env:</p>
 <pre><code>cp .env.exemple .env
 </code></pre>
-
 <p>Em seguida, deve-se alterar o arquivo .env com as devidas configurações e parâmetros referentes ao banco de dados, pastas para armazenamento dos arquivos de Upload e Download e endereço de hospedagem do OWS Server. Um exemplo de arquivo .env pode ser observado na <a href="/02-arq_execucao_dpat/#execucao-da-aplicacao-cerrado-dpat">seção</a></p>
 <p>Por fim, a fim de facilitar a execução do <em>Application Server</em> foi desenvolvido um script nomeado <code>start.sh</code> localizado na raiz da pasta <strong>src/server</strong>. Portanto, basta realizar a execução deste arquivo para inicializar o <em>Application Server</em>. A fim de identificar modificações em tempo real, o <em>Application Server</em> faz uso da biblioteca <a href="https://www.npmjs.com/package/always"><code>always</code></a>, portanto talvez seja necessário a instalação da mesma através do comando.</p>
-<pre><code class="sh">$ sudo npm install always -g
+<pre><code class="language-sh">$ sudo npm install always -g
 </code></pre>
-
 <p>Após a instalação do <em>always</em>, pode-se inicializar o <em>Application Server</em> através do comando:</p>
-<pre><code class="sh">$ ./src/server/start.sh
+<pre><code class="language-sh">$ ./src/server/start.sh
 </code></pre>
-
 <h2 id="middleware-para-manipulacao-do-banco-de-dados">Middleware para manipulação do banco de dados</h2>
 <p>Para facilitar a criação de serviços que fazem uso de consultas ao banco de dados foi criado um <em>middleware</em> nomeado <a href="https://github.com/lapig-ufg/d-pat/blob/master/src/server/middleware/data-injector.js"><code>dataInjector.js</code></a> que cria um <em>pool</em> de conexões para execução de diversas <em>queries</em> simultâneas. </p>
 <p>O <code>dataInjector.js</code> analisa a URL da requisição HTTP de modo a associar a função que especifica a query (por meio da tupla {id, sql}) com o controlador que irá devolver a resposta da requisição.</p>
 <p>Portanto, todas as URLs deverão ser criadas no seguinte padrão:</p>
 <pre><code>'/service/&lt;nome_arquivo_js_com_query&gt;/&lt;nome_funcao_executada&gt;'
 </code></pre>
-
 <h2 id="como-criar-um-novo-servico">Como criar um novo serviço</h2>
 <p>O <em>Application Server</em> possui três pastas que armazenam os principais arquivos que permitem a disponibilização de um novo serviço ao Cerrado DPAT: </p>
 <ol>
@@ -205,7 +157,7 @@
 <p>Portanto, supondo que queremos criar um novo serviço para retornar os maiores desmatamentos em um determinado ano detectado pelo PRODES-Cerrado é necessário criar/alterar os seguintes arquivos:</p>
 <pre><code>server/routes/example.js
 </code></pre>
-<pre><code class="js">module.exports = function (app) {
+<pre><code class="language-js">module.exports = function (app) {
 
     var dataInjector = app.middleware.dataInjector
     var example = app.controllers.examplecontroller;
@@ -214,11 +166,10 @@
 
 }
 </code></pre>
-
 <p>Após a criação do <em>endpoint</em> de acesso, basta criar o arquivo com as funções desta classe de <em>queries</em> (<code>examplequery.js</code>) e a função (<code>Query.largest</code>) que irá executar a <em>query</em> especificada. Vale ressaltar que deverá ser passado dois parâmetros pela requisição, o <strong>year</strong> e o <strong>amount</strong>, que indicam de qual ano e a quantidade de desmatamentos que o usuário quer encontrar.</p>
 <pre><code>server/database/queries/examplequery.js
 </code></pre>
-<pre><code class="js">module.exports = function (app) {
+<pre><code class="language-js">module.exports = function (app) {
 
     var Query = {};
 
@@ -233,11 +184,10 @@
     return Query;
 }
 </code></pre>
-
 <p>Após a construção do método e a <em>query</em>, basta criar o controlador <code>examplecontroller.js</code> para receber a requisição, realizar a chamada ao método para execução da <em>query</em>, coletar o resultado e enviar como resposta da requisição.</p>
 <pre><code>server/controllers/examplecontroller.js
 </code></pre>
-<pre><code class="js">module.exports = function (app) {
+<pre><code class="language-js">module.exports = function (app) {
 
     const config = app.config;
 
@@ -255,16 +205,14 @@
     return Controller;
 }
 </code></pre>
-
 <p>Por fim, este por se tratar de uma requisição HTTP do tipo <code>GET</code>, a mesma poderá ser acessada via navegador. Considerando que o server está executando em <code>localhost:3000</code> e o usuário deseja encontrar os 15 maiores desmatamentos detectados pelo PRODES-Cerrado em 2019, a URL de acesso ficará da seguinte forma: </p>
-<pre><code class="url">http://localhost:3000/service/examplequery/largest?year=2019&amp;amount=15
+<pre><code class="language-url">http://localhost:3000/service/examplequery/largest?year=2019&amp;amount=15
 </code></pre>
-
 <p>A visualização do JSON resultado da requisição acima pode ser observado no <a href="https://cerradodpat.org/service/deforestation/largest?year=2019&amp;amount=15">link</a>.</p>
 <p>Além de requisitar pelo navegador, o serviço também poderá ser requisitado pelo <em>WebMap Client</em> a fim de disponibilizar este dado na plataforma Cerrado DPAT. Para tal, o mesmo poderá ser feito via biblioteca <a href="https://angular.io/api/common/http/HttpClient">HttpClient</a> do Angular e assim obter o arquivo JSON com os dados processados. Considerando que a variável <code>http</code> foi devidadmente injetada no construtor da classe do Angular, o método <code>getLargest()</code> abaixo deverá realizar a requisição e armazenar seu resultado na variável <code>dados_largest</code>:</p>
 <pre><code>client/src/app/views/map.component.ts
 </code></pre>
-<pre><code class="js">getLargest() {
+<pre><code class="language-js">getLargest() {
 
     let url = '/service/examplequery/largest?year=2019&amp;amount=15'
 
@@ -295,7 +243,7 @@
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -305,7 +253,7 @@
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -319,6 +267,11 @@
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Luiz Pascoal e Sérgio Nogueira">
+  
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Rasters - Documentação - Cerrado DPAT</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,7 +25,7 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
@@ -35,6 +36,7 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Documentação - Cerrado DPAT</a>
         <div role="search">
@@ -45,97 +47,59 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">HOME</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Guia do usuário</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../01-guia_dados_geograficos/">Dados Geográficos</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../01-guia_metricas_de_qualidade/">Métricas de Qualidade</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../01-guia_funcionalidades/">Funcionalidades</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../01-guia_relatorios/">Relatórios</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Dados</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../03-dad_vetoriais/">Vetoriais</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Rasters</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#dados-rasters">Dados Rasters</a></li>
-    
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">HOME</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Guia do usuário</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_dados_geograficos/">Dados Geográficos</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_metricas_de_qualidade/">Métricas de Qualidade</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_funcionalidades/">Funcionalidades</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-guia_relatorios/">Relatórios</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Dados</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../03-dad_vetoriais/">Vetoriais</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Rasters</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#estrutura-de-diretorios">Estrutura de diretórios</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#processo-de-atualizacao">Processo de atualização</a>
         <ul>
-        
-            <li><a class="toctree-l4" href="#estrutura-de-diretorios">Estrutura de diretórios</a></li>
-        
-            <li><a class="toctree-l4" href="#processo-de-atualizacao">Processo de atualização</a></li>
-        
+    <li class="toctree-l3"><a class="reference internal" href="#mosaicos-landsat">Mosaicos Landsat</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mosaicos-sentinel-2">Mosaicos Sentinel-2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#disponibilizacao-no-ows-server">Disponibilização no OWS Server</a>
+    </li>
         </ul>
-    
-
+    </li>
     </ul>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Arquitetura de Software</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../02-arq_geral/">Visão geral</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_servidor_de_aplicacao/">Servidor de aplicação</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-arq_execucao_dpat/">Deployment da arquitetura do Cerrado DPAT</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../04-metricas_de_avaliacao/">Métricas de Avaliação</a>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Arquitetura de Software</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_geral/">Visão geral</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_servidor_de_mapas/">Servidor de mapas</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_servidor_de_aplicacao/">Servidor de aplicação</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-arq_execucao_dpat/">Deployment da arquitetura do Cerrado DPAT</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-metricas_de_avaliacao/">Métricas de Avaliação</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -164,6 +128,7 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
@@ -232,7 +197,6 @@
 <p>Após as edições deve-se executar o seguinte comando:</p>
 <pre><code>sh run.sh
 </code></pre>
-
 <p>As imagens no formato TIF de cada ano estarão disponiveis na pasta apontada em <code>OUTPUT_DIR</code>. </p>
 <h3 id="mosaicos-sentinel-2">Mosaicos Sentinel-2</h3>
 <p>As imagens Sentinel-2 foram baixadas por meio da plataforma <a href="https://earthengine.google.com/">Google Earth Engine</a>. Devido a caracteristica sazonal do bioma Cerrado, um mesmo alvo pode apresentar diferentes respostas espectrais durante os diferentes meses do ano. Assim, para que o mosaico apresentasse um padrão mais homogêneo entre as cenas, buscou-se por imagens dentro de um curto periodo de tempo. Foram priorizadas imagens para o periodo de um mês. No caso da indisponibilidade de imagens sem nuvens, o periodo foi estendido até que o intervalo entre maio e outubro fosse alcançado. Destaca-se também que diferentes padrões climáticos podem ser encontrado no bioma, dificultando assim a identificação de imagens sem nuvens. Dessa forma, diferentes geometrias foram criadas para a seleção de imagens em regiões específicas (ex: norte do bioma, próximo ao litoral maranhense). O código para o download do mosaico Sentinel-2 <a href="https://code.earthengine.google.com/e45dab08c30a7e688558032a30382792">encontra-se disponivel para acesso</a>.</p>
@@ -241,13 +205,11 @@
 
 gdal_translate mosaic_&quot;$ano&quot;.vrt mosaic_&quot;$ano&quot;.tif -co COMPRESS=LZW -co BIGTIFF=YES -co TILED=YES -a_nodata 0
 </code></pre>
-
 <p>Onde <code>$ano</code> é o ano de cada mosaico, presente no nome dos tiles correspondentes a imagem baixada.</p>
 <h3 id="disponibilizacao-no-ows-server">Disponibilização no OWS Server</h3>
 <p>Após a criação dos arquivos únicos para os mosaicos Landsat e Sentinel, antes de disponibilizar o mosaico ao OWS Server é necessário a criação das pirâmides para níveis diferentes de visualização do mosaico. Para criar a visualização em níveis, execute o comando:</p>
-<pre><code class="sh">gdaladdo --config USE_RRD=YES -ro &lt;nome_arquivo.tif&gt; 2 4 8
+<pre><code class="language-sh">gdaladdo --config USE_RRD=YES -ro &lt;nome_arquivo.tif&gt; 2 4 8
 </code></pre>
-
 <p>Ao finalizar o processamento, é importante definir o valor das bandas para a coloração do mosaico, o que pode ser alcançado com o apoio do QGIS, ao clicar com o botão direito sobre a camada -&gt; propriedades -&gt; simbologia na opção.A imagem abaixo apresenta um exemplo de definição do valor das bandas aplicadas ao mosaico Sentinel de 2018.</p>
 <p><img alt="Exemplo de bandas." src="../imgs/03/exemplo_bandas.png" /></p>
 <p>Por fim, pode-se então disponibilizar o mosaico como camada no Mapserver através de um <a href="../02-arq_servidor_de_mapas/#Processo de atualização">mapfile</a>. Um exemplo de mapfile para criação da camada com o mosaico Sentinel de 2018 pode ser visualizada abaixo:</p>
@@ -275,7 +237,6 @@ gdal_translate mosaic_&quot;$ano&quot;.vrt mosaic_&quot;$ano&quot;.tif -co COMPR
   PROCESSING &quot;BANDS=3,2,1&quot;
 END
 </code></pre>
-
 <p>É importante ressaltar a inserção do parâmetro <code>PROCESSING "SCALE_"</code> ao Mapfile permitindo informar ao Mapserver os valores de bandas definidos anteriormente.</p>
               
             </div>
@@ -299,7 +260,7 @@ END
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -309,7 +270,7 @@ END
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -323,6 +284,11 @@ END
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
