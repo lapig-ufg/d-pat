@@ -72,7 +72,7 @@ module.exports = function (app) {
               download: [],
               regionFilter: true,
               timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["timelabel"][language],
-              timeSelected: "year=2019",
+              timeSelected: "year=2020",
               timeHandler: "msfilter",
               times: [{
                 value: "year=2002",
@@ -154,7 +154,7 @@ module.exports = function (app) {
               download: [],
               regionFilter: true,
               timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_state_fip_img"]["timelabel"][language],
-              timeSelected: "year=2019",
+              timeSelected: "year=2020",
               timeHandler: "msfilter",
               times: [{
                 value: "year=2002",
@@ -236,7 +236,7 @@ module.exports = function (app) {
               download: ['csv', 'shp'],
               regionFilter: true,
               timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel"][language],
-              timeSelected: "year=2019",
+              timeSelected: "year=2020",
               timeHandler: "msfilter",
               times: [{
                 value: "year=2002",
