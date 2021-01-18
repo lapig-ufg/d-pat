@@ -220,6 +220,11 @@ module.exports = function (app) {
                 value: "year=2019",
                 Viewvalue: "2018/2019",
                 year: 2019
+              },
+              {
+                value: "year=2020",
+                Viewvalue: "2019/2020",
+                year: 2020
               }
               ]
             },
@@ -297,6 +302,11 @@ module.exports = function (app) {
                 value: "year=2019",
                 Viewvalue: "2018/2019",
                 year: 2019
+              },
+              {
+                value: "year=2020",
+                Viewvalue: "2019/2020",
+                year: 2020
               }
               ]
             },
@@ -426,6 +436,10 @@ module.exports = function (app) {
             },
             {
               value: "year < 2019",
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2019"][language]
+            },
+            {
+              value: "year < 2020",
               Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2019"][language]
             }
             ]
