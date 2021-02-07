@@ -87,14 +87,12 @@ inner join municipios_cerrado city on ST_INTERSECTS(city.geom, prodes.geom)
 GROUP BY prodes.gid HAVING COUNT(city.*) > 1
 ```
 
-Em seguida, deve-se copiar os polígonos PRODES-Cerrado 2019 para uma tabela alternativa `prodes2019_alt` (que possui o campo de município) dividindo o polígono nas porções que pertencem a cada município. Esta operação irá aumentar a quantidade de polígonos no banco, porém não irá impactar na área desmatada. 
-
+Em seguida, deve-se copiar os polígonos PRODES-Cerrado 2019 para uma tabela alternativa `prodes2019_alt` (que possui o campo de município) dividindo o polígono nas porções que pertencem a cada município. Esta operação irá aumentar a quantidade de polígonos no banco, porém não irá impactar na área desmatada.
 
 ``` sql
 ALTER TABLE prodes2019 
 ADD COLUMN county character varying(60);
 ```
-
 
 ``` sql
 insert into prodes2019_alt (id, state, path_row, class_name, image_date, year, area_km2, uf, county, geom)

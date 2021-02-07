@@ -76,10 +76,6 @@ module.exports = function (app) {
     var year = request.param("year");
     var language = request.param('lang')
 
-    if (parseInt(year) == 2020 || year == '2019') {
-      year = 2019;
-    }
-
     var qc = request.queryResult["car"];
 
     let stringified = qc.map(i => JSON.stringify(i));

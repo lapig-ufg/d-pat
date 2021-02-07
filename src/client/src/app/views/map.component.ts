@@ -4516,7 +4516,6 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       }
     );
 
-
     this.http.get('/service/report/car/' + this.getServiceParams()).subscribe(
       result => {
         this.carData = result['car'];

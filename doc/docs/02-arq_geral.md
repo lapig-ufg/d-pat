@@ -21,4 +21,4 @@ Resumidamente, todos os dados usados pelo Cerrado DPAT estão organizados em um 
 
 Estes dados são acessados pelo *Application Server* e pelo *OWS Server* (ambos construídos em NodeJS) e são disponibilizados através de URLs com requisições por meio do protocolo [HTTP](https://pt.wikipedia.org/wiki/Hypertext_Transfer_Protocol). Todas as requisições Web realizadas aos Servers são interceptadas pelo Apache Server e devidamente redirecionadas. Desta forma, o *Client* realiza todas as requisições necessárias para construir a visualização dos elementos da página, tais como: mapa interativo, gráficos, campo de busca e etc.
 
-Por fim, destaca-se que todo o código-fonte para o Cerrado DPAT e também para o OWS Server foi disponibilizado publicamente no [Github do LAPIG/UFG](https://github.com/lapig-ufg).
+Por fim, destaca-se que todo o código-fonte para o Cerrado DPAT e também para o OWS Server foi disponibilizado publicamente no [Github do LAPIG/UFG](https://github.com/lapig-ufg/d-pat).

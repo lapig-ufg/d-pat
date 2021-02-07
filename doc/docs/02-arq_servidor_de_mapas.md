@@ -64,7 +64,7 @@ O Mapserver utiliza um arquivo de configuração para renderização de dados ge
 
 A figura abaixo apresenta o Mapfile da camada dos desmatamentos PRODES-Cerrado presente no Cerrado DPAT. Esta mesma figura pode representar um exemplo prático para criação de um Mapfile com conexão com Banco de Dados e assim obter dados em formato vetorial. Portanto, segue a especificação de cada item destacado na imagem:
 
-![Exemplo de Mapfile.](imgs/02/mapfile.png)
+![Exemplo de Mapfile para dados Vetoriais.](imgs/02/mapfile.png)
 
 1. Apresenta o nome da camada, bem como a fonte de onde este dado será carregado. No exemplo este dado é acessado pela comunicação com Postgis devidamente autenticado;
 
