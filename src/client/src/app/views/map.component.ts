@@ -4615,7 +4615,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
       () => {
 
         this.dataTimeseriesModis = {
-          labels: this.tmpModis.map(element => element.date),
+          labels: this.tmpModis.map(element => new Date(element.date)),
           datasets: [
             {
               label: 'NDVI',
@@ -4661,9 +4661,15 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
             }],
             xAxes: [{
               type: 'time',
+              time: {
+                parser: 'D/M/YYYY',
+                unit: 'day',
+                tooltipFormat: "DD/MM/YYYY",
+              },
               ticks: {
                 autoSkip: true
-              }
+              },
+
             }]
           },
           title: {
