@@ -41,12 +41,13 @@ module.exports = function (app) {
 
 		let origin = params['origin']
 		let gid = params['gid']
+
 		return [
 			{
 				id: 'car',
-				sql: "SELECT ST_AREA(ST_Intersection(desmatamento.geom, car.geom)::GEOGRAPHY) / 1000000.0 as area_desmatada , ST_AREA(app.geom::GEOGRAPHY) / 1000000.0 as area_app_total, "
-					+ " ST_AREA(rl.geom::GEOGRAPHY) / 1000000.0 as area_reserva_legal_total, c.qnt_nascente as qnt_nascente, ST_AREA(ST_Intersection(desmatamento.geom, rl.geom)::GEOGRAPHY) / 1000000.0 as area_desmat_rl, "
-					+ " ST_AREA(ST_Intersection(desmatamento.geom, app.geom)::GEOGRAPHY) / 1000000.0 as area_desmat_app , "
+				sql: "SELECT ST_AREA(safe_intersection(desmatamento.geom, car.geom)::GEOGRAPHY) / 1000000.0 as area_desmatada , ST_AREA(app.geom::GEOGRAPHY) / 1000000.0 as area_app_total, "
+					+ " ST_AREA(rl.geom::GEOGRAPHY) / 1000000.0 as area_reserva_legal_total, c.qnt_nascente as qnt_nascente, ST_AREA(safe_intersection(desmatamento.geom, rl.geom)::GEOGRAPHY) / 1000000.0 as area_desmat_rl, "
+					+ " ST_AREA(safe_intersection(desmatamento.geom, app.geom)::GEOGRAPHY) / 1000000.0 as area_desmat_app , "
 					+ " car.gid as cargid, car.cod_car as codcar, car.area_ha / 100.0 as areacar, car.data_ref as datarefcar, rect_bbox(car.geom) as bboxcar FROM car_desmat c "
 					+ " INNER JOIN car_cerrado car on car.idt_imovel = c.idt_imovel"
 					+ " INNER JOIN geo_car_reserva_legal_cerrado rl on rl.idt_imovel = c.idt_imovel "
