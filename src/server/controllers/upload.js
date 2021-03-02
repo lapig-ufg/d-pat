@@ -22,7 +22,7 @@ module.exports = function (app) {
 	const languageJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
 
 	/**
-    Directory where the code will to put tmp files**/
+	Directory where the code will to put tmp files**/
 	Internal.dirUpload = config.uploadDataDir;
 
 	Internal.targetFilesName = null;

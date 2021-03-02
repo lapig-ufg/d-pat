@@ -4663,7 +4663,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
               type: 'time',
               time: {
                 parser: 'D/M/YYYY',
-                unit: 'day',
+                // unit: 'year',
                 tooltipFormat: "DD/MM/YYYY",
               },
               ticks: {
