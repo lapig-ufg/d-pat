@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MapComponent } from './views/map.component';
-import { MapMobileComponent } from './views/map-mobile/map-mobile.component'
+import { MapMobileComponent } from './views/map-mobile/map-mobile.component';
 import { HotsiteComponent } from './views/hotsite/hotsite.component';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
+import { CapacitacaoComponent } from './views/capacitacao/capacitacao.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: '', component: HotsiteComponent },
   { path: 'plataforma', component: MapComponent },
   { path: 'projeto', component: ProjectComponent },
+  { path: 'capacitacao', component: CapacitacaoComponent },
   { path: 'plataforma/:token', component: MapComponent },
   { path: 'regions/:token', component: MapComponent },
   { path: '**', redirectTo: '/'}
@@ -25,6 +27,7 @@ const routesMobile: Routes = [
   { path: '', component: MobileComponent },
   { path: 'mobile', component: MobileComponent },
   { path: 'projeto', component: ProjectComponent },
+  { path: 'capacitacao', component: CapacitacaoComponent },
   { path: 'map-mobile', component: MapMobileComponent },
   { path: 'plataforma/:token', component: MapMobileComponent },
   { path: 'regions/:token', component: MapMobileComponent},

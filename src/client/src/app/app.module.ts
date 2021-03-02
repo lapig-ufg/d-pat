@@ -62,6 +62,7 @@ import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { MobileComponent } from './views/mobile/mobile.component';
 import { ProjectComponent } from './views/project/project.component';
+import { CapacitacaoComponent } from './views/capacitacao/capacitacao.component';
 import { MapMobileComponent } from './views/map-mobile/map-mobile.component';
 import { RegionReportComponent } from './views/region-report/region-report.component';
 import { ReportCarComponent } from './views/report-car/report-car.component';
@@ -84,6 +85,7 @@ export function initApp(config: AppConfig) {
 @NgModule({
   declarations: [
     AppComponent,
+    CapacitacaoComponent,
     MapComponent,
     DialogOverviewExampleDialog,
     DialogMobileLaudo,
@@ -159,7 +161,8 @@ export function initApp(config: AppConfig) {
     ReportCarComponent,
     ChartsComponent,
     RegionReportMobileComponent,
-    TutorialsComponent
+    TutorialsComponent,
+    CapacitacaoComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

@@ -22,6 +22,7 @@ module.exports = function (app) {
         txt.fip                       = languageJson['hotsite']['fip'].map( function( elem ) {return elem[lang]});
         txt.fip_title                 = languageJson['hotsite']['fip_title'][lang];
         txt.team_title                = languageJson['hotsite']['team_title'][lang];
+        txt.capacitacao               = languageJson['hotsite']['capacitacao'][lang];
 
         return txt;
     };

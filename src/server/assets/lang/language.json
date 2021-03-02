@@ -4944,6 +4944,10 @@
 			"pt-br": "Acessar resultados",
 			"en-us": "See results"
 		},
+		"capacitacao": {
+			"pt-br": "Capacitação",
+			"en-us": "Training"
+		},
 		"hover_btn_documentation": {
 			"pt-br": "Documentação",
 			"en-us": "Documentation"
