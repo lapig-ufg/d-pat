@@ -14,7 +14,8 @@
                     class=""><strong>POR</strong></div>
                 <div (click)="setLang('en-us')"
                     [className]="lang === 'en-us' || lang === 'en' ? 'nav-item nav-link lang lang-selected' : 'nav-item nav-link lang'">
-                    <strong>ENG</strong></div>
+                    <strong>ENG</strong>
+                </div>
             </div>
         </div>
     </nav>
@@ -261,6 +262,16 @@
                 </figure>
 
                 <p class="text-justify lead" [innerHTML]="'deep_learning_01' | translate"></p>
+
+                <p class="text-justify lead" [innerHTML]="'docs_01' | translate"></p>
+                <figure class="figure mt-4 mb-4">
+                    <a target='blank' href="https://cerradodpat.org/docs">
+                        <img [src]="'docs_src_fig_01' | translate" class="img-fluid shadow-lg"
+                            [alt]="'docs_src_fig_01_alt' | translate">
+                    </a>
+                    <figcaption class="figure-caption text-center" [innerHTML]="'docs_src_fig_01_legend' | translate">
+                    </figcaption>
+                </figure>
 
             </div>
         </div>

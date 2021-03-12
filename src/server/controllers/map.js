@@ -440,7 +440,7 @@ module.exports = function (app) {
             },
             {
               value: "year < 2020",
-              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2019"][language]
+              Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2020"][language]
             }
             ]
           }]
