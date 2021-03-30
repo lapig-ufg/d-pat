@@ -3203,6 +3203,10 @@
 				"relevo": {
 					"pt-br": "Relevo (World Shaded Relief)",
 					"en-us": "Geographical Relief (World Shaded Relief)"
+				},
+				"planet": {
+					"pt-br": "Mosaico Planet (Último Trimestre de 2020)",
+					"en-us": "Planet Mosaic (Last Quarter of 2020)"
 				}
 			}
 		},

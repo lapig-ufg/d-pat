@@ -24,6 +24,8 @@ import TileWMS from 'ol/source/TileWMS';
 import UTFGrid from 'ol/source/UTFGrid.js';
 import VectorSource from 'ol/source/Vector';
 import OlXYZ from 'ol/source/XYZ';
+import WMTS from 'ol/source/WMTS';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke';
@@ -131,6 +133,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   estradas: any;
   relevo: any;
   landsat: any;
+  planet: any;
   descriptor: any;
   valueRegion: any;
   regionFilterDefault: any;
@@ -1574,6 +1577,20 @@ export class MapComponent implements OnInit, AfterViewChecked {
         visible: false
       })
     };
+
+    this.planet = {
+      visible: false,
+      layer: new OlTileLayer({
+        source: new OlXYZ({
+          url:
+            'https://tiles{0-3}.planet.com/basemaps/v1/planet-tiles/global_quarterly_2020q4_mosaic/gmap/{z}/{x}/{y}.png?api_key=d6f957677fbf40579a90fb3a9c74be1a',
+
+        }),
+        visible: false
+      })
+    };
+
+
 
     for (let baseName of this.basemapsNames) {
       this.layers.push(this[baseName.value].layer);

@@ -966,6 +966,11 @@ module.exports = function (app) {
           value: "relevo",
           viewValue: languageJson["descriptor"]["basemaps"]["types"]["relevo"][language],
           visible: false
+        },
+        {
+          value: "planet",
+          viewValue: languageJson["descriptor"]["basemaps"]["types"]["planet"][language],
+          visible: false
         }
         ]
       }],
