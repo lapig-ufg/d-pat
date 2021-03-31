@@ -1070,7 +1070,8 @@ module.exports = function (app) {
         car_table_headers: languageJson["layer_box"]["car_table_headers"][language],
         car_title_report: languageJson["layer_box"]["car_title_report"][language],
         upload_submit: languageJson["layer_box"]["upload_submit"][language],
-        upload_search: languageJson["layer_box"]["upload_search"][language]
+        upload_search: languageJson["layer_box"]["upload_search"][language],
+        map_coordinate: languageJson["layer_box"]["map_coordinate"][language]
       },
       descriptor: languageJson["descriptor"]
 

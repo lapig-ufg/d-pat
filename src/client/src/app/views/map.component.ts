@@ -10,10 +10,12 @@ import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
 import { Lightbox } from 'ngx-lightbox';
-import { Attribution } from 'ol/control';
+import { Attribution, defaults as defaultControls } from 'ol/control';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
+import MousePosition from 'ol/control/MousePosition';
+import { createStringXY, format as olFormat } from 'ol/coordinate';
 import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import OlMap from 'ol/Map';
@@ -24,8 +26,6 @@ import TileWMS from 'ol/source/TileWMS';
 import UTFGrid from 'ol/source/UTFGrid.js';
 import VectorSource from 'ol/source/Vector';
 import OlXYZ from 'ol/source/XYZ';
-import WMTS from 'ol/source/WMTS';
-import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke';
@@ -121,6 +121,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   optionsTimeSeries: any;
   optionsStates: any;
   optionsCities: any;
+
 
   changeTabSelected = "";
   viewWidth = 600;
@@ -986,8 +987,23 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.createBaseLayers();
     this.createLayers();
 
+    var mousePositionControl = new MousePosition({
+      // coordinateFormat: createStringXY(4),
+      coordinateFormat: function (coordinate) {
+        return olFormat(coordinate, 'Lat: {y}, Long: {x}', 4);
+      },
+      projection: 'EPSG:4326',
+      // comment the following two lines to have the mouse position
+      // be placed within the map.
+      className: 'ol-mouse-position',
+      target: document.getElementById('mouse-position'),
+      // undefinedHTML: '&nbsp;',
+      undefinedHTML: '',
+    });
+
     this.map = new OlMap({
       target: 'map',
+      controls: defaultControls().extend([mousePositionControl]),
       layers: this.layers,
       view: new OlView({
         center: OlProj.fromLonLat([-49, -13.5]),

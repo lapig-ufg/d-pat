@@ -214,6 +214,10 @@
 			"pt-br": "Desculpe, região não encontrada.",
 			"en-us": "Sorry, region not found."
 		},
+		"map_coordinate": {
+			"pt-br": "Coordenadas do Mouse no Mapa",
+			"en-us": "Mouse Coordinates on Map"
+		},
 		"label_upload_token": {
 			"pt-br": "Token de acesso (apenas números): ",
 			"en-us": "Access Token (numbers only): "
