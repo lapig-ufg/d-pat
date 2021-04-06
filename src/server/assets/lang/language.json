@@ -1334,6 +1334,252 @@
 				}
 			}
 		},
+		"areas_queimadas": {
+			"label": {
+				"pt-br": "Queimadas",
+				"en-us": "Burning Areas"
+			},
+			"layers": {
+				"queimadas": {
+					"label": {
+						"pt-br": "Queimadas - INPE",
+						"en-us": "Burned Area - INPE"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Queimadas - INPE",
+								"en-us": "Burned Area - IN"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Área antrópica total, mapeada no âmbito do PRODES-Cerrado, convertida até um determinado ano.",
+								"en-us": "Total area converted, mapped by PRODES-Cerrado, until a given year."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2000-2019",
+								"en-us": "2000-2019"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "1:250.000",
+								"en-us": "1:250.000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Coordinate Reference System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Instituto Nacional de Pesquisas Espaciais (INPE)",
+								"en-us": "National Institute for Space Research (INPE)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>",
+								"en-us": "<a target='_blank' class='link-details' href='http://terrabrasilis.dpi.inpe.br/'> http://terrabrasilis.dpi.inpe.br/ </a>"
+							}
+						}
+					],
+					"types": {
+						"cicatrizes_queimadas_2015a2019": {
+							"view_value": {
+								"pt-br": "Polígonos",
+								"en-us": "Polygons"
+							},
+							"timelabel": {
+								"pt-br": "Período",
+								"en-us": "Period"
+							},
+							"times": {
+								"year = 2015": {
+									"pt-br": "2015",
+									"en-us": "2015"
+								},
+								"year = 2016": {
+									"pt-br": "2016",
+									"en-us": "2016"
+								},
+								"year = 2017": {
+									"pt-br": "2017",
+									"en-us": "2017"
+								},
+								"year = 2018": {
+									"pt-br": "2018",
+									"en-us": "2018"
+								},
+								"year = 2019": {
+									"pt-br": "2019",
+									"en-us": "2019"
+								}
+							}
+						}
+					}
+				},
+				"frequencia_queimada": {
+					"label": {
+						"pt-br": "Frequência de Queimadas",
+						"en-us": "Burning Frequency"
+					},
+					"metadata": [
+						{
+							"title": {
+								"pt-br": "Dado",
+								"en-us": "Data"
+							},
+							"description": {
+								"pt-br": "Susceptibilidade a Desmatamentos",
+								"en-us": "Susceptibility to Deforestation"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Descrição",
+								"en-us": "Description"
+							},
+							"description": {
+								"pt-br": "Susceptibilidade, de acordo com os padrões observados entre os anos de 2010 e 2015, de uma área nativa ser antropizada por meio de corte raso.",
+								"en-us": "Susceptibility, according to the patterns observed between the years of 2010 and 2015, of a native area being anthropized through clear-cut."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Data",
+								"en-us": "Date"
+							},
+							"description": {
+								"pt-br": "2015",
+								"en-us": "2015"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Escala",
+								"en-us": "Scale"
+							},
+							"description": {
+								"pt-br": "30 metros",
+								"en-us": "30 meters"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Sistema de Referência e Coordenadas",
+								"en-us": "Coordinate Reference System"
+							},
+							"description": {
+								"pt-br": "SIRGAS 2000",
+								"en-us": "SIRGAS 2000"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Projeção Cartográfica",
+								"en-us": "Cartographic Projection"
+							},
+							"description": {
+								"pt-br": "Universal Transversa de Mercator",
+								"en-us": "Universal Transverse Mercator coordinate system"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Codificação de caractere",
+								"en-us": "Character encoding"
+							},
+							"description": {
+								"pt-br": "UTF-8.",
+								"en-us": "UTF-8."
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Fonte",
+								"en-us": "Source"
+							},
+							"description": {
+								"pt-br": "Laboratório de Processamento de Imagens e Geoprocessamento (LAPIG-UFG)",
+								"en-us": "Image Processing and Geoprocessing Laboratory (LAPIG-UFG)"
+							}
+						},
+						{
+							"title": {
+								"pt-br": "Detalhes",
+								"en-us": "Details"
+							},
+							"description": {
+								"pt-br": "<a target='_blank' class='link-details' href='https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract'> https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract</a>",
+								"en-us": "<a target='_blank' class='link-details' href='https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract'> https://ui.adsabs.harvard.edu/abs/2018AGUFM.B31I2607N/abstract</a>"
+							}
+						}
+					],
+					"types": {
+						"bi_ce_frequencia_queimada_ufmg": {
+							"view_value": {
+								"pt-br": "Qtde. Anos de Queima do Pixel",
+								"en-us": "Qty. Pixel Burning Years"
+							}
+						}
+					}
+				}
+			}
+		},
 		"areas_especiais": {
 			"label": {
 				"pt-br": "Áreas Especiais",

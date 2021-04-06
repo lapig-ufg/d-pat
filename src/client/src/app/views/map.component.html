@@ -60,8 +60,9 @@
 														{{layer.label}}
 													</mat-checkbox>
 													<div class="space"></div>
-													<button *ngIf="layer.visible" (click)="openDialogMetadata(layer)"
-														classs="btn-info" mat-icon-button>
+													<button *ngIf="layer.visible && layer.metadata"
+														(click)="openDialogMetadata(layer)" classs="btn-info"
+														mat-icon-button>
 														<mat-icon>info</mat-icon>
 													</button>
 												</div>
