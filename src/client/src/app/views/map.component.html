@@ -37,12 +37,12 @@
 							<div class="invalid-feedback" *ngIf="searchFailed">
 								{{titlesLayerBox.search_failed}}</div>
 
-							<div>
+							<!-- <div>
 								<h6 style="color:green;text-align:center;"> <b> {{titlesLayerBox.map_coordinate}}</b>
 								</h6>
 								<div style="font-weight: bold;font-size: 150%;text-align:center;"
 									class="ol-mouse-position" id="mouse-position"></div>
-							</div>
+							</div> -->
 							<mat-accordion>
 								<div [style.visibility]="showDrawer? 'visible' : 'hidden'" id="layers_desmatamentos">
 									<div *ngFor="let groups of descriptor.groups">
@@ -521,6 +521,13 @@
 			<p-sidebar [id]="'sideBar'" [modal]="false" [dismissible]="false" [autoZIndex]="true"
 				[style]="{'width':'34vw'}" [(visible)]="showStatistics" position="right">
 				<p-scrollPanel [style]="{height: '100%'}">
+
+					<div class="legends">
+						<!-- <h6 style="color:green;text-align:center;"> <b> {{titlesLayerBox.map_coordinate}}</b> -->
+						<h5 class="title-section"> {{titlesLayerBox.map_coordinate}}</h5>
+						<div style="font-weight: bold;font-size: 150%;text-align:center;padding-bottom: 15px"
+							class="ol-mouse-position" id="mouse-position"></div>
+					</div>
 
 					<h5 class="title-section">{{titlesLayerBox.legendTitle}}</h5>
 					<div class="legends" *ngFor="let layer of layersNames">

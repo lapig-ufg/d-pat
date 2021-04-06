@@ -1342,8 +1342,8 @@
 			"layers": {
 				"queimadas": {
 					"label": {
-						"pt-br": "Queimadas - INPE",
-						"en-us": "Burned Area - INPE"
+						"pt-br": "Cicatrizes de Queimadas",
+						"en-us": "Burned Area"
 					},
 					"metadata": [
 						{
@@ -1440,8 +1440,8 @@
 					"types": {
 						"cicatrizes_queimadas_2015a2019": {
 							"view_value": {
-								"pt-br": "Polígonos",
-								"en-us": "Polygons"
+								"pt-br": "Queimadas - INPE",
+								"en-us": "Burned Areas - INPE"
 							},
 							"timelabel": {
 								"pt-br": "Período",
@@ -1474,8 +1474,8 @@
 				},
 				"frequencia_queimada": {
 					"label": {
-						"pt-br": "Frequência de Queimadas",
-						"en-us": "Burning Frequency"
+						"pt-br": "Frequência de Queimadas (2001 - 2020)",
+						"en-us": "Burning Frequency (2001 - 2020)"
 					},
 					"metadata": [
 						{
