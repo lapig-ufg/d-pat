@@ -1079,10 +1079,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
+    let queimadas = this.layersNames.find(element => element.id === "focos_calor");
 
 
 
-    if (prodes.visible || deter.visible) {
+    if (prodes.visible || deter.visible || queimadas.visible) {
 
       let coordinate = this.map.getEventCoordinate(evt.originalEvent);
       let viewResolution = this.map.getView().getResolution();
@@ -1107,7 +1108,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img') || queimadas.visible) {
         isMunicipio = true;
       }
 
@@ -1120,7 +1121,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
           this.utfgridmunicipio.forDataAtCoordinateAndResolution(coordinate, viewResolution, function (data) {
             if (data) {
 
-              if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
+              if ((prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) ||
+                (queimadas.visible)) {
                 // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = 'pointer';
                 this.infodataMunicipio = data;
@@ -1749,29 +1751,57 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     let text = '1=1';
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    let calor = this.layersNames.find(element => element.id === 'focos_calor');
     let time = { value: '' }
     let layerutf = ''
 
-    if (prodes.selectedType == 'prodes_por_region_city_fip_img') {
-      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
-      layerutf = 'prodes_por_region_city_fip_utfgrid'
+    if (prodes.visible) {
+      if (prodes.selectedType == 'prodes_por_region_city_fip_img') {
+        time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
+        layerutf = 'prodes_por_region_city_fip_utfgrid'
+      }
+      else if (prodes.selectedType == 'prodes_por_region_state_fip_img') {
+        time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
+        layerutf = 'prodes_por_region_state_fip_utfgrid'
+      }
+
+
+      if (this.selectRegion.type === 'city') {
+        time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
+        text += ' AND region_type = \'' + this.selectRegion.type + '\'';
+        layerutf = 'prodes_por_region_city_fip_utfgrid'
+      }
+      else if (this.selectRegion.type === 'state') {
+        time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
+        layerutf = 'prodes_por_region_state_fip_utfgrid'
+        text += ' AND region_type = \'' + this.selectRegion.type + '\'';
+      }
     }
-    else if (prodes.selectedType == 'prodes_por_region_state_fip_img') {
-      time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
-      layerutf = 'prodes_por_region_state_fip_utfgrid'
+
+    if (calor.visible) {
+      if (calor.selectedType == 'focos_calor_regions_city_img') {
+        time = this.selectedTimeFromLayerType('focos_calor_regions_city_img');
+        layerutf = 'prodes_por_region_city_fip_utfgrid'
+      }
+      else if (calor.selectedType == 'focos_calor_regions_state_img') {
+        time = this.selectedTimeFromLayerType('focos_calor_regions_state_img');
+        layerutf = 'prodes_por_region_state_fip_utfgrid'
+      }
+
+
+      if (this.selectRegion.type === 'city') {
+        time = this.selectedTimeFromLayerType('focos_calor_regions_city_img');
+        text += ' AND region_type = \'' + this.selectRegion.type + '\'';
+        layerutf = 'prodes_por_region_city_fip_utfgrid'
+      }
+      else if (this.selectRegion.type === 'state') {
+        time = this.selectedTimeFromLayerType('focos_calor_regions_state_img');
+        layerutf = 'prodes_por_region_state_fip_utfgrid'
+        text += ' AND region_type = \'' + this.selectRegion.type + '\'';
+      }
     }
 
 
-    if (this.selectRegion.type === 'city') {
-      time = this.selectedTimeFromLayerType('prodes_por_region_city_fip_img');
-      text += ' AND region_type = \'' + this.selectRegion.type + '\'';
-      layerutf = 'prodes_por_region_city_fip_utfgrid'
-    }
-    else if (this.selectRegion.type === 'state') {
-      time = this.selectedTimeFromLayerType('prodes_por_region_state_fip_img');
-      layerutf = 'prodes_por_region_state_fip_utfgrid'
-      text += ' AND region_type = \'' + this.selectRegion.type + '\'';
-    }
 
     text += ' AND ' + time.value;
 
@@ -1953,8 +1983,27 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
+    let calor = this.layersNames.find(element => element.id === 'focos_calor');
 
-    if (prodes.visible || deter.visible) {
+    if (prodes.visible || deter.visible || calor.visible) {
+      if (calor.visible) {
+        if ((calor.selectedType == 'focos_calor_regions_city_img') || (calor.selectedType == 'focos_calor_regions_state_img')) {
+          if (this.utfgridmunicipio) {
+            let tileJSONMunicipio = this.getTileJSONMunicipio();
+
+            this.utfgridmunicipio.tileUrlFunction_ = _ol_TileUrlFunction_.createFromTemplates(tileJSONMunicipio.grids, this.utfgridmunicipio.tileGrid);
+            this.utfgridmunicipio.tileJSON = tileJSONMunicipio;
+            this.utfgridmunicipio.refresh();
+
+            this.utfgridlayerMunicipio.setVisible(true);
+          }
+        }
+        else {
+          this.infodataMunicipio = null;
+          window.document.body.style.cursor = 'auto';
+        }
+      }
+
       if (prodes.visible) {
         if ((prodes.selectedType == 'bi_ce_prodes_desmatamento_100_fip')) {
           if (this.utfgridsource) {
@@ -2104,7 +2153,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       layer.visible = e.checked;
     }
 
-    if (layer.id == "desmatamento_prodes" || layer.id == "desmatamento_deter") {
+    if (layer.id == "desmatamento_prodes" || layer.id == "desmatamento_deter" || layer.id == "focos_calor") {
       if (layer.visible) {
         this.handleInteraction();
       }
