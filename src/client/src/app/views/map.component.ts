@@ -1079,11 +1079,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === "desmatamento_deter");
-    let queimadas = this.layersNames.find(element => element.id === "focos_calor");
+    let calor = this.layersNames.find(element => element.id === "focos_calor");
 
 
 
-    if (prodes.visible || deter.visible || queimadas.visible) {
+    if (prodes.visible || deter.visible || calor.visible) {
 
       let coordinate = this.map.getEventCoordinate(evt.originalEvent);
       let viewResolution = this.map.getView().getResolution();
@@ -1108,7 +1108,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img') || queimadas.visible) {
+      if ((prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) ||
+        (calor.visible && ((calor.selectedType == 'focos_calor_regions_city_img') || (calor.selectedType == 'focos_calor_regions_state_img')))) {
         isMunicipio = true;
       }
 
@@ -1122,7 +1123,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
             if (data) {
 
               if ((prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) ||
-                (queimadas.visible)) {
+                (calor.visible && ((calor.selectedType == 'focos_calor_regions_city_img') || (calor.selectedType == 'focos_calor_regions_state_img')))) {
                 // console.log(this.infodataMunicipio)
                 window.document.body.style.cursor = 'pointer';
                 this.infodataMunicipio = data;
@@ -1330,10 +1331,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
     let deter = this.layersNames.find(element => element.id === 'desmatamento_deter');
+    let calor = this.layersNames.find(element => element.id === 'focos_calor');
 
     let layers = this.layersNames;
 
-    if (prodes.visible || deter.visible) {
+    if (prodes.visible || deter.visible || calor.visible) {
 
       let isCampo = false;
       let isOficial = false;
@@ -1354,7 +1356,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
         isCampo = true;
       }
 
-      if ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img')) {
+      if ((prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) ||
+        (calor.visible && ((calor.selectedType == 'focos_calor_regions_city_img') || (calor.selectedType == 'focos_calor_regions_state_img')))) {
         isMunicipio = true;
       }
 
@@ -1388,6 +1391,25 @@ export class MapComponent implements OnInit, AfterViewChecked {
                   this.changeVisibility(prodes, undefined);
                   this.infodataMunicipio = null;
 
+                });
+              }
+
+              if (calor.visible && ((calor.selectedType == 'focos_calor_regions_city_img') || (calor.selectedType == 'focos_calor_regions_state_img'))) {
+                this.http.get(SEARCH_REGION, { params: PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
+                  let ob = { text: '' };
+
+                  for (let item of result) {
+                    if (item.type === data.region_type && data.region_name.toUpperCase() === item.value.toUpperCase()) {
+                      ob = item;
+                    }
+                  }
+
+                  this.currentData = ob.text;
+                  this.updateRegion(ob);
+
+                  calor.selectedType = 'pontos_foco_calor_fip';
+                  this.changeVisibility(calor, undefined);
+                  this.infodataMunicipio = null;
                 });
               }
             }

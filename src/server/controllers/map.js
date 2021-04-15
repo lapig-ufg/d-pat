@@ -479,37 +479,130 @@ module.exports = function(app) {
                             metadata: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]['metadata'],
                             selectedType: "cicatrizes_queimadas_2015a2019",
                             types: [{
-                                value: "cicatrizes_queimadas_2015a2019",
-                                Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["view_value"][language],
-                                opacity: 0.8,
-                                order: 2,
-                                download: ['shp'],
-                                regionFilter: true,
-                                timeLabel: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["timelabel"][language],
-                                timeSelected: "year = 2019",
-                                timeHandler: "msfilter",
-                                times: [{
-                                        value: "year = 2015",
-                                        Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2015"][language]
-                                    },
-                                    {
-                                        value: "year = 2016",
-                                        Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2016"][language]
-                                    },
-                                    {
-                                        value: "year = 2017",
-                                        Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2017"][language]
-                                    },
-                                    {
-                                        value: "year = 2018",
-                                        Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2018"][language]
-                                    },
-                                    {
-                                        value: "year = 2019",
-                                        Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2019"][language]
-                                    },
-                                ]
-                            }, ]
+                                    value: "cicatrizes_queimadas_2015a2019",
+                                    Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["view_value"][language],
+                                    opacity: 0.8,
+                                    order: 2,
+                                    download: ['shp'],
+                                    regionFilter: true,
+                                    timeLabel: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["timelabel"][language],
+                                    timeSelected: "year = 2019",
+                                    timeHandler: "msfilter",
+                                    times: [{
+                                            value: "year = 2015",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2015"][language]
+                                        },
+                                        {
+                                            value: "year = 2016",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2016"][language]
+                                        },
+                                        {
+                                            value: "year = 2017",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2017"][language]
+                                        },
+                                        {
+                                            value: "year = 2018",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2018"][language]
+                                        },
+                                        {
+                                            value: "year = 2019",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2015a2019"]["times"]["year = 2019"][language]
+                                        },
+                                    ]
+                                },
+                                {
+                                    value: "cicatrizes_queimadas_2001a2020_mcd64a1",
+                                    Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["view_value"][language],
+                                    opacity: 0.8,
+                                    order: 2,
+                                    download: ['shp'],
+                                    regionFilter: true,
+                                    timeLabel: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["timelabel"][language],
+                                    timeSelected: "year = 2020",
+                                    timeHandler: "msfilter",
+                                    times: [{
+                                            value: "year = 2001",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2001"][language]
+                                        },
+                                        {
+                                            value: "year = 2002",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2002"][language]
+                                        },
+                                        {
+                                            value: "year = 2003",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2003"][language]
+                                        },
+                                        {
+                                            value: "year = 2004",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2004"][language]
+                                        },
+                                        {
+                                            value: "year = 2005",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2005"][language]
+                                        },
+                                        {
+                                            value: "year = 2006",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2006"][language]
+                                        },
+                                        {
+                                            value: "year = 2007",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2007"][language]
+                                        },
+                                        {
+                                            value: "year = 2008",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2008"][language]
+                                        },
+                                        {
+                                            value: "year = 2009",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2009"][language]
+                                        },
+                                        {
+                                            value: "year = 2010",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2010"][language]
+                                        },
+                                        {
+                                            value: "year = 2011",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2011"][language]
+                                        },
+                                        {
+                                            value: "year = 2012",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2012"][language]
+                                        },
+                                        {
+                                            value: "year = 2013",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2013"][language]
+                                        },
+                                        {
+                                            value: "year = 2014",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2014"][language]
+                                        },
+                                        {
+                                            value: "year = 2015",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2015"][language]
+                                        },
+                                        {
+                                            value: "year = 2016",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2016"][language]
+                                        },
+                                        {
+                                            value: "year = 2017",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2017"][language]
+                                        },
+                                        {
+                                            value: "year = 2018",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2018"][language]
+                                        },
+                                        {
+                                            value: "year = 2019",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2019"][language]
+                                        },
+                                        {
+                                            value: "year = 2020",
+                                            Viewvalue: languageJson["descriptor"]["areas_queimadas"]["layers"]["queimadas"]["types"]["cicatrizes_queimadas_2001a2020_mcd64a1"]["times"]["year = 2020"][language]
+                                        }
+                                    ]
+                                },
+                            ]
                         },
                         {
                             id: "frequencia_queimada",

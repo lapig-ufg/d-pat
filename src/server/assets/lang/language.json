@@ -1431,12 +1431,12 @@
                     "types": {
                         "cicatrizes_queimadas_2015a2019": {
                             "view_value": {
-                                "pt-br": "Queimadas - INPE",
-                                "en-us": "Burned Areas - INPE"
+                                "pt-br": "INPE",
+                                "en-us": "INPE"
                             },
                             "timelabel": {
-                                "pt-br": "Período",
-                                "en-us": "Period"
+                                "pt-br": "Ano",
+                                "en-us": "Year"
                             },
                             "times": {
                                 "year = 2015": {
@@ -1458,6 +1458,98 @@
                                 "year = 2019": {
                                     "pt-br": "2019",
                                     "en-us": "2019"
+                                }
+                            }
+                        },
+                        "cicatrizes_queimadas_2001a2020_mcd64a1": {
+                            "view_value": {
+                                "pt-br": "MODIS (MCD64A1)",
+                                "en-us": "MODIS (MCD64A1)"
+                            },
+                            "timelabel": {
+                                "pt-br": "Ano",
+                                "en-us": "Year"
+                            },
+                            "times": {
+                                "year = 2001": {
+                                    "pt-br": "2001",
+                                    "en-us": "2001"
+                                },
+                                "year = 2002": {
+                                    "pt-br": "2002",
+                                    "en-us": "2002"
+                                },
+                                "year = 2003": {
+                                    "pt-br": "2003",
+                                    "en-us": "2003"
+                                },
+                                "year = 2004": {
+                                    "pt-br": "2004",
+                                    "en-us": "2004"
+                                },
+                                "year = 2005": {
+                                    "pt-br": "2005",
+                                    "en-us": "2005"
+                                },
+                                "year = 2006": {
+                                    "pt-br": "2006",
+                                    "en-us": "2006"
+                                },
+                                "year = 2007": {
+                                    "pt-br": "2007",
+                                    "en-us": "2007"
+                                },
+                                "year = 2008": {
+                                    "pt-br": "2008",
+                                    "en-us": "2008"
+                                },
+                                "year = 2009": {
+                                    "pt-br": "2009",
+                                    "en-us": "2009"
+                                },
+                                "year = 2010": {
+                                    "pt-br": "2010",
+                                    "en-us": "2010"
+                                },
+                                "year = 2011": {
+                                    "pt-br": "2011",
+                                    "en-us": "2011"
+                                },
+                                "year = 2012": {
+                                    "pt-br": "2012",
+                                    "en-us": "2012"
+                                },
+                                "year = 2013": {
+                                    "pt-br": "2013",
+                                    "en-us": "2013"
+                                },
+                                "year = 2014": {
+                                    "pt-br": "2014",
+                                    "en-us": "2014"
+                                },
+                                "year = 2015": {
+                                    "pt-br": "2015",
+                                    "en-us": "2015"
+                                },
+                                "year = 2016": {
+                                    "pt-br": "2016",
+                                    "en-us": "2016"
+                                },
+                                "year = 2017": {
+                                    "pt-br": "2017",
+                                    "en-us": "2017"
+                                },
+                                "year = 2018": {
+                                    "pt-br": "2018",
+                                    "en-us": "2018"
+                                },
+                                "year = 2019": {
+                                    "pt-br": "2019",
+                                    "en-us": "2019"
+                                },
+                                "year = 2020": {
+                                    "pt-br": "2020",
+                                    "en-us": "2020"
                                 }
                             }
                         }
