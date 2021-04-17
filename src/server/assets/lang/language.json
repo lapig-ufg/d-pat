@@ -335,7 +335,36 @@
         "upload_search": {
             "pt-br": "Consultar Área",
             "en-us": "Load Area"
+        },
+        "terraclass_card": {
+            "pt-br": "Visualizar as classes Terraclass que intersectam com a área submetida.",
+            "en-us": "View the Terraclass classes that intersect with the submitted area."
+        },
+        "terraclass_msg_searching": {
+            "pt-br": "Buscando as classes Terraclass que intersectam com esta área. Por favor aguarde.",
+            "en-us": "Searching for the Terraclass classes that intersect with this area. Please wait."
+        },
+        "chart_terraclass_title": {
+            "pt-br": "Classes Terraclass que intersectam com a área submetida.",
+            "en-us": "Terraclass classes that intersect with the submitted area."
+        },
+        "focos_calor_card": {
+            "pt-br": "Visualizar a quantidade de focos de calor que intersectam com a área submetida a partir de 2013.",
+            "en-us": "View the number of Fire Pixels that intersect with the area submitted from 2013."
+        },
+        "focos_calor_msg_searching": {
+            "pt-br": "Buscando as focos de calor que intersectam com esta área. Por favor aguarde.",
+            "en-us": "Searching for fire pixels that intersect with this area. Please wait."
+        },
+        "chart_focos_calor_title": {
+            "pt-br": "Quantidade Focos de Calor que intersectam com a área submetida a partir de 2013.",
+            "en-us": "Amount of Fire Pixels that intersect with the submitted area from 2013."
+        },
+        "chart_focos_chart_label": {
+            "pt-br": "Quantidade de Focos de Calor por ano.",
+            "en-us": "Amount of Fire Pixels per year."
         }
+
     },
     "descriptor": {
         "type_of_information_label": {

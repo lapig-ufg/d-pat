@@ -1564,7 +1564,14 @@ module.exports = function(app) {
                 car_title_report: languageJson["layer_box"]["car_title_report"][language],
                 upload_submit: languageJson["layer_box"]["upload_submit"][language],
                 upload_search: languageJson["layer_box"]["upload_search"][language],
-                map_coordinate: languageJson["layer_box"]["map_coordinate"][language]
+                map_coordinate: languageJson["layer_box"]["map_coordinate"][language],
+                terraclass_card: languageJson["layer_box"]["terraclass_card"][language],
+                terraclass_msg_searching: languageJson["layer_box"]["terraclass_msg_searching"][language],
+                chart_terraclass_title: languageJson["layer_box"]["chart_terraclass_title"][language],
+                focos_calor_card: languageJson["layer_box"]["focos_calor_card"][language],
+                focos_calor_msg_searching: languageJson["layer_box"]["focos_calor_msg_searching"][language],
+                chart_focos_calor_title: languageJson["layer_box"]["chart_focos_calor_title"][language],
+
             },
             descriptor: languageJson["descriptor"]
 

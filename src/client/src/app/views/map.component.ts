@@ -36,6 +36,7 @@ import OlView from 'ol/View';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable } from 'rxjs';
+import Chart from 'chart.js';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
@@ -50,6 +51,7 @@ import { ProjectComponent } from "./project/project.component";
 import { MapMobileComponent } from "./map-mobile/map-mobile.component";
 import { TutorialsComponent } from "./tutorials/tutorials.component";
 import { AppConfig } from '../app.config';
+
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -829,15 +831,50 @@ export class MapComponent implements OnInit, AfterViewChecked {
               return data.labels[tooltipItem[0].index];
             },
             label(tooltipItem, data) {
-              let percent = parseFloat(
-                data['datasets'][0]['data'][tooltipItem['index']]
-              ).toLocaleString('de-DE');
-              return percent + ' km²';
+              // let percent = parseFloat(
+              //   data['datasets'][0]['data'][tooltipItem['index']].toFixed(2)
+              // ).toLocaleString('de-DE');
+              var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
+                { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
+              return sNumber + ' km²';
             },
             // afterLabel: function (tooltipItem, data) {
             //   return "a calcular";
             // }
           };
+
+          graphic.options.legend.labels.generateLabels = function (chart) {
+            var data = chart.data;
+            if (data.labels.length && data.datasets.length) {
+              return data.labels.map(function (label, i) {
+                var meta = chart.getDatasetMeta(0);
+                var ds = data.datasets[0];
+                var arc = meta.data[i];
+                var custom = arc && arc.custom || {};
+                var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                var arcOpts = chart.options.elements.arc;
+                var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                // We get the value of the current label
+                var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+                return {
+                  // Instead of `text: label,`
+                  // We add the value to the string
+                  text: label + " : " + parseFloat(value).toLocaleString('de-DE', { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 }) + " km²",
+                  fillStyle: fill,
+                  strokeStyle: stroke,
+                  lineWidth: bw,
+                  hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                  index: i
+                };
+              });
+            } else {
+              return [];
+            }
+          }
 
         }
 
@@ -2419,9 +2456,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     let paramsCar = []
     let urlParamsCar = '';
+    let urlTerraclass = '';
 
     if (fromConsulta) {
       this.layerFromConsulta.analyzedAreaLoading = true;
+      this.layerFromConsulta.terraclassLoading = true;
       params.push('token=' + this.layerFromConsulta.token)
       this.layerFromConsulta.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
@@ -2436,15 +2475,95 @@ export class MapComponent implements OnInit, AfterViewChecked {
         self.layerFromConsulta.error = true;
       }
 
-      urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
-      let resultCar = await this.http.get(urlParamsCar).toPromise();
+      try {
+        urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
+        let resultCar = await this.http.get(urlParamsCar).toPromise();
+        this.layerFromConsulta.analyzedArea.car = resultCar
+      } catch (err) {
+        self.layerFromUpload.error = true;
+      }
 
-      this.layerFromConsulta.analyzedArea.car = resultCar
+      try {
+
+        urlTerraclass = '/service/upload/terraclass?' + params.join('&');
+        let resultTerraClass = await this.http.get(urlTerraclass).toPromise();
+        this.layerFromConsulta.analyzedArea.terraclass = resultTerraClass['terraclass']
+        this.layerFromConsulta.analyzedArea.terraclass.options.tooltips.callbacks = {
+          title(tooltipItem, data) {
+            return data.labels[tooltipItem[0].index];
+          },
+          label(tooltipItem, data) {
+            let percent = parseFloat(
+              data['datasets'][0]['data'][tooltipItem['index']]
+            ).toLocaleString('de-DE');
+            return percent + ' km²';
+          },
+          // afterLabel: function (tooltipItem, data) {
+          //   return "a calcular";
+          // }
+        };
+
+        this.layerFromConsulta.analyzedArea.terraclass.options.legend.labels.generateLabels = function (chart) {
+          var data = chart.data;
+          if (data.labels.length && data.datasets.length) {
+            return data.labels.map(function (label, i) {
+              var meta = chart.getDatasetMeta(0);
+              var ds = data.datasets[0];
+              var arc = meta.data[i];
+              var custom = arc && arc.custom || {};
+              var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+              var arcOpts = chart.options.elements.arc;
+              var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+              var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+              var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+              // We get the value of the current label
+              var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+              return {
+                // Instead of `text: label,`
+                // We add the value to the string
+                text: label + " : " + value + " km²",
+                fillStyle: fill,
+                strokeStyle: stroke,
+                lineWidth: bw,
+                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                index: i
+              };
+            });
+          } else {
+            return [];
+          }
+        }
+
+        this.layerFromConsulta.analyzedArea.focos_calor = resultTerraClass['focos_calor']
+        this.layerFromConsulta.analyzedArea.focos_calor.options.tooltips.callbacks = {
+          title(tooltipItem, data) {
+            return data.labels[tooltipItem[0].index];
+          },
+          label(tooltipItem, data) {
+            let percent = parseInt(
+              data['datasets'][0]['data'][tooltipItem['index']]
+            ).toLocaleString('de-DE');
+            return percent + ' pts.';
+          },
+          // afterLabel: function (tooltipItem, data) {
+          //   return "a calcular";
+          // }
+        };
 
 
+        this.layerFromConsulta.terraclassLoading = false;
+
+      } catch (err) {
+        self.layerFromConsulta.terraclassLoading = false;
+        self.layerFromConsulta.error = true;
+      }
       this.googleAnalyticsService.eventEmitter("analyzeConsultaUploadLayer", "Analyze-Consulta-Upload", this.layerFromConsulta.token, 5);
-    } else {
+    }
+    else {
       this.layerFromUpload.analyzedAreaLoading = true;
+      this.layerFromUpload.terraclassLoading = true;
       params.push('token=' + this.layerFromUpload.token)
       this.layerFromUpload.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
@@ -2458,9 +2577,53 @@ export class MapComponent implements OnInit, AfterViewChecked {
         self.layerFromUpload.error = true;
       }
 
-      urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
-      let resultCar = await this.http.get(urlParamsCar).toPromise();
-      this.layerFromUpload.analyzedArea.car = resultCar
+      try {
+        urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
+        let resultCar = await this.http.get(urlParamsCar).toPromise();
+        this.layerFromUpload.analyzedArea.car = resultCar
+      } catch (err) {
+        self.layerFromUpload.error = true;
+      }
+
+      try {
+        this.layerFromUpload.analyzedArea.terraclassLoading = true;
+        urlTerraclass = '/service/upload/terraclass?' + params.join('&');
+        let resultTerraClass = await this.http.get(urlTerraclass).toPromise();
+        this.layerFromUpload.analyzedArea.terraclass = resultTerraClass['terraclass']
+        this.layerFromUpload.analyzedArea.terraclass.options.tooltips.callbacks = {
+          title(tooltipItem, data) {
+            return data.labels[tooltipItem[0].index];
+          },
+          label(tooltipItem, data) {
+            let percent = parseFloat(
+              data['datasets'][0]['data'][tooltipItem['index']]
+            ).toLocaleString('de-DE');
+            return percent + ' km²';
+          },
+        };
+
+
+        this.layerFromUpload.analyzedArea.focos_calor = resultTerraClass['focos_calor']
+        this.layerFromUpload.analyzedArea.focos_calor.options.tooltips.callbacks = {
+          title(tooltipItem, data) {
+            return data.labels[tooltipItem[0].index];
+          },
+          label(tooltipItem, data) {
+            let percent = parseInt(
+              data['datasets'][0]['data'][tooltipItem['index']]
+            ).toLocaleString('de-DE');
+            return percent + ' pts.';
+          },
+          // afterLabel: function (tooltipItem, data) {
+          //   return "a calcular";
+          // }
+        };
+
+        this.layerFromUpload.terraclassLoading = false;
+      } catch (err) {
+        self.layerFromUpload.terraclassLoading = false;
+        self.layerFromUpload.error = true;
+      }
 
       this.googleAnalyticsService.eventEmitter("analyzeUploadLayer", "Analyze-Upload", this.layerFromUpload.token, 6);
     }
@@ -3278,7 +3441,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     }
     this.updateRegion(this.defaultRegion);
   }
-  async openCharts(title, description, data, type, options) {
+  async openCharts(title, description = false, data, type, options) {
     let ob = {
       title: title,
       description: description,
