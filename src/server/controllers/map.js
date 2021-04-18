@@ -1571,6 +1571,9 @@ module.exports = function(app) {
                 focos_calor_card: languageJson["layer_box"]["focos_calor_card"][language],
                 focos_calor_msg_searching: languageJson["layer_box"]["focos_calor_msg_searching"][language],
                 chart_focos_calor_title: languageJson["layer_box"]["chart_focos_calor_title"][language],
+                queimadas_card: languageJson["layer_box"]["queimadas_card"][language],
+                queimadas_msg_searching: languageJson["layer_box"]["queimadas_msg_searching"][language],
+                chart_queimadas_title: languageJson["layer_box"]["chart_queimadas_title"][language],
 
             },
             descriptor: languageJson["descriptor"]

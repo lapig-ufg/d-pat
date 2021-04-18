@@ -20,6 +20,7 @@ import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
+import 'rxjs/add/operator/toPromise';
 import * as OlProj from 'ol/proj';
 import BingMaps from 'ol/source/BingMaps';
 import TileWMS from 'ol/source/TileWMS';
@@ -2457,10 +2458,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let paramsCar = []
     let urlParamsCar = '';
     let urlTerraclass = '';
+    let urlFocos = '';
+    let urlQueimadas = '';
 
     if (fromConsulta) {
       this.layerFromConsulta.analyzedAreaLoading = true;
       this.layerFromConsulta.terraclassLoading = true;
+      this.layerFromConsulta.focosLoading = true;
+      this.layerFromConsulta.queimadasLoading = true;
+
       params.push('token=' + this.layerFromConsulta.token)
       this.layerFromConsulta.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
@@ -2477,8 +2483,18 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       try {
         urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
-        let resultCar = await this.http.get(urlParamsCar).toPromise();
-        this.layerFromConsulta.analyzedArea.car = resultCar
+        // let resultCar = this.http.get(urlParamsCar).toPromise();
+
+        this.http.get(urlParamsCar)
+          .toPromise()
+          .then(
+            resultCar => { // Success
+              this.layerFromConsulta.analyzedArea.car = resultCar;
+            },
+            msg => { // Error
+              self.layerFromUpload.error = true;
+            }
+          );
       } catch (err) {
         self.layerFromUpload.error = true;
       }
@@ -2486,84 +2502,166 @@ export class MapComponent implements OnInit, AfterViewChecked {
       try {
 
         urlTerraclass = '/service/upload/terraclass?' + params.join('&');
-        let resultTerraClass = await this.http.get(urlTerraclass).toPromise();
-        this.layerFromConsulta.analyzedArea.terraclass = resultTerraClass['terraclass']
-        this.layerFromConsulta.analyzedArea.terraclass.options.tooltips.callbacks = {
-          title(tooltipItem, data) {
-            return data.labels[tooltipItem[0].index];
-          },
-          label(tooltipItem, data) {
-            let percent = parseFloat(
-              data['datasets'][0]['data'][tooltipItem['index']]
-            ).toLocaleString('de-DE');
-            return percent + ' km²';
-          },
-          // afterLabel: function (tooltipItem, data) {
-          //   return "a calcular";
-          // }
-        };
+        // let resultTerraClass = this.http.get(urlTerraclass).toPromise();
 
-        this.layerFromConsulta.analyzedArea.terraclass.options.legend.labels.generateLabels = function (chart) {
-          var data = chart.data;
-          if (data.labels.length && data.datasets.length) {
-            return data.labels.map(function (label, i) {
-              var meta = chart.getDatasetMeta(0);
-              var ds = data.datasets[0];
-              var arc = meta.data[i];
-              var custom = arc && arc.custom || {};
-              var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-              var arcOpts = chart.options.elements.arc;
-              var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-              var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-              var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+        this.http.get(urlTerraclass)
+          .toPromise()
+          .then(
+            resultTerraClass => { // Success
+              this.layerFromConsulta.analyzedArea.terraclass = resultTerraClass['terraclass']
 
-              // We get the value of the current label
-              var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-
-              return {
-                // Instead of `text: label,`
-                // We add the value to the string
-                text: label + " : " + value + " km²",
-                fillStyle: fill,
-                strokeStyle: stroke,
-                lineWidth: bw,
-                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                index: i
+              this.layerFromConsulta.analyzedArea.terraclass.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+                  var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
+                    { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
+                  return sNumber + ' km²';
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
               };
-            });
-          } else {
-            return [];
-          }
-        }
 
-        this.layerFromConsulta.analyzedArea.focos_calor = resultTerraClass['focos_calor']
-        this.layerFromConsulta.analyzedArea.focos_calor.options.tooltips.callbacks = {
-          title(tooltipItem, data) {
-            return data.labels[tooltipItem[0].index];
-          },
-          label(tooltipItem, data) {
-            let percent = parseInt(
-              data['datasets'][0]['data'][tooltipItem['index']]
-            ).toLocaleString('de-DE');
-            return percent + ' pts.';
-          },
-          // afterLabel: function (tooltipItem, data) {
-          //   return "a calcular";
-          // }
-        };
+              this.layerFromConsulta.analyzedArea.terraclass.options.legend.labels.generateLabels = function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var custom = arc && arc.custom || {};
+                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                    var arcOpts = chart.options.elements.arc;
+                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
 
+                    // We get the value of the current label
+                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
 
-        this.layerFromConsulta.terraclassLoading = false;
+                    return {
+                      // Instead of `text: label,`
+                      // We add the value to the string
+                      text: label + " : " + value + " km²",
+                      fillStyle: fill,
+                      strokeStyle: stroke,
+                      lineWidth: bw,
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i
+                    };
+                  });
+                } else {
+                  return [];
+                }
+              }
+
+              this.layerFromConsulta.terraclassLoading = false;
+
+            },
+            msg => { // Error
+              self.layerFromConsulta.terraclassLoading = false;
+              self.layerFromConsulta.error = true;
+              console.error(msg)
+            }
+          );
 
       } catch (err) {
         self.layerFromConsulta.terraclassLoading = false;
         self.layerFromConsulta.error = true;
       }
+
+      try {
+
+        urlFocos = '/service/upload/focos?' + params.join('&');
+        // let resultFocos = this.http.get(urlFocos).toPromise();
+
+        this.http.get(urlFocos)
+          .toPromise()
+          .then(
+            resultFocos => { // Success
+              this.layerFromConsulta.analyzedArea.focos_calor = resultFocos['focos_calor']
+              this.layerFromConsulta.analyzedArea.focos_calor.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+                  let percent = parseInt(
+                    data['datasets'][0]['data'][tooltipItem['index']]
+                  ).toLocaleString('de-DE');
+                  return percent + ' pts.';
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
+
+              this.layerFromConsulta.focosLoading = false;
+
+            },
+            msg => { // Error
+              self.layerFromConsulta.focosLoading = false;
+              self.layerFromConsulta.error = true;
+              console.error(msg)
+            }
+          );
+
+      } catch (err) {
+        self.layerFromConsulta.focosLoading = false;
+        self.layerFromConsulta.error = true;
+      }
+
+      try {
+
+        urlQueimadas = '/service/upload/queimadas?' + params.join('&');
+        // let resultQueimadas = this.http.get(urlQueimadas).toPromise();
+
+        this.http.get(urlQueimadas)
+          .toPromise()
+          .then(
+            resultQueimadas => { // Success
+              this.layerFromConsulta.analyzedArea.queimadas = resultQueimadas['queimadas_chart']
+
+              this.layerFromConsulta.analyzedArea.queimadas.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+
+                  var dataset = data.datasets[tooltipItem.datasetIndex];
+                  var index = tooltipItem.index;
+                  return parseFloat(dataset.data[index]).toLocaleString('de-DE') + ' km²';
+
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
+
+              this.layerFromConsulta.queimadasLoading = false;
+
+            },
+            msg => { // Error
+              self.layerFromConsulta.queimadasLoading = false;
+              self.layerFromConsulta.error = true;
+              console.error(msg)
+            }
+          );
+
+      } catch (err) {
+        self.layerFromConsulta.queimadasLoading = false;
+        self.layerFromConsulta.error = true;
+      }
+
       this.googleAnalyticsService.eventEmitter("analyzeConsultaUploadLayer", "Analyze-Consulta-Upload", this.layerFromConsulta.token, 5);
     }
     else {
       this.layerFromUpload.analyzedAreaLoading = true;
       this.layerFromUpload.terraclassLoading = true;
+      this.layerFromUpload.focosLoading = true;
+      this.layerFromUpload.queimadasLoading = true;
+
       params.push('token=' + this.layerFromUpload.token)
       this.layerFromUpload.error = false;
       urlParams = '/service/upload/desmatperyear?' + params.join('&');
@@ -2572,6 +2670,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
         this.layerFromUpload.analyzedArea = result;
         this.layerFromUpload.analyzedAreaLoading = false;
+
       } catch (err) {
         self.layerFromUpload.analyzedAreaLoading = false;
         self.layerFromUpload.error = true;
@@ -2579,49 +2678,174 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       try {
         urlParamsCar = '/service/upload/carspertoken?' + params.join('&');
-        let resultCar = await this.http.get(urlParamsCar).toPromise();
-        this.layerFromUpload.analyzedArea.car = resultCar
+        // let resultCar = this.http.get(urlParamsCar).toPromise();
+
+        this.http.get(urlParamsCar)
+          .toPromise()
+          .then(
+            resultCar => { // Success
+              this.layerFromUpload.analyzedArea.car = resultCar;
+            },
+            msg => { // Error
+              self.layerFromUpload.error = true;
+            }
+          );
       } catch (err) {
         self.layerFromUpload.error = true;
       }
 
       try {
-        this.layerFromUpload.analyzedArea.terraclassLoading = true;
+
         urlTerraclass = '/service/upload/terraclass?' + params.join('&');
-        let resultTerraClass = await this.http.get(urlTerraclass).toPromise();
-        this.layerFromUpload.analyzedArea.terraclass = resultTerraClass['terraclass']
-        this.layerFromUpload.analyzedArea.terraclass.options.tooltips.callbacks = {
-          title(tooltipItem, data) {
-            return data.labels[tooltipItem[0].index];
-          },
-          label(tooltipItem, data) {
-            let percent = parseFloat(
-              data['datasets'][0]['data'][tooltipItem['index']]
-            ).toLocaleString('de-DE');
-            return percent + ' km²';
-          },
-        };
+        // let resultTerraClass = this.http.get(urlTerraclass).toPromise();
 
+        this.http.get(urlTerraclass)
+          .toPromise()
+          .then(
+            resultTerraClass => { // Success
+              this.layerFromUpload.analyzedArea.terraclass = resultTerraClass['terraclass']
 
-        this.layerFromUpload.analyzedArea.focos_calor = resultTerraClass['focos_calor']
-        this.layerFromUpload.analyzedArea.focos_calor.options.tooltips.callbacks = {
-          title(tooltipItem, data) {
-            return data.labels[tooltipItem[0].index];
-          },
-          label(tooltipItem, data) {
-            let percent = parseInt(
-              data['datasets'][0]['data'][tooltipItem['index']]
-            ).toLocaleString('de-DE');
-            return percent + ' pts.';
-          },
-          // afterLabel: function (tooltipItem, data) {
-          //   return "a calcular";
-          // }
-        };
+              this.layerFromUpload.analyzedArea.terraclass.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+                  var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
+                    { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
+                  return sNumber + ' km²';
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
 
-        this.layerFromUpload.terraclassLoading = false;
+              this.layerFromUpload.analyzedArea.terraclass.options.legend.labels.generateLabels = function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var custom = arc && arc.custom || {};
+                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                    var arcOpts = chart.options.elements.arc;
+                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                    // We get the value of the current label
+                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+                    return {
+                      // Instead of `text: label,`
+                      // We add the value to the string
+                      text: label + " : " + value + " km²",
+                      fillStyle: fill,
+                      strokeStyle: stroke,
+                      lineWidth: bw,
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i
+                    };
+                  });
+                } else {
+                  return [];
+                }
+              }
+
+              this.layerFromUpload.terraclassLoading = false;
+
+            },
+            msg => { // Error
+              self.layerFromUpload.terraclassLoading = false;
+              self.layerFromUpload.error = true;
+              console.error(msg)
+            }
+          );
+
       } catch (err) {
         self.layerFromUpload.terraclassLoading = false;
+        self.layerFromUpload.error = true;
+      }
+
+      try {
+
+        urlFocos = '/service/upload/focos?' + params.join('&');
+        // let resultFocos = this.http.get(urlFocos).toPromise();
+
+        this.http.get(urlFocos)
+          .toPromise()
+          .then(
+            resultFocos => { // Success
+              this.layerFromUpload.analyzedArea.focos_calor = resultFocos['focos_calor']
+              this.layerFromUpload.analyzedArea.focos_calor.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+                  let percent = parseInt(
+                    data['datasets'][0]['data'][tooltipItem['index']]
+                  ).toLocaleString('de-DE');
+                  return percent + ' pts.';
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
+
+              this.layerFromUpload.focosLoading = false;
+
+            },
+            msg => { // Error
+              self.layerFromUpload.focosLoading = false;
+              self.layerFromUpload.error = true;
+              console.error(msg)
+            }
+          );
+
+      } catch (err) {
+        self.layerFromUpload.focosLoading = false;
+        self.layerFromUpload.error = true;
+      }
+
+      try {
+
+        urlQueimadas = '/service/upload/queimadas?' + params.join('&');
+        // let resultQueimadas = this.http.get(urlQueimadas).toPromise();
+
+        this.http.get(urlQueimadas)
+          .toPromise()
+          .then(
+            resultQueimadas => { // Success
+              this.layerFromUpload.analyzedArea.queimadas = resultQueimadas['queimadas_chart']
+
+              this.layerFromUpload.analyzedArea.queimadas.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+
+                  var dataset = data.datasets[tooltipItem.datasetIndex];
+                  var index = tooltipItem.index;
+                  return parseFloat(dataset.data[index]).toLocaleString('de-DE') + ' km²';
+
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
+
+              this.layerFromUpload.queimadasLoading = false;
+
+            },
+            msg => { // Error
+              self.layerFromUpload.queimadasLoading = false;
+              self.layerFromUpload.error = true;
+              console.error(msg)
+            }
+          );
+
+      } catch (err) {
+        self.layerFromUpload.queimadasLoading = false;
         self.layerFromUpload.error = true;
       }
 

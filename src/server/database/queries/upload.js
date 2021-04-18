@@ -86,6 +86,41 @@ module.exports = function(app) {
         ]
     }
 
+    Query.focos = function(params) {
+
+        var token = params['token']
+        return [{
+                id: 'focos_calor',
+                sql: "select f.ano as year, count(f.fid) as qnt from focos_calor_2000a2020 f inner join upload_shapes up on st_contains(up.geom, f.geom) where f.ano >= 2013 AND up.token= ${token} group by 1 order by 1",
+            },
+            {
+                id: 'next',
+                sql: 'select true'
+            }
+        ]
+    }
+
+    Query.queimadas = function(params) {
+
+        var token = params['token']
+        console.log(token)
+        return [{
+                id: 'queimadas_mcd64',
+                sql: "SELECT p.year, SUM((ST_AREA(ST_Intersection(ST_MAKEVALID(p.geom),up.geom)::GEOGRAPHY) / 1000000.0)) as area_queimada FROM cicatrizes_2001a2020_mcd64a1 p " +
+                    " INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) where p.year IS NOT NULL and up.token= ${token} GROUP BY 1 order by 1 desc"
+            },
+            {
+                id: 'queimadas_inpe',
+                sql: "SELECT p.year, SUM((ST_AREA(ST_Intersection(ST_MAKEVALID(p.geom),up.geom)::GEOGRAPHY) / 1000000.0)) as area_queimada FROM cicatrizes_queimadas_2015a2019_inpe p " +
+                    " INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) where p.year IS NOT NULL and up.token= ${token} GROUP BY 1 order by 1 desc"
+            },
+            {
+                id: 'next',
+                sql: 'select true'
+            }
+        ]
+    }
+
 
     return Query;
 

@@ -384,6 +384,64 @@ module.exports = function(app) {
 
     };
 
+    Uploader.focos = function(request, response) {
+
+        try {
+            let queryResultFocos = request.queryResult['focos_calor']
+            var focos = []
+
+            queryResultFocos.forEach(function(row) {
+
+                var year = Number(row['year'])
+                var qnt_focos = Number(row['qnt'])
+
+                focos.push({
+                    'year': year,
+                    'qnt_focos': qnt_focos
+                })
+            });
+
+            let graphFocosCalor = {
+                "title": "Focos Calor",
+                "type": "line",
+                "pointStyle": 'rect',
+                "options": {
+                    title: {
+                        display: false,
+                    },
+                    legend: {
+                        labels: {
+                            usePointStyle: true,
+                            fontColor: "#85560c"
+                        },
+                        position: "bottom"
+                    },
+                    tooltips: {}
+                },
+                "data": {
+                    labels: focos.map(e => e.year),
+                    datasets: [{
+                        data: focos.map(e => e.qnt_focos),
+                        fill: false,
+                        borderColor: '#f85402',
+                        backgroundColor: '#f85402',
+                        hidden: false,
+                        label: "Quantidade de Focos de Calor (Amount of Fire Pixels)"
+                    }]
+                }
+            }
+            let res = { focos_calor: graphFocosCalor }
+
+
+            response.status(200).send(res);
+            response.end()
+
+        } catch (err) {
+            response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+            response.end()
+        }
+    };
+
     Uploader.terraclass = function(request, response) {
 
         try {
@@ -432,51 +490,7 @@ module.exports = function(app) {
             }
 
 
-            let queryResultFocos = request.queryResult['focos_calor']
-            var focos = []
-
-            queryResultFocos.forEach(function(row) {
-
-                var year = Number(row['year'])
-                var qnt_focos = Number(row['qnt'])
-
-                focos.push({
-                    'year': year,
-                    'qnt_focos': qnt_focos
-                })
-            });
-
-            let graphFocosCalor = {
-                "title": "Focos Calor",
-                "type": "line",
-                "pointStyle": 'rect',
-                "options": {
-                    title: {
-                        display: false,
-                    },
-                    legend: {
-                        labels: {
-                            usePointStyle: true,
-                            fontColor: "#85560c"
-                        },
-                        position: "bottom"
-                    },
-                    tooltips: {}
-                },
-                "data": {
-                    labels: focos.map(e => e.year),
-                    datasets: [{
-                        data: focos.map(e => e.qnt_focos),
-                        fill: false,
-                        borderColor: '#f85402',
-                        backgroundColor: '#f85402',
-                        hidden: false,
-                        label: "Quantidade de Focos de Calor (Amount of Fire Pixels)"
-                    }]
-                }
-            }
-
-            let res = { terraclass: graphTerraclass, focos_calor: graphFocosCalor }
+            let res = { terraclass: graphTerraclass }
 
 
             response.status(200).send(res);
@@ -538,6 +552,119 @@ module.exports = function(app) {
             response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
             response.end()
         }
+
+    };
+
+    Uploader.queimadas = function(request, response) {
+
+        try {
+            var queryResult = request.queryResult['queimadas_mcd64']
+
+            // console.log(queryResult)
+
+            var queimadasByYear = []
+            queryResult.forEach(function(row) {
+
+                var year = Number(row['year'])
+                var area = Number(row['area_queimada'])
+
+                queimadasByYear.push({
+                    'area_queimada': area,
+                    'year': year
+                })
+            });
+
+            var queryResultInpe = request.queryResult['queimadas_inpe']
+
+            // console.log(queryResultInpe)
+
+            var pastagemByYear = []
+            queryResultInpe.forEach(function(row) {
+
+                var year = Number(row['year'])
+                var area = Number(row['area_queimada'])
+
+                queimadasByYear.push({
+                    'area_queimada_inpe': area,
+                    'year': year
+                })
+            });
+
+
+            const groupByKey = (list, key, { omitKey = false }) => list.reduce((hash, {
+                [key]: value,
+                ...rest
+            }) => ({
+                ...hash,
+                [value]: (hash[value] || []).concat(omitKey ? {...rest } : {
+                    [key]: value,
+                    ...rest
+                })
+            }), {})
+
+            // Group by color as key to the person array
+            const areasGroupedByYear = groupByKey(queimadasByYear, 'year', { omitKey: true });
+
+            const arrayHasIndex = (array, index) => Array.isArray(array) && array.hasOwnProperty(index);
+
+            // const areasGroupedByYear = groupBy(queimadasByYear, 'year');
+            let arrayAreasGrouped = []
+            for (let key of Object.keys(areasGroupedByYear)) {
+                arrayAreasGrouped.push({
+                    year: key,
+                    area_queimada_inpe: arrayHasIndex(areasGroupedByYear[key], 1) && areasGroupedByYear[key][1].hasOwnProperty('area_queimada_inpe') ? areasGroupedByYear[key][1]['area_queimada_inpe'] : null,
+                    area_queimada_mcd64: areasGroupedByYear[key][0].hasOwnProperty('area_queimada') ? areasGroupedByYear[key][0]['area_queimada'] : null
+                })
+
+            }
+            let graphQueimadasPastagem = {
+                "title": "Dados",
+                "type": "line",
+                "pointStyle": 'rect',
+                "options": {
+                    title: {
+                        display: false,
+                    },
+                    legend: {
+                        labels: {
+                            usePointStyle: true,
+                            fontColor: "#85560c"
+                        },
+                        position: "bottom"
+                    },
+                    tooltips: {}
+                },
+                "data": {
+                    labels: arrayAreasGrouped.map(e => parseInt(e.year)),
+                    datasets: [{
+                            data: arrayAreasGrouped.map(e => e.area_queimada_inpe),
+                            borderColor: 'rgb(231, 187, 2)',
+                            fill: false,
+                            label: "Area Queimada (INPE)"
+                        },
+                        {
+                            data: arrayAreasGrouped.map(e => e.area_queimada_mcd64),
+                            borderColor: 'rgb(110, 101, 101)',
+                            fill: false,
+                            label: "Area Queimada (MODIS64)"
+                        }
+                    ]
+                }
+            }
+
+            let res = {
+                queimadas_chart: graphQueimadasPastagem,
+                table_queimadas_peryear: arrayAreasGrouped,
+            }
+
+            response.status(200).send(res);
+            response.end()
+
+        } catch (err) {
+            response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+            response.end()
+        }
+
 
     };
 

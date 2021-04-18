@@ -9,4 +9,6 @@ module.exports = function(app) {
     app.get('/service/upload/carspertoken', dataInjector, uploader.carspertoken);
     app.get('/service/upload/findgeojsonbytoken', dataInjector, uploader.findGeoJsonByToken);
     app.get('/service/upload/terraclass', dataInjector, uploader.terraclass);
+    app.get('/service/upload/queimadas', dataInjector, uploader.queimadas);
+    app.get('/service/upload/focos', dataInjector, uploader.focos);
 }
