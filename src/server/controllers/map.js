@@ -1407,7 +1407,7 @@ module.exports = function(app) {
                                 opacity: 1,
                                 metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
                                 timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                                timeSelected: "bi_ce_mosaico_sentinel_10_2019_lapig",
+                                timeSelected: "bi_ce_mosaico_sentinel_10_2020_lapig",
                                 timeHandler: "layername",
                                 times: [{
                                         value: "bi_ce_mosaico_sentinel_10_2016_lapig",
@@ -1424,6 +1424,10 @@ module.exports = function(app) {
                                     {
                                         value: "bi_ce_mosaico_sentinel_10_2019_lapig",
                                         Viewvalue: "2019"
+                                    },
+                                    {
+                                        value: "bi_ce_mosaico_sentinel_10_2020_lapig",
+                                        Viewvalue: "2020"
                                     }
 
                                 ]
