@@ -20,3 +20,5 @@ src/client/package-lock.json
 src/server/package-lock.json
 src/server/scripts/bfast/result.csv
 src/server/scripts/bfast/.env
+src/server/scripts/amostral/.env
+src/server/scripts/amostral/validacao_amostral.csv
