@@ -28,9 +28,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ButtonModule } from 'primeng/button';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LOCALE_ID } from '@angular/core';
@@ -50,6 +50,10 @@ import { LightboxModule } from 'ngx-lightbox';
 import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputMaskModule } from 'primeng/inputmask';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 import { DatePipe } from '@angular/common';
 import { SpinnerImgComponent } from './views/spinner-img/spinner-img.component';
 import { FileUploadComponent } from './views/file-upload/file-upload.component';
@@ -103,9 +107,14 @@ export function initApp(config: AppConfig) {
     TutorialsComponent
   ],
   imports: [
+    AutoCompleteModule,
+    DropdownModule,
     TabViewModule,
     TooltipModule,
-    DropdownModule,
+    SelectButtonModule,
+    MultiSelectModule,
+    InputMaskModule,
+    ButtonModule,
     NgxGalleryModule,
     FieldsetModule,
     CardModule,

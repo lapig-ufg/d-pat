@@ -202,17 +202,29 @@
             "pt-br": "Este arquivo tem [current-size] MB. O tamanho máximo permitido é de [max-size] MB.",
             "en-us": "This file has [current-size] MB. Maximum size allowed is [max-size] MB."
         },
-        "search_placeholder": {
+        "search_placeholder_region": {
             "pt-br": "Digite um Estado ou Município",
             "en-us": "Please inform a State or Municipality name"
+        },
+        "search_placeholder_car": {
+            "pt-br": "Digite o Código da Propriedade Rural",
+            "en-us": "Please enter the Rural Property Code"
+        },
+        "search_lateral_title": {
+            "pt-br": "Procurar por: ",
+            "en-us": "Search by: "
         },
         "search_loading": {
             "pt-br": "Procurando...",
             "en-us": "Searching..."
         },
-        "search_failed": {
+        "search_failed_region": {
             "pt-br": "Desculpe, região não encontrada.",
             "en-us": "Sorry, region not found."
+        },
+        "search_failed_car": {
+            "pt-br": "Desculpe, código da propriedade rural não encontrado.",
+            "en-us": "Sorry, car code not found."
         },
         "map_coordinate": {
             "pt-br": "Coordenadas do Mouse no Mapa",

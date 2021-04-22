@@ -40,6 +40,7 @@ import { Observable } from 'rxjs';
 import Chart from 'chart.js';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { SelectItem } from 'primeng/api';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { ChartsComponent } from "./charts/charts.component";
 import logos from './logos';
@@ -52,49 +53,12 @@ import { ProjectComponent } from "./project/project.component";
 import { MapMobileComponent } from "./map-mobile/map-mobile.component";
 import { TutorialsComponent } from "./tutorials/tutorials.component";
 import { AppConfig } from '../app.config';
+import { SearchService } from "../services/search.service";
 
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;
-
-let SEARCH_URL = '/service/map/search';
-let SEARCH_REGION = '/service/map/searchregion';
-let PARAMS = new HttpParams({
-  fromObject: {
-    format: 'json'
-  }
-});
-
-@Injectable()
-export class SearchService {
-  constructor(private http: HttpClient) { }
-
-  search(term: string) {
-    if (term === '') {
-      return of([]);
-    }
-
-    return this.http
-      .get(SEARCH_URL, { params: PARAMS.set('key', term) })
-      .pipe(map(response => response));
-  }
-}
-
-@Injectable()
-export class SearchRegionService {
-  constructor(private http: HttpClient) { }
-
-  search(term: string, type: string) {
-    if (term === '') {
-      return of([]);
-    }
-
-    return this.http
-      .get(SEARCH_REGION, { params: PARAMS.set('key', term).set('type', type) })
-      .pipe(map(response => response));
-  }
-}
 
 @Component({
   selector: 'app-map',
@@ -145,6 +109,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   searching = false;
   searchFailed = false;
+  selectedSearchOption: string;
+  searchOptions: SelectItem[];
+
+
   msFilterRegion = '';
   selectRegion: any;
 
@@ -212,6 +180,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
   styleSelected: any;
   styleDefault: any;
 
+  layerFromCAR: any = {
+    layer: null,
+    strokeColor: '#363230',
+  }
+
   /** Variables for upload shapdefiles **/
   layerFromUpload: any = {
     label: null,
@@ -246,6 +219,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
   selectedIndexConteudo: number;
   selectedIndexUpload: number;
 
+  selectedAutoCompleteText: any;
+  listForAutoComplete: any[];
+  countries: any[];
+
   innerHeigth: any;
   showDrawer: boolean;
   controls: any;
@@ -266,7 +243,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     private decimalPipe: DecimalPipe,
     public translate: TranslateService,
     protected changeDetector: ChangeDetectorRef,
-    private config: AppConfig
+    private config: AppConfig,
   ) {
     translate.addLangs(['en', 'pt-br']);
     translate.setDefaultLang('pt-br');
@@ -356,6 +333,16 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.language = this.languages[browserLang];
 
     this.setStylesLangButton();
+
+    this.searchOptions = [
+      { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
+      { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' }
+      // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinates', icon: 'fa fa-fw fa-map-pin' }
+    ];
+
+    this.selectedSearchOption = 'region';
+    this.selectedAutoCompleteText = ''
+
     this.mapForABC = new Map([
       ["RPD", {
         "pt-br": "Recuperação de Pastagens Degradada (RPD)",
@@ -443,10 +430,98 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   formatter = (x: { text: string }) => x.text;
 
+  obtainSearchSuggestions(event) {
+
+    if (this.selectedSearchOption.toLowerCase() == 'region') {
+
+      console.log("eve - ", event)
+      let query = event.query;
+      this._service.getRegions(query).subscribe(regions => {
+        console.log(regions)
+        this.listForAutoComplete = regions;
+      });
+    }
+    else if (this.selectedSearchOption.toLowerCase() == 'car') {
+      console.log("eve - ", event)
+      let query = event.query;
+      this._service.getCARS(query).subscribe(regions => {
+        console.log(regions)
+        this.listForAutoComplete = regions;
+      });
+    }
+    // else if (this.selectedSearchOption.toLowerCase() == 'coordinate') {
+    //   console.log("eve - ", event)
+    //   let query = event.query;
+    //   this._service.getCoordinatePoint(query).subscribe(regions => {
+    //     console.log(regions)
+    //     this.listForAutoComplete = regions;
+    //   });
+    // }
+
+  }
+
+  onSelectSuggestion(event) {
+    console.log("select - ", event)
+
+    if (this.selectedSearchOption.toLowerCase() == 'region') {
+
+      this.updateRegion(event)
+
+    }
+    else if (this.selectedSearchOption.toLowerCase() == 'car') {
+
+      let map = this.map;
+
+      let vectorSource = new VectorSource({
+        features: (new GeoJSON()).readFeatures(event.geojson, {
+          dataProjection: 'EPSG:4326',
+          featureProjection: 'EPSG:3857'
+        })
+      });
+
+      this.layerFromCAR.layer = new VectorLayer({
+        source: vectorSource,
+        style: [
+          new Style({
+            stroke: new Stroke({
+              color: this.layerFromCAR.strokeColor,
+              width: 4
+            })
+          }),
+          new Style({
+            stroke: new Stroke({
+              color: this.layerFromCAR.strokeColor,
+              width: 4,
+              lineCap: 'round',
+              zIndex: 1
+            })
+          })
+        ]
+      });
+
+      map.addLayer(this.layerFromCAR.layer);
+      let extent = this.layerFromCAR.layer.getSource().getExtent();
+      map.getView().fit(extent, { duration: 1800 });
+
+      let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+      prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
+      this.changeVisibility(prodes, undefined);
+      this.infodataMunicipio = null;
+    }
+
+  }
+
+  onChangeSearchOption(event) {
+
+    console.log(event, this.titlesLayerBox, this.selectedSearchOption)
+    this.titlesLayerBox.search_placeholder = this.selectedSearchOption === 'region' ? this.titlesLayerBox['search_placeholder_region'] : this.titlesLayerBox['search_placeholder_car']
+    this.titlesLayerBox.search_failed = this.selectedSearchOption === 'region' ? this.titlesLayerBox['search_failed_region'] : this.titlesLayerBox['search_failed_car']
+  }
+
   onCityRowSelect(event) {
     let name = event.data.name;
 
-    this.http.get(SEARCH_URL, { params: PARAMS.set('key', name) }).subscribe(result => {
+    this.http.get(SearchService.SEARCH_URL, { params: SearchService.PARAMS.set('key', name) }).subscribe(result => {
       let ob: any = { text: '' };
 
       if (Array.isArray(result)) {
@@ -469,9 +544,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let name = e.element._model.label;
 
 
-    PARAMS.append('key', name)
-    PARAMS.append('type', 'state')
-    this.http.get(SEARCH_REGION, { params: PARAMS.set('key', name).set('type', 'state') }).subscribe(result => {
+    SearchService.PARAMS.append('key', name)
+    SearchService.PARAMS.append('type', 'state')
+    this.http.get(SearchService.SEARCH_REGION, { params: SearchService.PARAMS.set('key', name).set('type', 'state') }).subscribe(result => {
       let ob: any = { text: '' };
 
       if (Array.isArray(result)) {
@@ -619,11 +694,20 @@ export class MapComponent implements OnInit, AfterViewChecked {
   }
 
   private updateTexts() {
+
+    this.searchOptions = [
+      { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
+      { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' }
+      // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinates', icon: 'fa fa-fw fa-map-pin' }
+    ];
+
     let titlesUrl = '/service/map/titles' + this.getServiceParams();
 
     this.http.get(titlesUrl).subscribe(titlesResults => {
 
       this.titlesLayerBox = titlesResults['layer_box'];
+      this.titlesLayerBox.search_placeholder = this.selectedSearchOption === 'region' ? titlesResults['layer_box']['search_placeholder_region'] : titlesResults['layer_box']['search_placeholder_car']
+      this.titlesLayerBox.search_failed = this.selectedSearchOption === 'region' ? titlesResults['layer_box']['search_failed_region'] : titlesResults['layer_box']['search_failed_car']
       this.titlesLayerBox.legendTitle = titlesResults['legendTitle'];
       this.titlesLayerBox.region_tooltip = titlesResults['region_report_tooltip'];
       this.minireportText = titlesResults['utfgrid'];
@@ -948,18 +1032,20 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
 
     if (region == this.defaultRegion) {
+      this.selectedAutoCompleteText = ''
       this.valueRegion = '';
       this.currentData = '';
       this.desmatInfo = this.defaultPeriod
 
       prodes.selectedType = 'prodes_por_region_city_fip_img';
 
+      this.map.removeLayer(this.layerFromCAR.layer)
+
       let uso_terra = this.layersNames.find(element => element.id === "terraclass");
       uso_terra.visible = false;
 
       let agricultura = this.layersNames.find(element => element.id === "agricultura");
       agricultura.visible = false;
-
 
       this.changeVisibility(uso_terra, undefined)
       this.changeVisibility(agricultura, undefined)
@@ -1412,7 +1498,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
               if (prodes.visible && ((prodes.selectedType == 'prodes_por_region_city_fip_img') || (prodes.selectedType == 'prodes_por_region_state_fip_img'))) {
 
-                this.http.get(SEARCH_REGION, { params: PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
+                this.http.get(SearchService.SEARCH_REGION, { params: SearchService.PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
                   let ob = { text: '' };
 
                   for (let item of result) {
@@ -1433,7 +1519,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
               }
 
               if (calor.visible && ((calor.selectedType == 'focos_calor_regions_city_img') || (calor.selectedType == 'focos_calor_regions_state_img'))) {
-                this.http.get(SEARCH_REGION, { params: PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
+                this.http.get(SearchService.SEARCH_REGION, { params: SearchService.PARAMS.set('key', data.region_name).set('type', data.region_type) }).subscribe(result => {
                   let ob = { text: '' };
 
                   for (let item of result) {
@@ -3682,6 +3768,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
 
     this.urls = this.config.urls;
+
 
     let descriptorURL = '/service/map/descriptor' + this.getServiceParams();
 

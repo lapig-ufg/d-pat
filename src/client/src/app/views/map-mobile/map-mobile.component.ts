@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy, Inject, AfterViewInit, HostListener } from '@angular/core';
-import { SearchService, MapComponent } from '../map.component';
+import { MapComponent } from '../map.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
@@ -9,6 +9,9 @@ import logos from '../../views/logos';
 import * as moment from 'moment';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { SearchService } from "../../services/search.service";
+
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 declare let html2canvas: any;

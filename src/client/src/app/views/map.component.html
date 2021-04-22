@@ -18,16 +18,33 @@
                         <mat-progress-bar *ngIf="loadingsDownload" mode="indeterminate">
                         </mat-progress-bar>
                         <p-scrollPanel [style]="{width: '100%',  height: '70vh'}">
-                            <ng-template #rt let-r="result" let-t="term">
-                                <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
-                            </ng-template>
-                            <input id="typeahead-http" type="text" class="form-control searchRegion" [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}" (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
-                                [inputFormatter]="formatter" [value]="currentData" />
-                            <img [hidden]="selectRegion == defaultRegion" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
-                            <span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
-                            <div class="invalid-feedback" *ngIf="searchFailed">
-                                {{titlesLayerBox.search_failed}}</div>
+                            <div class="p-grid">
+                                <div class="p-col-3">
+                                    <p> <b>{{titlesLayerBox.search_lateral_title}} </b></p>
+                                </div>
+                                <div class="p-col-9">
+                                    <p-selectButton (onChange)="onChangeSearchOption($event)" [options]="searchOptions" [(ngModel)]="selectedSearchOption">
+                                    </p-selectButton>
+                                </div>
+                                <div class="p-col-12">
+                                    <!-- <ng-template #rt let-r="result" let-t="term">
+                                        <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+                                    </ng-template>
+                                    <input id="typeahead-http" type="text" class="form-control searchRegion" [class.is-invalid]="searchFailed" [(ngModel)]="valueRegion" [ngbTypeahead]="search" placeholder="{{titlesLayerBox.search_placeholder}}" (selectItem)="updateRegion($event.item)" [resultTemplate]="rt"
+                                        [inputFormatter]="formatter" [value]="currentData" />
+                                    <img [hidden]="selectRegion == defaultRegion" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+                                    <span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
+                                    <div class="invalid-feedback" *ngIf="searchFailed">
+                                        {{titlesLayerBox.search_failed}}</div> -->
+                                    <div class="ui-fluid">
+                                        <p-autoComplete [(ngModel)]="selectedAutoCompleteText" [suggestions]="listForAutoComplete" (completeMethod)="obtainSearchSuggestions($event)" field="text" placeholder="{{titlesLayerBox.search_placeholder}}" [minLength]="1" emptyMessage="{{titlesLayerBox.search_failed}}"
+                                            styleClass="wid100" [type]='"search"' (onSelect)="onSelectSuggestion($event)">
+                                        </p-autoComplete>
 
+                                        <img [hidden]="selectedAutoCompleteText == ''" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+                                    </div>
+                                </div>
+                            </div>
                             <!-- <div>
 								<h6 style="color:green;text-align:center;"> <b> {{titlesLayerBox.map_coordinate}}</b>
 								</h6>
