@@ -12,6 +12,8 @@
 
 > Python 3.7.2 > or latest version LTS
 
+> Postgis-2.5 > specific version
+
 ## Python Dependencies:
 
 > earthengine-api > latest version LTS
