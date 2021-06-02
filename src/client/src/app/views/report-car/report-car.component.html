@@ -7,13 +7,12 @@
                         <h5 class="title-report">{{dados.table_title}} </h5>
                     </div>
                     <div class="col-3">
-                        <a href="https://cerradodpat.org" target="_blank">
+                        <a href="https://cerradodpat.ufg.br" target="_blank">
                             <img class="logo-report" src="assets/logo/cerrado-dpat-logo.svg" /></a>
                     </div>
                 </div>
                 <div class="row">
-                    <p-table [paginator]="true" [rows]="10" [responsive]="true" [value]="dados.car"
-                        selectionMode="single" [resizableColumns]="true" [autoLayout]="true">
+                    <p-table [paginator]="true" [rows]="10" [responsive]="true" [value]="dados.car" selectionMode="single" [resizableColumns]="true" [autoLayout]="true">
                         <ng-template pTemplate="header">
                             <tr align="center">
                                 <th *ngFor="let header of dados.table_headers">

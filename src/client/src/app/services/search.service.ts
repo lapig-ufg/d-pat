@@ -57,6 +57,15 @@ export class SearchService {
             );;
     }
 
+    getUCs(term: string): Observable<any[]> {
+
+        return this.http
+            .get<any[]>(this.baseUrl + '/ucs', { params: SearchService.PARAMS.set("key", term) })
+            .pipe(map(response => response)).pipe(
+                catchError(this.errorHandler),
+            );;
+    }
+
     getRegionByGeocodigo(term: string): Observable<any[]> {
 
         return this.http

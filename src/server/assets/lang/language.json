@@ -210,6 +210,14 @@
             "pt-br": "Digite o Código da Propriedade Rural",
             "en-us": "Please enter the Rural Property Code"
         },
+        "search_placeholder_uc": {
+            "pt-br": "Digite o nome da Unidade de Conservação",
+            "en-us": "Please enter the name of the Conservation Unit"
+        },
+        "search_placeholder_coordinate": {
+            "pt-br": "Digite a coordenada desejada (formato: Lat, Long)",
+            "en-us": "Please enter the coordinates (format: Lat, Long)"
+        },
         "search_lateral_title": {
             "pt-br": "Procurar por: ",
             "en-us": "Search by: "
@@ -225,6 +233,14 @@
         "search_failed_car": {
             "pt-br": "Desculpe, código da propriedade rural não encontrado.",
             "en-us": "Sorry, car code not found."
+        },
+        "search_failed_uc": {
+            "pt-br": "Desculpe, nenhuma Unidade de Conservação encontrada.",
+            "en-us": "Sorry, none Conservation unit were found."
+        },
+        "search_failed_coordinate": {
+            "pt-br": "Desculpe, coordenadas não encontradas.",
+            "en-us": "Sorry, coordinates not found."
         },
         "map_coordinate": {
             "pt-br": "Coordenadas do Mouse no Mapa",

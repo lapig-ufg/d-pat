@@ -1,26 +1,26 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AfterViewChecked, ChangeDetectorRef, Component, HostListener, Inject, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AfterViewChecked, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import Chart from 'chart.js';
 import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-image-video-gallery';
 import { Lightbox } from 'ngx-lightbox';
 import { Attribution, defaults as defaultControls } from 'ol/control';
+import MousePosition from 'ol/control/MousePosition';
+import { format as olFormat } from 'ol/coordinate';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
 import { defaults as defaultInteractions } from 'ol/interaction';
-import MousePosition from 'ol/control/MousePosition';
-import { createStringXY, format as olFormat } from 'ol/coordinate';
 import OlTileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import OlMap from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
-import 'rxjs/add/operator/toPromise';
 import * as OlProj from 'ol/proj';
 import BingMaps from 'ol/source/BingMaps';
 import TileWMS from 'ol/source/TileWMS';
@@ -36,24 +36,21 @@ import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 import OlView from 'ol/View';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Observable } from 'rxjs';
-import Chart from 'chart.js';
-import { of } from 'rxjs/observable/of';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { SelectItem } from 'primeng/api';
+import { Observable, timer } from 'rxjs';
+import 'rxjs/add/operator/toPromise';
+import { of } from 'rxjs/observable/of';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, take } from 'rxjs/operators';
+import { AppConfig } from '../app.config';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
+import { SearchService } from "../services/search.service";
 import { ChartsComponent } from "./charts/charts.component";
 import logos from './logos';
 import { MetadataComponent } from './metadata/metadata.component';
 import { RegionReportMobileComponent } from './region-report-mobile/region-report-mobile.component';
 import { RegionReportComponent } from './region-report/region-report.component';
 import { ReportCarComponent } from './report-car/report-car.component';
-import { MobileComponent } from "./mobile/mobile.component";
-import { ProjectComponent } from "./project/project.component";
-import { MapMobileComponent } from "./map-mobile/map-mobile.component";
 import { TutorialsComponent } from "./tutorials/tutorials.component";
-import { AppConfig } from '../app.config';
-import { SearchService } from "../services/search.service";
 
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -103,7 +100,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
   landsat: any;
   planet: any;
   descriptor: any;
-  valueRegion: any;
   regionFilterDefault: any;
   urls: any;
 
@@ -278,9 +274,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.textOnDialog = {};
 
     this.currentData = '';
-    this.valueRegion = {
-      text: ''
-    };
 
     this.changeTabSelected = "";
 
@@ -334,11 +327,12 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     this.setStylesLangButton();
 
-    this.searchOptions = [
-      { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
-      { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' }
-      // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinates', icon: 'fa fa-fw fa-map-pin' }
-    ];
+    // this.searchOptions = [
+    //   { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
+    //   { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' },
+    //   { label: this.language === 'pt-br' ? 'UC' : 'Cons. Unit', value: 'uc', icon: 'fa fa-fw fa-envira' }
+    //   // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinate', icon: 'fa fa-fw fa-map-pin' }
+    // ];
 
     this.selectedSearchOption = 'region';
     this.selectedAutoCompleteText = ''
@@ -434,19 +428,21 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     if (this.selectedSearchOption.toLowerCase() == 'region') {
 
-      console.log("eve - ", event)
       let query = event.query;
       this._service.getRegions(query).subscribe(regions => {
-        console.log(regions)
         this.listForAutoComplete = regions;
       });
     }
     else if (this.selectedSearchOption.toLowerCase() == 'car') {
-      console.log("eve - ", event)
       let query = event.query;
       this._service.getCARS(query).subscribe(regions => {
-        console.log(regions)
         this.listForAutoComplete = regions;
+      });
+    }
+    else if (this.selectedSearchOption.toLowerCase() == 'uc') {
+      let query = event.query;
+      this._service.getUCs(query).subscribe(result => {
+        this.listForAutoComplete = result;
       });
     }
     // else if (this.selectedSearchOption.toLowerCase() == 'coordinate') {
@@ -460,62 +456,44 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   }
 
+
   onSelectSuggestion(event) {
-    console.log("select - ", event)
 
     if (this.selectedSearchOption.toLowerCase() == 'region') {
 
       this.updateRegion(event)
 
     }
-    else if (this.selectedSearchOption.toLowerCase() == 'car') {
+    else if (this.selectedSearchOption.toLowerCase() == 'car' || this.selectedSearchOption.toLowerCase() == 'uc') {
 
-      let map = this.map;
+      this.updateAreaOnMap(event)
 
-      let vectorSource = new VectorSource({
-        features: (new GeoJSON()).readFeatures(event.geojson, {
-          dataProjection: 'EPSG:4326',
-          featureProjection: 'EPSG:3857'
-        })
-      });
-
-      this.layerFromCAR.layer = new VectorLayer({
-        source: vectorSource,
-        style: [
-          new Style({
-            stroke: new Stroke({
-              color: this.layerFromCAR.strokeColor,
-              width: 4
-            })
-          }),
-          new Style({
-            stroke: new Stroke({
-              color: this.layerFromCAR.strokeColor,
-              width: 4,
-              lineCap: 'round',
-              zIndex: 1
-            })
-          })
-        ]
-      });
-
-      map.addLayer(this.layerFromCAR.layer);
-      let extent = this.layerFromCAR.layer.getSource().getExtent();
-      map.getView().fit(extent, { duration: 1800 });
-
-      let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
-      prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
-      this.changeVisibility(prodes, undefined);
-      this.infodataMunicipio = null;
     }
 
   }
 
   onChangeSearchOption(event) {
 
-    console.log(event, this.titlesLayerBox, this.selectedSearchOption)
-    this.titlesLayerBox.search_placeholder = this.selectedSearchOption === 'region' ? this.titlesLayerBox['search_placeholder_region'] : this.titlesLayerBox['search_placeholder_car']
-    this.titlesLayerBox.search_failed = this.selectedSearchOption === 'region' ? this.titlesLayerBox['search_failed_region'] : this.titlesLayerBox['search_failed_car']
+    if (this.selectedSearchOption === 'region') {
+      this.titlesLayerBox.search_placeholder = this.titlesLayerBox['search_placeholder_region']
+      this.titlesLayerBox.search_failed = this.titlesLayerBox['search_failed_region']
+
+    } else if (this.selectedSearchOption === 'car') {
+      this.titlesLayerBox.search_placeholder = this.titlesLayerBox['search_placeholder_car']
+      this.titlesLayerBox.search_failed = this.titlesLayerBox['search_failed_car']
+
+    }
+    else if (this.selectedSearchOption === 'uc') {
+      this.titlesLayerBox.search_placeholder = this.titlesLayerBox['search_placeholder_uc']
+      this.titlesLayerBox.search_failed = this.titlesLayerBox['search_failed_uc']
+
+    }
+    else {
+      this.titlesLayerBox.search_placeholder = this.titlesLayerBox['search_placeholder_coordinate']
+      this.titlesLayerBox.search_failed = this.titlesLayerBox['search_failed_coordinate']
+
+    }
+
   }
 
   onCityRowSelect(event) {
@@ -697,7 +675,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     this.searchOptions = [
       { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
-      { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' }
+      { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' },
+      { label: this.language === 'pt-br' ? 'UC' : 'Cons. Unit', value: 'uc', icon: 'fa fa-fw fa-envira' }
       // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinates', icon: 'fa fa-fw fa-map-pin' }
     ];
 
@@ -1024,16 +1003,71 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.changeVisibility(uso_terra, undefined);
     this.changeVisibility(agricultura, undefined);
 
+  }
 
+  private async clearAreaBeforeSearch() {
+    await this.updateRegion(this.defaultRegion)
+
+    await timer(2000).pipe(take(1)).toPromise();
+  }
+
+  async updateAreaOnMap(event) {
+
+    if (this.selectRegion != this.defaultRegion) {
+      await this.clearAreaBeforeSearch();
+    }
+
+    let map = this.map;
+
+    map.removeLayer(this.layerFromCAR.layer)
+
+    let vectorSource = new VectorSource({
+      features: (new GeoJSON()).readFeatures(event.geojson, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
+      })
+    });
+
+    this.layerFromCAR.layer = new VectorLayer({
+      source: vectorSource,
+      style: [
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromCAR.strokeColor,
+            width: 4
+          })
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: this.layerFromCAR.strokeColor,
+            width: 4,
+            lineCap: 'round',
+            zIndex: 1
+          })
+        })
+      ]
+    });
+
+    map.addLayer(this.layerFromCAR.layer);
+    let extent = this.layerFromCAR.layer.getSource().getExtent();
+    map.getView().fit(extent, { duration: 1800 });
+
+    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
+    this.changeVisibility(prodes, undefined);
+    this.infodataMunicipio = null;
+
+    this.selectedAutoCompleteText = event
 
   }
 
   updateRegion(region) {
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
 
+    this.map.removeLayer(this.layerFromCAR.layer)
+
     if (region == this.defaultRegion) {
-      this.selectedAutoCompleteText = ''
-      this.valueRegion = '';
+      this.selectedAutoCompleteText = {}
       this.currentData = '';
       this.desmatInfo = this.defaultPeriod
 
@@ -1059,8 +1093,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.changeVisibility(prodes, undefined);
 
     this.selectRegion = region;
-
-    // this.matgroup.selectedIndex = 0
 
     this.isFilteredByCity = false;
     this.isFilteredByState = false;
@@ -3352,9 +3384,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     dd.content.push({ text: token, alignment: 'center', style: 'token', margin: [20, 20, 20, 0] });
 
     // @ts-ignore
-    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + token, fit: '150', alignment: 'center' });
+    dd.content.push({ qr: 'https://www.cerradodpat.ufg.br/#/regions/' + token, fit: '150', alignment: 'center' });
     // @ts-ignore
-    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + token, alignment: 'center', style: 'textFooter', margin: [20, 10, 20, 60] });
+    dd.content.push({ text: 'https://www.cerradodpat.ufg.br/#/regions/' + token, alignment: 'center', style: 'textFooter', margin: [20, 10, 20, 60] });
 
     const filename = logos.upload.title[language] + ' - ' + token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
@@ -3412,7 +3444,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
                 {},
               ],
               [
-                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
+                { text: 'https://cerradodpat.ufg.br', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
                 { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
                 { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
               ],
@@ -3611,9 +3643,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     // @ts-ignore
     dd.content.push({ text: layer.token, alignment: 'center', style: 'textFooter', margin: [25, 30, 20, 10], pageBreak: false });
     // @ts-ignore
-    dd.content.push({ qr: 'https://www.cerradodpat.org/#/regions/' + layer.token, fit: '150', alignment: 'center' });
+    dd.content.push({ qr: 'https://www.cerradodpat.ufg.br/#/regions/' + layer.token, fit: '150', alignment: 'center' });
     // @ts-ignore
-    dd.content.push({ text: 'https://www.cerradodpat.org/#/regions/' + layer.token, alignment: 'center', margin: [0, 15, 10, 0], style: 'textFooter' });
+    dd.content.push({ text: 'https://www.cerradodpat.ufg.br/#/regions/' + layer.token, alignment: 'center', margin: [0, 15, 10, 0], style: 'textFooter' });
     let filename = this.titlesLayerBox.label_analyzed_area_title.toLowerCase() + ' - ' + layer.token + '.pdf'
     pdfMake.createPdf(dd).download(filename);
     this.loadingPrintReport = false;
@@ -4082,7 +4114,7 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
                 {},
               ],
               [
-                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
+                { text: 'https://cerradodpat.ufg.br', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
                 { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
                 { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
               ],
@@ -4911,9 +4943,9 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
         // @ts-ignore
         dd.content.push({ text: this.textOnDialog.information_tab.info_qrcode, alignment: 'center', style: 'textFooter', margin: [190, 80, 190, 10], pageBreak: false });
         // @ts-ignore
-        dd.content.push({ qr: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
+        dd.content.push({ qr: 'https://www.cerradodpat.ufg.br/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
         // @ts-ignore
-        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter' });
+        dd.content.push({ text: 'https://www.cerradodpat.ufg.br/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter' });
         let filename = this.textOnDialog.title.toLowerCase() + ' - ' + result[0].token + '.pdf'
         pdfMake.createPdf(dd).download(filename);
       }

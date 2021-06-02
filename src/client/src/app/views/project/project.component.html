@@ -3,17 +3,13 @@
         <a class="navbar-brand ml-4" href="#">
             <img class="img-logo" src="../../../assets/logo/logo-dpat.png" alt="Cerrado DAPT" loading="lazy">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">
             <mat-icon>menu_open</mat-icon>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-lg-auto ml-sm-auto mr-4">
-                <div (click)="setLang('pt-br')"
-                    [className]="lang === 'pt-br' || lang === 'pt' ? 'nav-item nav-link lang-selected ' : 'nav-item nav-link lang'"
-                    class=""><strong>POR</strong></div>
-                <div (click)="setLang('en-us')"
-                    [className]="lang === 'en-us' || lang === 'en' ? 'nav-item nav-link lang lang-selected' : 'nav-item nav-link lang'">
+                <div (click)="setLang('pt-br')" [className]="lang === 'pt-br' || lang === 'pt' ? 'nav-item nav-link lang-selected ' : 'nav-item nav-link lang'" class=""><strong>POR</strong></div>
+                <div (click)="setLang('en-us')" [className]="lang === 'en-us' || lang === 'en' ? 'nav-item nav-link lang lang-selected' : 'nav-item nav-link lang'">
                     <strong>ENG</strong>
                 </div>
             </div>
@@ -30,16 +26,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="../../../assets/img/cerrado_01.jpg"
-                        alt="Imagens dos campos de validação">
+                    <img class="d-block w-100" src="../../../assets/img/cerrado_01.jpg" alt="Imagens dos campos de validação">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="../../../assets/img/cerrado_02.jpg"
-                        alt="Imagens dos campos de validação">
+                    <img class="d-block w-100" src="../../../assets/img/cerrado_02.jpg" alt="Imagens dos campos de validação">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="../../../assets/img/cerrado_03.jpg"
-                        alt="Imagens dos campos de validação">
+                    <img class="d-block w-100" src="../../../assets/img/cerrado_03.jpg" alt="Imagens dos campos de validação">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -65,8 +58,7 @@
                 <p class="mt-2 text-justify lead" [innerHTML]="'dpat_01' | translate"></p>
                 <p class="mt-2 text-justify lead" [innerHTML]="'dpat_02' | translate"></p>
                 <figure class="figure mt-4 mb-4 ">
-                    <img [src]="'dpat_src_fig_01' | translate" class="img-fluid shadow-lg"
-                        [alt]="'dpat_src_fig_01_alt' | translate">
+                    <img [src]="'dpat_src_fig_01' | translate" class="img-fluid shadow-lg" [alt]="'dpat_src_fig_01_alt' | translate">
                     <figcaption class="figure-caption text-center" [innerHTML]="'dpat_src_fig_01_legend' | translate">
                     </figcaption>
                 </figure>
@@ -92,8 +84,7 @@
             </div>
             <div class="col-md-6">
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'dpat_src_fig_02' | translate" class="img-fluid shadow-lg"
-                        [alt]="'dpat_src_fig_02_alt' | translate">
+                    <img [src]="'dpat_src_fig_02' | translate" class="img-fluid shadow-lg" [alt]="'dpat_src_fig_02_alt' | translate">
                     <figcaption class="figure-caption text-center" [innerHTML]="'dpat_src_fig_02_legend' | translate">
                     </figcaption>
                 </figure>
@@ -109,10 +100,8 @@
                 <p class="text-justify lead" [innerHTML]="'metrics_02' | translate"></p>
                 <p class="text-justify lead" [innerHTML]="'metrics_03' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_src_fig_01' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_src_fig_01_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_src_fig_01_legend' | translate"></figcaption>
+                    <img [src]="'metrics_src_fig_01' | translate" class="img-fluid shadow-lg" [alt]="'metrics_src_fig_01_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_src_fig_01_legend' | translate"></figcaption>
                 </figure>
             </div>
         </div>
@@ -124,24 +113,18 @@
                 <h5 [innerHTML]="'metrics_susceptibility_title' | translate"></h5>
                 <p class="text-justify lead" [innerHTML]="'metrics_susceptibility_01' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_susceptibility_src_fig_01' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_susceptibility_src_fig_01_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_susceptibility_src_fig_01_legend' | translate"></figcaption>
+                    <img [src]="'metrics_susceptibility_src_fig_01' | translate" class="img-fluid shadow-lg" [alt]="'metrics_susceptibility_src_fig_01_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_susceptibility_src_fig_01_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_susceptibility_02' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_susceptibility_src_fig_02' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_susceptibility_src_fig_02_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_susceptibility_src_fig_02_legend' | translate"></figcaption>
+                    <img [src]="'metrics_susceptibility_src_fig_02' | translate" class="img-fluid shadow-lg" [alt]="'metrics_susceptibility_src_fig_02_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_susceptibility_src_fig_02_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_susceptibility_03' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_susceptibility_src_fig_03' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_susceptibility_src_fig_03_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_susceptibility_src_fig_03_legend' | translate"></figcaption>
+                    <img [src]="'metrics_susceptibility_src_fig_03' | translate" class="img-fluid shadow-lg" [alt]="'metrics_susceptibility_src_fig_03_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_susceptibility_src_fig_03_legend' | translate"></figcaption>
                 </figure>
             </div>
         </div>
@@ -191,23 +174,17 @@
                 </table>
                 <p class="text-justify lead" [innerHTML]="'metrics_validation_02' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_validation_src_fig_01' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_validation_src_fig_01_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_validation_src_fig_01_legend' | translate"></figcaption>
+                    <img [src]="'metrics_validation_src_fig_01' | translate" class="img-fluid shadow-lg" [alt]="'metrics_validation_src_fig_01_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_validation_src_fig_01_legend' | translate"></figcaption>
                 </figure>
                 <figure class="figure mt-4 mb-4 ">
-                    <img [src]="'metrics_validation_src_fig_02' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_validation_src_fig_02_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_validation_src_fig_02_legend' | translate"></figcaption>
+                    <img [src]="'metrics_validation_src_fig_02' | translate" class="img-fluid shadow-lg" [alt]="'metrics_validation_src_fig_02_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_validation_src_fig_02_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_validation_04' | translate"></p>
                 <figure class="figure mt-4 mb-4 ">
-                    <img [src]="'metrics_validation_src_fig_03' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_validation_src_fig_03_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_validation_src_fig_03_legend' | translate"></figcaption>
+                    <img [src]="'metrics_validation_src_fig_03' | translate" class="img-fluid shadow-lg" [alt]="'metrics_validation_src_fig_03_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_validation_src_fig_03_legend' | translate"></figcaption>
                 </figure>
             </div>
         </div>
@@ -219,49 +196,37 @@
                 <h5 [innerHTML]="'metrics_field_title' | translate"></h5>
                 <p class="text-justify lead" [innerHTML]="'metrics_field_01' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_field_src_fig_01' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_field_src_fig_01_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_field_src_fig_01_legend' | translate"></figcaption>
+                    <img [src]="'metrics_field_src_fig_01' | translate" class="img-fluid shadow-lg" [alt]="'metrics_field_src_fig_01_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_field_src_fig_01_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_field_02' | translate"></p>
                 <figure class="figure mt-4 mb-4 ">
-                    <img [src]="'metrics_field_src_fig_02' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_field_src_fig_02_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_field_src_fig_02_legend' | translate"></figcaption>
+                    <img [src]="'metrics_field_src_fig_02' | translate" class="img-fluid shadow-lg" [alt]="'metrics_field_src_fig_02_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_field_src_fig_02_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead " [innerHTML]="'metrics_field_03' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_field_src_fig_03' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_field_src_fig_03_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_field_src_fig_03_legend' | translate"></figcaption>
+                    <img [src]="'metrics_field_src_fig_03' | translate" class="img-fluid shadow-lg" [alt]="'metrics_field_src_fig_03_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_field_src_fig_03_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_field_04' | translate"></p>
                 <p class="text-justify lead" [innerHTML]="'metrics_field_05' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_field_src_fig_04' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_field_src_fig_04_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_field_src_fig_04_legend' | translate"></figcaption>
+                    <img [src]="'metrics_field_src_fig_04' | translate" class="img-fluid shadow-lg" [alt]="'metrics_field_src_fig_04_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_field_src_fig_04_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_field_06' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_field_src_fig_05' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_field_src_fig_05_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_field_src_fig_05_legend' | translate"></figcaption>
+                    <img [src]="'metrics_field_src_fig_05' | translate" class="img-fluid shadow-lg" [alt]="'metrics_field_src_fig_05_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_field_src_fig_05_legend' | translate"></figcaption>
                 </figure>
                 <p class="text-justify lead" [innerHTML]="'metrics_field_07' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <img [src]="'metrics_field_src_fig_06' | translate" class="img-fluid shadow-lg"
-                        [alt]="'metrics_field_src_fig_06_alt' | translate">
-                    <figcaption class="figure-caption text-center"
-                        [innerHTML]="'metrics_field_src_fig_06_legend' | translate"></figcaption>
+                    <img [src]="'metrics_field_src_fig_06' | translate" class="img-fluid shadow-lg" [alt]="'metrics_field_src_fig_06_alt' | translate">
+                    <figcaption class="figure-caption text-center" [innerHTML]="'metrics_field_src_fig_06_legend' | translate"></figcaption>
                 </figure>
 
-                
+
 
             </div>
         </div>
@@ -275,9 +240,8 @@
 
                 <p class="text-justify lead" [innerHTML]="'docs_01' | translate"></p>
                 <figure class="figure mt-4 mb-4">
-                    <a target='blank' href="https://cerradodpat.org/docs">
-                        <img [src]="'docs_src_fig_01' | translate" class="img-fluid shadow-lg"
-                            [alt]="'docs_src_fig_01_alt' | translate">
+                    <a target='blank' href="https://cerradodpat.ufg.br/docs">
+                        <img [src]="'docs_src_fig_01' | translate" class="img-fluid shadow-lg" [alt]="'docs_src_fig_01_alt' | translate">
                     </a>
                     <figcaption class="figure-caption text-center" [innerHTML]="'docs_src_fig_01_legend' | translate">
                     </figcaption>

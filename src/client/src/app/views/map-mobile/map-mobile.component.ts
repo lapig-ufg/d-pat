@@ -287,7 +287,7 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
                 {},
               ],
               [
-                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
+                { text: 'https://cerradodpat.ufg.br', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
                 { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
                 { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
               ],
@@ -1116,9 +1116,9 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
         // @ts-ignore
         dd.content.push({ text: this.textOnDialog.information_tab.info_qrcode, alignment: 'center', style: 'textFooter', margin: [190, 80, 190, 10], pageBreak: false });
         // @ts-ignore
-        dd.content.push({ qr: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
+        dd.content.push({ qr: 'https://www.cerradodpat.ufg.br/#/plataforma/' + result[0].token, fit: '150', alignment: 'center' });
         // @ts-ignore
-        dd.content.push({ text: 'https://www.cerradodpat.org/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter' });
+        dd.content.push({ text: 'https://www.cerradodpat.ufg.br/#/plataforma/' + result[0].token, alignment: 'center', style: 'textFooter' });
         let filename = this.textOnDialog.title.toLowerCase() + ' - ' + result[0].token + '.pdf'
         pdfMake.createPdf(dd).download(filename);
       }

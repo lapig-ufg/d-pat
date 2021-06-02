@@ -1,19 +1,19 @@
 <div id="regionMobileReport">
-  <div class="container-fluid">
-      <div class="container-buttons" >
-          <button color="primary" classs="btn-info " style="margin: 0px 10px" mat-icon-button (click)="printReportCounty()">
+    <div class="container-fluid">
+        <div class="container-buttons">
+            <button color="primary" classs="btn-info " style="margin: 0px 10px" mat-icon-button (click)="printReportCounty()">
               <mat-icon>print</mat-icon>
               <mat-spinner class="spinner" [strokeWidth]="2" [diameter]="18" *ngIf="loading" color="primary" mode="indeterminate"></mat-spinner>
           </button>
-          <button (click)="dialogRef.close()" color="primary" style="margin: 0px 10px" classs="btn-info " mat-icon-button>
+            <button (click)="dialogRef.close()" color="primary" style="margin: 0px 10px" classs="btn-info " mat-icon-button>
               <mat-icon>highlight_off</mat-icon>
           </button>
-      </div>
+        </div>
         <div class="title-logo">
-          <div>
-              <a href="https://cerradodpat.org" target="_blank">
-                  <img class="logo-report" width="50%" src="assets/logo/cerrado-dpat-logo.svg" /></a>
-          </div>
+            <div>
+                <a href="https://cerradodpat.ufg.br" target="_blank">
+                    <img class="logo-report" width="50%" src="assets/logo/cerrado-dpat-logo.svg" /></a>
+            </div>
             <div class="row">
                 <h5 class="title-report">{{texts.label_title}} </h5>
             </div>
@@ -23,12 +23,7 @@
                 <p-accordionTab class="tabs" header="{{texts.label_info}}" [selected]="true">
                     <div>
                         <div>
-                            <toh-spinner-img
-                                    [largura]="'100%'"
-                                    [altura]="'100%'"
-                                    [imgSrc]="dados.region.terraclass.imgSmall"
-                                    [spinnerSrc]="svgLoading"
-                                    (click)="openLightBoxTerraClass()">
+                            <toh-spinner-img [largura]="'100%'" [altura]="'100%'" [imgSrc]="dados.region.terraclass.imgSmall" [spinnerSrc]="svgLoading" (click)="openLightBoxTerraClass()">
                             </toh-spinner-img>
                             <p class="title-info">{{texts.label_img_mun}}</p>
                         </div>
@@ -55,7 +50,7 @@
                                 <strong>{{texts.label_legend}}</strong>
                             </h5>
                             <div class="legend">
-<!--                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">-->
+                                <!--                                            <img *ngIf="dados.region.legendas.legendDesmatamento" [src]="dados.region.legendas.legendDesmatamento">-->
                                 <img *ngIf="dados.region.legendas.legendRegion" [src]="dados.region.legendas.legendRegion">
                                 <img *ngIf="dados.region.legendas.legendTerraclass" [src]="dados.region.legendas.legendTerraclass">
                             </div>
@@ -72,24 +67,19 @@
                     </div>
                 </p-accordionTab>
                 <p-accordionTab class="tabs" header="{{texts.label_images}}">
-                    <div *ngIf="dados.region.anual_statistic" >
+                    <div *ngIf="dados.region.anual_statistic">
                         <div style="width: 100%; padding-bottom: 10px;" *ngFor="let item of dados.region.anual_statistic; let i=index">
-                            <mat-card  class="card-amostral">
+                            <mat-card class="card-amostral">
                                 <mat-card-header>
                                     <mat-card-title>{{texts.label_year}}: {{item.year}}</mat-card-title>
                                 </mat-card-header>
 
-                                <toh-spinner-img
-                                        class="img-landsat-laudo"
-                                        [largura]="'100%'"
-                                        [imgSrc]="item.imgSmall"
-                                        [spinnerSrc]="svgLoading"
-                                        (click)="openLightBoxImagesLandSat(item)">
+                                <toh-spinner-img class="img-landsat-laudo" [largura]="'100%'" [imgSrc]="item.imgSmall" [spinnerSrc]="svgLoading" (click)="openLightBoxImagesLandSat(item)">
                                 </toh-spinner-img>
 
                                 <img *ngIf="dados.region.legendas.legendDesmatamento" width="100%" [src]="dados.region.legendas.legendDesmatamento">
 
-                                <mat-card-content >
+                                <mat-card-content>
                                     <table class="tb-imgs" style="width:100%">
 
                                         <tr>
@@ -100,7 +90,7 @@
                                             <th class="table-label">{{texts.label_statistc_area_prodes}}</th>
                                             <th class="table-value">{{item.area_prodes | number:'1.2-2'}} km²</th>
                                         </tr>
-                                        <tr *ngIf="item.area_app" >
+                                        <tr *ngIf="item.area_app">
                                             <th class="table-label">{{texts.label_statistc_app}}</th>
                                             <th class="table-value">{{item.area_app | number:'1.2-2'}} km²</th>
                                         </tr>
@@ -114,8 +104,8 @@
                         </div>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab class="tabs"*ngIf="dados.ranking" header="{{texts.label_municipalities}}">
-                    <div  >
+                <p-accordionTab class="tabs" *ngIf="dados.ranking" header="{{texts.label_municipalities}}">
+                    <div>
                         <div>
                             <h6>
                                 <b>{{dados.ranking.table.description}} {{ dados.ranking.desmatInfo.Viewvalue }}</b>
@@ -129,8 +119,7 @@
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-city>
-                                    <tr [pSelectableRow]="city"
-                                        tooltipPosition="bottom" life="2000">
+                                    <tr [pSelectableRow]="city" tooltipPosition="bottom" life="2000">
                                         <td align="center">{{city.index}}</td>
                                         <td align="center">{{city.name}}</td>
                                         <td align="center">{{city.uf}}</td>
@@ -150,5 +139,5 @@
                 </div>
             </div>
         </div>
-  </div>
+    </div>
 </div>

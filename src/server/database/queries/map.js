@@ -28,6 +28,10 @@ module.exports = function(app) {
         return "SELECT cod_car as text, uf, area_km2, cd_geocmu, ST_AsGeoJSON(geom) geojson FROM car_cerrado WHERE unaccent(cod_car) ILIKE unaccent(${key}%) order by area_km2 DESC LIMIT 10";
     }
 
+    Query.ucs = function() {
+        return "SELECT nome || ' - ' || uf as text, uf, origin_table, cd_geocmu, ST_AsGeoJSON(geom) geojson FROM v_ucs WHERE unaccent(nome) ILIKE unaccent(${key}%) order by nome ASC LIMIT 10";
+    }
+
 
     return Query;
 

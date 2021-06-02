@@ -180,7 +180,7 @@ export class RegionReportComponent implements OnInit {
                 {},
               ],
               [
-                { text: 'https://cerradodpat.org', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
+                { text: 'https://cerradodpat.ufg.br', alignment: 'left', style: 'textFooter', margin: [60, 0, 0, 0] },
                 { text: moment().format('DD/MM/YYYY HH:mm:ss'), alignment: 'center', style: 'textFooter', margin: [0, 0, 0, 0] },
                 { text: logos.page.title[language] + currentPage.toString() + logos.page.of[language] + '' + pageCount, alignment: 'right', style: 'textFooter', margin: [0, 0, 60, 0] },
               ],

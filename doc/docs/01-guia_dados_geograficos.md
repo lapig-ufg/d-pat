@@ -9,7 +9,7 @@ Com o objetivo de contextualizar os desmatamentos detectados pelos sistemas PROD
 | PRODES-Cerrado | Incrementos anuais de desmatamento por corte raso registrados pelo sistema PRODES-Cerrado. | 2002-2019 | 1:250.000 | [Inpe](http://terrabrasilis.dpi.inpe.br/) | [Download](http://terrabrasilis.dpi.inpe.br/download/dataset/cerrado-prodes/vector/yearly_deforestation_2002_2019_cerrado_biome.zip) |
 | DETER-Cerrado | Avisos de evidências de alteração da vegetação nativa registrados pelo sistema DETER-Cerrado. | 2018-2020 | 1:500.000 | [Inpe](http://terrabrasilis.dpi.inpe.br/) | [Download](http://terrabrasilis.dpi.inpe.br/downloads/) |
 | Área antrópica | Máscara de área acumulada de supressão da vegetação nativa até 2000. | 2000 | 1:250.000 | [Inpe](http://terrabrasilis.dpi.inpe.br/) |  [Download](http://terrabrasilis.dpi.inpe.br/download/dataset/cerrado-prodes/vector/accumulated_deforestation_up_to_2000_cerrado_biome.zip) |
-| Susceptibilidade ao desmatamento | Áreas com alto potencial de serem desmatadas. | 2016 | 1:250.000 | [Lapig/UFG](http://cerradodpat.org/) | [Download](https://cerradodpat.org/#/plataforma) |
+| Susceptibilidade ao desmatamento | Áreas com alto potencial de serem desmatadas. | 2016 | 1:250.000 | [Lapig/UFG](http://cerradodpat.ufg.br/) | [Download](https://cerradodpat.ufg.br/#/plataforma) |
 
 <br>
 
@@ -74,7 +74,7 @@ Com o objetivo de contextualizar os desmatamentos detectados pelos sistemas PROD
 | Dado | Descrição | Data | Escala | Fonte | Detalhes | Baixar dado |
 | :-------: | :-------: | :-------: | :-------: |  :-------: |  :-------: |   :-------: |  
 | Solos | Revisão e conversão para o meio digital dos levantamentos de solos produzidos pelo Projeto RADAMBRASIL. | 2019 | 1:250.000 | [IBGE](http://ibge.gov.br/)  | [Manual de Pedologia](ftp://geoftp.ibge.gov.br/informacoes_ambientais/pedologia/vetores/escala_250_mil/versao_2019/) | [Download](ftp://geoftp.ibge.gov.br/informacoes_ambientais/pedologia/vetores/escala_250_mil/versao_2019/) |
-| Precipitação acumulada anual média | Média de precipitação acumulada anual, entre os anos de 2000 e 2014, obtida por meio da interpolação entre dados TRMM e estações meteorológicas do INMET. | 2000-2013 | 1:150.000 (resolução espacial de 30m) | TRMM/INMET | - | [Download](https://cerradodpat.org/#/plataforma) |
+| Precipitação acumulada anual média | Média de precipitação acumulada anual, entre os anos de 2000 e 2014, obtida por meio da interpolação entre dados TRMM e estações meteorológicas do INMET. | 2000-2013 | 1:150.000 (resolução espacial de 30m) | TRMM/INMET | - | [Download](https://cerradodpat.ufg.br/#/plataforma) |
 
 <br>
 
