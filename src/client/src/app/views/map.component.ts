@@ -350,7 +350,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.setStylesLangButton();
 
     this.selectedSearchOption = 'region';
-    this.selectedAutoCompleteText = {}
+    this.selectedAutoCompleteText = ''
 
     this.mapForABC = new Map([
       ["RPD", {
@@ -1150,7 +1150,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.map.removeLayer(this.layerFromCAR.layer)
 
     if (region == this.defaultRegion) {
-      this.selectedAutoCompleteText = {}
+      this.selectedAutoCompleteText = ''
       this.currentData = '';
       this.desmatInfo = this.defaultPeriod
 

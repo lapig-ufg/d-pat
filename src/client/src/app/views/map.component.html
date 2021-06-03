@@ -37,10 +37,10 @@
                                     <div class="invalid-feedback" *ngIf="searchFailed">
                                         {{titlesLayerBox.search_failed}}</div> -->
                                     <div *ngIf="selectedSearchOption != 'coordinate'" class="ui-fluid">
-                                        <p-autoComplete *ngIf="selectedSearchOption != 'coordinate'" [(ngModel)]="selectedAutoCompleteText" [suggestions]="listForAutoComplete" (completeMethod)="obtainSearchSuggestions($event)" field="text" placeholder="{{titlesLayerBox.search_placeholder}}"
-                                            [minLength]="1" emptyMessage="{{titlesLayerBox.search_failed}}" styleClass="wid100" [type]='"search"' (onSelect)="onSelectSuggestion($event)">
+                                        <p-autoComplete [(ngModel)]="selectedAutoCompleteText" [suggestions]="listForAutoComplete" (completeMethod)="obtainSearchSuggestions($event)" field="text" placeholder="{{titlesLayerBox.search_placeholder}}" [minLength]="1" emptyMessage="{{titlesLayerBox.search_failed}}"
+                                            styleClass="wid100" [type]='"search"' (onSelect)="onSelectSuggestion($event)">
                                         </p-autoComplete>
-                                        <img *ngIf="selectedSearchOption != 'coordinate'" [hidden]="selectedAutoCompleteText == ''" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+                                        <img [hidden]="selectedAutoCompleteText == ''" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
                                     </div>
 
                                     <div *ngIf="selectedSearchOption == 'coordinate'" class="ui-fluid">
