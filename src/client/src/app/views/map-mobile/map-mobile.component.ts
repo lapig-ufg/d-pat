@@ -29,6 +29,7 @@ export class MapMobileComponent extends MapComponent implements AfterViewInit {
   tabNum = 0;
   selected = 0;
   height: number;
+  valueRegion: any;
 
   ngOnInit() {
     super.ngOnInit();
@@ -174,6 +175,10 @@ export class DialogMobileLaudo implements OnInit, OnDestroy {
     this.textOnDialog = data.textosDaDialog;
     this.tmpModis = [];
     this.loading = false;
+      
+      this.valueRegion = {
+      text: ''
+    };
 
     this.dataEspecial = null;
 
