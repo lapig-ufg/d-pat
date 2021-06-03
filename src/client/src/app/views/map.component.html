@@ -36,13 +36,94 @@
                                     <span *ngIf="searching">{{titlesLayerBox.search_loading}}</span>
                                     <div class="invalid-feedback" *ngIf="searchFailed">
                                         {{titlesLayerBox.search_failed}}</div> -->
-                                    <div class="ui-fluid">
-                                        <p-autoComplete [(ngModel)]="selectedAutoCompleteText" [suggestions]="listForAutoComplete" (completeMethod)="obtainSearchSuggestions($event)" field="text" placeholder="{{titlesLayerBox.search_placeholder}}" [minLength]="1" emptyMessage="{{titlesLayerBox.search_failed}}"
-                                            styleClass="wid100" [type]='"search"' (onSelect)="onSelectSuggestion($event)">
+                                    <div *ngIf="selectedSearchOption != 'coordinate'" class="ui-fluid">
+                                        <p-autoComplete *ngIf="selectedSearchOption != 'coordinate'" [(ngModel)]="selectedAutoCompleteText" [suggestions]="listForAutoComplete" (completeMethod)="obtainSearchSuggestions($event)" field="text" placeholder="{{titlesLayerBox.search_placeholder}}"
+                                            [minLength]="1" emptyMessage="{{titlesLayerBox.search_failed}}" styleClass="wid100" [type]='"search"' (onSelect)="onSelectSuggestion($event)">
                                         </p-autoComplete>
-
-                                        <img [hidden]="selectedAutoCompleteText == ''" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
+                                        <img *ngIf="selectedSearchOption != 'coordinate'" [hidden]="selectedAutoCompleteText == ''" class="clear-region-btn" (click)="updateRegion(defaultRegion)" src="assets/clear_button.png" />
                                     </div>
+
+                                    <div *ngIf="selectedSearchOption == 'coordinate'" class="ui-fluid">
+                                        <form class="example-form" #formLat="ngForm">
+                                            <mat-form-field>
+                                                <mat-label>Latitude</mat-label>
+                                                <input type="number" matInput [formControl]="latitudeFormControl" placeholder="Ex. -16.665136 (Goiânia)">
+                                                <button *ngIf="latitudeFormControl.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="latitudeFormControl.reset()">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>
+
+                                                <mat-error *ngIf="latitudeFormControl.hasError('min')">
+                                                    The value is lower than the minimum of -90
+                                                </mat-error>
+                                                <mat-error *ngIf="latitudeFormControl.hasError('max')">
+                                                    The value is greater than the maximum of 90
+                                                </mat-error>
+                                                <mat-error *ngIf="!latitudeFormControl.hasError('required')">
+                                                    Latitude is <strong>required</strong>
+                                                </mat-error>
+
+                                            </mat-form-field>
+                                        </form>
+
+                                        <form class="example-form" #formLong="ngForm">
+                                            <mat-form-field>
+                                                <mat-label>Longitude</mat-label>
+                                                <input type="number" matInput [formControl]="longitudeFormControl" placeholder="Ex. -49.286041 (Goiânia)">
+                                                <button *ngIf="longitudeFormControl.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="longitudeFormControl.reset()">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>
+                                                <mat-error *ngIf="longitudeFormControl.hasError('min')">
+                                                    The value is lower than the minimum of -180
+                                                </mat-error>
+                                                <mat-error *ngIf="longitudeFormControl.hasError('max')">
+                                                    The value is greater than the maximum of 180
+                                                </mat-error>
+                                                <mat-error *ngIf="!longitudeFormControl.hasError('required')">
+                                                    Longitude is <strong>required</strong>
+                                                </mat-error>
+
+                                            </mat-form-field>
+                                        </form>
+
+                                        <!-- <mat-form-field>
+                                            <mat-label>Latitude</mat-label>
+                                            <input type="number" min="-90" max="90" matInput [formControl]="latitude" placeholder="Ex. -18.8"> 
+                                        <input type="number" min="-90" max="90" matInput [(ngModel)]="textLat" placeholder="Ex. -16.665136 (Goiânia)" required>
+                                        <button *ngIf="textLat != ''" matSuffix mat-icon-button aria-label="Clear" (click)="textLat=''">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                        <mat-error *ngIf="textLat == ''">
+                                            Latitude is <strong>required</strong>
+                                        </mat-error>
+                                        </mat-form-field> 
+
+                                        <mat-form-field>
+                                            <mat-label>Longitude</mat-label>
+                                            <input type="number" [min]="-180" [max]="180" matInput [(ngModel)]="textLong" placeholder="Ex. -49.286041 (Goiânia)" required>
+                                            <button *ngIf="textLong != ''" matSuffix mat-icon-button aria-label="Clear" (click)="textLong=''">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                            <mat-error *ngIf="textLong == ''">
+                                                Longitude is <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field> -->
+
+                                        <div class="buttons-analyze">
+                                            <button [disabled]="longitudeFormControl.value == '' || latitudeFormControl.value == ''" class="color-buttons" (click)="updatePointOnMap()" mat-raised-button color="primary">
+                                                <div>
+                                                    {{titlesLayerBox.btn_search.toUpperCase()}}</div>
+                                            </button>
+                                            <button class="color-buttons clear" [disabled]="this.layerFromCAR.layer == null" (click)="updateRegion(defaultRegion)" mat-raised-button color="warn">
+                                                <div *ngIf="titlesLayerBox.hasOwnProperty('btn_clear')">
+                                                    {{titlesLayerBox.btn_clear.toUpperCase()}}</div>
+                                            </button>
+
+                                        </div>
+
+
+                                    </div>
+
+
                                 </div>
                             </div>
                             <!-- <div>

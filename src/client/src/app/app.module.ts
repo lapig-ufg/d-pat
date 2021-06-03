@@ -2,15 +2,14 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material';
-
+import { CoordinatesModule } from 'angular-coordinates';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MapComponent } from './views/map.component';
 import { DialogOverviewExampleDialog } from './views/map.component';
 import { DialogMobileLaudo } from './views/map-mobile/map-mobile.component'
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
@@ -27,6 +26,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { HttpClientModule } from '@angular/common/http';
@@ -38,6 +38,7 @@ import { registerLocaleData, DecimalPipe } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
@@ -51,7 +52,6 @@ import { NgxGalleryModule } from 'ngx-image-video-gallery';
 import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputMaskModule } from 'primeng/inputmask';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { DatePipe } from '@angular/common';
@@ -110,16 +110,19 @@ export function initApp(config: AppConfig) {
     AutoCompleteModule,
     DropdownModule,
     TabViewModule,
+    CoordinatesModule,
     TooltipModule,
     SelectButtonModule,
     MultiSelectModule,
-    InputMaskModule,
     ButtonModule,
     NgxGalleryModule,
     FieldsetModule,
     CardModule,
+    ReactiveFormsModule,
     LightboxModule,
+    MatFormFieldModule,
     ScrollPanelModule,
+    KeyFilterModule,
     SidebarModule,
     PanelModule,
     AccordionModule,

@@ -1,6 +1,16 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewChecked, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgControl,
+  Validators
+} from '@angular/forms';
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,6 +23,8 @@ import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from 'ngx-ima
 import { Lightbox } from 'ngx-lightbox';
 import { Attribution, defaults as defaultControls } from 'ol/control';
 import MousePosition from 'ol/control/MousePosition';
+import OlPoint from 'ol/geom/Point';
+import OlFeature from 'ol/Feature';
 import { format as olFormat } from 'ol/coordinate';
 import * as OlExtent from 'ol/extent.js';
 import GeoJSON from 'ol/format/GeoJSON';
@@ -30,7 +42,7 @@ import OlXYZ from 'ol/source/XYZ';
 import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke';
-import Style from 'ol/style/Style';
+import { Icon, Style } from 'ol/style';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import * as _ol_TileUrlFunction_ from 'ol/tileurlfunction.js';
 import OlView from 'ol/View';
@@ -41,6 +53,7 @@ import { Observable, timer } from 'rxjs';
 import 'rxjs/add/operator/toPromise';
 import { of } from 'rxjs/observable/of';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap, take } from 'rxjs/operators';
+import { TransformationType, Direction, CoordinatesService } from 'angular-coordinates';
 import { AppConfig } from '../app.config';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { SearchService } from "../services/search.service";
@@ -61,8 +74,9 @@ declare let html2canvas: any;
   selector: 'app-map',
   templateUrl: './map.component.html',
   providers: [SearchService],
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
 })
+
 export class MapComponent implements OnInit, AfterViewChecked {
   map: OlMap;
   layers: Array<TileWMS>;
@@ -72,7 +86,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
   regionsLimits: any;
   dataSeries: any;
   dataStates: any;
-  dataCities: any;
   chartResultCities: any;
   chartResultCitiesIllegalAPP: any;
   chartResultCitiesIllegalRL: any;
@@ -84,8 +97,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
   googlemaps: any
   optionsTimeSeries: any;
   optionsStates: any;
-  optionsCities: any;
-
 
   changeTabSelected = "";
   viewWidth = 600;
@@ -108,20 +119,18 @@ export class MapComponent implements OnInit, AfterViewChecked {
   selectedSearchOption: string;
   searchOptions: SelectItem[];
 
+  direction = Direction;
+  type = TransformationType;
 
   msFilterRegion = '';
   selectRegion: any;
 
   httpOptions: any;
 
-  region_geom: any;
   regionSource: any;
-  regionTypeFilter: any;
 
   defaultRegion: any;
   defaultPeriod: any;
-
-  statePreposition = [];
 
   layersNames = [];
   layersTypes = [];
@@ -135,7 +144,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   isFilteredByCity = false;
   isFilteredByState = false;
-  // @ViewChild("matgroup", { static: false }) matgroup: MatTabGroup;
   collapseLegends = false;
 
   infodata: any;
@@ -143,7 +151,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
   infodataCampo: any;
   infodataMunicipio: any;
   infodataABC: any;
-  fieldPointsStop: any;
   utfgridsource: UTFGrid;
   utfgridlayer: OlTileLayer;
   utfgridsourceDeter: UTFGrid;
@@ -212,12 +219,24 @@ export class MapComponent implements OnInit, AfterViewChecked {
     analyzedArea: {},
   };
 
+  latitudeFormControl = new FormControl('', [
+    Validators.min(-90),
+    Validators.max(90),
+    Validators.required,
+  ]);
+
+  longitudeFormControl = new FormControl('', [
+    Validators.min(-180),
+    Validators.max(180),
+    Validators.required,
+  ]);
+
   selectedIndexConteudo: number;
   selectedIndexUpload: number;
 
   selectedAutoCompleteText: any;
   listForAutoComplete: any[];
-  countries: any[];
+
 
   innerHeigth: any;
   showDrawer: boolean;
@@ -239,6 +258,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     private decimalPipe: DecimalPipe,
     public translate: TranslateService,
     protected changeDetector: ChangeDetectorRef,
+    public coordinatesService: CoordinatesService,
     private config: AppConfig,
   ) {
     translate.addLangs(['en', 'pt-br']);
@@ -248,8 +268,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.currentZoom = 5.3;
     this.layers = [];
 
+
     this.dataSeries = {};
     this.dataStates = {};
+
 
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -327,15 +349,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
     this.setStylesLangButton();
 
-    // this.searchOptions = [
-    //   { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
-    //   { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' },
-    //   { label: this.language === 'pt-br' ? 'UC' : 'Cons. Unit', value: 'uc', icon: 'fa fa-fw fa-envira' }
-    //   // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinate', icon: 'fa fa-fw fa-map-pin' }
-    // ];
-
     this.selectedSearchOption = 'region';
-    this.selectedAutoCompleteText = ''
+    this.selectedAutoCompleteText = {}
 
     this.mapForABC = new Map([
       ["RPD", {
@@ -445,14 +460,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
         this.listForAutoComplete = result;
       });
     }
-    // else if (this.selectedSearchOption.toLowerCase() == 'coordinate') {
-    //   console.log("eve - ", event)
-    //   let query = event.query;
-    //   this._service.getCoordinatePoint(query).subscribe(regions => {
-    //     console.log(regions)
-    //     this.listForAutoComplete = regions;
-    //   });
-    // }
+    else if (this.selectedSearchOption.toLowerCase() == 'coordinate') {
+      let query = event.query;
+
+
+      // this._service.getCoordinatePoint(query).subscribe(regions => {
+      //   console.log(regions)
+      //   this.listForAutoComplete = regions;
+      // });
+    }
 
   }
 
@@ -676,8 +692,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.searchOptions = [
       { label: this.language === 'pt-br' ? 'Região' : 'Region', value: 'region', icon: 'fa fa-fw fa-building-o' },
       { label: this.language === 'pt-br' ? 'CAR' : 'CAR', value: 'car', icon: 'fa fa-fw fa-home' },
-      { label: this.language === 'pt-br' ? 'UC' : 'Cons. Unit', value: 'uc', icon: 'fa fa-fw fa-envira' }
-      // { label: this.language === 'pt-br' ? 'Coordenadas' : 'Coordinates', value: 'coordinates', icon: 'fa fa-fw fa-map-pin' }
+      { label: this.language === 'pt-br' ? 'UC' : 'Cons. Unit', value: 'uc', icon: 'fa fa-fw fa-envira' },
+      { label: this.language === 'pt-br' ? 'Ponto' : 'Point', value: 'coordinate', icon: 'fa fa-fw fa-map-pin' }
     ];
 
     let titlesUrl = '/service/map/titles' + this.getServiceParams();
@@ -1005,6 +1021,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   }
 
+  isCoordinateValid(type) {
+    if (type == 'lat') {
+      return this.coordinatesService.isValueValid(Number(this.latitudeFormControl.value), Direction.Latitude)
+    }
+    else {
+      return this.coordinatesService.isValueValid(Number(this.longitudeFormControl.value), Direction.Longitude)
+    }
+  }
+
   private async clearAreaBeforeSearch() {
     await this.updateRegion(this.defaultRegion)
 
@@ -1061,6 +1086,64 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   }
 
+  async updatePointOnMap() {
+
+    let map = this.map;
+    map.removeLayer(this.layerFromCAR.layer)
+
+    if (this.selectRegion != this.defaultRegion) {
+      await this.clearAreaBeforeSearch();
+    }
+
+
+    var iconFeature = new OlFeature({
+      geometry: new OlPoint(OlProj.fromLonLat([Number(this.longitudeFormControl.value), Number(this.latitudeFormControl.value)])),
+      name: 'Null Island',
+    });
+
+    var iconStyle = new Style({
+      image: new Icon({
+        anchor: [0.5, 0.96],
+        crossOrigin: 'anonymous',
+        src: '../../assets/marker/placeholder.png'
+      }),
+    });
+
+    iconFeature.setStyle(iconStyle);
+
+    var vectorSource = new VectorSource({
+      features: [iconFeature],
+    });
+
+    var vectorLayer = new VectorLayer({
+      source: vectorSource,
+    });
+
+    // Add one or more features 
+
+    console.log(this.layerFromCAR)
+
+    this.layerFromCAR.layer = vectorLayer;
+
+    console.log(this.layerFromCAR)
+
+
+    map.addLayer(this.layerFromCAR.layer);
+    let extent = this.layerFromCAR.layer.getSource().getExtent();
+
+
+    map.getView().fit(extent, { duration: 1800 });
+
+    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+    prodes.selectedType = 'bi_ce_prodes_desmatamento_100_fip';
+    this.changeVisibility(prodes, undefined);
+    this.infodataMunicipio = null;
+
+    // this.selectedAutoCompleteText = event
+
+  }
+
+
   updateRegion(region) {
     let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
 
@@ -1073,7 +1156,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       prodes.selectedType = 'prodes_por_region_city_fip_img';
 
-      this.map.removeLayer(this.layerFromCAR.layer)
+      // this.map.removeLayer(this.layerFromCAR.layer)
 
       let uso_terra = this.layersNames.find(element => element.id === "terraclass");
       uso_terra.visible = false;
