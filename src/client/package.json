@@ -26,7 +26,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@types/openlayers": "^4.6.17",
     "angular-coordinates": "^1.0.0",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^0.6.0",
     "core-js": "^3.6.4",
     "file-saver": "^2.0.2",
