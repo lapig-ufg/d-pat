@@ -1431,6 +1431,102 @@ module.exports = function(app) {
                                     }
 
                                 ]
+                            },
+                            {
+                                value: "planet",
+                                Viewvalue: "Planet",
+                                order: 10,
+                                download: [],
+                                opacity: 1,
+                                metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
+                                timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
+                                timeSelected: "global_quarterly_2021q1_mosaic",
+                                timeHandler: "layername",
+                                times: [{
+                                        value: "global_quarterly_2016q1_mosaic",
+                                        Viewvalue: "2016/1ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2016q2_mosaic",
+                                        Viewvalue: "2016/2ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2016q3_mosaic",
+                                        Viewvalue: "2016/3ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2016q4_mosaic",
+                                        Viewvalue: "2016/4ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2017q1_mosaic",
+                                        Viewvalue: "2017/1ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2017q2_mosaic",
+                                        Viewvalue: "2017/2ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2017q3_mosaic",
+                                        Viewvalue: "2017/3ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2017q4_mosaic",
+                                        Viewvalue: "2017/4ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2018q1_mosaic",
+                                        Viewvalue: "2018/1ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2018q2_mosaic",
+                                        Viewvalue: "2018/2ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2018q3_mosaic",
+                                        Viewvalue: "2018/3ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2018q4_mosaic",
+                                        Viewvalue: "2018/4ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2019q1_mosaic",
+                                        Viewvalue: "2019/1ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2019q2_mosaic",
+                                        Viewvalue: "2019/2ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2019q3_mosaic",
+                                        Viewvalue: "2019/3ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2019q4_mosaic",
+                                        Viewvalue: "2019/4ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2020q1_mosaic",
+                                        Viewvalue: "2020/1ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2020q2_mosaic",
+                                        Viewvalue: "2020/2ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2020q3_mosaic",
+                                        Viewvalue: "2020/3ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2020q4_mosaic",
+                                        Viewvalue: "2020/4ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2021q1_mosaic",
+                                        Viewvalue: "2021/1ºTri"
+                                    }
+                                ]
                             }
                         ]
                     }]

@@ -1119,18 +1119,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
       source: vectorSource,
     });
 
-    // Add one or more features 
-
-    console.log(this.layerFromCAR)
-
     this.layerFromCAR.layer = vectorLayer;
-
-    console.log(this.layerFromCAR)
-
 
     map.addLayer(this.layerFromCAR.layer);
     let extent = this.layerFromCAR.layer.getSource().getExtent();
-
 
     map.getView().fit(extent, { duration: 1800 });
 
@@ -1976,9 +1968,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
       text += ' AND uf = \'' + this.selectRegion.value + '\'';
     }
 
-
-    // console.log(this.selectRegion, text)
-
     return {
       version: '2.2.0',
       grids: [
@@ -2133,25 +2122,35 @@ export class MapComponent implements OnInit, AfterViewChecked {
   private parseUrls(layer) {
     let result = [];
 
-    let filters = [];
+    if (layer.value == 'planet') {
+      let layername = layer.value;
+      if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
 
-    if (layer.timeHandler == 'msfilter' && layer.times) {
-      filters.push(layer.timeSelected);
+
+      result.push("https://tiles.planet.com/basemaps/v1/planet-tiles/" + layername + "/gmap/{z}/{x}/{y}.png?api_key=d6f957677fbf40579a90fb3a9c74be1a")
     }
-    if (layer.layerfilter) { filters.push(layer.layerfilter); }
-    if (this.regionFilterDefault) { filters.push(this.regionFilterDefault); }
-    if (layer.regionFilter && this.msFilterRegion) {
-      filters.push(this.msFilterRegion);
-    }
+    else {
 
-    let msfilter = '';
-    if (filters.length > 0) { msfilter += '&MSFILTER=' + filters.join(' AND '); }
+      let filters = [];
 
-    let layername = layer.value;
-    if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
+      if (layer.timeHandler == 'msfilter' && layer.times) {
+        filters.push(layer.timeSelected);
+      }
+      if (layer.layerfilter) { filters.push(layer.layerfilter); }
+      if (this.regionFilterDefault) { filters.push(this.regionFilterDefault); }
+      if (layer.regionFilter && this.msFilterRegion) {
+        filters.push(this.msFilterRegion);
+      }
 
-    for (let url of this.urls) {
-      result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
+      let msfilter = '';
+      if (filters.length > 0) { msfilter += '&MSFILTER=' + filters.join(' AND '); }
+
+      let layername = layer.value;
+      if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
+
+      for (let url of this.urls) {
+        result.push(url + '?layers=' + layername + msfilter + '&mode=tile&tile={x}+{y}+{z}' + '&tilemode=gmap' + '&map.imagetype=png');
+      }
     }
     return result;
   }
@@ -2184,8 +2183,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     let source_layers = this.LayersTMS[layer.value].getSource();
     source_layers.setUrls(this.parseUrls(layer));
     source_layers.refresh();
-
-    // console.log(layer)
 
     if (layer.visible) {
       let layerTested = layer.value;
