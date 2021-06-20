@@ -1131,8 +1131,17 @@ module.exports = function(app) {
                             id: "terraclass",
                             label: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]["label"][language],
                             visible: false,
-                            selectedType: "uso_solo_terraclass_fip",
+                            selectedType: "uso_solo_terraclass_2018_fip",
                             types: [{
+                                    value: "uso_solo_terraclass_2018_fip",
+                                    Viewvalue: "TerraClass-Cerrado - 2018",
+                                    metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_terraclass_2018_fip']['metadata'],
+                                    regionFilter: true,
+                                    opacity: 0.8,
+                                    order: 3,
+                                    download: ['shp']
+                                },
+                                {
                                     value: "uso_solo_terraclass_fip",
                                     Viewvalue: "TerraClass-Cerrado - 2013",
                                     metadata: languageJson["descriptor"]["uso_da_terra"]["layers"]["terraclass"]['uso_solo_terraclass_fip']['metadata'],
