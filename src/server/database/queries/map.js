@@ -30,7 +30,6 @@ module.exports = function(app) {
 
     Query.ucs = function(params) {
         var key = params['key']
-
         return "SELECT nome || ' - ' || uf as text, uf, origin_table, cd_geocmu, ST_AsGeoJSON(geom) geojson FROM v_ucs WHERE unaccent(nome) ILIKE unaccent('%" + key + "%') order by nome ASC LIMIT 10";
     }
 

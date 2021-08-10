@@ -1,10 +1,12 @@
+var config = require('../config.js')
+
 module.exports = class Ows {
 
 
     constructor(
         typeShape
     ) {
-        this._url = "https://ows.lapig.iesa.ufg.br/ows";
+        this._url = config["ows_host"];
 
         if (typeShape == 'shp') {
             this._request = "GetFeature";
@@ -18,8 +20,7 @@ module.exports = class Ows {
             this._width = 1;
             this._height = 1;
             this._typeShape = typeShape;
-        }
-        else if (typeShape == 'tif') {
+        } else if (typeShape == 'tif') {
             this._request = "GetCoverage";
             this._service = "wcs";
             this._version = "2.0.0";
@@ -149,7 +150,7 @@ module.exports = class Ows {
 
                 let length = this._msFilter.length - 1;
 
-                this._msFilter.forEach(function (item, index) {
+                this._msFilter.forEach(function(item, index) {
                     if (index < length) {
                         if (item._attr == "default") {
                             url += item._value + "%20AND%20";
