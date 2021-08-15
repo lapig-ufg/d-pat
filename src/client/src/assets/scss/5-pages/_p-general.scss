@@ -162,3 +162,8 @@ body .ui-selectbutton .ui-button.ui-state-active {
 body .ui-inputtext:enabled:focus:not(.ui-state-error) {
     border-color: #257a33 !important;
 }
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+    background-color: #257a33 !important;
+    color: #ffffff;
+}

@@ -85,29 +85,6 @@
                                             </mat-form-field>
                                         </form>
 
-                                        <!-- <mat-form-field>
-                                            <mat-label>Latitude</mat-label>
-                                            <input type="number" min="-90" max="90" matInput [formControl]="latitude" placeholder="Ex. -18.8"> 
-                                        <input type="number" min="-90" max="90" matInput [(ngModel)]="textLat" placeholder="Ex. -16.665136 (Goiânia)" required>
-                                        <button *ngIf="textLat != ''" matSuffix mat-icon-button aria-label="Clear" (click)="textLat=''">
-                                            <mat-icon>close</mat-icon>
-                                        </button>
-                                        <mat-error *ngIf="textLat == ''">
-                                            Latitude is <strong>required</strong>
-                                        </mat-error>
-                                        </mat-form-field> 
-
-                                        <mat-form-field>
-                                            <mat-label>Longitude</mat-label>
-                                            <input type="number" [min]="-180" [max]="180" matInput [(ngModel)]="textLong" placeholder="Ex. -49.286041 (Goiânia)" required>
-                                            <button *ngIf="textLong != ''" matSuffix mat-icon-button aria-label="Clear" (click)="textLong=''">
-                                                <mat-icon>close</mat-icon>
-                                            </button>
-                                            <mat-error *ngIf="textLong == ''">
-                                                Longitude is <strong>required</strong>
-                                            </mat-error>
-                                        </mat-form-field> -->
-
                                         <div class="buttons-analyze">
                                             <button [disabled]="longitudeFormControl.value == '' || latitudeFormControl.value == ''" class="color-buttons" (click)="updatePointOnMap()" mat-raised-button color="primary">
                                                 <div>
@@ -700,7 +677,22 @@
                             </p-accordionTab>
                             <p-accordionTab class="tabs" header="{{chartResultCities.label}}" *ngIf="selectRegion.type != 'city'">
                                 <h6><b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b></h6>
-                                <p-table [responsive]="true" [autoLayout]="true" [value]="chartResultCities.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
+                                <p-table #dt_city [columns]="exportCols" [exportFilename]="filesName.cities" [paginator]="true" [rows]="10" [responsive]="true" [autoLayout]="true" [value]="chartResultCities.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-grid">
+                                            <div class="p-col" style="text-align: left">
+                                                <div class="ui-inputgroup">
+                                                    <input id="input" type="text" size="5" pInputText [(ngModel)]="sizeOfCitiesRanking.cities" appOnlynumber> &nbsp;
+                                                    <button style="background-color: #257a33" icon="fa fa-sign-out" type="button" (click)="updateCitiesRanking()" pButton pRipple></button>
+                                                </div>
+                                            </div>
+                                            <div class="p-col">
+                                                <div class="ui-helper-clearfix" style="text-align: right">
+                                                    <button type="button" pButton pRipple icon="pi pi-download" label="CSV" (click)="dt_city.exportCSV()" class="ui-button-success" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
                                     <ng-template pTemplate="header">
                                         <tr align="center">
                                             <th *ngFor="let header of chartResultCities.split">
@@ -740,7 +732,22 @@
                                     <b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>
                                     <!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
                                 </h6>
-                                <p-table [responsive]="true" [autoLayout]="true" [value]="chartResultCitiesIllegalAPP.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
+                                <p-table #dt_app [columns]="exportCols" [exportFilename]="filesName.app" [paginator]="true" [rows]="10" [responsive]="true" [autoLayout]="true" [value]="chartResultCitiesIllegalAPP.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-grid">
+                                            <div class="p-col" style="text-align: left">
+                                                <div class="ui-inputgroup">
+                                                    <input id="input" type="text" size="5" pInputText [(ngModel)]="sizeOfCitiesRanking.app" appOnlynumber> &nbsp;
+                                                    <button style="background-color: #257a33" icon="fa fa-sign-out" type="button" (click)="updateDeforastationAPPRanking()" pButton pRipple></button>
+                                                </div>
+                                            </div>
+                                            <div class="p-col">
+                                                <div class="ui-helper-clearfix" style="text-align: right">
+                                                    <button type="button" pButton pRipple icon="pi pi-download" label="CSV" (click)="dt_app.exportCSV()" class="ui-button-success" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
                                     <ng-template pTemplate="header">
                                         <tr align="center">
                                             <th *ngFor="let header of chartResultCities.split">
@@ -763,7 +770,22 @@
                                     <b>{{chartResultCitiesIllegalRL.description}} {{ desmatInfo.Viewvalue }}</b>
                                     <!-- <img class="legend_Graphic" [src]="'assets/legend_graphic.png'">  -->
                                 </h6>
-                                <p-table [responsive]="true" [autoLayout]="true" [value]="chartResultCitiesIllegalRL.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
+                                <p-table #dt_rl [columns]="exportCols" [exportFilename]="filesName.rl" [paginator]="true" [rows]="10" [responsive]="true" [autoLayout]="true" [value]="chartResultCitiesIllegalRL.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-grid">
+                                            <div class="p-col" style="text-align: left">
+                                                <div class="ui-inputgroup">
+                                                    <input id="input" type="text" size="5" pInputText [(ngModel)]="sizeOfCitiesRanking.rl" appOnlynumber> &nbsp;
+                                                    <button style="background-color: #257a33" icon="fa fa-sign-out" type="button" (click)="updateDeforastationRLRanking()" pButton pRipple></button>
+                                                </div>
+                                            </div>
+                                            <div class="p-col">
+                                                <div class="ui-helper-clearfix" style="text-align: right">
+                                                    <button type="button" pButton pRipple icon="pi pi-download" label="CSV" (click)="dt_rl.exportCSV()" class="ui-button-success" pTooltip="CSV" tooltipPosition="bottom"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
                                     <ng-template pTemplate="header">
                                         <tr align="center">
                                             <th *ngFor="let header of chartResultCities.split">

@@ -103,6 +103,14 @@ export class MapComponent implements OnInit, AfterViewChecked {
   viewWidthMobile = 350;
   chartRegionScale: boolean;
 
+  sizeOfCitiesRanking: any = {
+    cities: 10,
+    app: 10,
+    rl: 10
+  };
+
+  exportCols: any[];
+
   textOnDialog: any;
   mapbox: any;
   satelite: any;
@@ -246,6 +254,12 @@ export class MapComponent implements OnInit, AfterViewChecked {
   loadingsDownload: boolean;
   breakpointMobile: number;
   languages: any = {};
+  filesName: any = {
+    cities: "",
+    citiesRL: "",
+    citiesAPP: ""
+  };
+
   constructor(
     private http: HttpClient,
     private _service: SearchService,
@@ -726,12 +740,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private updateCharts() {
+
+  private updateDeforestationTimeSeries() {
     let timeseriesUrl = '/service/deforestation/timeseries' + this.getServiceParams();
-    let statesUrl = '/service/deforestation/states' + this.getServiceParams();
-    let citiesUrl = '/service/deforestation/cities' + this.getServiceParams();
-    let citiesIllegal = '/service/deforestation/illegal' + this.getServiceParams();
-    let urlUsoSolo = '/service/deforestation/indicators' + this.getServiceParams();
 
     this.http.get(timeseriesUrl).subscribe(timeseriesResult => {
 
@@ -796,6 +807,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
         }
       };
     });
+  }
+
+  private updateStatesChart() {
+    let statesUrl = '/service/deforestation/states' + this.getServiceParams();
 
     if (!this.isFilteredByState) {
       this.http.get(statesUrl).subscribe(statesResult => {
@@ -854,114 +869,156 @@ export class MapComponent implements OnInit, AfterViewChecked {
       });
     }
 
+  }
+
+  private updateCitiesRanking() {
+    let citiesUrl = '/service/deforestation/cities' + this.getServiceParams() + "&amount=" + this.sizeOfCitiesRanking.cities;
+
     if (!this.isFilteredByCity) {
+
+      this.filesName.cities = this.selectRegion.value + "_" + this.desmatInfo.Viewvalue
+
       this.http.get(citiesUrl).subscribe(citiesResult => {
         this.chartResultCities = citiesResult;
 
         this.chartResultCities.split = this.chartResultCities.title.split('?');
+        this.exportCols = [];
+        let rows_labels = this.chartResultCities.rows_labels.split('?');
+
+
+        for (let i = 0; i < rows_labels.length; i++) {
+          this.exportCols.push({ field: rows_labels[i], header: this.chartResultCities.split[i] })
+        }
 
       });
+    }
+  }
+
+  private updateDeforastationAPPRanking() {
+    let citiesIllegal = '/service/deforestation/app' + this.getServiceParams() + "&amount=" + this.sizeOfCitiesRanking.app;
+
+    this.filesName.app = "APP_" + this.selectRegion.value + "_" + this.desmatInfo.Viewvalue
+
+    this.http.get(citiesIllegal).subscribe(citiesIllegalResult => {
+      this.chartResultCitiesIllegalAPP = citiesIllegalResult;
+
+    });
+  }
+
+  private updateDeforastationRLRanking() {
+    let citiesIllegal = '/service/deforestation/rl' + this.getServiceParams() + "&amount=" + this.sizeOfCitiesRanking.rl;
+
+    this.filesName.rl = "RL_" + this.selectRegion.value + "_" + this.desmatInfo.Viewvalue
+
+    this.http.get(citiesIllegal).subscribe(citiesIllegalResult => {
+      this.chartResultCitiesIllegalRL = citiesIllegalResult;
+    });
+  }
+
+  private updateChartUsoDoSolo() {
+
+    let urlUsoSolo = '/service/deforestation/indicators' + this.getServiceParams();
+
+    this.http.get(urlUsoSolo).subscribe(usosoloResult => {
+      this.chartUsoSolo = usosoloResult;
+
+      for (let graphic of this.chartUsoSolo) {
+        graphic.data = {
+          labels: graphic.indicators.map(element => element.classe_lulc),
+          datasets: [
+            {
+              data: graphic.indicators.map(element => element.desmat_area_classe_lulc),
+              backgroundColor: graphic.indicators.map(element => element.color),
+              hoverBackgroundColor: graphic.indicators.map(element => element.color)
+            }
+          ]
+        };
+
+        graphic.options.legend.onHover = function (event) {
+          event.target.style.cursor = 'pointer';
+          graphic.options.legend.labels.fontColor = '#0335fc';
+        };
+
+        graphic.options.legend.onLeave = function (event) {
+
+          event.target.style.cursor = 'default';
+          graphic.options.legend.labels.fontColor = '#fa1d00';
+        };
+
+        graphic.options.tooltips.callbacks = {
+          title(tooltipItem, data) {
+            return data.labels[tooltipItem[0].index];
+          },
+          label(tooltipItem, data) {
+            // let percent = parseFloat(
+            //   data['datasets'][0]['data'][tooltipItem['index']].toFixed(2)
+            // ).toLocaleString('de-DE');
+            var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
+              { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
+            return sNumber + ' km²';
+          },
+          // afterLabel: function (tooltipItem, data) {
+          //   return "a calcular";
+          // }
+        };
+
+        graphic.options.legend.labels.generateLabels = function (chart) {
+          var data = chart.data;
+          if (data.labels.length && data.datasets.length) {
+            return data.labels.map(function (label, i) {
+              var meta = chart.getDatasetMeta(0);
+              var ds = data.datasets[0];
+              var arc = meta.data[i];
+              var custom = arc && arc.custom || {};
+              var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+              var arcOpts = chart.options.elements.arc;
+              var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+              var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+              var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+              // We get the value of the current label
+              var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+              return {
+                // Instead of `text: label,`
+                // We add the value to the string
+                text: label + " : " + parseFloat(value).toLocaleString('de-DE', { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 }) + " km²",
+                fillStyle: fill,
+                strokeStyle: stroke,
+                lineWidth: bw,
+                hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                index: i
+              };
+            });
+          } else {
+            return [];
+          }
+        }
+
+      }
+
+    }
+    );
+  }
+
+  private updateCharts() {
+
+    this.updateDeforestationTimeSeries();
+    this.updateStatesChart();
+
+    if (!this.isFilteredByCity) {
+      this.updateCitiesRanking();
 
       if (this.desmatInfo.year >= 2013) {
-        this.http.get(citiesIllegal).subscribe(citiesIllegalResult => {
-          this.chartResultCitiesIllegalAPP = citiesIllegalResult['resultAPP'];
-          this.chartResultCitiesIllegalRL = citiesIllegalResult['resultRL'];
-
-        });
+        this.updateDeforastationAPPRanking();
+        this.updateDeforastationRLRanking();
       }
     }
 
     if (this.isFilteredByCity || this.isFilteredByState) {
       /* Atualiza indicadores de uso do Solo */
-
-      this.http.get(urlUsoSolo).subscribe(usosoloResult => {
-
-        this.chartUsoSolo = usosoloResult;
-
-        for (let graphic of this.chartUsoSolo) {
-
-          graphic.data = {
-            labels: graphic.indicators.map(element => element.classe_lulc),
-            datasets: [
-              {
-                data: graphic.indicators.map(element => element.desmat_area_classe_lulc),
-                backgroundColor: graphic.indicators.map(element => element.color),
-                hoverBackgroundColor: graphic.indicators.map(element => element.color)
-              }
-            ]
-          };
-
-          // graphic.options.height = "60vh";
-          // graphic.options.responsive = true
-          // graphic.options.maintainAspectRatio = false
-
-          graphic.options.legend.onHover = function (event) {
-            event.target.style.cursor = 'pointer';
-            graphic.options.legend.labels.fontColor = '#0335fc';
-          };
-
-          graphic.options.legend.onLeave = function (event) {
-
-            event.target.style.cursor = 'default';
-            graphic.options.legend.labels.fontColor = '#fa1d00';
-          };
-
-          graphic.options.tooltips.callbacks = {
-            title(tooltipItem, data) {
-              return data.labels[tooltipItem[0].index];
-            },
-            label(tooltipItem, data) {
-              // let percent = parseFloat(
-              //   data['datasets'][0]['data'][tooltipItem['index']].toFixed(2)
-              // ).toLocaleString('de-DE');
-              var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
-                { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
-              return sNumber + ' km²';
-            },
-            // afterLabel: function (tooltipItem, data) {
-            //   return "a calcular";
-            // }
-          };
-
-          graphic.options.legend.labels.generateLabels = function (chart) {
-            var data = chart.data;
-            if (data.labels.length && data.datasets.length) {
-              return data.labels.map(function (label, i) {
-                var meta = chart.getDatasetMeta(0);
-                var ds = data.datasets[0];
-                var arc = meta.data[i];
-                var custom = arc && arc.custom || {};
-                var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
-                var arcOpts = chart.options.elements.arc;
-                var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-                var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-                var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
-
-                // We get the value of the current label
-                var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
-
-                return {
-                  // Instead of `text: label,`
-                  // We add the value to the string
-                  text: label + " : " + parseFloat(value).toLocaleString('de-DE', { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 }) + " km²",
-                  fillStyle: fill,
-                  strokeStyle: stroke,
-                  lineWidth: bw,
-                  hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-                  index: i
-                };
-              });
-            } else {
-              return [];
-            }
-          }
-
-        }
-
-      }
-      );
+      this.updateChartUsoDoSolo();
     }
-
   }
 
   onOpenLateralAccordionLULCTab(e) {
@@ -3390,6 +3447,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     }
 
   }
+
 
   async printRegionsIdentification(token) {
     let language = this.language;

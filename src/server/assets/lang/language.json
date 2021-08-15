@@ -52,6 +52,10 @@
             "pt-br": "#?Município?Estado?Área",
             "en-us": "#?Municipality?State?Area"
         },
+        "rows_labels": {
+            "pt-br": "index?name?uf?value",
+            "en-us": "index?name?uf?value"
+        },
         "tooltip_text": {
             "pt-br": "Clique para visualizar no mapa",
             "en-us": "Click to view on map"

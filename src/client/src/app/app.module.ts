@@ -8,6 +8,7 @@ import { CoordinatesModule } from 'angular-coordinates';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MapComponent } from './views/map.component';
+import { OnlyNumberDirective } from './views/onlynumber.directive'
 import { DialogOverviewExampleDialog } from './views/map.component';
 import { DialogMobileLaudo } from './views/map-mobile/map-mobile.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,6 +41,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { ChartModule } from 'primeng/chart';
+import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -104,7 +106,8 @@ export function initApp(config: AppConfig) {
     ReportCarComponent,
     ChartsComponent,
     RegionReportMobileComponent,
-    TutorialsComponent
+    TutorialsComponent,
+    OnlyNumberDirective
   ],
   imports: [
     AutoCompleteModule,
@@ -123,6 +126,7 @@ export function initApp(config: AppConfig) {
     MatFormFieldModule,
     ScrollPanelModule,
     KeyFilterModule,
+    InputTextModule,
     SidebarModule,
     PanelModule,
     AccordionModule,
