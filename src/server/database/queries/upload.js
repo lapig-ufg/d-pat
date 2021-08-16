@@ -3,17 +3,8 @@ module.exports = function(app) {
     var Internal = {}
     var Query = {};
 
-    Query.desmatperyear = function(params) {
-
+    Query.areainfo = function(params) {
         return [{
-                id: 'desmat_per_year_prodes',
-                sql: "SELECT p.year, SUM(ST_AREA(ST_Intersection(p.geom,up.geom)::GEOGRAPHY) / 1000000.0) as area_desmat FROM prodes_cerrado p INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) where p.year IS NOT NULL and up.token= ${token} GROUP BY 1 order by 1 desc"
-            },
-            {
-                id: 'desmat_per_year_deter',
-                sql: "SELECT date_part('year', p.view_date) as year, SUM(ST_AREA(ST_Intersection(p.geom,up.geom)::GEOGRAPHY) / 1000000.0) as area_desmat FROM deter_cerrado p INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) where  p.view_date IS NOT NULL and up.token= ${token} GROUP BY 1 order by 1 desc"
-            },
-            {
                 id: 'regions_pershape',
                 sql: "select r.type as type , unaccent(r.text), r.text as value  from regions r INNER JOIN upload_shapes up on ST_Intersects(up.geom,r.geom ) where r.type not in ('biome') and up.token= ${token} group by 1,2,3 order by 2"
             },
@@ -25,6 +16,32 @@ module.exports = function(app) {
                 id: 'geojson_upload',
                 sql: "select  ST_ASGEOJSON(ST_Transform(ST_Multi(ST_Union(geom)), 4674)) as geojson from upload_shapes where token= ${token} "
             }
+
+        ]
+    }
+
+    Query.desmatperyear = function(params) {
+
+        return [{
+                id: 'desmat_per_year_prodes',
+                sql: "SELECT p.year, SUM(ST_AREA(ST_Intersection(p.geom,up.geom)::GEOGRAPHY) / 1000000.0) as area_desmat FROM prodes_cerrado p INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) where p.year IS NOT NULL and up.token= ${token} GROUP BY 1 order by 1 desc"
+            },
+            {
+                id: 'desmat_per_year_deter',
+                sql: "SELECT date_part('year', p.view_date) as year, SUM(ST_AREA(ST_Intersection(p.geom,up.geom)::GEOGRAPHY) / 1000000.0) as area_desmat FROM deter_cerrado p INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) where  p.view_date IS NOT NULL and up.token= ${token} GROUP BY 1 order by 1 desc"
+            }
+            // {
+            //     id: 'regions_pershape',
+            //     sql: "select r.type as type , unaccent(r.text), r.text as value  from regions r INNER JOIN upload_shapes up on ST_Intersects(up.geom,r.geom ) where r.type not in ('biome') and up.token= ${token} group by 1,2,3 order by 2"
+            // },
+            // {
+            //     id: 'area_upload',
+            //     sql: "select token, SUM(ST_AREA(geom::GEOGRAPHY) / 1000000.0) as area_upload from upload_shapes where token= ${token} group by 1"
+            // },
+            // {
+            //     id: 'geojson_upload',
+            //     sql: "select  ST_ASGEOJSON(ST_Transform(ST_Multi(ST_Union(geom)), 4674)) as geojson from upload_shapes where token= ${token} "
+            // }
 
         ]
 
@@ -80,9 +97,9 @@ module.exports = function(app) {
                     " GROUP BY 1,2 ORDER BY 3 DESC",
             },
             {
-                id: 'focos_calor',
-                sql: "select f.ano as year, count(f.fid) as qnt from focos_calor_2000a2020 f inner join upload_shapes up on st_contains(up.geom, f.geom) where f.ano >= 2013 AND up.token= ${token} group by 1 order by 1",
-            },
+                id: 'next',
+                sql: 'select true'
+            }
         ]
     }
 
@@ -103,7 +120,6 @@ module.exports = function(app) {
     Query.queimadas = function(params) {
 
         var token = params['token']
-        console.log(token)
         return [{
                 id: 'queimadas_mcd64',
                 sql: "SELECT p.year, SUM((ST_AREA(ST_Intersection(ST_MAKEVALID(p.geom),up.geom)::GEOGRAPHY) / 1000000.0)) as area_queimada FROM cicatrizes_2001a2020_mcd64a1 p " +
@@ -120,6 +136,28 @@ module.exports = function(app) {
             }
         ]
     }
+
+    Query.getanalysis = function(params) {
+
+        var token = params['token']
+        return "SELECT gid, token, analysis, TO_CHAR(date,'DD/MM/YYYY HH:mm:ss') as data FROM area_analysis WHERE token = ${token};"
+    }
+
+
+    Query.saveanalysis = function(params) {
+        params['analysis'] = Buffer.from(JSON.stringify(params['analysis'])).toString('base64');
+        return [{
+                id: 'store',
+                sql: "INSERT INTO area_analysis(\n" +
+                    "\ttoken, analysis, date)\n" +
+                    "\tVALUES (${token}, ${analysis}, NOW()) RETURNING token;"
+            },
+            {
+                id: 'next',
+                sql: "select true"
+            }
+        ]
+    };
 
 
     return Query;

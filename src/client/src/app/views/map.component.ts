@@ -93,6 +93,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
   periodSelected: any;
   desmatInfo: any;
 
+  isPromiseFinished = {
+    areainfo: false,
+    desmatperyear: false,
+    car: false,
+    terraclass: false,
+    focos: false,
+    queimadas: false
+  };
+
   activeIndexLateralAccordion: any
   googlemaps: any
   optionsTimeSeries: any;
@@ -2705,34 +2714,150 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   }
 
+  private async delay(ms: number) {
+    await new Promise<void>(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
+  }
+
+  checkAllPromissesDone(fromConsulta, source) {
+    let self = this;
+    let done = true;
+
+    this.isPromiseFinished[source] = true;
+
+    // this.delay(1000).then(any => {
+    //your task after delay.
+    for (const [key, val] of Object.entries(this.isPromiseFinished)) {
+      // use key and val
+
+      if (val == false) {
+        done = false;
+      }
+    }
+
+    if (done) {
+      if (fromConsulta) {
+
+        let dados = {
+          token: this.layerFromConsulta.token,
+          analysis: this.layerFromConsulta.analyzedArea
+        }
+
+        this.saveCompleteAnalysis(dados)
+      }
+      else {
+        let dados = {
+          token: this.layerFromUpload.token,
+          analysis: this.layerFromUpload.analyzedArea
+        }
+        this.saveCompleteAnalysis(dados)
+      }
+    }
+    // });
+
+  }
+
+  private saveCompleteAnalysis(dados) {
+    this.http.post('/service/upload/saveanalysis', JSON.stringify(dados, null, 2), this.httpOptions).subscribe(result => {
+      console.log("Salvo no banco!", result)
+    }, (err) => {
+      console.error('Não foi possível cadastrar cadastrar a requisição do relatório')
+    });
+  }
+
+
+  async decideConsultaShape() {
+    let params = []
+    let self = this;
+
+    let urlParams = '/service/upload/getanalysis?'
+
+    params.push('token=' + this.layerFromConsulta.token)
+    this.layerFromConsulta.error = false;
+    urlParams += params.join('&');
+
+    try {
+      let result = await this.http.get(urlParams, this.httpOptions).toPromise()
+
+      if (typeof result === 'object' && result !== null) {
+        this.layerFromConsulta.analyzedArea = result;
+      }
+      else {
+        this.analyzeUploadShape(true);
+      }
+
+    } catch (err) {
+      self.layerFromConsulta.analyzedAreaLoading = false;
+      self.layerFromConsulta.error = true;
+    }
+
+    // this.layerFromConsulta.analyzedAreaLoading = false;
+
+  }
+
   async analyzeUploadShape(fromConsulta = false) {
     let params = [];
     let self = this;
     let urlParams = '';
 
-    let paramsCar = []
     let urlParamsCar = '';
     let urlTerraclass = '';
     let urlFocos = '';
     let urlQueimadas = '';
+    let urlDesmat = '';
+
+    this.isPromiseFinished = {
+      areainfo: false,
+      desmatperyear: false,
+      car: false,
+      terraclass: false,
+      focos: false,
+      queimadas: false
+    };
+
 
     if (fromConsulta) {
       this.layerFromConsulta.analyzedAreaLoading = true;
+      this.layerFromConsulta.desmatperyearLoading = true;
       this.layerFromConsulta.terraclassLoading = true;
       this.layerFromConsulta.focosLoading = true;
       this.layerFromConsulta.queimadasLoading = true;
 
       params.push('token=' + this.layerFromConsulta.token)
       this.layerFromConsulta.error = false;
-      urlParams = '/service/upload/desmatperyear?' + params.join('&');
+
+      urlParams = '/service/upload/areainfo?' + params.join('&');
 
       try {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
         this.layerFromConsulta.analyzedArea = result;
         this.layerFromConsulta.analyzedAreaLoading = false;
+        this.checkAllPromissesDone(fromConsulta, 'areainfo')
 
       } catch (err) {
         self.layerFromConsulta.analyzedAreaLoading = false;
+        self.layerFromConsulta.error = true;
+      }
+
+      try {
+        urlDesmat = '/service/upload/desmatperyear?' + params.join('&');
+
+        this.http.get(urlDesmat)
+          .toPromise()
+          .then(
+            resultDesmat => { // Success
+              this.layerFromConsulta.analyzedArea.prodes = resultDesmat['prodes'];
+              this.layerFromConsulta.analyzedArea.deter = resultDesmat['deter'];
+
+              this.checkAllPromissesDone(fromConsulta, 'desmatperyear')
+
+              this.layerFromConsulta.desmatperyearLoading = false;
+            },
+            msg => { // Error
+              self.layerFromConsulta.error = true;
+            }
+          );
+      } catch (err) {
+        this.layerFromConsulta.desmatperyearLoading = false;
         self.layerFromConsulta.error = true;
       }
 
@@ -2745,13 +2870,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultCar => { // Success
               this.layerFromConsulta.analyzedArea.car = resultCar;
+
+              this.checkAllPromissesDone(fromConsulta, 'car')
             },
             msg => { // Error
-              self.layerFromUpload.error = true;
+              self.layerFromConsulta.error = true;
             }
           );
       } catch (err) {
-        self.layerFromUpload.error = true;
+        self.layerFromConsulta.error = true;
       }
 
       try {
@@ -2764,6 +2891,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultTerraClass => { // Success
               this.layerFromConsulta.analyzedArea.terraclass = resultTerraClass['terraclass']
+
+              this.checkAllPromissesDone(fromConsulta, 'terraclass')
 
               this.layerFromConsulta.analyzedArea.terraclass.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
@@ -2837,6 +2966,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultFocos => { // Success
               this.layerFromConsulta.analyzedArea.focos_calor = resultFocos['focos_calor']
+
+              this.checkAllPromissesDone(fromConsulta, 'focos')
+
               this.layerFromConsulta.analyzedArea.focos_calor.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
                   return data.labels[tooltipItem[0].index];
@@ -2878,6 +3010,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
             resultQueimadas => { // Success
               this.layerFromConsulta.analyzedArea.queimadas = resultQueimadas['queimadas_chart']
 
+              this.checkAllPromissesDone(fromConsulta, 'queimadas')
+
               this.layerFromConsulta.analyzedArea.queimadas.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
                   return data.labels[tooltipItem[0].index];
@@ -2909,25 +3043,53 @@ export class MapComponent implements OnInit, AfterViewChecked {
         self.layerFromConsulta.error = true;
       }
 
+
+
       this.googleAnalyticsService.eventEmitter("analyzeConsultaUploadLayer", "Analyze-Consulta-Upload", this.layerFromConsulta.token, 5);
     }
     else {
       this.layerFromUpload.analyzedAreaLoading = true;
+      this.layerFromUpload.desmatperyear = true;
       this.layerFromUpload.terraclassLoading = true;
       this.layerFromUpload.focosLoading = true;
       this.layerFromUpload.queimadasLoading = true;
 
       params.push('token=' + this.layerFromUpload.token)
       this.layerFromUpload.error = false;
-      urlParams = '/service/upload/desmatperyear?' + params.join('&');
+
+      urlParams = '/service/upload/areainfo?' + params.join('&');
 
       try {
         let result = await this.http.get(urlParams, this.httpOptions).toPromise()
         this.layerFromUpload.analyzedArea = result;
         this.layerFromUpload.analyzedAreaLoading = false;
+        this.checkAllPromissesDone(fromConsulta, 'areainfo')
 
       } catch (err) {
         self.layerFromUpload.analyzedAreaLoading = false;
+        self.layerFromUpload.error = true;
+      }
+
+      try {
+        urlDesmat = '/service/upload/desmatperyear?' + params.join('&');
+
+        this.http.get(urlDesmat)
+          .toPromise()
+          .then(
+            resultDesmat => { // Success
+              this.layerFromUpload.analyzedArea.prodes = resultDesmat['prodes'];
+              this.layerFromUpload.analyzedArea.deter = resultDesmat['deter'];
+
+              this.checkAllPromissesDone(fromConsulta, 'desmatperyear')
+
+              this.layerFromUpload.desmatperyearLoading = false;
+            },
+            msg => { // Error
+              self.layerFromUpload.error = true;
+            }
+          );
+      } catch (err) {
+        this.layerFromUpload.desmatperyearLoading = false;
         self.layerFromUpload.error = true;
       }
 
@@ -2940,6 +3102,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultCar => { // Success
               this.layerFromUpload.analyzedArea.car = resultCar;
+              this.checkAllPromissesDone(fromConsulta, 'car')
             },
             msg => { // Error
               self.layerFromUpload.error = true;
@@ -2959,6 +3122,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultTerraClass => { // Success
               this.layerFromUpload.analyzedArea.terraclass = resultTerraClass['terraclass']
+
+              this.checkAllPromissesDone(fromConsulta, 'terraclass')
 
               this.layerFromUpload.analyzedArea.terraclass.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
@@ -3032,6 +3197,9 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultFocos => { // Success
               this.layerFromUpload.analyzedArea.focos_calor = resultFocos['focos_calor']
+
+              this.checkAllPromissesDone(fromConsulta, 'focos')
+
               this.layerFromUpload.analyzedArea.focos_calor.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
                   return data.labels[tooltipItem[0].index];
@@ -3072,6 +3240,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .then(
             resultQueimadas => { // Success
               this.layerFromUpload.analyzedArea.queimadas = resultQueimadas['queimadas_chart']
+
+              this.checkAllPromissesDone(fromConsulta, 'queimadas')
 
               this.layerFromUpload.analyzedArea.queimadas.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
@@ -5499,3 +5669,4 @@ export class DialogOverviewExampleDialog implements OnInit, OnDestroy {
 
 
 }
+

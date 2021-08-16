@@ -321,7 +321,7 @@
                                                 </h6>
                                             </div>
 
-                                            <div *ngIf="layerFromUpload.analyzedArea.deter.length > 0" class="card-upload-analysed-table">
+                                            <div *ngIf="layerFromUpload.analyzedArea.deter?.length > 0" class="card-upload-analysed-table">
                                                 <h5 class="card-upload-analysed-table-title">
                                                     {{titlesLayerBox.table_deter_title}}
                                                 </h5>
@@ -342,7 +342,7 @@
                                                     </ng-template>
                                                 </p-table>
                                             </div>
-                                            <div *ngIf="layerFromUpload.analyzedArea.prodes.length > 0" class="card-upload-analysed-table">
+                                            <div *ngIf="layerFromUpload.analyzedArea.prodes?.length > 0" class="card-upload-analysed-table">
                                                 <h5 class="card-upload-analysed-table-title">
                                                     {{titlesLayerBox.table_prodes_title}}
                                                 </h5>
@@ -385,7 +385,7 @@
                                             <div *ngIf="titlesLayerBox.hasOwnProperty('btn_analyze')">
                                                 {{titlesLayerBox.btn_search.toUpperCase()}}</div>
                                         </button>
-                                        <button class="color-buttons" *ngIf="layerFromConsulta.token != '' && layerFromConsulta.analyzedArea.hasOwnProperty('geojson')" (click)="analyzeUploadShape(true)" mat-raised-button color="primary">
+                                        <button class="color-buttons" *ngIf="layerFromConsulta.token != '' && layerFromConsulta.analyzedArea.hasOwnProperty('geojson')" (click)="decideConsultaShape()" mat-raised-button color="primary">
                                             <div *ngIf="titlesLayerBox.hasOwnProperty('btn_search')">
                                                 {{titlesLayerBox.btn_analyze.toUpperCase()}}</div>
                                         </button>
@@ -506,7 +506,7 @@
                                                 </h6>
                                             </div>
 
-                                            <div *ngIf="layerFromConsulta.analyzedArea.deter.length > 0" class="card-upload-analysed-table">
+                                            <div *ngIf="layerFromConsulta.analyzedArea.deter?.length > 0" class="card-upload-analysed-table">
                                                 <h5 class="card-upload-analysed-table-title">
                                                     {{titlesLayerBox.table_deter_title}}
                                                 </h5>
@@ -527,7 +527,7 @@
                                                     </ng-template>
                                                 </p-table>
                                             </div>
-                                            <div *ngIf="layerFromConsulta.analyzedArea.prodes.length > 0" class="card-upload-analysed-table">
+                                            <div *ngIf="layerFromConsulta.analyzedArea.prodes?.length > 0" class="card-upload-analysed-table">
                                                 <h5 class="card-upload-analysed-table-title">
                                                     {{titlesLayerBox.table_prodes_title}}
                                                 </h5>

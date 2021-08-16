@@ -230,8 +230,7 @@ module.exports = function(app) {
     Internal.insertToPostgis = async function(token, geom, data_atualizacao) {
 
         let INSERT_STATEMENT = 'INSERT INTO upload_shapes (token, geom, data_insercao) values ($1, ST_Transform(ST_SetSRID(ST_Force2D(ST_GeomFromGeoJSON($2)),$3), 4674), $4) returning token;'
-
-        let makeValid = 'select ST_MAKEVALID(geom) from upload_shapes where token= $1'
+        let MAKE_VALID = 'select ST_MAKEVALID(geom) from upload_shapes where token= $1'
 
         const client = await pool.connect()
         try {
@@ -242,7 +241,7 @@ module.exports = function(app) {
             console.log(token + ' inserted.')
 
             var rowValuesValid = [token]
-            const resValid = await client.query(makeValid, rowValuesValid)
+            const resValid = await client.query(MAKE_VALID, rowValuesValid)
             console.log(token, " validado!")
 
             await client.query('COMMIT')
@@ -317,13 +316,13 @@ module.exports = function(app) {
                 })
             });
 
-            queryResult = request.queryResult['area_upload']
-            let info_area = {
-                area_upload: queryResult[0]['area_upload']
-            }
+            // queryResult = request.queryResult['area_upload']
+            // let info_area = {
+            //     area_upload: queryResult[0]['area_upload']
+            // }
 
-            queryResult = request.queryResult['geojson_upload']
-            info_area.geojson = queryResult[0]['geojson']
+            // queryResult = request.queryResult['geojson_upload']
+            // info_area.geojson = queryResult[0]['geojson']
 
             queryResult = request.queryResult['desmat_per_year_deter']
             var resultByYearDeter = []
@@ -338,6 +337,61 @@ module.exports = function(app) {
                     'year': year
                 })
             });
+
+            // queryResult = request.queryResult['regions_pershape']
+            // var regions = []
+
+            // queryResult.forEach(function(row) {
+
+            //     regions.push({
+            //         'type': row['type'],
+            //         'name': row['value']
+            //     })
+            // });
+
+            // // Accepts the array and key
+            // const groupBy = (array, key) => {
+            //     // Return the end result
+            //     return array.reduce((result, currentValue) => {
+            //         // If an array already present for key, push it to the array. Else create an array and push the object
+            //         (result[currentValue[key]] = result[currentValue[key]] || []).push(
+            //             currentValue
+            //         );
+            //         // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+            //         return result;
+            //     }, {}); // empty object is the initial value for result object
+            // };
+
+            // // Group by color as key to the person array
+            // const regionGroupedByType = groupBy(regions, 'type');
+
+            let res = {
+                // regions_intersected: regionGroupedByType,
+                prodes: resultByYear,
+                deter: resultByYearDeter,
+                // shape_upload: info_area,
+                // car: []
+            }
+
+            response.status(200).send(res);
+            response.end()
+
+        } catch (err) {
+            response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+            response.end()
+        }
+
+    };
+
+    Uploader.areainfo = function(request, response) {
+        try {
+            var queryResult = request.queryResult['area_upload']
+            let info_area = {
+                area_upload: queryResult[0]['area_upload']
+            }
+
+            queryResult = request.queryResult['geojson_upload']
+            info_area.geojson = queryResult[0]['geojson']
 
             queryResult = request.queryResult['regions_pershape']
             var regions = []
@@ -368,8 +422,6 @@ module.exports = function(app) {
 
             let res = {
                 regions_intersected: regionGroupedByType,
-                prodes: resultByYear,
-                deter: resultByYearDeter,
                 shape_upload: info_area,
                 car: []
             }
@@ -381,8 +433,7 @@ module.exports = function(app) {
             response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
             response.end()
         }
-
-    };
+    }
 
     Uploader.focos = function(request, response) {
 
@@ -664,8 +715,36 @@ module.exports = function(app) {
             response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
             response.end()
         }
+    };
+
+    Uploader.getAnalysis = function(request, response) {
+        try {
+
+            queryResult = request.queryResult
+            let res = false
+            if (queryResult.length > 0) {
+                res = JSON.parse(Buffer(queryResult[0].analysis, 'base64'));
+            }
+
+            console.log(res)
+
+            response.status(200).send(res);
+            response.end()
+
+        } catch (err) {
+            response.status(400).send(languageJson['upload_messages']['spatial_relation_error'][Internal.language]);
+            response.end()
+        }
+    }
+
+    Uploader.saveAnalysis = function(request, response) {
 
 
+        let token = request.queryResult['store'];
+
+        console.log(token)
+        response.send(token);
+        response.end()
     };
 
     return Uploader;
