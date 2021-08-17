@@ -67,6 +67,22 @@ module.exports = function(app) {
         // });
     };
 
+    Internal.getDefaultDate = function() {
+        date = new Date();
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        dt = date.getDate();
+
+        if (dt < 10) {
+            dt = '0' + dt;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+
+        return (year + '-' + month + '-' + dt);
+    }
+
     Internal.toGeoJson = function(shapfile, callback) {
         let geojson = ogr2ogr(shapfile).timeout(300000); // 5 minutes
 
@@ -89,7 +105,7 @@ module.exports = function(app) {
         try {
             for await (const entry of zip) {
                 const arrayName = entry.path.split(".");
-                const fileName = arrayName[0];
+                let fileName = arrayName[0];
                 const type = entry.type; // 'Directory' or 'File'
                 const size = entry.vars.uncompressedSize; // There is also compressedSize;
                 const extension = arrayName.pop();
@@ -104,6 +120,10 @@ module.exports = function(app) {
                     Internal.response.status(400).send(languageJson['upload_messages']['only_one_shp'][Internal.language]);
                     console.error("FILE: ", Internal.targetFilesName, languageJson['upload_messages']['only_one_shp'][Internal.language]);
                     return;
+                }
+
+                if (fileName) {
+                    fileName = Internal.getDefaultDate();
                 }
 
                 Internal.dirTarget =

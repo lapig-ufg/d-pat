@@ -1449,7 +1449,7 @@ module.exports = function(app) {
                                 opacity: 1,
                                 metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['sentinel']['metadata'],
                                 timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                                timeSelected: "global_quarterly_2021q1_mosaic",
+                                timeSelected: "global_quarterly_2021q2_mosaic",
                                 timeHandler: "layername",
                                 times: [{
                                         value: "global_quarterly_2016q1_mosaic",
@@ -1534,6 +1534,10 @@ module.exports = function(app) {
                                     {
                                         value: "global_quarterly_2021q1_mosaic",
                                         Viewvalue: "2021/1ºTri"
+                                    },
+                                    {
+                                        value: "global_quarterly_2021q2_mosaic",
+                                        Viewvalue: "2021/2ºTri"
                                     }
                                 ]
                             }

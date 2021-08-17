@@ -1920,7 +1920,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       layer: new OlTileLayer({
         source: new OlXYZ({
           url:
-            'https://tiles{0-3}.planet.com/basemaps/v1/planet-tiles/global_quarterly_2021q1_mosaic/gmap/{z}/{x}/{y}.png?api_key=d6f957677fbf40579a90fb3a9c74be1a',
+            'https://tiles{0-3}.planet.com/basemaps/v1/planet-tiles/global_quarterly_2021q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=d6f957677fbf40579a90fb3a9c74be1a',
 
         }),
         visible: false
@@ -2758,7 +2758,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   private saveCompleteAnalysis(dados) {
     this.http.post('/service/upload/saveanalysis', JSON.stringify(dados, null, 2), this.httpOptions).subscribe(result => {
-      console.log("Salvo no banco!", result)
     }, (err) => {
       console.error('Não foi possível cadastrar cadastrar a requisição do relatório')
     });
