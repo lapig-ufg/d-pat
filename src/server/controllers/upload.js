@@ -517,8 +517,8 @@ module.exports = function(app) {
 
         try {
 
-            queryResult = request.queryResult['terraclass']
-            var terraclass = []
+            queryResult = request.queryResult['terraclass_2013']
+            var terraclass_2013 = []
 
             queryResult.forEach(function(row) {
 
@@ -526,15 +526,15 @@ module.exports = function(app) {
                 var lulc = (row['lulc'])
                 var area = Number(row['area_lulc'])
 
-                terraclass.push({
+                terraclass_2013.push({
                     'color': color,
                     'lulc': lulc,
                     'area_lulc': area
                 })
             });
 
-            let graphTerraclass = {
-                "title": "Terraclass",
+            let graphTerraclass_2013 = {
+                "title": "Terraclass 2013",
                 "type": "pie",
                 "pointStyle": 'rect',
                 "options": {
@@ -551,17 +551,63 @@ module.exports = function(app) {
                     tooltips: {}
                 },
                 "data": {
-                    labels: terraclass.map(e => e.lulc),
+                    labels: terraclass_2013.map(e => e.lulc),
                     datasets: [{
-                        data: terraclass.map(e => e.area_lulc.toFixed(2)),
-                        backgroundColor: terraclass.map(element => element.color),
-                        hoverBackgroundColor: terraclass.map(element => element.color)
+                        data: terraclass_2013.map(e => e.area_lulc.toFixed(2)),
+                        backgroundColor: terraclass_2013.map(element => element.color),
+                        hoverBackgroundColor: terraclass_2013.map(element => element.color)
+                    }]
+                }
+            }
+
+            queryResult = request.queryResult['terraclass_2018']
+            var terraclass_2018 = []
+
+            queryResult.forEach(function(row) {
+
+                var color = (row['color'])
+                var lulc = (row['lulc'])
+                var area = Number(row['area_lulc'])
+
+                terraclass_2018.push({
+                    'color': color,
+                    'lulc': lulc,
+                    'area_lulc': area
+                })
+            });
+
+            let graphTerraclass_2018 = {
+                "title": "Terraclass 2018",
+                "type": "pie",
+                "pointStyle": 'rect',
+                "options": {
+                    title: {
+                        display: false,
+                    },
+                    legend: {
+                        labels: {
+                            usePointStyle: true,
+                            fontColor: "#85560c"
+                        },
+                        position: "bottom"
+                    },
+                    tooltips: {}
+                },
+                "data": {
+                    labels: terraclass_2018.map(e => e.lulc),
+                    datasets: [{
+                        data: terraclass_2018.map(e => e.area_lulc.toFixed(2)),
+                        backgroundColor: terraclass_2018.map(element => element.color),
+                        hoverBackgroundColor: terraclass_2018.map(element => element.color)
                     }]
                 }
             }
 
 
-            let res = { terraclass: graphTerraclass }
+            let res = {
+                terraclass_2013: graphTerraclass_2013,
+                terraclass_2018: graphTerraclass_2018
+            }
 
 
             response.status(200).send(res);
@@ -631,8 +677,6 @@ module.exports = function(app) {
         try {
             var queryResult = request.queryResult['queimadas_mcd64']
 
-            // console.log(queryResult)
-
             var queimadasByYear = []
             queryResult.forEach(function(row) {
 
@@ -646,8 +690,6 @@ module.exports = function(app) {
             });
 
             var queryResultInpe = request.queryResult['queimadas_inpe']
-
-            // console.log(queryResultInpe)
 
             var pastagemByYear = []
             queryResultInpe.forEach(function(row) {
@@ -762,7 +804,6 @@ module.exports = function(app) {
 
         let token = request.queryResult['store'];
 
-        console.log(token)
         response.send(token);
         response.end()
     };

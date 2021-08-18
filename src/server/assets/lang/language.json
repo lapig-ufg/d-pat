@@ -368,17 +368,29 @@
             "pt-br": "Consultar Área",
             "en-us": "Load Area"
         },
-        "terraclass_card": {
-            "pt-br": "Visualizar as classes Terraclass que intersectam com a área submetida.",
-            "en-us": "View the Terraclass classes that intersect with the submitted area."
+        "terraclass_2013_card": {
+            "pt-br": "Visualizar as classes Terraclass 2013 que intersectam com a área submetida.",
+            "en-us": "View the Terraclass 2013 classes that intersect with the submitted area."
         },
-        "terraclass_msg_searching": {
-            "pt-br": "Buscando as classes Terraclass que intersectam com esta área. Por favor aguarde.",
-            "en-us": "Searching for the Terraclass classes that intersect with this area. Please wait."
+        "terraclass_msg_2013_searching": {
+            "pt-br": "Buscando as classes Terraclass 2013 que intersectam com esta área. Por favor aguarde.",
+            "en-us": "Searching for the Terraclass 2013 classes that intersect with this area. Please wait."
         },
-        "chart_terraclass_title": {
-            "pt-br": "Classes Terraclass que intersectam com a área submetida.",
-            "en-us": "Terraclass classes that intersect with the submitted area."
+        "terraclass_2018_card": {
+            "pt-br": "Visualizar as classes Terraclass 2018 que intersectam com a área submetida.",
+            "en-us": "View the Terraclass 2018 classes that intersect with the submitted area."
+        },
+        "terraclass_msg_2018_searching": {
+            "pt-br": "Buscando as classes Terraclass 2018 que intersectam com esta área. Por favor aguarde.",
+            "en-us": "Searching for the Terraclass 2018 classes that intersect with this area. Please wait."
+        },
+        "chart_terraclass_2013_title": {
+            "pt-br": "Classes Terraclass 2013 que intersectam com a área submetida.",
+            "en-us": "Terraclass 2013 classes that intersect with the submitted area."
+        },
+        "chart_terraclass_2018_title": {
+            "pt-br": "Classes Terraclass 2018 que intersectam com a área submetida.",
+            "en-us": "Terraclass 2018 classes that intersect with the submitted area."
         },
         "focos_calor_card": {
             "pt-br": "Visualizar a quantidade de focos de calor que intersectam com a área submetida a partir de 2013.",
@@ -2308,7 +2320,7 @@
                 "en-us": "Land Use"
             },
             "layers": {
-                "terraclass": {
+                "uso_solo": {
                     "label": {
                         "pt-br": "Uso e Cobertura da Terra",
                         "en-us": "Land Use and Land Cover"

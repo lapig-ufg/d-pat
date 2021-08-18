@@ -110,7 +110,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
   changeTabSelected = "";
   viewWidth = 600;
   viewWidthMobile = 350;
-  chartRegionScale: boolean;
 
   sizeOfCitiesRanking: any = {
     cities: 10,
@@ -425,7 +424,6 @@ export class MapComponent implements OnInit, AfterViewChecked {
     ]);
 
     this.updateCharts();
-    this.chartRegionScale = true;
     this.titlesLayerBox = {};
     this.minireportText = {};
 
@@ -661,9 +659,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
     if (event.tab.textLabel == "Série Temporal" || event.tab.textLabel == "Timeseries") {
       this.viewWidth = this.viewWidth + 1;
       this.viewWidthMobile = this.viewWidthMobile + 1;
-      this.chartRegionScale = true;
 
-      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+      let uso_terra = this.layersNames.find(element => element.id === "uso_solo");
       uso_terra.visible = false;
 
       let agricultura = this.layersNames.find(element => element.id === "agricultura");
@@ -1045,7 +1042,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
   onCloseLateralAccordionLULCTab(e) {
 
     if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 2))) {
-      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+      let uso_terra = this.layersNames.find(element => element.id === "uso_solo");
       uso_terra.visible = false;
 
       let agricultura = this.layersNames.find(element => element.id === "agricultura");
@@ -1058,7 +1055,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   changeSelectedLulcChart(e) {
 
-    let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+    let uso_terra = this.layersNames.find(element => element.id === "uso_solo");
     let agricultura = this.layersNames.find(element => element.id === "agricultura");
 
     if (this.activeIndexLateralAccordion) {
@@ -1070,6 +1067,11 @@ export class MapComponent implements OnInit, AfterViewChecked {
           agricultura.visible = false;
         }
         else if (e.index == 1) {
+          uso_terra.selectedType = "uso_solo_terraclass_2018_fip"
+          uso_terra.visible = true;
+          agricultura.visible = false;
+        }
+        else if (e.index == 2) {
           uso_terra.selectedType = "agricultura_agrosatelite_fip"
           uso_terra.visible = false
           agricultura.visible = true;
@@ -1216,7 +1218,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
       // this.map.removeLayer(this.layerFromCAR.layer)
 
-      let uso_terra = this.layersNames.find(element => element.id === "terraclass");
+      let uso_terra = this.layersNames.find(element => element.id === "uso_solo");
       uso_terra.visible = false;
 
       let agricultura = this.layersNames.find(element => element.id === "agricultura");
@@ -2889,11 +2891,12 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .toPromise()
           .then(
             resultTerraClass => { // Success
-              this.layerFromConsulta.analyzedArea.terraclass = resultTerraClass['terraclass']
+              this.layerFromConsulta.analyzedArea.terraclass_2013 = resultTerraClass['terraclass_2013']
+              this.layerFromConsulta.analyzedArea.terraclass_2018 = resultTerraClass['terraclass_2018']
 
               this.checkAllPromissesDone(fromConsulta, 'terraclass')
 
-              this.layerFromConsulta.analyzedArea.terraclass.options.tooltips.callbacks = {
+              this.layerFromConsulta.analyzedArea.terraclass_2013.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
                   return data.labels[tooltipItem[0].index];
                 },
@@ -2907,7 +2910,54 @@ export class MapComponent implements OnInit, AfterViewChecked {
                 // }
               };
 
-              this.layerFromConsulta.analyzedArea.terraclass.options.legend.labels.generateLabels = function (chart) {
+              this.layerFromConsulta.analyzedArea.terraclass_2018.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+                  var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
+                    { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
+                  return sNumber + ' km²';
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
+
+              this.layerFromConsulta.analyzedArea.terraclass_2013.options.legend.labels.generateLabels = function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var custom = arc && arc.custom || {};
+                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                    var arcOpts = chart.options.elements.arc;
+                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                    // We get the value of the current label
+                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+                    return {
+                      // Instead of `text: label,`
+                      // We add the value to the string
+                      text: label + " : " + value + " km²",
+                      fillStyle: fill,
+                      strokeStyle: stroke,
+                      lineWidth: bw,
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i
+                    };
+                  });
+                } else {
+                  return [];
+                }
+              }
+
+              this.layerFromConsulta.analyzedArea.terraclass_2018.options.legend.labels.generateLabels = function (chart) {
                 var data = chart.data;
                 if (data.labels.length && data.datasets.length) {
                   return data.labels.map(function (label, i) {
@@ -3120,11 +3170,12 @@ export class MapComponent implements OnInit, AfterViewChecked {
           .toPromise()
           .then(
             resultTerraClass => { // Success
-              this.layerFromUpload.analyzedArea.terraclass = resultTerraClass['terraclass']
+              this.layerFromUpload.analyzedArea.terraclass_2013 = resultTerraClass['terraclass_2013']
+              this.layerFromUpload.analyzedArea.terraclass_2018 = resultTerraClass['terraclass_2018']
 
               this.checkAllPromissesDone(fromConsulta, 'terraclass')
 
-              this.layerFromUpload.analyzedArea.terraclass.options.tooltips.callbacks = {
+              this.layerFromUpload.analyzedArea.terraclass_2013.options.tooltips.callbacks = {
                 title(tooltipItem, data) {
                   return data.labels[tooltipItem[0].index];
                 },
@@ -3138,7 +3189,54 @@ export class MapComponent implements OnInit, AfterViewChecked {
                 // }
               };
 
-              this.layerFromUpload.analyzedArea.terraclass.options.legend.labels.generateLabels = function (chart) {
+              this.layerFromUpload.analyzedArea.terraclass_2018.options.tooltips.callbacks = {
+                title(tooltipItem, data) {
+                  return data.labels[tooltipItem[0].index];
+                },
+                label(tooltipItem, data) {
+                  var sNumber = parseFloat(data['datasets'][0]['data'][tooltipItem['index']]).toLocaleString('de-DE',
+                    { 'minimumFractionDigits': 2, 'maximumFractionDigits': 2 });
+                  return sNumber + ' km²';
+                },
+                // afterLabel: function (tooltipItem, data) {
+                //   return "a calcular";
+                // }
+              };
+
+              this.layerFromUpload.analyzedArea.terraclass_2013.options.legend.labels.generateLabels = function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map(function (label, i) {
+                    var meta = chart.getDatasetMeta(0);
+                    var ds = data.datasets[0];
+                    var arc = meta.data[i];
+                    var custom = arc && arc.custom || {};
+                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                    var arcOpts = chart.options.elements.arc;
+                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                    // We get the value of the current label
+                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+                    return {
+                      // Instead of `text: label,`
+                      // We add the value to the string
+                      text: label + " : " + value + " km²",
+                      fillStyle: fill,
+                      strokeStyle: stroke,
+                      lineWidth: bw,
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i
+                    };
+                  });
+                } else {
+                  return [];
+                }
+              }
+
+              this.layerFromUpload.analyzedArea.terraclass_2018.options.legend.labels.generateLabels = function (chart) {
                 var data = chart.data;
                 if (data.labels.length && data.datasets.length) {
                   return data.labels.map(function (label, i) {

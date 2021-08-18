@@ -262,21 +262,41 @@
                                             </div>
 
                                             <div class="card-upload-analysed-table">
-                                                <h6 *ngIf="layerFromUpload.analyzedArea.terraclass || !layerFromUpload.terraclassLoading" class="card-upload-analysed-table-title card" (click)="openCharts(
-                          titlesLayerBox.chart_terraclass_title,
+                                                <h6 *ngIf="layerFromUpload.analyzedArea.terraclass_2013 || !layerFromUpload.terraclassLoading" class="card-upload-analysed-table-title card" (click)="openCharts(
+                          titlesLayerBox.chart_terraclass_2013_title,
                           false,
-                           layerFromUpload.analyzedArea.terraclass.data,
-                           layerFromUpload.analyzedArea.terraclass.type,
-                           layerFromUpload.analyzedArea.terraclass.options
+                           layerFromUpload.analyzedArea.terraclass_2013.data,
+                           layerFromUpload.analyzedArea.terraclass_2013.type,
+                           layerFromUpload.analyzedArea.terraclass_2013.options
                             )">
-                                                    {{titlesLayerBox.terraclass_card}}
+                                                    {{titlesLayerBox.terraclass_2013_card}}
 
                                                 </h6>
                                                 <h6 *ngIf="layerFromUpload.terraclassLoading" class="card-upload-analysed-table-title card">
                                                     <mat-progress-bar class="progress-analyse" color="accent" *ngIf="layerFromUpload.terraclassLoading" mode="indeterminate">
                                                     </mat-progress-bar>
                                                     <i>
-                                                        {{titlesLayerBox.terraclass_msg_searching}}
+                                                        {{titlesLayerBox.terraclass_msg_2013_searching}}
+                                                    </i>
+                                                </h6>
+                                            </div>
+
+                                            <div class="card-upload-analysed-table">
+                                                <h6 *ngIf="layerFromUpload.analyzedArea.terraclass_2018 || !layerFromUpload.terraclassLoading" class="card-upload-analysed-table-title card" (click)="openCharts(
+                          titlesLayerBox.chart_terraclass_2018_title,
+                          false,
+                           layerFromUpload.analyzedArea.terraclass_2018.data,
+                           layerFromUpload.analyzedArea.terraclass_2018.type,
+                           layerFromUpload.analyzedArea.terraclass_2018.options
+                            )">
+                                                    {{titlesLayerBox.terraclass_2018_card}}
+
+                                                </h6>
+                                                <h6 *ngIf="layerFromUpload.terraclassLoading" class="card-upload-analysed-table-title card">
+                                                    <mat-progress-bar class="progress-analyse" color="accent" *ngIf="layerFromUpload.terraclassLoading" mode="indeterminate">
+                                                    </mat-progress-bar>
+                                                    <i>
+                                                        {{titlesLayerBox.terraclass_msg_2018_searching}}
                                                     </i>
                                                 </h6>
                                             </div>
@@ -447,21 +467,40 @@
                                             </div>
 
                                             <div class="card-upload-analysed-table">
-                                                <h6 *ngIf="layerFromConsulta.analyzedArea.terraclass || !layerFromConsulta.terraclassLoading" class="card-upload-analysed-table-title card" (click)="openCharts(
-													titlesLayerBox.chart_terraclass_title,
+                                                <h6 *ngIf="layerFromConsulta.analyzedArea.terraclass_2013 || !layerFromConsulta.terraclassLoading" class="card-upload-analysed-table-title card" (click)="openCharts(
+													titlesLayerBox.chart_terraclass_2013_title,
 													false,
-													 layerFromConsulta.analyzedArea.terraclass.data,
-													 layerFromConsulta.analyzedArea.terraclass.type,
-													 layerFromConsulta.analyzedArea.terraclass.options
+													 layerFromConsulta.analyzedArea.terraclass_2013.data,
+													 layerFromConsulta.analyzedArea.terraclass_2013.type,
+													 layerFromConsulta.analyzedArea.terraclass_2013.options
 													  )">
-                                                    {{titlesLayerBox.terraclass_card}}
+                                                    {{titlesLayerBox.terraclass_2013_card}}
 
                                                 </h6>
                                                 <h6 *ngIf="layerFromConsulta.terraclassLoading" class="card-upload-analysed-table-title card">
                                                     <mat-progress-bar class="progress-analyse" color="accent" *ngIf="layerFromConsulta.terraclassLoading" mode="indeterminate">
                                                     </mat-progress-bar>
                                                     <i>
-                                                        {{titlesLayerBox.terraclass_msg_searching}}
+                                                        {{titlesLayerBox.terraclass_msg_2013_searching}}
+                                                    </i>
+                                                </h6>
+                                            </div>
+                                            <div class="card-upload-analysed-table">
+                                                <h6 *ngIf="layerFromConsulta.analyzedArea.terraclass_2018 || !layerFromConsulta.terraclassLoading" class="card-upload-analysed-table-title card" (click)="openCharts(
+													titlesLayerBox.chart_terraclass_2018_title,
+													false,
+													 layerFromConsulta.analyzedArea.terraclass_2018.data,
+													 layerFromConsulta.analyzedArea.terraclass_2018.type,
+													 layerFromConsulta.analyzedArea.terraclass_2018.options
+													  )">
+                                                    {{titlesLayerBox.terraclass_2018_card}}
+
+                                                </h6>
+                                                <h6 *ngIf="layerFromConsulta.terraclassLoading" class="card-upload-analysed-table-title card">
+                                                    <mat-progress-bar class="progress-analyse" color="accent" *ngIf="layerFromConsulta.terraclassLoading" mode="indeterminate">
+                                                    </mat-progress-bar>
+                                                    <i>
+                                                        {{titlesLayerBox.terraclass_msg_2018_searching}}
                                                     </i>
                                                 </h6>
                                             </div>
@@ -675,6 +714,23 @@
                                 <p-chart type="horizontalBar" [height]="400" [responsive]="true" [data]="dataStates" [options]="optionsStates" (onDataSelect)="onStateSelect($event)">
                                 </p-chart>
                             </p-accordionTab>
+                            <p-accordionTab class="tabs" header="{{chartUsoSolo[0]?.label}}" *ngIf="isFilteredByCity || isFilteredByState">
+                                <p-tabView (onChange)="changeSelectedLulcChart($event)">
+                                    <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
+                                        <div>
+                                            <p style="font-weight: bold">
+                                                <button color="primary" (click)="openCharts(selectRegion.text,uso.text, uso.data, uso.type, uso.options)" mat-icon-button>
+                                                    <mat-icon>aspect_ratio</mat-icon>
+                                                </button> {{ selectRegion.text }}
+                                            </p>
+                                            <div>{{uso.text}}</div>
+                                            <p-chart [responsive]="true" id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options">
+                                            </p-chart>
+                                        </div>
+                                    </p-tabPanel>
+                                </p-tabView>
+                                <div style="height: 20vh"></div>
+                            </p-accordionTab>
                             <p-accordionTab class="tabs" header="{{chartResultCities.label}}" *ngIf="selectRegion.type != 'city'">
                                 <h6><b>{{chartResultCities.description}} {{ desmatInfo.Viewvalue }}</b></h6>
                                 <p-table #dt_city [columns]="exportCols" [exportFilename]="filesName.cities" [paginator]="true" [rows]="10" [responsive]="true" [autoLayout]="true" [value]="chartResultCities.series" selectionMode="single" (onRowSelect)="onCityRowSelect($event)">
@@ -710,23 +766,7 @@
                                     </ng-template>
                                 </p-table>
                             </p-accordionTab>
-                            <p-accordionTab class="tabs" header="{{chartUsoSolo[0]?.label}}" *ngIf="isFilteredByCity || isFilteredByState">
-                                <p-tabView (onChange)="changeSelectedLulcChart($event)">
-                                    <p-tabPanel [header]="uso.title" *ngFor="let uso of chartUsoSolo; let i = index" [selected]="i == 0" [disabled]="!uso.show" [cache]="true">
-                                        <div>
-                                            <p style="font-weight: bold">
-                                                <button color="primary" (click)="openCharts(selectRegion.text,uso.text, uso.data, uso.type, uso.options)" mat-icon-button>
-                                                    <mat-icon>aspect_ratio</mat-icon>
-                                                </button> {{ selectRegion.text }}
-                                            </p>
-                                            <div>{{uso.text}}</div>
-                                            <p-chart [responsive]="true" id="chartUso" *ngIf="uso.type" [type]="uso.type" [data]="uso.data" [options]="uso.options">
-                                            </p-chart>
-                                        </div>
-                                    </p-tabPanel>
-                                </p-tabView>
-                                <div style="height: 20vh"></div>
-                            </p-accordionTab>
+
                             <p-accordionTab class="tabs" header="{{chartResultCitiesIllegalAPP.label}}" *ngIf="selectRegion.type != 'city' && desmatInfo.year >= 2013">
                                 <h6>
                                     <b>{{chartResultCitiesIllegalAPP.description}} {{ desmatInfo.Viewvalue }}</b>

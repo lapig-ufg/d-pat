@@ -585,8 +585,8 @@ module.exports = function(app) {
 
         var chartResult = [{
                 "id": "uso_solo_terraclass",
-                "title": "Terraclass",
-                "type": "doughnut",
+                "title": "Terraclass 2013",
+                "type": "pie",
                 "pointStyle": 'rect',
                 "disabled": false,
                 "options": {
@@ -607,7 +607,7 @@ module.exports = function(app) {
                     var areaDesmatClasse = parseFloat(chart['indicators'][0]["desmat_area_classe_lulc"]);
                     var areaTotalClasse = parseFloat(chart['indicators'][0]["total_area_classe_lulc"]);
                     var ano = chart['indicators'][0]["year"]
-                    var projeto = "Terraclass Cerrado"
+                    var projeto = "Terraclass Cerrado 2013"
 
                     var percentual_area_km = (areaDesmatClasse / areaTotalClasse) * 100;
 
@@ -621,9 +621,47 @@ module.exports = function(app) {
 
             },
             {
+                "id": "uso_solo_terraclass_2018",
+                "title": "Terraclass 2018",
+                "type": "pie",
+                "pointStyle": 'rect',
+                "disabled": false,
+                "options": {
+                    title: {
+                        display: false,
+                    },
+                    legend: {
+                        labels: {
+                            usePointStyle: true,
+                            fontColor: "#85560c"
+                        },
+                        position: "bottom"
+                    },
+                    tooltips: {}
+                },
+                "getText": function(chart) {
+                    var label = chart['indicators'][0]["classe_lulc"]
+                    var areaDesmatClasse = parseFloat(chart['indicators'][0]["desmat_area_classe_lulc"]);
+                    var areaTotalClasse = parseFloat(chart['indicators'][0]["total_area_classe_lulc"]);
+                    var ano = chart['indicators'][0]["year"]
+                    var projeto = "Terraclass Cerrado 2018"
+
+                    var percentual_area_km = (areaDesmatClasse / areaTotalClasse) * 100;
+
+                    var message = languageJson["charts_box_lulc"]["text"][language].split("?");
+
+                    var text = message[0] + projeto + message[1] + ano + message[2] + label + message[3] + numberFormat(areaDesmatClasse) + message[4];
+                    // numberFormat(percentual_area_km) + message[5]
+
+                    return text
+                }
+
+            },
+
+            {
                 "id": "uso_solo_agrosatelite",
                 "title": "Agrosatélite",
-                "type": "doughnut",
+                "type": "pie",
                 "pointStyle": 'rect',
                 "disabled": true,
                 "options": {
@@ -680,7 +718,7 @@ module.exports = function(app) {
                     var areaDesmatClasse = chart['indicators'][0]["desmat_area_classe_lulc"]
                     var areaTotalClasse = chart['indicators'][0]["total_area_classe_lulc"]
                     var ano = chart['indicators'][0]["year"]
-                    var projeto = "PROBIO Cerrado"
+                    var projeto = "PROBIO Cerrado 2002"
 
                     var percentual_area_km = (areaDesmatClasse / areaTotalClasse) * 100;
 
@@ -693,16 +731,21 @@ module.exports = function(app) {
 
             }
         ]
+
         let chartFinal = []
         for (let chart of chartResult) {
 
             var qc = request.queryResult[chart.id];
 
             let stringified = qc.map(i => JSON.stringify(i));
-            var queryCar = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
+            var queryInd = stringified.filter((k, idx) => stringified.indexOf(k) === idx)
                 .map(j => JSON.parse(j))
 
-            chart['indicators'] = queryCar
+            let nq = queryInd.filter(val => {
+                return parseFloat(val.desmat_area_classe_lulc) > 0.0001
+            })
+
+            chart['indicators'] = nq
             chart['show'] = false
 
             // console.log(chart)
@@ -715,6 +758,7 @@ module.exports = function(app) {
             }
 
         }
+
         response.send(chartFinal)
         response.end();
     }

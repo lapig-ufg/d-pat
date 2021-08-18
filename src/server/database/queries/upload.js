@@ -90,15 +90,18 @@ module.exports = function(app) {
 
         var token = params['token']
         return [{
-                id: 'terraclass',
+                id: 'terraclass_2013',
                 sql: "SELECT b.name as lulc, b.color as color, SUM(ST_AREA(ST_Transform(ST_Intersection(p.geom, up.geom),4674)::GEOGRAPHY) / 1000000.0) as area_lulc FROM uso_solo_terraclass p INNER JOIN graphic_colors b on unaccent(b.name) ilike unaccent(p.classe) AND b.table_rel = 'uso_solo_terraclass' " +
                     " INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) " +
                     " where up.token= ${token}" +
                     " GROUP BY 1,2 ORDER BY 3 DESC",
             },
             {
-                id: 'next',
-                sql: 'select true'
+                id: 'terraclass_2018',
+                sql: "SELECT b.name as lulc, b.color as color, SUM(ST_AREA(ST_Transform(ST_Intersection(p.geom, up.geom),4674)::GEOGRAPHY) / 1000000.0) as area_lulc FROM uso_solo_terraclass_2018 p INNER JOIN graphic_colors b on unaccent(b.name) ilike unaccent(p.classe) AND b.table_rel = 'uso_solo_terraclass_2018' " +
+                    " INNER JOIN upload_shapes up on ST_INTERSECTS(p.geom, up.geom) " +
+                    " where up.token= ${token}" +
+                    " GROUP BY 1,2 ORDER BY 3 DESC",
             }
         ]
     }
