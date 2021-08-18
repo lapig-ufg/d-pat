@@ -639,7 +639,7 @@
             </div>
 
             <div class="controls">
-                <div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion" [class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
+                <div [matTooltip]="controls.label_close_mun" *ngIf="this.selectRegion != this.defaultRegion || this.selectedAutoCompleteText != ''" [class]="'btn-layers'" (click)="updateRegion(defaultRegion)">
                     <img width="25" height="25" src="../../assets/img/close-button.svg" [alt]="controls.label_close_mun">
                 </div>
                 <div [matTooltip]="controls.label_layers" [class]="showDrawer ? 'btn-layers btn-layers-active' : 'btn-layers'" (click)="handleDrawer()">

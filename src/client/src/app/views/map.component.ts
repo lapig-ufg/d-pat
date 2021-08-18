@@ -1199,18 +1199,22 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.changeVisibility(prodes, undefined);
     this.infodataMunicipio = null;
 
-    // this.selectedAutoCompleteText = event
-
+    this.selectedAutoCompleteText = 'point'
   }
 
 
   updateRegion(region) {
-    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
 
     this.map.removeLayer(this.layerFromCAR.layer)
 
+    let prodes = this.layersNames.find(element => element.id === 'desmatamento_prodes');
+
     if (region == this.defaultRegion) {
+
+      this.latitudeFormControl.reset()
+      this.longitudeFormControl.reset()
       this.selectedAutoCompleteText = ''
+
       this.currentData = '';
       this.desmatInfo = this.defaultPeriod
 
