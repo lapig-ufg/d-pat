@@ -6,7 +6,7 @@ module.exports = class Ows {
     constructor(
         typeShape
     ) {
-        this._url = config["ows_host"];
+        this._url = config["ows_host"] + "/ows";
 
         if (typeShape == 'shp') {
             this._request = "GetFeature";
