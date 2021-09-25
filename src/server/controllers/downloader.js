@@ -8,7 +8,7 @@ var path = require('path');
 var request = require('request');
 var archiver = require('archiver');
 
-module.exports = function (app) {
+module.exports = function(app) {
     var Controller = {};
     var self = {};
 
@@ -18,32 +18,32 @@ module.exports = function (app) {
         fs.mkdirSync(config.downloadDataDir);
     }
 
-    self.requestFileFromMapServ = async function (url, pathFile, response) {
+    self.requestFileFromMapServ = async function(url, pathFile, response) {
 
         let file = fs.createWriteStream(pathFile + ".zip");
 
         await new Promise((resolve, reject) => {
-            let stream = request({
-                uri: url,
-                gzip: true
+                let stream = request({
+                        uri: url,
+                        gzip: true
+                    })
+                    .pipe(file)
+                    .on('finish', () => {
+                        response.download(pathFile + '.zip');
+                        resolve();
+                    })
+                    .on('error', (error) => {
+                        response.send(error)
+                        response.end();
+                        reject(error);
+                    })
             })
-                .pipe(file)
-                .on('finish', () => {
-                    response.download(pathFile + '.zip');
-                    resolve();
-                })
-                .on('error', (error) => {
-                    response.send(error)
-                    response.end();
-                    reject(error);
-                })
-        })
             .catch(error => {
                 console.log(`Something happened: ${error}`);
             });
     };
 
-    Controller.downloadCSV = async function (request, response) {
+    Controller.downloadCSV = async function(request, response) {
         let layer = request.body.layer;
         let region = request.body.selectedRegion;
         let time = request.body.times;
@@ -51,7 +51,7 @@ module.exports = function (app) {
 
         let data = request.queryResult['csv'];
 
-        data.forEach(function (item, index) {
+        data.forEach(function(item, index) {
             data[index].view_date = moment(item.view_date).format('DD/MM/YYYY')
         });
 
@@ -61,8 +61,7 @@ module.exports = function (app) {
 
         if (time != undefined) {
             fileParam = layer.selectedType + "_" + time.value;
-        }
-        else {
+        } else {
             fileParam = layer.selectedType;
         }
 
@@ -78,21 +77,20 @@ module.exports = function (app) {
         response.download(pathFile);
     };
 
-    Controller.downloadSHP = function (request, response) {
+    Controller.downloadSHP = function(request, response) {
 
         let layer = request.body.layer;
         let region = request.body.selectedRegion;
         let time = request.body.times;
         let typeShape = request.body.typeshape;
+        let ows_host = config["ows_host"];
 
-        let owsRequest = new Ows(typeShape);
+        let owsRequest = new Ows(ows_host, typeShape);
         owsRequest.setTypeName(layer.selectedType);
 
         let diretorio = '';
         let fileParam = '';
         let pathFile = '';
-
-        console.log(layer)
 
         let layersSkipFilters = ['terra_indigena', 'quilombola', 'ucs']
 
@@ -101,23 +99,20 @@ module.exports = function (app) {
 
             if (region.type == 'city') {
                 owsRequest.addFilter('cd_geocmu', "'" + region.cd_geocmu + "'");
-            }
-            else if (region.type == 'state') {
+            } else if (region.type == 'state') {
                 owsRequest.addFilter('uf', "'" + region.value + "'");
             }
 
             if (time != undefined) {
                 owsRequest.addFilterDirect(time.value);
                 fileParam = layer.selectedType + "_" + time.value;
-            }
-            else {
+            } else {
                 fileParam = layer.selectedType;
             }
 
             diretorio = config.downloadDataDir + region.type + '/' + region.value + '/' + typeShape + '/' + layer.selectedType + '/';
 
-        }
-        else {
+        } else {
             diretorio = config.downloadDataDir + '/' + typeShape + '/' + layer.selectedType + '/';
             fileParam = layer.selectedType;
         }

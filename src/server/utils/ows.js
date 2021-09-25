@@ -1,12 +1,9 @@
-var config = require('../config.js')
-
 module.exports = class Ows {
 
-
     constructor(
-        typeShape
+        ows_host, typeShape
     ) {
-        this._url = config["ows_host"] + "/ows";
+        this._url = String(ows_host) + "/ows";
 
         if (typeShape == 'shp') {
             this._request = "GetFeature";
