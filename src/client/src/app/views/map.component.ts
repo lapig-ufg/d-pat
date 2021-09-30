@@ -1029,7 +1029,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   onOpenLateralAccordionLULCTab(e) {
 
-    if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 2))) {
+    if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 1))) {
       this.activeIndexLateralAccordion = true
       this.changeSelectedLulcChart({ index: 0 });
     }
@@ -1041,7 +1041,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   onCloseLateralAccordionLULCTab(e) {
 
-    if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 2))) {
+    if (((this.selectRegion.type == 'city') && (e.index == 1)) || ((this.selectRegion.type == 'state') && (e.index == 1))) {
       let uso_terra = this.layersNames.find(element => element.id === "uso_solo");
       uso_terra.visible = false;
 
