@@ -186,6 +186,8 @@ WHERE ST_EQUALS(p.geom, d.geom);
 ```
 
 
+
+
 ### Cadastro Ambiental Rural (CAR)
 
 Após a criação dos quatro shapefiles com os principais componentes do CAR (Propriedades Rurais, Reserva Legal, Área de Preservação Permanence e Nascentes) deve-se inserir corretamente estes dados no banco de dados.
@@ -234,6 +236,64 @@ from
      ) as sub 
 where sub.internocar = car_desmat.car_cerrado_id and sub.internoprodes = car_desmat.prodes_id
 ```
+
+#### PRODES e DETER-Cerrado com o CAR
+
+Após realizar a atualização dos dados PRODES-Cerrado e DETER-Cerrado é necessário realizar os cruzamentos espaciais entre estes dados e as áreas tratadas como Especiais pelo Cerrado DPAT, tais como:
+
++ *Terras Indígenas (TI).*
++ *Comunidades Quilombolas (AQ).*
++ *Unidades de Conservação de Uso Sustentável (UCUS).* 
++ *Unidades de Conversavação de Proteção Integral (UCPI).*
+
+O tipo de cruzamento a ser realizado é o cálculo das distâncias entre cada polígono PRODES e/ou DETER e cada área especial, no intuito de descobrir a área mais próxima de cada polígono.
+
+Portanto, primeiramente é importante apagar os registros anteriores. Inicialmente iremos apagar a tabela de relacionamento entre os dados do PRODES/DETER e as áreas especiais. A fim de facilitar, iremos utilizar ``*{origin_table}*'' para identificar a tabela de origem, seja ela PRODES ou DETER-Cerrado.
+``` sql
+TRUNCATE TABLE {origin_table}_distancias RESTART IDENTITY;
+```
+
+Em seguida, inicialmente deve-se inserir (em relação de 1:1) o cruzamento entre a área especial de TI e os polígonos {origin-table}-Cerrado na tabela `{origin_table}_distancias`:
+
+``` sql
+insert into {origin_table}_distancias ({origin_table}_id, ti_gid, ti_dist)
+select 
+a.gid as {origin_table}_id, b.gid as ti_gid, b.distance as distance
+from {origin_table}_cerrado a 
+cross join lateral
+(select b.gid, 
+(a.geom::geography <-> b.geom::geography)/1000.0 as distance 
+-- ST_Distance(a.geom::geography, b.geom::geography)/1000.0 as distance -- outra forma de calcular a distância em km.
+from terras_indigenas b 
+--where st_dwithin(a.geom,b.geom,400) -- caso queira filtrar por distância mínima
+order by distance asc limit 1
+) as b
+```
+
+Em seguida, atualiza-se os demais campos referentes a Comunidades Quilombola, UCUS e UCPI na tabela de relacionamento:
+
+
+``` sql
+insert into car_desmat (car_cerrado_id, idt_imovel, deter_id)
+select car.gid, car.idt_imovel, deter.gid from car_cerrado car 
+inner join deter_cerrado deter on ST_INTERSECTS(car.geom, deter.geom)
+```
+
+Com as relações criadas, atualiza-se a tabela `car_desmat` com a quantidade de nascentes e cada desmatamento detectado dentro de uma propriedade rural:
+
+``` sql
+update car_desmat
+set qnt_nascente = sub.qnt 
+from 
+    (
+      select c.car_cerrado_id as internocar, c.prodes_id as internoprodes, count(rl.gid) as qnt
+      from geo_car_nascente_cerrado rl
+      inner join car_desmat c on c.idt_imovel = rl.idt_imovel 
+      group by 1,2
+     ) as sub 
+where sub.internocar = car_desmat.car_cerrado_id and sub.internoprodes = car_desmat.prodes_id
+```
+
 
 #### PRODES-Cerrado com os pontos da Validação de Campo
 

@@ -424,7 +424,6 @@
             "pt-br": "Área das Cicatrizes de Queimadas por ano.",
             "en-us": "Burned Area per year."
         }
-
     },
     "descriptor": {
         "type_of_information_label": {
@@ -442,7 +441,8 @@
                         "pt-br": "Desmatamentos -  PRODES - Cerrado",
                         "en-us": "Deforestation - PRODES - Cerrado"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -583,7 +583,8 @@
                         "pt-br": "Avisos - DETER - Cerrado",
                         "en-us": "Warnings - DETER - Cerrado"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -685,6 +686,10 @@
                                 "en-us": "Period"
                             },
                             "times": {
+                                "view_date > '2021-01-01'": {
+                                    "pt-br": "A partir de 2021",
+                                    "en-us": "From 2021"
+                                },
                                 "view_date > '2020-01-01'": {
                                     "pt-br": "A partir de 2020",
                                     "en-us": "From 2020"
@@ -712,7 +717,8 @@
                         "pt-br": "Antrópico - PRODES - Cerrado",
                         "en-us": "Anthropic - PRODES - Cerrado"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -879,7 +885,8 @@
                         "pt-br": "Susceptibilidade a Desmatamentos",
                         "en-us": "Susceptibility to Deforestation"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -1004,7 +1011,8 @@
                                 "pt-br": "Propriedades Rurais",
                                 "en-us": "Rural Properties"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -1109,7 +1117,8 @@
                                 "pt-br": "Polígonos",
                                 "en-us": "Polygons"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -1214,7 +1223,8 @@
                                 "pt-br": "Áreas",
                                 "en-us": "Areas"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -1319,7 +1329,8 @@
                                 "pt-br": "Pontos",
                                 "en-us": "Points"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -1426,7 +1437,8 @@
                         "pt-br": "Cicatrizes de Queimadas",
                         "en-us": "Burned Area"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -1649,7 +1661,8 @@
                         "pt-br": "Frequência de Queimadas (2001 - 2020)",
                         "en-us": "Burning Frequency (2001 - 2020)"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -1754,7 +1767,8 @@
                         "pt-br": "Focos de Calor -  INPE",
                         "en-us": "Fire Pixels - INPE"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -1897,7 +1911,8 @@
                                 "pt-br": "Limites",
                                 "en-us": "Bounderies"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -2002,7 +2017,8 @@
                                 "pt-br": "Comunidades",
                                 "en-us": "Communities"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -2121,7 +2137,8 @@
                                 "pt-br": "Uso Sustentável",
                                 "en-us": "Sustainable Use"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -2218,7 +2235,8 @@
                                 "pt-br": "Proteção Integral",
                                 "en-us": "Comprehensive Protection"
                             },
-                            "metadata": [{
+                            "metadata": [
+                                {
                                     "title": {
                                         "pt-br": "Dado",
                                         "en-us": "Data"
@@ -2326,7 +2344,8 @@
                         "en-us": "Land Use and Land Cover"
                     },
                     "uso_solo_terraclass_2018_fip": {
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -2419,7 +2438,8 @@
                         ]
                     },
                     "uso_solo_terraclass_fip": {
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -2516,7 +2536,8 @@
                             "pt-br": "Vegetação Pretérita",
                             "en-us": "Past vegetation"
                         },
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -2609,7 +2630,8 @@
                         ]
                     },
                     "uso_solo_probio_fip": {
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -2708,7 +2730,8 @@
                         "en-us": "Agriculture"
                     },
                     "agricultura_agrosatelite_fip": {
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -2806,7 +2829,8 @@
                         "pt-br": "Floresta Plantada",
                         "en-us": "Planted Forest"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -2911,7 +2935,8 @@
                         "pt-br": "Malha Viária (Federal/Estadual)",
                         "en-us": "Roads Network (Federal/State)"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3008,7 +3033,8 @@
                         "pt-br": "Armazéns",
                         "en-us": "Warehouses"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3105,7 +3131,8 @@
                         "pt-br": "Matadouros e Frigoríficos",
                         "en-us": "Slaughterhouses & Meatpacking Company"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3210,7 +3237,8 @@
                         "pt-br": "Altitude",
                         "en-us": "Altitude"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3307,7 +3335,8 @@
                         "pt-br": "Declividade",
                         "en-us": "Slope"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3412,7 +3441,8 @@
                         "pt-br": "Solos (1:250.000)",
                         "en-us": "Soils (1:250.000)"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3509,7 +3539,8 @@
                         "pt-br": "Média da Precipitação Acumulada",
                         "en-us": "Average Accumulated Precipitation"
                     },
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3619,7 +3650,8 @@
                         "en-us": "Year"
                     },
                     "landsat": {
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -3712,7 +3744,8 @@
                         ]
                     },
                     "sentinel": {
-                        "metadata": [{
+                        "metadata": [
+                            {
                                 "title": {
                                     "pt-br": "Dado",
                                     "en-us": "Data"
@@ -3840,7 +3873,8 @@
                 "limite_cerrado": {
                     "pt-br": "Cerrado",
                     "en-us": "Cerrado",
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -3935,7 +3969,8 @@
                 "estados": {
                     "pt-br": "Estados",
                     "en-us": "States",
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4030,7 +4065,8 @@
                 "municipios_cerrado": {
                     "pt-br": "Municípios",
                     "en-us": "Municipality",
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4375,7 +4411,8 @@
             },
             "rl_car_metadata": {
                 "property": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4468,7 +4505,8 @@
                     ]
                 },
                 "legal_reserve": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4561,7 +4599,8 @@
                     ]
                 },
                 "permanent_preservation_area": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4654,7 +4693,8 @@
                     ]
                 },
                 "source": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4747,7 +4787,8 @@
                     ]
                 },
                 "sample_validation": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4840,7 +4881,8 @@
                     ]
                 },
                 "field_validation": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -4933,7 +4975,8 @@
                     ]
                 },
                 "indigenous_lands": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -5026,7 +5069,8 @@
                     ]
                 },
                 "cu_integral_protection": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -5119,7 +5163,8 @@
                     ]
                 },
                 "cu_sustainable_use": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -5212,7 +5257,8 @@
                     ]
                 },
                 "biodiversity_conservation": {
-                    "metadata": [{
+                    "metadata": [
+                        {
                             "title": {
                                 "pt-br": "Dado",
                                 "en-us": "Data"
@@ -5568,7 +5614,8 @@
             "pt-br": "Documentação",
             "en-us": "Documentation"
         },
-        "about": [{
+        "about": [
+            {
                 "pt-br": "O Cerrado Deforestation Polygon Assessment Tool (Cerrado DPAT) é uma ferramenta online e gratuita criada com o propósito de caracterizar os desmatamentos detectados pelos sistemas <a href=\"http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br\" target=\"_blank\"> PRODES-Cerrado</a> e <a style=\"font-weight: 700\" href=\"http://terrabrasilis.dpi.inpe.br/app/map/alerts?hl=pt-br\" target=\"_blank\">DETER-Cerrado</a>.",
                 "en-us": "The Cerrado Deforestation Polygon Assessment Tool (Cerrado DPAT) is a free online tool created with the purpose of characterizing the deforestation detected by the systems <a href=\"http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br\" target=\"_blank\"> PRODES-Cerrado</a> and <a style=\"font-weight: 700\" href=\"http://terrabrasilis.dpi.inpe.br/app/map/alerts?hl=pt-br\" target=\"_blank\">DETER-Cerrado</a>."
             },
@@ -5585,7 +5632,8 @@
             "pt-br": "Sobre",
             "en-us": "About"
         },
-        "innovations": [{
+        "innovations": [
+            {
                 "pt-br": "O Cerrado DPAT inova porque, além de qualificar o desmatamento com dados geográficos de diversas fontes, também oferece a validação dos polígonos de desmatamento, contribuindo para a melhoria do processo de detecção da perda de vegetação nativa no Cerrado.",
                 "en-us": "The Cerrado DPAT also innovates by offering the validation data of deforestation polygons, thus contributing to the improvement of the process of detecting the loss of native vegetation and the emission of greenhouse gases in the Cerrado."
             },
@@ -5598,7 +5646,8 @@
             "pt-br": "Diferencial",
             "en-us": "Innovations"
         },
-        "how_to_use": [{
+        "how_to_use": [
+            {
                 "pt-br": "As informações associadas ao polígono de desmatamento são acessadas pelo usuário de forma rápida e intuitiva. Ao clicar no polígono, um relatório com as informações disponíveis para a região é gerado, permitindo que usuários experientes e eventuais possam ter acesso à informação.",
                 "en-us": "The dataset of each deforestation polygon is accessed quickly and intuitively. With a click on a polygon, a report is generated with the information available for the region, allowing easy access to information.\n"
             },
@@ -5611,7 +5660,8 @@
             "pt-br": "Como usar",
             "en-us": "How to use"
         },
-        "fip": [{
+        "fip": [
+            {
                 "pt-br": "Em 2016, o Programa de Investimento Florestal (FIP) foi implementado no Brasil no âmbito do Plano de Investimento Brasileiro, gerido pelo Banco Internacional para Reconstrução e Desenvolvimento (IBRD/Banco Mundial) e financiado pelo Fundo Estratégico do Clima, cujo objetivo é desenvolver sistemas de prevenção de incêndios florestais e monitorar a cobertura vegetal no bioma.",
                 "en-us": "In 2016, the Forest Investment Program (FIP) was implemented in Brazil under the Brazilian Investment Plan, managed by the International Bank for Reconstruction and Development (IBRD / World Bank) and financed by the Strategic Climate Fund, whose objective is to develop systems prevention of forest fires and monitor the vegetation cover in the biome."
             },

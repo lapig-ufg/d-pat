@@ -116,8 +116,8 @@ def zonal_mean(input_value_raster, feature, srs):
 
 
 connPostgis = "PG: host=%s port=%s dbname=%s user=%s password=%s" \
-    % ('10.0.0.12', '5432', 'fip_cerrado', 'fip_cerrado',
-       'fip_cerrado123')
+    % ('localhost', '5432', 'fip_cerrado', 'dbuser',
+       'dbpass')
 
 print(connPostgis)
 postgis = ogr.Open(connPostgis)
@@ -125,13 +125,13 @@ postgis = ogr.Open(connPostgis)
 table_name = 'prodes_2019'
 layer = postgis.GetLayer(table_name)
 
-imageSmall = 'INPUT/deforestation_probability_small_pol_nodata.tif'
-imageBig = 'INPUT/deforestation_probability_big_pol_nodata.tif'
+imageSmall = 'PATH/TO/deforestation_probability_small_pol_nodata.tif'
+imageBig = 'PATH/TO/deforestation_probability_big_pol_nodata.tif'
 
 for feature in layer:
-    print feature
+    print (feature)
     id = feature.GetField("gid")
-    print id
+    print (id)
 
     meanSmall = zonal_mean(imageSmall, feature, layer.GetSpatialRef())
     if not numpy.isnan(meanSmall):
