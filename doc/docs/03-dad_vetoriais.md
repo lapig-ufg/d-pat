@@ -261,37 +261,31 @@ select
 a.gid as {origin_table}_id, b.gid as ti_gid, b.distance as distance
 from {origin_table}_cerrado a 
 cross join lateral
-(select b.gid, 
-(a.geom::geography <-> b.geom::geography)/1000.0 as distance 
--- ST_Distance(a.geom::geography, b.geom::geography)/1000.0 as distance -- outra forma de calcular a distância em km.
-from terras_indigenas b 
---where st_dwithin(a.geom,b.geom,400) -- caso queira filtrar por distância mínima
-order by distance asc limit 1
-) as b
+	(select b.gid, 
+	-- (a.geom::geography <-> b.geom::geography)/1000.0 as distance 
+	 CAST(ST_DistanceSphere(a.geom, b.geom)/1000.0 as numeric) as distance
+	from areas_quilombolas b 
+	--where st_dwithin(a.geom,b.geom,400) -- caso queira filtrar por distância mínima
+	order by distance asc limit 1
+	) as b
 ```
 
-Em seguida, atualiza-se os demais campos referentes a Comunidades Quilombola, UCUS e UCPI na tabela de relacionamento:
-
-
-``` sql
-insert into car_desmat (car_cerrado_id, idt_imovel, deter_id)
-select car.gid, car.idt_imovel, deter.gid from car_cerrado car 
-inner join deter_cerrado deter on ST_INTERSECTS(car.geom, deter.geom)
-```
-
-Com as relações criadas, atualiza-se a tabela `car_desmat` com a quantidade de nascentes e cada desmatamento detectado dentro de uma propriedade rural:
+Em seguida, atualiza-se os demais campos referentes a Comunidades Quilombola (colunas q_gid, q_dist em deter_distancias e tabela 'areas_quilombolas'), UCUS (colunas ucus_gid, ucus_dist em deter_distancias e tabela 'ucs_uso_sustentavel') e UCPI (colunas ucpi_gid, ucpi_dist em deter_distancias e tabela 'ucs_protecao_integral') na tabela de relacionamento:
 
 ``` sql
-update car_desmat
-set qnt_nascente = sub.qnt 
-from 
-    (
-      select c.car_cerrado_id as internocar, c.prodes_id as internoprodes, count(rl.gid) as qnt
-      from geo_car_nascente_cerrado rl
-      inner join car_desmat c on c.idt_imovel = rl.idt_imovel 
-      group by 1,2
-     ) as sub 
-where sub.internocar = car_desmat.car_cerrado_id and sub.internoprodes = car_desmat.prodes_id
+update deter_distancias 
+set q_gid = b.gid,
+q_dist = b.distance
+from deter_cerrado a
+cross join lateral
+	(select b.gid, 
+	-- (a.geom::geography <-> b.geom::geography)/1000.0 as distance 
+	 CAST(ST_DistanceSphere(a.geom, b.geom)/1000.0 as numeric) as distance
+	from areas_quilombolas b 
+	--where st_dwithin(a.geom,b.geom,400) -- caso queira filtrar por distância mínima
+	order by distance asc limit 1
+	) as b
+where deter_distancias.deter_id = a.gid 
 ```
 
 
