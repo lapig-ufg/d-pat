@@ -7,7 +7,7 @@
     "always": "^2.2.0",
     "app-root-path": "^1.0.0",
     "archiver": "^4.0.2",
-    "async": "~0.2.10",
+    "async": "~3.2.2",
     "body-parser": "^1.19.0",
     "child_process": "^1.0.2",
     "compression": "^1.7.4",
