@@ -35,7 +35,7 @@ bfast_apply = function(coordinate) {
 			))
 	}
 
-	ndvi <- brick("/mnt/HD01/containers/MDC_LAPIG/APP/BIG-TIF/pa_br_mod13q1_ndvi_250_2000_2020.tif")
+	ndvi <- brick("/mnt/HD01/containers/MDC_LAPIG/APP/BIG-TIF/pa_br_mod13q1_ndvi_250_2000_2021.tif")
 	#ndvi <- brick("/data/DADOS_GRID/pa_br_ndvi_maxmin_250_lapig/pa_br_ndvi_maxmin_250.vrt")
 
 	lon <- coordinate[1]
