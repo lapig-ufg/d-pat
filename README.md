@@ -1,7 +1,7 @@
 # Deforestation Polygon Assessment Tool
 ![image](https://mundogeo.com/wp-content/uploads/2020/09/22230400/logo-dpat-cerrado.png)
 
-## Prerequisites and necessary dependencies!:
+## Prerequisites and necessary dependencies:
 
 > Node.js > latest version LTS
 
