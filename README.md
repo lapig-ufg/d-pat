@@ -1,4 +1,5 @@
 # Deforestation Polygon Assessment Tool
+![image]([https://user-images.githubusercontent.com/26287257/172415977-49faa5b6-15ed-46a6-887f-c6c8a8e7d62c.png](https://mundogeo.com/wp-content/uploads/2020/09/22230400/logo-dpat-cerrado.png)
 
 ## Prerequisites and necessary dependencies!:
 
