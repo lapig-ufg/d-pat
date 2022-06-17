@@ -1926,7 +1926,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       layer: new OlTileLayer({
         source: new OlXYZ({
           url:
-            'https://tiles{0-3}.planet.com/basemaps/v1/planet-tiles/global_quarterly_2021q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=d6f957677fbf40579a90fb3a9c74be1a',
+            'https://tiles{0-3}.planet.com/basemaps/v1/planet-tiles/global_quarterly_2021q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=PLAK2d16e6d66d214374b65b5d391113ebd7',
 
         }),
         visible: false
@@ -2199,7 +2199,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
       if (layer.timeHandler == 'layername') { layername = layer.timeSelected; }
 
 
-      result.push("https://tiles.planet.com/basemaps/v1/planet-tiles/" + layername + "/gmap/{z}/{x}/{y}.png?api_key=d6f957677fbf40579a90fb3a9c74be1a")
+      result.push("https://tiles.planet.com/basemaps/v1/planet-tiles/" + layername + "/gmap/{z}/{x}/{y}.png?api_key=PLAK2d16e6d66d214374b65b5d391113ebd7")
     }
     else {
 
