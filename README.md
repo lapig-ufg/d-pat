@@ -3,7 +3,7 @@
 
 ## Prerequisites and necessary dependencies:
 
-> Node.js > latest version LTS
+> Node.js > v12.8.0
 
 > npm > latest version LTS
 
@@ -11,7 +11,7 @@
 
 > Angular 8/cli > specific version
 
-> Python 3.7.2 > or latest version LTS
+> Python 3.7.3 > or latest version LTS
 
 > Postgis-2.5 > specific version
 
