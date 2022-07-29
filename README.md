@@ -11,7 +11,7 @@
 
 > Angular 8/cli > specific version
 
-> Python 3.7.3 
+> Python > 3.7.3 
 
 > Postgis-2.5 > specific version
 
