@@ -18,8 +18,8 @@ WORKDIR /APP
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget git bzip2 curl build-essential libgdal-dev libcurl4 \
                                                     python3.7 python3-pip gdal-bin=2.4.0+dfsg-1+b1 \
                                                     procps net-tools r-base libudunits2-dev libgdal-dev \
-                                                    libgeos-dev libproj-dev libfontconfig1-dev  r-base-dev \
-                                                    r-cran-raster && \ 
+                                                    libgeos-dev libproj-dev libfontconfig1-dev r-base-dev \
+                                                    r-cran-raster postgis && \ 
                                                     curl -sL https://deb.nodesource.com/setup_12.x | bash - && \ 
                                                     apt-get update && apt-get install -y nodejs && \
                                                     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
