@@ -28,8 +28,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget git bzip2 curl build-
                                                     cd /APP && git clone -b ${BRANCH} ${URL_TO_APPLICATION_GITHUB} && \
                                                     Rscript -e 'install.packages("rgdal", repos="https://cloud.r-project.org")' && \
                                                     pip3 install GDAL==2.4.0
-
-
 # Update C env vars so compiler can find gdal
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
