@@ -418,7 +418,7 @@ module.exports = function (app) {
     let sizeThumb = 400;
 
     var urlsLandsatMontadas = [];
-    for (let ano = 2000; ano <= 2020; ano++) {
+    for (let ano = 2000; ano <= 2021; ano++) {
       urlsLandsatMontadas.push({
         url: app.config.ows_host + "/ows?SERVICE=WMS&REQUEST=GetMap&VERSION=1.1.1&layers=bi_ce_mosaico_landsat_completo_30_" +
           ano + "_fip,bi_ce_" + origin_table + "_desmatamento_100_fip,bi_ce_validacao_amostral_fip&bbox=" + box + "&TRANSPARENT=TRUE&srs=EPSG:4674&width=" +
