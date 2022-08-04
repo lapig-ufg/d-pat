@@ -137,7 +137,7 @@ module.exports = function(app) {
 
         var queryResult = request.queryResult["timeseries"]
 
-        var indicatorYear = Number(request.param('year', 2020));;
+        var indicatorYear = Number(request.param('year', 2021));
 
         var anthropicArea = 0
         var deforestationArea = 0
@@ -245,7 +245,7 @@ module.exports = function(app) {
 
         var language = request.param('lang')
 
-        var year = Number(request.param('year', 2020));
+        var year = Number(request.param('year', 2021));
 
         var queryResult = request.queryResult
 
