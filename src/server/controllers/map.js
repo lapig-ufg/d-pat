@@ -1369,7 +1369,7 @@ module.exports = function (app) {
                             opacity: 1,
                             metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'],
                             timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                            timeSelected: "bi_ce_mosaico_landsat_completo_30_2020_fip",
+                            timeSelected: "bi_ce_mosaico_landsat_completo_30_2021_fip",
                             timeHandler: "layername",
                             times: [{
                                 value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
@@ -1430,6 +1430,10 @@ module.exports = function (app) {
                             {
                                 value: "bi_ce_mosaico_landsat_completo_30_2020_fip",
                                 Viewvalue: "2020"
+                            },
+                            {
+                                value: "bi_ce_mosaico_landsat_completo_30_2021_fip",
+                                Viewvalue: "2021"
                             }
                             ]
                         },

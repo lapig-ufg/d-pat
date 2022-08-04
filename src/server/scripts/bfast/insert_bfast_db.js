@@ -26,6 +26,7 @@ fs.createReadStream(csvFilepath)
 
                 for (i in csvRows) {
                     var row = csvRows[i]
+                    console.log(row)
 
                     /* for initial population*/
                     var rowValues = [parseFloat(row.lon), parseFloat(row.lat), row.monitor_breakpoint, row.monitor_magnitude]
