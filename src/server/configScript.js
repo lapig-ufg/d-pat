@@ -31,6 +31,8 @@ module.exports = function (app) {
             "debug": env.PG_DEBUG
         }
     }
+
+    console.log(config)
     return config;
 
 }

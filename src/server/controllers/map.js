@@ -72,7 +72,7 @@ module.exports = function (app) {
                             download: [],
                             regionFilter: true,
                             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_city_fip_img"]["timelabel"][language],
-                            timeSelected: "year=2020",
+                            timeSelected: "year=2021",
                             timeHandler: "msfilter",
                             times: [{
                                 value: "year=2002",
@@ -143,6 +143,11 @@ module.exports = function (app) {
                                 value: "year=2020",
                                 Viewvalue: "2019/2020",
                                 year: 2020
+                            },
+                            {
+                                value: "year=2021",
+                                Viewvalue: "2020/2021",
+                                year: 2021
                             }
                             ]
                         },
@@ -154,7 +159,7 @@ module.exports = function (app) {
                             download: [],
                             regionFilter: true,
                             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["prodes_por_region_state_fip_img"]["timelabel"][language],
-                            timeSelected: "year=2020",
+                            timeSelected: "year=2021",
                             timeHandler: "msfilter",
                             times: [{
                                 value: "year=2002",
@@ -225,6 +230,11 @@ module.exports = function (app) {
                                 value: "year=2020",
                                 Viewvalue: "2019/2020",
                                 year: 2020
+                            },
+                            {
+                                value: "year=2021",
+                                Viewvalue: "2020/2021",
+                                year: 2021
                             }
                             ]
                         },
@@ -236,7 +246,7 @@ module.exports = function (app) {
                             download: ['csv', 'shp'],
                             regionFilter: true,
                             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["desmatamento_prodes"]["types"]["bi_ce_prodes_desmatamento_100_fip"]["timelabel"][language],
-                            timeSelected: "year=2020",
+                            timeSelected: "year=2021",
                             timeHandler: "msfilter",
                             times: [{
                                 value: "year=2002",
@@ -307,6 +317,11 @@ module.exports = function (app) {
                                 value: "year=2020",
                                 Viewvalue: "2019/2020",
                                 year: 2020
+                            },
+                            {
+                                value: "year=2021",
+                                Viewvalue: "2020/2021",
+                                year: 2021
                             }
                             ]
                         },
@@ -388,7 +403,7 @@ module.exports = function (app) {
                             download: ['shp'],
                             regionFilter: true,
                             timeLabel: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["timelabel"][language],
-                            timeSelected: "year < 2019",
+                            timeSelected: "year < 2021",
                             timeHandler: "msfilter",
                             times: [{
                                 value: "year < 2002",
@@ -445,6 +460,10 @@ module.exports = function (app) {
                             {
                                 value: "year < 2020",
                                 Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2020"][language]
+                            },
+                            {
+                                value: "year < 2021",
+                                Viewvalue: languageJson["descriptor"]["desmatamento"]["layers"]["antropico"]["types"]["bi_ce_prodes_antropico_100_fip"]["times"]["year < 2021"][language]
                             }
                             ]
                         }]
@@ -1350,7 +1369,7 @@ module.exports = function (app) {
                             opacity: 1,
                             metadata: languageJson["descriptor"]["imagens"]["layers"]['satelite']['landsat']['metadata'],
                             timeLabel: languageJson["descriptor"]["imagens"]["layers"]["satelite"]["timelabel"][language],
-                            timeSelected: "bi_ce_mosaico_landsat_completo_30_2020_fip",
+                            timeSelected: "bi_ce_mosaico_landsat_completo_30_2021_fip",
                             timeHandler: "layername",
                             times: [{
                                 value: "bi_ce_mosaico_landsat_completo_30_2000_fip",
@@ -1411,6 +1430,10 @@ module.exports = function (app) {
                             {
                                 value: "bi_ce_mosaico_landsat_completo_30_2020_fip",
                                 Viewvalue: "2020"
+                            },
+                            {
+                                value: "bi_ce_mosaico_landsat_completo_30_2021_fip",
+                                Viewvalue: "2021"
                             }
                             ]
                         },

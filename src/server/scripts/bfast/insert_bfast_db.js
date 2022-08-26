@@ -3,10 +3,11 @@ const csv = require('csv-parser');
 const fs = require('fs');
 
 var config = require('../../configScript.js')
+console.log(config['pg'])
 var pool = new Pool(config['pg'])
 
 var csvRows = []
-var csvFilepath = 'result.csv'
+var csvFilepath = '/home/luizmlpascoal/AmbienteDeTrabalho/Workspaces/LAPIG/d-pat/src/server/scripts/bfast/result_r.csv'
 const insertRow = 'INSERT INTO bfast_points(lon,lat,breakpoint,th) VALUES($1,$2,$3,$4) RETURNING gid'
 
 fs.createReadStream(csvFilepath)
@@ -26,6 +27,7 @@ fs.createReadStream(csvFilepath)
 
                 for (i in csvRows) {
                     var row = csvRows[i]
+                    console.log(row)
 
                     /* for initial population*/
                     var rowValues = [parseFloat(row.lon), parseFloat(row.lat), row.monitor_breakpoint, row.monitor_magnitude]
